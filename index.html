@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏数据导航</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 40px; min-height: 100vh; }
+        h1 { text-align: center; color: #00bcd4; margin-bottom: 20px; font-size: 36px; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 16px; margin-bottom: 30px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .stats { text-align: center; color: #aaa; font-size: 14px; margin-bottom: 40px; }
+        .nav-cards-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .nav-card { background: linear-gradient(145deg, #3a3a3a, #444444); border: 2px solid #555; border-radius: 16px; padding: 30px 20px; text-align: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .nav-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 24px rgba(0,0,0,0.5); }
+        .nav-card a { text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .nav-card .card-icon { font-size: 48px; margin-bottom: 8px; }
+        .nav-card .card-title { color: white; font-size: 24px; font-weight: bold; }
+        .nav-card .card-count { color: #aaa; font-size: 14px; }
+        .nav-card .card-subtitle { color: #888; font-size: 14px; }
+
+        /* 物品卡片样式（绿色） */
+        .items-card { border-color: #4CAF50; }
+        .items-card:hover { border-color: #81C784; background: linear-gradient(145deg, #2a4a2a, #3a5a3a); }
+        .items-card .card-icon { filter: drop-shadow(0 0 8px #4CAF50); }
+
+        /* 怪物卡片样式（橙色） */
+        .monsters-card { border-color: #FF6600; }
+        .monsters-card:hover { border-color: #FF8C00; background: linear-gradient(145deg, #4a3a2a, #5a4a3a); }
+        .monsters-card .card-icon { filter: drop-shadow(0 0 8px #FF6600); }
+
+        /* 掉落卡片样式（蓝色） */
+        .lootdrops-card { border-color: #2196F3; }
+        .lootdrops-card:hover { border-color: #64B5F6; background: linear-gradient(145deg, #2a3a4a, #3a4a5a); }
+        .lootdrops-card .card-icon { filter: drop-shadow(0 0 8px #2196F3); }
+
+        /* 探索目标卡片样式（青色） */
+        .explore-card { border-color: #00bcd4; }
+        .explore-card:hover { border-color: #00e5ff; background: linear-gradient(145deg, #2a4a4a, #3a5a5a); }
+        .explore-card .card-icon { filter: drop-shadow(0 0 8px #00bcd4); }
+        .explore-card .card-title { color: #00bcd4; }
+
+        .footer { text-align: center; margin-top: 50px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>游戏数据导航</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="stats">物品: 144 | 怪物: 120 | 物品>>怪物: 402 | 无结果: 1801</div>
+    <div class="nav-cards-container">
+    <div class="nav-card items-card">
+        <a href="items.html">
+            <span class="card-icon">📦</span>
+            <span class="card-title">【物品表】</span>
+            <span class="card-count">144 个物品</span>
+            <span class="card-subtitle">查看物品位置</span>
+        </a>
+    </div>
+    <div class="nav-card monsters-card">
+        <a href="monsters.html">
+            <span class="card-icon">👹</span>
+            <span class="card-title">【怪物表】</span>
+            <span class="card-count">120 个怪物</span>
+            <span class="card-subtitle">查看怪物位置</span>
+        </a>
+    </div>
+    <div class="nav-card lootdrops-card">
+        <a href="lootdrops.html">
+            <span class="card-icon">💎</span>
+            <span class="card-title">【掉落表】</span>
+            <span class="card-count">402 个掉落关系</span>
+            <span class="card-subtitle">查看物品掉落怪物</span>
+        </a>
+    </div>
+</div>
+
+    <div class="footer">共 2467 个目标位置</div>
+</body>
+</html>

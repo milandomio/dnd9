@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>巨魔之棒 >> 洞穴巨魔 怪物坐标汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        .monster-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 15px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .monster-toggle-btn { padding: 8px 15px; border: 2px solid #fff; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; color: #fff; transition: all 0.2s; opacity: 1; }
+        .monster-toggle-btn:hover { opacity: 0.8; transform: translateY(-2px); }
+        .monster-toggle-btn.hidden { opacity: 0.3; }
+        .monster-legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 14px; text-align: center; }
+        .legend-items { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 5px; color: #aaa; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #555; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 2px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .monster-summary { display: flex; flex-wrap: wrap; gap: 4px 10px; justify-content: center; margin-top: 5px; font-size: 13px; color: #ccc; align-items: center; }
+        .ms-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .ms-name { cursor: pointer; }
+        .ms-name:hover { text-decoration: underline; color: #fff; }
+        .ms-count { color: #888; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .monster-dot.hidden { opacity: 0.2; }
+        .group-header.hidden { display: none; }
+        .map-card.empty { display: none; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>巨魔之棒 >> 洞穴巨魔 怪物坐标汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">巨魔之棒 (TrollsClub) >> CaveTroll</div>
+    <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>洞穴巨魔 (1)</div>
+</div></div>
+
+    <div class="monster-nav">
+    <button class="monster-toggle-btn" id="btn-CaveTroll" data-monster="CaveTroll" onclick="toggleMonster('CaveTroll')" style="background-color: rgba(255, 0, 0, 0.7);">洞穴巨魔</button>
+</div>
+
+    <div class="maps-grid" id="maps-grid">    <div class="group-header" id="group-Cave">哥布林洞穴1层</div>
+    <div class="map-card" id="map-card-CaveTown_02_HR_D-json" data-monsters="CaveTroll" data-group="group-Cave" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">哥布林小镇 B<span class='debug-text'> (Goblin_Town_B)</span><div class='map-filename'>CaveTown_02_HR_D.json</div></h3>
+        <div class="map-info">CaveTown_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('CaveTown_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-CaveTown_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('CaveTown_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('CaveTown_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-CaveTown_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-CaveTown_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-CaveTown_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CaveTown_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-CaveTown_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CaveTown_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('CaveTown_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('CaveTown_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('CaveTown_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('CaveTown_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-CaveTown_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown_02.webp" class="image">        <div class="dot monster-dot" data-monster="CaveTroll" data-index="406" data-x="232.47646" data-y="892.2974" data-z="0.0001" style="left: 57.26%; top: 77.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="CaveTroll">洞穴巨魔</span><span class="ms-count">(1点)</span></div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>位置统计：共 1 个怪物，1 个位置点</strong>
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-406">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_HR_D-json', 406, this)"></td>
+        <td>洞穴巨魔</td>
+        <td>哥布林洞穴1层</td>
+        <td>CaveTown_02_HR_D.json</td>
+        <td>哥布林小镇 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_CaveTroll</td>
+        <td>232.48</td>
+        <td>892.30</td>
+        <td>0.00</td>
+    </tr>
+</table>
+    </div>
+    <script>
+        window.monsterColors = {
+    'CaveTroll': 'rgba(255, 0, 0, 0.7)',
+};
+
+        window.monsterVisible = {
+    'CaveTroll': true,
+};
+
+        function toggleMonster(monsterId) {
+            const btn = document.getElementById('btn-' + monsterId);
+            const dots = document.querySelectorAll('.monster-dot[data-monster="' + monsterId + '"]');
+
+            if (window.monsterVisible[monsterId]) {
+                window.monsterVisible[monsterId] = false;
+                btn.classList.add('hidden');
+                dots.forEach(dot => dot.classList.add('hidden'));
+            } else {
+                window.monsterVisible[monsterId] = true;
+                btn.classList.remove('hidden');
+                dots.forEach(dot => dot.classList.remove('hidden'));
+            }
+
+            // 检查并隐藏/显示没有可见点的卡片和分组
+            updateCardVisibility();
+        }
+
+        function updateCardVisibility() {
+            // 检查每个地图卡片是否有可见的点
+            const cards = document.querySelectorAll('.map-card');
+            cards.forEach(card => {
+                const monstersAttr = card.getAttribute('data-monsters') || '';
+                const monsterIds = monstersAttr.split(',').filter(Boolean);
+                let hasVisible = false;
+
+                // 只要任一关联怪物可见，卡片就显示
+                for (const mid of monsterIds) {
+                    if (window.monsterVisible[mid] !== false) {
+                        hasVisible = true;
+                        break;
+                    }
+                }
+
+                if (!hasVisible) {
+                    card.classList.add('empty');
+                } else {
+                    card.classList.remove('empty');
+                }
+            });
+
+            // 检查并隐藏/显示分组标题
+            const groups = document.querySelectorAll('.group-header');
+            groups.forEach(group => {
+                const groupId = group.getAttribute('id');
+                const groupCards = document.querySelectorAll(`.map-card[data-group="${groupId}"]`);
+                let allEmpty = true;
+
+                groupCards.forEach(card => {
+                    if (!card.classList.contains('empty')) {
+                        allEmpty = false;
+                    }
+                });
+
+                if (allEmpty) {
+                    group.classList.add('hidden');
+                } else {
+                    group.classList.remove('hidden');
+                }
+            });
+        }
+        window.mapStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx2 = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy2 = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX2 = 50, multY2 = 50, centerX2 = 50, centerY2 = 50;
+                if (sx2 === 1 && sy2 === 2) { centerX2 = 100; multX2 = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX2 + (x / range) * multX2;
+                const top = centerY2 + (y / range) * multY2;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

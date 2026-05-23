@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>剧毒蜻蜓 位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #FFC107; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 5px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+        .summary .label-group-row { background-color: #424242; }
+        .label-toggle-btn { margin: 2px 4px; padding: 4px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .label-toggle-btn:hover { background-color: #45a049; transform: scale(1.05); }
+        .label-toggle-btn:active { transform: scale(0.95); }
+        .legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 15px; text-align: center; color: #aaa; }
+        .color-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>剧毒蜻蜓 位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">剧毒蜻蜓 (GiantDragonfly)</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header">哥布林洞穴1层</div>
+    <div class="map-card" id="map-card-Cave_Altar_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洞穴祭坛 B<span class='debug-text'> (Cave_Altar_B)</span><div class='map-filename'>Cave_Altar_02_HR_D.json</div></h3>
+        <div class="map-info">Cave_Altar_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cave_Altar_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cave_Altar_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cave_Altar_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cave_Altar_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cave_Altar_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cave_Altar_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Altar_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Altar_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Altar_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Altar_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cave_Altar_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_Altar_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cave_Altar_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_Altar_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cave_Altar_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cave_Altar_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Altar_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cave_Altar_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cave_Altar_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Altar_02.webp" class="image">        <div class="dot" data-index="506" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-21.0" data-y="34.0" data-z="-379.68594" style="left: 49.34%; top: 51.06%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-379</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Cave_BanditCamp_Center_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">哥布林匪窝<span class='debug-text'> (Goblin_Bandits)</span><div class='map-filename'>Cave_BanditCamp_Center_HR_D.json</div></h3>
+        <div class="map-info">Cave_BanditCamp_Center.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cave_BanditCamp_Center_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cave_BanditCamp_Center_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cave_BanditCamp_Center_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cave_BanditCamp_Center_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cave_BanditCamp_Center_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cave_BanditCamp_Center_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cave_BanditCamp_Center_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_BanditCamp_Center_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_BanditCamp_Center_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_BanditCamp_Center_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cave_BanditCamp_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_BanditCamp_Center_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cave_BanditCamp_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_BanditCamp_Center_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cave_BanditCamp_Center_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cave_BanditCamp_Center_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_BanditCamp_Center_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cave_BanditCamp_Center_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cave_BanditCamp_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_BanditCamp_Center.webp" class="image">        <div class="dot" data-index="698" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="25.0" data-y="70.0" data-z="0.0" style="left: 50.78%; top: 52.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="699" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-21.0" data-y="34.0" data-z="0.0" style="left: 49.34%; top: 51.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="700" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-21.0" data-y="34.0" data-z="0.0" style="left: 49.34%; top: 51.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Cave_SpiderNest_02_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">蛛网巢穴<span class='debug-text'> (SpiderNest)</span><div class='map-filename'>Cave_SpiderNest_02_D.json</div></h3>
+        <div class="map-info">Cave_SpiderNest_02.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cave_SpiderNest_02_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cave_SpiderNest_02_D-json" value="1600" step="100" onchange="updateMapRange('Cave_SpiderNest_02_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cave_SpiderNest_02_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cave_SpiderNest_02_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cave_SpiderNest_02_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cave_SpiderNest_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_SpiderNest_02_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cave_SpiderNest_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_SpiderNest_02_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cave_SpiderNest_02_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cave_SpiderNest_02_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_SpiderNest_02_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cave_SpiderNest_02_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cave_SpiderNest_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_SpiderNest_02.webp" class="image">        <div class="dot" data-index="808" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803379" data-y="237.07407" data-z="180.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+        <div class="dot" data-index="809" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803379" data-y="237.07407" data-z="180.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-GoblinCaveCorner_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洞穴隧道<span class='debug-text'> (CaveTunnels)</span><div class='map-filename'>GoblinCaveCorner_01_HR_D.json</div></h3>
+        <div class="map-info">GoblinCaveCorner_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('GoblinCaveCorner_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-GoblinCaveCorner_01_HR_D-json" value="1600" step="100" onchange="updateMapRange('GoblinCaveCorner_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('GoblinCaveCorner_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-GoblinCaveCorner_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-GoblinCaveCorner_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-GoblinCaveCorner_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinCaveCorner_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-GoblinCaveCorner_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinCaveCorner_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('GoblinCaveCorner_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('GoblinCaveCorner_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinCaveCorner_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('GoblinCaveCorner_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-GoblinCaveCorner_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinCaveCorner_01.webp" class="image">        <div class="dot" data-index="1861" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-51.362602" data-y="-51.569294" data-z="140.0" style="left: 48.39%; top: 48.39%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">140</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-SpiderCave_02_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">蜘蛛洞<span class='debug-text'> (SpiderCave)</span><div class='map-filename'>SpiderCave_02_D.json</div></h3>
+        <div class="map-info">SpiderCave_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('SpiderCave_02_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-SpiderCave_02_D-json" value="1600" step="100" onchange="updateMapRange('SpiderCave_02_D-json')">
+                <button class="btn-scale" onclick="scaleRange('SpiderCave_02_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-SpiderCave_02_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-SpiderCave_02_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_02_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_02_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_02_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_02_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-SpiderCave_02_D-json" value="0" step="10" onchange="applyOffsetInput('SpiderCave_02_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-SpiderCave_02_D-json" value="0" step="10" onchange="applyOffsetInput('SpiderCave_02_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('SpiderCave_02_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('SpiderCave_02_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('SpiderCave_02_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('SpiderCave_02_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-SpiderCave_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/SpiderCave_02.webp" class="image">        <div class="dot" data-index="1951" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="580.0" data-y="-529.0" data-z="-320.0" style="left: 68.12%; top: 33.47%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-320</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-StoneGrave_Center_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">石坟 B<span class='debug-text'> (Stone_Graves_B)</span><div class='map-filename'>StoneGrave_Center_02_HR_D.json</div></h3>
+        <div class="map-info">StoneGrave_Center_02.webp (缓存) | 找到 8 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-StoneGrave_Center_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('StoneGrave_Center_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-StoneGrave_Center_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-StoneGrave_Center_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-StoneGrave_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-StoneGrave_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('StoneGrave_Center_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('StoneGrave_Center_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('StoneGrave_Center_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('StoneGrave_Center_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-StoneGrave_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/StoneGrave_Center_02.webp" class="image">        <div class="dot" data-index="1567" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803383" data-y="237.07407" data-z="180.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+        <div class="dot" data-index="1568" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="47.722492" data-y="60.731594" data-z="150.0001" style="left: 51.49%; top: 51.90%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">150</span></div>
+        <div class="dot" data-index="1569" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="149.54764" data-y="-33.010815" data-z="164.0001" style="left: 54.67%; top: 48.97%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">164</span></div>
+        <div class="dot" data-index="1570" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803385" data-y="237.07407" data-z="168.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">168</span></div>
+        <div class="dot" data-index="1571" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803383" data-y="237.07407" data-z="180.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+        <div class="dot" data-index="1572" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803385" data-y="237.07407" data-z="168.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">168</span></div>
+        <div class="dot" data-index="1573" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803383" data-y="237.07407" data-z="180.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+        <div class="dot" data-index="1574" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-11.803385" data-y="237.07407" data-z="180.0001" style="left: 49.63%; top: 57.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟2层地牢</div>
+    <div class="map-card" id="map-card-AdmirerRoom_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">信徒会所<span class='debug-text'> (Admirer_Room)</span><div class='map-filename'>AdmirerRoom_HR_D.json</div></h3>
+        <div class="map-info">AdmirerRoom.webp (缓存) | 找到 6 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('AdmirerRoom_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-AdmirerRoom_HR_D-json" value="1600" step="100" onchange="updateMapRange('AdmirerRoom_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('AdmirerRoom_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-AdmirerRoom_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-AdmirerRoom_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('AdmirerRoom_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('AdmirerRoom_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('AdmirerRoom_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('AdmirerRoom_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-AdmirerRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('AdmirerRoom_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-AdmirerRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('AdmirerRoom_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('AdmirerRoom_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('AdmirerRoom_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('AdmirerRoom_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('AdmirerRoom_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-AdmirerRoom_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/AdmirerRoom.webp" class="image">        <div class="dot" data-index="4310" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-281.44366" data-y="-1064.4436" data-z="358.0001" style="left: 41.20%; top: 16.74%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">358</span></div>
+        <div class="dot" data-index="4311" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="53.556347" data-y="-1175.4436" data-z="378.0001" style="left: 51.67%; top: 13.27%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">378</span></div>
+        <div class="dot" data-index="4312" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="497.55634" data-y="-750.44366" data-z="372.0001" style="left: 65.55%; top: 26.55%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">372</span></div>
+        <div class="dot" data-index="4313" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-265.44366" data-y="-477.44363" data-z="288.0001" style="left: 41.70%; top: 35.08%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">288</span></div>
+        <div class="dot" data-index="4314" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="731.0" data-y="648.0" data-z="438.38837" style="left: 72.84%; top: 70.25%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">438</span></div>
+        <div class="dot" data-index="4315" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-811.0" data-y="815.0" data-z="301.0001" style="left: 24.66%; top: 75.47%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">301</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Cistern_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">蓄水池<span class='debug-text'> (Cistern)</span><div class='map-filename'>Cistern_HR_D.json</div></h3>
+        <div class="map-info">Cistern.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cistern_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cistern_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cistern_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cistern_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cistern_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cistern_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cistern_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cistern_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cistern_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cistern_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cistern_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cistern_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cistern_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cistern_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cistern_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cistern.webp" class="image">        <div class="dot" data-index="4467" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="110.0" data-y="590.0" data-z="-90.0" style="left: 53.44%; top: 68.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-90</span></div>
+        <div class="dot" data-index="4468" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-720.0" data-y="-780.0" data-z="-90.0" style="left: 27.50%; top: 25.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-90</span></div>
+</div>
+    </div>
+    <div class="map-card test-module" id="map-card-Cistern_SR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">SR<span class='debug-text'> (SR)</span><div class='map-filename'>Cistern_SR_D.json</div></h3>
+        <div class="map-info">未找到 (尝试: Cistern_SR, SR) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cistern_SR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cistern_SR_D-json" value="1600" step="100" onchange="updateMapRange('Cistern_SR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cistern_SR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cistern_SR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cistern_SR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_SR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_SR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_SR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_SR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cistern_SR_D-json" value="0" step="10" onchange="applyOffsetInput('Cistern_SR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cistern_SR_D-json" value="0" step="10" onchange="applyOffsetInput('Cistern_SR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cistern_SR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cistern_SR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cistern_SR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cistern_SR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cistern_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Cistern_SR, SR</small></div>        <div class="dot" data-index="4476" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="110.0" data-y="590.0" data-z="-90.0" style="left: 53.44%; top: 68.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-90</span></div>
+        <div class="dot" data-index="4477" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-720.0" data-y="-780.0" data-z="-90.0" style="left: 27.50%; top: 25.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-90</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ComplexHall_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">门控房间<span class='debug-text'> (Gated_Rooms)</span><div class='map-filename'>ComplexHall_HR_D.json</div></h3>
+        <div class="map-info">ComplexHall.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ComplexHall_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ComplexHall_HR_D-json" value="1600" step="100" onchange="updateMapRange('ComplexHall_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ComplexHall_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ComplexHall_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ComplexHall_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ComplexHall_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ComplexHall_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ComplexHall_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ComplexHall_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ComplexHall_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ComplexHall_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ComplexHall_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ComplexHall_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ComplexHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ComplexHall.webp" class="image">        <div class="dot" data-index="2593" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-1200.0" data-y="705.0" data-z="145.0" style="left: 12.50%; top: 72.03%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">145</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Connector_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">走廊 E<span class='debug-text'> (Hall_E)</span><div class='map-filename'>Connector_01_HR_D.json</div></h3>
+        <div class="map-info">Connector_01.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Connector_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Connector_01_HR_D-json" value="1600" step="100" onchange="updateMapRange('Connector_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Connector_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Connector_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Connector_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Connector_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Connector_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Connector_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Connector_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Connector_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Connector_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Connector_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Connector_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Connector_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Connector_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Connector_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Connector_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Connector_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Connector_01.webp" class="image">        <div class="dot" data-index="2652" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-20.0" data-y="460.0" data-z="175.0" style="left: 49.38%; top: 64.38%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">175</span></div>
+        <div class="dot" data-index="2653" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-20.0" data-y="1011.0" data-z="175.0" style="left: 49.38%; top: 81.59%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">175</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Crypt_LargeRoomPit_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">断桥<span class='debug-text'> (Broken_Bridge)</span><div class='map-filename'>Crypt_LargeRoomPit_HR_D.json</div></h3>
+        <div class="map-info">Crypt_LargeRoomPit.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Crypt_LargeRoomPit_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Crypt_LargeRoomPit_HR_D-json" value="1600" step="100" onchange="updateMapRange('Crypt_LargeRoomPit_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Crypt_LargeRoomPit_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Crypt_LargeRoomPit_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Crypt_LargeRoomPit_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Crypt_LargeRoomPit_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_LargeRoomPit_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Crypt_LargeRoomPit_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_LargeRoomPit_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Crypt_LargeRoomPit_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Crypt_LargeRoomPit_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_LargeRoomPit_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Crypt_LargeRoomPit_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Crypt_LargeRoomPit_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_LargeRoomPit.webp" class="image">        <div class="dot" data-index="3530" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-404.0" data-y="-14.0" data-z="99.0" style="left: 37.38%; top: 49.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">99</span></div>
+        <div class="dot" data-index="3531" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="372.0" data-y="18.000006" data-z="129.0" style="left: 61.62%; top: 50.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">129</span></div>
+</div>
+    </div>
+    <div class="map-card test-module" id="map-card-Crypt_LargeRoomPit_SR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">LargeRoomPit_SR<span class='debug-text'> (LargeRoomPit_SR)</span><div class='map-filename'>Crypt_LargeRoomPit_SR_D.json</div></h3>
+        <div class="map-info">未找到 (尝试: Crypt_LargeRoomPit_SR, LargeRoomPit_SR) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Crypt_LargeRoomPit_SR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Crypt_LargeRoomPit_SR_D-json" value="1600" step="100" onchange="updateMapRange('Crypt_LargeRoomPit_SR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Crypt_LargeRoomPit_SR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Crypt_LargeRoomPit_SR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Crypt_LargeRoomPit_SR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_SR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_SR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_SR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_LargeRoomPit_SR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Crypt_LargeRoomPit_SR_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_LargeRoomPit_SR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Crypt_LargeRoomPit_SR_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_LargeRoomPit_SR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Crypt_LargeRoomPit_SR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Crypt_LargeRoomPit_SR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_LargeRoomPit_SR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Crypt_LargeRoomPit_SR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Crypt_LargeRoomPit_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_LargeRoomPit_SR, LargeRoomPit_SR</small></div>        <div class="dot" data-index="3590" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-404.0" data-y="-14.0" data-z="99.0" style="left: 37.38%; top: 49.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">99</span></div>
+        <div class="dot" data-index="3591" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="372.0" data-y="18.000006" data-z="129.0" style="left: 61.62%; top: 50.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">129</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-MimicRoom_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">拟态巢穴<span class='debug-text'> (Mimic_Lair)</span><div class='map-filename'>MimicRoom_HR_D.json</div></h3>
+        <div class="map-info">MimicRoom.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('MimicRoom_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-MimicRoom_HR_D-json" value="1600" step="100" onchange="updateMapRange('MimicRoom_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('MimicRoom_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-MimicRoom_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-MimicRoom_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('MimicRoom_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('MimicRoom_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('MimicRoom_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('MimicRoom_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-MimicRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('MimicRoom_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-MimicRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('MimicRoom_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('MimicRoom_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('MimicRoom_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('MimicRoom_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('MimicRoom_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-MimicRoom_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/MimicRoom.webp" class="image">        <div class="dot" data-index="4901" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-787.0" data-y="445.0" data-z="-237.0" style="left: 25.41%; top: 63.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-237</span></div>
+        <div class="dot" data-index="4902" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-787.0" data-y="1206.0" data-z="-237.0" style="left: 25.41%; top: 87.69%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-237</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Sewers_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">下水道<span class='debug-text'> (Sewers)</span><div class='map-filename'>Sewers_HR_D.json</div></h3>
+        <div class="map-info">Sewers.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Sewers_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Sewers_HR_D-json" value="1600" step="100" onchange="updateMapRange('Sewers_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Sewers_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Sewers_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Sewers_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Sewers_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Sewers_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Sewers_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Sewers_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Sewers_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Sewers_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Sewers_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Sewers_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Sewers_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Sewers_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Sewers_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Sewers_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Sewers_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Sewers.webp" class="image">        <div class="dot" data-index="5198" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-466.0" data-y="153.99997" data-z="65.0" style="left: 35.44%; top: 54.81%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">65</span></div>
+        <div class="dot" data-index="5199" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="1095.0" data-y="-109.999985" data-z="-249.0" style="left: 84.22%; top: 46.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-249</span></div>
+        <div class="dot" data-index="5200" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="400.0" data-y="-110.0" data-z="180.0" style="left: 62.50%; top: 46.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+        <div class="dot" data-index="5201" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-150.00002" data-y="320.0" data-z="180.0" style="left: 45.31%; top: 60.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">180</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-SkeletonPit_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">藏骨堂<span class='debug-text'> (Skeleton_Rooms)</span><div class='map-filename'>SkeletonPit_D.json</div></h3>
+        <div class="map-info">SkeletonPit.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('SkeletonPit_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-SkeletonPit_D-json" value="1600" step="100" onchange="updateMapRange('SkeletonPit_D-json')">
+                <button class="btn-scale" onclick="scaleRange('SkeletonPit_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-SkeletonPit_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-SkeletonPit_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('SkeletonPit_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('SkeletonPit_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('SkeletonPit_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('SkeletonPit_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-SkeletonPit_D-json" value="0" step="10" onchange="applyOffsetInput('SkeletonPit_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-SkeletonPit_D-json" value="0" step="10" onchange="applyOffsetInput('SkeletonPit_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('SkeletonPit_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('SkeletonPit_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('SkeletonPit_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('SkeletonPit_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-SkeletonPit_D-json" style="aspect-ratio: 1 / 1;"><img src="images/SkeletonPit.webp" class="image">        <div class="dot" data-index="5275" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="566.2836" data-y="876.0187" data-z="260.0" style="left: 67.70%; top: 77.38%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">260</span></div>
+        <div class="dot" data-index="5276" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="774.2836" data-y="-677.9813" data-z="260.0" style="left: 74.20%; top: 28.81%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">260</span></div>
+        <div class="dot" data-index="5277" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="774.2836" data-y="677.0187" data-z="260.0" style="left: 74.20%; top: 71.16%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">260</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟3层炼狱</div>
+    <div class="map-card test-module" id="map-card-InfernoColumns_SR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">SR<span class='debug-text'> (SR)</span><div class='map-filename'>InfernoColumns_SR_D.json</div></h3>
+        <div class="map-info">未找到 (尝试: InfernoColumns_SR, SR) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoColumns_SR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoColumns_SR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoColumns_SR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoColumns_SR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoColumns_SR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoColumns_SR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoColumns_SR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoColumns_SR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoColumns_SR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoColumns_SR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoColumns_SR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoColumns_SR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_SR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoColumns_SR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoColumns_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: InfernoColumns_SR, SR</small></div>        <div class="dot" data-index="9917" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="976.0" data-y="-1054.0" data-z="233.0" style="left: 80.50%; top: 17.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">233</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-SpiderCave_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">蜘蛛巢穴<span class='debug-text'> (Spider_Lair)</span><div class='map-filename'>SpiderCave_01_HR_D.json</div></h3>
+        <div class="map-info">SpiderCave_01.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('SpiderCave_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-SpiderCave_01_HR_D-json" value="1600" step="100" onchange="updateMapRange('SpiderCave_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('SpiderCave_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-SpiderCave_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-SpiderCave_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-SpiderCave_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('SpiderCave_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-SpiderCave_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('SpiderCave_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('SpiderCave_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('SpiderCave_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('SpiderCave_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('SpiderCave_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-SpiderCave_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/SpiderCave_01.webp" class="image">        <div class="dot" data-index="2006" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="1013.73926" data-y="-536.725" data-z="261.0" style="left: 81.68%; top: 33.23%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">261</span></div>
+        <div class="dot" data-index="2007" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-291.26074" data-y="116.275024" data-z="261.0" style="left: 40.90%; top: 53.63%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">261</span></div>
+        <div class="dot" data-index="2008" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-1167.0145" data-y="877.2319" data-z="171.0" style="left: 13.53%; top: 77.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">171</span></div>
+        <div class="dot" data-index="2009" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-1206.7491" data-y="1217.2418" data-z="171.0" style="left: 12.29%; top: 88.04%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">171</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟1层</div>
+    <div class="map-card" id="map-card-Ruins_Bath_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洗澡堂<span class='debug-text'> (Bath_House)</span><div class='map-filename'>Ruins_Bath_HR_D.json</div></h3>
+        <div class="map-info">Ruins_Bath.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Bath_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Bath_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Bath_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Bath_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Bath_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Bath_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Bath_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Bath_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Bath_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Bath_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_Bath_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Bath_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_Bath_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Bath_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Bath_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Bath_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Bath_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Bath_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_Bath_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Bath.webp" class="image">        <div class="dot" data-index="10375" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-168.0" data-y="628.0" data-z="-919.9999" style="left: 44.75%; top: 69.62%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-919</span></div>
+        <div class="dot" data-index="10376" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-928.0" data-y="448.0" data-z="-969.9999" style="left: 21.00%; top: 64.00%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-969</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Ruins_Forest_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">森林 A<span class='debug-text'> (Forest_A)</span><div class='map-filename'>Ruins_Forest_01_D.json</div></h3>
+        <div class="map-info">Ruins_Forest_01.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Forest_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Forest_01_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Forest_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Forest_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Forest_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Forest_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Forest_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Forest_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Forest_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Forest_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_Forest_01_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Forest_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_Forest_01_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Forest_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Forest_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Forest_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Forest_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Forest_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_Forest_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Forest_01.webp" class="image">        <div class="dot" data-index="10614" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="253.3735" data-y="670.62854" data-z="449.92203" style="left: 57.92%; top: 70.96%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">449</span></div>
+        <div class="dot" data-index="10615" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-655.62646" data-y="193.62852" data-z="448.92203" style="left: 29.51%; top: 56.05%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">448</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Ruins_Keep_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">要塞<span class='debug-text'> (Keep)</span><div class='map-filename'>Ruins_Keep_HR_D.json</div></h3>
+        <div class="map-info">Ruins_Keep.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Keep_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Keep_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Keep_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Keep_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Keep_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Keep_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Keep_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Keep_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Keep_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Keep_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_Keep_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Keep_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_Keep_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Keep_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Keep_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Keep_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Keep_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Keep_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_Keep_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Keep.webp" class="image">        <div class="dot" data-index="11203" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="9.0" data-y="-1023.0" data-z="195.0" style="left: 50.28%; top: 18.03%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">195</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Ruins_Refectory_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">修道院食堂<span class='debug-text'> (Refectory)</span><div class='map-filename'>Ruins_Refectory_HR_D.json</div></h3>
+        <div class="map-info">Ruins_Refectory.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Refectory_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Refectory_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Refectory_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Refectory_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Refectory_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Refectory_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Refectory_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Refectory_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Refectory_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Refectory_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_Refectory_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Refectory_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_Refectory_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Refectory_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Refectory_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Refectory_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Refectory_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Refectory_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_Refectory_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Refectory.webp" class="image">        <div class="dot" data-index="11332" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-375.0" data-y="-15.0" data-z="-360.0" style="left: 38.28%; top: 49.53%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-360</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Ruins_WollfColony_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">狼穴<span class='debug-text'> (Wolf_Den)</span><div class='map-filename'>Ruins_WollfColony_D.json</div></h3>
+        <div class="map-info">Ruins_WollfColony.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_WollfColony_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_WollfColony_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_WollfColony_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_WollfColony_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_WollfColony_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_WollfColony_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_WollfColony_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_WollfColony_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_WollfColony_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_WollfColony_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_WollfColony_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_WollfColony_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_WollfColony_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_WollfColony_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_WollfColony_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_WollfColony_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_WollfColony_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_WollfColony_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_WollfColony_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_WollfColony.webp" class="image">        <div class="dot" data-index="12420" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" data-x="-1110.0" data-y="-493.00003" data-z="0.0001" style="left: 15.31%; top: 34.59%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>颜色说明：</strong>
+        <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
+        <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
+        <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
+        <br><strong>位置统计：共 68 个位置点</strong><br><strong>包含地图：</strong> 下水道, 信徒会所, 修道院食堂, 哥布林匪窝, 拟态巢穴, 断桥, 森林 A, 洗澡堂, 洞穴祭坛 B, 洞穴隧道, 狼穴, 石坟 B, 蓄水池, 藏骨堂, 蛛网巢穴, 蜘蛛巢穴, 蜘蛛洞, 要塞, 走廊 E, 门控房间
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table>
+            <tr><th>显示</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>
+                <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签分组开关（点击全选/取消同标签）</th>
+        <th colspan='3' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签数量</th>
+    </tr>
+    <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Monster_GiantDragonfly')">GameSpawner_Id_Spawner_New_Monster_GiantDragonfly (54)</button>
+        </th>
+        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
+    </tr>
+
+                <tr id="row-506" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 506, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_Altar_02_HR_D.json</td>
+        <td>洞穴祭坛 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-21.00</td>
+        <td>34.00</td>
+        <td>-379.69</td>
+    </tr>
+    <tr id="row-698" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 698, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_BanditCamp_Center_HR_D.json</td>
+        <td>哥布林匪窝</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>25.00</td>
+        <td>70.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-699" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 699, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_BanditCamp_Center_HR_D.json</td>
+        <td>哥布林匪窝</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-21.00</td>
+        <td>34.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-700" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 700, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_BanditCamp_Center_HR_D.json</td>
+        <td>哥布林匪窝</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-21.00</td>
+        <td>34.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-808" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_SpiderNest_02_D-json', 808, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_SpiderNest_02_D.json</td>
+        <td>蛛网巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-809" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_SpiderNest_02_D-json', 809, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_SpiderNest_02_D.json</td>
+        <td>蛛网巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-1861" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1861, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>GoblinCaveCorner_01_HR_D.json</td>
+        <td>洞穴隧道</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-51.36</td>
+        <td>-51.57</td>
+        <td>140.00</td>
+    </tr>
+    <tr id="row-1951" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_02_D-json', 1951, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>SpiderCave_02_D.json</td>
+        <td>蜘蛛洞</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>580.00</td>
+        <td>-529.00</td>
+        <td>-320.00</td>
+    </tr>
+    <tr id="row-1567" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1567, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-1568" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1568, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>47.72</td>
+        <td>60.73</td>
+        <td>150.00</td>
+    </tr>
+    <tr id="row-1569" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1569, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>149.55</td>
+        <td>-33.01</td>
+        <td>164.00</td>
+    </tr>
+    <tr id="row-1570" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1570, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>168.00</td>
+    </tr>
+    <tr id="row-1571" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1571, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-1572" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1572, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>168.00</td>
+    </tr>
+    <tr id="row-1573" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1573, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-1574" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1574, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-11.80</td>
+        <td>237.07</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-4310" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('AdmirerRoom_HR_D-json', 4310, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>AdmirerRoom_HR_D.json</td>
+        <td>信徒会所</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-281.44</td>
+        <td>-1064.44</td>
+        <td>358.00</td>
+    </tr>
+    <tr id="row-4311" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('AdmirerRoom_HR_D-json', 4311, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>AdmirerRoom_HR_D.json</td>
+        <td>信徒会所</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>53.56</td>
+        <td>-1175.44</td>
+        <td>378.00</td>
+    </tr>
+    <tr id="row-4312" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('AdmirerRoom_HR_D-json', 4312, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>AdmirerRoom_HR_D.json</td>
+        <td>信徒会所</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>497.56</td>
+        <td>-750.44</td>
+        <td>372.00</td>
+    </tr>
+    <tr id="row-4313" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('AdmirerRoom_HR_D-json', 4313, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>AdmirerRoom_HR_D.json</td>
+        <td>信徒会所</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-265.44</td>
+        <td>-477.44</td>
+        <td>288.00</td>
+    </tr>
+    <tr id="row-4314" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('AdmirerRoom_HR_D-json', 4314, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>AdmirerRoom_HR_D.json</td>
+        <td>信徒会所</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>731.00</td>
+        <td>648.00</td>
+        <td>438.39</td>
+    </tr>
+    <tr id="row-4315" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('AdmirerRoom_HR_D-json', 4315, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>AdmirerRoom_HR_D.json</td>
+        <td>信徒会所</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-811.00</td>
+        <td>815.00</td>
+        <td>301.00</td>
+    </tr>
+    <tr id="row-4467" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cistern_HR_D-json', 4467, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cistern_HR_D.json</td>
+        <td>蓄水池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>110.00</td>
+        <td>590.00</td>
+        <td>-90.00</td>
+    </tr>
+    <tr id="row-4468" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cistern_HR_D-json', 4468, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cistern_HR_D.json</td>
+        <td>蓄水池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-720.00</td>
+        <td>-780.00</td>
+        <td>-90.00</td>
+    </tr>
+    <tr id="row-4476" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cistern_SR_D-json', 4476, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cistern_SR_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>110.00</td>
+        <td>590.00</td>
+        <td>-90.00</td>
+    </tr>
+    <tr id="row-4477" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cistern_SR_D-json', 4477, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cistern_SR_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-720.00</td>
+        <td>-780.00</td>
+        <td>-90.00</td>
+    </tr>
+    <tr id="row-2593" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ComplexHall_HR_D-json', 2593, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>ComplexHall_HR_D.json</td>
+        <td>门控房间</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-1200.00</td>
+        <td>705.00</td>
+        <td>145.00</td>
+    </tr>
+    <tr id="row-2652" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Connector_01_HR_D-json', 2652, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Connector_01_HR_D.json</td>
+        <td>走廊 E</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-20.00</td>
+        <td>460.00</td>
+        <td>175.00</td>
+    </tr>
+    <tr id="row-2653" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Connector_01_HR_D-json', 2653, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Connector_01_HR_D.json</td>
+        <td>走廊 E</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-20.00</td>
+        <td>1011.00</td>
+        <td>175.00</td>
+    </tr>
+    <tr id="row-3530" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_LargeRoomPit_HR_D-json', 3530, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_LargeRoomPit_HR_D.json</td>
+        <td>断桥</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-404.00</td>
+        <td>-14.00</td>
+        <td>99.00</td>
+    </tr>
+    <tr id="row-3531" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_LargeRoomPit_HR_D-json', 3531, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_LargeRoomPit_HR_D.json</td>
+        <td>断桥</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>372.00</td>
+        <td>18.00</td>
+        <td>129.00</td>
+    </tr>
+    <tr id="row-3590" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_LargeRoomPit_SR_D-json', 3590, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_LargeRoomPit_SR_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-404.00</td>
+        <td>-14.00</td>
+        <td>99.00</td>
+    </tr>
+    <tr id="row-3591" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_LargeRoomPit_SR_D-json', 3591, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_LargeRoomPit_SR_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>372.00</td>
+        <td>18.00</td>
+        <td>129.00</td>
+    </tr>
+    <tr id="row-4901" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('MimicRoom_HR_D-json', 4901, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>MimicRoom_HR_D.json</td>
+        <td>拟态巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-787.00</td>
+        <td>445.00</td>
+        <td>-237.00</td>
+    </tr>
+    <tr id="row-4902" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('MimicRoom_HR_D-json', 4902, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>MimicRoom_HR_D.json</td>
+        <td>拟态巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-787.00</td>
+        <td>1206.00</td>
+        <td>-237.00</td>
+    </tr>
+    <tr id="row-5198" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sewers_HR_D-json', 5198, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Sewers_HR_D.json</td>
+        <td>下水道</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-466.00</td>
+        <td>154.00</td>
+        <td>65.00</td>
+    </tr>
+    <tr id="row-5199" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sewers_HR_D-json', 5199, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Sewers_HR_D.json</td>
+        <td>下水道</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>1095.00</td>
+        <td>-110.00</td>
+        <td>-249.00</td>
+    </tr>
+    <tr id="row-5200" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sewers_HR_D-json', 5200, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Sewers_HR_D.json</td>
+        <td>下水道</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>400.00</td>
+        <td>-110.00</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-5201" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sewers_HR_D-json', 5201, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Sewers_HR_D.json</td>
+        <td>下水道</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-150.00</td>
+        <td>320.00</td>
+        <td>180.00</td>
+    </tr>
+    <tr id="row-5275" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SkeletonPit_D-json', 5275, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>SkeletonPit_D.json</td>
+        <td>藏骨堂</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>566.28</td>
+        <td>876.02</td>
+        <td>260.00</td>
+    </tr>
+    <tr id="row-5276" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SkeletonPit_D-json', 5276, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>SkeletonPit_D.json</td>
+        <td>藏骨堂</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>774.28</td>
+        <td>-677.98</td>
+        <td>260.00</td>
+    </tr>
+    <tr id="row-5277" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SkeletonPit_D-json', 5277, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>SkeletonPit_D.json</td>
+        <td>藏骨堂</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>774.28</td>
+        <td>677.02</td>
+        <td>260.00</td>
+    </tr>
+    <tr id="row-9917" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 9917, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoColumns_SR_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>976.00</td>
+        <td>-1054.00</td>
+        <td>233.00</td>
+    </tr>
+    <tr id="row-2006" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 2006, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>SpiderCave_01_HR_D.json</td>
+        <td>蜘蛛巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>1013.74</td>
+        <td>-536.73</td>
+        <td>261.00</td>
+    </tr>
+    <tr id="row-2007" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 2007, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>SpiderCave_01_HR_D.json</td>
+        <td>蜘蛛巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-291.26</td>
+        <td>116.28</td>
+        <td>261.00</td>
+    </tr>
+    <tr id="row-2008" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 2008, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>SpiderCave_01_HR_D.json</td>
+        <td>蜘蛛巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-1167.01</td>
+        <td>877.23</td>
+        <td>171.00</td>
+    </tr>
+    <tr id="row-2009" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 2009, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>SpiderCave_01_HR_D.json</td>
+        <td>蜘蛛巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-1206.75</td>
+        <td>1217.24</td>
+        <td>171.00</td>
+    </tr>
+    <tr id="row-10375" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Bath_HR_D-json', 10375, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Bath_HR_D.json</td>
+        <td>洗澡堂</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-168.00</td>
+        <td>628.00</td>
+        <td>-920.00</td>
+    </tr>
+    <tr id="row-10376" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Bath_HR_D-json', 10376, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Bath_HR_D.json</td>
+        <td>洗澡堂</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-928.00</td>
+        <td>448.00</td>
+        <td>-970.00</td>
+    </tr>
+    <tr id="row-10614" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Forest_01_D-json', 10614, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Forest_01_D.json</td>
+        <td>森林 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>253.37</td>
+        <td>670.63</td>
+        <td>449.92</td>
+    </tr>
+    <tr id="row-10615" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Forest_01_D-json', 10615, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Forest_01_D.json</td>
+        <td>森林 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-655.63</td>
+        <td>193.63</td>
+        <td>448.92</td>
+    </tr>
+    <tr id="row-11203" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Keep_HR_D-json', 11203, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Keep_HR_D.json</td>
+        <td>要塞</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>9.00</td>
+        <td>-1023.00</td>
+        <td>195.00</td>
+    </tr>
+    <tr id="row-11332" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Refectory_HR_D-json', 11332, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Refectory_HR_D.json</td>
+        <td>修道院食堂</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-375.00</td>
+        <td>-15.00</td>
+        <td>-360.00</td>
+    </tr>
+    <tr id="row-12420" data-label="GameSpawner_Id_Spawner_New_Monster_GiantDragonfly">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WollfColony_D-json', 12420, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_WollfColony_D.json</td>
+        <td>狼穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantDragonfly</td>
+        <td>-1110.00</td>
+        <td>-493.00</td>
+        <td>0.00</td>
+    </tr>
+
+        </table>
+    </div>
+    <script>
+        window.mapStates = {};
+        window.labelStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+            // 检查卡片是否还有可见点，自动隐藏/显示卡片
+            checkCardVisibility(cardId);
+        }
+        function checkCardVisibility(cardId) {
+            const card = document.getElementById('map-card-' + cardId);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            let hasVisibleDot = false;
+            dots.forEach(dot => {
+                if (dot.style.display !== 'none') {
+                    hasVisibleDot = true;
+                }
+            });
+            // 如果所有点都隐藏，隐藏整个卡片；否则显示卡片
+            card.style.display = hasVisibleDot ? 'flex' : 'none';
+        }
+        function toggleLabelGroup(label) {
+            // 切换标签状态的选中/取消
+            if (!window.labelStates[label]) {
+                window.labelStates[label] = true; // 默认为true（显示）
+            }
+            window.labelStates[label] = !window.labelStates[label];
+            const shouldShow = window.labelStates[label];
+
+            // 更新所有同标签的点和复选框
+            const allLabelRows = document.querySelectorAll(`tr[data-label="${label}"]`);
+            allLabelRows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = shouldShow;
+                    // 触发togglePoint函数
+                    const rowId = row.id;
+                    const pointIndex = rowId.replace('row-', '');
+                    // 获取对应的cardId（从data属性或其他方式）
+                    const dot = document.querySelector(`.dot[data-label="${label}"][data-index="${pointIndex}"]`);
+                    if (dot) {
+                        const card = dot.closest('.map-card');
+                        if (card) {
+                            const cardId = card.id.replace('map-card-', '');
+                            // 手动调用togglePoint
+                            dot.style.display = shouldShow ? 'block' : 'none';
+                            row.style.opacity = shouldShow ? '1' : '0.4';
+                            checkCardVisibility(cardId);
+                        }
+                    }
+                }
+            });
+
+            // 更新按钮样式
+            const toggleBtn = document.querySelector(`.label-toggle-btn[data-label="${label}"]`);
+            if (toggleBtn) {
+                toggleBtn.style.backgroundColor = shouldShow ? '#4CAF50' : '#f44336';
+                toggleBtn.style.color = shouldShow ? 'white' : 'white';
+            }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX = 50, multY = 50, centerX = 50, centerY = 50;
+                if (sx === 1 && sy === 2) { centerX = 100; multX = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX + (x / range) * multX;
+                const top = centerY + (y / range) * multY;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+            
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

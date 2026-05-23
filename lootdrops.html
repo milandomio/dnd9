@@ -1,0 +1,2498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>【掉落表】物品掉落怪物汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 40px; }
+        h1 { text-align: center; color: #00bcd4; margin-bottom: 20px; font-size: 36px; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 16px; margin-bottom: 30px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .stats { text-align: center; color: #aaa; font-size: 14px; margin-bottom: 20px; }
+        .section-header { font-size: 24px; font-weight: bold; margin: 30px 0 10px 0; padding-bottom: 5px; border-bottom: 2px; text-align: left; }
+        .section-header:first-child { margin-top: 0; }
+        .section-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .summary-item { background-color: #3a3a3a; border: 1px solid #555; border-radius: 8px; padding: 20px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .summary-item a { font-size: 18px; text-decoration: none; font-weight: bold; display: block; }
+        .summary-item .name-display { color: white; font-size: 18px; font-weight: bold; }
+        .summary-item .name-debug { color: white; font-size: 18px; font-weight: bold; }
+        
+        .item-section {{ color: #4CAF50; border-bottom-color: #4CAF50; }}
+        .item-item {{ border-color: #4CAF50; }}
+        .item-item:hover {{ border-color: #81C784; }}
+        .item-item .name-display {{ color: #4CAF50; }}
+        .item-item .name-debug {{ color: #4CAF50; }}
+        .item-item a {{ color: #4CAF50; }}
+        .item-item a:hover {{ color: #81C784; }}
+        .monster-section {{ color: #FF6600; border-bottom-color: #FF6600; }}
+        .monster-item {{ border-color: #FF6600; }}
+        .monster-item:hover {{ border-color: #FF8C00; }}
+        .monster-item .name-display {{ color: #FF6600; }}
+        .monster-item .name-debug {{ color: #FF6600; }}
+        .monster-item a {{ color: #FF6600; }}
+        .monster-item a:hover {{ color: #FF8C00; }}
+        .item-monster-section {{ color: #2196F3; border-bottom-color: #2196F3; }}
+        .item-monster-item {{ border-color: #2196F3; }}
+        .item-monster-item:hover {{ border-color: #64B5F6; }}
+        .item-monster-item .name-display {{ color: #2196F3; }}
+        .item-monster-item .name-debug {{ color: #2196F3; }}
+        .item-monster-item a {{ color: #2196F3; }}
+        .item-monster-item a:hover {{ color: #64B5F6; }}
+        .back-to-home { text-align: center; margin-bottom: 30px; }
+        .back-to-home a { color: #00bcd4; text-decoration: none; font-size: 18px; padding: 10px 20px; border: 2px solid #00bcd4; border-radius: 8px; display: inline-block; transition: all 0.2s; }
+        .back-to-home a:hover { background-color: #00bcd4; color: #2c2c2c; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+    </style>
+</head>
+<body>
+    <div class="back-to-home"><a href="index.html">← 返回首页</a></div>
+    <h1>【掉落表】物品掉落怪物汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="stats">共 402 个掉落关系</div>
+    <div class="section-header item-monster-section">掉落列表（物品>>怪物）</div>
+<div class="section-content">    <div class="summary-item item-monster-item">
+        <a href="GoldBangle1I-monsters.html">
+            <span class="name-display">三宝石手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">三宝石手镯（裂开）【GoldBangle1I】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Mitre-monsters.html">
+            <span class="name-display">主教冠 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">主教冠【Mitre】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CuttlefishInkSac-monsters.html">
+            <span class="name-display">乌贼墨汁袋 -目标- 乌贼</span>
+            <span class="name-debug" style="display:none;">乌贼墨汁袋【CuttlefishInkSac】 -目标- 【乌贼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RusticTunic-monsters.html">
+            <span class="name-display">乡村束腰外衣 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">乡村束腰外衣【RusticTunic】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CeremonialHeaddress-monsters.html">
+            <span class="name-display">仪式法帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">仪式法帽【CeremonialHeaddress】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CeremonialStaff-monsters.html">
+            <span class="name-display">仪式法杖 [7变体] -目标- 巨型水母、巫妖、地狱三头犬...</span>
+            <span class="name-debug" style="display:none;">仪式法杖【CeremonialStaff】 -目标- 【巨型水母】、【巫妖】、【地狱三头犬...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RitualRobe-monsters.html">
+            <span class="name-display">仪式长袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">仪式长袍【RitualRobe】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FellingAxe-monsters.html">
+            <span class="name-display">伐木斧 [8变体] -目标- 矮人斧手、骷髅斧兵、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">伐木斧【FellingAxe】 -目标- 【矮人斧手】、【骷髅斧兵】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Ale-monsters.html">
+            <span class="name-display">传送门 [3变体] -目标- 木乃伊、史莱姆、魔蛆...</span>
+            <span class="name-debug" style="display:none;">传送门【Ale】 -目标- 【木乃伊】、【史莱姆】、【魔蛆...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="StefanBeret-monsters.html">
+            <span class="name-display">作家帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">作家帽【StefanBeret】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ProtectionPotion-monsters.html">
+            <span class="name-display">保护药水 [4变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">保护药水【ProtectionPotion】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Frock-monsters.html">
+            <span class="name-display">修士袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">修士袍【Frock】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RadiantCloak-monsters.html">
+            <span class="name-display">光辉披风 [4变体] -目标- 火元素、冰霜行尸、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">光辉披风【RadiantCloak】 -目标- 【火元素】、【冰霜行尸】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="KrisDagger-monsters.html">
+            <span class="name-display">克里斯匕首 [7变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">克里斯匕首【KrisDagger】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WardenOutfit-monsters.html">
+            <span class="name-display">典狱长外套 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">典狱长外套【WardenOutfit】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="AdventurerTunic-monsters.html">
+            <span class="name-display">冒险者外衣 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">冒险者外衣【AdventurerTunic】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="AdventurerCloak-monsters.html">
+            <span class="name-display">冒险者披风 [4变体] -目标- 火元素、冰霜行尸、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">冒险者披风【AdventurerCloak】 -目标- 【火元素】、【冰霜行尸】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="AdventurerBoots-monsters.html">
+            <span class="name-display">冒险者长靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">冒险者长靴【AdventurerBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ChampionArmor-monsters.html">
+            <span class="name-display">冠军铠甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">冠军铠甲【ChampionArmor】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SpectralFabric-monsters.html">
+            <span class="name-display">冥界织物 -目标- 鬼灵骑士</span>
+            <span class="name-debug" style="display:none;">冥界织物【SpectralFabric】 -目标- 【鬼灵骑士】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrozenClaw-monsters.html">
+            <span class="name-display">冰霜利爪 -目标- 寒冰猎犬</span>
+            <span class="name-debug" style="display:none;">冰霜利爪【FrozenClaw】 -目标- 【寒冰猎犬】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrostWyvernClaws-monsters.html">
+            <span class="name-display">冰霜巨龙的利爪 -目标- 冰霜飞龙</span>
+            <span class="name-debug" style="display:none;">冰霜巨龙的利爪【FrostWyvernClaws】 -目标- 【冰霜飞龙】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrozenHeart-monsters.html">
+            <span class="name-display">冰霜心脏 -目标- 温迪戈</span>
+            <span class="name-debug" style="display:none;">冰霜心脏【FrozenHeart】 -目标- 【温迪戈】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrostAmulet-monsters.html">
+            <span class="name-display">冰霜护符 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">冰霜护符【FrostAmulet】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrostWyvernsHide-monsters.html">
+            <span class="name-display">冰霜飞龙皮 -目标- 冰霜飞龙</span>
+            <span class="name-debug" style="display:none;">冰霜飞龙皮【FrostWyvernsHide】 -目标- 【冰霜飞龙】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RingOfResolve-monsters.html">
+            <span class="name-display">决心之戒 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">决心之戒【RingOfResolve】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PhoenixChoker-monsters.html">
+            <span class="name-display">凤凰项圈 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">凤凰项圈【PhoenixChoker】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ReinforcedGloves-monsters.html">
+            <span class="name-display">加固手套 [7变体] -目标- 矮人斧手、骷髅斧兵、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">加固手套【ReinforcedGloves】 -目标- 【矮人斧手】、【骷髅斧兵】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RuggedBoots-monsters.html">
+            <span class="name-display">加固长靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">加固长靴【RuggedBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RingOfCourage-monsters.html">
+            <span class="name-display">勇气之戒 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">勇气之戒【RingOfCourage】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ValiantAttire-monsters.html">
+            <span class="name-display">勇者礼服 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">勇者礼服【ValiantAttire】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Gjermundbu-monsters.html">
+            <span class="name-display">北境战盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">北境战盔【Gjermundbu】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="NorthernFullTunic-monsters.html">
+            <span class="name-display">北境战袍 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">北境战袍【NorthernFullTunic】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="NormanNasalHelm-monsters.html">
+            <span class="name-display">北境护鼻盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">北境护鼻盔【NormanNasalHelm】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="NorthernHalfTunic-monsters.html">
+            <span class="name-display">北境短战袍 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">北境短战袍【NorthernHalfTunic】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CrusaderHelm-monsters.html">
+            <span class="name-display">十字军巨盔 [7变体] -目标- 矮人斧手、骷髅斧兵、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">十字军巨盔【CrusaderHelm】 -目标- 【矮人斧手】、【骷髅斧兵】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CrusaderArmor-monsters.html">
+            <span class="name-display">十字军铠甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">十字军铠甲【CrusaderArmor】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Crossbow-monsters.html">
+            <span class="name-display">十字弩 [7变体] -目标- 地狱猎手、火蜥蜴、蛇尾鸡...</span>
+            <span class="name-debug" style="display:none;">十字弩【Crossbow】 -目标- 【地狱猎手】、【火蜥蜴】、【蛇尾鸡...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Pickaxe-monsters.html">
+            <span class="name-display">十字镐 [5变体] -目标- 矮人重锤手、哥布林战士、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">十字镐【Pickaxe】 -目标- 【矮人重锤手】、【哥布林战士】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TailOfCentaur-monsters.html">
+            <span class="name-display">半人马之尾 -目标- 恶魔半人马</span>
+            <span class="name-debug" style="display:none;">半人马之尾【TailOfCentaur】 -目标- 【恶魔半人马】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HornOfCentaur-monsters.html">
+            <span class="name-display">半人马之角 -目标- 恶魔半人马</span>
+            <span class="name-debug" style="display:none;">半人马之角【HornOfCentaur】 -目标- 【恶魔半人马】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CentaurHoof-monsters.html">
+            <span class="name-display">半人马蹄子 -目标- 恶魔半人马</span>
+            <span class="name-debug" style="display:none;">半人马蹄子【CentaurHoof】 -目标- 【恶魔半人马】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="VisoredSallet-monsters.html">
+            <span class="name-display">半遮面轻盔 [7变体] -目标- 矮人斧手、骷髅斧兵、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">半遮面轻盔【VisoredSallet】 -目标- 【矮人斧手】、【骷髅斧兵】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SplendidCloak-monsters.html">
+            <span class="name-display">华丽披风 [4变体] -目标- 火元素、冰霜行尸、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">华丽披风【SplendidCloak】 -目标- 【火元素】、【冰霜行尸】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LavishShirt-monsters.html">
+            <span class="name-display">华丽衬衫 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">华丽衬衫【LavishShirt】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GrandBrigandine-monsters.html">
+            <span class="name-display">华丽镶嵌甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">华丽镶嵌甲【GrandBrigandine】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DashingBoots-monsters.html">
+            <span class="name-display">华丽长靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">华丽长靴【DashingBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CastillonDagger-monsters.html">
+            <span class="name-display">卡斯蒂永匕首 [7变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">卡斯蒂永匕首【CastillonDagger】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PrimitiveBracelet-monsters.html">
+            <span class="name-display">原始项链 -目标- 寒冰狗头人斧手</span>
+            <span class="name-debug" style="display:none;">原始项链【PrimitiveBracelet】 -目标- 【寒冰狗头人斧手】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DoubleAxe-monsters.html">
+            <span class="name-display">双刃斧 [8变体] -目标- 矮人斧手、骷髅斧兵、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">双刃斧【DoubleAxe】 -目标- 【矮人斧手】、【骷髅斧兵】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RecurveBow-monsters.html">
+            <span class="name-display">反曲弓 [8变体] -目标- 海盗弓手、鬼王、哥布林弓手...</span>
+            <span class="name-debug" style="display:none;">反曲弓【RecurveBow】 -目标- 【海盗弓手】、【鬼王】、【哥布林弓手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GlowingOrangeEye-monsters.html">
+            <span class="name-display">发光的橙色眼睛 -目标- 地狱三头犬</span>
+            <span class="name-debug" style="display:none;">发光的橙色眼睛【GlowingOrangeEye】 -目标- 【地狱三头犬】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GlowingBlueIceEyes-monsters.html">
+            <span class="name-display">发光的蓝眼睛 -目标- 冰霜行尸</span>
+            <span class="name-debug" style="display:none;">发光的蓝眼睛【GlowingBlueIceEyes】 -目标- 【冰霜行尸】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MoldyBread-monsters.html">
+            <span class="name-display">发霉的面包 -目标- 冰霜骷髅弓手、冰霜骷髅斧手、冰霜骷髅弩手...</span>
+            <span class="name-debug" style="display:none;">发霉的面包【MoldyBread】 -目标- 【冰霜骷髅弓手】、【冰霜骷髅斧手】、【冰霜骷髅弩手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TimewornRobe-monsters.html">
+            <span class="name-display">古典长袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">古典长袍【TimewornRobe】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle1J-monsters.html">
+            <span class="name-display">叶形金手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">叶形金手镯（裂开）【GoldBangle1J】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="NecklaceOfPeace-monsters.html">
+            <span class="name-display">和平项链 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">和平项链【NecklaceOfPeace】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoblinEars-monsters.html">
+            <span class="name-display">哥布林耳朵 -目标- 哥布林弓手、哥布林斧手、哥布林投石手...</span>
+            <span class="name-debug" style="display:none;">哥布林耳朵【GoblinEars】 -目标- 【哥布林弓手】、【哥布林斧手】、【哥布林投石手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle1C-monsters.html">
+            <span class="name-display">图案金手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">图案金手镯（裂开）【GoldBangle1C】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle1D-monsters.html">
+            <span class="name-display">圆点金手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">圆点金手镯（裂开）【GoldBangle1D】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RoundShield-monsters.html">
+            <span class="name-display">圆盾 [8变体] -目标- 冰霜骷髅卫士、劣魔砍杀者、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">圆盾【RoundShield】 -目标- 【冰霜骷髅卫士】、【劣魔砍杀者】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Topfhelm-monsters.html">
+            <span class="name-display">圣殿巨盔 [7变体] -目标- 矮人斧手、骷髅斧兵、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">圣殿巨盔【Topfhelm】 -目标- 【矮人斧手】、【骷髅斧兵】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TemplarArmor-monsters.html">
+            <span class="name-display">圣殿铠甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">圣殿铠甲【TemplarArmor】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HellHuntersCurvedBlade-monsters.html">
+            <span class="name-display">地狱猎手的弯刀 -目标- 地狱猎手</span>
+            <span class="name-debug" style="display:none;">地狱猎手的弯刀【HellHuntersCurvedBlade】 -目标- 【地狱猎手】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BrokenGlasses-monsters.html">
+            <span class="name-display">坏眼镜 -目标- 恶魔鬼童</span>
+            <span class="name-debug" style="display:none;">坏眼镜【BrokenGlasses】 -目标- 【恶魔鬼童】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HardCrabShell-monsters.html">
+            <span class="name-display">坚硬的蟹壳 -目标- 钳爪蟹</span>
+            <span class="name-debug" style="display:none;">坚硬的蟹壳【HardCrabShell】 -目标- 【钳爪蟹】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GraveEssence-monsters.html">
+            <span class="name-display">坟墓精华 -目标- 冰霜行尸、巫妖、木乃伊...</span>
+            <span class="name-debug" style="display:none;">坟墓精华【GraveEssence】 -目标- 【冰霜行尸】、【巫妖】、【木乃伊...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="KettleHat-monsters.html">
+            <span class="name-display">壶盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">壶盔【KettleHat】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WhiteSharkTooth-monsters.html">
+            <span class="name-display">大白鲨的利齿 -目标- 大白鲨</span>
+            <span class="name-debug" style="display:none;">大白鲨的利齿【WhiteSharkTooth】 -目标- 【大白鲨】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WhiteSharkHide-monsters.html">
+            <span class="name-display">大白鲨的皮 -目标- 大白鲨</span>
+            <span class="name-debug" style="display:none;">大白鲨的皮【WhiteSharkHide】 -目标- 【大白鲨】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WhiteSharkFin-monsters.html">
+            <span class="name-display">大白鲨的背鳍 -目标- 大白鲨</span>
+            <span class="name-debug" style="display:none;">大白鲨的背鳍【WhiteSharkFin】 -目标- 【大白鲨】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WarMaul-monsters.html">
+            <span class="name-display">大铁锤 [8变体] -目标- 矮人重锤手、巨型蠕虫、远古刺鳐...</span>
+            <span class="name-debug" style="display:none;">大铁锤【WarMaul】 -目标- 【矮人重锤手】、【巨型蠕虫】、【远古刺鳐...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Chaperon-monsters.html">
+            <span class="name-display">头巾帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">头巾帽【Chaperon】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ArcaneHood-monsters.html">
+            <span class="name-display">奥术兜帽 [7变体] -目标- 火元素、火蜥蜴、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">奥术兜帽【ArcaneHood】 -目标- 【火元素】、【火蜥蜴】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ArcaneGloves-monsters.html">
+            <span class="name-display">奥术手套 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、劣魔粉碎者...</span>
+            <span class="name-debug" style="display:none;">奥术手套【ArcaneGloves】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【劣魔粉碎者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ArcaneGarb-monsters.html">
+            <span class="name-display">奥术法袍 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">奥术法袍【ArcaneGarb】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ArcaneEssence-monsters.html">
+            <span class="name-display">奥术精华 [5变体] -目标- 火元素、火蜥蜴、恶魔蜉蝣...</span>
+            <span class="name-debug" style="display:none;">奥术精华【ArcaneEssence】 -目标- 【火元素】、【火蜥蜴】、【恶魔蜉蝣...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WatchmanCloak-monsters.html">
+            <span class="name-display">守望者披风 [4变体] -目标- 火元素、冰霜行尸、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">守望者披风【WatchmanCloak】 -目标- 【火元素】、【冰霜行尸】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="IntactSkull-monsters.html">
+            <span class="name-display">完整头骨 -目标- 冰霜骷髅弓手、冰霜骷髅斧手、冰霜骷髅弩手...</span>
+            <span class="name-debug" style="display:none;">完整头骨【IntactSkull】 -目标- 【冰霜骷髅弓手】、【冰霜骷髅斧手】、【冰霜骷髅弩手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GemRing-monsters.html">
+            <span class="name-display">宝石戒指（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">宝石戒指（裂开）【GemRing】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GemNecklace-monsters.html">
+            <span class="name-display">宝石项链（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">宝石项链（裂开）【GemNecklace】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GlovesOfUtility-monsters.html">
+            <span class="name-display">实用手套 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、恐狼...</span>
+            <span class="name-debug" style="display:none;">实用手套【GlovesOfUtility】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CourtlyDress-monsters.html">
+            <span class="name-display">宫廷礼服 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">宫廷礼服【CourtlyDress】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LooseTrousers-monsters.html">
+            <span class="name-display">宽松长裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">宽松长裤【LooseTrousers】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrozenIronKey-monsters.html">
+            <span class="name-display">寒铁钥匙 -目标- 冰霜飞龙</span>
+            <span class="name-debug" style="display:none;">寒铁钥匙【FrozenIronKey】 -目标- 【冰霜飞龙】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrostedFeather-monsters.html">
+            <span class="name-display">寒霜翎羽 -目标- 寒冰鹰身女妖</span>
+            <span class="name-debug" style="display:none;">寒霜翎羽【FrostedFeather】 -目标- 【寒冰鹰身女妖】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="JesterOutfit-monsters.html">
+            <span class="name-display">小丑外套 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">小丑外套【JesterOutfit】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="JesterPoulaines-monsters.html">
+            <span class="name-display">小丑尖头鞋 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">小丑尖头鞋【JesterPoulaines】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="JesterCap-monsters.html">
+            <span class="name-display">小丑帽子 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">小丑帽子【JesterCap】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="JesterPants-monsters.html">
+            <span class="name-display">小丑裤子 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">小丑裤子【JesterPants】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Buckler-monsters.html">
+            <span class="name-display">小圆盾 [8变体] -目标- 冰霜骷髅卫士、劣魔砍杀者、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">小圆盾【Buckler】 -目标- 【冰霜骷髅卫士】、【劣魔砍杀者】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SmallFiendlingHorn-monsters.html">
+            <span class="name-display">小型劣魔角 -目标- 劣魔斩切者、劣魔粉碎者、劣魔砍杀者</span>
+            <span class="name-debug" style="display:none;">小型劣魔角【SmallFiendlingHorn】 -目标- 【劣魔斩切者】、【劣魔粉碎者】、【劣魔砍杀者】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BarbutaHelm-monsters.html">
+            <span class="name-display">尖顶盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">尖顶盔【BarbutaHelm】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BrandoftheSubservient-monsters.html">
+            <span class="name-display">屈从烙印 -目标- 劣魔斩切者、劣魔粉碎者、劣魔砍杀者</span>
+            <span class="name-debug" style="display:none;">屈从烙印【BrandoftheSubservient】 -目标- 【劣魔斩切者】、【劣魔粉碎者】、【劣魔砍杀者】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MagmaEssence-monsters.html">
+            <span class="name-display">岩浆精华 -目标- 熔岩史莱姆</span>
+            <span class="name-debug" style="display:none;">岩浆精华【MagmaEssence】 -目标- 【熔岩史莱姆】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GiantToe-monsters.html">
+            <span class="name-display">巨人脚趾 -目标- 冰霜巨人狂战士、冰霜持盾巨人</span>
+            <span class="name-debug" style="display:none;">巨人脚趾【GiantToe】 -目标- 【冰霜巨人狂战士】、【冰霜持盾巨人】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Zweihander-monsters.html">
+            <span class="name-display">巨剑 [8变体] -目标- 骷髅督军、骷髅双手剑士、鬼王...</span>
+            <span class="name-debug" style="display:none;">巨剑【Zweihander】 -目标- 【骷髅督军】、【骷髅双手剑士】、【鬼王...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GiantBatHide-monsters.html">
+            <span class="name-display">巨型蝙蝠毛皮 -目标- 巨型蝙蝠</span>
+            <span class="name-debug" style="display:none;">巨型蝙蝠毛皮【GiantBatHide】 -目标- 【巨型蝙蝠】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BatWing-monsters.html">
+            <span class="name-display">巨型蝙蝠翅膀 -目标- 巨型蝙蝠</span>
+            <span class="name-debug" style="display:none;">巨型蝙蝠翅膀【BatWing】 -目标- 【巨型蝙蝠】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GiantBatEar-monsters.html">
+            <span class="name-display">巨型蝙蝠耳朵 -目标- 巨型蝙蝠</span>
+            <span class="name-debug" style="display:none;">巨型蝙蝠耳朵【GiantBatEar】 -目标- 【巨型蝙蝠】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GreatHelm-monsters.html">
+            <span class="name-display">巨盔 [7变体] -目标- 矮人斧手、骷髅斧兵、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">巨盔【GreatHelm】 -目标- 【矮人斧手】、【骷髅斧兵】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Pavise-monsters.html">
+            <span class="name-display">巨盾 [7变体] -目标- 冰霜持盾巨人、鬼灵骑士、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">巨盾【Pavise】 -目标- 【冰霜持盾巨人】、【鬼灵骑士】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GiantHorn-monsters.html">
+            <span class="name-display">巨角 -目标- 憎恶</span>
+            <span class="name-debug" style="display:none;">巨角【GiantHorn】 -目标- 【憎恶】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TrollsClub-monsters.html">
+            <span class="name-display">巨魔之棒 -目标- 洞穴巨魔</span>
+            <span class="name-debug" style="display:none;">巨魔之棒【TrollsClub】 -目标- 【洞穴巨魔】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TrollPelt-monsters.html">
+            <span class="name-display">巨魔之皮 -目标- 洞穴巨魔</span>
+            <span class="name-debug" style="display:none;">巨魔之皮【TrollPelt】 -目标- 【洞穴巨魔】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Coif-monsters.html">
+            <span class="name-display">巫师帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">巫师帽【Coif】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WizardShoes-monsters.html">
+            <span class="name-display">巫师鞋 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">巫师鞋【WizardShoes】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ClothPants-monsters.html">
+            <span class="name-display">布裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">布裤【ClothPants】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SkinnyFinger-monsters.html">
+            <span class="name-display">干枯的手指 -目标- 食尸鬼</span>
+            <span class="name-debug" style="display:none;">干枯的手指【SkinnyFinger】 -目标- 【食尸鬼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PhantomFlower-monsters.html">
+            <span class="name-display">幻影花 [3变体] -目标- 巨型蠕虫</span>
+            <span class="name-debug" style="display:none;">幻影花【PhantomFlower】 -目标- 【巨型蠕虫】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SpectralHilt-monsters.html">
+            <span class="name-display">幽冥剑柄 -目标- 鬼灵骑士</span>
+            <span class="name-debug" style="display:none;">幽冥剑柄【SpectralHilt】 -目标- 【鬼灵骑士】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GhostdustPouch_3001-monsters.html">
+            <span class="name-display">幽尘袋子 -目标- 鳄鱼人、乌贼、飞行骷髅头...</span>
+            <span class="name-debug" style="display:none;">幽尘袋子【GhostdustPouch_3001】 -目标- 【鳄鱼人】、【乌贼】、【飞行骷髅头...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GhostlyEssence-monsters.html">
+            <span class="name-display">幽界精华 -目标- 鬼王</span>
+            <span class="name-debug" style="display:none;">幽界精华【GhostlyEssence】 -目标- 【鬼王】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CrackedTusk-monsters.html">
+            <span class="name-display">开裂长牙 -目标- 烈焰野猪</span>
+            <span class="name-debug" style="display:none;">开裂长牙【CrackedTusk】 -目标- 【烈焰野猪】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Lockpick-monsters.html">
+            <span class="name-display">开锁器 -目标- 蓝枪鱼、冰霜鬼童、巨型蝙蝠...</span>
+            <span class="name-debug" style="display:none;">开锁器【Lockpick】 -目标- 【蓝枪鱼】、【冰霜鬼童】、【巨型蝙蝠...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OpenSallet-monsters.html">
+            <span class="name-display">开面轻盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">开面轻盔【OpenSallet】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bowstring-monsters.html">
+            <span class="name-display">弓弦 -目标- 冰霜骷髅弓手、冰霜骷髅弩手、哥布林弓手...</span>
+            <span class="name-debug" style="display:none;">弓弦【Bowstring】 -目标- 【冰霜骷髅弓手】、【冰霜骷髅弩手】、【哥布林弓手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bolt_2001-monsters.html">
+            <span class="name-display">弩矢 -目标- 冰霜骷髅弩手、熔岩史莱姆、海盗弩手...</span>
+            <span class="name-debug" style="display:none;">弩矢【Bolt_2001】 -目标- 【冰霜骷髅弩手】、【熔岩史莱姆】、【海盗弩手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Falchion-monsters.html">
+            <span class="name-display">弯刃大刀 [8变体] -目标- 地狱猎手、冰霜骷髅卫士、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">弯刃大刀【Falchion】 -目标- 【地狱猎手】、【冰霜骷髅卫士】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Ball_2001-monsters.html">
+            <span class="name-display">弹丸 -目标- 矮人火铳手、劣魔粉碎者、哥布林投石手...</span>
+            <span class="name-debug" style="display:none;">弹丸【Ball_2001】 -目标- 【矮人火铳手】、【劣魔粉碎者】、【哥布林投石手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MarauderOutfit-monsters.html">
+            <span class="name-display">强盗外套 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">强盗外套【MarauderOutfit】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle2G-monsters.html">
+            <span class="name-display">微光手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">微光手镯（裂开）【GoldBangle2G】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PocketWatch-monsters.html">
+            <span class="name-display">怀表 -目标- 幽鬼</span>
+            <span class="name-debug" style="display:none;">怀表【PocketWatch】 -目标- 【幽鬼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SmellyVomit-monsters.html">
+            <span class="name-display">恶臭的呕吐物 -目标- 憎恶</span>
+            <span class="name-debug" style="display:none;">恶臭的呕吐物【SmellyVomit】 -目标- 【憎恶】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DemonWingMembrane-monsters.html">
+            <span class="name-display">恶魔之翼膜 -目标- 恶魔斥候</span>
+            <span class="name-debug" style="display:none;">恶魔之翼膜【DemonWingMembrane】 -目标- 【恶魔斥候】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DemonBlood-monsters.html">
+            <span class="name-display">恶魔之血 -目标- 憎恶、恶魔半人马、地狱三头犬...</span>
+            <span class="name-debug" style="display:none;">恶魔之血【DemonBlood】 -目标- 【憎恶】、【恶魔半人马】、【地狱三头犬...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DemonDogThorns-monsters.html">
+            <span class="name-display">恶魔犬尖刺 -目标- 恶魔犬</span>
+            <span class="name-debug" style="display:none;">恶魔犬尖刺【DemonDogThorns】 -目标- 【恶魔犬】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BattleWornArmorFragment-monsters.html">
+            <span class="name-display">战损盔甲碎片 -目标- 地狱猎手</span>
+            <span class="name-debug" style="display:none;">战损盔甲碎片【BattleWornArmorFragment】 -目标- 【地狱猎手】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BattleAxe-monsters.html">
+            <span class="name-display">战斗斧 [8变体] -目标- 矮人斧手、骷髅斧兵、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">战斗斧【BattleAxe】 -目标- 【矮人斧手】、【骷髅斧兵】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WarHammer-monsters.html">
+            <span class="name-display">战锤 [7变体] -目标- 火蜥蜴、洞穴巨魔、鬼王...</span>
+            <span class="name-debug" style="display:none;">战锤【WarHammer】 -目标- 【火蜥蜴】、【洞穴巨魔】、【鬼王...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HandCrossbow-monsters.html">
+            <span class="name-display">手弩 [7变体] -目标- 地狱猎手、火蜥蜴、蛇尾鸡...</span>
+            <span class="name-debug" style="display:none;">手弩【HandCrossbow】 -目标- 【地狱猎手】、【火蜥蜴】、【蛇尾鸡...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SurgicalKit-monsters.html">
+            <span class="name-display">手术包 [2变体] -目标- 木乃伊、冰霜巨型蜘蛛、海盗掷斧手...</span>
+            <span class="name-debug" style="display:none;">手术包【SurgicalKit】 -目标- 【木乃伊】、【冰霜巨型蜘蛛】、【海盗掷斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HandCannon-monsters.html">
+            <span class="name-display">手铳 [7变体] -目标- 海盗弓手、鳄鱼人、矮人火铳手...</span>
+            <span class="name-debug" style="display:none;">手铳【HandCannon】 -目标- 【海盗弓手】、【鳄鱼人】、【矮人火铳手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BuckledBoots-monsters.html">
+            <span class="name-display">扣带皮靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">扣带皮靴【BuckledBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TwistedAbyssHorn-monsters.html">
+            <span class="name-display">扭曲的深渊巨角 -目标- 恶魔处刑者</span>
+            <span class="name-debug" style="display:none;">扭曲的深渊巨角【TwistedAbyssHorn】 -目标- 【恶魔处刑者】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WarpedAdamantineShackles-monsters.html">
+            <span class="name-display">扭曲的精炼枷锁 -目标- 赤焰巨像</span>
+            <span class="name-debug" style="display:none;">扭曲的精炼枷锁【WarpedAdamantineShackles】 -目标- 【赤焰巨像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RingOfFinesse-monsters.html">
+            <span class="name-display">技巧之戒 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">技巧之戒【RingOfFinesse】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SlingStone_2001-monsters.html">
+            <span class="name-display">投石弹 -目标- 矮人火铳手、劣魔粉碎者、哥布林投石手...</span>
+            <span class="name-debug" style="display:none;">投石弹【SlingStone_2001】 -目标- 【矮人火铳手】、【劣魔粉碎者】、【哥布林投石手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Sling-monsters.html">
+            <span class="name-display">投石索 [7变体] -目标- 冰霜狼、恶魔犬、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">投石索【Sling】 -目标- 【冰霜狼】、【恶魔犬】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BrokenWarHorn-monsters.html">
+            <span class="name-display">折断的战号 -目标- 废墟魔像、鬼灵骑士</span>
+            <span class="name-debug" style="display:none;">折断的战号【BrokenWarHorn】 -目标- 【废墟魔像】、【鬼灵骑士】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BrokenBoneSpike-monsters.html">
+            <span class="name-display">折断的骨刺 -目标- 畸形骨魔</span>
+            <span class="name-debug" style="display:none;">折断的骨刺【BrokenBoneSpike】 -目标- 【畸形骨魔】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SleekHidePants-monsters.html">
+            <span class="name-display">抛光兽皮裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">抛光兽皮裤【SleekHidePants】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Wardweed-monsters.html">
+            <span class="name-display">护符草 [3变体] -目标- 巨型蠕虫</span>
+            <span class="name-debug" style="display:none;">护符草【Wardweed】 -目标- 【巨型蠕虫】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HuntingTrap-monsters.html">
+            <span class="name-display">捕兽夹 [4变体] -目标- 鳄鱼人、恶魔犬、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">捕兽夹【HuntingTrap】 -目标- 【鳄鱼人】、【恶魔犬】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CapturedEnergyFlakes-monsters.html">
+            <span class="name-display">捕获的能量碎片 -目标- 恶魔鬼童</span>
+            <span class="name-debug" style="display:none;">捕获的能量碎片【CapturedEnergyFlakes】 -目标- 【恶魔鬼童】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CapturedManaFlakes-monsters.html">
+            <span class="name-display">捕获的魔力碎片 -目标- 幻灵</span>
+            <span class="name-debug" style="display:none;">捕获的魔力碎片【CapturedManaFlakes】 -目标- 【幻灵】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FlickeringEmber-monsters.html">
+            <span class="name-display">摇曳的余烬 -目标- 火灵</span>
+            <span class="name-debug" style="display:none;">摇曳的余烬【FlickeringEmber】 -目标- 【火灵】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HeaterShield-monsters.html">
+            <span class="name-display">斗盾 [8变体] -目标- 冰霜骷髅卫士、劣魔砍杀者、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">斗盾【HeaterShield】 -目标- 【冰霜骷髅卫士】、【劣魔砍杀者】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LeatherBonnet-monsters.html">
+            <span class="name-display">无檐羽毛帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">无檐羽毛帽【LeatherBonnet】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OldCloth-monsters.html">
+            <span class="name-display">旧布 -目标- 冰霜行尸、巫妖、木乃伊...</span>
+            <span class="name-debug" style="display:none;">旧布【OldCloth】 -目标- 【冰霜行尸】、【巫妖】、【木乃伊...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OldShoes-monsters.html">
+            <span class="name-display">旧鞋 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">旧鞋【OldShoes】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MorningStar-monsters.html">
+            <span class="name-display">晨星 [8变体] -目标- 火蜥蜴、洞穴巨魔、鬼王...</span>
+            <span class="name-debug" style="display:none;">晨星【MorningStar】 -目标- 【火蜥蜴】、【洞穴巨魔】、【鬼王...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RingOfWisdom-monsters.html">
+            <span class="name-display">智慧之戒 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">智慧之戒【RingOfWisdom】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkleafBoots-monsters.html">
+            <span class="name-display">暗叶靴子 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">暗叶靴子【DarkleafBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ShadowHood-monsters.html">
+            <span class="name-display">暗影兜帽 [7变体] -目标- 火元素、火蜥蜴、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">暗影兜帽【ShadowHood】 -目标- 【火元素】、【火蜥蜴】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ShadowMask-monsters.html">
+            <span class="name-display">暗影面罩 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、骷髅督军...</span>
+            <span class="name-debug" style="display:none;">暗影面罩【ShadowMask】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【骷髅督军...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkgroveHood-monsters.html">
+            <span class="name-display">暗林兜帽 [7变体] -目标- 火元素、火蜥蜴、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">暗林兜帽【DarkgroveHood】 -目标- 【火元素】、【火蜥蜴】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkgroveRobe-monsters.html">
+            <span class="name-display">暗林长袍 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">暗林长袍【DarkgroveRobe】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bardiche-monsters.html">
+            <span class="name-display">月刃斧 [7变体] -目标- 巨型蠕虫、珊瑚灵、憎恶...</span>
+            <span class="name-debug" style="display:none;">月刃斧【Bardiche】 -目标- 【巨型蠕虫】、【珊瑚灵】、【憎恶...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="InfectedFlesh-monsters.html">
+            <span class="name-display">有毒的肉 -目标- 殭尸</span>
+            <span class="name-debug" style="display:none;">有毒的肉【InfectedFlesh】 -目标- 【殭尸】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RondelDagger-monsters.html">
+            <span class="name-display">朗德尔匕首 [7变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">朗德尔匕首【RondelDagger】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HolyRobe-monsters.html">
+            <span class="name-display">朝圣袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">朝圣袍【HolyRobe】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OccultistHood-monsters.html">
+            <span class="name-display">术士兜帽 [7变体] -目标- 火元素、火蜥蜴、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">术士兜帽【OccultistHood】 -目标- 【火元素】、【火蜥蜴】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OccultistTunic-monsters.html">
+            <span class="name-display">术士法衣 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">术士法衣【OccultistTunic】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OccultistRobe-monsters.html">
+            <span class="name-display">术士长袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">术士长袍【OccultistRobe】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OccultistPants-monsters.html">
+            <span class="name-display">术士长裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">术士长裤【OccultistPants】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OccultistBoots-monsters.html">
+            <span class="name-display">术士长靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">术士长靴【OccultistBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LanternShield-monsters.html">
+            <span class="name-display">机关盾 [7变体] -目标- 冰霜骷髅卫士、劣魔砍杀者、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">机关盾【LanternShield】 -目标- 【冰霜骷髅卫士】、【劣魔砍杀者】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PaddedTunic-monsters.html">
+            <span class="name-display">束腰棉外套 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">束腰棉外套【PaddedTunic】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PlatePants-monsters.html">
+            <span class="name-display">板甲裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">板甲裤【PlatePants】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PlateBoots-monsters.html">
+            <span class="name-display">板甲靴 [7变体] -目标- 巨型蠕虫、冰霜骷髅卫士、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">板甲靴【PlateBoots】 -目标- 【巨型蠕虫】、【冰霜骷髅卫士】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ForestHood-monsters.html">
+            <span class="name-display">林地兜帽 [7变体] -目标- 火元素、火蜥蜴、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">林地兜帽【ForestHood】 -目标- 【火元素】、【火蜥蜴】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ForestBoots-monsters.html">
+            <span class="name-display">林地靴子 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">林地靴子【ForestBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OldBloodyBandage-monsters.html">
+            <span class="name-display">染血的旧绷带 -目标- 木乃伊</span>
+            <span class="name-debug" style="display:none;">染血的旧绷带【OldBloodyBandage】 -目标- 【木乃伊】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DryadMask-monsters.html">
+            <span class="name-display">树妖面具 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、骷髅督军...</span>
+            <span class="name-debug" style="display:none;">树妖面具【DryadMask】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【骷髅督军...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Club-monsters.html">
+            <span class="name-display">棍棒 [7变体] -目标- 矮人重锤手、鬼王、劣魔粉碎者...</span>
+            <span class="name-debug" style="display:none;">棍棒【Club】 -目标- 【矮人重锤手】、【鬼王】、【劣魔粉碎者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ArmingSword-monsters.html">
+            <span class="name-display">武装剑 [8变体] -目标- 地狱猎手、冰霜骷髅卫士、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">武装剑【ArmingSword】 -目标- 【地狱猎手】、【冰霜骷髅卫士】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Armet-monsters.html">
+            <span class="name-display">武装盔 [7变体] -目标- 矮人斧手、骷髅斧兵、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">武装盔【Armet】 -目标- 【矮人斧手】、【骷髅斧兵】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BeetleWings-monsters.html">
+            <span class="name-display">死亡甲虫翅膀 -目标- 死亡甲虫</span>
+            <span class="name-debug" style="display:none;">死亡甲虫翅膀【BeetleWings】 -目标- 【死亡甲虫】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BreathOfTheDeceased-monsters.html">
+            <span class="name-display">死者之息 -目标- 报丧女妖、巨型蠕虫、幽鬼</span>
+            <span class="name-debug" style="display:none;">死者之息【BreathOfTheDeceased】 -目标- 【报丧女妖】、【巨型蠕虫】、【幽鬼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CursedBell-monsters.html">
+            <span class="name-display">毒咒铃铛 -目标- 憎恶、恶魔半人马、巫妖...</span>
+            <span class="name-debug" style="display:none;">毒咒铃铛【CursedBell】 -目标- 【憎恶】、【恶魔半人马】、【巫妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SmokyPoisonPowder-monsters.html">
+            <span class="name-display">毒烟粉尘 -目标- 恶魔蜉蝣</span>
+            <span class="name-debug" style="display:none;">毒烟粉尘【SmokyPoisonPowder】 -目标- 【恶魔蜉蝣】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PoisonVial_3001-monsters.html">
+            <span class="name-display">毒药瓶 -目标- 鳄鱼人、乌贼、飞行骷髅头...</span>
+            <span class="name-debug" style="display:none;">毒药瓶【PoisonVial_3001】 -目标- 【鳄鱼人】、【乌贼】、【飞行骷髅头...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="AquaglowLantern_3001-monsters.html">
+            <span class="name-display">水光灯笼 -目标- 巨型水母、水母、人鱼...</span>
+            <span class="name-debug" style="display:none;">水光灯笼【AquaglowLantern_3001】 -目标- 【巨型水母】、【水母】、【人鱼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PotionofWaterBreathing-monsters.html">
+            <span class="name-display">水息药剂 [2变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">水息药剂【PotionofWaterBreathing】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CrystalSword-monsters.html">
+            <span class="name-display">水晶剑 [8变体] -目标- 巨型水母、火元素、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">水晶剑【CrystalSword】 -目标- 【巨型水母】、【火元素】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CrystalBall-monsters.html">
+            <span class="name-display">水晶球 [8变体] -目标- 巨型水母、火元素、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">水晶球【CrystalBall】 -目标- 【巨型水母】、【火元素】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="JellyfishGlowEssence-monsters.html">
+            <span class="name-display">水母萤光精华 -目标- 水母</span>
+            <span class="name-debug" style="display:none;">水母萤光精华【JellyfishGlowEssence】 -目标- 【水母】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MercurialCloak-monsters.html">
+            <span class="name-display">水银披风 [4变体] -目标- 火元素、冰霜行尸、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">水银披风【MercurialCloak】 -目标- 【火元素】、【冰霜行尸】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OilLantern-monsters.html">
+            <span class="name-display">油灯笼 -目标- 鳄鱼人、乌贼、飞行骷髅头...</span>
+            <span class="name-debug" style="display:none;">油灯笼【OilLantern】 -目标- 【鳄鱼人】、【乌贼】、【飞行骷髅头...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HealingPotion-monsters.html">
+            <span class="name-display">治疗药水 [5变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">治疗药水【HealingPotion】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FlangedMace-monsters.html">
+            <span class="name-display">法兰锤 [7变体] -目标- 火蜥蜴、洞穴巨魔、鬼王...</span>
+            <span class="name-debug" style="display:none;">法兰锤【FlangedMace】 -目标- 【火蜥蜴】、【洞穴巨魔】、【鬼王...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WizardHat-monsters.html">
+            <span class="name-display">法师帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">法师帽【WizardHat】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RingOfVitality-monsters.html">
+            <span class="name-display">活力之戒 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">活力之戒【RingOfVitality】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WandererAttire-monsters.html">
+            <span class="name-display">流浪者外衣 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">流浪者外衣【WandererAttire】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LightCassock-monsters.html">
+            <span class="name-display">浅色圣袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">浅色圣袍【LightCassock】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle1H-monsters.html">
+            <span class="name-display">浅金手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">浅金手镯（裂开）【GoldBangle1H】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Cutlass-monsters.html">
+            <span class="name-display">海盗弯刀 [7变体] -目标- 鳄鱼人、海盗剑士、钉手船长...</span>
+            <span class="name-debug" style="display:none;">海盗弯刀【Cutlass】 -目标- 【鳄鱼人】、【海盗剑士】、【钉手船长...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SharpSeaUrchinSpine-monsters.html">
+            <span class="name-display">海胆荆棘 -目标- 海胆</span>
+            <span class="name-debug" style="display:none;">海胆荆棘【SharpSeaUrchinSpine】 -目标- 【海胆】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SeaweedNecklace-monsters.html">
+            <span class="name-display">海藻项链 -目标- 踏潮者萨满、踏潮者棍手、踏潮者飞镖投手...</span>
+            <span class="name-debug" style="display:none;">海藻项链【SeaweedNecklace】 -目标- 【踏潮者萨满】、【踏潮者棍手】、【踏潮者飞镖投手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkCassock-monsters.html">
+            <span class="name-display">深色圣袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">深色圣袍【DarkCassock】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkPaddedHose-monsters.html">
+            <span class="name-display">深色衬垫裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">深色衬垫裤【DarkPaddedHose】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ClarityPotion-monsters.html">
+            <span class="name-display">清晰药水 [2变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">清晰药水【ClarityPotion】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WendigoSharpClaws-monsters.html">
+            <span class="name-display">温迪戈的利爪 -目标- 温迪戈</span>
+            <span class="name-debug" style="display:none;">温迪戈的利爪【WendigoSharpClaws】 -目标- 【温迪戈】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WendigosEntrails-monsters.html">
+            <span class="name-display">温迪戈的大肠 -目标- 温迪戈</span>
+            <span class="name-debug" style="display:none;">温迪戈的大肠【WendigosEntrails】 -目标- 【温迪戈】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WendigosAntlerFragment-monsters.html">
+            <span class="name-display">温迪戈的犄角残片 -目标- 温迪戈</span>
+            <span class="name-debug" style="display:none;">温迪戈的犄角残片【WendigosAntlerFragment】 -目标- 【温迪戈】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WendigoHoof-monsters.html">
+            <span class="name-display">温迪戈的蹄子 -目标- 温迪戈</span>
+            <span class="name-debug" style="display:none;">温迪戈的蹄子【WendigoHoof】 -目标- 【温迪戈】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LukewarmStew-monsters.html">
+            <span class="name-display">温香乱炖 -目标- 殭尸</span>
+            <span class="name-debug" style="display:none;">温香乱炖【LukewarmStew】 -目标- 【殭尸】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RangerHood-monsters.html">
+            <span class="name-display">游侠兜帽 [7变体] -目标- 火元素、火蜥蜴、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">游侠兜帽【RangerHood】 -目标- 【火元素】、【火蜥蜴】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ProwlerGloves-monsters.html">
+            <span class="name-display">潜行者手套 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、劣魔粉碎者...</span>
+            <span class="name-debug" style="display:none;">潜行者手套【ProwlerGloves】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【劣魔粉碎者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TearoftheVolcano-monsters.html">
+            <span class="name-display">火山之泪 -目标- 赤焰巨像</span>
+            <span class="name-debug" style="display:none;">火山之泪【TearoftheVolcano】 -目标- 【赤焰巨像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="VolcanicAsh-monsters.html">
+            <span class="name-display">火山灰 -目标- 骷髅法师</span>
+            <span class="name-debug" style="display:none;">火山灰【VolcanicAsh】 -目标- 【骷髅法师】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Torch_1001-monsters.html">
+            <span class="name-display">火把 -目标- 飞行骷髅头、恶魔鬼童、恐狼...</span>
+            <span class="name-debug" style="display:none;">火把【Torch_1001】 -目标- 【飞行骷髅头】、【恶魔鬼童】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Lantern-monsters.html">
+            <span class="name-display">灯笼 [7变体] -目标- 火元素、炎魔、恶魔犬...</span>
+            <span class="name-debug" style="display:none;">灯笼【Lantern】 -目标- 【火元素】、【炎魔】、【恶魔犬...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TrunkHose-monsters.html">
+            <span class="name-display">灯笼裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">灯笼裤【TrunkHose】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CoreofCinder-monsters.html">
+            <span class="name-display">灰烬之核 -目标- 火元素</span>
+            <span class="name-debug" style="display:none;">灰烬之核【CoreofCinder】 -目标- 【火元素】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Ectoplasm-monsters.html">
+            <span class="name-display">灵体物质 -目标- 冰霜怨灵</span>
+            <span class="name-debug" style="display:none;">灵体物质【Ectoplasm】 -目标- 【冰霜怨灵】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SoulTorq-monsters.html">
+            <span class="name-display">灵魂颈饰 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">灵魂颈饰【SoulTorq】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ExplosiveBottle-monsters.html">
+            <span class="name-display">炸药瓶 [4变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">炸药瓶【ExplosiveBottle】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BlazingTail-monsters.html">
+            <span class="name-display">炽热尾巴 -目标- 火蜥蜴</span>
+            <span class="name-debug" style="display:none;">炽热尾巴【BlazingTail】 -目标- 【火蜥蜴】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SearedHide-monsters.html">
+            <span class="name-display">烧焦皮革 -目标- 火蜥蜴</span>
+            <span class="name-debug" style="display:none;">烧焦皮革【SearedHide】 -目标- 【火蜥蜴】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SootyBeardHair-monsters.html">
+            <span class="name-display">煤灰胡须 -目标- 矮人斧手、矮人火铳手、矮人骑士</span>
+            <span class="name-debug" style="display:none;">煤灰胡须【SootyBeardHair】 -目标- 【矮人斧手】、【矮人火铳手】、【矮人骑士】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BearPendant-monsters.html">
+            <span class="name-display">熊吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">熊吊坠【BearPendant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LavaGolemShoulderFragment-monsters.html">
+            <span class="name-display">熔岩魔像的肩膀石块 -目标- 熔岩魔像</span>
+            <span class="name-debug" style="display:none;">熔岩魔像的肩膀石块【LavaGolemShoulderFragment】 -目标- 【熔岩魔像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FoxPendant-monsters.html">
+            <span class="name-display">狐狸吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">狐狸吊坠【FoxPendant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OxPendant-monsters.html">
+            <span class="name-display">狐狸吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">狐狸吊坠【OxPendant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="KoboldEar-monsters.html">
+            <span class="name-display">狗头人耳朵 -目标- 寒冰狗头人弓手、寒冰狗头人斧手</span>
+            <span class="name-debug" style="display:none;">狗头人耳朵【KoboldEar】 -目标- 【寒冰狗头人弓手】、【寒冰狗头人斧手】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Hounskull-monsters.html">
+            <span class="name-display">狗面盔 [7变体] -目标- 矮人斧手、骷髅斧兵、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">狗面盔【Hounskull】 -目标- 【矮人斧手】、【骷髅斧兵】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DogCollar-monsters.html">
+            <span class="name-display">狗项圈 -目标- 恶魔犬</span>
+            <span class="name-debug" style="display:none;">狗项圈【DogCollar】 -目标- 【恶魔犬】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CyclopsClub-monsters.html">
+            <span class="name-display">独眼巨人之棒 -目标- 独眼巨人</span>
+            <span class="name-debug" style="display:none;">独眼巨人之棒【CyclopsClub】 -目标- 【独眼巨人】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CyclopsEye-monsters.html">
+            <span class="name-display">独眼巨人的眼球 -目标- 独眼巨人</span>
+            <span class="name-debug" style="display:none;">独眼巨人的眼球【CyclopsEye】 -目标- 【独眼巨人】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CyclopsRags-monsters.html">
+            <span class="name-display">独眼巨人的破布 -目标- 独眼巨人</span>
+            <span class="name-debug" style="display:none;">独眼巨人的破布【CyclopsRags】 -目标- 【独眼巨人】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BansheeSonnet-monsters.html">
+            <span class="name-display">狺女的十四行诗 -目标- 报丧女妖</span>
+            <span class="name-debug" style="display:none;">狺女的十四行诗【BansheeSonnet】 -目标- 【报丧女妖】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WolfClaw-monsters.html">
+            <span class="name-display">狼爪 -目标- 恐狼、冰霜狼</span>
+            <span class="name-debug" style="display:none;">狼爪【WolfClaw】 -目标- 【恐狼】、【冰霜狼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WolfFang-monsters.html">
+            <span class="name-display">狼牙 -目标- 恐狼、冰霜狼</span>
+            <span class="name-debug" style="display:none;">狼牙【WolfFang】 -目标- 【恐狼】、【冰霜狼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WolfPelt-monsters.html">
+            <span class="name-display">狼皮 -目标- 恐狼、冰霜狼</span>
+            <span class="name-debug" style="display:none;">狼皮【WolfPelt】 -目标- 【恐狼】、【冰霜狼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TrapperHat-monsters.html">
+            <span class="name-display">猎人帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">猎人帽【TrapperHat】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OwlPendant-monsters.html">
+            <span class="name-display">猫头鹰吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">猫头鹰吊坠【OwlPendant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MonkeyPendant-monsters.html">
+            <span class="name-display">猴子吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">猴子吊坠【MonkeyPendant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BadgerPendant-monsters.html">
+            <span class="name-display">獾吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">獾吊坠【BadgerPendant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PearlNecklace-monsters.html">
+            <span class="name-display">珍珠项链（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">珍珠项链（裂开）【PearlNecklace】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Lifeleaf-monsters.html">
+            <span class="name-display">生命之叶 [3变体] -目标- 巨型蠕虫</span>
+            <span class="name-debug" style="display:none;">生命之叶【Lifeleaf】 -目标- 【巨型蠕虫】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RingOfSurvival-monsters.html">
+            <span class="name-display">生存之戒 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">生存之戒【RingOfSurvival】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SurvivalBow-monsters.html">
+            <span class="name-display">生存弓 [8变体] -目标- 海盗弓手、哥布林弓手、冰霜飞龙...</span>
+            <span class="name-debug" style="display:none;">生存弓【SurvivalBow】 -目标- 【海盗弓手】、【哥布林弓手】、【冰霜飞龙...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RawhideGloves-monsters.html">
+            <span class="name-display">生皮手套 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、恐狼...</span>
+            <span class="name-debug" style="display:none;">生皮手套【RawhideGloves】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RustyBrokenSword-monsters.html">
+            <span class="name-display">生锈的断剑 -目标- 冰霜骷髅步兵、冰霜骷髅卫士、骷髅步兵...</span>
+            <span class="name-debug" style="display:none;">生锈的断剑【RustyBrokenSword】 -目标- 【冰霜骷髅步兵】、【冰霜骷髅卫士】、【骷髅步兵...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OldRustyKey-monsters.html">
+            <span class="name-display">生锈的旧钥匙 -目标- 报丧女妖、鬼灵骑士</span>
+            <span class="name-debug" style="display:none;">生锈的旧钥匙【OldRustyKey】 -目标- 【报丧女妖】、【鬼灵骑士】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PastoralTunic-monsters.html">
+            <span class="name-display">田园束腰外衣 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">田园束腰外衣【PastoralTunic】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MisshapenBladeShard-monsters.html">
+            <span class="name-display">畸形刃片 -目标- 恶魔处刑者</span>
+            <span class="name-debug" style="display:none;">畸形刃片【MisshapenBladeShard】 -目标- 【恶魔处刑者】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LeatherCap-monsters.html">
+            <span class="name-display">皮帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">皮帽【LeatherCap】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LeatherGloves-monsters.html">
+            <span class="name-display">皮革手套 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、恐狼...</span>
+            <span class="name-debug" style="display:none;">皮革手套【LeatherGloves】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LeatherLeggings-monsters.html">
+            <span class="name-display">皮革护腿 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">皮革护腿【LeatherLeggings】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LeatherLamellar-monsters.html">
+            <span class="name-display">皮革札甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">皮革札甲【LeatherLamellar】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LeatherChausses-monsters.html">
+            <span class="name-display">皮革马裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">皮革马裤【LeatherChausses】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ArmorScrap-monsters.html">
+            <span class="name-display">盔甲碎片 -目标- 铠甲傀儡</span>
+            <span class="name-debug" style="display:none;">盔甲碎片【ArmorScrap】 -目标- 【铠甲傀儡】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RogueCowl-monsters.html">
+            <span class="name-display">盗贼风帽 [7变体] -目标- 火元素、火蜥蜴、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">盗贼风帽【RogueCowl】 -目标- 【火元素】、【火蜥蜴】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WarlordsBrokenSwordBlade-monsters.html">
+            <span class="name-display">督军的断剑 -目标- 骷髅督军</span>
+            <span class="name-debug" style="display:none;">督军的断剑【WarlordsBrokenSwordBlade】 -目标- 【骷髅督军】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WarlordsArmorShard-monsters.html">
+            <span class="name-display">督军的铠甲残片 -目标- 骷髅督军</span>
+            <span class="name-debug" style="display:none;">督军的铠甲残片【WarlordsArmorShard】 -目标- 【骷髅督军】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ShortSword-monsters.html">
+            <span class="name-display">短剑 [7变体] -目标- 冰霜骷髅卫士、劣魔砍杀者、炎魔...</span>
+            <span class="name-debug" style="display:none;">短剑【ShortSword】 -目标- 【冰霜骷髅卫士】、【劣魔砍杀者】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Hatchet-monsters.html">
+            <span class="name-display">短柄斧 [7变体] -目标- 矮人斧手、骷髅斧兵、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">短柄斧【Hatchet】 -目标- 【矮人斧手】、【骷髅斧兵】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LowBoots-monsters.html">
+            <span class="name-display">短靴 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">短靴【LowBoots】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="StoneMortar-monsters.html">
+            <span class="name-display">石臼 -目标- 骷髅法师</span>
+            <span class="name-debug" style="display:none;">石臼【StoneMortar】 -目标- 【骷髅法师】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WoodsmanAxe-monsters.html">
+            <span class="name-display">砍柴斧 [7变体] -目标- 矮人重锤手、哥布林战士、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">砍柴斧【WoodsmanAxe】 -目标- 【矮人重锤手】、【哥布林战士】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TatteredCloak-monsters.html">
+            <span class="name-display">破旧披风 [4变体] -目标- 火元素、冰霜行尸、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">破旧披风【TatteredCloak】 -目标- 【火元素】、【冰霜行尸】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BrokenSkull-monsters.html">
+            <span class="name-display">破碎的头骨 -目标- 冰霜骷髅弓手、冰霜骷髅斧手、冰霜骷髅弩手...</span>
+            <span class="name-debug" style="display:none;">破碎的头骨【BrokenSkull】 -目标- 【冰霜骷髅弓手】、【冰霜骷髅斧手】、【冰霜骷髅弩手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HardenedShellFragment-monsters.html">
+            <span class="name-display">硬化龟壳碎片 -目标- 熔岩龟</span>
+            <span class="name-debug" style="display:none;">硬化龟壳碎片【HardenedShellFragment】 -目标- 【熔岩龟】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MysticalGem-monsters.html">
+            <span class="name-display">神秘宝石 -目标- 洞穴巨魔、独眼巨人</span>
+            <span class="name-debug" style="display:none;">神秘宝石【MysticalGem】 -目标- 【洞穴巨魔】、【独眼巨人】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MysticVestments-monsters.html">
+            <span class="name-display">神秘法衣 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">神秘法衣【MysticVestments】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MysteriousPotion-monsters.html">
+            <span class="name-display">神秘药水 -目标- 畸形骨魔</span>
+            <span class="name-debug" style="display:none;">神秘药水【MysteriousPotion】 -目标- 【畸形骨魔】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OracleRobe-monsters.html">
+            <span class="name-display">神谕长袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">神谕长袍【OracleRobe】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MysticGloves-monsters.html">
+            <span class="name-display">秘法手套 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、劣魔粉碎者...</span>
+            <span class="name-debug" style="display:none;">秘法手套【MysticGloves】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【劣魔粉碎者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RunestoneGloves-monsters.html">
+            <span class="name-display">符石手套 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、恐狼...</span>
+            <span class="name-debug" style="display:none;">符石手套【RunestoneGloves】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle1B-monsters.html">
+            <span class="name-display">简约金手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">简约金手镯（裂开）【GoldBangle1B】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Arrow_2001-monsters.html">
+            <span class="name-display">箭 -目标- 冰霜骷髅弓手、哥布林弓手、寒冰狗头人弓手...</span>
+            <span class="name-debug" style="display:none;">箭【Arrow_2001】 -目标- 【冰霜骷髅弓手】、【哥布林弓手】、【寒冰狗头人弓手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Quiver_2001-monsters.html">
+            <span class="name-display">箭袋 -目标- 冰霜骷髅弓手、冰霜骷髅弩手、哥布林弓手...</span>
+            <span class="name-debug" style="display:none;">箭袋【Quiver_2001】 -目标- 【冰霜骷髅弓手】、【冰霜骷髅弩手】、【哥布林弓手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ThickForefoot-monsters.html">
+            <span class="name-display">粗厚前足 -目标- 地狱三头犬</span>
+            <span class="name-debug" style="display:none;">粗厚前足【ThickForefoot】 -目标- 【地狱三头犬】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SturdyBoots-monsters.html">
+            <span class="name-display">粗厚皮靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">粗厚皮靴【SturdyBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FineCuirass-monsters.html">
+            <span class="name-display">精美胸甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">精美胸甲【FineCuirass】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LacedTurnshoe-monsters.html">
+            <span class="name-display">系带翻面鞋 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">系带翻面鞋【LacedTurnshoe】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Poupoint-monsters.html">
+            <span class="name-display">紧身棉外套 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">紧身棉外套【Poupoint】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Doublet-monsters.html">
+            <span class="name-display">紧身衣 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">紧身衣【Doublet】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Ruby-monsters.html">
+            <span class="name-display">红宝石银矿 [7变体] -目标- 木乃伊、寄居蟹、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">红宝石银矿【Ruby】 -目标- 【木乃伊】、【寄居蟹】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RubysilverOres_5001-monsters.html">
+            <span class="name-display">红宝石银矿 -目标- 废墟魔像</span>
+            <span class="name-debug" style="display:none;">红宝石银矿【RubysilverOres_5001】 -目标- 【废墟魔像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RedApple-monsters.html">
+            <span class="name-display">红苹果 -目标- 史莱姆</span>
+            <span class="name-debug" style="display:none;">红苹果【RedApple】 -目标- 【史莱姆】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ButtonedLeggings-monsters.html">
+            <span class="name-display">纽扣护腿 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">纽扣护腿【ButtonedLeggings】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ButtonedBoots-monsters.html">
+            <span class="name-display">纽扣长靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">纽扣长靴【ButtonedBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Rapier-monsters.html">
+            <span class="name-display">细剑 [8变体] -目标- 地狱猎手、冰霜骷髅卫士、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">细剑【Rapier】 -目标- 【地狱猎手】、【冰霜骷髅卫士】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle2D-monsters.html">
+            <span class="name-display">细长手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">细长手镯（裂开）【GoldBangle2D】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bolas-monsters.html">
+            <span class="name-display">绊石索 [7变体] -目标- 冰霜狼、恶魔犬、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">绊石索【Bolas】 -目标- 【冰霜狼】、【恶魔犬】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WindlassCrossbow-monsters.html">
+            <span class="name-display">绞盘弩 [7变体] -目标- 骷髅弩手、冰霜飞龙、冰霜骷髅弩手...</span>
+            <span class="name-debug" style="display:none;">绞盘弩【WindlassCrossbow】 -目标- 【骷髅弩手】、【冰霜飞龙】、【冰霜骷髅弩手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="VikingSword-monsters.html">
+            <span class="name-display">维京剑 [7变体] -目标- 地狱猎手、冰霜骷髅卫士、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">维京剑【VikingSword】 -目标- 【地狱猎手】、【冰霜骷髅卫士】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="VikingHelm-monsters.html">
+            <span class="name-display">维京战盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">维京战盔【VikingHelm】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bandage-monsters.html">
+            <span class="name-display">绷带 [4变体] -目标- 踏潮者矛手、巨型蜘蛛、冰霜蜘蛛...</span>
+            <span class="name-debug" style="display:none;">绷带【Bandage】 -目标- 【踏潮者矛手】、【巨型蜘蛛】、【冰霜蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle1E-monsters.html">
+            <span class="name-display">绿松石宝石手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">绿松石宝石手镯（裂开）【GoldBangle1E】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="StitchedTurnshoe-monsters.html">
+            <span class="name-display">缝合翻面鞋 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">缝合翻面鞋【StitchedTurnshoe】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WoolenCap-monsters.html">
+            <span class="name-display">羊毛帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">羊毛帽【WoolenCap】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FeatheredHat-monsters.html">
+            <span class="name-display">羽毛帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">羽毛帽【FeatheredHat】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Pigache-monsters.html">
+            <span class="name-display">翘头鞋 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">翘头鞋【Pigache】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Emerald-monsters.html">
+            <span class="name-display">翡翠（裂开） [7变体] -目标- 木乃伊、寄居蟹、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">翡翠（裂开）【Emerald】 -目标- 【木乃伊】、【寄居蟹】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CuffedBoots-monsters.html">
+            <span class="name-display">翻边皮靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">翻边皮靴【CuffedBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Turnshoe-monsters.html">
+            <span class="name-display">翻面鞋 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">翻面鞋【Turnshoe】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RatPendant-monsters.html">
+            <span class="name-display">老鼠吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">老鼠吊坠【RatPendant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RottenFluids-monsters.html">
+            <span class="name-display">腐烂粘液 -目标- 殭尸</span>
+            <span class="name-debug" style="display:none;">腐烂粘液【RottenFluids】 -目标- 【殭尸】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RottenLump-monsters.html">
+            <span class="name-display">腐烂肉块 -目标- 憎恶</span>
+            <span class="name-debug" style="display:none;">腐烂肉块【RottenLump】 -目标- 【憎恶】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CaptainsCorrodedKey-monsters.html">
+            <span class="name-display">船长的锈钥匙 -目标- 远古刺鳐、钉手船长</span>
+            <span class="name-debug" style="display:none;">船长的锈钥匙【CaptainsCorrodedKey】 -目标- 【远古刺鳐】、【钉手船长】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="StrawHat-monsters.html">
+            <span class="name-display">草帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">草帽【StrawHat】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TokenOfHonor-monsters.html">
+            <span class="name-display">荣耀徽章 -目标- 骷髅冠军</span>
+            <span class="name-debug" style="display:none;">荣耀徽章【TokenOfHonor】 -目标- 【骷髅冠军】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FireflyAbdomen-monsters.html">
+            <span class="name-display">萤火虫之腹 -目标- 废墟魔像</span>
+            <span class="name-debug" style="display:none;">萤火虫之腹【FireflyAbdomen】 -目标- 【废墟魔像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CampfireKit-monsters.html">
+            <span class="name-display">营火工具 [4变体] -目标- 恶魔犬、冰霜鬼童、寒冰猎犬...</span>
+            <span class="name-debug" style="display:none;">营火工具【CampfireKit】 -目标- 【恶魔犬】、【冰霜鬼童】、【寒冰猎犬...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BlueSapphire-monsters.html">
+            <span class="name-display">蓝宝石（裂开） [7变体] -目标- 木乃伊、寄居蟹、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">蓝宝石（裂开）【BlueSapphire】 -目标- 【木乃伊】、【寄居蟹】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BlueEyeballs-monsters.html">
+            <span class="name-display">蓝眼球 -目标- 恐狼、冰霜狼</span>
+            <span class="name-debug" style="display:none;">蓝眼球【BlueEyeballs】 -目标- 【恐狼】、【冰霜狼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BugShell-monsters.html">
+            <span class="name-display">虫子外壳 -目标- 死亡甲虫</span>
+            <span class="name-debug" style="display:none;">虫子外壳【BugShell】 -目标- 【死亡甲虫】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Maggots-monsters.html">
+            <span class="name-display">蛆虫 -目标- 冰霜行尸、巫妖、木乃伊...</span>
+            <span class="name-debug" style="display:none;">蛆虫【Maggots】 -目标- 【冰霜行尸】、【巫妖】、【木乃伊...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CockatricesLuckyFeather-monsters.html">
+            <span class="name-display">蛇尾鸡的幸运羽毛 -目标- 蛇尾鸡</span>
+            <span class="name-debug" style="display:none;">蛇尾鸡的幸运羽毛【CockatricesLuckyFeather】 -目标- 【蛇尾鸡】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CockatriceEgg-monsters.html">
+            <span class="name-display">蛇尾鸡的蛋蛋 -目标- 蛇尾鸡</span>
+            <span class="name-debug" style="display:none;">蛇尾鸡的蛋蛋【CockatriceEgg】 -目标- 【蛇尾鸡】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SpiderSilk-monsters.html">
+            <span class="name-display">蜘蛛丝 -目标- 巨型蜘蛛、冰霜巨型蜘蛛</span>
+            <span class="name-debug" style="display:none;">蜘蛛丝【SpiderSilk】 -目标- 【巨型蜘蛛】、【冰霜巨型蜘蛛】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BatClaw-monsters.html">
+            <span class="name-display">蝙蝠爪子 -目标- 恶魔蝙蝠</span>
+            <span class="name-debug" style="display:none;">蝙蝠爪子【BatClaw】 -目标- 【恶魔蝙蝠】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MeltedPickaxeHead-monsters.html">
+            <span class="name-display">融化的十字镐头 -目标- 矮人斧手、矮人火铳手、矮人骑士</span>
+            <span class="name-debug" style="display:none;">融化的十字镐头【MeltedPickaxeHead】 -目标- 【矮人斧手】、【矮人火铳手】、【矮人骑士】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BloodwovenGloves-monsters.html">
+            <span class="name-display">血纹手套 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、恐狼...</span>
+            <span class="name-debug" style="display:none;">血纹手套【BloodwovenGloves】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BloodwovenRobe-monsters.html">
+            <span class="name-display">血纹长袍 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">血纹长袍【BloodwovenRobe】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="PaddedLeggings-monsters.html">
+            <span class="name-display">衬垫护腿 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">衬垫护腿【PaddedLeggings】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TornBatWing-monsters.html">
+            <span class="name-display">被扯下的蝙蝠翅膀 -目标- 恶魔蝙蝠</span>
+            <span class="name-debug" style="display:none;">被扯下的蝙蝠翅膀【TornBatWing】 -目标- 【恶魔蝙蝠】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Plunderhosen-monsters.html">
+            <span class="name-display">裂口裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">裂口裤【Plunderhosen】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="VisoredBarbutaHelm-monsters.html">
+            <span class="name-display">覆面尖顶盔 [7变体] -目标- 矮人斧手、骷髅斧兵、火蜥蜴...</span>
+            <span class="name-debug" style="display:none;">覆面尖顶盔【VisoredBarbutaHelm】 -目标- 【矮人斧手】、【骷髅斧兵】、【火蜥蜴...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="VigilantCloak-monsters.html">
+            <span class="name-display">警惕披风 [4变体] -目标- 火元素、冰霜行尸、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">警惕披风【VigilantCloak】 -目标- 【火元素】、【冰霜行尸】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CursedCrown-monsters.html">
+            <span class="name-display">诅咒之冠 -目标- 鬼王</span>
+            <span class="name-debug" style="display:none;">诅咒之冠【CursedCrown】 -目标- 【鬼王】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TroubadourOutfit-monsters.html">
+            <span class="name-display">诗人外套 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">诗人外套【TroubadourOutfit】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BardicPants-monsters.html">
+            <span class="name-display">诗人长裤 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">诗人长裤【BardicPants】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RegalMitre-monsters.html">
+            <span class="name-display">豪华主教冠 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">豪华主教冠【RegalMitre】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OrnateJazerant-monsters.html">
+            <span class="name-display">豪华布面锁子甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">豪华布面锁子甲【OrnateJazerant】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RegalGambeson-monsters.html">
+            <span class="name-display">豪华棉甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">豪华棉甲【RegalGambeson】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GallantOutfit-monsters.html">
+            <span class="name-display">贵族外套 [7变体] -目标- 巨型蠕虫、地狱猎手、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">贵族外套【GallantOutfit】 -目标- 【巨型蠕虫】、【地狱猎手】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ExtraThickPelts-monsters.html">
+            <span class="name-display">超厚毛皮 -目标- 冰霜狼</span>
+            <span class="name-debug" style="display:none;">超厚毛皮【ExtraThickPelts】 -目标- 【冰霜狼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TidewalkerFin-monsters.html">
+            <span class="name-display">踏潮者的背鳍 -目标- 踏潮者萨满、踏潮者棍手、踏潮者飞镖投手...</span>
+            <span class="name-debug" style="display:none;">踏潮者的背鳍【TidewalkerFin】 -目标- 【踏潮者萨满】、【踏潮者棍手】、【踏潮者飞镖投手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LightfootBoots-monsters.html">
+            <span class="name-display">轻便长靴 [7变体] -目标- 火蜥蜴、冰霜哨戒魔像、哥布林斧手...</span>
+            <span class="name-debug" style="display:none;">轻便长靴【LightfootBoots】 -目标- 【火蜥蜴】、【冰霜哨戒魔像】、【哥布林斧手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LightAketon-monsters.html">
+            <span class="name-display">轻型布面甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">轻型布面甲【LightAketon】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="LightGauntlets-monsters.html">
+            <span class="name-display">轻型板甲护手 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">轻型板甲护手【LightGauntlets】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Sallet-monsters.html">
+            <span class="name-display">轻盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">轻盔【Sallet】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RingOfQuickness-monsters.html">
+            <span class="name-display">速度之戒 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">速度之戒【RingOfQuickness】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Lyre-monsters.html">
+            <span class="name-display">里拉琴 [7变体] -目标- 火元素、火蜥蜴、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">里拉琴【Lyre】 -目标- 【火元素】、【火蜥蜴】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HeavyGauntlet-monsters.html">
+            <span class="name-display">重型板甲护手 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">重型板甲护手【HeavyGauntlet】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HeavyGambeson-monsters.html">
+            <span class="name-display">重型棉甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">重型棉甲【HeavyGambeson】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HeavyBoots-monsters.html">
+            <span class="name-display">重型长靴 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、炎魔...</span>
+            <span class="name-debug" style="display:none;">重型长靴【HeavyBoots】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HeavyLeatherLeggings-monsters.html">
+            <span class="name-display">重皮护腿 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">重皮护腿【HeavyLeatherLeggings】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldCoins-monsters.html">
+            <span class="name-display">金币 -目标- 憎恶、远古刺鳐、报丧女妖...</span>
+            <span class="name-debug" style="display:none;">金币【GoldCoins】 -目标- 【憎恶】、【远古刺鳐】、【报丧女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldenTeeth-monsters.html">
+            <span class="name-display">金牙 -目标- 冰霜骷髅弓手、冰霜骷髅斧手、冰霜骷髅弩手...</span>
+            <span class="name-debug" style="display:none;">金牙【GoldenTeeth】 -目标- 【冰霜骷髅弓手】、【冰霜骷髅斧手】、【冰霜骷髅弩手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBand-monsters.html">
+            <span class="name-display">金环（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">金环（裂开）【GoldBand】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldOres_5001-monsters.html">
+            <span class="name-display">金矿 -目标- 废墟魔像</span>
+            <span class="name-debug" style="display:none;">金矿【GoldOres_5001】 -目标- 【废墟魔像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CobaltOres_4001-monsters.html">
+            <span class="name-display">钴矿 -目标- 废墟魔像</span>
+            <span class="name-debug" style="display:none;">钴矿【CobaltOres_4001】 -目标- 【废墟魔像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Diamond-monsters.html">
+            <span class="name-display">钻石（裂开） [7变体] -目标- 木乃伊、寄居蟹、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">钻石（裂开）【Diamond】 -目标- 【木乃伊】、【寄居蟹】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Quarterstaff-monsters.html">
+            <span class="name-display">铁头棒 [8变体] -目标- 巨型蠕虫、踏潮者矛手、鬼王...</span>
+            <span class="name-debug" style="display:none;">铁头棒【Quarterstaff】 -目标- 【巨型蠕虫】、【踏潮者矛手】、【鬼王...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="RivetedGloves-monsters.html">
+            <span class="name-display">铆接手套 [7变体] -目标- 矮人斧手、骷髅斧兵、劣魔砍杀者...</span>
+            <span class="name-debug" style="display:none;">铆接手套【RivetedGloves】 -目标- 【矮人斧手】、【骷髅斧兵】、【劣魔砍杀者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Spangenhelm-monsters.html">
+            <span class="name-display">铆钉护鼻盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">铆钉护鼻盔【Spangenhelm】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CopperOres_3001-monsters.html">
+            <span class="name-display">铜矿 -目标- 废墟魔像</span>
+            <span class="name-debug" style="display:none;">铜矿【CopperOres_3001】 -目标- 【废墟魔像】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MetalCup-monsters.html">
+            <span class="name-display">银圣杯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">银圣杯（裂开）【MetalCup】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="SilverCoin-monsters.html">
+            <span class="name-display">银币 -目标- 憎恶、远古刺鳐、报丧女妖...</span>
+            <span class="name-debug" style="display:none;">银币【SilverCoin】 -目标- 【憎恶】、【远古刺鳐】、【报丧女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ChapelDeFer-monsters.html">
+            <span class="name-display">锅盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">锅盔【ChapelDeFer】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="StilettoDagger-monsters.html">
+            <span class="name-display">锥刺匕首 [8变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">锥刺匕首【StilettoDagger】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Awl-monsters.html">
+            <span class="name-display">锥子 -目标- 骷髅长枪兵</span>
+            <span class="name-debug" style="display:none;">锥子【Awl】 -目标- 【骷髅长枪兵】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="StuddedLeather-monsters.html">
+            <span class="name-display">镶钉皮甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">镶钉皮甲【StuddedLeather】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Longsword-monsters.html">
+            <span class="name-display">长剑 [8变体] -目标- 骷髅督军、骷髅双手剑士、恶魔处刑者...</span>
+            <span class="name-debug" style="display:none;">长剑【Longsword】 -目标- 【骷髅督军】、【骷髅双手剑士】、【恶魔处刑者...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Longbow-monsters.html">
+            <span class="name-display">长弓 [8变体] -目标- 海盗弓手、哥布林弓手、冰霜飞龙...</span>
+            <span class="name-debug" style="display:none;">长弓【Longbow】 -目标- 【海盗弓手】、【哥布林弓手】、【冰霜飞龙...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Halberd-monsters.html">
+            <span class="name-display">长戟 [8变体] -目标- 巨型蠕虫、珊瑚灵、憎恶...</span>
+            <span class="name-debug" style="display:none;">长戟【Halberd】 -目标- 【巨型蠕虫】、【珊瑚灵】、【憎恶...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Spear-monsters.html">
+            <span class="name-display">长矛 [8变体] -目标- 巨型蠕虫、珊瑚灵、远古刺鳐...</span>
+            <span class="name-debug" style="display:none;">长矛【Spear】 -目标- 【巨型蠕虫】、【珊瑚灵】、【远古刺鳐...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Flute-monsters.html">
+            <span class="name-display">长笛 [7变体] -目标- 火元素、火蜥蜴、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">长笛【Flute】 -目标- 【火元素】、【火蜥蜴】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Lute-monsters.html">
+            <span class="name-display">长笛 [7变体] -目标- 火元素、火蜥蜴、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">长笛【Lute】 -目标- 【火元素】、【火蜥蜴】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldBangle2H-monsters.html">
+            <span class="name-display">闪亮手镯（裂开） [7变体] -目标- 恶魔蜉蝣、踏潮者矛手、剧毒蜻蜓...</span>
+            <span class="name-debug" style="display:none;">闪亮手镯（裂开）【GoldBangle2H】 -目标- 【恶魔蜉蝣】、【踏潮者矛手】、【剧毒蜻蜓...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="EnchantedEye-monsters.html">
+            <span class="name-display">附魔之眼 -目标- 恶魔斥候</span>
+            <span class="name-debug" style="display:none;">附魔之眼【EnchantedEye】 -目标- 【恶魔斥候】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="EnchantedDarkFabric-monsters.html">
+            <span class="name-display">附魔的黑暗织物 -目标- 骷髅法师</span>
+            <span class="name-debug" style="display:none;">附魔的黑暗织物【EnchantedDarkFabric】 -目标- 【骷髅法师】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="TrapDisarmingKit-monsters.html">
+            <span class="name-display">陷阱解除工具 -目标- 恐狼、烈焰野猪、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">陷阱解除工具【TrapDisarmingKit】 -目标- 【恐狼】、【烈焰野猪】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="InvisibilityPotion-monsters.html">
+            <span class="name-display">隐身药水 [5变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">隐身药水【InvisibilityPotion】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="YetisTeeth-monsters.html">
+            <span class="name-display">雪猿的牙齿 -目标- 冰雪巨猿</span>
+            <span class="name-debug" style="display:none;">雪猿的牙齿【YetisTeeth】 -目标- 【冰雪巨猿】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FrostbittenMallet-monsters.html">
+            <span class="name-display">霜噬之锤 -目标- 温迪戈、冰雪巨猿</span>
+            <span class="name-debug" style="display:none;">霜噬之锤【FrostbittenMallet】 -目标- 【温迪戈】、【冰雪巨猿】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BronzeScale-monsters.html">
+            <span class="name-display">青铜天秤 -目标- 骷髅双手剑士</span>
+            <span class="name-debug" style="display:none;">青铜天秤【BronzeScale】 -目标- 【骷髅双手剑士】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WindLocket-monsters.html">
+            <span class="name-display">风之吊坠 [5变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">风之吊坠【WindLocket】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="EtchedWandFragment-monsters.html">
+            <span class="name-display">风化的魔杖残片 -目标- 踏潮者萨满</span>
+            <span class="name-debug" style="display:none;">风化的魔杖残片【EtchedWandFragment】 -目标- 【踏潮者萨满】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bellows-monsters.html">
+            <span class="name-display">风箱 -目标- 幽鬼</span>
+            <span class="name-debug" style="display:none;">风箱【Bellows】 -目标- 【幽鬼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ThrowingKnife-monsters.html">
+            <span class="name-display">飞刀 [4变体] -目标- 冰霜狼、恶魔犬、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">飞刀【ThrowingKnife】 -目标- 【冰霜狼】、【恶魔犬】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="FranciscaAxe-monsters.html">
+            <span class="name-display">飞斧 [4变体] -目标- 冰霜狼、恶魔犬、冰霜鬼童...</span>
+            <span class="name-debug" style="display:none;">飞斧【FranciscaAxe】 -目标- 【冰霜狼】、【恶魔犬】、【冰霜鬼童...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="HorsemansAxe-monsters.html">
+            <span class="name-display">骑士斧 [8变体] -目标- 矮人斧手、骷髅斧兵、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">骑士斧【HorsemansAxe】 -目标- 【矮人斧手】、【骷髅斧兵】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bone-monsters.html">
+            <span class="name-display">骨头棒 -目标- 冰霜骷髅弓手、冰霜骷髅斧手、冰霜骷髅弩手...</span>
+            <span class="name-debug" style="display:none;">骨头棒【Bone】 -目标- 【冰霜骷髅弓手】、【冰霜骷髅斧手】、【冰霜骷髅弩手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BoneHelm-monsters.html">
+            <span class="name-display">骨盔 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、冰霜哨戒魔像...</span>
+            <span class="name-debug" style="display:none;">骨盔【BoneHelm】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【冰霜哨戒魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="BonePowder-monsters.html">
+            <span class="name-display">骨粉 -目标- 畸形骨魔</span>
+            <span class="name-debug" style="display:none;">骨粉【BonePowder】 -目标- 【畸形骨魔】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Spellbook-monsters.html">
+            <span class="name-display">魔法书 [8变体] -目标- 巨型水母、火元素、海洋鹰身女妖...</span>
+            <span class="name-debug" style="display:none;">魔法书【Spellbook】 -目标- 【巨型水母】、【火元素】、【海洋鹰身女妖...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MagicProtectionPotion-monsters.html">
+            <span class="name-display">魔法保护药水 [5变体] -目标- 鹰身女妖、海洋鹰身女妖、炎魔...</span>
+            <span class="name-debug" style="display:none;">魔法保护药水【MagicProtectionPotion】 -目标- 【鹰身女妖】、【海洋鹰身女妖】、【炎魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="WizardStaff-monsters.html">
+            <span class="name-display">魔法杖 [8变体] -目标- 巨型水母、巫妖、废墟魔像...</span>
+            <span class="name-debug" style="display:none;">魔法杖【WizardStaff】 -目标- 【巨型水母】、【巫妖】、【废墟魔像...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MermaidsTear-monsters.html">
+            <span class="name-display">鱼人之泪 -目标- 人鱼</span>
+            <span class="name-debug" style="display:none;">鱼人之泪【MermaidsTear】 -目标- 【人鱼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="MermaidScale-monsters.html">
+            <span class="name-display">鱼人鳞片 -目标- 人鱼</span>
+            <span class="name-debug" style="display:none;">鱼人鳞片【MermaidScale】 -目标- 【人鱼】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="CrocodilianEyeball-monsters.html">
+            <span class="name-display">鳄鱼人眼球 -目标- 鳄鱼人</span>
+            <span class="name-debug" style="display:none;">鳄鱼人眼球【CrocodilianEyeball】 -目标- 【鳄鱼人】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ScaledArmor-monsters.html">
+            <span class="name-display">鳞甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">鳞甲【ScaledArmor】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Bycocket-monsters.html">
+            <span class="name-display">鸟嘴帽 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">鸟嘴帽【Bycocket】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ElkwoodCrown-monsters.html">
+            <span class="name-display">鹿角木头冠 [7变体] -目标- 火蜥蜴、海洋鹰身女妖、巨型蜘蛛...</span>
+            <span class="name-debug" style="display:none;">鹿角木头冠【ElkwoodCrown】 -目标- 【火蜥蜴】、【海洋鹰身女妖】、【巨型蜘蛛...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="ElkwoodGloves-monsters.html">
+            <span class="name-display">鹿角木手套 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、恐狼...</span>
+            <span class="name-debug" style="display:none;">鹿角木手套【ElkwoodGloves】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="GoldenKey-monsters.html">
+            <span class="name-display">黄金钥匙 -目标- 鬼王、巫妖、骷髅督军</span>
+            <span class="name-debug" style="display:none;">黄金钥匙【GoldenKey】 -目标- 【鬼王】、【巫妖】、【骷髅督军】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="StickyTongue-monsters.html">
+            <span class="name-display">黏舌头 -目标- 地狱三头犬</span>
+            <span class="name-debug" style="display:none;">黏舌头【StickyTongue】 -目标- 【地狱三头犬】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkPlateArmor-monsters.html">
+            <span class="name-display">黑暗板甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">黑暗板甲【DarkPlateArmor】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkMatter-monsters.html">
+            <span class="name-display">黑暗物质 -目标- 巫妖</span>
+            <span class="name-debug" style="display:none;">黑暗物质【DarkMatter】 -目标- 【巫妖】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkLeatherLeggings-monsters.html">
+            <span class="name-display">黑暗皮革护腿 [7变体] -目标- 巨型蠕虫、巨型水母、独眼巨人...</span>
+            <span class="name-debug" style="display:none;">黑暗皮革护腿【DarkLeatherLeggings】 -目标- 【巨型蠕虫】、【巨型水母】、【独眼巨人...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="DarkCuirass-monsters.html">
+            <span class="name-display">黑暗胸甲 [7变体] -目标- 巨型蠕虫、巨型水母、地狱猎手...</span>
+            <span class="name-debug" style="display:none;">黑暗胸甲【DarkCuirass】 -目标- 【巨型蠕虫】、【巨型水母】、【地狱猎手...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="OnyxGloves-monsters.html">
+            <span class="name-display">黑玉手套 [7变体] -目标- 冰霜骷髅卫士、火蜥蜴、恐狼...</span>
+            <span class="name-debug" style="display:none;">黑玉手套【OnyxGloves】 -目标- 【冰霜骷髅卫士】、【火蜥蜴】、【恐狼...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="Drum-monsters.html">
+            <span class="name-display">鼓 [7变体] -目标- 火元素、火蜥蜴、洞穴巨魔...</span>
+            <span class="name-debug" style="display:none;">鼓【Drum】 -目标- 【火元素】、【火蜥蜴】、【洞穴巨魔...】</span>
+        </a>
+    </div>
+    <div class="summary-item item-monster-item">
+        <a href="KneadBloodBag-monsters.html">
+            <span class="name-display">鼓胀的血囊 -目标- 魔蛆</span>
+            <span class="name-debug" style="display:none;">鼓胀的血囊【KneadBloodBag】 -目标- 【魔蛆】</span>
+        </a>
+    </div>
+</div>
+
+    <script>
+        function toggleDebugInfo() {
+            const displays = document.querySelectorAll('.name-display');
+            const debugs = document.querySelectorAll('.name-debug');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = debugs.length > 0 && debugs[0].style.display !== 'none';
+            displays.forEach(el => el.style.display = isVisible ? 'inline' : 'none');
+            debugs.forEach(el => el.style.display = isVisible ? 'none' : 'inline');
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => { if (dot.style.display === 'none') return; dot.style.left = '50%'; dot.style.top = '50%'; });
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

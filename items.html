@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>【物品表】物品位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 40px; }
+        h1 { text-align: center; color: #00bcd4; margin-bottom: 20px; font-size: 36px; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 16px; margin-bottom: 30px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .stats { text-align: center; color: #aaa; font-size: 14px; margin-bottom: 20px; }
+        .section-header { font-size: 24px; font-weight: bold; margin: 30px 0 10px 0; padding-bottom: 5px; border-bottom: 2px; text-align: left; }
+        .section-header:first-child { margin-top: 0; }
+        .section-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .summary-item { background-color: #3a3a3a; border: 1px solid #555; border-radius: 8px; padding: 20px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .summary-item a { font-size: 18px; text-decoration: none; font-weight: bold; display: block; }
+        .summary-item .name-display { color: white; font-size: 18px; font-weight: bold; }
+        .summary-item .name-debug { color: white; font-size: 18px; font-weight: bold; }
+        
+        .item-section {{ color: #4CAF50; border-bottom-color: #4CAF50; }}
+        .item-item {{ border-color: #4CAF50; }}
+        .item-item:hover {{ border-color: #81C784; }}
+        .item-item .name-display {{ color: #4CAF50; }}
+        .item-item .name-debug {{ color: #4CAF50; }}
+        .item-item a {{ color: #4CAF50; }}
+        .item-item a:hover {{ color: #81C784; }}
+        .monster-section {{ color: #FF6600; border-bottom-color: #FF6600; }}
+        .monster-item {{ border-color: #FF6600; }}
+        .monster-item:hover {{ border-color: #FF8C00; }}
+        .monster-item .name-display {{ color: #FF6600; }}
+        .monster-item .name-debug {{ color: #FF6600; }}
+        .monster-item a {{ color: #FF6600; }}
+        .monster-item a:hover {{ color: #FF8C00; }}
+        .item-monster-section {{ color: #2196F3; border-bottom-color: #2196F3; }}
+        .item-monster-item {{ border-color: #2196F3; }}
+        .item-monster-item:hover {{ border-color: #64B5F6; }}
+        .item-monster-item .name-display {{ color: #2196F3; }}
+        .item-monster-item .name-debug {{ color: #2196F3; }}
+        .item-monster-item a {{ color: #2196F3; }}
+        .item-monster-item a:hover {{ color: #64B5F6; }}
+        .back-to-home { text-align: center; margin-bottom: 30px; }
+        .back-to-home a { color: #00bcd4; text-decoration: none; font-size: 18px; padding: 10px 20px; border: 2px solid #00bcd4; border-radius: 8px; display: inline-block; transition: all 0.2s; }
+        .back-to-home a:hover { background-color: #00bcd4; color: #2c2c2c; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+    </style>
+</head>
+<body>
+    <div class="back-to-home"><a href="index.html">← 返回首页</a></div>
+    <h1>【物品表】物品位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="stats">共 144 个物品</div>
+    <div class="section-header item-section">物品列表</div>
+<div class="section-content">    <div class="summary-item item-item">
+        <a href="Tripod.html">
+            <span class="name-display">三脚架</span>
+            <span class="name-debug" style="display:none;">三脚架【Tripod】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CrateMedium.html">
+            <span class="name-display">中型木箱子</span>
+            <span class="name-debug" style="display:none;">中型木箱子【CrateMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Bookshelf.html">
+            <span class="name-display">书架</span>
+            <span class="name-debug" style="display:none;">书架【Bookshelf】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="MermaidCoffin.html">
+            <span class="name-display">人鱼棺材</span>
+            <span class="name-debug" style="display:none;">人鱼棺材【MermaidCoffin】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CeremonialDagger.html">
+            <span class="name-display">仪式匕首（裂开）</span>
+            <span class="name-debug" style="display:none;">仪式匕首（裂开）【CeremonialDagger】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Ale.html">
+            <span class="name-display">传送门</span>
+            <span class="name-debug" style="display:none;">传送门【Ale】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Cloak.html">
+            <span class="name-display">冒险者披风</span>
+            <span class="name-debug" style="display:none;">冒险者披风【Cloak】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Armor_Armory.html">
+            <span class="name-display">军械库-护甲</span>
+            <span class="name-debug" style="display:none;">军械库-护甲【Armor_Armory】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon_FrozenRoom.html">
+            <span class="name-display">冰封房-武器</span>
+            <span class="name-debug" style="display:none;">冰封房-武器【Weapon_FrozenRoom】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Scabbard.html">
+            <span class="name-display">剑鞘</span>
+            <span class="name-debug" style="display:none;">剑鞘【Scabbard】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodChestMedium.html">
+            <span class="name-display">加固宝箱</span>
+            <span class="name-debug" style="display:none;">加固宝箱【WoodChestMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="DoctorsBag.html">
+            <span class="name-display">医师的包</span>
+            <span class="name-debug" style="display:none;">医师的包【DoctorsBag】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Pickaxe.html">
+            <span class="name-display">十字镐</span>
+            <span class="name-debug" style="display:none;">十字镐【Pickaxe】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="MarvelousChest.html">
+            <span class="name-display">卓越宝箱</span>
+            <span class="name-debug" style="display:none;">卓越宝箱【MarvelousChest】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Armor_DualBoss.html">
+            <span class="name-display">双Boss-护甲</span>
+            <span class="name-debug" style="display:none;">双Boss-护甲【Armor_DualBoss】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon_DualBoss.html">
+            <span class="name-display">双Boss-武器</span>
+            <span class="name-debug" style="display:none;">双Boss-武器【Weapon_DualBoss】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Coin.html">
+            <span class="name-display">古钱币</span>
+            <span class="name-debug" style="display:none;">古钱币【Coin】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Ground.html">
+            <span class="name-display">地面</span>
+            <span class="name-debug" style="display:none;">地面【Ground】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BrokenTelescopeHead.html">
+            <span class="name-display">坏掉的望远镜</span>
+            <span class="name-debug" style="display:none;">坏掉的望远镜【BrokenTelescopeHead】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BrokenWheel.html">
+            <span class="name-display">坏掉的车轮</span>
+            <span class="name-debug" style="display:none;">坏掉的车轮【BrokenWheel】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BrokenPickaxe.html">
+            <span class="name-display">坏掉的镐</span>
+            <span class="name-debug" style="display:none;">坏掉的镐【BrokenPickaxe】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BrokenWoodenBarrelFragment.html">
+            <span class="name-display">坏木桶的碎片</span>
+            <span class="name-debug" style="display:none;">坏木桶的碎片【BrokenWoodenBarrelFragment】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BrokenJarShard.html">
+            <span class="name-display">坏罐子碎片</span>
+            <span class="name-debug" style="display:none;">坏罐子碎片【BrokenJarShard】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodChestLarge.html">
+            <span class="name-display">大型加固宝箱</span>
+            <span class="name-debug" style="display:none;">大型加固宝箱【WoodChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SimpleChestLarge.html">
+            <span class="name-display">大型橡木宝箱</span>
+            <span class="name-debug" style="display:none;">大型橡木宝箱【SimpleChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Gems.html">
+            <span class="name-display">宝石</span>
+            <span class="name-debug" style="display:none;">宝石【Gems】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Hoard.html">
+            <span class="name-display">宝藏堆</span>
+            <span class="name-debug" style="display:none;">宝藏堆【Hoard】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SealedLetter.html">
+            <span class="name-display">密封信函</span>
+            <span class="name-debug" style="display:none;">密封信函【SealedLetter】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodChestSmall.html">
+            <span class="name-display">小型加固宝箱</span>
+            <span class="name-debug" style="display:none;">小型加固宝箱【WoodChestSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CrateSmall.html">
+            <span class="name-display">小型木板箱</span>
+            <span class="name-debug" style="display:none;">小型木板箱【CrateSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SimpleChestSmall.html">
+            <span class="name-display">小型橡木宝箱</span>
+            <span class="name-debug" style="display:none;">小型橡木宝箱【SimpleChestSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="StoneFragment.html">
+            <span class="name-display">小碎石</span>
+            <span class="name-debug" style="display:none;">小碎石【StoneFragment】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Trinkets.html">
+            <span class="name-display">小饰品</span>
+            <span class="name-debug" style="display:none;">小饰品【Trinkets】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="GoatHideRug.html">
+            <span class="name-display">山羊皮毯</span>
+            <span class="name-debug" style="display:none;">山羊皮毯【GoatHideRug】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="ChocolateChipMuffin.html">
+            <span class="name-display">巧克力松饼</span>
+            <span class="name-debug" style="display:none;">巧克力松饼【ChocolateChipMuffin】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="GiantBarnacle.html">
+            <span class="name-display">巨型藤壶</span>
+            <span class="name-debug" style="display:none;">巨型藤壶【GiantBarnacle】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="GiantClam_Chest.html">
+            <span class="name-display">巨蚌</span>
+            <span class="name-debug" style="display:none;">巨蚌【GiantClam_Chest】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="PhantomFlower.html">
+            <span class="name-display">幻影花</span>
+            <span class="name-debug" style="display:none;">幻影花【PhantomFlower】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Lockpick.html">
+            <span class="name-display">开锁器</span>
+            <span class="name-debug" style="display:none;">开锁器【Lockpick】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WarHorn.html">
+            <span class="name-display">战争号角</span>
+            <span class="name-debug" style="display:none;">战争号角【WarHorn】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WalkingCane.html">
+            <span class="name-display">手杖</span>
+            <span class="name-debug" style="display:none;">手杖【WalkingCane】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Wardweed.html">
+            <span class="name-display">护符草</span>
+            <span class="name-debug" style="display:none;">护符草【Wardweed】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BrokenFrame.html">
+            <span class="name-display">损坏的画作</span>
+            <span class="name-debug" style="display:none;">损坏的画作【BrokenFrame】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="TracingWheel.html">
+            <span class="name-display">描线轮</span>
+            <span class="name-debug" style="display:none;">描线轮【TracingWheel】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="FlatChestLarge.html">
+            <span class="name-display">方型宝箱</span>
+            <span class="name-debug" style="display:none;">方型宝箱【FlatChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SquareCushion.html">
+            <span class="name-display">方形坐垫</span>
+            <span class="name-debug" style="display:none;">方形坐垫【SquareCushion】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="OldRope.html">
+            <span class="name-display">旧绳索</span>
+            <span class="name-debug" style="display:none;">旧绳索【OldRope】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="OldNauticalChartFragment.html">
+            <span class="name-display">旧航海图残页</span>
+            <span class="name-debug" style="display:none;">旧航海图残页【OldNauticalChartFragment】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Accessory_OldRustRoom.html">
+            <span class="name-display">旧锈房-饰品</span>
+            <span class="name-debug" style="display:none;">旧锈房-饰品【Accessory_OldRustRoom】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon_Common.html">
+            <span class="name-display">普通武器</span>
+            <span class="name-debug" style="display:none;">普通武器【Weapon_Common】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Telescope.html">
+            <span class="name-display">望远镜</span>
+            <span class="name-debug" style="display:none;">望远镜【Telescope】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodenPlank.html">
+            <span class="name-display">木板</span>
+            <span class="name-debug" style="display:none;">木板【WoodenPlank】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodenStake.html">
+            <span class="name-display">木桩</span>
+            <span class="name-debug" style="display:none;">木桩【WoodenStake】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Barrel.html">
+            <span class="name-display">木桶</span>
+            <span class="name-debug" style="display:none;">木桶【Barrel】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodenStick.html">
+            <span class="name-display">木棍</span>
+            <span class="name-debug" style="display:none;">木棍【WoodenStick】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Charcoal.html">
+            <span class="name-display">木炭</span>
+            <span class="name-debug" style="display:none;">木炭【Charcoal】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodenFigurine.html">
+            <span class="name-display">木雕像</span>
+            <span class="name-debug" style="display:none;">木雕像【WoodenFigurine】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodenMask.html">
+            <span class="name-display">木面具</span>
+            <span class="name-debug" style="display:none;">木面具【WoodenMask】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodenDice.html">
+            <span class="name-display">木骰子</span>
+            <span class="name-debug" style="display:none;">木骰子【WoodenDice】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BarrelHoop.html">
+            <span class="name-display">桶箍</span>
+            <span class="name-debug" style="display:none;">桶箍【BarrelHoop】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SimpleChestMedium.html">
+            <span class="name-display">橡木宝箱</span>
+            <span class="name-debug" style="display:none;">橡木宝箱【SimpleChestMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon.html">
+            <span class="name-display">武器</span>
+            <span class="name-debug" style="display:none;">武器【Weapon】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SailorsJournal.html">
+            <span class="name-display">水手日记</span>
+            <span class="name-debug" style="display:none;">水手日记【SailorsJournal】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Hourglass.html">
+            <span class="name-display">沙漏</span>
+            <span class="name-debug" style="display:none;">沙漏【Hourglass】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="ArmillarySphere.html">
+            <span class="name-display">浑天仪</span>
+            <span class="name-debug" style="display:none;">浑天仪【ArmillarySphere】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodenBarrel_UnderSea.html">
+            <span class="name-display">海底木桶</span>
+            <span class="name-debug" style="display:none;">海底木桶【WoodenBarrel_UnderSea】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Starfish.html">
+            <span class="name-display">海星</span>
+            <span class="name-debug" style="display:none;">海星【Starfish】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="ConchShell.html">
+            <span class="name-display">海螺壳</span>
+            <span class="name-debug" style="display:none;">海螺壳【ConchShell】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Potion.html">
+            <span class="name-display">清晰药水</span>
+            <span class="name-debug" style="display:none;">清晰药水【Potion】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="LukewarmStew.html">
+            <span class="name-display">温香乱炖</span>
+            <span class="name-debug" style="display:none;">温香乱炖【LukewarmStew】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="TidestoneOre.html">
+            <span class="name-display">潮汐石矿</span>
+            <span class="name-debug" style="display:none;">潮汐石矿【TidestoneOre】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="TarBarrel.html">
+            <span class="name-display">焦油木桶</span>
+            <span class="name-debug" style="display:none;">焦油木桶【TarBarrel】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="LavaMushroom.html">
+            <span class="name-display">熔岩菇</span>
+            <span class="name-debug" style="display:none;">熔岩菇【LavaMushroom】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SpentCandle.html">
+            <span class="name-display">燃尽的蜡烛</span>
+            <span class="name-debug" style="display:none;">燃尽的蜡烛【SpentCandle】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="OrnateChestLarge.html">
+            <span class="name-display">狮头宝箱</span>
+            <span class="name-debug" style="display:none;">狮头宝箱【OrnateChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CrimsonThreadSpool.html">
+            <span class="name-display">猩红线卷</span>
+            <span class="name-debug" style="display:none;">猩红线卷【CrimsonThreadSpool】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CoralFragment.html">
+            <span class="name-display">珊瑚碎块</span>
+            <span class="name-debug" style="display:none;">珊瑚碎块【CoralFragment】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Lifeleaf.html">
+            <span class="name-display">生命之叶</span>
+            <span class="name-debug" style="display:none;">生命之叶【Lifeleaf】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WhiteThreadSpool.html">
+            <span class="name-display">白线卷</span>
+            <span class="name-debug" style="display:none;">白线卷【WhiteThreadSpool】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Coffin_Royal.html">
+            <span class="name-display">皇家棺材</span>
+            <span class="name-debug" style="display:none;">皇家棺材【Coffin_Royal】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="LeatherBoot.html">
+            <span class="name-display">皮靴子</span>
+            <span class="name-debug" style="display:none;">皮靴子【LeatherBoot】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Saltvine.html">
+            <span class="name-display">盐藤</span>
+            <span class="name-debug" style="display:none;">盐藤【Saltvine】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Eyepatch.html">
+            <span class="name-display">眼罩</span>
+            <span class="name-debug" style="display:none;">眼罩【Eyepatch】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="DwarfSecretWeapon.html">
+            <span class="name-display">矮人秘密武器</span>
+            <span class="name-debug" style="display:none;">矮人秘密武器【DwarfSecretWeapon】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="StoneTomb.html">
+            <span class="name-display">石棺</span>
+            <span class="name-debug" style="display:none;">石棺【StoneTomb】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WoodsmanAxe.html">
+            <span class="name-display">砍柴斧</span>
+            <span class="name-debug" style="display:none;">砍柴斧【WoodsmanAxe】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="TornSail.html">
+            <span class="name-display">破损船帆</span>
+            <span class="name-debug" style="display:none;">破损船帆【TornSail】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Brimstone.html">
+            <span class="name-display">硫磺</span>
+            <span class="name-debug" style="display:none;">硫磺【Brimstone】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon_MysticalTreasureRoom.html">
+            <span class="name-display">神秘宝藏房-武器</span>
+            <span class="name-debug" style="display:none;">神秘宝藏房-武器【Weapon_MysticalTreasureRoom】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon_Rare.html">
+            <span class="name-display">稀有武器</span>
+            <span class="name-debug" style="display:none;">稀有武器【Weapon_Rare】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Arrow.html">
+            <span class="name-display">箭</span>
+            <span class="name-debug" style="display:none;">箭【Arrow】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="RubysilverOre.html">
+            <span class="name-display">红宝石银矿</span>
+            <span class="name-debug" style="display:none;">红宝石银矿【RubysilverOre】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="RedApple.html">
+            <span class="name-display">红苹果</span>
+            <span class="name-debug" style="display:none;">红苹果【RedApple】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SturdyCloth.html">
+            <span class="name-display">结实的布料</span>
+            <span class="name-debug" style="display:none;">结实的布料【SturdyCloth】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SturdyRope.html">
+            <span class="name-display">结实的绳索</span>
+            <span class="name-debug" style="display:none;">结实的绳索【SturdyRope】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Bandage.html">
+            <span class="name-display">绷带</span>
+            <span class="name-debug" style="display:none;">绷带【Bandage】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="GreenThreadSpool.html">
+            <span class="name-display">绿线卷</span>
+            <span class="name-debug" style="display:none;">绿线卷【GreenThreadSpool】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Reins.html">
+            <span class="name-display">缰绳</span>
+            <span class="name-debug" style="display:none;">缰绳【Reins】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Pot.html">
+            <span class="name-display">罐子</span>
+            <span class="name-debug" style="display:none;">罐子【Pot】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Soap.html">
+            <span class="name-display">肥皂</span>
+            <span class="name-debug" style="display:none;">肥皂【Soap】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="NavigationalCompass.html">
+            <span class="name-display">航海罗盘</span>
+            <span class="name-debug" style="display:none;">航海罗盘【NavigationalCompass】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="ShipsWheel.html">
+            <span class="name-display">舵轮</span>
+            <span class="name-debug" style="display:none;">舵轮【ShipsWheel】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Anchor.html">
+            <span class="name-display">船锚</span>
+            <span class="name-debug" style="display:none;">船锚【Anchor】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="HerbPouch.html">
+            <span class="name-display">草药袋</span>
+            <span class="name-debug" style="display:none;">草药袋【HerbPouch】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BlueThreadSpool.html">
+            <span class="name-display">蓝线卷</span>
+            <span class="name-debug" style="display:none;">蓝线卷【BlueThreadSpool】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="WovenRattanBottle.html">
+            <span class="name-display">藤编壶</span>
+            <span class="name-debug" style="display:none;">藤编壶【WovenRattanBottle】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SpiderPot.html">
+            <span class="name-display">蜘蛛罐子</span>
+            <span class="name-debug" style="display:none;">蜘蛛罐子【SpiderPot】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="FabricShears.html">
+            <span class="name-display">裁布剪刀</span>
+            <span class="name-debug" style="display:none;">裁布剪刀【FabricShears】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Seashell.html">
+            <span class="name-display">贝壳</span>
+            <span class="name-debug" style="display:none;">贝壳【Seashell】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SuperHoard.html">
+            <span class="name-display">超级宝藏</span>
+            <span class="name-debug" style="display:none;">超级宝藏【SuperHoard】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="StingrayEgg.html">
+            <span class="name-display">远古刺鳐的蛋</span>
+            <span class="name-debug" style="display:none;">远古刺鳐的蛋【StingrayEgg】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="LargeScroll.html">
+            <span class="name-display">远古卷轴（裂开）</span>
+            <span class="name-debug" style="display:none;">远古卷轴（裂开）【LargeScroll】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Lock.html">
+            <span class="name-display">通过杀死怪物解锁拉杆</span>
+            <span class="name-debug" style="display:none;">通过杀死怪物解锁拉杆【Lock】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Corpse.html">
+            <span class="name-display">遗骸</span>
+            <span class="name-debug" style="display:none;">遗骸【Corpse】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="OrnateChestMedium.html">
+            <span class="name-display">重型华丽宝箱</span>
+            <span class="name-debug" style="display:none;">重型华丽宝箱【OrnateChestMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Chalice.html">
+            <span class="name-display">金圣杯（裂开）</span>
+            <span class="name-debug" style="display:none;">金圣杯（裂开）【Chalice】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="GoldWaterpot.html">
+            <span class="name-display">金水壶（裂开）</span>
+            <span class="name-debug" style="display:none;">金水壶（裂开）【GoldWaterpot】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CandleHolder.html">
+            <span class="name-display">金烛台（裂开）</span>
+            <span class="name-debug" style="display:none;">金烛台（裂开）【CandleHolder】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="GoldOre.html">
+            <span class="name-display">金矿</span>
+            <span class="name-debug" style="display:none;">金矿【GoldOre】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Pincushion.html">
+            <span class="name-display">针垫</span>
+            <span class="name-debug" style="display:none;">针垫【Pincushion】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CobaltOre.html">
+            <span class="name-display">钴矿</span>
+            <span class="name-debug" style="display:none;">钴矿【CobaltOre】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BlacksmithTongs.html">
+            <span class="name-display">铁匠钳</span>
+            <span class="name-debug" style="display:none;">铁匠钳【BlacksmithTongs】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="IronChain.html">
+            <span class="name-display">铁链</span>
+            <span class="name-debug" style="display:none;">铁链【IronChain】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="CopperOre.html">
+            <span class="name-display">铜矿</span>
+            <span class="name-debug" style="display:none;">铜矿【CopperOre】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Paperweight.html">
+            <span class="name-display">镇纸</span>
+            <span class="name-debug" style="display:none;">镇纸【Paperweight】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Shackles.html">
+            <span class="name-display">镣铐</span>
+            <span class="name-debug" style="display:none;">镣铐【Shackles】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="LongPipe.html">
+            <span class="name-display">长烟斗</span>
+            <span class="name-debug" style="display:none;">长烟斗【LongPipe】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="FrostStoneOre.html">
+            <span class="name-display">霜石矿</span>
+            <span class="name-debug" style="display:none;">霜石矿【FrostStoneOre】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="OrnateChestSmall.html">
+            <span class="name-display">青铜华丽宝箱</span>
+            <span class="name-debug" style="display:none;">青铜华丽宝箱【OrnateChestSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BronzeLadle.html">
+            <span class="name-display">青铜长勺</span>
+            <span class="name-debug" style="display:none;">青铜长勺【BronzeLadle】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Horseshoe.html">
+            <span class="name-display">马蹄铁</span>
+            <span class="name-debug" style="display:none;">马蹄铁【Horseshoe】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Saddle.html">
+            <span class="name-display">马鞍</span>
+            <span class="name-debug" style="display:none;">马鞍【Saddle】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon_SkullRoom.html">
+            <span class="name-display">骷髅房-武器</span>
+            <span class="name-debug" style="display:none;">骷髅房-武器【Weapon_SkullRoom】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="SkullKey.html">
+            <span class="name-display">骷髅钥匙</span>
+            <span class="name-debug" style="display:none;">骷髅钥匙【SkullKey】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Bones.html">
+            <span class="name-display">骸骨</span>
+            <span class="name-debug" style="display:none;">骸骨【Bones】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="LuxuryBootRack.html">
+            <span class="name-display">高档靴撑子</span>
+            <span class="name-debug" style="display:none;">高档靴撑子【LuxuryBootRack】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Birdcage.html">
+            <span class="name-display">鸟笼</span>
+            <span class="name-debug" style="display:none;">鸟笼【Birdcage】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="YellowThreadSpool.html">
+            <span class="name-display">黄线卷</span>
+            <span class="name-debug" style="display:none;">黄线卷【YellowThreadSpool】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="GoldChest.html">
+            <span class="name-display">黄金宝箱</span>
+            <span class="name-debug" style="display:none;">黄金宝箱【GoldChest】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Armor_GoldenRoom.html">
+            <span class="name-display">黄金房-护甲</span>
+            <span class="name-debug" style="display:none;">黄金房-护甲【Armor_GoldenRoom】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="Weapon_GoldenRoom.html">
+            <span class="name-display">黄金房-武器</span>
+            <span class="name-debug" style="display:none;">黄金房-武器【Weapon_GoldenRoom】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="ObsidianOre.html">
+            <span class="name-display">黑曜石矿</span>
+            <span class="name-debug" style="display:none;">黑曜石矿【ObsidianOre】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BlackRose.html">
+            <span class="name-display">黑玫瑰</span>
+            <span class="name-debug" style="display:none;">黑玫瑰【BlackRose】</span>
+        </a>
+    </div>
+    <div class="summary-item item-item">
+        <a href="BlackThreadSpool.html">
+            <span class="name-display">黑线卷</span>
+            <span class="name-debug" style="display:none;">黑线卷【BlackThreadSpool】</span>
+        </a>
+    </div>
+</div>
+
+    <script>
+        function toggleDebugInfo() {
+            const displays = document.querySelectorAll('.name-display');
+            const debugs = document.querySelectorAll('.name-debug');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = debugs.length > 0 && debugs[0].style.display !== 'none';
+            displays.forEach(el => el.style.display = isVisible ? 'inline' : 'none');
+            debugs.forEach(el => el.style.display = isVisible ? 'none' : 'inline');
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => { if (dot.style.display === 'none') return; dot.style.left = '50%'; dot.style.top = '50%'; });
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

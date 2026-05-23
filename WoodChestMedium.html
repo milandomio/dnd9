@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>加固宝箱 位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #FFC107; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 5px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+        .summary .label-group-row { background-color: #424242; }
+        .label-toggle-btn { margin: 2px 4px; padding: 4px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .label-toggle-btn:hover { background-color: #45a049; transform: scale(1.05); }
+        .label-toggle-btn:active { transform: scale(0.95); }
+        .legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 15px; text-align: center; color: #aaa; }
+        .color-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>加固宝箱 位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">加固宝箱 (WoodChestMedium)</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header">哥布林洞穴1层</div>
+    <div class="map-card" id="map-card-Cave_MoleTunnel_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">鼹鼠隧道<span class='debug-text'> (MoleTunnel)</span><div class='map-filename'>Cave_MoleTunnel_HR_D.json</div></h3>
+        <div class="map-info">Cave_MoleTunnel.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cave_MoleTunnel_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cave_MoleTunnel_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cave_MoleTunnel_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cave_MoleTunnel_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cave_MoleTunnel_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cave_MoleTunnel_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cave_MoleTunnel_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_MoleTunnel_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_MoleTunnel_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_MoleTunnel_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cave_MoleTunnel_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_MoleTunnel_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cave_MoleTunnel_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_MoleTunnel_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cave_MoleTunnel_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cave_MoleTunnel_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_MoleTunnel_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cave_MoleTunnel_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cave_MoleTunnel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_MoleTunnel.webp" class="image">        <div class="dot" data-index="745" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-720.0" data-y="28.0" data-z="465.0001" style="left: 27.50%; top: 50.88%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">465</span></div>
+        <div class="dot" data-index="746" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-360.0" data-y="1338.0" data-z="9.598046e-05" style="left: 38.75%; top: 91.81%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Cave_Tomb_Center_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洞穴墓葬<span class='debug-text'> (Cave_Tombs)</span><div class='map-filename'>Cave_Tomb_Center_HR_D.json</div></h3>
+        <div class="map-info">Cave_Tomb_Center.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cave_Tomb_Center_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cave_Tomb_Center_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cave_Tomb_Center_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cave_Tomb_Center_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cave_Tomb_Center_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cave_Tomb_Center_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Tomb_Center_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Tomb_Center_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Tomb_Center_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Tomb_Center_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cave_Tomb_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_Tomb_Center_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cave_Tomb_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_Tomb_Center_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cave_Tomb_Center_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cave_Tomb_Center_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Tomb_Center_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cave_Tomb_Center_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cave_Tomb_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Tomb_Center.webp" class="image">        <div class="dot" data-index="899" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-701.0" data-y="28.0" data-z="0.415263" style="left: 28.09%; top: 50.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="900" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-606.0" data-y="1282.0" data-z="0.314066" style="left: 31.06%; top: 90.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟2层地牢</div>
+    <div class="map-card" id="map-card-Crypt_Atrium_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">中庭<span class='debug-text'> (Atrium)</span><div class='map-filename'>Crypt_Atrium_D.json</div></h3>
+        <div class="map-info">Crypt_Atrium.webp (缓存) | 找到 8 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Crypt_Atrium_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Crypt_Atrium_D-json" value="1600" step="100" onchange="updateMapRange('Crypt_Atrium_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Crypt_Atrium_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Crypt_Atrium_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Crypt_Atrium_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_Atrium_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_Atrium_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_Atrium_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_Atrium_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Crypt_Atrium_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_Atrium_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Crypt_Atrium_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_Atrium_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Crypt_Atrium_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Crypt_Atrium_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_Atrium_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Crypt_Atrium_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Crypt_Atrium_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_Atrium.webp" class="image">        <div class="dot" data-index="2168" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="1150.0" data-y="540.03577" data-z="-399.9999" style="left: 85.94%; top: 66.88%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+        <div class="dot" data-index="2169" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-1150.0001" data-y="-621.7368" data-z="-399.9999" style="left: 14.06%; top: 30.57%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+        <div class="dot" data-index="2170" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="544.99994" data-y="-825.00006" data-z="-399.9999" style="left: 67.03%; top: 24.22%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+        <div class="dot" data-index="2171" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-544.99994" data-y="815.00006" data-z="-399.9999" style="left: 32.97%; top: 75.47%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+        <div class="dot" data-index="2172" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-830.00006" data-y="-626.7369" data-z="-399.9999" style="left: 24.06%; top: 30.41%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+        <div class="dot" data-index="2173" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="825.0" data-y="544.2338" data-z="-399.9999" style="left: 75.78%; top: 67.01%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+        <div class="dot" data-index="2174" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="1189.1599" data-y="-1166.2311" data-z="-399.9999" style="left: 87.16%; top: 13.56%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+        <div class="dot" data-index="2175" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-1152.0278" data-y="1152.6779" data-z="-399.9999" style="left: 14.00%; top: 86.02%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+</div>
+    </div>
+    <div class="group-header">冰图1层</div>
+    <div class="map-card" id="map-card-IceCave_Hive_03_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="2" style="">
+        <h3 class="map-title">蜂巢<span class='debug-text'> (IceCave_Hive)</span><div class='map-filename'>IceCave_Hive_03_HR_D.json</div></h3>
+        <div class="map-info">IceCave_Hive_03.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceCave_Hive_03_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceCave_Hive_03_HR_D-json" value="3200" step="100" onchange="updateMapRange('IceCave_Hive_03_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceCave_Hive_03_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceCave_Hive_03_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceCave_Hive_03_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceCave_Hive_03_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Hive_03_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceCave_Hive_03_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Hive_03_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceCave_Hive_03_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceCave_Hive_03_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Hive_03_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceCave_Hive_03_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceCave_Hive_03_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/IceCave_Hive_03.webp" class="image">        <div class="dot" data-index="7404" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-2926.0" data-y="391.43594" data-z="-163.9999" style="left: 8.56%; top: 56.12%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-163</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟3层炼狱</div>
+    <div class="map-card" id="map-card-InfernoRiver_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">InfernoRiver<span class='debug-text'> (InfernoRiver)</span><div class='map-filename'>InfernoRiver_D.json</div></h3>
+        <div class="map-info">InfernoRiver.webp (缓存) | 找到 7 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoRiver_D-json" value="1600" step="100" onchange="updateMapRange('InfernoRiver_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoRiver_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoRiver_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoRiver_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoRiver_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoRiver_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoRiver_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoRiver_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoRiver_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot" data-index="9505" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="477.08447" data-y="-310.22836" data-z="-252.27747" style="left: 64.91%; top: 40.31%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-252</span></div>
+        <div class="dot" data-index="9506" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="998.43774" data-y="305.73175" data-z="-299.9999" style="left: 81.20%; top: 59.55%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-299</span></div>
+        <div class="dot" data-index="9507" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="546.0" data-y="1070.0" data-z="0.0" style="left: 67.06%; top: 83.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="9508" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="546.0" data-y="1200.0" data-z="1.0" style="left: 67.06%; top: 87.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">1</span></div>
+        <div class="dot" data-index="9509" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="291.95184" data-y="-579.95184" data-z="-160.0" style="left: 59.12%; top: 31.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-160</span></div>
+        <div class="dot" data-index="9510" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-442.64468" data-y="273.39612" data-z="-160.0" style="left: 36.17%; top: 58.54%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-160</span></div>
+        <div class="dot" data-index="9511" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="1423.0" data-y="-369.0" data-z="-100.0" style="left: 94.47%; top: 38.47%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-100</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ThroneRoom_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶魔王座<span class='debug-text'> (Demon_Throne)</span><div class='map-filename'>ThroneRoom_02_HR_D.json</div></h3>
+        <div class="map-info">ThroneRoom_02.webp (缓存) | 找到 5 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ThroneRoom_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ThroneRoom_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('ThroneRoom_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ThroneRoom_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ThroneRoom_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ThroneRoom_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ThroneRoom_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThroneRoom_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ThroneRoom_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThroneRoom_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ThroneRoom_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ThroneRoom_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ThroneRoom_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ThroneRoom_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot" data-index="9908" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-800.0" data-y="480.0" data-z="400.0" style="left: 25.00%; top: 65.00%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">400</span></div>
+        <div class="dot" data-index="9909" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-250.0" data-y="480.00116" data-z="200.0001" style="left: 42.19%; top: 65.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">200</span></div>
+        <div class="dot" data-index="9910" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="-249.99797" data-y="-480.99884" data-z="200.0001" style="left: 42.19%; top: 34.97%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">200</span></div>
+        <div class="dot" data-index="9911" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="160.0" data-y="-840.0" data-z="0.0" style="left: 55.00%; top: 23.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="9912" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" data-x="160.0" data-y="820.0" data-z="0.0" style="left: 55.00%; top: 75.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>颜色说明：</strong>
+        <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
+        <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
+        <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
+        <br><strong>位置统计：共 38 个位置点</strong><br><strong>包含地图：</strong> 中庭, 恶魔王座, 洞穴墓葬, 蜂巢, 鼹鼠隧道
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table>
+            <tr><th>显示</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>
+                <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签分组开关（点击全选/取消同标签）</th>
+        <th colspan='3' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签数量</th>
+    </tr>
+    <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_WoodChestMedium')">GameSpawner_Id_Spawner_New_Props_WoodChestMedium (25)</button>
+        </th>
+        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
+    </tr>
+
+                <tr id="row-745" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_MoleTunnel_HR_D-json', 745, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_MoleTunnel_HR_D.json</td>
+        <td>鼹鼠隧道</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-720.00</td>
+        <td>28.00</td>
+        <td>465.00</td>
+    </tr>
+    <tr id="row-746" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_MoleTunnel_HR_D-json', 746, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_MoleTunnel_HR_D.json</td>
+        <td>鼹鼠隧道</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-360.00</td>
+        <td>1338.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-899" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_HR_D-json', 899, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_Tomb_Center_HR_D.json</td>
+        <td>洞穴墓葬</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-701.00</td>
+        <td>28.00</td>
+        <td>0.42</td>
+    </tr>
+    <tr id="row-900" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_HR_D-json', 900, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_Tomb_Center_HR_D.json</td>
+        <td>洞穴墓葬</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-606.00</td>
+        <td>1282.00</td>
+        <td>0.31</td>
+    </tr>
+    <tr id="row-2168" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2168, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>1150.00</td>
+        <td>540.04</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-2169" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2169, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-1150.00</td>
+        <td>-621.74</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-2170" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2170, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>545.00</td>
+        <td>-825.00</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-2171" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2171, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-545.00</td>
+        <td>815.00</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-2172" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2172, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-830.00</td>
+        <td>-626.74</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-2173" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2173, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>825.00</td>
+        <td>544.23</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-2174" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2174, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>1189.16</td>
+        <td>-1166.23</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-2175" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Atrium_D-json', 2175, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_Atrium_D.json</td>
+        <td>中庭</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-1152.03</td>
+        <td>1152.68</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-7404" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 7404, this)"></td>
+        <td>冰图1层</td>
+        <td>IceCave_Hive_03_HR_D.json</td>
+        <td>蜂巢</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-2926.00</td>
+        <td>391.44</td>
+        <td>-164.00</td>
+    </tr>
+    <tr id="row-9505" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_D-json', 9505, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>477.08</td>
+        <td>-310.23</td>
+        <td>-252.28</td>
+    </tr>
+    <tr id="row-9506" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_D-json', 9506, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>998.44</td>
+        <td>305.73</td>
+        <td>-300.00</td>
+    </tr>
+    <tr id="row-9507" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_D-json', 9507, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>546.00</td>
+        <td>1070.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9508" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_D-json', 9508, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>546.00</td>
+        <td>1200.00</td>
+        <td>1.00</td>
+    </tr>
+    <tr id="row-9509" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_D-json', 9509, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>291.95</td>
+        <td>-579.95</td>
+        <td>-160.00</td>
+    </tr>
+    <tr id="row-9510" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_D-json', 9510, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-442.64</td>
+        <td>273.40</td>
+        <td>-160.00</td>
+    </tr>
+    <tr id="row-9511" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_D-json', 9511, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>1423.00</td>
+        <td>-369.00</td>
+        <td>-100.00</td>
+    </tr>
+    <tr id="row-9908" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9908, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>ThroneRoom_02_HR_D.json</td>
+        <td>恶魔王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-800.00</td>
+        <td>480.00</td>
+        <td>400.00</td>
+    </tr>
+    <tr id="row-9909" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9909, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>ThroneRoom_02_HR_D.json</td>
+        <td>恶魔王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-250.00</td>
+        <td>480.00</td>
+        <td>200.00</td>
+    </tr>
+    <tr id="row-9910" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9910, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>ThroneRoom_02_HR_D.json</td>
+        <td>恶魔王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>-250.00</td>
+        <td>-481.00</td>
+        <td>200.00</td>
+    </tr>
+    <tr id="row-9911" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9911, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>ThroneRoom_02_HR_D.json</td>
+        <td>恶魔王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>160.00</td>
+        <td>-840.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9912" data-label="GameSpawner_Id_Spawner_New_Props_WoodChestMedium">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9912, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>ThroneRoom_02_HR_D.json</td>
+        <td>恶魔王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_WoodChestMedium</td>
+        <td>160.00</td>
+        <td>820.00</td>
+        <td>0.00</td>
+    </tr>
+
+        </table>
+    </div>
+    <script>
+        window.mapStates = {};
+        window.labelStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+            // 检查卡片是否还有可见点，自动隐藏/显示卡片
+            checkCardVisibility(cardId);
+        }
+        function checkCardVisibility(cardId) {
+            const card = document.getElementById('map-card-' + cardId);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            let hasVisibleDot = false;
+            dots.forEach(dot => {
+                if (dot.style.display !== 'none') {
+                    hasVisibleDot = true;
+                }
+            });
+            // 如果所有点都隐藏，隐藏整个卡片；否则显示卡片
+            card.style.display = hasVisibleDot ? 'flex' : 'none';
+        }
+        function toggleLabelGroup(label) {
+            // 切换标签状态的选中/取消
+            if (!window.labelStates[label]) {
+                window.labelStates[label] = true; // 默认为true（显示）
+            }
+            window.labelStates[label] = !window.labelStates[label];
+            const shouldShow = window.labelStates[label];
+
+            // 更新所有同标签的点和复选框
+            const allLabelRows = document.querySelectorAll(`tr[data-label="${label}"]`);
+            allLabelRows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = shouldShow;
+                    // 触发togglePoint函数
+                    const rowId = row.id;
+                    const pointIndex = rowId.replace('row-', '');
+                    // 获取对应的cardId（从data属性或其他方式）
+                    const dot = document.querySelector(`.dot[data-label="${label}"][data-index="${pointIndex}"]`);
+                    if (dot) {
+                        const card = dot.closest('.map-card');
+                        if (card) {
+                            const cardId = card.id.replace('map-card-', '');
+                            // 手动调用togglePoint
+                            dot.style.display = shouldShow ? 'block' : 'none';
+                            row.style.opacity = shouldShow ? '1' : '0.4';
+                            checkCardVisibility(cardId);
+                        }
+                    }
+                }
+            });
+
+            // 更新按钮样式
+            const toggleBtn = document.querySelector(`.label-toggle-btn[data-label="${label}"]`);
+            if (toggleBtn) {
+                toggleBtn.style.backgroundColor = shouldShow ? '#4CAF50' : '#f44336';
+                toggleBtn.style.color = shouldShow ? 'white' : 'white';
+            }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX = 50, multY = 50, centerX = 50, centerY = 50;
+                if (sx === 1 && sy === 2) { centerX = 100; multX = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX + (x / range) * multX;
+                const top = centerY + (y / range) * multY;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+            
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

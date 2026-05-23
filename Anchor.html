@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>船锚 位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #FFC107; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 5px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+        .summary .label-group-row { background-color: #424242; }
+        .label-toggle-btn { margin: 2px 4px; padding: 4px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .label-toggle-btn:hover { background-color: #45a049; transform: scale(1.05); }
+        .label-toggle-btn:active { transform: scale(0.95); }
+        .legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 15px; text-align: center; color: #aaa; }
+        .color-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>船锚 位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">船锚 (Anchor)</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header">水图</div>
+    <div class="map-card" id="map-card-EmptyModule_1F_09_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">5-1模块<span class='debug-text'> (1F_09)</span><div class='map-filename'>EmptyModule_1F_09_D.json</div></h3>
+        <div class="map-info">EmptyModule_1F_09.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_09_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-EmptyModule_1F_09_D-json" value="1600" step="100" onchange="updateMapRange('EmptyModule_1F_09_D-json')">
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_09_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-EmptyModule_1F_09_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-EmptyModule_1F_09_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_09_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_09_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_09_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_09_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-EmptyModule_1F_09_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_09_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-EmptyModule_1F_09_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_09_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('EmptyModule_1F_09_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('EmptyModule_1F_09_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('EmptyModule_1F_09_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('EmptyModule_1F_09_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-EmptyModule_1F_09_D-json" style="aspect-ratio: 1 / 1;"><img src="images/EmptyModule_1F_09.webp" class="image">        <div class="dot" data-index="13053" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="403.1442" data-y="277.87314" data-z="-653.39386" style="left: 62.60%; top: 58.68%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-653</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-EmptyModule_1F_13_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">6-5模块<span class='debug-text'> (1F_13)</span><div class='map-filename'>EmptyModule_1F_13_D.json</div></h3>
+        <div class="map-info">EmptyModule_1F_13.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_13_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-EmptyModule_1F_13_D-json" value="1600" step="100" onchange="updateMapRange('EmptyModule_1F_13_D-json')">
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_13_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-EmptyModule_1F_13_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-EmptyModule_1F_13_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_13_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_13_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_13_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_13_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-EmptyModule_1F_13_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_13_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-EmptyModule_1F_13_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_13_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('EmptyModule_1F_13_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('EmptyModule_1F_13_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('EmptyModule_1F_13_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('EmptyModule_1F_13_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-EmptyModule_1F_13_D-json" style="aspect-ratio: 1 / 1;"><img src="images/EmptyModule_1F_13.webp" class="image">        <div class="dot" data-index="13073" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-1251.5239" data-y="985.9398" data-z="-972.41284" style="left: 10.89%; top: 80.81%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-972</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-EmptyModule_1F_14_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">3-1模块<span class='debug-text'> (1F_14)</span><div class='map-filename'>EmptyModule_1F_14_D.json</div></h3>
+        <div class="map-info">EmptyModule_1F_14.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_14_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-EmptyModule_1F_14_D-json" value="1600" step="100" onchange="updateMapRange('EmptyModule_1F_14_D-json')">
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_14_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-EmptyModule_1F_14_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-EmptyModule_1F_14_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-EmptyModule_1F_14_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_14_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-EmptyModule_1F_14_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_14_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('EmptyModule_1F_14_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('EmptyModule_1F_14_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('EmptyModule_1F_14_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('EmptyModule_1F_14_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-EmptyModule_1F_14_D-json" style="aspect-ratio: 1 / 1;"><img src="images/EmptyModule_1F_14.webp" class="image">        <div class="dot" data-index="13110" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="862.36584" data-y="-1368.0393" data-z="-1000.0" style="left: 76.95%; top: 7.25%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1000</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-EmptyModule_1F_15_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">7-4模块<span class='debug-text'> (1F_15)</span><div class='map-filename'>EmptyModule_1F_15_D.json</div></h3>
+        <div class="map-info">EmptyModule_1F_15.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_15_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-EmptyModule_1F_15_D-json" value="1600" step="100" onchange="updateMapRange('EmptyModule_1F_15_D-json')">
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_15_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-EmptyModule_1F_15_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-EmptyModule_1F_15_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_15_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_15_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_15_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_15_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-EmptyModule_1F_15_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_15_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-EmptyModule_1F_15_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_15_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('EmptyModule_1F_15_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('EmptyModule_1F_15_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('EmptyModule_1F_15_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('EmptyModule_1F_15_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-EmptyModule_1F_15_D-json" style="aspect-ratio: 1 / 1;"><img src="images/EmptyModule_1F_15.webp" class="image">        <div class="dot" data-index="13134" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="290.68646" data-y="258.59796" data-z="-825.9812" style="left: 59.08%; top: 58.08%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-825</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_CircleIsland_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">环形岛<span class='debug-text'> (ShipGraveyard_CircleIsland)</span><div class='map-filename'>ShipGraveyard_CircleIsland_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_CircleIsland.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CircleIsland_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_CircleIsland_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_CircleIsland_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CircleIsland_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_CircleIsland_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_CircleIsland_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_CircleIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CircleIsland_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_CircleIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CircleIsland_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_CircleIsland_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_CircleIsland_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_CircleIsland_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_CircleIsland_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_CircleIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_CircleIsland.webp" class="image">        <div class="dot" data-index="12897" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="894.18335" data-y="-195.97997" data-z="-982.212" style="left: 77.94%; top: 43.88%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-982</span></div>
+        <div class="dot" data-index="12898" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-104.34191" data-y="-925.912" data-z="21.0" style="left: 46.74%; top: 21.07%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">21</span></div>
+        <div class="dot" data-index="12899" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="1168.4094" data-y="994.2588" data-z="23.0" style="left: 86.51%; top: 81.07%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">23</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_FlippedShip_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">倾覆之船<span class='debug-text'> (ShipGraveyard_FlippedShip)</span><div class='map-filename'>ShipGraveyard_FlippedShip_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_FlippedShip.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FlippedShip_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_FlippedShip_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_FlippedShip_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FlippedShip_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_FlippedShip_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_FlippedShip_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FlippedShip_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FlippedShip_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FlippedShip_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FlippedShip_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_FlippedShip_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_FlippedShip_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_FlippedShip_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_FlippedShip_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_FlippedShip_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_FlippedShip_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FlippedShip_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_FlippedShip_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_FlippedShip_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_FlippedShip.webp" class="image">        <div class="dot" data-index="13179" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="231.11026" data-y="814.2277" data-z="1.570491" style="left: 57.22%; top: 75.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">1</span></div>
+        <div class="dot" data-index="13180" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="1114.3146" data-y="-519.6344" data-z="-934.5412" style="left: 84.82%; top: 33.76%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-934</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_FloatingHouse_01_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">水手客栈<span class='debug-text'> (ShipGraveyard_FloatingHouse_01)</span><div class='map-filename'>ShipGraveyard_FloatingHouse_01_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_FloatingHouse_01.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingHouse_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_FloatingHouse_01_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_FloatingHouse_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingHouse_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_FloatingHouse_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_FloatingHouse_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingHouse_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingHouse_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingHouse_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingHouse_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_FloatingHouse_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingHouse_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_FloatingHouse_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingHouse_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_FloatingHouse_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_FloatingHouse_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FloatingHouse_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_FloatingHouse_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_FloatingHouse_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_FloatingHouse_01.webp" class="image">        <div class="dot" data-index="13298" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-395.75174" data-y="999.7277" data-z="285.3084" style="left: 37.63%; top: 81.24%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">285</span></div>
+        <div class="dot" data-index="13299" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-1379.0833" data-y="-871.2573" data-z="471.31982" style="left: 6.90%; top: 22.77%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">471</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_Oceanvolcano_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海底火山<span class='debug-text'> (ShipGraveyard_Oceanvolcano)</span><div class='map-filename'>ShipGraveyard_Oceanvolcano_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_Oceanvolcano.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Oceanvolcano_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_Oceanvolcano_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_Oceanvolcano_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Oceanvolcano_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_Oceanvolcano_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_Oceanvolcano_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_Oceanvolcano_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Oceanvolcano_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_Oceanvolcano_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Oceanvolcano_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_Oceanvolcano_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_Oceanvolcano_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Oceanvolcano_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_Oceanvolcano_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_Oceanvolcano_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Oceanvolcano.webp" class="image">        <div class="dot" data-index="14440" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-1254.0393" data-y="-1092.0787" data-z="-985.17896" style="left: 10.81%; top: 15.87%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-985</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_RockIsland_D-json" data-rotate="3" data-init-rotate="3" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">岩岛<span class='debug-text'> (ShipGraveyard_RockIsland)</span><div class='map-filename'>ShipGraveyard_RockIsland_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_RockIsland.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_RockIsland_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_RockIsland_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_RockIsland_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_RockIsland_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_RockIsland_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻3</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_RockIsland_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_RockIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_RockIsland_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_RockIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_RockIsland_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_RockIsland_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_RockIsland_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_RockIsland_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_RockIsland_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_RockIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_RockIsland.webp" class="image">        <div class="dot" data-index="15021" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="1207.1123" data-y="395.9672" data-z="-950.41144" style="left: 87.72%; top: 62.37%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-950</span></div>
+        <div class="dot" data-index="15022" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="152.54315" data-y="63.296574" data-z="2520.0" style="left: 54.77%; top: 51.98%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">2520</span></div>
+        <div class="dot" data-index="15023" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-986.0" data-y="1235.0" data-z="-989.0" style="left: 19.19%; top: 88.59%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-989</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_SeaFortress_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海洋要塞 A<span class='debug-text'> (ShipGraveyard_SeaFortress)</span><div class='map-filename'>ShipGraveyard_SeaFortress_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_SeaFortress.webp (缓存) | 找到 5 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SeaFortress_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_SeaFortress_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_SeaFortress_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SeaFortress_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_SeaFortress_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_SeaFortress_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SeaFortress_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SeaFortress_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SeaFortress_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SeaFortress_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_SeaFortress_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SeaFortress_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_SeaFortress_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SeaFortress_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_SeaFortress_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_SeaFortress_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SeaFortress_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_SeaFortress_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_SeaFortress_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SeaFortress.webp" class="image">        <div class="dot" data-index="15123" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="33.28359" data-y="1036.862" data-z="598.6095" style="left: 51.04%; top: 82.40%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">598</span></div>
+        <div class="dot" data-index="15124" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-1211.9076" data-y="541.18866" data-z="34.445004" style="left: 12.13%; top: 66.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">34</span></div>
+        <div class="dot" data-index="15125" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-151.86372" data-y="795.6349" data-z="14.529441" style="left: 45.25%; top: 74.86%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">14</span></div>
+        <div class="dot" data-index="15126" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-349.27158" data-y="-810.1778" data-z="-996.02405" style="left: 39.09%; top: 24.68%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-996</span></div>
+        <div class="dot" data-index="15127" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="759.9606" data-y="-185.77524" data-z="-942.6981" style="left: 73.75%; top: 44.19%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-942</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_SunkenShip_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">沉没之船<span class='debug-text'> (ShipGraveyard_SunkenShip_01)</span><div class='map-filename'>ShipGraveyard_SunkenShip_01_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_SunkenShip_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SunkenShip_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_SunkenShip_01_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_SunkenShip_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SunkenShip_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_SunkenShip_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_SunkenShip_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_SunkenShip_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SunkenShip_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_SunkenShip_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SunkenShip_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_SunkenShip_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_SunkenShip_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SunkenShip_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_SunkenShip_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_SunkenShip_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SunkenShip_01.webp" class="image">        <div class="dot" data-index="15809" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-134.29314" data-y="338.5972" data-z="-1189.8944" style="left: 45.80%; top: 60.58%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1189</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_Trench_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海沟<span class='debug-text'> (ShipGraveyard_Trench)</span><div class='map-filename'>ShipGraveyard_Trench_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_Trench.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Trench_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_Trench_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_Trench_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Trench_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_Trench_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_Trench_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_Trench_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Trench_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_Trench_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Trench_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_Trench_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_Trench_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Trench_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_Trench_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_Trench_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Trench.webp" class="image">        <div class="dot" data-index="15900" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="275.81165" data-y="123.253555" data-z="-696.3796" style="left: 58.62%; top: 53.85%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-696</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_UnderSeaCave_01_D-json" data-rotate="2" data-init-rotate="2" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海底洞穴 A<span class='debug-text'> (ShipGraveyard_UnderSeaCave_01)</span><div class='map-filename'>ShipGraveyard_UnderSeaCave_01_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_UnderSeaCave_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_UnderSeaCave_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_UnderSeaCave_01_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_UnderSeaCave_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_UnderSeaCave_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_UnderSeaCave_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻2</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_UnderSeaCave_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_UnderSeaCave_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_UnderSeaCave_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_UnderSeaCave_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_UnderSeaCave_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_UnderSeaCave_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_UnderSeaCave_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_UnderSeaCave_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_UnderSeaCave_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_UnderSeaCave_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_UnderSeaCave_01.webp" class="image">        <div class="dot" data-index="15986" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-679.6024" data-y="1456.6371" data-z="-996.51514" style="left: 28.76%; top: 95.52%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-996</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Shipgraveyard_TwinChamber_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海底洞穴 B<span class='debug-text'> (Shipgraveyard_UnderSeaCave_02)</span><div class='map-filename'>Shipgraveyard_TwinChamber_D.json</div></h3>
+        <div class="map-info">Shipgraveyard_TwinChamber.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Shipgraveyard_TwinChamber_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Shipgraveyard_TwinChamber_D-json" value="1600" step="100" onchange="updateMapRange('Shipgraveyard_TwinChamber_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Shipgraveyard_TwinChamber_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Shipgraveyard_TwinChamber_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Shipgraveyard_TwinChamber_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Shipgraveyard_TwinChamber_D-json" value="0" step="10" onchange="applyOffsetInput('Shipgraveyard_TwinChamber_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Shipgraveyard_TwinChamber_D-json" value="0" step="10" onchange="applyOffsetInput('Shipgraveyard_TwinChamber_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Shipgraveyard_TwinChamber_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Shipgraveyard_TwinChamber_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Shipgraveyard_TwinChamber_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Shipgraveyard_TwinChamber_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Shipgraveyard_TwinChamber_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Shipgraveyard_TwinChamber.webp" class="image">        <div class="dot" data-index="16054" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="292.29126" data-y="-947.51636" data-z="-487.2605" style="left: 59.13%; top: 20.39%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-487</span></div>
+        <div class="dot" data-index="16055" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="241.47537" data-y="560.1627" data-z="-3013.315" style="left: 57.55%; top: 67.51%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-3013</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_AbandonedShip_01_HR_D-json" data-rotate="3" data-init-rotate="3" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="1" data-size-y="2" style="">
+        <h3 class="map-title">废弃舰船<span class='debug-text'> (AbandonedShip_01)</span><div class='map-filename'>ShipGraveyard_AbandonedShip_01_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_AbandonedShip_01.webp (缓存) | 找到 2 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_AbandonedShip_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_AbandonedShip_01_HR_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_AbandonedShip_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_AbandonedShip_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_AbandonedShip_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻3</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_AbandonedShip_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_AbandonedShip_01_HR_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_AbandonedShip_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_AbandonedShip_01_HR_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_AbandonedShip_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_AbandonedShip_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_AbandonedShip_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_AbandonedShip_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_AbandonedShip_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot" data-index="12633" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="3953.4517" data-y="-770.0992" data-z="468.55917" style="left: 173.55%; top: 12.97%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">468</span></div>
+        <div class="dot" data-index="12634" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="1458.1567" data-y="323.60117" data-z="423.5955" style="left: 95.57%; top: 30.06%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">423</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_FloatingVillage_D-json" data-rotate="0" data-init-rotate="0" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="1600.00" data-size-x="1" data-size-y="2" style="">
+        <h3 class="map-title">水上村落<span class='debug-text'> (ShipGraveyard_FloatingVillage)</span><div class='map-filename'>ShipGraveyard_FloatingVillage_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_FloatingVillage.webp (缓存) | 找到 2 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingVillage_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_FloatingVillage_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_FloatingVillage_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingVillage_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_FloatingVillage_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_FloatingVillage_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_FloatingVillage_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingVillage_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_FloatingVillage_D-json" value="1600" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingVillage_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_FloatingVillage_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_FloatingVillage_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FloatingVillage_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_FloatingVillage_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_FloatingVillage_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_FloatingVillage.webp" class="image">        <div class="dot" data-index="13395" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-159.4003" data-y="1232.684" data-z="-954.0" style="left: 45.02%; top: 94.26%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-954</span></div>
+        <div class="dot" data-index="13396" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="1352.3507" data-y="-3936.9197" data-z="216.31071" style="left: 92.26%; top: 13.49%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">216</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_HangingShip_HR_D-json" data-rotate="3" data-init-rotate="3" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="0.00" data-size-x="2" data-size-y="1" style="grid-column: span 2;">
+        <h3 class="map-title">吊船<span class='debug-text'> (HangingShip)</span><div class='map-filename'>ShipGraveyard_HangingShip_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_HangingShip.webp (缓存) | 找到 4 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_HangingShip_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_HangingShip_HR_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_HangingShip_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_HangingShip_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_HangingShip_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻3</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_HangingShip_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_HangingShip_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_HangingShip_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_HangingShip_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_HangingShip_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_HangingShip_HR_D-json" value="1600" step="10" onchange="applyOffsetInput('ShipGraveyard_HangingShip_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_HangingShip_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_HangingShip_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_HangingShip_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_HangingShip_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_HangingShip_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_HangingShip_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_HangingShip_HR_D-json" style="aspect-ratio: 2 / 1;"><img src="images/ShipGraveyard_HangingShip.webp" class="image">        <div class="dot" data-index="13686" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-314.0" data-y="2289.0" data-z="37.0" style="left: 70.09%; top: 85.77%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">37</span></div>
+        <div class="dot" data-index="13687" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-397.1234" data-y="1161.0657" data-z="1653.498" style="left: 68.79%; top: 68.14%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1653</span></div>
+        <div class="dot" data-index="13688" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="67.55555" data-y="2270.157" data-z="91.3925" style="left: 76.06%; top: 85.47%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">91</span></div>
+        <div class="dot" data-index="13689" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="-38.80781" data-y="3228.1733" data-z="35.20444" style="left: 74.39%; top: 100.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">35</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_PiratePrison_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="-3200.00" data-init-offset-y="3200.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">海盗监狱<span class='debug-text'> (PiratePrison)</span><div class='map-filename'>ShipGraveyard_PiratePrison_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_PiratePrison.webp (缓存) | 找到 5 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_PiratePrison_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_PiratePrison_HR_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_PiratePrison_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_PiratePrison_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_PiratePrison_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_PiratePrison_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_PiratePrison_HR_D-json" value="-3200" step="10" onchange="applyOffsetInput('ShipGraveyard_PiratePrison_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_PiratePrison_HR_D-json" value="3200" step="10" onchange="applyOffsetInput('ShipGraveyard_PiratePrison_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_PiratePrison_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_PiratePrison_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_PiratePrison_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_PiratePrison_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_PiratePrison_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_PiratePrison.webp" class="image">        <div class="dot" data-index="14783" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="4287.426" data-y="1783.907" data-z="1197.1511" style="left: 66.99%; top: 127.87%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1197</span></div>
+        <div class="dot" data-index="14784" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="1629.865" data-y="898.4715" data-z="1205.1842" style="left: 25.47%; top: 114.04%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1205</span></div>
+        <div class="dot" data-index="14785" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="5239.7646" data-y="1187.379" data-z="787.05286" style="left: 81.87%; top: 118.55%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">787</span></div>
+        <div class="dot" data-index="14786" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="5261.8706" data-y="1521.5527" data-z="1226.17" style="left: 82.22%; top: 123.77%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1226</span></div>
+        <div class="dot" data-index="14787" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="2473.6165" data-y="3164.7488" data-z="1076.36" style="left: 38.65%; top: 149.45%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1076</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_SkullIsland_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">骷髅岛<span class='debug-text'> (ShipGraveyard_SkullIsland)</span><div class='map-filename'>ShipGraveyard_SkullIsland_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_SkullIsland.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SkullIsland_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_SkullIsland_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_SkullIsland_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SkullIsland_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_SkullIsland_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_SkullIsland_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_SkullIsland_D-json" value="1600" step="10" onchange="applyOffsetInput('ShipGraveyard_SkullIsland_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_SkullIsland_D-json" value="1600" step="10" onchange="applyOffsetInput('ShipGraveyard_SkullIsland_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_SkullIsland_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_SkullIsland_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SkullIsland_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_SkullIsland_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_SkullIsland_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_SkullIsland.webp" class="image">        <div class="dot" data-index="15315" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" data-x="2057.536" data-y="-2051.9172" data-z="102.816605" style="left: 107.15%; top: 42.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">102</span></div>
+</div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>颜色说明：</strong>
+        <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
+        <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
+        <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
+        <br><strong>位置统计：共 50 个位置点</strong><br><strong>包含地图：</strong> 倾覆之船, 吊船, 岩岛, 废弃舰船, 水上村落, 水手客栈, 沉没之船, 海底洞穴 A, 海底洞穴 B, 海底火山, 海沟, 海洋要塞 A, 海盗监狱, 环形岛, 骷髅岛
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table>
+            <tr><th>显示</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>
+                <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签分组开关（点击全选/取消同标签）</th>
+        <th colspan='3' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签数量</th>
+    </tr>
+    <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_Lootdrop_Anchor')">GameSpawner_Id_Spawner_Lootdrop_Anchor (39)</button>
+        </th>
+        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
+    </tr>
+
+                <tr id="row-13053" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EmptyModule_1F_09_D-json', 13053, this)"></td>
+        <td>水图</td>
+        <td>EmptyModule_1F_09_D.json</td>
+        <td>5-1模块</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>403.14</td>
+        <td>277.87</td>
+        <td>-653.39</td>
+    </tr>
+    <tr id="row-13073" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EmptyModule_1F_13_D-json', 13073, this)"></td>
+        <td>水图</td>
+        <td>EmptyModule_1F_13_D.json</td>
+        <td>6-5模块</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-1251.52</td>
+        <td>985.94</td>
+        <td>-972.41</td>
+    </tr>
+    <tr id="row-13110" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EmptyModule_1F_14_D-json', 13110, this)"></td>
+        <td>水图</td>
+        <td>EmptyModule_1F_14_D.json</td>
+        <td>3-1模块</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>862.37</td>
+        <td>-1368.04</td>
+        <td>-1000.00</td>
+    </tr>
+    <tr id="row-13134" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EmptyModule_1F_15_D-json', 13134, this)"></td>
+        <td>水图</td>
+        <td>EmptyModule_1F_15_D.json</td>
+        <td>7-4模块</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>290.69</td>
+        <td>258.60</td>
+        <td>-825.98</td>
+    </tr>
+    <tr id="row-12897" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12897, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CircleIsland_D.json</td>
+        <td>环形岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>894.18</td>
+        <td>-195.98</td>
+        <td>-982.21</td>
+    </tr>
+    <tr id="row-12898" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12898, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CircleIsland_D.json</td>
+        <td>环形岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-104.34</td>
+        <td>-925.91</td>
+        <td>21.00</td>
+    </tr>
+    <tr id="row-12899" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12899, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CircleIsland_D.json</td>
+        <td>环形岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>1168.41</td>
+        <td>994.26</td>
+        <td>23.00</td>
+    </tr>
+    <tr id="row-13179" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FlippedShip_D-json', 13179, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FlippedShip_D.json</td>
+        <td>倾覆之船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>231.11</td>
+        <td>814.23</td>
+        <td>1.57</td>
+    </tr>
+    <tr id="row-13180" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FlippedShip_D-json', 13180, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FlippedShip_D.json</td>
+        <td>倾覆之船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>1114.31</td>
+        <td>-519.63</td>
+        <td>-934.54</td>
+    </tr>
+    <tr id="row-13298" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13298, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingHouse_01_D.json</td>
+        <td>水手客栈</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-395.75</td>
+        <td>999.73</td>
+        <td>285.31</td>
+    </tr>
+    <tr id="row-13299" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13299, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingHouse_01_D.json</td>
+        <td>水手客栈</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-1379.08</td>
+        <td>-871.26</td>
+        <td>471.32</td>
+    </tr>
+    <tr id="row-14440" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14440, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-1254.04</td>
+        <td>-1092.08</td>
+        <td>-985.18</td>
+    </tr>
+    <tr id="row-15021" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15021, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_RockIsland_D.json</td>
+        <td>岩岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>1207.11</td>
+        <td>395.97</td>
+        <td>-950.41</td>
+    </tr>
+    <tr id="row-15022" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15022, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_RockIsland_D.json</td>
+        <td>岩岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>152.54</td>
+        <td>63.30</td>
+        <td>2520.00</td>
+    </tr>
+    <tr id="row-15023" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15023, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_RockIsland_D.json</td>
+        <td>岩岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-986.00</td>
+        <td>1235.00</td>
+        <td>-989.00</td>
+    </tr>
+    <tr id="row-15123" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15123, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SeaFortress_D.json</td>
+        <td>海洋要塞 A</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>33.28</td>
+        <td>1036.86</td>
+        <td>598.61</td>
+    </tr>
+    <tr id="row-15124" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15124, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SeaFortress_D.json</td>
+        <td>海洋要塞 A</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-1211.91</td>
+        <td>541.19</td>
+        <td>34.45</td>
+    </tr>
+    <tr id="row-15125" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15125, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SeaFortress_D.json</td>
+        <td>海洋要塞 A</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-151.86</td>
+        <td>795.63</td>
+        <td>14.53</td>
+    </tr>
+    <tr id="row-15126" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15126, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SeaFortress_D.json</td>
+        <td>海洋要塞 A</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-349.27</td>
+        <td>-810.18</td>
+        <td>-996.02</td>
+    </tr>
+    <tr id="row-15127" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15127, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SeaFortress_D.json</td>
+        <td>海洋要塞 A</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>759.96</td>
+        <td>-185.78</td>
+        <td>-942.70</td>
+    </tr>
+    <tr id="row-15809" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SunkenShip_01_D-json', 15809, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SunkenShip_01_D.json</td>
+        <td>沉没之船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-134.29</td>
+        <td>338.60</td>
+        <td>-1189.89</td>
+    </tr>
+    <tr id="row-15900" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15900, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>275.81</td>
+        <td>123.25</td>
+        <td>-696.38</td>
+    </tr>
+    <tr id="row-15986" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15986, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-679.60</td>
+        <td>1456.64</td>
+        <td>-996.52</td>
+    </tr>
+    <tr id="row-16054" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Shipgraveyard_TwinChamber_D-json', 16054, this)"></td>
+        <td>水图</td>
+        <td>Shipgraveyard_TwinChamber_D.json</td>
+        <td>海底洞穴 B</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>292.29</td>
+        <td>-947.52</td>
+        <td>-487.26</td>
+    </tr>
+    <tr id="row-16055" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Shipgraveyard_TwinChamber_D-json', 16055, this)"></td>
+        <td>水图</td>
+        <td>Shipgraveyard_TwinChamber_D.json</td>
+        <td>海底洞穴 B</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>241.48</td>
+        <td>560.16</td>
+        <td>-3013.32</td>
+    </tr>
+    <tr id="row-12633" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12633, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
+        <td>废弃舰船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>3953.45</td>
+        <td>-770.10</td>
+        <td>468.56</td>
+    </tr>
+    <tr id="row-12634" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12634, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
+        <td>废弃舰船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>1458.16</td>
+        <td>323.60</td>
+        <td>423.60</td>
+    </tr>
+    <tr id="row-13395" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13395, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingVillage_D.json</td>
+        <td>水上村落</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-159.40</td>
+        <td>1232.68</td>
+        <td>-954.00</td>
+    </tr>
+    <tr id="row-13396" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13396, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingVillage_D.json</td>
+        <td>水上村落</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>1352.35</td>
+        <td>-3936.92</td>
+        <td>216.31</td>
+    </tr>
+    <tr id="row-13686" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13686, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_HangingShip_HR_D.json</td>
+        <td>吊船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-314.00</td>
+        <td>2289.00</td>
+        <td>37.00</td>
+    </tr>
+    <tr id="row-13687" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13687, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_HangingShip_HR_D.json</td>
+        <td>吊船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-397.12</td>
+        <td>1161.07</td>
+        <td>1653.50</td>
+    </tr>
+    <tr id="row-13688" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13688, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_HangingShip_HR_D.json</td>
+        <td>吊船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>67.56</td>
+        <td>2270.16</td>
+        <td>91.39</td>
+    </tr>
+    <tr id="row-13689" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13689, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_HangingShip_HR_D.json</td>
+        <td>吊船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>-38.81</td>
+        <td>3228.17</td>
+        <td>35.20</td>
+    </tr>
+    <tr id="row-14783" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_PiratePrison_HR_D-json', 14783, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_PiratePrison_HR_D.json</td>
+        <td>海盗监狱</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>4287.43</td>
+        <td>1783.91</td>
+        <td>1197.15</td>
+    </tr>
+    <tr id="row-14784" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_PiratePrison_HR_D-json', 14784, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_PiratePrison_HR_D.json</td>
+        <td>海盗监狱</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>1629.87</td>
+        <td>898.47</td>
+        <td>1205.18</td>
+    </tr>
+    <tr id="row-14785" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_PiratePrison_HR_D-json', 14785, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_PiratePrison_HR_D.json</td>
+        <td>海盗监狱</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>5239.76</td>
+        <td>1187.38</td>
+        <td>787.05</td>
+    </tr>
+    <tr id="row-14786" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_PiratePrison_HR_D-json', 14786, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_PiratePrison_HR_D.json</td>
+        <td>海盗监狱</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>5261.87</td>
+        <td>1521.55</td>
+        <td>1226.17</td>
+    </tr>
+    <tr id="row-14787" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_PiratePrison_HR_D-json', 14787, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_PiratePrison_HR_D.json</td>
+        <td>海盗监狱</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>2473.62</td>
+        <td>3164.75</td>
+        <td>1076.36</td>
+    </tr>
+    <tr id="row-15315" data-label="GameSpawner_Id_Spawner_Lootdrop_Anchor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15315, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SkullIsland_D.json</td>
+        <td>骷髅岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_Anchor</td>
+        <td>2057.54</td>
+        <td>-2051.92</td>
+        <td>102.82</td>
+    </tr>
+
+        </table>
+    </div>
+    <script>
+        window.mapStates = {};
+        window.labelStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+            // 检查卡片是否还有可见点，自动隐藏/显示卡片
+            checkCardVisibility(cardId);
+        }
+        function checkCardVisibility(cardId) {
+            const card = document.getElementById('map-card-' + cardId);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            let hasVisibleDot = false;
+            dots.forEach(dot => {
+                if (dot.style.display !== 'none') {
+                    hasVisibleDot = true;
+                }
+            });
+            // 如果所有点都隐藏，隐藏整个卡片；否则显示卡片
+            card.style.display = hasVisibleDot ? 'flex' : 'none';
+        }
+        function toggleLabelGroup(label) {
+            // 切换标签状态的选中/取消
+            if (!window.labelStates[label]) {
+                window.labelStates[label] = true; // 默认为true（显示）
+            }
+            window.labelStates[label] = !window.labelStates[label];
+            const shouldShow = window.labelStates[label];
+
+            // 更新所有同标签的点和复选框
+            const allLabelRows = document.querySelectorAll(`tr[data-label="${label}"]`);
+            allLabelRows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = shouldShow;
+                    // 触发togglePoint函数
+                    const rowId = row.id;
+                    const pointIndex = rowId.replace('row-', '');
+                    // 获取对应的cardId（从data属性或其他方式）
+                    const dot = document.querySelector(`.dot[data-label="${label}"][data-index="${pointIndex}"]`);
+                    if (dot) {
+                        const card = dot.closest('.map-card');
+                        if (card) {
+                            const cardId = card.id.replace('map-card-', '');
+                            // 手动调用togglePoint
+                            dot.style.display = shouldShow ? 'block' : 'none';
+                            row.style.opacity = shouldShow ? '1' : '0.4';
+                            checkCardVisibility(cardId);
+                        }
+                    }
+                }
+            });
+
+            // 更新按钮样式
+            const toggleBtn = document.querySelector(`.label-toggle-btn[data-label="${label}"]`);
+            if (toggleBtn) {
+                toggleBtn.style.backgroundColor = shouldShow ? '#4CAF50' : '#f44336';
+                toggleBtn.style.color = shouldShow ? 'white' : 'white';
+            }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX = 50, multY = 50, centerX = 50, centerY = 50;
+                if (sx === 1 && sy === 2) { centerX = 100; multX = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX + (x / range) * multX;
+                const top = centerY + (y / range) * multY;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+            
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

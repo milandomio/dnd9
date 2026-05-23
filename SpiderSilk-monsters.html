@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>蜘蛛丝 >> 巨型蜘蛛、冰霜巨型蜘蛛 怪物坐标汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        .monster-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 15px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .monster-toggle-btn { padding: 8px 15px; border: 2px solid #fff; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; color: #fff; transition: all 0.2s; opacity: 1; }
+        .monster-toggle-btn:hover { opacity: 0.8; transform: translateY(-2px); }
+        .monster-toggle-btn.hidden { opacity: 0.3; }
+        .monster-legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 14px; text-align: center; }
+        .legend-items { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 5px; color: #aaa; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #555; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 2px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .monster-summary { display: flex; flex-wrap: wrap; gap: 4px 10px; justify-content: center; margin-top: 5px; font-size: 13px; color: #ccc; align-items: center; }
+        .ms-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .ms-name { cursor: pointer; }
+        .ms-name:hover { text-decoration: underline; color: #fff; }
+        .ms-count { color: #888; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .monster-dot.hidden { opacity: 0.2; }
+        .group-header.hidden { display: none; }
+        .map-card.empty { display: none; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>蜘蛛丝 >> 巨型蜘蛛、冰霜巨型蜘蛛 怪物坐标汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">蜘蛛丝 (SpiderSilk) >> GiantSpider、IceGiantSpider</div>
+    <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>巨型蜘蛛 (17)</div>
+    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>冰霜巨型蜘蛛 (56)</div>
+</div></div>
+
+    <div class="monster-nav">
+    <button class="monster-toggle-btn" id="btn-GiantSpider" data-monster="GiantSpider" onclick="toggleMonster('GiantSpider')" style="background-color: rgba(255, 0, 0, 0.7);">巨型蜘蛛</button>
+    <button class="monster-toggle-btn" id="btn-IceGiantSpider" data-monster="IceGiantSpider" onclick="toggleMonster('IceGiantSpider')" style="background-color: rgba(0, 255, 0, 0.7);">冰霜巨型蜘蛛</button>
+</div>
+
+    <div class="maps-grid" id="maps-grid">    <div class="group-header" id="group-Cave">哥布林洞穴1层</div>
+    <div class="map-card" id="map-card-Cave_SpiderNest_02_D-json" data-monsters="GiantSpider" data-group="group-Cave" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">蛛网巢穴<span class='debug-text'> (SpiderNest)</span><div class='map-filename'>Cave_SpiderNest_02_D.json</div></h3>
+        <div class="map-info">Cave_SpiderNest_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cave_SpiderNest_02_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cave_SpiderNest_02_D-json" value="1600" step="100" onchange="updateMapRange('Cave_SpiderNest_02_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cave_SpiderNest_02_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cave_SpiderNest_02_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cave_SpiderNest_02_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_SpiderNest_02_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cave_SpiderNest_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_SpiderNest_02_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cave_SpiderNest_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_SpiderNest_02_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cave_SpiderNest_02_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cave_SpiderNest_02_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_SpiderNest_02_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cave_SpiderNest_02_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cave_SpiderNest_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_SpiderNest_02.webp" class="image">        <div class="dot monster-dot" data-monster="GiantSpider" data-index="783" data-x="-510.58752" data-y="458.52625" data-z="0.31406483" style="left: 34.04%; top: 64.33%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GiantSpider">巨型蜘蛛</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-HideoutCave_02_HR_D-json" data-monsters="GiantSpider" data-group="group-Cave" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洞穴藏身处 B<span class='debug-text'> (CaveHideout_B)</span><div class='map-filename'>HideoutCave_02_HR_D.json</div></h3>
+        <div class="map-info">HideoutCave_02.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('HideoutCave_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-HideoutCave_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('HideoutCave_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('HideoutCave_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-HideoutCave_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-HideoutCave_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-HideoutCave_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('HideoutCave_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-HideoutCave_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('HideoutCave_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('HideoutCave_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('HideoutCave_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('HideoutCave_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('HideoutCave_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-HideoutCave_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HideoutCave_02.webp" class="image">        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1902" data-x="82.13521" data-y="898.8908" data-z="-400.0" style="left: 52.57%; top: 78.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1903" data-x="-295.0" data-y="-248.99997" data-z="-399.9999" style="left: 40.78%; top: 42.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1904" data-x="1061.0" data-y="-387.0" data-z="-400.0" style="left: 83.16%; top: 37.91%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GiantSpider">巨型蜘蛛</span><span class="ms-count">(3点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-StoneGrave_Center_02_HR_D-json" data-monsters="GiantSpider" data-group="group-Cave" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">石坟 B<span class='debug-text'> (Stone_Graves_B)</span><div class='map-filename'>StoneGrave_Center_02_HR_D.json</div></h3>
+        <div class="map-info">StoneGrave_Center_02.webp (缓存) | 找到 12 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-StoneGrave_Center_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('StoneGrave_Center_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-StoneGrave_Center_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-StoneGrave_Center_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-StoneGrave_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-StoneGrave_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('StoneGrave_Center_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('StoneGrave_Center_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('StoneGrave_Center_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('StoneGrave_Center_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-StoneGrave_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/StoneGrave_Center_02.webp" class="image">        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1509" data-x="-923.9034" data-y="-813.4376" data-z="1005.0" style="left: 21.13%; top: 24.58%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1005</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1510" data-x="777.20105" data-y="276.8101" data-z="-399.9999" style="left: 74.29%; top: 58.65%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1511" data-x="-29.68737" data-y="-64.61478" data-z="0.0001" style="left: 49.07%; top: 47.98%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1512" data-x="102.632454" data-y="-386.6194" data-z="0.0001" style="left: 53.21%; top: 37.92%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1513" data-x="252.23357" data-y="-397.0839" data-z="0.0001" style="left: 57.88%; top: 37.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1514" data-x="61.84033" data-y="31.224115" data-z="0.0001" style="left: 51.93%; top: 50.98%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1515" data-x="170.85094" data-y="-119.94641" data-z="1005.0" style="left: 55.34%; top: 46.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1005</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1516" data-x="-1176.7898" data-y="1035.9082" data-z="0.0" style="left: 13.23%; top: 82.37%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1517" data-x="-719.0" data-y="-164.0" data-z="-400.0" style="left: 27.53%; top: 44.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1518" data-x="-79.36898" data-y="399.7519" data-z="0.0001" style="left: 47.52%; top: 62.49%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1519" data-x="254.94606" data-y="-253.0598" data-z="-399.9999" style="left: 57.97%; top: 42.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="GiantSpider" data-index="1520" data-x="64.11028" data-y="289.15488" data-z="0.0001" style="left: 52.00%; top: 59.04%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GiantSpider">巨型蜘蛛</span><span class="ms-count">(12点)</span></div>
+    </div>
+    <div class="group-header" id="group-IceAbyss">冰图2层</div>
+    <div class="map-card" id="map-card-IceAbyss_CharnelHouse_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">停尸房<span class='debug-text'> (CharnelHouse)</span><div class='map-filename'>IceAbyss_CharnelHouse_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_CharnelHouse.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_CharnelHouse_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_CharnelHouse_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_CharnelHouse_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_CharnelHouse_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_CharnelHouse_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_CharnelHouse_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_CharnelHouse_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_CharnelHouse_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_CharnelHouse_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_CharnelHouse_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_CharnelHouse_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_CharnelHouse_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_CharnelHouse_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_CharnelHouse_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_CharnelHouse_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_CharnelHouse_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_CharnelHouse_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_CharnelHouse_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_CharnelHouse_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_CharnelHouse.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5765" data-x="-1225.0" data-y="-50.0" data-z="-400.0" style="left: 11.72%; top: 48.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-400</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_DeathPit_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">死亡深渊<span class='debug-text'> (IceAbyss_DeathPit)</span><div class='map-filename'>IceAbyss_DeathPit_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_DeathPit.webp (缓存) | 找到 8 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_DeathPit_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_DeathPit_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_DeathPit_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_DeathPit_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_DeathPit_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_DeathPit_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeathPit_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeathPit_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeathPit_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeathPit_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_DeathPit_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_DeathPit_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_DeathPit_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_DeathPit_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_DeathPit_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_DeathPit_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DeathPit_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_DeathPit_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_DeathPit_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeathPit.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5818" data-x="140.0" data-y="391.0" data-z="1.2604399" style="left: 54.38%; top: 62.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5819" data-x="-571.0" data-y="443.0" data-z="1.2604399" style="left: 32.16%; top: 63.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5820" data-x="730.0" data-y="30.0" data-z="-500.0" style="left: 72.81%; top: 50.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-500</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5821" data-x="-685.0" data-y="-261.0" data-z="1.2604399" style="left: 28.59%; top: 41.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5822" data-x="-710.0" data-y="30.0" data-z="-500.0" style="left: 27.81%; top: 50.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-500</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5823" data-x="-132.0" data-y="339.0" data-z="1.2604399" style="left: 45.88%; top: 60.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5824" data-x="-441.0" data-y="819.0" data-z="1.2604399" style="left: 36.22%; top: 75.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5825" data-x="201.0" data-y="22.0" data-z="1.2604399" style="left: 56.28%; top: 50.69%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(8点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_DeepFlow_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">寒渊之流<span class='debug-text'> (IceAbyss_DeepFlow)</span><div class='map-filename'>IceAbyss_DeepFlow_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_DeepFlow.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_DeepFlow_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_DeepFlow_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_DeepFlow_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_DeepFlow_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_DeepFlow_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_DeepFlow_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeepFlow_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeepFlow_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeepFlow_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DeepFlow_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_DeepFlow_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_DeepFlow_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_DeepFlow_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_DeepFlow_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_DeepFlow_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_DeepFlow_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DeepFlow_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_DeepFlow_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_DeepFlow_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeepFlow.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5843" data-x="573.0848" data-y="37.642357" data-z="110.0" style="left: 67.91%; top: 51.18%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">110</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5844" data-x="10.161445" data-y="-140.68327" data-z="-270.0" style="left: 50.32%; top: 45.60%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-270</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5845" data-x="10.161455" data-y="324.31674" data-z="165.0" style="left: 50.32%; top: 60.13%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">165</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5846" data-x="93.08479" data-y="-897.35767" data-z="210.0" style="left: 52.91%; top: 21.96%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">210</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(4点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_DividingHill_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">裂丘<span class='debug-text'> (IceAbyss_DividingHill)</span><div class='map-filename'>IceAbyss_DividingHill_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_DividingHill.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_DividingHill_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_DividingHill_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_DividingHill_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_DividingHill_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_DividingHill_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_DividingHill_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DividingHill_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DividingHill_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DividingHill_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_DividingHill_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_DividingHill_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_DividingHill_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_DividingHill_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_DividingHill_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_DividingHill_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_DividingHill_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DividingHill_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_DividingHill_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_DividingHill_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DividingHill.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5923" data-x="483.0" data-y="-1077.0" data-z="0.000102447266" style="left: 65.09%; top: 16.34%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5924" data-x="308.0" data-y="14.0" data-z="9.000103" style="left: 59.62%; top: 50.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">9</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5925" data-x="357.0" data-y="980.0" data-z="0.00010282421" style="left: 61.16%; top: 80.62%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(3点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_FalseThrone_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">伪王座<span class='debug-text'> (IceAbyss_FalseThrone)</span><div class='map-filename'>IceAbyss_FalseThrone_D.json</div></h3>
+        <div class="map-info">IceAbyss_FalseThrone.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FalseThrone_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_FalseThrone_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_FalseThrone_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FalseThrone_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_FalseThrone_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_FalseThrone_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_FalseThrone_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FalseThrone_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_FalseThrone_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FalseThrone_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_FalseThrone_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_FalseThrone_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FalseThrone_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_FalseThrone_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_FalseThrone_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FalseThrone.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5940" data-x="1050.0" data-y="-1060.0" data-z="-305.0" style="left: 82.81%; top: 16.88%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-305</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5941" data-x="-890.0" data-y="-780.00006" data-z="-460.0" style="left: 22.19%; top: 25.62%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-460</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(2点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_FrostMaw_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">冰封之喉<span class='debug-text'> (IceAbyss_FrostMaw)</span><div class='map-filename'>IceAbyss_FrostMaw_D.json</div></h3>
+        <div class="map-info">IceAbyss_FrostMaw.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FrostMaw_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_FrostMaw_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_FrostMaw_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FrostMaw_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_FrostMaw_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_FrostMaw_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostMaw_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostMaw_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostMaw_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostMaw_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_FrostMaw_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FrostMaw_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_FrostMaw_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FrostMaw_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_FrostMaw_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_FrostMaw_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FrostMaw_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_FrostMaw_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_FrostMaw_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FrostMaw.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5972" data-x="475.0" data-y="120.0" data-z="205.0" style="left: 64.84%; top: 53.75%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">205</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5973" data-x="675.0" data-y="-430.0" data-z="205.0" style="left: 71.09%; top: 36.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">205</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5974" data-x="-270.0" data-y="420.0" data-z="205.0" style="left: 41.56%; top: 63.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">205</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="5975" data-x="-775.0" data-y="-180.0" data-z="205.0" style="left: 25.78%; top: 44.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">205</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(4点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_FrostwovenPillars_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">霜纹柱廊<span class='debug-text'> (IceAbyss_FrostwovenPillars)</span><div class='map-filename'>IceAbyss_FrostwovenPillars_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_FrostwovenPillars.webp (缓存) | 找到 6 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FrostwovenPillars_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_FrostwovenPillars_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_FrostwovenPillars_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FrostwovenPillars_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_FrostwovenPillars_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_FrostwovenPillars_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostwovenPillars_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostwovenPillars_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostwovenPillars_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrostwovenPillars_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_FrostwovenPillars_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FrostwovenPillars_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_FrostwovenPillars_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FrostwovenPillars_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_FrostwovenPillars_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_FrostwovenPillars_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FrostwovenPillars_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_FrostwovenPillars_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_FrostwovenPillars_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FrostwovenPillars.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6005" data-x="-446.0" data-y="27.0" data-z="-304.0" style="left: 36.06%; top: 50.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-304</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6006" data-x="508.0" data-y="-52.0" data-z="-304.0" style="left: 65.88%; top: 48.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-304</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6007" data-x="-1160.0" data-y="-1061.0" data-z="-304.0" style="left: 13.75%; top: 16.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-304</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6008" data-x="-1106.0" data-y="1436.0" data-z="-304.0" style="left: 15.44%; top: 94.88%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-304</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6009" data-x="462.0" data-y="850.0" data-z="-304.0" style="left: 64.44%; top: 76.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-304</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6010" data-x="-161.0" data-y="27.0" data-z="214.0" style="left: 44.97%; top: 50.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">214</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(6点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_FrozenHold_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">霜锢堡垒<span class='debug-text'> (IceAbyss_FrozenHold)</span><div class='map-filename'>IceAbyss_FrozenHold_D.json</div></h3>
+        <div class="map-info">IceAbyss_FrozenHold.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FrozenHold_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_FrozenHold_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_FrozenHold_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FrozenHold_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_FrozenHold_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_FrozenHold_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrozenHold_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrozenHold_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrozenHold_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FrozenHold_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_FrozenHold_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FrozenHold_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_FrozenHold_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FrozenHold_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_FrozenHold_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_FrozenHold_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FrozenHold_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_FrozenHold_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_FrozenHold_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FrozenHold.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6036" data-x="-580.0" data-y="510.0" data-z="375.0" style="left: 31.88%; top: 65.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">375</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6037" data-x="265.0" data-y="-680.0" data-z="265.0" style="left: 58.28%; top: 28.75%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">265</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6038" data-x="1080.0" data-y="-540.0" data-z="280.0" style="left: 83.75%; top: 33.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">280</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6039" data-x="175.0" data-y="-815.0" data-z="655.0" style="left: 55.47%; top: 24.53%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">655</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(4点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_IceMaze_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="-1150.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">冰迷宫<span class='debug-text'> (IceAbyss_IceMaze)</span><div class='map-filename'>IceAbyss_IceMaze_D.json</div></h3>
+        <div class="map-info">IceAbyss_IceMaze.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_IceMaze_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_IceMaze_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_IceMaze_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_IceMaze_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_IceMaze_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_IceMaze_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_IceMaze_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_IceMaze_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_IceMaze_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_IceMaze_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_IceMaze_D-json" value="-1150" step="10" onchange="applyOffsetInput('IceAbyss_IceMaze_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_IceMaze_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_IceMaze_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_IceMaze_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_IceMaze_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_IceMaze_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_IceMaze_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_IceMaze_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_IceMaze.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6204" data-x="-202.0" data-y="-972.0" data-z="-541.9999" style="left: 7.75%; top: 19.62%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-541</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6205" data-x="-1017.0" data-y="1085.0" data-z="-443.9999" style="left: -17.72%; top: 83.91%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-443</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6206" data-x="671.0" data-y="1147.0" data-z="-497.9999" style="left: 35.03%; top: 85.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-497</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6207" data-x="-853.0" data-y="-132.0" data-z="-443.9999" style="left: -12.59%; top: 45.88%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-443</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(4点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_ImpRitualRooms_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶灵仪式室<span class='debug-text'> (IceAbyss_ImpRitualRooms)</span><div class='map-filename'>IceAbyss_ImpRitualRooms_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_ImpRitualRooms.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ImpRitualRooms_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_ImpRitualRooms_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_ImpRitualRooms_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ImpRitualRooms_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_ImpRitualRooms_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_ImpRitualRooms_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_ImpRitualRooms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ImpRitualRooms_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_ImpRitualRooms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ImpRitualRooms_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_ImpRitualRooms_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_ImpRitualRooms_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_ImpRitualRooms_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_ImpRitualRooms_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_ImpRitualRooms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ImpRitualRooms.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6256" data-x="130.0" data-y="149.0" data-z="-600.0" style="left: 54.06%; top: 54.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-600</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_Monoliths_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">巨构体<span class='debug-text'> (IceAbyss_Monoliths)</span><div class='map-filename'>IceAbyss_Monoliths_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_Monoliths.webp (缓存) | 找到 5 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_Monoliths_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_Monoliths_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_Monoliths_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_Monoliths_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_Monoliths_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_Monoliths_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Monoliths_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Monoliths_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Monoliths_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Monoliths_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_Monoliths_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_Monoliths_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_Monoliths_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_Monoliths_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_Monoliths_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_Monoliths_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_Monoliths_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_Monoliths_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_Monoliths_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Monoliths.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6276" data-x="2116.0" data-y="-308.0" data-z="205.00009" style="left: 116.12%; top: 40.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">205</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6277" data-x="-540.0" data-y="-375.0" data-z="0.0" style="left: 33.12%; top: 38.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6278" data-x="835.0" data-y="-510.0" data-z="-250.0" style="left: 76.09%; top: 34.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-250</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6279" data-x="1000.0" data-y="68.0" data-z="-84.99991" style="left: 81.25%; top: 52.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-84</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6280" data-x="620.0" data-y="-1295.0" data-z="170.0" style="left: 69.38%; top: 9.53%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">170</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(5点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_Pillars_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">石柱廊<span class='debug-text'> (IceAbyss_Pillars)</span><div class='map-filename'>IceAbyss_Pillars_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_Pillars.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_Pillars_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_Pillars_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_Pillars_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_Pillars_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_Pillars_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_Pillars_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Pillars_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Pillars_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Pillars_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_Pillars_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_Pillars_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_Pillars_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_Pillars_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_Pillars_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_Pillars_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_Pillars_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_Pillars_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_Pillars_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_Pillars_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Pillars.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6312" data-x="-460.0" data-y="-30.0" data-z="-580.0" style="left: 35.62%; top: 49.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-580</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_ReversedPyramid_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">倒金字塔<span class='debug-text'> (IceAbyss_ReversedPyramid)</span><div class='map-filename'>IceAbyss_ReversedPyramid_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_ReversedPyramid.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ReversedPyramid_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_ReversedPyramid_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_ReversedPyramid_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ReversedPyramid_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_ReversedPyramid_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_ReversedPyramid_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ReversedPyramid_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ReversedPyramid_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ReversedPyramid_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ReversedPyramid_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_ReversedPyramid_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ReversedPyramid_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_ReversedPyramid_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ReversedPyramid_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_ReversedPyramid_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_ReversedPyramid_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_ReversedPyramid_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_ReversedPyramid_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_ReversedPyramid_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ReversedPyramid.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6352" data-x="1227.0" data-y="921.0" data-z="0.00010944726" style="left: 88.34%; top: 78.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6353" data-x="303.0" data-y="2060.0" data-z="0.6426265" style="left: 59.47%; top: 114.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6354" data-x="-897.0" data-y="1103.0" data-z="0.00010181787" style="left: 21.97%; top: 84.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6355" data-x="274.0" data-y="-8.0" data-z="2.4163082" style="left: 58.56%; top: 49.75%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">2</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(4点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_SinkingPillars_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">沉墟柱廊<span class='debug-text'> (IceAbyss_SinkingPillars)</span><div class='map-filename'>IceAbyss_SinkingPillars_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_SinkingPillars.webp (缓存) | 找到 5 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_SinkingPillars_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_SinkingPillars_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_SinkingPillars_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_SinkingPillars_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_SinkingPillars_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_SinkingPillars_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_SinkingPillars_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_SinkingPillars_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_SinkingPillars_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_SinkingPillars_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_SinkingPillars_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_SinkingPillars_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_SinkingPillars_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_SinkingPillars_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_SinkingPillars_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_SinkingPillars_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_SinkingPillars_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_SinkingPillars_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_SinkingPillars_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_SinkingPillars.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6405" data-x="-10.468796" data-y="38.05613" data-z="270.0" style="left: 49.67%; top: 51.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">270</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6406" data-x="-400.0" data-y="-265.0" data-z="-480.0" style="left: 37.50%; top: 41.72%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-480</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6407" data-x="905.0" data-y="-260.0" data-z="-480.0" style="left: 78.28%; top: 41.88%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-480</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6408" data-x="-12.0" data-y="520.0" data-z="-535.0" style="left: 49.62%; top: 66.25%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-535</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6409" data-x="370.0" data-y="-1000.0" data-z="-442.0" style="left: 61.56%; top: 18.75%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-442</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(5点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_StaircaseHill_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">阶梯山丘<span class='debug-text'> (IceAbyss_StaircaseHill)</span><div class='map-filename'>IceAbyss_StaircaseHill_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_StaircaseHill.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_StaircaseHill_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_StaircaseHill_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_StaircaseHill_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_StaircaseHill_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_StaircaseHill_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_StaircaseHill_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_StaircaseHill_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_StaircaseHill_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_StaircaseHill_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_StaircaseHill_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_StaircaseHill_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_StaircaseHill_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_StaircaseHill_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_StaircaseHill_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_StaircaseHill_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_StaircaseHill.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="6460" data-x="747.0" data-y="17.0" data-z="0.0" style="left: 73.34%; top: 50.53%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="group-header" id="group-IceCave">冰图1层</div>
+    <div class="map-card" id="map-card-IceCave_Path_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceCave" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">小道 A<span class='debug-text'> (IceCave_Path_A)</span><div class='map-filename'>IceCave_Path_HR_D.json</div></h3>
+        <div class="map-info">IceCave_Path.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceCave_Path_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceCave_Path_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceCave_Path_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceCave_Path_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceCave_Path_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceCave_Path_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Path_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Path_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Path_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Path_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceCave_Path_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Path_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceCave_Path_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Path_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceCave_Path_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceCave_Path_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Path_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceCave_Path_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceCave_Path_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Path.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="7758" data-x="423.95605" data-y="-1133.1196" data-z="367.84778" style="left: 63.25%; top: 14.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">367</span></div>
+        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="7759" data-x="108.03975" data-y="-1080.5371" data-z="321.03485" style="left: 53.38%; top: 16.23%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">321</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(2点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-IceCave_Hive_03_HR_D-json" data-monsters="IceGiantSpider" data-group="group-IceCave" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="2" style="">
+        <h3 class="map-title">蜂巢<span class='debug-text'> (IceCave_Hive)</span><div class='map-filename'>IceCave_Hive_03_HR_D.json</div></h3>
+        <div class="map-info">IceCave_Hive_03.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceCave_Hive_03_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceCave_Hive_03_HR_D-json" value="3200" step="100" onchange="updateMapRange('IceCave_Hive_03_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceCave_Hive_03_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceCave_Hive_03_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceCave_Hive_03_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceCave_Hive_03_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Hive_03_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceCave_Hive_03_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Hive_03_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceCave_Hive_03_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceCave_Hive_03_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Hive_03_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceCave_Hive_03_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceCave_Hive_03_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/IceCave_Hive_03.webp" class="image">        <div class="dot monster-dot" data-monster="IceGiantSpider" data-index="7361" data-x="1280.0" data-y="-82.0" data-z="0.0" style="left: 140.00%; top: 48.72%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceGiantSpider">冰霜巨型蜘蛛</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="group-header" id="group-Ruins">废墟1层</div>
+    <div class="map-card" id="map-card-Ruins_UndergroundAltar_01_HR_D-json" data-monsters="GiantSpider" data-group="group-Ruins" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">隐蔽圣坛<span class='debug-text'> (Hidden_Altar)</span><div class='map-filename'>Ruins_UndergroundAltar_01_HR_D.json</div></h3>
+        <div class="map-info">Ruins_UndergroundAltar_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_UndergroundAltar_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_UndergroundAltar_01_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_UndergroundAltar_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_UndergroundAltar_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_UndergroundAltar_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_UndergroundAltar_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_UndergroundAltar_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_UndergroundAltar_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_UndergroundAltar_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_UndergroundAltar_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_UndergroundAltar_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_UndergroundAltar_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_UndergroundAltar_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_UndergroundAltar_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_UndergroundAltar_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_UndergroundAltar_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_UndergroundAltar_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_UndergroundAltar_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_UndergroundAltar_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_UndergroundAltar_01.webp" class="image">        <div class="dot monster-dot" data-monster="GiantSpider" data-index="12158" data-x="-30.0" data-y="-30.0" data-z="0.0" style="left: 49.06%; top: 49.06%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GiantSpider">巨型蜘蛛</span><span class="ms-count">(1点)</span></div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>位置统计：共 2 个怪物，73 个位置点</strong>
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-783">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_SpiderNest_02_D-json', 783, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_SpiderNest_02_D.json</td>
+        <td>蛛网巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-510.59</td>
+        <td>458.53</td>
+        <td>0.31</td>
+    </tr>
+    <tr id="row-1902">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_HR_D-json', 1902, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>HideoutCave_02_HR_D.json</td>
+        <td>洞穴藏身处 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>82.14</td>
+        <td>898.89</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-1903">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_HR_D-json', 1903, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>HideoutCave_02_HR_D.json</td>
+        <td>洞穴藏身处 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-295.00</td>
+        <td>-249.00</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-1904">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_HR_D-json', 1904, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>HideoutCave_02_HR_D.json</td>
+        <td>洞穴藏身处 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>1061.00</td>
+        <td>-387.00</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-1509">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1509, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-923.90</td>
+        <td>-813.44</td>
+        <td>1005.00</td>
+    </tr>
+    <tr id="row-1510">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1510, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>777.20</td>
+        <td>276.81</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-1511">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1511, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-29.69</td>
+        <td>-64.61</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-1512">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1512, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>102.63</td>
+        <td>-386.62</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-1513">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1513, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>252.23</td>
+        <td>-397.08</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-1514">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1514, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>61.84</td>
+        <td>31.22</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-1515">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1515, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>170.85</td>
+        <td>-119.95</td>
+        <td>1005.00</td>
+    </tr>
+    <tr id="row-1516">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1516, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-1176.79</td>
+        <td>1035.91</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-1517">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1517, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-719.00</td>
+        <td>-164.00</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-1518">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1518, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-79.37</td>
+        <td>399.75</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-1519">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1519, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>254.95</td>
+        <td>-253.06</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-1520">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1520, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>64.11</td>
+        <td>289.15</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-5765">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_CharnelHouse_HR_D-json', 5765, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_CharnelHouse_HR_D.json</td>
+        <td>停尸房</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-1225.00</td>
+        <td>-50.00</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-5818">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5818, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>140.00</td>
+        <td>391.00</td>
+        <td>1.26</td>
+    </tr>
+    <tr id="row-5819">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5819, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-571.00</td>
+        <td>443.00</td>
+        <td>1.26</td>
+    </tr>
+    <tr id="row-5820">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5820, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>730.00</td>
+        <td>30.00</td>
+        <td>-500.00</td>
+    </tr>
+    <tr id="row-5821">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5821, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-685.00</td>
+        <td>-261.00</td>
+        <td>1.26</td>
+    </tr>
+    <tr id="row-5822">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5822, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-710.00</td>
+        <td>30.00</td>
+        <td>-500.00</td>
+    </tr>
+    <tr id="row-5823">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5823, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-132.00</td>
+        <td>339.00</td>
+        <td>1.26</td>
+    </tr>
+    <tr id="row-5824">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5824, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-441.00</td>
+        <td>819.00</td>
+        <td>1.26</td>
+    </tr>
+    <tr id="row-5825">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5825, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeathPit_HR_D.json</td>
+        <td>死亡深渊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>201.00</td>
+        <td>22.00</td>
+        <td>1.26</td>
+    </tr>
+    <tr id="row-5843">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 5843, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeepFlow_HR_D.json</td>
+        <td>寒渊之流</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>573.08</td>
+        <td>37.64</td>
+        <td>110.00</td>
+    </tr>
+    <tr id="row-5844">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 5844, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeepFlow_HR_D.json</td>
+        <td>寒渊之流</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>10.16</td>
+        <td>-140.68</td>
+        <td>-270.00</td>
+    </tr>
+    <tr id="row-5845">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 5845, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeepFlow_HR_D.json</td>
+        <td>寒渊之流</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>10.16</td>
+        <td>324.32</td>
+        <td>165.00</td>
+    </tr>
+    <tr id="row-5846">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 5846, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DeepFlow_HR_D.json</td>
+        <td>寒渊之流</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>93.08</td>
+        <td>-897.36</td>
+        <td>210.00</td>
+    </tr>
+    <tr id="row-5923">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DividingHill_HR_D-json', 5923, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DividingHill_HR_D.json</td>
+        <td>裂丘</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>483.00</td>
+        <td>-1077.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-5924">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DividingHill_HR_D-json', 5924, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DividingHill_HR_D.json</td>
+        <td>裂丘</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>308.00</td>
+        <td>14.00</td>
+        <td>9.00</td>
+    </tr>
+    <tr id="row-5925">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DividingHill_HR_D-json', 5925, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_DividingHill_HR_D.json</td>
+        <td>裂丘</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>357.00</td>
+        <td>980.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-5940">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 5940, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FalseThrone_D.json</td>
+        <td>伪王座</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>1050.00</td>
+        <td>-1060.00</td>
+        <td>-305.00</td>
+    </tr>
+    <tr id="row-5941">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 5941, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FalseThrone_D.json</td>
+        <td>伪王座</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-890.00</td>
+        <td>-780.00</td>
+        <td>-460.00</td>
+    </tr>
+    <tr id="row-5972">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostMaw_D-json', 5972, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostMaw_D.json</td>
+        <td>冰封之喉</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>475.00</td>
+        <td>120.00</td>
+        <td>205.00</td>
+    </tr>
+    <tr id="row-5973">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostMaw_D-json', 5973, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostMaw_D.json</td>
+        <td>冰封之喉</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>675.00</td>
+        <td>-430.00</td>
+        <td>205.00</td>
+    </tr>
+    <tr id="row-5974">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostMaw_D-json', 5974, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostMaw_D.json</td>
+        <td>冰封之喉</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-270.00</td>
+        <td>420.00</td>
+        <td>205.00</td>
+    </tr>
+    <tr id="row-5975">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostMaw_D-json', 5975, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostMaw_D.json</td>
+        <td>冰封之喉</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-775.00</td>
+        <td>-180.00</td>
+        <td>205.00</td>
+    </tr>
+    <tr id="row-6005">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostwovenPillars_HR_D-json', 6005, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostwovenPillars_HR_D.json</td>
+        <td>霜纹柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-446.00</td>
+        <td>27.00</td>
+        <td>-304.00</td>
+    </tr>
+    <tr id="row-6006">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostwovenPillars_HR_D-json', 6006, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostwovenPillars_HR_D.json</td>
+        <td>霜纹柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>508.00</td>
+        <td>-52.00</td>
+        <td>-304.00</td>
+    </tr>
+    <tr id="row-6007">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostwovenPillars_HR_D-json', 6007, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostwovenPillars_HR_D.json</td>
+        <td>霜纹柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-1160.00</td>
+        <td>-1061.00</td>
+        <td>-304.00</td>
+    </tr>
+    <tr id="row-6008">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostwovenPillars_HR_D-json', 6008, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostwovenPillars_HR_D.json</td>
+        <td>霜纹柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-1106.00</td>
+        <td>1436.00</td>
+        <td>-304.00</td>
+    </tr>
+    <tr id="row-6009">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostwovenPillars_HR_D-json', 6009, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostwovenPillars_HR_D.json</td>
+        <td>霜纹柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>462.00</td>
+        <td>850.00</td>
+        <td>-304.00</td>
+    </tr>
+    <tr id="row-6010">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrostwovenPillars_HR_D-json', 6010, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrostwovenPillars_HR_D.json</td>
+        <td>霜纹柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-161.00</td>
+        <td>27.00</td>
+        <td>214.00</td>
+    </tr>
+    <tr id="row-6036">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6036, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrozenHold_D.json</td>
+        <td>霜锢堡垒</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-580.00</td>
+        <td>510.00</td>
+        <td>375.00</td>
+    </tr>
+    <tr id="row-6037">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6037, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrozenHold_D.json</td>
+        <td>霜锢堡垒</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>265.00</td>
+        <td>-680.00</td>
+        <td>265.00</td>
+    </tr>
+    <tr id="row-6038">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6038, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrozenHold_D.json</td>
+        <td>霜锢堡垒</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>1080.00</td>
+        <td>-540.00</td>
+        <td>280.00</td>
+    </tr>
+    <tr id="row-6039">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6039, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FrozenHold_D.json</td>
+        <td>霜锢堡垒</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>175.00</td>
+        <td>-815.00</td>
+        <td>655.00</td>
+    </tr>
+    <tr id="row-6204">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_IceMaze_D-json', 6204, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_IceMaze_D.json</td>
+        <td>冰迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-202.00</td>
+        <td>-972.00</td>
+        <td>-542.00</td>
+    </tr>
+    <tr id="row-6205">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_IceMaze_D-json', 6205, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_IceMaze_D.json</td>
+        <td>冰迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-1017.00</td>
+        <td>1085.00</td>
+        <td>-444.00</td>
+    </tr>
+    <tr id="row-6206">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_IceMaze_D-json', 6206, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_IceMaze_D.json</td>
+        <td>冰迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>671.00</td>
+        <td>1147.00</td>
+        <td>-498.00</td>
+    </tr>
+    <tr id="row-6207">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_IceMaze_D-json', 6207, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_IceMaze_D.json</td>
+        <td>冰迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-853.00</td>
+        <td>-132.00</td>
+        <td>-444.00</td>
+    </tr>
+    <tr id="row-6256">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 6256, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ImpRitualRooms_HR_D.json</td>
+        <td>恶灵仪式室</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>130.00</td>
+        <td>149.00</td>
+        <td>-600.00</td>
+    </tr>
+    <tr id="row-6276">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Monoliths_HR_D-json', 6276, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_Monoliths_HR_D.json</td>
+        <td>巨构体</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>2116.00</td>
+        <td>-308.00</td>
+        <td>205.00</td>
+    </tr>
+    <tr id="row-6277">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Monoliths_HR_D-json', 6277, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_Monoliths_HR_D.json</td>
+        <td>巨构体</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-540.00</td>
+        <td>-375.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-6278">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Monoliths_HR_D-json', 6278, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_Monoliths_HR_D.json</td>
+        <td>巨构体</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>835.00</td>
+        <td>-510.00</td>
+        <td>-250.00</td>
+    </tr>
+    <tr id="row-6279">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Monoliths_HR_D-json', 6279, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_Monoliths_HR_D.json</td>
+        <td>巨构体</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>1000.00</td>
+        <td>68.00</td>
+        <td>-85.00</td>
+    </tr>
+    <tr id="row-6280">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Monoliths_HR_D-json', 6280, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_Monoliths_HR_D.json</td>
+        <td>巨构体</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>620.00</td>
+        <td>-1295.00</td>
+        <td>170.00</td>
+    </tr>
+    <tr id="row-6312">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Pillars_HR_D-json', 6312, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_Pillars_HR_D.json</td>
+        <td>石柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-460.00</td>
+        <td>-30.00</td>
+        <td>-580.00</td>
+    </tr>
+    <tr id="row-6352">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ReversedPyramid_HR_D-json', 6352, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ReversedPyramid_HR_D.json</td>
+        <td>倒金字塔</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>1227.00</td>
+        <td>921.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-6353">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ReversedPyramid_HR_D-json', 6353, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ReversedPyramid_HR_D.json</td>
+        <td>倒金字塔</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>303.00</td>
+        <td>2060.00</td>
+        <td>0.64</td>
+    </tr>
+    <tr id="row-6354">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ReversedPyramid_HR_D-json', 6354, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ReversedPyramid_HR_D.json</td>
+        <td>倒金字塔</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-897.00</td>
+        <td>1103.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-6355">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ReversedPyramid_HR_D-json', 6355, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ReversedPyramid_HR_D.json</td>
+        <td>倒金字塔</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>274.00</td>
+        <td>-8.00</td>
+        <td>2.42</td>
+    </tr>
+    <tr id="row-6405">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_SinkingPillars_HR_D-json', 6405, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_SinkingPillars_HR_D.json</td>
+        <td>沉墟柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-10.47</td>
+        <td>38.06</td>
+        <td>270.00</td>
+    </tr>
+    <tr id="row-6406">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_SinkingPillars_HR_D-json', 6406, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_SinkingPillars_HR_D.json</td>
+        <td>沉墟柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-400.00</td>
+        <td>-265.00</td>
+        <td>-480.00</td>
+    </tr>
+    <tr id="row-6407">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_SinkingPillars_HR_D-json', 6407, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_SinkingPillars_HR_D.json</td>
+        <td>沉墟柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>905.00</td>
+        <td>-260.00</td>
+        <td>-480.00</td>
+    </tr>
+    <tr id="row-6408">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_SinkingPillars_HR_D-json', 6408, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_SinkingPillars_HR_D.json</td>
+        <td>沉墟柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>-12.00</td>
+        <td>520.00</td>
+        <td>-535.00</td>
+    </tr>
+    <tr id="row-6409">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_SinkingPillars_HR_D-json', 6409, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_SinkingPillars_HR_D.json</td>
+        <td>沉墟柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>370.00</td>
+        <td>-1000.00</td>
+        <td>-442.00</td>
+    </tr>
+    <tr id="row-6460">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_StaircaseHill_HR_D-json', 6460, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图2层</td>
+        <td>IceAbyss_StaircaseHill_HR_D.json</td>
+        <td>阶梯山丘</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>747.00</td>
+        <td>17.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-7758">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Path_HR_D-json', 7758, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图1层</td>
+        <td>IceCave_Path_HR_D.json</td>
+        <td>小道 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>423.96</td>
+        <td>-1133.12</td>
+        <td>367.85</td>
+    </tr>
+    <tr id="row-7759">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Path_HR_D-json', 7759, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图1层</td>
+        <td>IceCave_Path_HR_D.json</td>
+        <td>小道 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>108.04</td>
+        <td>-1080.54</td>
+        <td>321.03</td>
+    </tr>
+    <tr id="row-7361">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 7361, this)"></td>
+        <td>冰霜巨型蜘蛛</td>
+        <td>冰图1层</td>
+        <td>IceCave_Hive_03_HR_D.json</td>
+        <td>蜂巢</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_IceGiantSpider</td>
+        <td>1280.00</td>
+        <td>-82.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-12158">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_UndergroundAltar_01_HR_D-json', 12158, this)"></td>
+        <td>巨型蜘蛛</td>
+        <td>废墟1层</td>
+        <td>Ruins_UndergroundAltar_01_HR_D.json</td>
+        <td>隐蔽圣坛</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_GiantSpider</td>
+        <td>-30.00</td>
+        <td>-30.00</td>
+        <td>0.00</td>
+    </tr>
+</table>
+    </div>
+    <script>
+        window.monsterColors = {
+    'GiantSpider': 'rgba(255, 0, 0, 0.7)',
+    'IceGiantSpider': 'rgba(0, 255, 0, 0.7)',
+};
+
+        window.monsterVisible = {
+    'GiantSpider': true,
+    'IceGiantSpider': true,
+};
+
+        function toggleMonster(monsterId) {
+            const btn = document.getElementById('btn-' + monsterId);
+            const dots = document.querySelectorAll('.monster-dot[data-monster="' + monsterId + '"]');
+
+            if (window.monsterVisible[monsterId]) {
+                window.monsterVisible[monsterId] = false;
+                btn.classList.add('hidden');
+                dots.forEach(dot => dot.classList.add('hidden'));
+            } else {
+                window.monsterVisible[monsterId] = true;
+                btn.classList.remove('hidden');
+                dots.forEach(dot => dot.classList.remove('hidden'));
+            }
+
+            // 检查并隐藏/显示没有可见点的卡片和分组
+            updateCardVisibility();
+        }
+
+        function updateCardVisibility() {
+            // 检查每个地图卡片是否有可见的点
+            const cards = document.querySelectorAll('.map-card');
+            cards.forEach(card => {
+                const monstersAttr = card.getAttribute('data-monsters') || '';
+                const monsterIds = monstersAttr.split(',').filter(Boolean);
+                let hasVisible = false;
+
+                // 只要任一关联怪物可见，卡片就显示
+                for (const mid of monsterIds) {
+                    if (window.monsterVisible[mid] !== false) {
+                        hasVisible = true;
+                        break;
+                    }
+                }
+
+                if (!hasVisible) {
+                    card.classList.add('empty');
+                } else {
+                    card.classList.remove('empty');
+                }
+            });
+
+            // 检查并隐藏/显示分组标题
+            const groups = document.querySelectorAll('.group-header');
+            groups.forEach(group => {
+                const groupId = group.getAttribute('id');
+                const groupCards = document.querySelectorAll(`.map-card[data-group="${groupId}"]`);
+                let allEmpty = true;
+
+                groupCards.forEach(card => {
+                    if (!card.classList.contains('empty')) {
+                        allEmpty = false;
+                    }
+                });
+
+                if (allEmpty) {
+                    group.classList.add('hidden');
+                } else {
+                    group.classList.remove('hidden');
+                }
+            });
+        }
+        window.mapStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx2 = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy2 = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX2 = 50, multY2 = 50, centerX2 = 50, centerY2 = 50;
+                if (sx2 === 1 && sy2 === 2) { centerX2 = 100; multX2 = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX2 + (x / range) * multX2;
+                const top = centerY2 + (y / range) * multY2;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

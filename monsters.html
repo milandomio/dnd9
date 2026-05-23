@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>【怪物表】怪物位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 40px; }
+        h1 { text-align: center; color: #00bcd4; margin-bottom: 20px; font-size: 36px; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 16px; margin-bottom: 30px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .stats { text-align: center; color: #aaa; font-size: 14px; margin-bottom: 20px; }
+        .section-header { font-size: 24px; font-weight: bold; margin: 30px 0 10px 0; padding-bottom: 5px; border-bottom: 2px; text-align: left; }
+        .section-header:first-child { margin-top: 0; }
+        .section-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .summary-item { background-color: #3a3a3a; border: 1px solid #555; border-radius: 8px; padding: 20px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .summary-item a { font-size: 18px; text-decoration: none; font-weight: bold; display: block; }
+        .summary-item .name-display { color: white; font-size: 18px; font-weight: bold; }
+        .summary-item .name-debug { color: white; font-size: 18px; font-weight: bold; }
+        
+        .item-section {{ color: #4CAF50; border-bottom-color: #4CAF50; }}
+        .item-item {{ border-color: #4CAF50; }}
+        .item-item:hover {{ border-color: #81C784; }}
+        .item-item .name-display {{ color: #4CAF50; }}
+        .item-item .name-debug {{ color: #4CAF50; }}
+        .item-item a {{ color: #4CAF50; }}
+        .item-item a:hover {{ color: #81C784; }}
+        .monster-section {{ color: #FF6600; border-bottom-color: #FF6600; }}
+        .monster-item {{ border-color: #FF6600; }}
+        .monster-item:hover {{ border-color: #FF8C00; }}
+        .monster-item .name-display {{ color: #FF6600; }}
+        .monster-item .name-debug {{ color: #FF6600; }}
+        .monster-item a {{ color: #FF6600; }}
+        .monster-item a:hover {{ color: #FF8C00; }}
+        .item-monster-section {{ color: #2196F3; border-bottom-color: #2196F3; }}
+        .item-monster-item {{ border-color: #2196F3; }}
+        .item-monster-item:hover {{ border-color: #64B5F6; }}
+        .item-monster-item .name-display {{ color: #2196F3; }}
+        .item-monster-item .name-debug {{ color: #2196F3; }}
+        .item-monster-item a {{ color: #2196F3; }}
+        .item-monster-item a:hover {{ color: #64B5F6; }}
+        .back-to-home { text-align: center; margin-bottom: 30px; }
+        .back-to-home a { color: #00bcd4; text-decoration: none; font-size: 18px; padding: 10px 20px; border: 2px solid #00bcd4; border-radius: 8px; display: inline-block; transition: all 0.2s; }
+        .back-to-home a:hover { background-color: #00bcd4; color: #2c2c2c; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+    </style>
+</head>
+<body>
+    <div class="back-to-home"><a href="index.html">← 返回首页</a></div>
+    <h1>【怪物表】怪物位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="stats">共 120 个怪物</div>
+    <div class="section-header monster-section">怪物列表</div>
+<div class="section-content">    <div class="summary-item monster-item">
+        <a href="Cuttlefish.html">
+            <span class="name-display">乌贼 >> 乌贼墨汁袋</span>
+            <span class="name-debug" style="display:none;">乌贼【Cuttlefish】 >> 乌贼墨汁袋【CuttlefishInkSac】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Mermaid.html">
+            <span class="name-display">人鱼 >> 鱼人鳞片 > 鱼人之泪</span>
+            <span class="name-debug" style="display:none;">人鱼【Mermaid】 >> 鱼人鳞片【MermaidScale】 > 鱼人之泪【MermaidsTear】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Yeti.html">
+            <span class="name-display">冰雪巨猿 >> 雪猿的牙齿</span>
+            <span class="name-debug" style="display:none;">冰雪巨猿【Yeti】 >> 雪猿的牙齿【YetisTeeth】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSentinel.html">
+            <span class="name-display">冰霜哨戒魔像</span>
+            <span class="name-debug" style="display:none;">冰霜哨戒魔像【FrostSentinel】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostGiantBerserker.html">
+            <span class="name-display">冰霜巨人狂战士 >> 巨人脚趾</span>
+            <span class="name-debug" style="display:none;">冰霜巨人狂战士【FrostGiantBerserker】 >> 巨人脚趾【GiantToe】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="IceGiantSpider.html">
+            <span class="name-display">冰霜巨型蜘蛛 >> 蜘蛛丝</span>
+            <span class="name-debug" style="display:none;">冰霜巨型蜘蛛【IceGiantSpider】 >> 蜘蛛丝【SpiderSilk】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrozenGhost.html">
+            <span class="name-display">冰霜怨灵 >> 灵体物质</span>
+            <span class="name-debug" style="display:none;">冰霜怨灵【FrozenGhost】 >> 灵体物质【Ectoplasm】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostDemon.html">
+            <span class="name-display">冰霜恶魔大君</span>
+            <span class="name-debug" style="display:none;">冰霜恶魔大君【FrostDemon】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostGiantShielder.html">
+            <span class="name-display">冰霜持盾巨人 >> 巨人脚趾</span>
+            <span class="name-debug" style="display:none;">冰霜持盾巨人【FrostGiantShielder】 >> 巨人脚趾【GiantToe】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostWolf.html">
+            <span class="name-display">冰霜狼 >> 蓝眼球 > 超厚毛皮 > 狼爪 > 狼牙 > 狼皮</span>
+            <span class="name-debug" style="display:none;">冰霜狼【FrostWolf】 >> 蓝眼球【BlueEyeballs】 > 超厚毛皮【ExtraThickPelts】 > 狼爪【WolfClaw】 > 狼牙【WolfFang】 > 狼皮【WolfPelt】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="IceSpider.html">
+            <span class="name-display">冰霜蜘蛛</span>
+            <span class="name-debug" style="display:none;">冰霜蜘蛛【IceSpider】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostWalker.html">
+            <span class="name-display">冰霜行尸 >> 发光的蓝眼睛 > 坟墓精华 > 蛆虫 > 旧布</span>
+            <span class="name-debug" style="display:none;">冰霜行尸【FrostWalker】 >> 发光的蓝眼睛【GlowingBlueIceEyes】 > 坟墓精华【GraveEssence】 > 蛆虫【Maggots】 > 旧布【OldCloth】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostWyvern.html">
+            <span class="name-display">冰霜飞龙 >> 冰霜巨龙的利爪 > 冰霜飞龙皮</span>
+            <span class="name-debug" style="display:none;">冰霜飞龙【FrostWyvern】 >> 冰霜巨龙的利爪【FrostWyvernClaws】 > 冰霜飞龙皮【FrostWyvernsHide】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSkeletonGuardman.html">
+            <span class="name-display">冰霜骷髅卫士 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包 > 生锈的断剑</span>
+            <span class="name-debug" style="display:none;">冰霜骷髅卫士【FrostSkeletonGuardman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 生锈的断剑【RustyBrokenSword】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSkeletonArcher.html">
+            <span class="name-display">冰霜骷髅弓手 >> 骨头棒 > 弓弦 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包 > 箭袋</span>
+            <span class="name-debug" style="display:none;">冰霜骷髅弓手【FrostSkeletonArcher】 >> 骨头棒【Bone】 > 弓弦【Bowstring】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 箭袋【Quiver_2001】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSkeletonCrossbowman.html">
+            <span class="name-display">冰霜骷髅弩手 >> 骨头棒 > 弓弦 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包 > 箭袋</span>
+            <span class="name-debug" style="display:none;">冰霜骷髅弩手【FrostSkeletonCrossbowman】 >> 骨头棒【Bone】 > 弓弦【Bowstring】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 箭袋【Quiver_2001】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSkeletonHalberdier.html">
+            <span class="name-display">冰霜骷髅戟兵 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包</span>
+            <span class="name-debug" style="display:none;">冰霜骷髅戟兵【FrostSkeletonHalberdier】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSkeletonAxeman.html">
+            <span class="name-display">冰霜骷髅斧手 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包</span>
+            <span class="name-debug" style="display:none;">冰霜骷髅斧手【FrostSkeletonAxeman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSkeletonFootman.html">
+            <span class="name-display">冰霜骷髅步兵 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包 > 生锈的断剑</span>
+            <span class="name-debug" style="display:none;">冰霜骷髅步兵【FrostSkeletonFootman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 生锈的断剑【RustyBrokenSword】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostSkeletonMaceman.html">
+            <span class="name-display">冰霜骷髅锤手 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包</span>
+            <span class="name-debug" style="display:none;">冰霜骷髅锤手【FrostSkeletonMaceman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FrostImp.html">
+            <span class="name-display">冰霜鬼童</span>
+            <span class="name-debug" style="display:none;">冰霜鬼童【FrostImp】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GiantDragonfly.html">
+            <span class="name-display">剧毒蜻蜓</span>
+            <span class="name-debug" style="display:none;">剧毒蜻蜓【GiantDragonfly】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FiendlingChopper.html">
+            <span class="name-display">劣魔斩切者 >> 屈从烙印 > 恶魔之血 > 小型劣魔角</span>
+            <span class="name-debug" style="display:none;">劣魔斩切者【FiendlingChopper】 >> 屈从烙印【BrandoftheSubservient】 > 恶魔之血【DemonBlood】 > 小型劣魔角【SmallFiendlingHorn】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FiendlingSlasher.html">
+            <span class="name-display">劣魔砍杀者 >> 屈从烙印 > 恶魔之血 > 小型劣魔角</span>
+            <span class="name-debug" style="display:none;">劣魔砍杀者【FiendlingSlasher】 >> 屈从烙印【BrandoftheSubservient】 > 恶魔之血【DemonBlood】 > 小型劣魔角【SmallFiendlingHorn】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FiendlingCrusher.html">
+            <span class="name-display">劣魔粉碎者 >> 屈从烙印 > 恶魔之血 > 小型劣魔角</span>
+            <span class="name-debug" style="display:none;">劣魔粉碎者【FiendlingCrusher】 >> 屈从烙印【BrandoftheSubservient】 > 恶魔之血【DemonBlood】 > 小型劣魔角【SmallFiendlingHorn】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Slime.html">
+            <span class="name-display">史莱姆 >> 红苹果</span>
+            <span class="name-debug" style="display:none;">史莱姆【Slime】 >> 红苹果【RedApple】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GoblinArcher.html">
+            <span class="name-display">哥布林弓手 >> 弓弦 > 哥布林耳朵 > 箭袋</span>
+            <span class="name-debug" style="display:none;">哥布林弓手【GoblinArcher】 >> 弓弦【Bowstring】 > 哥布林耳朵【GoblinEars】 > 箭袋【Quiver_2001】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GoblinWarrior.html">
+            <span class="name-display">哥布林战士 >> 哥布林耳朵</span>
+            <span class="name-debug" style="display:none;">哥布林战士【GoblinWarrior】 >> 哥布林耳朵【GoblinEars】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GoblinBolaslinger.html">
+            <span class="name-display">哥布林投石手 >> 哥布林耳朵</span>
+            <span class="name-debug" style="display:none;">哥布林投石手【GoblinBolaslinger】 >> 哥布林耳朵【GoblinEars】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GoblinAxeman.html">
+            <span class="name-display">哥布林斧手 >> 哥布林耳朵</span>
+            <span class="name-debug" style="display:none;">哥布林斧手【GoblinAxeman】 >> 哥布林耳朵【GoblinEars】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GoblinMage.html">
+            <span class="name-display">哥布林法师 >> 哥布林耳朵</span>
+            <span class="name-debug" style="display:none;">哥布林法师【GoblinMage】 >> 哥布林耳朵【GoblinEars】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Cerberus.html">
+            <span class="name-display">地狱三头犬 >> 恶魔之血 > 发光的橙色眼睛 > 黏舌头 > 粗厚前足</span>
+            <span class="name-debug" style="display:none;">地狱三头犬【Cerberus】 >> 恶魔之血【DemonBlood】 > 发光的橙色眼睛【GlowingOrangeEye】 > 黏舌头【StickyTongue】 > 粗厚前足【ThickForefoot】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="HellHunter.html">
+            <span class="name-display">地狱猎手 >> 战损盔甲碎片 > 恶魔之血 > 地狱猎手的弯刀</span>
+            <span class="name-debug" style="display:none;">地狱猎手【HellHunter】 >> 战损盔甲碎片【BattleWornArmorFragment】 > 恶魔之血【DemonBlood】 > 地狱猎手的弯刀【HellHuntersCurvedBlade】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="WhiteShark.html">
+            <span class="name-display">大白鲨 >> 大白鲨的背鳍 > 大白鲨的皮 > 大白鲨的利齿</span>
+            <span class="name-debug" style="display:none;">大白鲨【WhiteShark】 >> 大白鲨的背鳍【WhiteSharkFin】 > 大白鲨的皮【WhiteSharkHide】 > 大白鲨的利齿【WhiteSharkTooth】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="HermitCrab.html">
+            <span class="name-display">寄居蟹</span>
+            <span class="name-debug" style="display:none;">寄居蟹【HermitCrab】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="IceKoboldArcher.html">
+            <span class="name-display">寒冰狗头人弓手 >> 弓弦 > 狗头人耳朵 > 箭袋</span>
+            <span class="name-debug" style="display:none;">寒冰狗头人弓手【IceKoboldArcher】 >> 弓弦【Bowstring】 > 狗头人耳朵【KoboldEar】 > 箭袋【Quiver_2001】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="IceKoboldAxeman.html">
+            <span class="name-display">寒冰狗头人斧手 >> 狗头人耳朵 > 原始项链</span>
+            <span class="name-debug" style="display:none;">寒冰狗头人斧手【IceKoboldAxeman】 >> 狗头人耳朵【KoboldEar】 > 原始项链【PrimitiveBracelet】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="IceHound.html">
+            <span class="name-display">寒冰猎犬 >> 冰霜利爪</span>
+            <span class="name-debug" style="display:none;">寒冰猎犬【IceHound】 >> 冰霜利爪【FrozenClaw】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="IceHarpy.html">
+            <span class="name-display">寒冰鹰身女妖 >> 寒霜翎羽</span>
+            <span class="name-debug" style="display:none;">寒冰鹰身女妖【IceHarpy】 >> 寒霜翎羽【FrostedFeather】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GiantJellyfish.html">
+            <span class="name-display">巨型水母</span>
+            <span class="name-debug" style="display:none;">巨型水母【GiantJellyfish】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GiantCentipede.html">
+            <span class="name-display">巨型蜈蚣</span>
+            <span class="name-debug" style="display:none;">巨型蜈蚣【GiantCentipede】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GiantSpider.html">
+            <span class="name-display">巨型蜘蛛 >> 蜘蛛丝</span>
+            <span class="name-debug" style="display:none;">巨型蜘蛛【GiantSpider】 >> 蜘蛛丝【SpiderSilk】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GiantBat.html">
+            <span class="name-display">巨型蝙蝠 >> 巨型蝙蝠翅膀 > 巨型蝙蝠耳朵 > 巨型蝙蝠毛皮</span>
+            <span class="name-debug" style="display:none;">巨型蝙蝠【GiantBat】 >> 巨型蝙蝠翅膀【BatWing】 > 巨型蝙蝠耳朵【GiantBatEar】 > 巨型蝙蝠毛皮【GiantBatHide】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GiantWorm.html">
+            <span class="name-display">巨型蠕虫</span>
+            <span class="name-debug" style="display:none;">巨型蠕虫【GiantWorm】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Lich.html">
+            <span class="name-display">巫妖 >> 黑暗物质 > 坟墓精华 > 蛆虫 > 旧布</span>
+            <span class="name-debug" style="display:none;">巫妖【Lich】 >> 黑暗物质【DarkMatter】 > 坟墓精华【GraveEssence】 > 蛆虫【Maggots】 > 旧布【OldCloth】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Wisp.html">
+            <span class="name-display">幻灵 >> 捕获的魔力碎片</span>
+            <span class="name-debug" style="display:none;">幻灵【Wisp】 >> 捕获的魔力碎片【CapturedManaFlakes】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Wraith.html">
+            <span class="name-display">幽鬼 >> 风箱 > 坟墓精华 > 蛆虫 > 旧布 > 怀表</span>
+            <span class="name-debug" style="display:none;">幽鬼【Wraith】 >> 风箱【Bellows】 > 坟墓精华【GraveEssence】 > 蛆虫【Maggots】 > 旧布【OldCloth】 > 怀表【PocketWatch】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="RuinsGolem.html">
+            <span class="name-display">废墟魔像 >> 萤火虫之腹</span>
+            <span class="name-debug" style="display:none;">废墟魔像【RuinsGolem】 >> 萤火虫之腹【FireflyAbdomen】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DireWolf.html">
+            <span class="name-display">恐狼 >> 蓝眼球 > 狼爪 > 狼牙 > 狼皮</span>
+            <span class="name-debug" style="display:none;">恐狼【DireWolf】 >> 蓝眼球【BlueEyeballs】 > 狼爪【WolfClaw】 > 狼牙【WolfFang】 > 狼皮【WolfPelt】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="CentaurDemon.html">
+            <span class="name-display">恶魔半人马 >> 半人马蹄子 > 恶魔之血 > 半人马之角 > 半人马之尾</span>
+            <span class="name-debug" style="display:none;">恶魔半人马【CentaurDemon】 >> 半人马蹄子【CentaurHoof】 > 恶魔之血【DemonBlood】 > 半人马之角【HornOfCentaur】 > 半人马之尾【TailOfCentaur】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DemonExecutioner.html">
+            <span class="name-display">恶魔处刑者 >> 恶魔之血 > 畸形刃片 > 扭曲的深渊巨角</span>
+            <span class="name-debug" style="display:none;">恶魔处刑者【DemonExecutioner】 >> 恶魔之血【DemonBlood】 > 畸形刃片【MisshapenBladeShard】 > 扭曲的深渊巨角【TwistedAbyssHorn】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DemonScout.html">
+            <span class="name-display">恶魔斥候 >> 恶魔之血 > 恶魔之翼膜 > 附魔之眼</span>
+            <span class="name-debug" style="display:none;">恶魔斥候【DemonScout】 >> 恶魔之血【DemonBlood】 > 恶魔之翼膜【DemonWingMembrane】 > 附魔之眼【EnchantedEye】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DemonDog.html">
+            <span class="name-display">恶魔犬 >> 恶魔之血 > 恶魔犬尖刺 > 狗项圈</span>
+            <span class="name-debug" style="display:none;">恶魔犬【DemonDog】 >> 恶魔之血【DemonBlood】 > 恶魔犬尖刺【DemonDogThorns】 > 狗项圈【DogCollar】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DemonBerserker.html">
+            <span class="name-display">恶魔狂战士 >> 恶魔之血</span>
+            <span class="name-debug" style="display:none;">恶魔狂战士【DemonBerserker】 >> 恶魔之血【DemonBlood】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DemonFly.html">
+            <span class="name-display">恶魔蜉蝣 >> 恶魔之血 > 毒烟粉尘</span>
+            <span class="name-debug" style="display:none;">恶魔蜉蝣【DemonFly】 >> 恶魔之血【DemonBlood】 > 毒烟粉尘【SmokyPoisonPowder】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DemonBat.html">
+            <span class="name-display">恶魔蝙蝠 >> 蝙蝠爪子 > 恶魔之血 > 被扯下的蝙蝠翅膀</span>
+            <span class="name-debug" style="display:none;">恶魔蝙蝠【DemonBat】 >> 蝙蝠爪子【BatClaw】 > 恶魔之血【DemonBlood】 > 被扯下的蝙蝠翅膀【TornBatWing】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DemonImp.html">
+            <span class="name-display">恶魔鬼童 >> 坏眼镜 > 捕获的能量碎片 > 恶魔之血</span>
+            <span class="name-debug" style="display:none;">恶魔鬼童【DemonImp】 >> 坏眼镜【BrokenGlasses】 > 捕获的能量碎片【CapturedEnergyFlakes】 > 恶魔之血【DemonBlood】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Abomination.html">
+            <span class="name-display">憎恶 >> 恶魔之血 > 巨角 > 腐烂肉块 > 恶臭的呕吐物</span>
+            <span class="name-debug" style="display:none;">憎恶【Abomination】 >> 恶魔之血【DemonBlood】 > 巨角【GiantHorn】 > 腐烂肉块【RottenLump】 > 恶臭的呕吐物【SmellyVomit】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Banshee.html">
+            <span class="name-display">报丧女妖 >> 狺女的十四行诗</span>
+            <span class="name-debug" style="display:none;">报丧女妖【Banshee】 >> 狺女的十四行诗【BansheeSonnet】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Mummy.html">
+            <span class="name-display">木乃伊 >> 坟墓精华 > 蛆虫 > 染血的旧绷带 > 旧布</span>
+            <span class="name-debug" style="display:none;">木乃伊【Mummy】 >> 坟墓精华【GraveEssence】 > 蛆虫【Maggots】 > 染血的旧绷带【OldBloodyBandage】 > 旧布【OldCloth】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DeathBeetle.html">
+            <span class="name-display">死亡甲虫 >> 死亡甲虫翅膀 > 虫子外壳</span>
+            <span class="name-debug" style="display:none;">死亡甲虫【DeathBeetle】 >> 死亡甲虫翅膀【BeetleWings】 > 虫子外壳【BugShell】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Zombie.html">
+            <span class="name-display">殭尸 >> 坟墓精华 > 有毒的肉 > 温香乱炖 > 蛆虫 > 旧布 > 腐烂粘液</span>
+            <span class="name-debug" style="display:none;">殭尸【Zombie】 >> 坟墓精华【GraveEssence】 > 有毒的肉【InfectedFlesh】 > 温香乱炖【LukewarmStew】 > 蛆虫【Maggots】 > 旧布【OldCloth】 > 腐烂粘液【RottenFluids】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Jellyfish.html">
+            <span class="name-display">水母 >> 水母萤光精华</span>
+            <span class="name-debug" style="display:none;">水母【Jellyfish】 >> 水母萤光精华【JellyfishGlowEssence】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="CaveTroll.html">
+            <span class="name-display">洞穴巨魔 >> 巨魔之皮 > 巨魔之棒</span>
+            <span class="name-debug" style="display:none;">洞穴巨魔【CaveTroll】 >> 巨魔之皮【TrollPelt】 > 巨魔之棒【TrollsClub】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SeaHarpy.html">
+            <span class="name-display">海洋鹰身女妖</span>
+            <span class="name-debug" style="display:none;">海洋鹰身女妖【SeaHarpy】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="PirateSwordman.html">
+            <span class="name-display">海盗剑士</span>
+            <span class="name-debug" style="display:none;">海盗剑士【PirateSwordman】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="PirateBowman.html">
+            <span class="name-display">海盗弓手</span>
+            <span class="name-debug" style="display:none;">海盗弓手【PirateBowman】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="PirateCrossbow.html">
+            <span class="name-display">海盗弩手</span>
+            <span class="name-debug" style="display:none;">海盗弩手【PirateCrossbow】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="PirateSwiftblade.html">
+            <span class="name-display">海盗快刀手</span>
+            <span class="name-debug" style="display:none;">海盗快刀手【PirateSwiftblade】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="PirateAxeThrower.html">
+            <span class="name-display">海盗掷斧手</span>
+            <span class="name-debug" style="display:none;">海盗掷斧手【PirateAxeThrower】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Seaurchin.html">
+            <span class="name-display">海胆 >> 海胆荆棘</span>
+            <span class="name-debug" style="display:none;">海胆【Seaurchin】 >> 海胆荆棘【SharpSeaUrchinSpine】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Morayeel.html">
+            <span class="name-display">海鳗</span>
+            <span class="name-debug" style="display:none;">海鳗【Morayeel】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="BabyTurtle.html">
+            <span class="name-display">海龟幼崽</span>
+            <span class="name-debug" style="display:none;">海龟幼崽【BabyTurtle】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SeaWalker.html">
+            <span class="name-display">深海行尸</span>
+            <span class="name-debug" style="display:none;">深海行尸【SeaWalker】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SeaPiranha.html">
+            <span class="name-display">深海食人鱼</span>
+            <span class="name-debug" style="display:none;">深海食人鱼【SeaPiranha】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Wendigo.html">
+            <span class="name-display">温迪戈 >> 冰霜心脏 > 温迪戈的蹄子 > 温迪戈的利爪 > 温迪戈的犄角残片 > 温迪戈的大肠</span>
+            <span class="name-debug" style="display:none;">温迪戈【Wendigo】 >> 冰霜心脏【FrozenHeart】 > 温迪戈的蹄子【WendigoHoof】 > 温迪戈的利爪【WendigoSharpClaws】 > 温迪戈的犄角残片【WendigosAntlerFragment】 > 温迪戈的大肠【WendigosEntrails】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FireElemental.html">
+            <span class="name-display">火元素 >> 灰烬之核</span>
+            <span class="name-debug" style="display:none;">火元素【FireElemental】 >> 灰烬之核【CoreofCinder】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FireSpirit.html">
+            <span class="name-display">火灵 >> 摇曳的余烬</span>
+            <span class="name-debug" style="display:none;">火灵【FireSpirit】 >> 摇曳的余烬【FlickeringEmber】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FireLizard.html">
+            <span class="name-display">火蜥蜴 >> 炽热尾巴 > 烧焦皮革</span>
+            <span class="name-debug" style="display:none;">火蜥蜴【FireLizard】 >> 炽热尾巴【BlazingTail】 > 烧焦皮革【SearedHide】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Ifrit.html">
+            <span class="name-display">炎魔</span>
+            <span class="name-debug" style="display:none;">炎魔【Ifrit】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FlameBoar.html">
+            <span class="name-display">烈焰野猪 >> 开裂长牙</span>
+            <span class="name-debug" style="display:none;">烈焰野猪【FlameBoar】 >> 开裂长牙【CrackedTusk】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="LavaSlime.html">
+            <span class="name-display">熔岩史莱姆 >> 岩浆精华</span>
+            <span class="name-debug" style="display:none;">熔岩史莱姆【LavaSlime】 >> 岩浆精华【MagmaEssence】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="LavaGolem.html">
+            <span class="name-display">熔岩魔像 >> 熔岩魔像的肩膀石块</span>
+            <span class="name-debug" style="display:none;">熔岩魔像【LavaGolem】 >> 熔岩魔像的肩膀石块【LavaGolemShoulderFragment】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="LavaTurtle.html">
+            <span class="name-display">熔岩龟 >> 硬化龟壳碎片</span>
+            <span class="name-debug" style="display:none;">熔岩龟【LavaTurtle】 >> 硬化龟壳碎片【HardenedShellFragment】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Cyclops.html">
+            <span class="name-display">独眼巨人 >> 独眼巨人之棒 > 独眼巨人的眼球 > 独眼巨人的破布</span>
+            <span class="name-debug" style="display:none;">独眼巨人【Cyclops】 >> 独眼巨人之棒【CyclopsClub】 > 独眼巨人的眼球【CyclopsEye】 > 独眼巨人的破布【CyclopsRags】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Reefling.html">
+            <span class="name-display">珊瑚灵</span>
+            <span class="name-debug" style="display:none;">珊瑚灵【Reefling】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Dreadspine.html">
+            <span class="name-display">畸形骨魔 >> 骨粉 > 折断的骨刺 > 神秘药水</span>
+            <span class="name-debug" style="display:none;">畸形骨魔【Dreadspine】 >> 骨粉【BonePowder】 > 折断的骨刺【BrokenBoneSpike】 > 神秘药水【MysteriousPotion】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DwarfAxeman.html">
+            <span class="name-display">矮人斧手 >> 融化的十字镐头 > 煤灰胡须</span>
+            <span class="name-debug" style="display:none;">矮人斧手【DwarfAxeman】 >> 融化的十字镐头【MeltedPickaxeHead】 > 煤灰胡须【SootyBeardHair】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DwarfHandCannoneer.html">
+            <span class="name-display">矮人火铳手 >> 融化的十字镐头 > 煤灰胡须</span>
+            <span class="name-debug" style="display:none;">矮人火铳手【DwarfHandCannoneer】 >> 融化的十字镐头【MeltedPickaxeHead】 > 煤灰胡须【SootyBeardHair】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DwarfMauler.html">
+            <span class="name-display">矮人重锤手</span>
+            <span class="name-debug" style="display:none;">矮人重锤手【DwarfMauler】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DwarfKnight.html">
+            <span class="name-display">矮人骑士 >> 融化的十字镐头 > 煤灰胡须</span>
+            <span class="name-debug" style="display:none;">矮人骑士【DwarfKnight】 >> 融化的十字镐头【MeltedPickaxeHead】 > 煤灰胡须【SootyBeardHair】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="LivingStatue.html">
+            <span class="name-display">石像鬼</span>
+            <span class="name-debug" style="display:none;">石像鬼【LivingStatue】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Octopus.html">
+            <span class="name-display">章鱼</span>
+            <span class="name-debug" style="display:none;">章鱼【Octopus】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="BlueMarlin.html">
+            <span class="name-display">蓝枪鱼</span>
+            <span class="name-debug" style="display:none;">蓝枪鱼【BlueMarlin】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Cockatrice.html">
+            <span class="name-display">蛇尾鸡 >> 蛇尾鸡的蛋蛋 > 蛇尾鸡的幸运羽毛</span>
+            <span class="name-debug" style="display:none;">蛇尾鸡【Cockatrice】 >> 蛇尾鸡的蛋蛋【CockatriceEgg】 > 蛇尾鸡的幸运羽毛【CockatricesLuckyFeather】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="FireColossus.html">
+            <span class="name-display">赤焰巨像 >> 火山之泪 > 扭曲的精炼枷锁</span>
+            <span class="name-debug" style="display:none;">赤焰巨像【FireColossus】 >> 火山之泪【TearoftheVolcano】 > 扭曲的精炼枷锁【WarpedAdamantineShackles】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="TidewalkerClubfighter.html">
+            <span class="name-display">踏潮者棍手 >> 海藻项链 > 踏潮者的背鳍</span>
+            <span class="name-debug" style="display:none;">踏潮者棍手【TidewalkerClubfighter】 >> 海藻项链【SeaweedNecklace】 > 踏潮者的背鳍【TidewalkerFin】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="TidewalkerSpearer.html">
+            <span class="name-display">踏潮者矛手 >> 海藻项链 > 踏潮者的背鳍</span>
+            <span class="name-debug" style="display:none;">踏潮者矛手【TidewalkerSpearer】 >> 海藻项链【SeaweedNecklace】 > 踏潮者的背鳍【TidewalkerFin】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="TideWalkerShaman.html">
+            <span class="name-display">踏潮者萨满 >> 风化的魔杖残片 > 海藻项链 > 踏潮者的背鳍</span>
+            <span class="name-debug" style="display:none;">踏潮者萨满【TideWalkerShaman】 >> 风化的魔杖残片【EtchedWandFragment】 > 海藻项链【SeaweedNecklace】 > 踏潮者的背鳍【TidewalkerFin】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="TidewalkerSlinger.html">
+            <span class="name-display">踏潮者飞镖投手 >> 海藻项链 > 踏潮者的背鳍</span>
+            <span class="name-debug" style="display:none;">踏潮者飞镖投手【TidewalkerSlinger】 >> 海藻项链【SeaweedNecklace】 > 踏潮者的背鳍【TidewalkerFin】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="AncientStingray.html">
+            <span class="name-display">远古刺鳐</span>
+            <span class="name-debug" style="display:none;">远古刺鳐【AncientStingray】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Bladehand.html">
+            <span class="name-display">钉手船长</span>
+            <span class="name-debug" style="display:none;">钉手船长【Bladehand】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="PinchclawCrab.html">
+            <span class="name-display">钳爪蟹 >> 坚硬的蟹壳</span>
+            <span class="name-debug" style="display:none;">钳爪蟹【PinchclawCrab】 >> 坚硬的蟹壳【HardCrabShell】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="LivingArmor.html">
+            <span class="name-display">铠甲傀儡 >> 盔甲碎片</span>
+            <span class="name-debug" style="display:none;">铠甲傀儡【LivingArmor】 >> 盔甲碎片【ArmorScrap】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="DeathSkull.html">
+            <span class="name-display">飞行骷髅头</span>
+            <span class="name-debug" style="display:none;">飞行骷髅头【DeathSkull】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Ghoul.html">
+            <span class="name-display">食尸鬼 >> 干枯的手指</span>
+            <span class="name-debug" style="display:none;">食尸鬼【Ghoul】 >> 干枯的手指【SkinnyFinger】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonChampion.html">
+            <span class="name-display">骷髅冠军 >> 骨头棒 > 破碎的头骨 > 金牙 > 坟墓精华 > 完整头骨 > 蛆虫 > 发霉的面包 > 旧布 > 荣耀徽章</span>
+            <span class="name-debug" style="display:none;">骷髅冠军【SkeletonChampion】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 坟墓精华【GraveEssence】 > 完整头骨【IntactSkull】 > 蛆虫【Maggots】 > 发霉的面包【MoldyBread】 > 旧布【OldCloth】 > 荣耀徽章【TokenOfHonor】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonSwordman.html">
+            <span class="name-display">骷髅双手剑士 >> 骨头棒 > 破碎的头骨 > 青铜天秤 > 金牙 > 完整头骨 > 发霉的面包 > 生锈的断剑</span>
+            <span class="name-debug" style="display:none;">骷髅双手剑士【SkeletonSwordman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 青铜天秤【BronzeScale】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 生锈的断剑【RustyBrokenSword】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonArcher.html">
+            <span class="name-display">骷髅弓箭手 >> 骨头棒 > 弓弦 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包 > 箭袋</span>
+            <span class="name-debug" style="display:none;">骷髅弓箭手【SkeletonArcher】 >> 骨头棒【Bone】 > 弓弦【Bowstring】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 箭袋【Quiver_2001】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonCrossbowman.html">
+            <span class="name-display">骷髅弩手 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包</span>
+            <span class="name-debug" style="display:none;">骷髅弩手【SkeletonCrossbowman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonAxeman.html">
+            <span class="name-display">骷髅斧兵 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包</span>
+            <span class="name-debug" style="display:none;">骷髅斧兵【SkeletonAxeman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonFootman.html">
+            <span class="name-display">骷髅步兵 >> 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包 > 生锈的断剑</span>
+            <span class="name-debug" style="display:none;">骷髅步兵【SkeletonFootman】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 生锈的断剑【RustyBrokenSword】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonMage.html">
+            <span class="name-display">骷髅法师 >> 骨头棒 > 破碎的头骨 > 附魔的黑暗织物 > 金牙 > 完整头骨 > 发霉的面包 > 石臼 > 火山灰</span>
+            <span class="name-debug" style="display:none;">骷髅法师【SkeletonMage】 >> 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 附魔的黑暗织物【EnchantedDarkFabric】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】 > 石臼【StoneMortar】 > 火山灰【VolcanicAsh】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonWarlord.html">
+            <span class="name-display">骷髅督军 >> 坟墓精华 > 蛆虫 > 旧布 > 督军的铠甲残片 > 督军的断剑</span>
+            <span class="name-debug" style="display:none;">骷髅督军【SkeletonWarlord】 >> 坟墓精华【GraveEssence】 > 蛆虫【Maggots】 > 旧布【OldCloth】 > 督军的铠甲残片【WarlordsArmorShard】 > 督军的断剑【WarlordsBrokenSwordBlade】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SkeletonSpearman.html">
+            <span class="name-display">骷髅长枪兵 >> 锥子 > 骨头棒 > 破碎的头骨 > 金牙 > 完整头骨 > 发霉的面包</span>
+            <span class="name-debug" style="display:none;">骷髅长枪兵【SkeletonSpearman】 >> 锥子【Awl】 > 骨头棒【Bone】 > 破碎的头骨【BrokenSkull】 > 金牙【GoldenTeeth】 > 完整头骨【IntactSkull】 > 发霉的面包【MoldyBread】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="SpectralKnight.html">
+            <span class="name-display">鬼灵骑士 >> 冥界织物 > 幽冥剑柄</span>
+            <span class="name-debug" style="display:none;">鬼灵骑士【SpectralKnight】 >> 冥界织物【SpectralFabric】 > 幽冥剑柄【SpectralHilt】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="GhostKing.html">
+            <span class="name-display">鬼王 >> 诅咒之冠 > 幽界精华</span>
+            <span class="name-debug" style="display:none;">鬼王【GhostKing】 >> 诅咒之冠【CursedCrown】 > 幽界精华【GhostlyEssence】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="HellMaggot.html">
+            <span class="name-display">魔蛆 >> 鼓胀的血囊</span>
+            <span class="name-debug" style="display:none;">魔蛆【HellMaggot】 >> 鼓胀的血囊【KneadBloodBag】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Crocodilian.html">
+            <span class="name-display">鳄鱼人 >> 鳄鱼人眼球</span>
+            <span class="name-debug" style="display:none;">鳄鱼人【Crocodilian】 >> 鳄鱼人眼球【CrocodilianEyeball】</span>
+        </a>
+    </div>
+    <div class="summary-item monster-item">
+        <a href="Harpy.html">
+            <span class="name-display">鹰身女妖</span>
+            <span class="name-debug" style="display:none;">鹰身女妖【Harpy】</span>
+        </a>
+    </div>
+</div>
+
+    <script>
+        function toggleDebugInfo() {
+            const displays = document.querySelectorAll('.name-display');
+            const debugs = document.querySelectorAll('.name-debug');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = debugs.length > 0 && debugs[0].style.display !== 'none';
+            displays.forEach(el => el.style.display = isVisible ? 'inline' : 'none');
+            debugs.forEach(el => el.style.display = isVisible ? 'none' : 'inline');
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => { if (dot.style.display === 'none') return; dot.style.left = '50%'; dot.style.top = '50%'; });
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

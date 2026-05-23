@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>海鳗 位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #FFC107; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 5px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+        .summary .label-group-row { background-color: #424242; }
+        .label-toggle-btn { margin: 2px 4px; padding: 4px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .label-toggle-btn:hover { background-color: #45a049; transform: scale(1.05); }
+        .label-toggle-btn:active { transform: scale(0.95); }
+        .legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 15px; text-align: center; color: #aaa; }
+        .color-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>海鳗 位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">海鳗 (Morayeel)</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header">水图</div>
+    <div class="map-card" id="map-card-ShipGraveyard_CoralForest_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">珊瑚密林<span class='debug-text'> (ShipGraveyard_CoralForest_01)</span><div class='map-filename'>ShipGraveyard_CoralForest_01_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_CoralForest_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CoralForest_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_CoralForest_01_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_CoralForest_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CoralForest_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_CoralForest_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_CoralForest_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_CoralForest_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CoralForest_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_CoralForest_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CoralForest_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_CoralForest_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_CoralForest_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_CoralForest_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_CoralForest_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_CoralForest_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_CoralForest_01.webp" class="image">        <div class="dot" data-index="12970" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-154.89087" data-y="-176.6066" data-z="-625.0" style="left: 45.16%; top: 44.48%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-625</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_FloatingIsland_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">浮岛 A<span class='debug-text'> (ShipGraveyard_FloatingIsland)</span><div class='map-filename'>ShipGraveyard_FloatingIsland_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_FloatingIsland.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingIsland_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_FloatingIsland_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_FloatingIsland_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingIsland_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_FloatingIsland_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_FloatingIsland_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingIsland_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingIsland_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingIsland_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingIsland_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_FloatingIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingIsland_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_FloatingIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingIsland_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_FloatingIsland_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_FloatingIsland_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FloatingIsland_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_FloatingIsland_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_FloatingIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_FloatingIsland.webp" class="image">        <div class="dot" data-index="13358" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-248.12622" data-y="1192.2239" data-z="-905.0" style="left: 42.25%; top: 87.26%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-905</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_MermaidTomb_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">人鱼冢<span class='debug-text'> (MermaidTomb)</span><div class='map-filename'>ShipGraveyard_MermaidTomb_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_MermaidTomb.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MermaidTomb_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_MermaidTomb_HR_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_MermaidTomb_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MermaidTomb_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_MermaidTomb_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_MermaidTomb_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_MermaidTomb_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MermaidTomb_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_MermaidTomb_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MermaidTomb_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_MermaidTomb_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_MermaidTomb_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_MermaidTomb_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_MermaidTomb_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_MermaidTomb_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_MermaidTomb.webp" class="image">        <div class="dot" data-index="14263" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="44.331776" data-y="249.0969" data-z="-924.0" style="left: 51.39%; top: 57.78%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-924</span></div>
+        <div class="dot" data-index="14264" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="69.331924" data-y="-435.10123" data-z="-1137.0" style="left: 52.17%; top: 36.40%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1137</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_SpawningPool_HR_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">孵化池<span class='debug-text'> (SpawningPool)</span><div class='map-filename'>ShipGraveyard_SpawningPool_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_SpawningPool.webp (缓存) | 找到 7 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SpawningPool_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_SpawningPool_HR_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_SpawningPool_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SpawningPool_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_SpawningPool_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_SpawningPool_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_SpawningPool_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SpawningPool_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_SpawningPool_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SpawningPool_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_SpawningPool_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_SpawningPool_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SpawningPool_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_SpawningPool_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_SpawningPool_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SpawningPool.webp" class="image">        <div class="dot" data-index="15668" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-957.0" data-y="236.0" data-z="-1065.0" style="left: 20.09%; top: 57.38%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1065</span></div>
+        <div class="dot" data-index="15669" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-221.67938" data-y="121.5966" data-z="-1147.0" style="left: 43.07%; top: 53.80%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1147</span></div>
+        <div class="dot" data-index="15670" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="199.6214" data-y="411.4139" data-z="-1717.0" style="left: 56.24%; top: 62.86%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1717</span></div>
+        <div class="dot" data-index="15671" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="684.0366" data-y="-88.12689" data-z="-1231.0" style="left: 71.38%; top: 47.25%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1231</span></div>
+        <div class="dot" data-index="15672" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="1160.5007" data-y="-83.78714" data-z="-1580.0" style="left: 86.27%; top: 47.38%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1580</span></div>
+        <div class="dot" data-index="15673" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-206.95798" data-y="1661.0315" data-z="-1330.0" style="left: 43.53%; top: 101.91%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1330</span></div>
+        <div class="dot" data-index="15674" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-710.813" data-y="1372.2102" data-z="-1634.0" style="left: 27.79%; top: 92.88%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1634</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_Trench_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海沟<span class='debug-text'> (ShipGraveyard_Trench)</span><div class='map-filename'>ShipGraveyard_Trench_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_Trench.webp (缓存) | 找到 17 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Trench_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_Trench_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_Trench_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Trench_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_Trench_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_Trench_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_Trench_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Trench_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_Trench_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Trench_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_Trench_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_Trench_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Trench_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_Trench_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_Trench_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Trench.webp" class="image">        <div class="dot" data-index="15904" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="314.345" data-y="1667.5569" data-z="-1936.0" style="left: 59.82%; top: 102.11%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1936</span></div>
+        <div class="dot" data-index="15905" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="170.50368" data-y="1477.2704" data-z="-1936.0" style="left: 55.33%; top: 96.16%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1936</span></div>
+        <div class="dot" data-index="15906" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="689.41547" data-y="2066.8616" data-z="-2405.0" style="left: 71.54%; top: 114.59%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2405</span></div>
+        <div class="dot" data-index="15907" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="172.57045" data-y="1272.1471" data-z="-2373.0" style="left: 55.39%; top: 89.75%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2373</span></div>
+        <div class="dot" data-index="15908" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-209.18748" data-y="300.89" data-z="-2219.5283" style="left: 43.46%; top: 59.40%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2219</span></div>
+        <div class="dot" data-index="15909" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="1330.3342" data-y="974.82025" data-z="-2404.0" style="left: 91.57%; top: 80.46%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2404</span></div>
+        <div class="dot" data-index="15910" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="407.47247" data-y="87.11035" data-z="-1231.0" style="left: 62.73%; top: 52.72%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1231</span></div>
+        <div class="dot" data-index="15911" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="340.0" data-y="607.0" data-z="-955.0" style="left: 60.62%; top: 68.97%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-955</span></div>
+        <div class="dot" data-index="15912" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-619.9087" data-y="1335.9082" data-z="-1115.0" style="left: 30.63%; top: 91.75%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1115</span></div>
+        <div class="dot" data-index="15913" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-437.70206" data-y="214.913" data-z="-1482.0" style="left: 36.32%; top: 56.72%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1482</span></div>
+        <div class="dot" data-index="15914" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="1052.0123" data-y="1013.3064" data-z="-1265.0" style="left: 82.88%; top: 81.67%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1265</span></div>
+        <div class="dot" data-index="15915" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="1140.9011" data-y="1341.734" data-z="-874.0" style="left: 85.65%; top: 91.93%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-874</span></div>
+        <div class="dot" data-index="15916" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-692.9681" data-y="835.1893" data-z="-699.0" style="left: 28.34%; top: 76.10%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-699</span></div>
+        <div class="dot" data-index="15917" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="525.0076" data-y="-11.205759" data-z="-245.0" style="left: 66.41%; top: 49.65%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-245</span></div>
+        <div class="dot" data-index="15918" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="940.87756" data-y="1178.4048" data-z="-406.0" style="left: 79.40%; top: 86.83%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-406</span></div>
+        <div class="dot" data-index="15919" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="961.0" data-y="746.0" data-z="-465.0" style="left: 80.03%; top: 73.31%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-465</span></div>
+        <div class="dot" data-index="15920" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-365.04364" data-y="8.611477" data-z="-630.8076" style="left: 38.59%; top: 50.27%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-630</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_UnderSeaCave_01_D-json" data-rotate="2" data-init-rotate="2" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海底洞穴 A<span class='debug-text'> (ShipGraveyard_UnderSeaCave_01)</span><div class='map-filename'>ShipGraveyard_UnderSeaCave_01_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_UnderSeaCave_01.webp (缓存) | 找到 9 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_UnderSeaCave_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_UnderSeaCave_01_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_UnderSeaCave_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_UnderSeaCave_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_UnderSeaCave_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻2</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_UnderSeaCave_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_UnderSeaCave_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_UnderSeaCave_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_UnderSeaCave_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_UnderSeaCave_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_UnderSeaCave_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_UnderSeaCave_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_UnderSeaCave_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_UnderSeaCave_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_UnderSeaCave_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_UnderSeaCave_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_UnderSeaCave_01.webp" class="image">        <div class="dot" data-index="15992" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="215.99799" data-y="-878.13135" data-z="-2759.0283" style="left: 56.75%; top: 22.56%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2759</span></div>
+        <div class="dot" data-index="15993" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="1120.0" data-y="-990.0" data-z="-2112.4265" style="left: 85.00%; top: 19.06%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2112</span></div>
+        <div class="dot" data-index="15994" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-1339.9194" data-y="1144.3433" data-z="-1696.5798" style="left: 8.13%; top: 85.76%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1696</span></div>
+        <div class="dot" data-index="15995" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="740.10345" data-y="98.890724" data-z="-1260.0" style="left: 73.13%; top: 53.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1260</span></div>
+        <div class="dot" data-index="15996" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-620.64856" data-y="-275.0607" data-z="-1386.5973" style="left: 30.60%; top: 41.40%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1386</span></div>
+        <div class="dot" data-index="15997" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="937.5845" data-y="128.46286" data-z="-1745.7738" style="left: 79.30%; top: 54.01%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1745</span></div>
+        <div class="dot" data-index="15998" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-138.66025" data-y="1370.359" data-z="-2670.0" style="left: 45.67%; top: 92.82%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2670</span></div>
+        <div class="dot" data-index="15999" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-1237.4017" data-y="524.60175" data-z="-2950.0" style="left: 11.33%; top: 66.39%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2950</span></div>
+        <div class="dot" data-index="16000" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-1026.5266" data-y="-1187.4487" data-z="-2540.7954" style="left: 17.92%; top: 12.89%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2540</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_AbandonedShip_01_HR_D-json" data-rotate="3" data-init-rotate="3" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="1" data-size-y="2" style="">
+        <h3 class="map-title">废弃舰船<span class='debug-text'> (AbandonedShip_01)</span><div class='map-filename'>ShipGraveyard_AbandonedShip_01_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_AbandonedShip_01.webp (缓存) | 找到 3 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_AbandonedShip_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_AbandonedShip_01_HR_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_AbandonedShip_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_AbandonedShip_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_AbandonedShip_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻3</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_AbandonedShip_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_AbandonedShip_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_AbandonedShip_01_HR_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_AbandonedShip_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_AbandonedShip_01_HR_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_AbandonedShip_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_AbandonedShip_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_AbandonedShip_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_AbandonedShip_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_AbandonedShip_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot" data-index="12657" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-390.31088" data-y="452.5" data-z="-850.0" style="left: 37.80%; top: 32.07%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-850</span></div>
+        <div class="dot" data-index="12658" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="259.37314" data-y="299.83835" data-z="-660.0" style="left: 58.11%; top: 29.68%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-660</span></div>
+        <div class="dot" data-index="12659" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="3930.652" data-y="390.11298" data-z="-780.5111" style="left: 172.83%; top: 31.10%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-780</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_BladehandRefuge_D-json" data-rotate="0" data-init-rotate="0" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">钉手的藏身处<span class='debug-text'> (ShipGraveyard_BladehandRefuge)</span><div class='map-filename'>ShipGraveyard_BladehandRefuge_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_BladehandRefuge.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_BladehandRefuge_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_BladehandRefuge_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_BladehandRefuge_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_BladehandRefuge_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_BladehandRefuge_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_BladehandRefuge_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_BladehandRefuge_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_BladehandRefuge_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_BladehandRefuge_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_BladehandRefuge_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_BladehandRefuge_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_BladehandRefuge_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_BladehandRefuge_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_BladehandRefuge_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_BladehandRefuge_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_BladehandRefuge.webp" class="image">        <div class="dot" data-index="12795" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-19.289314" data-y="1078.6328" data-z="-470.4929" style="left: 24.70%; top: 41.85%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-470</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_Hole_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="4800" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">蓝洞<span class='debug-text'> (Hole)</span><div class='map-filename'>ShipGraveyard_Hole_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_Hole.webp (缓存) | 找到 5 个位置 | 范围: ±4800</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Hole_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_Hole_HR_D-json" value="4800" step="100" onchange="updateMapRange('ShipGraveyard_Hole_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Hole_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_Hole_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_Hole_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_Hole_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Hole_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_Hole_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Hole_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_Hole_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_Hole_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Hole_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_Hole_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_Hole_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_Hole.webp" class="image">        <div class="dot" data-index="14100" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="2664.6907" data-y="4096.161" data-z="-877.3223" style="left: 77.76%; top: 92.67%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-877</span></div>
+        <div class="dot" data-index="14101" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="-2487.0378" data-y="1874.3671" data-z="-790.0" style="left: 24.09%; top: 69.52%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-790</span></div>
+        <div class="dot" data-index="14102" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="424.82852" data-y="1813.9487" data-z="-1213.7395" style="left: 54.43%; top: 68.90%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1213</span></div>
+        <div class="dot" data-index="14103" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="776.71576" data-y="886.7157" data-z="-1675.0" style="left: 58.09%; top: 59.24%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1675</span></div>
+        <div class="dot" data-index="14104" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="2214.7793" data-y="-86.91858" data-z="-992.92896" style="left: 73.07%; top: 49.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-992</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_SkullIsland_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">骷髅岛<span class='debug-text'> (ShipGraveyard_SkullIsland)</span><div class='map-filename'>ShipGraveyard_SkullIsland_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_SkullIsland.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SkullIsland_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_SkullIsland_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_SkullIsland_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SkullIsland_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_SkullIsland_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_SkullIsland_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SkullIsland_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_SkullIsland_D-json" value="1600" step="10" onchange="applyOffsetInput('ShipGraveyard_SkullIsland_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_SkullIsland_D-json" value="1600" step="10" onchange="applyOffsetInput('ShipGraveyard_SkullIsland_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_SkullIsland_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_SkullIsland_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SkullIsland_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_SkullIsland_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_SkullIsland_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_SkullIsland.webp" class="image">        <div class="dot" data-index="15330" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" data-x="846.3146" data-y="-1465.938" data-z="-975.0" style="left: 88.22%; top: 52.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-975</span></div>
+</div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>颜色说明：</strong>
+        <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
+        <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
+        <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
+        <br><strong>位置统计：共 64 个位置点</strong><br><strong>包含地图：</strong> 人鱼冢, 孵化池, 废弃舰船, 浮岛 A, 海底洞穴 A, 海沟, 珊瑚密林, 蓝洞, 钉手的藏身处, 骷髅岛
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table>
+            <tr><th>显示</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>
+                <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签分组开关（点击全选/取消同标签）</th>
+        <th colspan='3' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签数量</th>
+    </tr>
+    <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Monster_Morayeel')">GameSpawner_Id_Spawner_New_Monster_Morayeel (47)</button>
+        </th>
+        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
+    </tr>
+
+                <tr id="row-12970" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CoralForest_01_D-json', 12970, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CoralForest_01_D.json</td>
+        <td>珊瑚密林</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-154.89</td>
+        <td>-176.61</td>
+        <td>-625.00</td>
+    </tr>
+    <tr id="row-13358" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 13358, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingIsland_D.json</td>
+        <td>浮岛 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-248.13</td>
+        <td>1192.22</td>
+        <td>-905.00</td>
+    </tr>
+    <tr id="row-14263" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14263, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>44.33</td>
+        <td>249.10</td>
+        <td>-924.00</td>
+    </tr>
+    <tr id="row-14264" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14264, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>69.33</td>
+        <td>-435.10</td>
+        <td>-1137.00</td>
+    </tr>
+    <tr id="row-15668" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15668, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-957.00</td>
+        <td>236.00</td>
+        <td>-1065.00</td>
+    </tr>
+    <tr id="row-15669" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15669, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-221.68</td>
+        <td>121.60</td>
+        <td>-1147.00</td>
+    </tr>
+    <tr id="row-15670" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15670, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>199.62</td>
+        <td>411.41</td>
+        <td>-1717.00</td>
+    </tr>
+    <tr id="row-15671" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15671, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>684.04</td>
+        <td>-88.13</td>
+        <td>-1231.00</td>
+    </tr>
+    <tr id="row-15672" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15672, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>1160.50</td>
+        <td>-83.79</td>
+        <td>-1580.00</td>
+    </tr>
+    <tr id="row-15673" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15673, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-206.96</td>
+        <td>1661.03</td>
+        <td>-1330.00</td>
+    </tr>
+    <tr id="row-15674" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15674, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-710.81</td>
+        <td>1372.21</td>
+        <td>-1634.00</td>
+    </tr>
+    <tr id="row-15904" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15904, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>314.35</td>
+        <td>1667.56</td>
+        <td>-1936.00</td>
+    </tr>
+    <tr id="row-15905" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15905, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>170.50</td>
+        <td>1477.27</td>
+        <td>-1936.00</td>
+    </tr>
+    <tr id="row-15906" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15906, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>689.42</td>
+        <td>2066.86</td>
+        <td>-2405.00</td>
+    </tr>
+    <tr id="row-15907" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15907, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>172.57</td>
+        <td>1272.15</td>
+        <td>-2373.00</td>
+    </tr>
+    <tr id="row-15908" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15908, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-209.19</td>
+        <td>300.89</td>
+        <td>-2219.53</td>
+    </tr>
+    <tr id="row-15909" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15909, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>1330.33</td>
+        <td>974.82</td>
+        <td>-2404.00</td>
+    </tr>
+    <tr id="row-15910" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15910, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>407.47</td>
+        <td>87.11</td>
+        <td>-1231.00</td>
+    </tr>
+    <tr id="row-15911" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15911, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>340.00</td>
+        <td>607.00</td>
+        <td>-955.00</td>
+    </tr>
+    <tr id="row-15912" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15912, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-619.91</td>
+        <td>1335.91</td>
+        <td>-1115.00</td>
+    </tr>
+    <tr id="row-15913" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15913, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-437.70</td>
+        <td>214.91</td>
+        <td>-1482.00</td>
+    </tr>
+    <tr id="row-15914" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15914, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>1052.01</td>
+        <td>1013.31</td>
+        <td>-1265.00</td>
+    </tr>
+    <tr id="row-15915" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15915, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>1140.90</td>
+        <td>1341.73</td>
+        <td>-874.00</td>
+    </tr>
+    <tr id="row-15916" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15916, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-692.97</td>
+        <td>835.19</td>
+        <td>-699.00</td>
+    </tr>
+    <tr id="row-15917" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15917, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>525.01</td>
+        <td>-11.21</td>
+        <td>-245.00</td>
+    </tr>
+    <tr id="row-15918" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15918, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>940.88</td>
+        <td>1178.40</td>
+        <td>-406.00</td>
+    </tr>
+    <tr id="row-15919" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15919, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>961.00</td>
+        <td>746.00</td>
+        <td>-465.00</td>
+    </tr>
+    <tr id="row-15920" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15920, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-365.04</td>
+        <td>8.61</td>
+        <td>-630.81</td>
+    </tr>
+    <tr id="row-15992" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15992, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>216.00</td>
+        <td>-878.13</td>
+        <td>-2759.03</td>
+    </tr>
+    <tr id="row-15993" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15993, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>1120.00</td>
+        <td>-990.00</td>
+        <td>-2112.43</td>
+    </tr>
+    <tr id="row-15994" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15994, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-1339.92</td>
+        <td>1144.34</td>
+        <td>-1696.58</td>
+    </tr>
+    <tr id="row-15995" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15995, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>740.10</td>
+        <td>98.89</td>
+        <td>-1260.00</td>
+    </tr>
+    <tr id="row-15996" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15996, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-620.65</td>
+        <td>-275.06</td>
+        <td>-1386.60</td>
+    </tr>
+    <tr id="row-15997" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15997, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>937.58</td>
+        <td>128.46</td>
+        <td>-1745.77</td>
+    </tr>
+    <tr id="row-15998" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15998, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-138.66</td>
+        <td>1370.36</td>
+        <td>-2670.00</td>
+    </tr>
+    <tr id="row-15999" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 15999, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-1237.40</td>
+        <td>524.60</td>
+        <td>-2950.00</td>
+    </tr>
+    <tr id="row-16000" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_UnderSeaCave_01_D-json', 16000, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_UnderSeaCave_01_D.json</td>
+        <td>海底洞穴 A</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-1026.53</td>
+        <td>-1187.45</td>
+        <td>-2540.80</td>
+    </tr>
+    <tr id="row-12657" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12657, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
+        <td>废弃舰船</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-390.31</td>
+        <td>452.50</td>
+        <td>-850.00</td>
+    </tr>
+    <tr id="row-12658" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12658, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
+        <td>废弃舰船</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>259.37</td>
+        <td>299.84</td>
+        <td>-660.00</td>
+    </tr>
+    <tr id="row-12659" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12659, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
+        <td>废弃舰船</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>3930.65</td>
+        <td>390.11</td>
+        <td>-780.51</td>
+    </tr>
+    <tr id="row-12795" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12795, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-19.29</td>
+        <td>1078.63</td>
+        <td>-470.49</td>
+    </tr>
+    <tr id="row-14100" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14100, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>2664.69</td>
+        <td>4096.16</td>
+        <td>-877.32</td>
+    </tr>
+    <tr id="row-14101" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14101, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>-2487.04</td>
+        <td>1874.37</td>
+        <td>-790.00</td>
+    </tr>
+    <tr id="row-14102" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14102, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>424.83</td>
+        <td>1813.95</td>
+        <td>-1213.74</td>
+    </tr>
+    <tr id="row-14103" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14103, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>776.72</td>
+        <td>886.72</td>
+        <td>-1675.00</td>
+    </tr>
+    <tr id="row-14104" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14104, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>2214.78</td>
+        <td>-86.92</td>
+        <td>-992.93</td>
+    </tr>
+    <tr id="row-15330" data-label="GameSpawner_Id_Spawner_New_Monster_Morayeel">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15330, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SkullIsland_D.json</td>
+        <td>骷髅岛</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Morayeel</td>
+        <td>846.31</td>
+        <td>-1465.94</td>
+        <td>-975.00</td>
+    </tr>
+
+        </table>
+    </div>
+    <script>
+        window.mapStates = {};
+        window.labelStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+            // 检查卡片是否还有可见点，自动隐藏/显示卡片
+            checkCardVisibility(cardId);
+        }
+        function checkCardVisibility(cardId) {
+            const card = document.getElementById('map-card-' + cardId);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            let hasVisibleDot = false;
+            dots.forEach(dot => {
+                if (dot.style.display !== 'none') {
+                    hasVisibleDot = true;
+                }
+            });
+            // 如果所有点都隐藏，隐藏整个卡片；否则显示卡片
+            card.style.display = hasVisibleDot ? 'flex' : 'none';
+        }
+        function toggleLabelGroup(label) {
+            // 切换标签状态的选中/取消
+            if (!window.labelStates[label]) {
+                window.labelStates[label] = true; // 默认为true（显示）
+            }
+            window.labelStates[label] = !window.labelStates[label];
+            const shouldShow = window.labelStates[label];
+
+            // 更新所有同标签的点和复选框
+            const allLabelRows = document.querySelectorAll(`tr[data-label="${label}"]`);
+            allLabelRows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = shouldShow;
+                    // 触发togglePoint函数
+                    const rowId = row.id;
+                    const pointIndex = rowId.replace('row-', '');
+                    // 获取对应的cardId（从data属性或其他方式）
+                    const dot = document.querySelector(`.dot[data-label="${label}"][data-index="${pointIndex}"]`);
+                    if (dot) {
+                        const card = dot.closest('.map-card');
+                        if (card) {
+                            const cardId = card.id.replace('map-card-', '');
+                            // 手动调用togglePoint
+                            dot.style.display = shouldShow ? 'block' : 'none';
+                            row.style.opacity = shouldShow ? '1' : '0.4';
+                            checkCardVisibility(cardId);
+                        }
+                    }
+                }
+            });
+
+            // 更新按钮样式
+            const toggleBtn = document.querySelector(`.label-toggle-btn[data-label="${label}"]`);
+            if (toggleBtn) {
+                toggleBtn.style.backgroundColor = shouldShow ? '#4CAF50' : '#f44336';
+                toggleBtn.style.color = shouldShow ? 'white' : 'white';
+            }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX = 50, multY = 50, centerX = 50, centerY = 50;
+                if (sx === 1 && sy === 2) { centerX = 100; multX = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX + (x / range) * multX;
+                const top = centerY + (y / range) * multY;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+            
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

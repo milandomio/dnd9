@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>坏眼镜 >> 恶魔鬼童 怪物坐标汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        .monster-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 15px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .monster-toggle-btn { padding: 8px 15px; border: 2px solid #fff; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; color: #fff; transition: all 0.2s; opacity: 1; }
+        .monster-toggle-btn:hover { opacity: 0.8; transform: translateY(-2px); }
+        .monster-toggle-btn.hidden { opacity: 0.3; }
+        .monster-legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 14px; text-align: center; }
+        .legend-items { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 8px; }
+        .legend-item { display: flex; align-items: center; gap: 5px; color: #aaa; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #555; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 2px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .monster-summary { display: flex; flex-wrap: wrap; gap: 4px 10px; justify-content: center; margin-top: 5px; font-size: 13px; color: #ccc; align-items: center; }
+        .ms-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .ms-name { cursor: pointer; }
+        .ms-name:hover { text-decoration: underline; color: #fff; }
+        .ms-count { color: #888; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .monster-dot.hidden { opacity: 0.2; }
+        .group-header.hidden { display: none; }
+        .map-card.empty { display: none; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>坏眼镜 >> 恶魔鬼童 怪物坐标汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">坏眼镜 (BrokenGlasses) >> DemonImp</div>
+    <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>恶魔鬼童 (20)</div>
+</div></div>
+
+    <div class="monster-nav">
+    <button class="monster-toggle-btn" id="btn-DemonImp" data-monster="DemonImp" onclick="toggleMonster('DemonImp')" style="background-color: rgba(255, 0, 0, 0.7);">恶魔鬼童</button>
+</div>
+
+    <div class="maps-grid" id="maps-grid">    <div class="group-header" id="group-Inferno">废墟3层炼狱</div>
+    <div class="map-card" id="map-card-DeathAltar_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">死亡祭坛<span class='debug-text'> (Death_Altar)</span><div class='map-filename'>DeathAltar_HR_D.json</div></h3>
+        <div class="map-info">DeathAltar.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('DeathAltar_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-DeathAltar_HR_D-json" value="1600" step="100" onchange="updateMapRange('DeathAltar_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('DeathAltar_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-DeathAltar_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-DeathAltar_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('DeathAltar_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('DeathAltar_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('DeathAltar_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('DeathAltar_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-DeathAltar_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DeathAltar_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-DeathAltar_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DeathAltar_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('DeathAltar_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('DeathAltar_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('DeathAltar_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('DeathAltar_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-DeathAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathAltar.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9115" data-x="53.0" data-y="-25.0" data-z="98.0" style="left: 51.66%; top: 49.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">98</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-DemonDen_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">炼狱魔窟<span class='debug-text'> (Demon_Den)</span><div class='map-filename'>DemonDen_HR_D.json</div></h3>
+        <div class="map-info">DemonDen.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-DemonDen_HR_D-json" value="1600" step="100" onchange="updateMapRange('DemonDen_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-DemonDen_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-DemonDen_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('DemonDen_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('DemonDen_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('DemonDen_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('DemonDen_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9256" data-x="-33.0" data-y="-610.0" data-z="410.0" style="left: 48.97%; top: 30.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">410</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-InfernoCastleConner_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火城堡<span class='debug-text'> (Blood_Castle)</span><div class='map-filename'>InfernoCastleConner_HR_D.json</div></h3>
+        <div class="map-info">InfernoCastleConner.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoCastleConner_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoCastleConner_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoCastleConner_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoCastleConner_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoCastleConner_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoCastleConner_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoCastleConner_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoCastleConner_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoCastleConner_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoCastleConner_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoCastleConner_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoCastleConner_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoCastleConner_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoCastleConner_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9320" data-x="526.0" data-y="681.0" data-z="-3.0" style="left: 66.44%; top: 71.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-InfernoColumns_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火柱廊<span class='debug-text'> (Blood_Columns)</span><div class='map-filename'>InfernoColumns_HR_D.json</div></h3>
+        <div class="map-info">InfernoColumns.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoColumns_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoColumns_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoColumns_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoColumns_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoColumns_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoColumns_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoColumns_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoColumns_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoColumns_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoColumns_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoColumns_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoColumns_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoColumns_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoColumns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoColumns.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9366" data-x="39.0" data-y="-125.0" data-z="0.0" style="left: 51.22%; top: 46.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="9367" data-x="1901.0" data-y="256.0" data-z="0.0" style="left: 109.41%; top: 58.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
+    </div>
+    <div class="map-card test-module" id="map-card-InfernoColumns_SR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">SR<span class='debug-text'> (SR)</span><div class='map-filename'>InfernoColumns_SR_D.json</div></h3>
+        <div class="map-info">未找到 (尝试: InfernoColumns_SR, SR) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoColumns_SR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoColumns_SR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoColumns_SR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoColumns_SR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoColumns_SR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoColumns_SR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoColumns_SR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoColumns_SR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoColumns_SR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoColumns_SR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoColumns_SR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoColumns_SR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoColumns_SR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_SR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoColumns_SR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoColumns_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: InfernoColumns_SR, SR</small></div>        <div class="dot monster-dot" data-monster="DemonImp" data-index="9920" data-x="39.0" data-y="-125.0" data-z="0.0" style="left: 51.22%; top: 46.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="9921" data-x="1901.0" data-y="256.0" data-z="0.0" style="left: 109.41%; top: 58.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-InfernoRiver_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火之河<span class='debug-text'> (Blood_River)</span><div class='map-filename'>InfernoRiver_HR_D.json</div></h3>
+        <div class="map-info">InfernoRiver.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoRiver_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoRiver_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoRiver_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoRiver_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoRiver_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoRiver_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoRiver_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9521" data-x="-919.0" data-y="-1068.0" data-z="-1.0" style="left: 21.28%; top: 16.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-1</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_Bloodyfalls_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火瀑布<span class='debug-text'> (Bloodyfalls)</span><div class='map-filename'>Inferno_Bloodyfalls_HR_D.json</div></h3>
+        <div class="map-info">Inferno_Bloodyfalls.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_Bloodyfalls_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_Bloodyfalls_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_Bloodyfalls_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_Bloodyfalls_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_Bloodyfalls_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_Bloodyfalls_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Bloodyfalls_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Bloodyfalls_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Bloodyfalls_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Bloodyfalls_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_Bloodyfalls_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_Bloodyfalls_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_Bloodyfalls_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_Bloodyfalls_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_Bloodyfalls_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_Bloodyfalls_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Bloodyfalls_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_Bloodyfalls_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_Bloodyfalls_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Bloodyfalls.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8378" data-x="148.0" data-y="-5.0" data-z="400.0" style="left: 54.62%; top: 49.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">400</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_DeathPlatforms_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火平台<span class='debug-text'> (Blood_Platforms)</span><div class='map-filename'>Inferno_DeathPlatforms_HR_D.json</div></h3>
+        <div class="map-info">Inferno_DeathPlatforms.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_DeathPlatforms_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_DeathPlatforms_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_DeathPlatforms_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_DeathPlatforms_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_DeathPlatforms_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_DeathPlatforms_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DeathPlatforms_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_DeathPlatforms_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9173" data-x="785.0" data-y="779.0" data-z="496.0" style="left: 74.53%; top: 74.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">496</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_Doomcage_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">末日囚笼<span class='debug-text'> (Doomcage)</span><div class='map-filename'>Inferno_Doomcage_HR_D.json</div></h3>
+        <div class="map-info">Inferno_Doomcage.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_Doomcage_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_Doomcage_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_Doomcage_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_Doomcage_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_Doomcage_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_Doomcage_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Doomcage_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Doomcage_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Doomcage_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Doomcage_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_Doomcage_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_Doomcage_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_Doomcage_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_Doomcage_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_Doomcage_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_Doomcage_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Doomcage_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_Doomcage_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8463" data-x="-211.0" data-y="-58.0" data-z="149.0" style="left: 43.41%; top: 48.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">149</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_DownStair_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">等候室<span class='debug-text'> (Waiting_Room)</span><div class='map-filename'>Inferno_DownStair_HR_D.json</div></h3>
+        <div class="map-info">Inferno_DownStair.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_DownStair_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_DownStair_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_DownStair_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_DownStair_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_DownStair_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_DownStair_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DownStair_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DownStair_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DownStair_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DownStair_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_DownStair_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DownStair_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_DownStair_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DownStair_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_DownStair_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_DownStair_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DownStair_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_DownStair_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_DownStair_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DownStair.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8538" data-x="-468.0" data-y="1059.0" data-z="-3.0" style="left: 35.38%; top: 83.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="8539" data-x="-165.0" data-y="-1133.0" data-z="-3.0" style="left: 44.84%; top: 14.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_Hellcrossbridge_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="-600.00" data-init-offset-y="300.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">百鬼桥<span class='debug-text'> (Hellcrossbridge)</span><div class='map-filename'>Inferno_Hellcrossbridge_HR_D.json</div></h3>
+        <div class="map-info">Inferno_Hellcrossbridge.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_Hellcrossbridge_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_Hellcrossbridge_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_Hellcrossbridge_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_Hellcrossbridge_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_Hellcrossbridge_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_Hellcrossbridge_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_Hellcrossbridge_HR_D-json" value="-600" step="10" onchange="applyOffsetInput('Inferno_Hellcrossbridge_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_Hellcrossbridge_HR_D-json" value="300" step="10" onchange="applyOffsetInput('Inferno_Hellcrossbridge_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_Hellcrossbridge_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_Hellcrossbridge_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Hellcrossbridge_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_Hellcrossbridge_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8749" data-x="-48.0" data-y="104.0" data-z="-500.0" style="left: 29.75%; top: 62.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_Judgementroad_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="-1000.00" data-init-offset-y="-1000.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">判罪之路<span class='debug-text'> (Judgementroad)</span><div class='map-filename'>Inferno_Judgementroad_HR_D.json</div></h3>
+        <div class="map-info">Inferno_Judgementroad.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_Judgementroad_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_Judgementroad_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_Judgementroad_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_Judgementroad_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_Judgementroad_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_Judgementroad_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Judgementroad_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Judgementroad_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Judgementroad_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Judgementroad_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_Judgementroad_HR_D-json" value="-1000" step="10" onchange="applyOffsetInput('Inferno_Judgementroad_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_Judgementroad_HR_D-json" value="-1000" step="10" onchange="applyOffsetInput('Inferno_Judgementroad_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_Judgementroad_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_Judgementroad_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Judgementroad_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_Judgementroad_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_Judgementroad_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Judgementroad.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8921" data-x="-13.0" data-y="-61.0" data-z="0.0" style="left: 18.34%; top: 16.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="8922" data-x="-13.0" data-y="-61.0" data-z="0.0" style="left: 18.34%; top: 16.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_LavaStairway_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶魔阶梯<span class='debug-text'> (Demon_Stairs)</span><div class='map-filename'>Inferno_LavaStairway_HR_D.json</div></h3>
+        <div class="map-info">Inferno_LavaStairway.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_LavaStairway_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_LavaStairway_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_LavaStairway_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_LavaStairway_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_LavaStairway_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_LavaStairway_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaStairway_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaStairway_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaStairway_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaStairway_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_LavaStairway_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_LavaStairway_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_LavaStairway_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_LavaStairway_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_LavaStairway_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_LavaStairway_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_LavaStairway_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_LavaStairway_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9766" data-x="1068.0" data-y="120.0" data-z="-200.0" style="left: 83.38%; top: 53.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-200</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_Painfulsteps_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">苦行阶梯<span class='debug-text'> (Painfulsteps)</span><div class='map-filename'>Inferno_Painfulsteps_HR_D.json</div></h3>
+        <div class="map-info">Inferno_Painfulsteps.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_Painfulsteps_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_Painfulsteps_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_Painfulsteps_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_Painfulsteps_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_Painfulsteps_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_Painfulsteps_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Painfulsteps_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Painfulsteps_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Painfulsteps_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Painfulsteps_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_Painfulsteps_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_Painfulsteps_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_Painfulsteps_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_Painfulsteps_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_Painfulsteps_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_Painfulsteps_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Painfulsteps_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_Painfulsteps_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_Painfulsteps_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Painfulsteps.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9048" data-x="-90.0" data-y="58.0" data-z="100.0" style="left: 47.19%; top: 51.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">100</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Skull_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火监牢<span class='debug-text'> (Blood_Prison)</span><div class='map-filename'>Skull_HR_D.json</div></h3>
+        <div class="map-info">Skull.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Skull_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Skull_HR_D-json" value="1600" step="100" onchange="updateMapRange('Skull_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Skull_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Skull_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Skull_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Skull_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Skull_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Skull_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Skull_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Skull_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Skull_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Skull_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Skull_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Skull_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Skull_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Skull_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Skull_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Skull_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Skull.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9829" data-x="227.0" data-y="670.0" data-z="-670.0" style="left: 57.09%; top: 70.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-670</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-ThroneRoom_02_HR_D-json" data-monsters="DemonImp" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶魔王座<span class='debug-text'> (Demon_Throne)</span><div class='map-filename'>ThroneRoom_02_HR_D.json</div></h3>
+        <div class="map-info">ThroneRoom_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ThroneRoom_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ThroneRoom_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('ThroneRoom_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ThroneRoom_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ThroneRoom_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ThroneRoom_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ThroneRoom_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThroneRoom_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ThroneRoom_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThroneRoom_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ThroneRoom_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ThroneRoom_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ThroneRoom_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ThroneRoom_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9888" data-x="-683.0" data-y="190.0" data-z="397.0" style="left: 28.66%; top: 55.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">397</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>位置统计：共 1 个怪物，20 个位置点</strong>
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-9115">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathAltar_HR_D-json', 9115, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>DeathAltar_HR_D.json</td>
+        <td>死亡祭坛</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>53.00</td>
+        <td>-25.00</td>
+        <td>98.00</td>
+    </tr>
+    <tr id="row-9256">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 9256, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>DemonDen_HR_D.json</td>
+        <td>炼狱魔窟</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-33.00</td>
+        <td>-610.00</td>
+        <td>410.00</td>
+    </tr>
+    <tr id="row-9320">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 9320, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoCastleConner_HR_D.json</td>
+        <td>硫火城堡</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>526.00</td>
+        <td>681.00</td>
+        <td>-3.00</td>
+    </tr>
+    <tr id="row-9366">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9366, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoColumns_HR_D.json</td>
+        <td>硫火柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>39.00</td>
+        <td>-125.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9367">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9367, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoColumns_HR_D.json</td>
+        <td>硫火柱廊</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>1901.00</td>
+        <td>256.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9920">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 9920, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoColumns_SR_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>39.00</td>
+        <td>-125.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9921">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 9921, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoColumns_SR_D.json</td>
+        <td></td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>1901.00</td>
+        <td>256.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9521">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 9521, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_HR_D.json</td>
+        <td>硫火之河</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-919.00</td>
+        <td>-1068.00</td>
+        <td>-1.00</td>
+    </tr>
+    <tr id="row-8378">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8378, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_Bloodyfalls_HR_D.json</td>
+        <td>硫火瀑布</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>148.00</td>
+        <td>-5.00</td>
+        <td>400.00</td>
+    </tr>
+    <tr id="row-9173">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 9173, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_DeathPlatforms_HR_D.json</td>
+        <td>硫火平台</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>785.00</td>
+        <td>779.00</td>
+        <td>496.00</td>
+    </tr>
+    <tr id="row-8463">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 8463, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_Doomcage_HR_D.json</td>
+        <td>末日囚笼</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-211.00</td>
+        <td>-58.00</td>
+        <td>149.00</td>
+    </tr>
+    <tr id="row-8538">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8538, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_DownStair_HR_D.json</td>
+        <td>等候室</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-468.00</td>
+        <td>1059.00</td>
+        <td>-3.00</td>
+    </tr>
+    <tr id="row-8539">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8539, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_DownStair_HR_D.json</td>
+        <td>等候室</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-165.00</td>
+        <td>-1133.00</td>
+        <td>-3.00</td>
+    </tr>
+    <tr id="row-8749">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 8749, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_Hellcrossbridge_HR_D.json</td>
+        <td>百鬼桥</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-48.00</td>
+        <td>104.00</td>
+        <td>-500.00</td>
+    </tr>
+    <tr id="row-8921">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Judgementroad_HR_D-json', 8921, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_Judgementroad_HR_D.json</td>
+        <td>判罪之路</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-13.00</td>
+        <td>-61.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-8922">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Judgementroad_HR_D-json', 8922, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_Judgementroad_HR_D.json</td>
+        <td>判罪之路</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-13.00</td>
+        <td>-61.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9766">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 9766, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_LavaStairway_HR_D.json</td>
+        <td>恶魔阶梯</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>1068.00</td>
+        <td>120.00</td>
+        <td>-200.00</td>
+    </tr>
+    <tr id="row-9048">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 9048, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_Painfulsteps_HR_D.json</td>
+        <td>苦行阶梯</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-90.00</td>
+        <td>58.00</td>
+        <td>100.00</td>
+    </tr>
+    <tr id="row-9829">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 9829, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>Skull_HR_D.json</td>
+        <td>硫火监牢</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>227.00</td>
+        <td>670.00</td>
+        <td>-670.00</td>
+    </tr>
+    <tr id="row-9888">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9888, this)"></td>
+        <td>恶魔鬼童</td>
+        <td>废墟3层炼狱</td>
+        <td>ThroneRoom_02_HR_D.json</td>
+        <td>恶魔王座</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_DemonImp</td>
+        <td>-683.00</td>
+        <td>190.00</td>
+        <td>397.00</td>
+    </tr>
+</table>
+    </div>
+    <script>
+        window.monsterColors = {
+    'DemonImp': 'rgba(255, 0, 0, 0.7)',
+};
+
+        window.monsterVisible = {
+    'DemonImp': true,
+};
+
+        function toggleMonster(monsterId) {
+            const btn = document.getElementById('btn-' + monsterId);
+            const dots = document.querySelectorAll('.monster-dot[data-monster="' + monsterId + '"]');
+
+            if (window.monsterVisible[monsterId]) {
+                window.monsterVisible[monsterId] = false;
+                btn.classList.add('hidden');
+                dots.forEach(dot => dot.classList.add('hidden'));
+            } else {
+                window.monsterVisible[monsterId] = true;
+                btn.classList.remove('hidden');
+                dots.forEach(dot => dot.classList.remove('hidden'));
+            }
+
+            // 检查并隐藏/显示没有可见点的卡片和分组
+            updateCardVisibility();
+        }
+
+        function updateCardVisibility() {
+            // 检查每个地图卡片是否有可见的点
+            const cards = document.querySelectorAll('.map-card');
+            cards.forEach(card => {
+                const monstersAttr = card.getAttribute('data-monsters') || '';
+                const monsterIds = monstersAttr.split(',').filter(Boolean);
+                let hasVisible = false;
+
+                // 只要任一关联怪物可见，卡片就显示
+                for (const mid of monsterIds) {
+                    if (window.monsterVisible[mid] !== false) {
+                        hasVisible = true;
+                        break;
+                    }
+                }
+
+                if (!hasVisible) {
+                    card.classList.add('empty');
+                } else {
+                    card.classList.remove('empty');
+                }
+            });
+
+            // 检查并隐藏/显示分组标题
+            const groups = document.querySelectorAll('.group-header');
+            groups.forEach(group => {
+                const groupId = group.getAttribute('id');
+                const groupCards = document.querySelectorAll(`.map-card[data-group="${groupId}"]`);
+                let allEmpty = true;
+
+                groupCards.forEach(card => {
+                    if (!card.classList.contains('empty')) {
+                        allEmpty = false;
+                    }
+                });
+
+                if (allEmpty) {
+                    group.classList.add('hidden');
+                } else {
+                    group.classList.remove('hidden');
+                }
+            });
+        }
+        window.mapStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx2 = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy2 = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX2 = 50, multY2 = 50, centerX2 = 50, centerY2 = 50;
+                if (sx2 === 1 && sy2 === 2) { centerX2 = 100; multX2 = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX2 + (x / range) * multX2;
+                const top = centerY2 + (y / range) * multY2;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

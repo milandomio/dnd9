@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>海螺壳 位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #FFC107; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 5px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+        .summary .label-group-row { background-color: #424242; }
+        .label-toggle-btn { margin: 2px 4px; padding: 4px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .label-toggle-btn:hover { background-color: #45a049; transform: scale(1.05); }
+        .label-toggle-btn:active { transform: scale(0.95); }
+        .legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 15px; text-align: center; color: #aaa; }
+        .color-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>海螺壳 位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">海螺壳 (ConchShell)</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header">水图</div>
+    <div class="map-card" id="map-card-EmptyModule_1F_14_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">3-1模块<span class='debug-text'> (1F_14)</span><div class='map-filename'>EmptyModule_1F_14_D.json</div></h3>
+        <div class="map-info">EmptyModule_1F_14.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_14_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-EmptyModule_1F_14_D-json" value="1600" step="100" onchange="updateMapRange('EmptyModule_1F_14_D-json')">
+                <button class="btn-scale" onclick="scaleRange('EmptyModule_1F_14_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-EmptyModule_1F_14_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-EmptyModule_1F_14_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('EmptyModule_1F_14_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-EmptyModule_1F_14_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_14_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-EmptyModule_1F_14_D-json" value="0" step="10" onchange="applyOffsetInput('EmptyModule_1F_14_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('EmptyModule_1F_14_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('EmptyModule_1F_14_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('EmptyModule_1F_14_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('EmptyModule_1F_14_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-EmptyModule_1F_14_D-json" style="aspect-ratio: 1 / 1;"><img src="images/EmptyModule_1F_14.webp" class="image">        <div class="dot" data-index="13117" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-867.7346" data-y="1412.4877" data-z="-1000.0" style="left: 22.88%; top: 94.14%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1000</span></div>
+        <div class="dot" data-index="13118" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-1137.1763" data-y="1006.1412" data-z="-271.53372" style="left: 14.46%; top: 81.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-271</span></div>
+        <div class="dot" data-index="13119" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="289.1901" data-y="390.9901" data-z="-606.9148" style="left: 59.04%; top: 62.22%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-606</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_CircleIsland_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">环形岛<span class='debug-text'> (ShipGraveyard_CircleIsland)</span><div class='map-filename'>ShipGraveyard_CircleIsland_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_CircleIsland.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CircleIsland_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_CircleIsland_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_CircleIsland_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CircleIsland_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_CircleIsland_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_CircleIsland_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CircleIsland_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_CircleIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CircleIsland_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_CircleIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CircleIsland_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_CircleIsland_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_CircleIsland_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_CircleIsland_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_CircleIsland_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_CircleIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_CircleIsland.webp" class="image">        <div class="dot" data-index="12889" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="292.89282" data-y="-118.09649" data-z="-1001.0" style="left: 59.15%; top: 46.31%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1001</span></div>
+        <div class="dot" data-index="12890" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="265.89282" data-y="-126.09649" data-z="-1001.0" style="left: 58.31%; top: 46.06%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1001</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_CoralForest_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">珊瑚密林<span class='debug-text'> (ShipGraveyard_CoralForest_01)</span><div class='map-filename'>ShipGraveyard_CoralForest_01_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_CoralForest_01.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CoralForest_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_CoralForest_01_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_CoralForest_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_CoralForest_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_CoralForest_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_CoralForest_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_CoralForest_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_CoralForest_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CoralForest_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_CoralForest_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_CoralForest_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_CoralForest_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_CoralForest_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_CoralForest_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_CoralForest_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_CoralForest_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_CoralForest_01.webp" class="image">        <div class="dot" data-index="12962" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-802.2606" data-y="-875.746" data-z="-881.0549" style="left: 24.93%; top: 22.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-881</span></div>
+        <div class="dot" data-index="12963" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-1153.2606" data-y="-1185.746" data-z="-859.0549" style="left: 13.96%; top: 12.95%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-859</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_MermaidTomb_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">人鱼冢<span class='debug-text'> (MermaidTomb)</span><div class='map-filename'>ShipGraveyard_MermaidTomb_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_MermaidTomb.webp (缓存) | 找到 6 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MermaidTomb_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_MermaidTomb_HR_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_MermaidTomb_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MermaidTomb_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_MermaidTomb_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_MermaidTomb_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_MermaidTomb_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MermaidTomb_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_MermaidTomb_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MermaidTomb_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_MermaidTomb_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_MermaidTomb_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_MermaidTomb_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_MermaidTomb_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_MermaidTomb_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_MermaidTomb.webp" class="image">        <div class="dot" data-index="14278" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-880.0" data-y="1289.0" data-z="-997.0" style="left: 22.50%; top: 90.28%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-997</span></div>
+        <div class="dot" data-index="14279" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-1326.0" data-y="1244.0" data-z="-988.0" style="left: 8.56%; top: 88.88%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-988</span></div>
+        <div class="dot" data-index="14280" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-814.0" data-y="-492.0" data-z="-781.0" style="left: 24.56%; top: 34.62%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-781</span></div>
+        <div class="dot" data-index="14281" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="96.0" data-y="-736.0" data-z="-767.0" style="left: 53.00%; top: 27.00%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-767</span></div>
+        <div class="dot" data-index="14282" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="331.0" data-y="-187.0" data-z="-1326.0" style="left: 60.34%; top: 44.16%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1326</span></div>
+        <div class="dot" data-index="14283" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-71.0" data-y="-672.0" data-z="-1332.0" style="left: 47.78%; top: 29.00%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1332</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_MistWatch_D-json" data-rotate="3" data-init-rotate="3" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海洋要塞 B<span class='debug-text'> (ShipGraveyard_SeaFortress_02)</span><div class='map-filename'>ShipGraveyard_MistWatch_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_MistWatch.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MistWatch_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_MistWatch_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_MistWatch_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MistWatch_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_MistWatch_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻3</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_MistWatch_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MistWatch_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MistWatch_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MistWatch_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MistWatch_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_MistWatch_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MistWatch_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_MistWatch_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MistWatch_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_MistWatch_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_MistWatch_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_MistWatch_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_MistWatch_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_MistWatch_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_MistWatch.webp" class="image">        <div class="dot" data-index="14329" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-736.0" data-y="284.0" data-z="-841.0" style="left: 27.00%; top: 58.88%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-841</span></div>
+        <div class="dot" data-index="14330" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-779.0" data-y="-1226.0" data-z="-508.0" style="left: 25.66%; top: 11.69%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-508</span></div>
+        <div class="dot" data-index="14331" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-1166.0" data-y="-452.0" data-z="-709.0" style="left: 13.56%; top: 35.88%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-709</span></div>
+        <div class="dot" data-index="14332" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="707.0" data-y="-303.0" data-z="-839.0" style="left: 72.09%; top: 40.53%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-839</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_Oceanvolcano_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海底火山<span class='debug-text'> (ShipGraveyard_Oceanvolcano)</span><div class='map-filename'>ShipGraveyard_Oceanvolcano_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_Oceanvolcano.webp (缓存) | 找到 8 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Oceanvolcano_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_Oceanvolcano_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_Oceanvolcano_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Oceanvolcano_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_Oceanvolcano_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_Oceanvolcano_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Oceanvolcano_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_Oceanvolcano_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Oceanvolcano_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_Oceanvolcano_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Oceanvolcano_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_Oceanvolcano_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_Oceanvolcano_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Oceanvolcano_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_Oceanvolcano_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_Oceanvolcano_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Oceanvolcano.webp" class="image">        <div class="dot" data-index="14422" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="457.0" data-y="-448.0" data-z="-859.0" style="left: 64.28%; top: 36.00%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-859</span></div>
+        <div class="dot" data-index="14423" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="464.0" data-y="317.0" data-z="-917.0" style="left: 64.50%; top: 59.91%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-917</span></div>
+        <div class="dot" data-index="14424" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-532.0" data-y="-30.0" data-z="-842.0" style="left: 33.38%; top: 49.06%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-842</span></div>
+        <div class="dot" data-index="14425" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-249.0" data-y="-501.0" data-z="-402.0" style="left: 42.22%; top: 34.34%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-402</span></div>
+        <div class="dot" data-index="14426" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="270.0" data-y="569.0" data-z="-840.0" style="left: 58.44%; top: 67.78%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-840</span></div>
+        <div class="dot" data-index="14427" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="549.0" data-y="1021.0" data-z="-1997.0" style="left: 67.16%; top: 81.91%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1997</span></div>
+        <div class="dot" data-index="14428" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="1150.0" data-y="190.0" data-z="-2154.0" style="left: 85.94%; top: 55.94%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2154</span></div>
+        <div class="dot" data-index="14429" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-233.0" data-y="-1281.0" data-z="-1714.0" style="left: 42.72%; top: 9.97%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1714</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_RockIsland_D-json" data-rotate="3" data-init-rotate="3" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">岩岛<span class='debug-text'> (ShipGraveyard_RockIsland)</span><div class='map-filename'>ShipGraveyard_RockIsland_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_RockIsland.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_RockIsland_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_RockIsland_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_RockIsland_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_RockIsland_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_RockIsland_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻3</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_RockIsland_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_RockIsland_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_RockIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_RockIsland_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_RockIsland_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_RockIsland_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_RockIsland_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_RockIsland_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_RockIsland_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_RockIsland_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_RockIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_RockIsland.webp" class="image">        <div class="dot" data-index="15017" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="511.27707" data-y="-15.196194" data-z="-1001.7186" style="left: 65.98%; top: 49.53%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1001</span></div>
+        <div class="dot" data-index="15018" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="462.12238" data-y="-24.600481" data-z="-1002.07196" style="left: 64.44%; top: 49.23%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1002</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_ShipRest_D-json" data-rotate="2" data-init-rotate="2" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">沉眠之船<span class='debug-text'> (ShipGraveyard_SleepingShip)</span><div class='map-filename'>ShipGraveyard_ShipRest_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_ShipRest.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_ShipRest_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_ShipRest_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_ShipRest_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_ShipRest_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_ShipRest_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻2</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_ShipRest_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_ShipRest_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_ShipRest_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_ShipRest_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_ShipRest_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_ShipRest_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_ShipRest_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_ShipRest_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_ShipRest_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_ShipRest_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_ShipRest_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_ShipRest_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_ShipRest_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_ShipRest_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_ShipRest.webp" class="image">        <div class="dot" data-index="15184" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="1487.7947" data-y="-534.7658" data-z="-528.8248" style="left: 96.49%; top: 33.29%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-528</span></div>
+        <div class="dot" data-index="15185" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="1464.6805" data-y="-552.014" data-z="-528.6574" style="left: 95.77%; top: 32.75%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-528</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_SpawningPool_HR_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">孵化池<span class='debug-text'> (SpawningPool)</span><div class='map-filename'>ShipGraveyard_SpawningPool_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_SpawningPool.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SpawningPool_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_SpawningPool_HR_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_SpawningPool_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SpawningPool_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_SpawningPool_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_SpawningPool_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SpawningPool_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_SpawningPool_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SpawningPool_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_SpawningPool_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SpawningPool_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_SpawningPool_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_SpawningPool_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SpawningPool_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_SpawningPool_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_SpawningPool_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SpawningPool.webp" class="image">        <div class="dot" data-index="15646" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="1254.1606" data-y="-712.4985" data-z="-390.174" style="left: 89.19%; top: 27.73%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-390</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_StarfishValley_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海星谷<span class='debug-text'> (ShipGraveyard_StarfishValley)</span><div class='map-filename'>ShipGraveyard_StarfishValley_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_StarfishValley.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_StarfishValley_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_StarfishValley_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_StarfishValley_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_StarfishValley_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_StarfishValley_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_StarfishValley_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_StarfishValley_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_StarfishValley_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_StarfishValley_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_StarfishValley_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_StarfishValley_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_StarfishValley_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_StarfishValley_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_StarfishValley_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_StarfishValley_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_StarfishValley_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_StarfishValley_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_StarfishValley_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_StarfishValley_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_StarfishValley.webp" class="image">        <div class="dot" data-index="15733" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="1.3099546" data-y="19.040524" data-z="-158.22221" style="left: 50.04%; top: 50.60%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-158</span></div>
+        <div class="dot" data-index="15734" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="399.89322" data-y="426.9856" data-z="14.763167" style="left: 62.50%; top: 63.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">14</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_SunkenShip_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">沉没之船<span class='debug-text'> (ShipGraveyard_SunkenShip_01)</span><div class='map-filename'>ShipGraveyard_SunkenShip_01_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_SunkenShip_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SunkenShip_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_SunkenShip_01_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_SunkenShip_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_SunkenShip_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_SunkenShip_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_SunkenShip_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_SunkenShip_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_SunkenShip_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SunkenShip_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_SunkenShip_01_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_SunkenShip_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_SunkenShip_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_SunkenShip_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SunkenShip_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_SunkenShip_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_SunkenShip_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SunkenShip_01.webp" class="image">        <div class="dot" data-index="15807" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-412.90714" data-y="95.68698" data-z="-3107.9187" style="left: 37.10%; top: 52.99%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-3107</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_Trench_D-json" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海沟<span class='debug-text'> (ShipGraveyard_Trench)</span><div class='map-filename'>ShipGraveyard_Trench_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_Trench.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Trench_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_Trench_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_Trench_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Trench_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_Trench_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_Trench_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Trench_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_Trench_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Trench_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_Trench_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Trench_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_Trench_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_Trench_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Trench_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_Trench_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_Trench_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Trench.webp" class="image">        <div class="dot" data-index="15893" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-269.8831" data-y="579.50543" data-z="-1199.4385" style="left: 41.57%; top: 68.11%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1199</span></div>
+        <div class="dot" data-index="15894" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-748.0793" data-y="-1059.2041" data-z="-2490.62" style="left: 26.62%; top: 16.90%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-2490</span></div>
+        <div class="dot" data-index="15895" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-540.43536" data-y="-601.8387" data-z="-925.9537" style="left: 33.11%; top: 31.19%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-925</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Shipgraveyard_TwinChamber_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">海底洞穴 B<span class='debug-text'> (Shipgraveyard_UnderSeaCave_02)</span><div class='map-filename'>Shipgraveyard_TwinChamber_D.json</div></h3>
+        <div class="map-info">Shipgraveyard_TwinChamber.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Shipgraveyard_TwinChamber_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Shipgraveyard_TwinChamber_D-json" value="1600" step="100" onchange="updateMapRange('Shipgraveyard_TwinChamber_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Shipgraveyard_TwinChamber_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Shipgraveyard_TwinChamber_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Shipgraveyard_TwinChamber_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Shipgraveyard_TwinChamber_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Shipgraveyard_TwinChamber_D-json" value="0" step="10" onchange="applyOffsetInput('Shipgraveyard_TwinChamber_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Shipgraveyard_TwinChamber_D-json" value="0" step="10" onchange="applyOffsetInput('Shipgraveyard_TwinChamber_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Shipgraveyard_TwinChamber_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Shipgraveyard_TwinChamber_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Shipgraveyard_TwinChamber_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Shipgraveyard_TwinChamber_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Shipgraveyard_TwinChamber_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Shipgraveyard_TwinChamber.webp" class="image">        <div class="dot" data-index="16048" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-744.13794" data-y="-274.26138" data-z="-537.3275" style="left: 26.75%; top: 41.43%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-537</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_FloatingVillage_D-json" data-rotate="0" data-init-rotate="0" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="1600.00" data-size-x="1" data-size-y="2" style="">
+        <h3 class="map-title">水上村落<span class='debug-text'> (ShipGraveyard_FloatingVillage)</span><div class='map-filename'>ShipGraveyard_FloatingVillage_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_FloatingVillage.webp (缓存) | 找到 3 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingVillage_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_FloatingVillage_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_FloatingVillage_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_FloatingVillage_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_FloatingVillage_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_FloatingVillage_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_FloatingVillage_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_FloatingVillage_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingVillage_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_FloatingVillage_D-json" value="1600" step="10" onchange="applyOffsetInput('ShipGraveyard_FloatingVillage_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_FloatingVillage_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_FloatingVillage_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FloatingVillage_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_FloatingVillage_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_FloatingVillage_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_FloatingVillage.webp" class="image">        <div class="dot" data-index="13387" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-907.81714" data-y="-756.33405" data-z="-985.0" style="left: 21.63%; top: 63.18%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-985</span></div>
+        <div class="dot" data-index="13388" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-866.81714" data-y="-588.33405" data-z="-1001.0" style="left: 22.91%; top: 65.81%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1001</span></div>
+        <div class="dot" data-index="13389" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-762.288" data-y="-3350.915" data-z="-985.6219" style="left: 26.18%; top: 22.64%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-985</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_BladehandRefuge_D-json" data-rotate="0" data-init-rotate="0" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">钉手的藏身处<span class='debug-text'> (ShipGraveyard_BladehandRefuge)</span><div class='map-filename'>ShipGraveyard_BladehandRefuge_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_BladehandRefuge.webp (缓存) | 找到 2 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_BladehandRefuge_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_BladehandRefuge_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_BladehandRefuge_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_BladehandRefuge_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_BladehandRefuge_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻0</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_BladehandRefuge_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_BladehandRefuge_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_BladehandRefuge_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_BladehandRefuge_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_BladehandRefuge_D-json" value="-1600" step="10" onchange="applyOffsetInput('ShipGraveyard_BladehandRefuge_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_BladehandRefuge_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_BladehandRefuge_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_BladehandRefuge_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_BladehandRefuge_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_BladehandRefuge_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_BladehandRefuge.webp" class="image">        <div class="dot" data-index="12764" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-1079.0" data-y="3870.0" data-z="-974.0" style="left: 8.14%; top: 85.47%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-974</span></div>
+        <div class="dot" data-index="12765" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="756.0" data-y="2627.0" data-z="-653.0" style="left: 36.81%; top: 66.05%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-653</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_Hole_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="4800" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">蓝洞<span class='debug-text'> (Hole)</span><div class='map-filename'>ShipGraveyard_Hole_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_Hole.webp (缓存) | 找到 48 个位置 | 范围: ±4800</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Hole_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_Hole_HR_D-json" value="4800" step="100" onchange="updateMapRange('ShipGraveyard_Hole_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_Hole_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_Hole_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_Hole_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_Hole_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_Hole_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Hole_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_Hole_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_Hole_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_Hole_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_Hole_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Hole_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_Hole_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_Hole_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_Hole.webp" class="image">        <div class="dot" data-index="13987" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-3281.5505" data-y="-2329.4348" data-z="-840.0889" style="left: 15.82%; top: 25.74%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-840</span></div>
+        <div class="dot" data-index="13988" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-3303.8699" data-y="-2380.3982" data-z="-861.6901" style="left: 15.58%; top: 25.20%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-861</span></div>
+        <div class="dot" data-index="13989" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-3379.8079" data-y="-2360.0532" data-z="-894.0884" style="left: 14.79%; top: 25.42%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-894</span></div>
+        <div class="dot" data-index="13990" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4608.791" data-y="-30.52373" data-z="-996.628" style="left: 1.99%; top: 49.68%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-996</span></div>
+        <div class="dot" data-index="13991" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4652.385" data-y="31.438776" data-z="-997.64465" style="left: 1.54%; top: 50.33%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-997</span></div>
+        <div class="dot" data-index="13992" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4652.831" data-y="-304.50894" data-z="-968.85846" style="left: 1.53%; top: 46.83%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-968</span></div>
+        <div class="dot" data-index="13993" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4232.926" data-y="1262.1692" data-z="-970.30304" style="left: 5.91%; top: 63.15%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-970</span></div>
+        <div class="dot" data-index="13994" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4078.0325" data-y="1613.3109" data-z="-996.80634" style="left: 7.52%; top: 66.81%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-996</span></div>
+        <div class="dot" data-index="13995" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-5113.3345" data-y="1765.5209" data-z="-996.59247" style="left: -3.26%; top: 68.39%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-996</span></div>
+        <div class="dot" data-index="13996" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-5169.3857" data-y="1723.9769" data-z="-1002.50287" style="left: -3.85%; top: 67.96%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1002</span></div>
+        <div class="dot" data-index="13997" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4457.4126" data-y="2893.684" data-z="-719.1663" style="left: 3.57%; top: 80.14%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-719</span></div>
+        <div class="dot" data-index="13998" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4496.265" data-y="2870.523" data-z="-746.35223" style="left: 3.16%; top: 79.90%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-746</span></div>
+        <div class="dot" data-index="13999" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4408.369" data-y="2930.723" data-z="-692.94135" style="left: 4.08%; top: 80.53%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-692</span></div>
+        <div class="dot" data-index="14000" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4232.079" data-y="3013.641" data-z="-604.13544" style="left: 5.92%; top: 81.39%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-604</span></div>
+        <div class="dot" data-index="14001" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4925.1543" data-y="3773.027" data-z="-607.21857" style="left: -1.30%; top: 89.30%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-607</span></div>
+        <div class="dot" data-index="14002" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-4653.0967" data-y="3721.1892" data-z="-806.4731" style="left: 1.53%; top: 88.76%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-806</span></div>
+        <div class="dot" data-index="14003" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-2977.207" data-y="4585.151" data-z="-887.6639" style="left: 18.99%; top: 97.76%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-887</span></div>
+        <div class="dot" data-index="14004" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-2296.203" data-y="4493.0044" data-z="-987.731" style="left: 26.08%; top: 96.80%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-987</span></div>
+        <div class="dot" data-index="14005" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-2099.704" data-y="4578.455" data-z="-985.58795" style="left: 28.13%; top: 97.69%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-985</span></div>
+        <div class="dot" data-index="14006" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-2311.112" data-y="4538.7183" data-z="-990.0874" style="left: 25.93%; top: 97.28%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-990</span></div>
+        <div class="dot" data-index="14007" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-1620.2104" data-y="4539.263" data-z="-984.13275" style="left: 33.12%; top: 97.28%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-984</span></div>
+        <div class="dot" data-index="14008" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-1670.4402" data-y="4711.5806" data-z="-997.3711" style="left: 32.60%; top: 99.08%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-997</span></div>
+        <div class="dot" data-index="14009" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-198.54134" data-y="4415.1343" data-z="-993.23584" style="left: 47.93%; top: 95.99%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-993</span></div>
+        <div class="dot" data-index="14010" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="736.94183" data-y="4717.013" data-z="-982.58923" style="left: 57.68%; top: 99.14%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-982</span></div>
+        <div class="dot" data-index="14011" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="714.7225" data-y="4728.3525" data-z="-969.7187" style="left: 57.45%; top: 99.25%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-969</span></div>
+        <div class="dot" data-index="14012" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="1060.3883" data-y="4638.5933" data-z="-1001.5605" style="left: 61.05%; top: 98.32%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1001</span></div>
+        <div class="dot" data-index="14013" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="3590.9473" data-y="4830.9033" data-z="-939.6189" style="left: 87.41%; top: 100.32%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-939</span></div>
+        <div class="dot" data-index="14014" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="3661.0474" data-y="4778.33" data-z="-962.89343" style="left: 88.14%; top: 99.77%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-962</span></div>
+        <div class="dot" data-index="14015" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4605.152" data-y="4936.877" data-z="-951.57544" style="left: 97.97%; top: 101.43%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-951</span></div>
+        <div class="dot" data-index="14016" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4589.4346" data-y="4879.6763" data-z="-954.78375" style="left: 97.81%; top: 100.83%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-954</span></div>
+        <div class="dot" data-index="14017" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4648.48" data-y="4632.086" data-z="-984.0461" style="left: 98.42%; top: 98.25%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-984</span></div>
+        <div class="dot" data-index="14018" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4801.629" data-y="1686.1995" data-z="-967.71606" style="left: 100.02%; top: 67.56%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-967</span></div>
+        <div class="dot" data-index="14019" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4222.41" data-y="1370.3881" data-z="-963.55255" style="left: 93.98%; top: 64.27%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-963</span></div>
+        <div class="dot" data-index="14020" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4713.98" data-y="-1531.3729" data-z="-979.89294" style="left: 99.10%; top: 34.05%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-979</span></div>
+        <div class="dot" data-index="14021" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4563.774" data-y="-1498.1542" data-z="-974.1937" style="left: 97.54%; top: 34.39%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-974</span></div>
+        <div class="dot" data-index="14022" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4240.9985" data-y="-1543.7399" data-z="-1003.0874" style="left: 94.18%; top: 33.92%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1003</span></div>
+        <div class="dot" data-index="14023" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="4011.2256" data-y="-1859.6588" data-z="-989.68835" style="left: 91.78%; top: 30.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-989</span></div>
+        <div class="dot" data-index="14024" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="3508.4297" data-y="-1796.1116" data-z="-974.4295" style="left: 86.55%; top: 31.29%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-974</span></div>
+        <div class="dot" data-index="14025" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="3521.023" data-y="-1837.9402" data-z="-973.6642" style="left: 86.68%; top: 30.85%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-973</span></div>
+        <div class="dot" data-index="14026" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="2338.3984" data-y="-1762.7378" data-z="-1010.7178" style="left: 74.36%; top: 31.64%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1010</span></div>
+        <div class="dot" data-index="14027" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="2350.2783" data-y="-1804.918" data-z="-1009.3133" style="left: 74.48%; top: 31.20%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1009</span></div>
+        <div class="dot" data-index="14028" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="1796.6039" data-y="-2199.4766" data-z="-963.3811" style="left: 68.71%; top: 27.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-963</span></div>
+        <div class="dot" data-index="14029" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-3338.6255" data-y="1799.7144" data-z="-71.68201" style="left: 15.22%; top: 68.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-71</span></div>
+        <div class="dot" data-index="14030" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-3120.9902" data-y="1743.2085" data-z="-96.57172" style="left: 17.49%; top: 68.16%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-96</span></div>
+        <div class="dot" data-index="14031" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-3713.6792" data-y="1467.233" data-z="-245.51118" style="left: 11.32%; top: 65.28%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-245</span></div>
+        <div class="dot" data-index="14032" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-2728.7395" data-y="-4228.3115" data-z="-949.39777" style="left: 21.58%; top: 5.96%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-949</span></div>
+        <div class="dot" data-index="14033" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-2858.6628" data-y="-4223.874" data-z="-937.8441" style="left: 20.22%; top: 6.00%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-937</span></div>
+        <div class="dot" data-index="14034" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" data-x="-2832.9785" data-y="-3851.0627" data-z="-795.82935" style="left: 20.49%; top: 9.88%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-795</span></div>
+</div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>颜色说明：</strong>
+        <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
+        <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
+        <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
+        <br><strong>位置统计：共 145 个位置点</strong><br><strong>包含地图：</strong> 人鱼冢, 孵化池, 岩岛, 水上村落, 沉没之船, 沉眠之船, 海底洞穴 B, 海底火山, 海星谷, 海沟, 海洋要塞 B, 环形岛, 珊瑚密林, 蓝洞, 钉手的藏身处
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table>
+            <tr><th>显示</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>
+                <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签分组开关（点击全选/取消同标签）</th>
+        <th colspan='3' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签数量</th>
+    </tr>
+    <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_Lootdrop_ConchShell')">GameSpawner_Id_Spawner_Lootdrop_ConchShell (90)</button>
+        </th>
+        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
+    </tr>
+
+                <tr id="row-13117" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EmptyModule_1F_14_D-json', 13117, this)"></td>
+        <td>水图</td>
+        <td>EmptyModule_1F_14_D.json</td>
+        <td>3-1模块</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-867.73</td>
+        <td>1412.49</td>
+        <td>-1000.00</td>
+    </tr>
+    <tr id="row-13118" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EmptyModule_1F_14_D-json', 13118, this)"></td>
+        <td>水图</td>
+        <td>EmptyModule_1F_14_D.json</td>
+        <td>3-1模块</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-1137.18</td>
+        <td>1006.14</td>
+        <td>-271.53</td>
+    </tr>
+    <tr id="row-13119" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EmptyModule_1F_14_D-json', 13119, this)"></td>
+        <td>水图</td>
+        <td>EmptyModule_1F_14_D.json</td>
+        <td>3-1模块</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>289.19</td>
+        <td>390.99</td>
+        <td>-606.91</td>
+    </tr>
+    <tr id="row-12889" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12889, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CircleIsland_D.json</td>
+        <td>环形岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>292.89</td>
+        <td>-118.10</td>
+        <td>-1001.00</td>
+    </tr>
+    <tr id="row-12890" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12890, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CircleIsland_D.json</td>
+        <td>环形岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>265.89</td>
+        <td>-126.10</td>
+        <td>-1001.00</td>
+    </tr>
+    <tr id="row-12962" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CoralForest_01_D-json', 12962, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CoralForest_01_D.json</td>
+        <td>珊瑚密林</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-802.26</td>
+        <td>-875.75</td>
+        <td>-881.05</td>
+    </tr>
+    <tr id="row-12963" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CoralForest_01_D-json', 12963, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_CoralForest_01_D.json</td>
+        <td>珊瑚密林</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-1153.26</td>
+        <td>-1185.75</td>
+        <td>-859.05</td>
+    </tr>
+    <tr id="row-14278" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14278, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-880.00</td>
+        <td>1289.00</td>
+        <td>-997.00</td>
+    </tr>
+    <tr id="row-14279" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14279, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-1326.00</td>
+        <td>1244.00</td>
+        <td>-988.00</td>
+    </tr>
+    <tr id="row-14280" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14280, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-814.00</td>
+        <td>-492.00</td>
+        <td>-781.00</td>
+    </tr>
+    <tr id="row-14281" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14281, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>96.00</td>
+        <td>-736.00</td>
+        <td>-767.00</td>
+    </tr>
+    <tr id="row-14282" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14282, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>331.00</td>
+        <td>-187.00</td>
+        <td>-1326.00</td>
+    </tr>
+    <tr id="row-14283" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 14283, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-71.00</td>
+        <td>-672.00</td>
+        <td>-1332.00</td>
+    </tr>
+    <tr id="row-14329" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MistWatch_D-json', 14329, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MistWatch_D.json</td>
+        <td>海洋要塞 B</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-736.00</td>
+        <td>284.00</td>
+        <td>-841.00</td>
+    </tr>
+    <tr id="row-14330" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MistWatch_D-json', 14330, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MistWatch_D.json</td>
+        <td>海洋要塞 B</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-779.00</td>
+        <td>-1226.00</td>
+        <td>-508.00</td>
+    </tr>
+    <tr id="row-14331" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MistWatch_D-json', 14331, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MistWatch_D.json</td>
+        <td>海洋要塞 B</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-1166.00</td>
+        <td>-452.00</td>
+        <td>-709.00</td>
+    </tr>
+    <tr id="row-14332" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MistWatch_D-json', 14332, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MistWatch_D.json</td>
+        <td>海洋要塞 B</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>707.00</td>
+        <td>-303.00</td>
+        <td>-839.00</td>
+    </tr>
+    <tr id="row-14422" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14422, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>457.00</td>
+        <td>-448.00</td>
+        <td>-859.00</td>
+    </tr>
+    <tr id="row-14423" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14423, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>464.00</td>
+        <td>317.00</td>
+        <td>-917.00</td>
+    </tr>
+    <tr id="row-14424" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14424, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-532.00</td>
+        <td>-30.00</td>
+        <td>-842.00</td>
+    </tr>
+    <tr id="row-14425" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14425, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-249.00</td>
+        <td>-501.00</td>
+        <td>-402.00</td>
+    </tr>
+    <tr id="row-14426" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14426, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>270.00</td>
+        <td>569.00</td>
+        <td>-840.00</td>
+    </tr>
+    <tr id="row-14427" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14427, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>549.00</td>
+        <td>1021.00</td>
+        <td>-1997.00</td>
+    </tr>
+    <tr id="row-14428" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14428, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>1150.00</td>
+        <td>190.00</td>
+        <td>-2154.00</td>
+    </tr>
+    <tr id="row-14429" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14429, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Oceanvolcano_D.json</td>
+        <td>海底火山</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-233.00</td>
+        <td>-1281.00</td>
+        <td>-1714.00</td>
+    </tr>
+    <tr id="row-15017" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15017, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_RockIsland_D.json</td>
+        <td>岩岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>511.28</td>
+        <td>-15.20</td>
+        <td>-1001.72</td>
+    </tr>
+    <tr id="row-15018" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15018, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_RockIsland_D.json</td>
+        <td>岩岛</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>462.12</td>
+        <td>-24.60</td>
+        <td>-1002.07</td>
+    </tr>
+    <tr id="row-15184" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_ShipRest_D-json', 15184, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_ShipRest_D.json</td>
+        <td>沉眠之船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>1487.79</td>
+        <td>-534.77</td>
+        <td>-528.82</td>
+    </tr>
+    <tr id="row-15185" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_ShipRest_D-json', 15185, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_ShipRest_D.json</td>
+        <td>沉眠之船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>1464.68</td>
+        <td>-552.01</td>
+        <td>-528.66</td>
+    </tr>
+    <tr id="row-15646" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SpawningPool_HR_D-json', 15646, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SpawningPool_HR_D.json</td>
+        <td>孵化池</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>1254.16</td>
+        <td>-712.50</td>
+        <td>-390.17</td>
+    </tr>
+    <tr id="row-15733" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_StarfishValley_D-json', 15733, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_StarfishValley_D.json</td>
+        <td>海星谷</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>1.31</td>
+        <td>19.04</td>
+        <td>-158.22</td>
+    </tr>
+    <tr id="row-15734" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_StarfishValley_D-json', 15734, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_StarfishValley_D.json</td>
+        <td>海星谷</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>399.89</td>
+        <td>426.99</td>
+        <td>14.76</td>
+    </tr>
+    <tr id="row-15807" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SunkenShip_01_D-json', 15807, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_SunkenShip_01_D.json</td>
+        <td>沉没之船</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-412.91</td>
+        <td>95.69</td>
+        <td>-3107.92</td>
+    </tr>
+    <tr id="row-15893" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15893, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-269.88</td>
+        <td>579.51</td>
+        <td>-1199.44</td>
+    </tr>
+    <tr id="row-15894" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15894, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-748.08</td>
+        <td>-1059.20</td>
+        <td>-2490.62</td>
+    </tr>
+    <tr id="row-15895" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15895, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Trench_D.json</td>
+        <td>海沟</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-540.44</td>
+        <td>-601.84</td>
+        <td>-925.95</td>
+    </tr>
+    <tr id="row-16048" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Shipgraveyard_TwinChamber_D-json', 16048, this)"></td>
+        <td>水图</td>
+        <td>Shipgraveyard_TwinChamber_D.json</td>
+        <td>海底洞穴 B</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-744.14</td>
+        <td>-274.26</td>
+        <td>-537.33</td>
+    </tr>
+    <tr id="row-13387" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13387, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingVillage_D.json</td>
+        <td>水上村落</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-907.82</td>
+        <td>-756.33</td>
+        <td>-985.00</td>
+    </tr>
+    <tr id="row-13388" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13388, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingVillage_D.json</td>
+        <td>水上村落</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-866.82</td>
+        <td>-588.33</td>
+        <td>-1001.00</td>
+    </tr>
+    <tr id="row-13389" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13389, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_FloatingVillage_D.json</td>
+        <td>水上村落</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-762.29</td>
+        <td>-3350.91</td>
+        <td>-985.62</td>
+    </tr>
+    <tr id="row-12764" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12764, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-1079.00</td>
+        <td>3870.00</td>
+        <td>-974.00</td>
+    </tr>
+    <tr id="row-12765" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12765, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>756.00</td>
+        <td>2627.00</td>
+        <td>-653.00</td>
+    </tr>
+    <tr id="row-13987" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13987, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-3281.55</td>
+        <td>-2329.43</td>
+        <td>-840.09</td>
+    </tr>
+    <tr id="row-13988" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13988, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-3303.87</td>
+        <td>-2380.40</td>
+        <td>-861.69</td>
+    </tr>
+    <tr id="row-13989" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13989, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-3379.81</td>
+        <td>-2360.05</td>
+        <td>-894.09</td>
+    </tr>
+    <tr id="row-13990" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13990, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4608.79</td>
+        <td>-30.52</td>
+        <td>-996.63</td>
+    </tr>
+    <tr id="row-13991" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13991, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4652.39</td>
+        <td>31.44</td>
+        <td>-997.64</td>
+    </tr>
+    <tr id="row-13992" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13992, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4652.83</td>
+        <td>-304.51</td>
+        <td>-968.86</td>
+    </tr>
+    <tr id="row-13993" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13993, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4232.93</td>
+        <td>1262.17</td>
+        <td>-970.30</td>
+    </tr>
+    <tr id="row-13994" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13994, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4078.03</td>
+        <td>1613.31</td>
+        <td>-996.81</td>
+    </tr>
+    <tr id="row-13995" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13995, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-5113.33</td>
+        <td>1765.52</td>
+        <td>-996.59</td>
+    </tr>
+    <tr id="row-13996" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13996, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-5169.39</td>
+        <td>1723.98</td>
+        <td>-1002.50</td>
+    </tr>
+    <tr id="row-13997" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13997, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4457.41</td>
+        <td>2893.68</td>
+        <td>-719.17</td>
+    </tr>
+    <tr id="row-13998" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13998, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4496.27</td>
+        <td>2870.52</td>
+        <td>-746.35</td>
+    </tr>
+    <tr id="row-13999" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 13999, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4408.37</td>
+        <td>2930.72</td>
+        <td>-692.94</td>
+    </tr>
+    <tr id="row-14000" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14000, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4232.08</td>
+        <td>3013.64</td>
+        <td>-604.14</td>
+    </tr>
+    <tr id="row-14001" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14001, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4925.15</td>
+        <td>3773.03</td>
+        <td>-607.22</td>
+    </tr>
+    <tr id="row-14002" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14002, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-4653.10</td>
+        <td>3721.19</td>
+        <td>-806.47</td>
+    </tr>
+    <tr id="row-14003" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14003, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-2977.21</td>
+        <td>4585.15</td>
+        <td>-887.66</td>
+    </tr>
+    <tr id="row-14004" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14004, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-2296.20</td>
+        <td>4493.00</td>
+        <td>-987.73</td>
+    </tr>
+    <tr id="row-14005" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14005, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-2099.70</td>
+        <td>4578.45</td>
+        <td>-985.59</td>
+    </tr>
+    <tr id="row-14006" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14006, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-2311.11</td>
+        <td>4538.72</td>
+        <td>-990.09</td>
+    </tr>
+    <tr id="row-14007" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14007, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-1620.21</td>
+        <td>4539.26</td>
+        <td>-984.13</td>
+    </tr>
+    <tr id="row-14008" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14008, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-1670.44</td>
+        <td>4711.58</td>
+        <td>-997.37</td>
+    </tr>
+    <tr id="row-14009" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14009, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-198.54</td>
+        <td>4415.13</td>
+        <td>-993.24</td>
+    </tr>
+    <tr id="row-14010" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14010, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>736.94</td>
+        <td>4717.01</td>
+        <td>-982.59</td>
+    </tr>
+    <tr id="row-14011" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14011, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>714.72</td>
+        <td>4728.35</td>
+        <td>-969.72</td>
+    </tr>
+    <tr id="row-14012" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14012, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>1060.39</td>
+        <td>4638.59</td>
+        <td>-1001.56</td>
+    </tr>
+    <tr id="row-14013" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14013, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>3590.95</td>
+        <td>4830.90</td>
+        <td>-939.62</td>
+    </tr>
+    <tr id="row-14014" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14014, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>3661.05</td>
+        <td>4778.33</td>
+        <td>-962.89</td>
+    </tr>
+    <tr id="row-14015" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14015, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4605.15</td>
+        <td>4936.88</td>
+        <td>-951.58</td>
+    </tr>
+    <tr id="row-14016" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14016, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4589.43</td>
+        <td>4879.68</td>
+        <td>-954.78</td>
+    </tr>
+    <tr id="row-14017" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14017, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4648.48</td>
+        <td>4632.09</td>
+        <td>-984.05</td>
+    </tr>
+    <tr id="row-14018" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14018, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4801.63</td>
+        <td>1686.20</td>
+        <td>-967.72</td>
+    </tr>
+    <tr id="row-14019" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14019, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4222.41</td>
+        <td>1370.39</td>
+        <td>-963.55</td>
+    </tr>
+    <tr id="row-14020" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14020, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4713.98</td>
+        <td>-1531.37</td>
+        <td>-979.89</td>
+    </tr>
+    <tr id="row-14021" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14021, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4563.77</td>
+        <td>-1498.15</td>
+        <td>-974.19</td>
+    </tr>
+    <tr id="row-14022" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14022, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4241.00</td>
+        <td>-1543.74</td>
+        <td>-1003.09</td>
+    </tr>
+    <tr id="row-14023" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14023, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>4011.23</td>
+        <td>-1859.66</td>
+        <td>-989.69</td>
+    </tr>
+    <tr id="row-14024" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14024, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>3508.43</td>
+        <td>-1796.11</td>
+        <td>-974.43</td>
+    </tr>
+    <tr id="row-14025" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14025, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>3521.02</td>
+        <td>-1837.94</td>
+        <td>-973.66</td>
+    </tr>
+    <tr id="row-14026" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14026, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>2338.40</td>
+        <td>-1762.74</td>
+        <td>-1010.72</td>
+    </tr>
+    <tr id="row-14027" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14027, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>2350.28</td>
+        <td>-1804.92</td>
+        <td>-1009.31</td>
+    </tr>
+    <tr id="row-14028" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14028, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>1796.60</td>
+        <td>-2199.48</td>
+        <td>-963.38</td>
+    </tr>
+    <tr id="row-14029" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14029, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-3338.63</td>
+        <td>1799.71</td>
+        <td>-71.68</td>
+    </tr>
+    <tr id="row-14030" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14030, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-3120.99</td>
+        <td>1743.21</td>
+        <td>-96.57</td>
+    </tr>
+    <tr id="row-14031" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14031, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-3713.68</td>
+        <td>1467.23</td>
+        <td>-245.51</td>
+    </tr>
+    <tr id="row-14032" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14032, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-2728.74</td>
+        <td>-4228.31</td>
+        <td>-949.40</td>
+    </tr>
+    <tr id="row-14033" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14033, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-2858.66</td>
+        <td>-4223.87</td>
+        <td>-937.84</td>
+    </tr>
+    <tr id="row-14034" data-label="GameSpawner_Id_Spawner_Lootdrop_ConchShell">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14034, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_Hole_HR_D.json</td>
+        <td>蓝洞</td>
+        <td>GameSpawner_Id_Spawner_Lootdrop_ConchShell</td>
+        <td>-2832.98</td>
+        <td>-3851.06</td>
+        <td>-795.83</td>
+    </tr>
+
+        </table>
+    </div>
+    <script>
+        window.mapStates = {};
+        window.labelStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+            // 检查卡片是否还有可见点，自动隐藏/显示卡片
+            checkCardVisibility(cardId);
+        }
+        function checkCardVisibility(cardId) {
+            const card = document.getElementById('map-card-' + cardId);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            let hasVisibleDot = false;
+            dots.forEach(dot => {
+                if (dot.style.display !== 'none') {
+                    hasVisibleDot = true;
+                }
+            });
+            // 如果所有点都隐藏，隐藏整个卡片；否则显示卡片
+            card.style.display = hasVisibleDot ? 'flex' : 'none';
+        }
+        function toggleLabelGroup(label) {
+            // 切换标签状态的选中/取消
+            if (!window.labelStates[label]) {
+                window.labelStates[label] = true; // 默认为true（显示）
+            }
+            window.labelStates[label] = !window.labelStates[label];
+            const shouldShow = window.labelStates[label];
+
+            // 更新所有同标签的点和复选框
+            const allLabelRows = document.querySelectorAll(`tr[data-label="${label}"]`);
+            allLabelRows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = shouldShow;
+                    // 触发togglePoint函数
+                    const rowId = row.id;
+                    const pointIndex = rowId.replace('row-', '');
+                    // 获取对应的cardId（从data属性或其他方式）
+                    const dot = document.querySelector(`.dot[data-label="${label}"][data-index="${pointIndex}"]`);
+                    if (dot) {
+                        const card = dot.closest('.map-card');
+                        if (card) {
+                            const cardId = card.id.replace('map-card-', '');
+                            // 手动调用togglePoint
+                            dot.style.display = shouldShow ? 'block' : 'none';
+                            row.style.opacity = shouldShow ? '1' : '0.4';
+                            checkCardVisibility(cardId);
+                        }
+                    }
+                }
+            });
+
+            // 更新按钮样式
+            const toggleBtn = document.querySelector(`.label-toggle-btn[data-label="${label}"]`);
+            if (toggleBtn) {
+                toggleBtn.style.backgroundColor = shouldShow ? '#4CAF50' : '#f44336';
+                toggleBtn.style.color = shouldShow ? 'white' : 'white';
+            }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX = 50, multY = 50, centerX = 50, centerY = 50;
+                if (sx === 1 && sy === 2) { centerX = 100; multX = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX + (x / range) * multX;
+                const top = centerY + (y / range) * multY;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+            
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>
