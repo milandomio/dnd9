@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>盔甲碎片 >> 铠甲傀儡 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">盔甲碎片 (ArmorScrap) >> LivingArmor</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>铠甲傀儡 (19)</div>
 </div></div>
@@ -121,7 +122,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Armory_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Armory_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Armory_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Armory.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="9943" data-x="-1343.4712" data-y="-457.07578" data-z="2e-06" style="left: 8.02%; top: 35.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Armory_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Armory.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11318" data-x="-1343.4712" data-y="-457.07578" data-z="2e-06" style="left: 8.02%; top: 35.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LivingArmor">铠甲傀儡</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -155,8 +156,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_GreatHall_01_Destroyed_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_GreatHall_01_Destroyed_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_GreatHall_01_Destroyed_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_GreatHall_01_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11011" data-x="1467.0" data-y="1105.0" data-z="-400.0" style="left: 95.84%; top: 84.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11012" data-x="-1458.0" data-y="-1105.0" data-z="-400.0" style="left: 4.44%; top: 15.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="container" id="container-Ruins_GreatHall_01_Destroyed_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_GreatHall_01_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12538" data-x="1467.0" data-y="1105.0" data-z="-400.0" style="left: 95.84%; top: 84.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12539" data-x="-1458.0" data-y="-1105.0" data-z="-400.0" style="left: 4.44%; top: 15.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LivingArmor">铠甲傀儡</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -190,12 +191,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_GreatHall_03_Destroyed_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_GreatHall_03_Destroyed_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_GreatHall_03_Destroyed_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_GreatHall_03_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11099" data-x="64.3426" data-y="473.3133" data-z="11.051007" style="left: 52.01%; top: 64.79%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11100" data-x="66.121574" data-y="-1.877244" data-z="11.051011" style="left: 52.07%; top: 49.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11101" data-x="66.68206" data-y="-483.15463" data-z="11.051013" style="left: 52.08%; top: 34.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11102" data-x="752.1633" data-y="-482.02258" data-z="11.051008" style="left: 73.51%; top: 34.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11103" data-x="752.1633" data-y="0.32256857" data-z="11.051007" style="left: 73.51%; top: 50.01%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11104" data-x="821.8643" data-y="914.13367" data-z="11.051007" style="left: 75.68%; top: 78.57%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="container" id="container-Ruins_GreatHall_03_Destroyed_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_GreatHall_03_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12654" data-x="64.3426" data-y="473.3133" data-z="11.051007" style="left: 52.01%; top: 64.79%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12655" data-x="66.121574" data-y="-1.877244" data-z="11.051011" style="left: 52.07%; top: 49.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12656" data-x="66.68206" data-y="-483.15463" data-z="11.051013" style="left: 52.08%; top: 34.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12657" data-x="752.1633" data-y="-482.02258" data-z="11.051008" style="left: 73.51%; top: 34.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12658" data-x="752.1633" data-y="0.32256857" data-z="11.051007" style="left: 73.51%; top: 50.01%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12659" data-x="821.8643" data-y="914.13367" data-z="11.051007" style="left: 75.68%; top: 78.57%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LivingArmor">铠甲傀儡</span><span class="ms-count">(6点)</span></div>
     </div>
@@ -229,12 +230,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_GreatHall_03_Destroyed_SR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_GreatHall_03_Destroyed_SR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_GreatHall_03_Destroyed_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_GreatHall_03_Destroyed_SR, GreatHall_03_Destroyed_SR</small></div>        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11142" data-x="64.3426" data-y="473.3133" data-z="11.051007" style="left: 52.01%; top: 64.79%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11143" data-x="66.121574" data-y="-1.877244" data-z="11.051011" style="left: 52.07%; top: 49.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11144" data-x="66.68206" data-y="-483.15463" data-z="11.051013" style="left: 52.08%; top: 34.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11145" data-x="752.1633" data-y="-482.02258" data-z="11.051008" style="left: 73.51%; top: 34.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11146" data-x="752.1633" data-y="0.32256857" data-z="11.051007" style="left: 73.51%; top: 50.01%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11147" data-x="821.8643" data-y="914.13367" data-z="11.051007" style="left: 75.68%; top: 78.57%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="container" id="container-Ruins_GreatHall_03_Destroyed_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_GreatHall_03_Destroyed_SR, GreatHall_03_Destroyed_SR</small></div>        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12717" data-x="64.3426" data-y="473.3133" data-z="11.051007" style="left: 52.01%; top: 64.79%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12718" data-x="66.121574" data-y="-1.877244" data-z="11.051011" style="left: 52.07%; top: 49.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12719" data-x="66.68206" data-y="-483.15463" data-z="11.051013" style="left: 52.08%; top: 34.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12720" data-x="752.1633" data-y="-482.02258" data-z="11.051008" style="left: 73.51%; top: 34.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12721" data-x="752.1633" data-y="0.32256857" data-z="11.051007" style="left: 73.51%; top: 50.01%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12722" data-x="821.8643" data-y="914.13367" data-z="11.051007" style="left: 75.68%; top: 78.57%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">11</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LivingArmor">铠甲傀儡</span><span class="ms-count">(6点)</span></div>
     </div>
@@ -268,8 +269,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Keep_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Keep_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Keep_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Keep.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11186" data-x="83.76374" data-y="438.60645" data-z="1.0000075" style="left: 52.62%; top: 63.71%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11187" data-x="646.2152" data-y="438.60645" data-z="1.0000082" style="left: 70.19%; top: 63.71%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1</span></div>
+        <div class="container" id="container-Ruins_Keep_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Keep.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12817" data-x="83.76374" data-y="438.60645" data-z="1.0000075" style="left: 52.62%; top: 63.71%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12818" data-x="646.2152" data-y="438.60645" data-z="1.0000082" style="left: 70.19%; top: 63.71%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LivingArmor">铠甲傀儡</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -303,8 +304,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Refectory_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Refectory_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Refectory_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Refectory.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11358" data-x="400.0" data-y="770.0" data-z="0.0" style="left: 62.50%; top: 74.06%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="LivingArmor" data-index="11359" data-x="815.0" data-y="-200.0" data-z="0.0" style="left: 75.47%; top: 43.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Refectory_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Refectory.webp" class="image">        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12937" data-x="400.0" data-y="770.0" data-z="0.0" style="left: 62.50%; top: 74.06%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="LivingArmor" data-index="12938" data-x="815.0" data-y="-200.0" data-z="0.0" style="left: 75.47%; top: 43.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LivingArmor">铠甲傀儡</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -314,8 +315,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-9943">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 9943, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-11318">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11318, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
@@ -325,8 +326,8 @@
         <td>-457.08</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11011">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_HR_D-json', 11011, this)"></td>
+    <tr id="row-12538">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_HR_D-json', 12538, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_01_Destroyed_HR_D.json</td>
@@ -336,8 +337,8 @@
         <td>1105.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-11012">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_HR_D-json', 11012, this)"></td>
+    <tr id="row-12539">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_HR_D-json', 12539, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_01_Destroyed_HR_D.json</td>
@@ -347,8 +348,8 @@
         <td>-1105.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-11099">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 11099, this)"></td>
+    <tr id="row-12654">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 12654, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_HR_D.json</td>
@@ -358,8 +359,8 @@
         <td>473.31</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11100">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 11100, this)"></td>
+    <tr id="row-12655">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 12655, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_HR_D.json</td>
@@ -369,8 +370,8 @@
         <td>-1.88</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11101">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 11101, this)"></td>
+    <tr id="row-12656">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 12656, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_HR_D.json</td>
@@ -380,8 +381,8 @@
         <td>-483.15</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11102">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 11102, this)"></td>
+    <tr id="row-12657">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 12657, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_HR_D.json</td>
@@ -391,8 +392,8 @@
         <td>-482.02</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11103">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 11103, this)"></td>
+    <tr id="row-12658">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 12658, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_HR_D.json</td>
@@ -402,8 +403,8 @@
         <td>0.32</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11104">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 11104, this)"></td>
+    <tr id="row-12659">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_HR_D-json', 12659, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_HR_D.json</td>
@@ -413,8 +414,8 @@
         <td>914.13</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11142">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 11142, this)"></td>
+    <tr id="row-12717">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 12717, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_SR_D.json</td>
@@ -424,8 +425,8 @@
         <td>473.31</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11143">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 11143, this)"></td>
+    <tr id="row-12718">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 12718, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_SR_D.json</td>
@@ -435,8 +436,8 @@
         <td>-1.88</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11144">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 11144, this)"></td>
+    <tr id="row-12719">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 12719, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_SR_D.json</td>
@@ -446,8 +447,8 @@
         <td>-483.15</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11145">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 11145, this)"></td>
+    <tr id="row-12720">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 12720, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_SR_D.json</td>
@@ -457,8 +458,8 @@
         <td>-482.02</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11146">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 11146, this)"></td>
+    <tr id="row-12721">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 12721, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_SR_D.json</td>
@@ -468,8 +469,8 @@
         <td>0.32</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11147">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 11147, this)"></td>
+    <tr id="row-12722">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_03_Destroyed_SR_D-json', 12722, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_03_Destroyed_SR_D.json</td>
@@ -479,8 +480,8 @@
         <td>914.13</td>
         <td>11.05</td>
     </tr>
-    <tr id="row-11186">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Keep_HR_D-json', 11186, this)"></td>
+    <tr id="row-12817">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Keep_HR_D-json', 12817, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_Keep_HR_D.json</td>
@@ -490,8 +491,8 @@
         <td>438.61</td>
         <td>1.00</td>
     </tr>
-    <tr id="row-11187">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Keep_HR_D-json', 11187, this)"></td>
+    <tr id="row-12818">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Keep_HR_D-json', 12818, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_Keep_HR_D.json</td>
@@ -501,8 +502,8 @@
         <td>438.61</td>
         <td>1.00</td>
     </tr>
-    <tr id="row-11358">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Refectory_HR_D-json', 11358, this)"></td>
+    <tr id="row-12937">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Refectory_HR_D-json', 12937, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_Refectory_HR_D.json</td>
@@ -512,8 +513,8 @@
         <td>770.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11359">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Refectory_HR_D-json', 11359, this)"></td>
+    <tr id="row-12938">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Refectory_HR_D-json', 12938, this)"></td>
         <td>铠甲傀儡</td>
         <td>废墟1层</td>
         <td>Ruins_Refectory_HR_D.json</td>

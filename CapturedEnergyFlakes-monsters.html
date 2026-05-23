@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>捕获的能量碎片 >> 恶魔鬼童 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">捕获的能量碎片 (CapturedEnergyFlakes) >> DemonImp</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>恶魔鬼童 (20)</div>
 </div></div>
@@ -121,7 +122,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('DeathAltar_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('DeathAltar_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-DeathAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathAltar.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9115" data-x="53.0" data-y="-25.0" data-z="98.0" style="left: 51.66%; top: 49.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">98</span></div>
+        <div class="container" id="container-DeathAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathAltar.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10236" data-x="53.0" data-y="-25.0" data-z="98.0" style="left: 51.66%; top: 49.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">98</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -155,7 +156,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('DemonDen_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('DemonDen_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9256" data-x="-33.0" data-y="-610.0" data-z="410.0" style="left: 48.97%; top: 30.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">410</span></div>
+        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10417" data-x="-33.0" data-y="-610.0" data-z="410.0" style="left: 48.97%; top: 30.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">410</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -189,7 +190,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoCastleConner_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoCastleConner_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9320" data-x="526.0" data-y="681.0" data-z="-3.0" style="left: 66.44%; top: 71.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
+        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10491" data-x="526.0" data-y="681.0" data-z="-3.0" style="left: 66.44%; top: 71.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -223,8 +224,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoColumns_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoColumns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoColumns.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9366" data-x="39.0" data-y="-125.0" data-z="0.0" style="left: 51.22%; top: 46.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="DemonImp" data-index="9367" data-x="1901.0" data-y="256.0" data-z="0.0" style="left: 109.41%; top: 58.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-InfernoColumns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoColumns.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10549" data-x="39.0" data-y="-125.0" data-z="0.0" style="left: 51.22%; top: 46.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="10550" data-x="1901.0" data-y="256.0" data-z="0.0" style="left: 109.41%; top: 58.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -258,8 +259,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_SR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoColumns_SR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoColumns_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: InfernoColumns_SR, SR</small></div>        <div class="dot monster-dot" data-monster="DemonImp" data-index="9920" data-x="39.0" data-y="-125.0" data-z="0.0" style="left: 51.22%; top: 46.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="DemonImp" data-index="9921" data-x="1901.0" data-y="256.0" data-z="0.0" style="left: 109.41%; top: 58.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-InfernoColumns_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: InfernoColumns_SR, SR</small></div>        <div class="dot monster-dot" data-monster="DemonImp" data-index="11285" data-x="39.0" data-y="-125.0" data-z="0.0" style="left: 51.22%; top: 46.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="11286" data-x="1901.0" data-y="256.0" data-z="0.0" style="left: 109.41%; top: 58.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -293,7 +294,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoRiver_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9521" data-x="-919.0" data-y="-1068.0" data-z="-1.0" style="left: 21.28%; top: 16.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-1</span></div>
+        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10824" data-x="-919.0" data-y="-1068.0" data-z="-1.0" style="left: 21.28%; top: 16.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-1</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -327,7 +328,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Bloodyfalls_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Bloodyfalls_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Bloodyfalls_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Bloodyfalls.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8378" data-x="148.0" data-y="-5.0" data-z="400.0" style="left: 54.62%; top: 49.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">400</span></div>
+        <div class="container" id="container-Inferno_Bloodyfalls_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Bloodyfalls.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9438" data-x="148.0" data-y="-5.0" data-z="400.0" style="left: 54.62%; top: 49.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">400</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -361,7 +362,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DeathPlatforms_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_DeathPlatforms_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9173" data-x="785.0" data-y="779.0" data-z="496.0" style="left: 74.53%; top: 74.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">496</span></div>
+        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10341" data-x="785.0" data-y="779.0" data-z="496.0" style="left: 74.53%; top: 74.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">496</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -395,7 +396,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Doomcage_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Doomcage_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8463" data-x="-211.0" data-y="-58.0" data-z="149.0" style="left: 43.41%; top: 48.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">149</span></div>
+        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9552" data-x="-211.0" data-y="-58.0" data-z="149.0" style="left: 43.41%; top: 48.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">149</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -429,8 +430,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DownStair_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_DownStair_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_DownStair_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DownStair.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8538" data-x="-468.0" data-y="1059.0" data-z="-3.0" style="left: 35.38%; top: 83.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
-        <div class="dot monster-dot" data-monster="DemonImp" data-index="8539" data-x="-165.0" data-y="-1133.0" data-z="-3.0" style="left: 44.84%; top: 14.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
+        <div class="container" id="container-Inferno_DownStair_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DownStair.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9627" data-x="-468.0" data-y="1059.0" data-z="-3.0" style="left: 35.38%; top: 83.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="9628" data-x="-165.0" data-y="-1133.0" data-z="-3.0" style="left: 44.84%; top: 14.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-3</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -464,7 +465,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Hellcrossbridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Hellcrossbridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8749" data-x="-48.0" data-y="104.0" data-z="-500.0" style="left: 29.75%; top: 62.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
+        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9867" data-x="-48.0" data-y="104.0" data-z="-500.0" style="left: 29.75%; top: 62.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -498,8 +499,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Judgementroad_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Judgementroad_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Judgementroad_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Judgementroad.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="8921" data-x="-13.0" data-y="-61.0" data-z="0.0" style="left: 18.34%; top: 16.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="DemonImp" data-index="8922" data-x="-13.0" data-y="-61.0" data-z="0.0" style="left: 18.34%; top: 16.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_Judgementroad_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Judgementroad.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10021" data-x="-13.0" data-y="-61.0" data-z="0.0" style="left: 18.34%; top: 16.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonImp" data-index="10022" data-x="-13.0" data-y="-61.0" data-z="0.0" style="left: 18.34%; top: 16.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -533,7 +534,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_LavaStairway_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_LavaStairway_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9766" data-x="1068.0" data-y="120.0" data-z="-200.0" style="left: 83.38%; top: 53.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-200</span></div>
+        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="11116" data-x="1068.0" data-y="120.0" data-z="-200.0" style="left: 83.38%; top: 53.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-200</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -567,7 +568,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Painfulsteps_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Painfulsteps_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Painfulsteps_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Painfulsteps.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9048" data-x="-90.0" data-y="58.0" data-z="100.0" style="left: 47.19%; top: 51.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">100</span></div>
+        <div class="container" id="container-Inferno_Painfulsteps_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Painfulsteps.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="10159" data-x="-90.0" data-y="58.0" data-z="100.0" style="left: 47.19%; top: 51.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">100</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -601,7 +602,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Skull_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Skull_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Skull_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Skull.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9829" data-x="227.0" data-y="670.0" data-z="-670.0" style="left: 57.09%; top: 70.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-670</span></div>
+        <div class="container" id="container-Skull_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Skull.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="11176" data-x="227.0" data-y="670.0" data-z="-670.0" style="left: 57.09%; top: 70.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-670</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -635,7 +636,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ThroneRoom_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ThroneRoom_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="9888" data-x="-683.0" data-y="190.0" data-z="397.0" style="left: 28.66%; top: 55.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">397</span></div>
+        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot monster-dot" data-monster="DemonImp" data-index="11244" data-x="-683.0" data-y="190.0" data-z="397.0" style="left: 28.66%; top: 55.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">397</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="DemonImp">恶魔鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -645,8 +646,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-9115">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathAltar_HR_D-json', 9115, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-10236">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathAltar_HR_D-json', 10236, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>DeathAltar_HR_D.json</td>
@@ -656,8 +657,8 @@
         <td>-25.00</td>
         <td>98.00</td>
     </tr>
-    <tr id="row-9256">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 9256, this)"></td>
+    <tr id="row-10417">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 10417, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>DemonDen_HR_D.json</td>
@@ -667,8 +668,8 @@
         <td>-610.00</td>
         <td>410.00</td>
     </tr>
-    <tr id="row-9320">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 9320, this)"></td>
+    <tr id="row-10491">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 10491, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>InfernoCastleConner_HR_D.json</td>
@@ -678,8 +679,8 @@
         <td>681.00</td>
         <td>-3.00</td>
     </tr>
-    <tr id="row-9366">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9366, this)"></td>
+    <tr id="row-10549">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 10549, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_HR_D.json</td>
@@ -689,8 +690,8 @@
         <td>-125.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9367">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9367, this)"></td>
+    <tr id="row-10550">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 10550, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_HR_D.json</td>
@@ -700,8 +701,8 @@
         <td>256.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9920">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 9920, this)"></td>
+    <tr id="row-11285">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 11285, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_SR_D.json</td>
@@ -711,8 +712,8 @@
         <td>-125.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9921">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 9921, this)"></td>
+    <tr id="row-11286">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 11286, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_SR_D.json</td>
@@ -722,8 +723,8 @@
         <td>256.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9521">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 9521, this)"></td>
+    <tr id="row-10824">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10824, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
@@ -733,8 +734,8 @@
         <td>-1068.00</td>
         <td>-1.00</td>
     </tr>
-    <tr id="row-8378">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8378, this)"></td>
+    <tr id="row-9438">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9438, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -744,8 +745,8 @@
         <td>-5.00</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-9173">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 9173, this)"></td>
+    <tr id="row-10341">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10341, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DeathPlatforms_HR_D.json</td>
@@ -755,8 +756,8 @@
         <td>779.00</td>
         <td>496.00</td>
     </tr>
-    <tr id="row-8463">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 8463, this)"></td>
+    <tr id="row-9552">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9552, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
@@ -766,8 +767,8 @@
         <td>-58.00</td>
         <td>149.00</td>
     </tr>
-    <tr id="row-8538">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8538, this)"></td>
+    <tr id="row-9627">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 9627, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DownStair_HR_D.json</td>
@@ -777,8 +778,8 @@
         <td>1059.00</td>
         <td>-3.00</td>
     </tr>
-    <tr id="row-8539">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8539, this)"></td>
+    <tr id="row-9628">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 9628, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DownStair_HR_D.json</td>
@@ -788,8 +789,8 @@
         <td>-1133.00</td>
         <td>-3.00</td>
     </tr>
-    <tr id="row-8749">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 8749, this)"></td>
+    <tr id="row-9867">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9867, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Hellcrossbridge_HR_D.json</td>
@@ -799,8 +800,8 @@
         <td>104.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-8921">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Judgementroad_HR_D-json', 8921, this)"></td>
+    <tr id="row-10021">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Judgementroad_HR_D-json', 10021, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Judgementroad_HR_D.json</td>
@@ -810,8 +811,8 @@
         <td>-61.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8922">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Judgementroad_HR_D-json', 8922, this)"></td>
+    <tr id="row-10022">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Judgementroad_HR_D-json', 10022, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Judgementroad_HR_D.json</td>
@@ -821,8 +822,8 @@
         <td>-61.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9766">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 9766, this)"></td>
+    <tr id="row-11116">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 11116, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaStairway_HR_D.json</td>
@@ -832,8 +833,8 @@
         <td>120.00</td>
         <td>-200.00</td>
     </tr>
-    <tr id="row-9048">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 9048, this)"></td>
+    <tr id="row-10159">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 10159, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Painfulsteps_HR_D.json</td>
@@ -843,8 +844,8 @@
         <td>58.00</td>
         <td>100.00</td>
     </tr>
-    <tr id="row-9829">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 9829, this)"></td>
+    <tr id="row-11176">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 11176, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>Skull_HR_D.json</td>
@@ -854,8 +855,8 @@
         <td>670.00</td>
         <td>-670.00</td>
     </tr>
-    <tr id="row-9888">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9888, this)"></td>
+    <tr id="row-11244">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 11244, this)"></td>
         <td>恶魔鬼童</td>
         <td>废墟3层炼狱</td>
         <td>ThroneRoom_02_HR_D.json</td>

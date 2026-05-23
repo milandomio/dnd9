@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>地狱猎手的弯刀 >> 地狱猎手 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">地狱猎手的弯刀 (HellHuntersCurvedBlade) >> HellHunter</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>地狱猎手 (5)</div>
 </div></div>
@@ -121,7 +122,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ConectorDoubleBridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ConectorDoubleBridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="8279" data-x="-28.0" data-y="-25.0" data-z="-400.0" style="left: 49.12%; top: 49.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="9304" data-x="-28.0" data-y="-25.0" data-z="-400.0" style="left: 49.12%; top: 49.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="HellHunter">地狱猎手</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -155,7 +156,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoCastleConner_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoCastleConner_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="9317" data-x="865.9913" data-y="-639.45764" data-z="500.0" style="left: 77.06%; top: 30.02%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">500</span></div>
+        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="10484" data-x="865.9913" data-y="-639.45764" data-z="500.0" style="left: 77.06%; top: 30.02%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">500</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="HellHunter">地狱猎手</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -189,7 +190,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Doomcage_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Doomcage_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="8477" data-x="-5.0" data-y="190.0" data-z="0.0" style="left: 49.84%; top: 55.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="9522" data-x="-5.0" data-y="190.0" data-z="0.0" style="left: 49.84%; top: 55.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="HellHunter">地狱猎手</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -223,7 +224,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_LavaStairway_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_LavaStairway_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="9763" data-x="-0.924713" data-y="-1411.6692" data-z="-157.94534" style="left: 49.97%; top: 5.89%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-157</span></div>
+        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="11109" data-x="-0.924713" data-y="-1411.6692" data-z="-157.94534" style="left: 49.97%; top: 5.89%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-157</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="HellHunter">地狱猎手</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -257,7 +258,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Skull_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Skull_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Skull_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Skull.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="9828" data-x="64.0" data-y="912.0" data-z="-700.0" style="left: 52.00%; top: 78.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-700</span></div>
+        <div class="container" id="container-Skull_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Skull.webp" class="image">        <div class="dot monster-dot" data-monster="HellHunter" data-index="11157" data-x="64.0" data-y="912.0" data-z="-700.0" style="left: 52.00%; top: 78.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-700</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="HellHunter">地狱猎手</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -267,8 +268,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-8279">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 8279, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-9304">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 9304, this)"></td>
         <td>地狱猎手</td>
         <td>废墟3层炼狱</td>
         <td>ConectorDoubleBridge_HR_D.json</td>
@@ -278,8 +279,8 @@
         <td>-25.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-9317">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 9317, this)"></td>
+    <tr id="row-10484">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 10484, this)"></td>
         <td>地狱猎手</td>
         <td>废墟3层炼狱</td>
         <td>InfernoCastleConner_HR_D.json</td>
@@ -289,8 +290,8 @@
         <td>-639.46</td>
         <td>500.00</td>
     </tr>
-    <tr id="row-8477">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 8477, this)"></td>
+    <tr id="row-9522">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9522, this)"></td>
         <td>地狱猎手</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
@@ -300,8 +301,8 @@
         <td>190.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9763">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 9763, this)"></td>
+    <tr id="row-11109">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 11109, this)"></td>
         <td>地狱猎手</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaStairway_HR_D.json</td>
@@ -311,8 +312,8 @@
         <td>-1411.67</td>
         <td>-157.95</td>
     </tr>
-    <tr id="row-9828">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 9828, this)"></td>
+    <tr id="row-11157">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 11157, this)"></td>
         <td>地狱猎手</td>
         <td>废墟3层炼狱</td>
         <td>Skull_HR_D.json</td>

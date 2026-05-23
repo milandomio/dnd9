@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>怀表 >> 幽鬼 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">怀表 (PocketWatch) >> Wraith</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>幽鬼 (16)</div>
 </div></div>
@@ -121,10 +122,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_BlindfallPit_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_BlindfallPit_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_BlindfallPit_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_BlindfallPit, BlindfallPit</small></div>        <div class="dot monster-dot" data-monster="Wraith" data-index="2199" data-x="355.0" data-y="-45.0" data-z="0.0" style="left: 61.09%; top: 48.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="Wraith" data-index="2200" data-x="-755.0" data-y="-45.00002" data-z="0.0" style="left: 26.41%; top: 48.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="Wraith" data-index="2201" data-x="-200.00002" data-y="460.0" data-z="0.0" style="left: 43.75%; top: 64.38%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="Wraith" data-index="2202" data-x="-199.99998" data-y="-430.0" data-z="0.0" style="left: 43.75%; top: 36.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Crypt_BlindfallPit_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_BlindfallPit, BlindfallPit</small></div>        <div class="dot monster-dot" data-monster="Wraith" data-index="2553" data-x="355.0" data-y="-45.0" data-z="0.0" style="left: 61.09%; top: 48.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="Wraith" data-index="2554" data-x="-755.0" data-y="-45.00002" data-z="0.0" style="left: 26.41%; top: 48.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="Wraith" data-index="2555" data-x="-200.00002" data-y="460.0" data-z="0.0" style="left: 43.75%; top: 64.38%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="Wraith" data-index="2556" data-x="-199.99998" data-y="-430.0" data-z="0.0" style="left: 43.75%; top: 36.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -158,7 +159,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_GreatWalkway_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_GreatWalkway_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_GreatWalkway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_GreatWalkway.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="3419" data-x="0.0" data-y="0.0" data-z="0.0001" style="left: 50.00%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Crypt_GreatWalkway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_GreatWalkway.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="3941" data-x="0.0" data-y="0.0" data-z="0.0001" style="left: 50.00%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -192,7 +193,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_Vault_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_Vault_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_Vault_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_Vault.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4284" data-x="326.0" data-y="299.0" data-z="-47.0" style="left: 60.19%; top: 59.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-47</span></div>
+        <div class="container" id="container-Crypt_Vault_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_Vault.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4955" data-x="326.0" data-y="299.0" data-z="-47.0" style="left: 60.19%; top: 59.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-47</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -226,7 +227,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('DeathHall_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('DeathHall_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-DeathHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathHall.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4627" data-x="30.0" data-y="14.0" data-z="0.0" style="left: 50.94%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-DeathHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathHall.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="5405" data-x="30.0" data-y="14.0" data-z="0.0" style="left: 50.94%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -260,7 +261,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('EightToOne_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('EightToOne_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-EightToOne_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/EightToOne_02.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="3035" data-x="-1.8189894e-12" data-y="9.999874" data-z="0.0" style="left: 50.00%; top: 50.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-EightToOne_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/EightToOne_02.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="3513" data-x="-1.8189894e-12" data-y="9.999874" data-z="0.0" style="left: 50.00%; top: 50.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -294,7 +295,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('GuardPost_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('GuardPost_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-GuardPost_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GuardPost.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4697" data-x="918.0025" data-y="-704.00214" data-z="0.0" style="left: 78.69%; top: 28.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-GuardPost_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GuardPost.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="5484" data-x="918.0025" data-y="-704.00214" data-z="0.0" style="left: 78.69%; top: 28.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -328,7 +329,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('HBridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('HBridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-HBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HBridge.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="3435" data-x="-785.0" data-y="-760.0" data-z="-500.0" style="left: 25.47%; top: 26.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
+        <div class="container" id="container-HBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HBridge.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="3973" data-x="-785.0" data-y="-760.0" data-z="-500.0" style="left: 25.47%; top: 26.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -362,7 +363,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('OldTomb_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('OldTomb_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-OldTomb_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/OldTomb.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4984" data-x="107.00001" data-y="74.00004" data-z="-5.0" style="left: 53.34%; top: 52.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-5</span></div>
+        <div class="container" id="container-OldTomb_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/OldTomb.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="5809" data-x="107.00001" data-y="74.00004" data-z="-5.0" style="left: 53.34%; top: 52.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-5</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -396,7 +397,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('TheCage_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('TheCage_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-TheCage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TheCage.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4013" data-x="-10.0" data-y="-114.0" data-z="540.0" style="left: 49.69%; top: 46.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">540</span></div>
+        <div class="container" id="container-TheCage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TheCage.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4568" data-x="-10.0" data-y="-114.0" data-z="540.0" style="left: 49.69%; top: 46.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">540</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -430,7 +431,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('TheMiniWheel_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('TheMiniWheel_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-TheMiniWheel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TheMiniWheel.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4075" data-x="730.0" data-y="10.000009" data-z="-499.9999" style="left: 72.81%; top: 50.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-499</span></div>
+        <div class="container" id="container-TheMiniWheel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TheMiniWheel.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="4702" data-x="730.0" data-y="10.000009" data-z="-499.9999" style="left: 72.81%; top: 50.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-499</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -465,7 +466,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoMouth_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoMouth_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoMouth_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoMouth.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="9424" data-x="1171.0" data-y="240.0" data-z="-299.9998" style="left: 86.59%; top: 57.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
+        <div class="container" id="container-InfernoMouth_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoMouth.webp" class="image">        <div class="dot monster-dot" data-monster="Wraith" data-index="10692" data-x="1171.0" data-y="240.0" data-z="-299.9998" style="left: 86.59%; top: 57.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -500,8 +501,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_BossTest_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_BossTest_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Barbican_01_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest</small></div>        <div class="dot monster-dot" data-monster="Wraith" data-index="10218" data-x="56.0" data-y="-1447.0" data-z="0.0" style="left: 51.75%; top: 4.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="Wraith" data-index="10219" data-x="-557.0" data-y="430.0" data-z="0.0" style="left: 32.59%; top: 63.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest</small></div>        <div class="dot monster-dot" data-monster="Wraith" data-index="11581" data-x="56.0" data-y="-1447.0" data-z="0.0" style="left: 51.75%; top: 4.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="Wraith" data-index="11582" data-x="-557.0" data-y="430.0" data-z="0.0" style="left: 32.59%; top: 63.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Wraith">幽鬼</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -511,8 +512,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-2199">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2199, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-2553">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2553, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -522,8 +523,8 @@
         <td>-45.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2200">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2200, this)"></td>
+    <tr id="row-2554">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2554, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -533,8 +534,8 @@
         <td>-45.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2201">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2201, this)"></td>
+    <tr id="row-2555">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2555, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -544,8 +545,8 @@
         <td>460.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2202">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2202, this)"></td>
+    <tr id="row-2556">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2556, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -555,8 +556,8 @@
         <td>-430.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-3419">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_GreatWalkway_HR_D-json', 3419, this)"></td>
+    <tr id="row-3941">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_GreatWalkway_HR_D-json', 3941, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>Crypt_GreatWalkway_HR_D.json</td>
@@ -566,8 +567,8 @@
         <td>0.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-4284">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Vault_HR_D-json', 4284, this)"></td>
+    <tr id="row-4955">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Vault_HR_D-json', 4955, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>Crypt_Vault_HR_D.json</td>
@@ -577,8 +578,8 @@
         <td>299.00</td>
         <td>-47.00</td>
     </tr>
-    <tr id="row-4627">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathHall_HR_D-json', 4627, this)"></td>
+    <tr id="row-5405">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathHall_HR_D-json', 5405, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>DeathHall_HR_D.json</td>
@@ -588,8 +589,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-3035">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EightToOne_02_HR_D-json', 3035, this)"></td>
+    <tr id="row-3513">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('EightToOne_02_HR_D-json', 3513, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>EightToOne_02_HR_D.json</td>
@@ -599,8 +600,8 @@
         <td>10.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-4697">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GuardPost_HR_D-json', 4697, this)"></td>
+    <tr id="row-5484">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GuardPost_HR_D-json', 5484, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>GuardPost_HR_D.json</td>
@@ -610,8 +611,8 @@
         <td>-704.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-3435">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HBridge_HR_D-json', 3435, this)"></td>
+    <tr id="row-3973">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HBridge_HR_D-json', 3973, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>HBridge_HR_D.json</td>
@@ -621,8 +622,8 @@
         <td>-760.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-4984">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('OldTomb_HR_D-json', 4984, this)"></td>
+    <tr id="row-5809">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('OldTomb_HR_D-json', 5809, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>OldTomb_HR_D.json</td>
@@ -632,8 +633,8 @@
         <td>74.00</td>
         <td>-5.00</td>
     </tr>
-    <tr id="row-4013">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('TheCage_HR_D-json', 4013, this)"></td>
+    <tr id="row-4568">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('TheCage_HR_D-json', 4568, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>TheCage_HR_D.json</td>
@@ -643,8 +644,8 @@
         <td>-114.00</td>
         <td>540.00</td>
     </tr>
-    <tr id="row-4075">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('TheMiniWheel_HR_D-json', 4075, this)"></td>
+    <tr id="row-4702">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('TheMiniWheel_HR_D-json', 4702, this)"></td>
         <td>幽鬼</td>
         <td>废墟2层地牢</td>
         <td>TheMiniWheel_HR_D.json</td>
@@ -654,8 +655,8 @@
         <td>10.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-9424">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoMouth_HR_D-json', 9424, this)"></td>
+    <tr id="row-10692">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoMouth_HR_D-json', 10692, this)"></td>
         <td>幽鬼</td>
         <td>废墟3层炼狱</td>
         <td>InfernoMouth_HR_D.json</td>
@@ -665,8 +666,8 @@
         <td>240.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-10218">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 10218, this)"></td>
+    <tr id="row-11581">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11581, this)"></td>
         <td>幽鬼</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_BossTest_D.json</td>
@@ -676,8 +677,8 @@
         <td>-1447.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10219">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 10219, this)"></td>
+    <tr id="row-11582">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11582, this)"></td>
         <td>幽鬼</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_BossTest_D.json</td>

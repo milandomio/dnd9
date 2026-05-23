@@ -41,19 +41,25 @@
         .explore-card .card-icon { filter: drop-shadow(0 0 8px #00bcd4); }
         .explore-card .card-title { color: #00bcd4; }
 
+        /* 实体表卡片样式（紫色） */
+        .props-card { border-color: #9C27B0; }
+        .props-card:hover { border-color: #CE93D8; background: linear-gradient(145deg, #3a2a4a, #4a3a5a); }
+        .props-card .card-icon { filter: drop-shadow(0 0 8px #9C27B0); }
+        .props-card .card-title { color: #CE93D8; }
+
         .footer { text-align: center; margin-top: 50px; color: #666; }
     </style>
 </head>
 <body>
     <h1>游戏数据导航</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
-    <div class="stats">物品: 144 | 怪物: 120 | 物品>>怪物: 402 | 无结果: 1801</div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="stats">物品: 108 | 怪物: 120 | 物品>>怪物: 402 | 无结果: 1937</div>
     <div class="nav-cards-container">
     <div class="nav-card items-card">
         <a href="items.html">
             <span class="card-icon">📦</span>
             <span class="card-title">【物品表】</span>
-            <span class="card-count">144 个物品</span>
+            <span class="card-count">108 个物品</span>
             <span class="card-subtitle">查看物品位置</span>
         </a>
     </div>
@@ -73,8 +79,16 @@
             <span class="card-subtitle">查看物品掉落怪物</span>
         </a>
     </div>
+    <div class="nav-card props-card">
+        <a href="props.html">
+            <span class="card-icon">🏛️</span>
+            <span class="card-title">【实体表】</span>
+            <span class="card-count">80 个实体</span>
+            <span class="card-subtitle">查看实体位置</span>
+        </a>
+    </div>
 </div>
 
-    <div class="footer">共 2467 个目标位置</div>
+    <div class="footer">共 2647 个目标位置</div>
 </body>
 </html>

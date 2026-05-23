@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>锥子 >> 骷髅长枪兵 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">锥子 (Awl) >> SkeletonSpearman</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>骷髅长枪兵 (20)</div>
 </div></div>
@@ -121,7 +122,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_01_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cemetery_01_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cemetery_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_01.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2232" data-x="-855.9992" data-y="-195.99974" data-z="27.292477" style="left: 23.25%; top: 43.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">27</span></div>
+        <div class="container" id="container-Cemetery_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_01.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2616" data-x="-855.9992" data-y="-195.99974" data-z="27.292477" style="left: 23.25%; top: 43.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">27</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -155,7 +156,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_02_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cemetery_02_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cemetery_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_02.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2301" data-x="-125.99936" data-y="461.00104" data-z="0.0" style="left: 46.06%; top: 64.41%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Cemetery_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_02.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2731" data-x="-125.99936" data-y="461.00104" data-z="0.0" style="left: 46.06%; top: 64.41%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -189,10 +190,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_BlindfallPit_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_BlindfallPit_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_BlindfallPit_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_BlindfallPit, BlindfallPit</small></div>        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2203" data-x="290.0" data-y="50.00001" data-z="0.0" style="left: 59.06%; top: 51.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2204" data-x="-700.0" data-y="49.999966" data-z="0.0" style="left: 28.12%; top: 51.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2205" data-x="-715.0" data-y="-8.726646e-07" data-z="0.0" style="left: 27.66%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2206" data-x="-95.0" data-y="500.0" data-z="0.0" style="left: 47.03%; top: 65.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Crypt_BlindfallPit_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_BlindfallPit, BlindfallPit</small></div>        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2549" data-x="290.0" data-y="50.00001" data-z="0.0" style="left: 59.06%; top: 51.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2550" data-x="-700.0" data-y="49.999966" data-z="0.0" style="left: 28.12%; top: 51.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2551" data-x="-715.0" data-y="-8.726646e-07" data-z="0.0" style="left: 27.66%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="2552" data-x="-95.0" data-y="500.0" data-z="0.0" style="left: 47.03%; top: 65.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -226,7 +227,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_GreatWalkway_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_GreatWalkway_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_GreatWalkway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_GreatWalkway.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="3418" data-x="-1120.0" data-y="715.0" data-z="0.000126" style="left: 15.00%; top: 72.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Crypt_GreatWalkway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_GreatWalkway.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="3938" data-x="-1120.0" data-y="715.0" data-z="0.000126" style="left: 15.00%; top: 72.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -260,8 +261,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_Ramparts_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_Ramparts_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_Ramparts_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_Ramparts.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="3842" data-x="-1031.2816" data-y="-17.002699" data-z="290.0001" style="left: 17.77%; top: 49.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">290</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="3843" data-x="1088.7184" data-y="-7.002772" data-z="290.0001" style="left: 84.02%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">290</span></div>
+        <div class="container" id="container-Crypt_Ramparts_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_Ramparts.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="4446" data-x="-1031.2816" data-y="-17.002699" data-z="290.0001" style="left: 17.77%; top: 49.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">290</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="4447" data-x="1088.7184" data-y="-7.002772" data-z="290.0001" style="left: 84.02%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">290</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -295,13 +296,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('UndergroundAltar_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('UndergroundAltar_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-UndergroundAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/UndergroundAltar.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="5475" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="5476" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="5477" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="5478" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="5479" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="5480" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="5481" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-UndergroundAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/UndergroundAltar.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="6420" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="6421" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="6422" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="6423" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="6424" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="6425" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="6426" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(7点)</span></div>
     </div>
@@ -336,7 +337,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ConectorDoubleBridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ConectorDoubleBridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="8259" data-x="22.0" data-y="-66.0" data-z="0.0" style="left: 50.69%; top: 47.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="9335" data-x="22.0" data-y="-66.0" data-z="0.0" style="left: 50.69%; top: 47.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -370,8 +371,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Doomcage_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Doomcage_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="8448" data-x="-1380.0" data-y="95.0" data-z="250.0" style="left: 6.88%; top: 52.97%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
-        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="8449" data-x="1410.0" data-y="110.0" data-z="250.0" style="left: 94.06%; top: 53.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
+        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="9578" data-x="-1380.0" data-y="95.0" data-z="250.0" style="left: 6.88%; top: 52.97%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
+        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="9579" data-x="1410.0" data-y="110.0" data-z="250.0" style="left: 94.06%; top: 53.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -405,7 +406,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Hellcrossbridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Hellcrossbridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="8727" data-x="1265.0" data-y="-1170.0" data-z="-500.0" style="left: 70.78%; top: 22.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
+        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot monster-dot" data-monster="SkeletonSpearman" data-index="9896" data-x="1265.0" data-y="-1170.0" data-z="-500.0" style="left: 70.78%; top: 22.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="SkeletonSpearman">骷髅长枪兵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -415,8 +416,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-2232">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_01_D-json', 2232, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-2616">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_01_D-json', 2616, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Cemetery_01_D.json</td>
@@ -426,8 +427,8 @@
         <td>-196.00</td>
         <td>27.29</td>
     </tr>
-    <tr id="row-2301">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_D-json', 2301, this)"></td>
+    <tr id="row-2731">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_D-json', 2731, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Cemetery_02_D.json</td>
@@ -437,8 +438,8 @@
         <td>461.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2203">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2203, this)"></td>
+    <tr id="row-2549">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2549, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -448,8 +449,8 @@
         <td>50.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2204">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2204, this)"></td>
+    <tr id="row-2550">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2550, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -459,8 +460,8 @@
         <td>50.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2205">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2205, this)"></td>
+    <tr id="row-2551">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2551, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -470,8 +471,8 @@
         <td>-0.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2206">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2206, this)"></td>
+    <tr id="row-2552">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2552, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
@@ -481,8 +482,8 @@
         <td>500.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-3418">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_GreatWalkway_HR_D-json', 3418, this)"></td>
+    <tr id="row-3938">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_GreatWalkway_HR_D-json', 3938, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Crypt_GreatWalkway_HR_D.json</td>
@@ -492,8 +493,8 @@
         <td>715.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-3842">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 3842, this)"></td>
+    <tr id="row-4446">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 4446, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Crypt_Ramparts_HR_D.json</td>
@@ -503,8 +504,8 @@
         <td>-17.00</td>
         <td>290.00</td>
     </tr>
-    <tr id="row-3843">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 3843, this)"></td>
+    <tr id="row-4447">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 4447, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>Crypt_Ramparts_HR_D.json</td>
@@ -514,8 +515,8 @@
         <td>-7.00</td>
         <td>290.00</td>
     </tr>
-    <tr id="row-5475">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 5475, this)"></td>
+    <tr id="row-6420">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6420, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
@@ -525,8 +526,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5476">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 5476, this)"></td>
+    <tr id="row-6421">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6421, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
@@ -536,8 +537,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5477">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 5477, this)"></td>
+    <tr id="row-6422">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6422, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
@@ -547,8 +548,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5478">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 5478, this)"></td>
+    <tr id="row-6423">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6423, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
@@ -558,8 +559,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5479">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 5479, this)"></td>
+    <tr id="row-6424">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6424, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
@@ -569,8 +570,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5480">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 5480, this)"></td>
+    <tr id="row-6425">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6425, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
@@ -580,8 +581,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5481">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 5481, this)"></td>
+    <tr id="row-6426">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6426, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
@@ -591,8 +592,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8259">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 8259, this)"></td>
+    <tr id="row-9335">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 9335, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟3层炼狱</td>
         <td>ConectorDoubleBridge_HR_D.json</td>
@@ -602,8 +603,8 @@
         <td>-66.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8448">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 8448, this)"></td>
+    <tr id="row-9578">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9578, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
@@ -613,8 +614,8 @@
         <td>95.00</td>
         <td>250.00</td>
     </tr>
-    <tr id="row-8449">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 8449, this)"></td>
+    <tr id="row-9579">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9579, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
@@ -624,8 +625,8 @@
         <td>110.00</td>
         <td>250.00</td>
     </tr>
-    <tr id="row-8727">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 8727, this)"></td>
+    <tr id="row-9896">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9896, this)"></td>
         <td>骷髅长枪兵</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Hellcrossbridge_HR_D.json</td>

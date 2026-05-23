@@ -20,27 +20,8 @@
         .summary-item .name-display { color: white; font-size: 18px; font-weight: bold; }
         .summary-item .name-debug { color: white; font-size: 18px; font-weight: bold; }
         
-        .item-section {{ color: #4CAF50; border-bottom-color: #4CAF50; }}
-        .item-item {{ border-color: #4CAF50; }}
-        .item-item:hover {{ border-color: #81C784; }}
-        .item-item .name-display {{ color: #4CAF50; }}
-        .item-item .name-debug {{ color: #4CAF50; }}
-        .item-item a {{ color: #4CAF50; }}
-        .item-item a:hover {{ color: #81C784; }}
-        .monster-section {{ color: #FF6600; border-bottom-color: #FF6600; }}
-        .monster-item {{ border-color: #FF6600; }}
-        .monster-item:hover {{ border-color: #FF8C00; }}
-        .monster-item .name-display {{ color: #FF6600; }}
-        .monster-item .name-debug {{ color: #FF6600; }}
-        .monster-item a {{ color: #FF6600; }}
-        .monster-item a:hover {{ color: #FF8C00; }}
-        .item-monster-section {{ color: #2196F3; border-bottom-color: #2196F3; }}
-        .item-monster-item {{ border-color: #2196F3; }}
-        .item-monster-item:hover {{ border-color: #64B5F6; }}
-        .item-monster-item .name-display {{ color: #2196F3; }}
-        .item-monster-item .name-debug {{ color: #2196F3; }}
-        .item-monster-item a {{ color: #2196F3; }}
-        .item-monster-item a:hover {{ color: #64B5F6; }}
+        .summary-item.no-coord { display: none; }
+        .summary-item.no-coord.debug-visible { display: block; }
         .back-to-home { text-align: center; margin-bottom: 30px; }
         .back-to-home a { color: #00bcd4; text-decoration: none; font-size: 18px; padding: 10px 20px; border: 2px solid #00bcd4; border-radius: 8px; display: inline-block; transition: all 0.2s; }
         .back-to-home a:hover { background-color: #00bcd4; color: #2c2c2c; }
@@ -51,31 +32,13 @@
 <body>
     <div class="back-to-home"><a href="index.html">← 返回首页</a></div>
     <h1>【物品表】物品位置汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
-    <div class="stats">共 144 个物品</div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="stats">共 108 个物品</div>
     <div class="section-header item-section">物品列表</div>
 <div class="section-content">    <div class="summary-item item-item">
         <a href="Tripod.html">
             <span class="name-display">三脚架</span>
             <span class="name-debug" style="display:none;">三脚架【Tripod】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="CrateMedium.html">
-            <span class="name-display">中型木箱子</span>
-            <span class="name-debug" style="display:none;">中型木箱子【CrateMedium】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="Bookshelf.html">
-            <span class="name-display">书架</span>
-            <span class="name-debug" style="display:none;">书架【Bookshelf】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="MermaidCoffin.html">
-            <span class="name-display">人鱼棺材</span>
-            <span class="name-debug" style="display:none;">人鱼棺材【MermaidCoffin】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -115,12 +78,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="WoodChestMedium.html">
-            <span class="name-display">加固宝箱</span>
-            <span class="name-debug" style="display:none;">加固宝箱【WoodChestMedium】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="DoctorsBag.html">
             <span class="name-display">医师的包</span>
             <span class="name-debug" style="display:none;">医师的包【DoctorsBag】</span>
@@ -130,12 +87,6 @@
         <a href="Pickaxe.html">
             <span class="name-display">十字镐</span>
             <span class="name-debug" style="display:none;">十字镐【Pickaxe】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="MarvelousChest.html">
-            <span class="name-display">卓越宝箱</span>
-            <span class="name-debug" style="display:none;">卓越宝箱【MarvelousChest】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -193,51 +144,15 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="WoodChestLarge.html">
-            <span class="name-display">大型加固宝箱</span>
-            <span class="name-debug" style="display:none;">大型加固宝箱【WoodChestLarge】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="SimpleChestLarge.html">
-            <span class="name-display">大型橡木宝箱</span>
-            <span class="name-debug" style="display:none;">大型橡木宝箱【SimpleChestLarge】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="Gems.html">
             <span class="name-display">宝石</span>
             <span class="name-debug" style="display:none;">宝石【Gems】</span>
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="Hoard.html">
-            <span class="name-display">宝藏堆</span>
-            <span class="name-debug" style="display:none;">宝藏堆【Hoard】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="SealedLetter.html">
             <span class="name-display">密封信函</span>
             <span class="name-debug" style="display:none;">密封信函【SealedLetter】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="WoodChestSmall.html">
-            <span class="name-display">小型加固宝箱</span>
-            <span class="name-debug" style="display:none;">小型加固宝箱【WoodChestSmall】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="CrateSmall.html">
-            <span class="name-display">小型木板箱</span>
-            <span class="name-debug" style="display:none;">小型木板箱【CrateSmall】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="SimpleChestSmall.html">
-            <span class="name-display">小型橡木宝箱</span>
-            <span class="name-debug" style="display:none;">小型橡木宝箱【SimpleChestSmall】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -265,24 +180,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="GiantBarnacle.html">
-            <span class="name-display">巨型藤壶</span>
-            <span class="name-debug" style="display:none;">巨型藤壶【GiantBarnacle】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="GiantClam_Chest.html">
-            <span class="name-display">巨蚌</span>
-            <span class="name-debug" style="display:none;">巨蚌【GiantClam_Chest】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="PhantomFlower.html">
-            <span class="name-display">幻影花</span>
-            <span class="name-debug" style="display:none;">幻影花【PhantomFlower】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="Lockpick.html">
             <span class="name-display">开锁器</span>
             <span class="name-debug" style="display:none;">开锁器【Lockpick】</span>
@@ -301,12 +198,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="Wardweed.html">
-            <span class="name-display">护符草</span>
-            <span class="name-debug" style="display:none;">护符草【Wardweed】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="BrokenFrame.html">
             <span class="name-display">损坏的画作</span>
             <span class="name-debug" style="display:none;">损坏的画作【BrokenFrame】</span>
@@ -316,12 +207,6 @@
         <a href="TracingWheel.html">
             <span class="name-display">描线轮</span>
             <span class="name-debug" style="display:none;">描线轮【TracingWheel】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="FlatChestLarge.html">
-            <span class="name-display">方型宝箱</span>
-            <span class="name-debug" style="display:none;">方型宝箱【FlatChestLarge】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -415,12 +300,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="SimpleChestMedium.html">
-            <span class="name-display">橡木宝箱</span>
-            <span class="name-debug" style="display:none;">橡木宝箱【SimpleChestMedium】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="Weapon.html">
             <span class="name-display">武器</span>
             <span class="name-debug" style="display:none;">武器【Weapon】</span>
@@ -475,33 +354,9 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="TidestoneOre.html">
-            <span class="name-display">潮汐石矿</span>
-            <span class="name-debug" style="display:none;">潮汐石矿【TidestoneOre】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="TarBarrel.html">
-            <span class="name-display">焦油木桶</span>
-            <span class="name-debug" style="display:none;">焦油木桶【TarBarrel】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="LavaMushroom.html">
-            <span class="name-display">熔岩菇</span>
-            <span class="name-debug" style="display:none;">熔岩菇【LavaMushroom】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="SpentCandle.html">
             <span class="name-display">燃尽的蜡烛</span>
             <span class="name-debug" style="display:none;">燃尽的蜡烛【SpentCandle】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="OrnateChestLarge.html">
-            <span class="name-display">狮头宝箱</span>
-            <span class="name-debug" style="display:none;">狮头宝箱【OrnateChestLarge】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -514,12 +369,6 @@
         <a href="CoralFragment.html">
             <span class="name-display">珊瑚碎块</span>
             <span class="name-debug" style="display:none;">珊瑚碎块【CoralFragment】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="Lifeleaf.html">
-            <span class="name-display">生命之叶</span>
-            <span class="name-debug" style="display:none;">生命之叶【Lifeleaf】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -541,12 +390,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="Saltvine.html">
-            <span class="name-display">盐藤</span>
-            <span class="name-debug" style="display:none;">盐藤【Saltvine】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="Eyepatch.html">
             <span class="name-display">眼罩</span>
             <span class="name-debug" style="display:none;">眼罩【Eyepatch】</span>
@@ -556,12 +399,6 @@
         <a href="DwarfSecretWeapon.html">
             <span class="name-display">矮人秘密武器</span>
             <span class="name-debug" style="display:none;">矮人秘密武器【DwarfSecretWeapon】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="StoneTomb.html">
-            <span class="name-display">石棺</span>
-            <span class="name-debug" style="display:none;">石棺【StoneTomb】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -601,12 +438,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="RubysilverOre.html">
-            <span class="name-display">红宝石银矿</span>
-            <span class="name-debug" style="display:none;">红宝石银矿【RubysilverOre】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="RedApple.html">
             <span class="name-display">红苹果</span>
             <span class="name-debug" style="display:none;">红苹果【RedApple】</span>
@@ -640,12 +471,6 @@
         <a href="Reins.html">
             <span class="name-display">缰绳</span>
             <span class="name-debug" style="display:none;">缰绳【Reins】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="Pot.html">
-            <span class="name-display">罐子</span>
-            <span class="name-debug" style="display:none;">罐子【Pot】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -691,12 +516,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="SpiderPot.html">
-            <span class="name-display">蜘蛛罐子</span>
-            <span class="name-debug" style="display:none;">蜘蛛罐子【SpiderPot】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="FabricShears.html">
             <span class="name-display">裁布剪刀</span>
             <span class="name-debug" style="display:none;">裁布剪刀【FabricShears】</span>
@@ -733,18 +552,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="Corpse.html">
-            <span class="name-display">遗骸</span>
-            <span class="name-debug" style="display:none;">遗骸【Corpse】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="OrnateChestMedium.html">
-            <span class="name-display">重型华丽宝箱</span>
-            <span class="name-debug" style="display:none;">重型华丽宝箱【OrnateChestMedium】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="Chalice.html">
             <span class="name-display">金圣杯（裂开）</span>
             <span class="name-debug" style="display:none;">金圣杯（裂开）【Chalice】</span>
@@ -763,21 +570,9 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="GoldOre.html">
-            <span class="name-display">金矿</span>
-            <span class="name-debug" style="display:none;">金矿【GoldOre】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="Pincushion.html">
             <span class="name-display">针垫</span>
             <span class="name-debug" style="display:none;">针垫【Pincushion】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="CobaltOre.html">
-            <span class="name-display">钴矿</span>
-            <span class="name-debug" style="display:none;">钴矿【CobaltOre】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -790,12 +585,6 @@
         <a href="IronChain.html">
             <span class="name-display">铁链</span>
             <span class="name-debug" style="display:none;">铁链【IronChain】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="CopperOre.html">
-            <span class="name-display">铜矿</span>
-            <span class="name-debug" style="display:none;">铜矿【CopperOre】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -814,18 +603,6 @@
         <a href="LongPipe.html">
             <span class="name-display">长烟斗</span>
             <span class="name-debug" style="display:none;">长烟斗【LongPipe】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="FrostStoneOre.html">
-            <span class="name-display">霜石矿</span>
-            <span class="name-debug" style="display:none;">霜石矿【FrostStoneOre】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="OrnateChestSmall.html">
-            <span class="name-display">青铜华丽宝箱</span>
-            <span class="name-debug" style="display:none;">青铜华丽宝箱【OrnateChestSmall】</span>
         </a>
     </div>
     <div class="summary-item item-item">
@@ -901,18 +678,6 @@
         </a>
     </div>
     <div class="summary-item item-item">
-        <a href="ObsidianOre.html">
-            <span class="name-display">黑曜石矿</span>
-            <span class="name-debug" style="display:none;">黑曜石矿【ObsidianOre】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
-        <a href="BlackRose.html">
-            <span class="name-display">黑玫瑰</span>
-            <span class="name-debug" style="display:none;">黑玫瑰【BlackRose】</span>
-        </a>
-    </div>
-    <div class="summary-item item-item">
         <a href="BlackThreadSpool.html">
             <span class="name-display">黑线卷</span>
             <span class="name-debug" style="display:none;">黑线卷【BlackThreadSpool】</span>
@@ -929,6 +694,7 @@
             displays.forEach(el => el.style.display = isVisible ? 'inline' : 'none');
             debugs.forEach(el => el.style.display = isVisible ? 'none' : 'inline');
             document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            document.querySelectorAll('.summary-item.no-coord').forEach(el => el.classList.toggle('debug-visible', !isVisible));
             btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
         }
         function updateDots(index, state) {

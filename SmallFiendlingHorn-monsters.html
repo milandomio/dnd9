@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>小型劣魔角 >> 劣魔斩切者、劣魔粉碎者、劣魔砍杀者 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">小型劣魔角 (SmallFiendlingHorn) >> FiendlingChopper、FiendlingCrusher、FiendlingSlasher</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>劣魔斩切者 (28)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>劣魔粉碎者 (47)</div>
@@ -125,10 +126,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ConectorDoubleBridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ConectorDoubleBridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="8295" data-x="162.0" data-y="274.0" data-z="-400.0" style="left: 55.06%; top: 58.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="8296" data-x="-183.0" data-y="-245.0" data-z="-400.0" style="left: 44.28%; top: 42.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8286" data-x="187.0" data-y="-256.0" data-z="-399.99988" style="left: 55.84%; top: 42.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-399</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8258" data-x="-248.0" data-y="204.0" data-z="-399.99988" style="left: 42.25%; top: 56.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-399</span></div>
+        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9333" data-x="162.0" data-y="274.0" data-z="-400.0" style="left: 55.06%; top: 58.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9334" data-x="-183.0" data-y="-245.0" data-z="-400.0" style="left: 44.28%; top: 42.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9317" data-x="187.0" data-y="-256.0" data-z="-399.99988" style="left: 55.84%; top: 42.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9322" data-x="-248.0" data-y="204.0" data-z="-399.99988" style="left: 42.25%; top: 56.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-399</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingChopper">劣魔斩切者</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -162,9 +163,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoCastleConner_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoCastleConner_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9339" data-x="962.72076" data-y="501.93903" data-z="0.0" style="left: 80.09%; top: 65.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9340" data-x="-662.0531" data-y="988.6591" data-z="510.0" style="left: 29.31%; top: 80.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">510</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9306" data-x="494.93903" data-y="884.939" data-z="0.0" style="left: 65.47%; top: 77.65%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10507" data-x="962.72076" data-y="501.93903" data-z="0.0" style="left: 80.09%; top: 65.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10508" data-x="-662.0531" data-y="988.6591" data-z="510.0" style="left: 29.31%; top: 80.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">510</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10506" data-x="494.93903" data-y="884.939" data-z="0.0" style="left: 65.47%; top: 77.65%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingChopper">劣魔斩切者</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -198,9 +199,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoColumns_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoColumns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoColumns.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9378" data-x="-257.0" data-y="-278.0" data-z="-449.9999" style="left: 41.97%; top: 41.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-449</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9376" data-x="286.0" data-y="-923.0" data-z="14.0" style="left: 58.94%; top: 21.16%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9377" data-x="2.0" data-y="-1086.0" data-z="14.0" style="left: 50.06%; top: 16.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
+        <div class="container" id="container-InfernoColumns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoColumns.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10543" data-x="-257.0" data-y="-278.0" data-z="-449.9999" style="left: 41.97%; top: 41.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-449</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10551" data-x="286.0" data-y="-923.0" data-z="14.0" style="left: 58.94%; top: 21.16%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10552" data-x="2.0" data-y="-1086.0" data-z="14.0" style="left: 50.06%; top: 16.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingChopper">劣魔斩切者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -234,16 +235,16 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoGate_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoGate_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoGate_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoGate.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9419" data-x="610.0" data-y="1230.0" data-z="500.0" style="left: 69.06%; top: 88.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">500</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9420" data-x="-669.0" data-y="-122.0" data-z="200.0" style="left: 29.09%; top: 46.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">200</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9421" data-x="-2418.0" data-y="1237.0" data-z="-6.0" style="left: -25.56%; top: 88.66%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-6</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9422" data-x="-248.0" data-y="2.0" data-z="-0.9999" style="left: 42.25%; top: 50.06%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9401" data-x="-530.0" data-y="0.0" data-z="1000.0" style="left: 33.44%; top: 50.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1000</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9402" data-x="625.0" data-y="70.0" data-z="300.0" style="left: 69.53%; top: 52.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">300</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9403" data-x="-669.0" data-y="130.0" data-z="200.0" style="left: 29.09%; top: 54.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">200</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9379" data-x="601.0" data-y="-1257.0" data-z="500.0" style="left: 68.78%; top: 10.72%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">500</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9380" data-x="1170.0" data-y="1290.0" data-z="0.0" style="left: 86.56%; top: 90.31%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9381" data-x="610.0" data-y="-50.0" data-z="300.0" style="left: 69.06%; top: 48.44%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">300</span></div>
+        <div class="container" id="container-InfernoGate_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoGate.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10626" data-x="610.0" data-y="1230.0" data-z="500.0" style="left: 69.06%; top: 88.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">500</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10627" data-x="-669.0" data-y="-122.0" data-z="200.0" style="left: 29.09%; top: 46.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">200</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10628" data-x="-2418.0" data-y="1237.0" data-z="-6.0" style="left: -25.56%; top: 88.66%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-6</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10629" data-x="-248.0" data-y="2.0" data-z="-0.9999" style="left: 42.25%; top: 50.06%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10601" data-x="-530.0" data-y="0.0" data-z="1000.0" style="left: 33.44%; top: 50.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1000</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10602" data-x="625.0" data-y="70.0" data-z="300.0" style="left: 69.53%; top: 52.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">300</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10603" data-x="-669.0" data-y="130.0" data-z="200.0" style="left: 29.09%; top: 54.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">200</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10623" data-x="601.0" data-y="-1257.0" data-z="500.0" style="left: 68.78%; top: 10.72%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">500</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10624" data-x="1170.0" data-y="1290.0" data-z="0.0" style="left: 86.56%; top: 90.31%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10625" data-x="610.0" data-y="-50.0" data-z="300.0" style="left: 69.06%; top: 48.44%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">300</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingChopper">劣魔斩切者</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -277,8 +278,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoRiver_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9551" data-x="-401.0" data-y="-167.0" data-z="250.0" style="left: 37.47%; top: 44.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">250</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9516" data-x="1296.0" data-y="-635.0" data-z="0.0" style="left: 90.50%; top: 30.16%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10830" data-x="-401.0" data-y="-167.0" data-z="250.0" style="left: 37.47%; top: 44.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">250</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10849" data-x="1296.0" data-y="-635.0" data-z="0.0" style="left: 90.50%; top: 30.16%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -312,11 +313,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Bloodyfalls_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Bloodyfalls_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Bloodyfalls_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Bloodyfalls.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="8392" data-x="-715.0" data-y="-1255.0" data-z="0.0" style="left: 27.66%; top: 10.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="8393" data-x="1360.0" data-y="-5.000001" data-z="300.0" style="left: 92.50%; top: 49.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="8394" data-x="-1330.0" data-y="-740.0" data-z="0.0" style="left: 8.44%; top: 26.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8379" data-x="760.0" data-y="-1345.0" data-z="0.0" style="left: 73.75%; top: 7.97%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8368" data-x="-765.0" data-y="1330.0" data-z="0.0" style="left: 26.09%; top: 91.56%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_Bloodyfalls_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Bloodyfalls.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9423" data-x="-715.0" data-y="-1255.0" data-z="0.0" style="left: 27.66%; top: 10.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9424" data-x="1360.0" data-y="-5.000001" data-z="300.0" style="left: 92.50%; top: 49.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9425" data-x="-1330.0" data-y="-740.0" data-z="0.0" style="left: 8.44%; top: 26.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9439" data-x="760.0" data-y="-1345.0" data-z="0.0" style="left: 73.75%; top: 7.97%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9422" data-x="-765.0" data-y="1330.0" data-z="0.0" style="left: 26.09%; top: 91.56%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingChopper">劣魔斩切者</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -350,9 +351,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DeathPlatforms_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_DeathPlatforms_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="9176" data-x="355.85785" data-y="-151.00505" data-z="300.0" style="left: 61.12%; top: 45.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9207" data-x="-115.0" data-y="1138.0" data-z="100.0" style="left: 46.41%; top: 85.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">100</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9172" data-x="-769.6825" data-y="215.61272" data-z="0.0" style="left: 25.95%; top: 56.74%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingChopper" data-index="10358" data-x="355.85785" data-y="-151.00505" data-z="300.0" style="left: 61.12%; top: 45.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10344" data-x="-115.0" data-y="1138.0" data-z="100.0" style="left: 46.41%; top: 85.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">100</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10357" data-x="-769.6825" data-y="215.61272" data-z="0.0" style="left: 25.95%; top: 56.74%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingChopper">劣魔斩切者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -386,10 +387,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DownStair_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_DownStair_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_DownStair_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DownStair.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8548" data-x="1170.0" data-y="-0.0" data-z="0.0" style="left: 86.56%; top: 50.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8549" data-x="-1110.0" data-y="-110.0" data-z="0.0" style="left: 15.31%; top: 46.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8522" data-x="-35.0" data-y="-1130.0" data-z="0.0" style="left: 48.91%; top: 14.69%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8523" data-x="0.0" data-y="1130.0" data-z="0.0" style="left: 50.00%; top: 85.31%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_DownStair_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DownStair.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9637" data-x="1170.0" data-y="-0.0" data-z="0.0" style="left: 86.56%; top: 50.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9638" data-x="-1110.0" data-y="-110.0" data-z="0.0" style="left: 15.31%; top: 46.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9618" data-x="-35.0" data-y="-1130.0" data-z="0.0" style="left: 48.91%; top: 14.69%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9619" data-x="0.0" data-y="1130.0" data-z="0.0" style="left: 50.00%; top: 85.31%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -423,10 +424,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Hellcrossbridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Hellcrossbridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8797" data-x="0.0" data-y="250.0" data-z="-500.0" style="left: 31.25%; top: 67.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-500</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8798" data-x="60.0" data-y="190.0" data-z="400.0" style="left: 33.12%; top: 65.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">400</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8725" data-x="0.0" data-y="-250.0" data-z="-500.0" style="left: 31.25%; top: 51.56%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-500</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8726" data-x="-105.0" data-y="-185.0" data-z="400.0" style="left: 27.97%; top: 53.59%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">400</span></div>
+        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9869" data-x="0.0" data-y="250.0" data-z="-500.0" style="left: 31.25%; top: 67.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-500</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9870" data-x="60.0" data-y="190.0" data-z="400.0" style="left: 33.12%; top: 65.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">400</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9888" data-x="0.0" data-y="-250.0" data-z="-500.0" style="left: 31.25%; top: 51.56%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-500</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9889" data-x="-105.0" data-y="-185.0" data-z="400.0" style="left: 27.97%; top: 53.59%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">400</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -460,8 +461,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_LavaStairway_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_LavaStairway_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9768" data-x="5.0" data-y="1155.0" data-z="-400.0" style="left: 50.16%; top: 86.09%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9769" data-x="10.0" data-y="-480.0" data-z="-399.9999" style="left: 50.31%; top: 35.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-399</span></div>
+        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="11110" data-x="5.0" data-y="1155.0" data-z="-400.0" style="left: 50.16%; top: 86.09%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="11111" data-x="10.0" data-y="-480.0" data-z="-399.9999" style="left: 50.31%; top: 35.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-399</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -495,12 +496,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Obelisk_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Obelisk_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Obelisk_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Obelisk.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8968" data-x="750.0" data-y="735.0" data-z="0.0" style="left: 73.44%; top: 72.97%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8969" data-x="1285.0" data-y="1295.0" data-z="0.0" style="left: 90.16%; top: 90.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="8970" data-x="-710.0" data-y="740.0" data-z="0.0" style="left: 27.81%; top: 73.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8956" data-x="-805.0" data-y="-795.0" data-z="0.0" style="left: 24.84%; top: 25.16%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8957" data-x="1315.0" data-y="-1295.0" data-z="0.0" style="left: 91.09%; top: 9.53%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="8958" data-x="-1300.0" data-y="-1310.0" data-z="0.0" style="left: 9.38%; top: 9.06%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_Obelisk_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Obelisk.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10091" data-x="750.0" data-y="735.0" data-z="0.0" style="left: 73.44%; top: 72.97%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10092" data-x="1285.0" data-y="1295.0" data-z="0.0" style="left: 90.16%; top: 90.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10093" data-x="-710.0" data-y="740.0" data-z="0.0" style="left: 27.81%; top: 73.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10078" data-x="-805.0" data-y="-795.0" data-z="0.0" style="left: 24.84%; top: 25.16%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10079" data-x="1315.0" data-y="-1295.0" data-z="0.0" style="left: 91.09%; top: 9.53%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10080" data-x="-1300.0" data-y="-1310.0" data-z="0.0" style="left: 9.38%; top: 9.06%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -534,8 +535,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Painfulsteps_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Painfulsteps_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Painfulsteps_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Painfulsteps.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9051" data-x="150.0" data-y="0.0" data-z="0.0001" style="left: 54.69%; top: 50.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9014" data-x="-150.0" data-y="0.0" data-z="0.0001" style="left: 45.31%; top: 50.00%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_Painfulsteps_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Painfulsteps.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="10162" data-x="150.0" data-y="0.0" data-z="0.0001" style="left: 54.69%; top: 50.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="10176" data-x="-150.0" data-y="0.0" data-z="0.0001" style="left: 45.31%; top: 50.00%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -569,9 +570,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Skull_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Skull_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Skull_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Skull.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9811" data-x="422.0005" data-y="333.0002" data-z="0.0001" style="left: 63.19%; top: 60.41%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9812" data-x="-1150.9995" data-y="76.00015" data-z="0.0001" style="left: 14.03%; top: 52.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9813" data-x="-118.99938" data-y="-574.99976" data-z="0.0001" style="left: 46.28%; top: 32.03%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Skull_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Skull.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="11158" data-x="422.0005" data-y="333.0002" data-z="0.0001" style="left: 63.19%; top: 60.41%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="11159" data-x="-1150.9995" data-y="76.00015" data-z="0.0001" style="left: 14.03%; top: 52.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="11160" data-x="-118.99938" data-y="-574.99976" data-z="0.0001" style="left: 46.28%; top: 32.03%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -605,8 +606,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ThroneRoom_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ThroneRoom_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="9913" data-x="120.37161" data-y="-1089.9581" data-z="10.0" style="left: 53.76%; top: 15.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">10</span></div>
-        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="9883" data-x="-29.628386" data-y="910.0419" data-z="10.0" style="left: 49.07%; top: 78.44%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">10</span></div>
+        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot monster-dot" data-monster="FiendlingCrusher" data-index="11249" data-x="120.37161" data-y="-1089.9581" data-z="10.0" style="left: 53.76%; top: 15.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">10</span></div>
+        <div class="dot monster-dot" data-monster="FiendlingSlasher" data-index="11261" data-x="-29.628386" data-y="910.0419" data-z="10.0" style="left: 49.07%; top: 78.44%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">10</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FiendlingCrusher">劣魔粉碎者</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FiendlingSlasher">劣魔砍杀者</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -616,8 +617,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-8295">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 8295, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-9333">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 9333, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>ConectorDoubleBridge_HR_D.json</td>
@@ -627,8 +628,8 @@
         <td>274.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-8296">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 8296, this)"></td>
+    <tr id="row-9334">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 9334, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>ConectorDoubleBridge_HR_D.json</td>
@@ -638,8 +639,8 @@
         <td>-245.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-8286">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 8286, this)"></td>
+    <tr id="row-9317">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 9317, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>ConectorDoubleBridge_HR_D.json</td>
@@ -649,8 +650,8 @@
         <td>-256.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-8258">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 8258, this)"></td>
+    <tr id="row-9322">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 9322, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>ConectorDoubleBridge_HR_D.json</td>
@@ -660,8 +661,8 @@
         <td>204.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-9339">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 9339, this)"></td>
+    <tr id="row-10507">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 10507, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoCastleConner_HR_D.json</td>
@@ -671,8 +672,8 @@
         <td>501.94</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9340">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 9340, this)"></td>
+    <tr id="row-10508">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 10508, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoCastleConner_HR_D.json</td>
@@ -682,8 +683,8 @@
         <td>988.66</td>
         <td>510.00</td>
     </tr>
-    <tr id="row-9306">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 9306, this)"></td>
+    <tr id="row-10506">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 10506, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoCastleConner_HR_D.json</td>
@@ -693,8 +694,8 @@
         <td>884.94</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9378">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9378, this)"></td>
+    <tr id="row-10543">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 10543, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_HR_D.json</td>
@@ -704,8 +705,8 @@
         <td>-278.00</td>
         <td>-450.00</td>
     </tr>
-    <tr id="row-9376">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9376, this)"></td>
+    <tr id="row-10551">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 10551, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_HR_D.json</td>
@@ -715,8 +716,8 @@
         <td>-923.00</td>
         <td>14.00</td>
     </tr>
-    <tr id="row-9377">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9377, this)"></td>
+    <tr id="row-10552">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 10552, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_HR_D.json</td>
@@ -726,8 +727,8 @@
         <td>-1086.00</td>
         <td>14.00</td>
     </tr>
-    <tr id="row-9419">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9419, this)"></td>
+    <tr id="row-10626">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10626, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -737,8 +738,8 @@
         <td>1230.00</td>
         <td>500.00</td>
     </tr>
-    <tr id="row-9420">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9420, this)"></td>
+    <tr id="row-10627">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10627, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -748,8 +749,8 @@
         <td>-122.00</td>
         <td>200.00</td>
     </tr>
-    <tr id="row-9421">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9421, this)"></td>
+    <tr id="row-10628">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10628, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -759,8 +760,8 @@
         <td>1237.00</td>
         <td>-6.00</td>
     </tr>
-    <tr id="row-9422">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9422, this)"></td>
+    <tr id="row-10629">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10629, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -770,8 +771,8 @@
         <td>2.00</td>
         <td>-1.00</td>
     </tr>
-    <tr id="row-9401">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9401, this)"></td>
+    <tr id="row-10601">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10601, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -781,8 +782,8 @@
         <td>0.00</td>
         <td>1000.00</td>
     </tr>
-    <tr id="row-9402">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9402, this)"></td>
+    <tr id="row-10602">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10602, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -792,8 +793,8 @@
         <td>70.00</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-9403">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9403, this)"></td>
+    <tr id="row-10603">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10603, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -803,8 +804,8 @@
         <td>130.00</td>
         <td>200.00</td>
     </tr>
-    <tr id="row-9379">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9379, this)"></td>
+    <tr id="row-10623">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10623, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -814,8 +815,8 @@
         <td>-1257.00</td>
         <td>500.00</td>
     </tr>
-    <tr id="row-9380">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9380, this)"></td>
+    <tr id="row-10624">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10624, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -825,8 +826,8 @@
         <td>1290.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9381">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 9381, this)"></td>
+    <tr id="row-10625">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoGate_HR_D-json', 10625, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoGate_HR_D.json</td>
@@ -836,8 +837,8 @@
         <td>-50.00</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-9551">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 9551, this)"></td>
+    <tr id="row-10830">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10830, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
@@ -847,8 +848,8 @@
         <td>-167.00</td>
         <td>250.00</td>
     </tr>
-    <tr id="row-9516">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 9516, this)"></td>
+    <tr id="row-10849">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10849, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
@@ -858,8 +859,8 @@
         <td>-635.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8392">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8392, this)"></td>
+    <tr id="row-9423">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9423, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -869,8 +870,8 @@
         <td>-1255.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8393">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8393, this)"></td>
+    <tr id="row-9424">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9424, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -880,8 +881,8 @@
         <td>-5.00</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-8394">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8394, this)"></td>
+    <tr id="row-9425">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9425, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -891,8 +892,8 @@
         <td>-740.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8379">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8379, this)"></td>
+    <tr id="row-9439">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9439, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -902,8 +903,8 @@
         <td>-1345.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8368">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8368, this)"></td>
+    <tr id="row-9422">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9422, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -913,8 +914,8 @@
         <td>1330.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9176">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 9176, this)"></td>
+    <tr id="row-10358">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10358, this)"></td>
         <td>劣魔斩切者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DeathPlatforms_HR_D.json</td>
@@ -924,8 +925,8 @@
         <td>-151.01</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-9207">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 9207, this)"></td>
+    <tr id="row-10344">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10344, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DeathPlatforms_HR_D.json</td>
@@ -935,8 +936,8 @@
         <td>1138.00</td>
         <td>100.00</td>
     </tr>
-    <tr id="row-9172">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 9172, this)"></td>
+    <tr id="row-10357">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10357, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DeathPlatforms_HR_D.json</td>
@@ -946,8 +947,8 @@
         <td>215.61</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8548">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8548, this)"></td>
+    <tr id="row-9637">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 9637, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DownStair_HR_D.json</td>
@@ -957,8 +958,8 @@
         <td>-0.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8549">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8549, this)"></td>
+    <tr id="row-9638">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 9638, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DownStair_HR_D.json</td>
@@ -968,8 +969,8 @@
         <td>-110.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8522">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8522, this)"></td>
+    <tr id="row-9618">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 9618, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DownStair_HR_D.json</td>
@@ -979,8 +980,8 @@
         <td>-1130.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8523">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8523, this)"></td>
+    <tr id="row-9619">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 9619, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DownStair_HR_D.json</td>
@@ -990,8 +991,8 @@
         <td>1130.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8797">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 8797, this)"></td>
+    <tr id="row-9869">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9869, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Hellcrossbridge_HR_D.json</td>
@@ -1001,8 +1002,8 @@
         <td>250.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-8798">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 8798, this)"></td>
+    <tr id="row-9870">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9870, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Hellcrossbridge_HR_D.json</td>
@@ -1012,8 +1013,8 @@
         <td>190.00</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-8725">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 8725, this)"></td>
+    <tr id="row-9888">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9888, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Hellcrossbridge_HR_D.json</td>
@@ -1023,8 +1024,8 @@
         <td>-250.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-8726">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 8726, this)"></td>
+    <tr id="row-9889">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9889, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Hellcrossbridge_HR_D.json</td>
@@ -1034,8 +1035,8 @@
         <td>-185.00</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-9768">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 9768, this)"></td>
+    <tr id="row-11110">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 11110, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaStairway_HR_D.json</td>
@@ -1045,8 +1046,8 @@
         <td>1155.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-9769">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 9769, this)"></td>
+    <tr id="row-11111">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 11111, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaStairway_HR_D.json</td>
@@ -1056,8 +1057,8 @@
         <td>-480.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-8968">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8968, this)"></td>
+    <tr id="row-10091">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10091, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -1067,8 +1068,8 @@
         <td>735.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8969">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8969, this)"></td>
+    <tr id="row-10092">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10092, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -1078,8 +1079,8 @@
         <td>1295.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8970">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8970, this)"></td>
+    <tr id="row-10093">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10093, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -1089,8 +1090,8 @@
         <td>740.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8956">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8956, this)"></td>
+    <tr id="row-10078">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10078, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -1100,8 +1101,8 @@
         <td>-795.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8957">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8957, this)"></td>
+    <tr id="row-10079">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10079, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -1111,8 +1112,8 @@
         <td>-1295.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8958">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8958, this)"></td>
+    <tr id="row-10080">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10080, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -1122,8 +1123,8 @@
         <td>-1310.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9051">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 9051, this)"></td>
+    <tr id="row-10162">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 10162, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Painfulsteps_HR_D.json</td>
@@ -1133,8 +1134,8 @@
         <td>0.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9014">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 9014, this)"></td>
+    <tr id="row-10176">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 10176, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Painfulsteps_HR_D.json</td>
@@ -1144,8 +1145,8 @@
         <td>0.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9811">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 9811, this)"></td>
+    <tr id="row-11158">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 11158, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Skull_HR_D.json</td>
@@ -1155,8 +1156,8 @@
         <td>333.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9812">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 9812, this)"></td>
+    <tr id="row-11159">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 11159, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Skull_HR_D.json</td>
@@ -1166,8 +1167,8 @@
         <td>76.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9813">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 9813, this)"></td>
+    <tr id="row-11160">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Skull_HR_D-json', 11160, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>Skull_HR_D.json</td>
@@ -1177,8 +1178,8 @@
         <td>-575.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9913">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9913, this)"></td>
+    <tr id="row-11249">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 11249, this)"></td>
         <td>劣魔粉碎者</td>
         <td>废墟3层炼狱</td>
         <td>ThroneRoom_02_HR_D.json</td>
@@ -1188,8 +1189,8 @@
         <td>-1089.96</td>
         <td>10.00</td>
     </tr>
-    <tr id="row-9883">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9883, this)"></td>
+    <tr id="row-11261">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 11261, this)"></td>
         <td>劣魔砍杀者</td>
         <td>废墟3层炼狱</td>
         <td>ThroneRoom_02_HR_D.json</td>

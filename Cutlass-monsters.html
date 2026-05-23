@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>海盗弯刀 >> 鳄鱼人、海盗剑士、钉手船长...(+2) 怪物坐标汇总</title>
+    <title>海盗弯刀 >> 鳄鱼人、大白鲨、钉手船长...(+2) 怪物坐标汇总</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -80,21 +81,21 @@
 </head>
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
-    <h1>海盗弯刀 >> 鳄鱼人、海盗剑士、钉手船长...(+2) 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
-    <div class="debug-title" id="debug-title">海盗弯刀 (Cutlass) >> Crocodilian、PirateSwordman、Bladehand、WhiteShark、PirateSwiftblade</div>
+    <h1>海盗弯刀 >> 鳄鱼人、大白鲨、钉手船长...(+2) 怪物坐标汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">海盗弯刀 (Cutlass) >> Crocodilian、WhiteShark、Bladehand、PirateSwordman、PirateSwiftblade</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>鳄鱼人 (30)</div>
-    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>海盗剑士 (82)</div>
+    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>大白鲨 (13)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 0, 255, 0.7);"></span>钉手船长 (10)</div>
-    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 255, 0, 0.7);"></span>大白鲨 (13)</div>
+    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 255, 0, 0.7);"></span>海盗剑士 (82)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 255, 0.7);"></span>海盗快刀手 (82)</div>
 </div></div>
 
     <div class="monster-nav">
     <button class="monster-toggle-btn" id="btn-Crocodilian" data-monster="Crocodilian" onclick="toggleMonster('Crocodilian')" style="background-color: rgba(255, 0, 0, 0.7);">鳄鱼人</button>
-    <button class="monster-toggle-btn" id="btn-PirateSwordman" data-monster="PirateSwordman" onclick="toggleMonster('PirateSwordman')" style="background-color: rgba(0, 255, 0, 0.7);">海盗剑士</button>
+    <button class="monster-toggle-btn" id="btn-WhiteShark" data-monster="WhiteShark" onclick="toggleMonster('WhiteShark')" style="background-color: rgba(0, 255, 0, 0.7);">大白鲨</button>
     <button class="monster-toggle-btn" id="btn-Bladehand" data-monster="Bladehand" onclick="toggleMonster('Bladehand')" style="background-color: rgba(0, 0, 255, 0.7);">钉手船长</button>
-    <button class="monster-toggle-btn" id="btn-WhiteShark" data-monster="WhiteShark" onclick="toggleMonster('WhiteShark')" style="background-color: rgba(255, 255, 0, 0.7);">大白鲨</button>
+    <button class="monster-toggle-btn" id="btn-PirateSwordman" data-monster="PirateSwordman" onclick="toggleMonster('PirateSwordman')" style="background-color: rgba(255, 255, 0, 0.7);">海盗剑士</button>
     <button class="monster-toggle-btn" id="btn-PirateSwiftblade" data-monster="PirateSwiftblade" onclick="toggleMonster('PirateSwiftblade')" style="background-color: rgba(255, 0, 255, 0.7);">海盗快刀手</button>
 </div>
 
@@ -129,11 +130,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_CircleIsland_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_CircleIsland_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_CircleIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_CircleIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12930" data-x="820.0" data-y="749.0" data-z="17.600687" style="left: 75.62%; top: 73.41%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">17</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12931" data-x="1045.0" data-y="224.0" data-z="16.762552" style="left: 82.66%; top: 57.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">16</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12895" data-x="773.0" data-y="-663.0" data-z="25.000103" style="left: 74.16%; top: 29.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">25</span></div>
+        <div class="container" id="container-ShipGraveyard_CircleIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_CircleIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14542" data-x="820.0" data-y="749.0" data-z="17.600687" style="left: 75.62%; top: 73.41%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">17</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14543" data-x="1045.0" data-y="224.0" data-z="16.762552" style="left: 82.66%; top: 57.00%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">16</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14595" data-x="773.0" data-y="-663.0" data-z="25.000103" style="left: 74.16%; top: 29.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">25</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_FloatingHouse_01_D-json" data-monsters="PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">水手客栈<span class='debug-text'> (ShipGraveyard_FloatingHouse_01)</span><div class='map-filename'>ShipGraveyard_FloatingHouse_01_D.json</div></h3>
@@ -165,15 +166,15 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FloatingHouse_01_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_FloatingHouse_01_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_FloatingHouse_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_FloatingHouse_01.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13328" data-x="-347.26065" data-y="-1221.9722" data-z="15.0" style="left: 39.15%; top: 11.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">15</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13329" data-x="1065.0" data-y="-430.0" data-z="235.0" style="left: 83.28%; top: 36.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">235</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13330" data-x="-510.0" data-y="-335.0" data-z="435.0" style="left: 34.06%; top: 39.53%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">435</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13331" data-x="-779.55066" data-y="709.1644" data-z="635.0" style="left: 25.64%; top: 72.16%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">635</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13283" data-x="270.0" data-y="-555.0" data-z="235.0" style="left: 58.44%; top: 32.66%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">235</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13284" data-x="740.0" data-y="-865.0" data-z="235.0" style="left: 73.12%; top: 22.97%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">235</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13285" data-x="240.0" data-y="5.456968e-12" data-z="15.0" style="left: 57.50%; top: 50.00%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">15</span></div>
+        <div class="container" id="container-ShipGraveyard_FloatingHouse_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_FloatingHouse_01.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14930" data-x="-347.26065" data-y="-1221.9722" data-z="15.0" style="left: 39.15%; top: 11.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">15</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14931" data-x="1065.0" data-y="-430.0" data-z="235.0" style="left: 83.28%; top: 36.56%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">235</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14932" data-x="-510.0" data-y="-335.0" data-z="435.0" style="left: 34.06%; top: 39.53%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">435</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14933" data-x="-779.55066" data-y="709.1644" data-z="635.0" style="left: 25.64%; top: 72.16%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">635</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14981" data-x="270.0" data-y="-555.0" data-z="235.0" style="left: 58.44%; top: 32.66%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">235</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14982" data-x="740.0" data-y="-865.0" data-z="235.0" style="left: 73.12%; top: 22.97%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">235</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14983" data-x="240.0" data-y="5.456968e-12" data-z="15.0" style="left: 57.50%; top: 50.00%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">15</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(3点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(3点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_FloatingIsland_D-json" data-monsters="PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">浮岛 A<span class='debug-text'> (ShipGraveyard_FloatingIsland)</span><div class='map-filename'>ShipGraveyard_FloatingIsland_D.json</div></h3>
@@ -205,12 +206,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FloatingIsland_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_FloatingIsland_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_FloatingIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_FloatingIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13370" data-x="305.0" data-y="-503.0" data-z="195.27434" style="left: 59.53%; top: 34.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">195</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13371" data-x="1045.0" data-y="224.0" data-z="1.7625531" style="left: 82.66%; top: 57.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13372" data-x="109.0" data-y="-503.0" data-z="195.27434" style="left: 53.41%; top: 34.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">195</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13378" data-x="-447.0" data-y="220.0" data-z="12.600688" style="left: 36.03%; top: 56.88%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">12</span></div>
+        <div class="container" id="container-ShipGraveyard_FloatingIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_FloatingIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15005" data-x="305.0" data-y="-503.0" data-z="195.27434" style="left: 59.53%; top: 34.28%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">195</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15006" data-x="1045.0" data-y="224.0" data-z="1.7625531" style="left: 82.66%; top: 57.00%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15007" data-x="109.0" data-y="-503.0" data-z="195.27434" style="left: 53.41%; top: 34.28%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">195</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15018" data-x="-447.0" data-y="220.0" data-z="12.600688" style="left: 36.03%; top: 56.88%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">12</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_RockIsland_D-json" data-monsters="PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="3" data-init-rotate="3" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">岩岛<span class='debug-text'> (ShipGraveyard_RockIsland)</span><div class='map-filename'>ShipGraveyard_RockIsland_D.json</div></h3>
@@ -242,13 +243,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_RockIsland_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_RockIsland_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_RockIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_RockIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15035" data-x="-50.0" data-y="-50.0" data-z="7.8494043" style="left: 48.44%; top: 48.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">7</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15036" data-x="395.0" data-y="720.0" data-z="1765.0" style="left: 62.34%; top: 72.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1765</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15060" data-x="50.0" data-y="-900.0" data-z="400.0" style="left: 51.56%; top: 21.88%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">400</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15061" data-x="586.0" data-y="-136.0" data-z="2511.0" style="left: 68.31%; top: 45.75%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">2511</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15062" data-x="100.0" data-y="-50.0" data-z="6.0" style="left: 53.12%; top: 48.44%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">6</span></div>
+        <div class="container" id="container-ShipGraveyard_RockIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_RockIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16710" data-x="-50.0" data-y="-50.0" data-z="7.8494043" style="left: 48.44%; top: 48.44%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">7</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16711" data-x="395.0" data-y="720.0" data-z="1765.0" style="left: 62.34%; top: 72.50%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1765</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16702" data-x="50.0" data-y="-900.0" data-z="400.0" style="left: 51.56%; top: 21.88%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">400</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16703" data-x="586.0" data-y="-136.0" data-z="2511.0" style="left: 68.31%; top: 45.75%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">2511</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16704" data-x="100.0" data-y="-50.0" data-z="6.0" style="left: 53.12%; top: 48.44%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">6</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(3点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(3点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_SeaFortress_D-json" data-monsters="Crocodilian,PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">海洋要塞 A<span class='debug-text'> (ShipGraveyard_SeaFortress)</span><div class='map-filename'>ShipGraveyard_SeaFortress_D.json</div></h3>
@@ -280,21 +281,21 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SeaFortress_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_SeaFortress_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_SeaFortress_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SeaFortress.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="15102" data-x="76.0" data-y="-7.0" data-z="600.0001" style="left: 52.38%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">600</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15157" data-x="888.0" data-y="452.0" data-z="1.7625511" style="left: 77.75%; top: 64.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15158" data-x="75.0" data-y="403.0" data-z="4.762551" style="left: 52.34%; top: 62.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">4</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15159" data-x="830.0" data-y="-918.0" data-z="1.762551" style="left: 75.94%; top: 21.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15160" data-x="152.0" data-y="-150.0" data-z="600.0001" style="left: 54.75%; top: 45.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">600</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15161" data-x="344.0" data-y="-435.0" data-z="1.762551" style="left: 60.75%; top: 36.41%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15162" data-x="-777.0" data-y="-1360.0" data-z="0.25127175" style="left: 25.72%; top: 7.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15163" data-x="-1054.0" data-y="191.0" data-z="1.762551" style="left: 17.06%; top: 55.97%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15115" data-x="-447.0" data-y="531.0" data-z="12.600686" style="left: 36.03%; top: 66.59%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">12</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15116" data-x="1069.0" data-y="175.0" data-z="1.762551" style="left: 83.41%; top: 55.47%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15117" data-x="344.0" data-y="-84.0" data-z="1.762551" style="left: 60.75%; top: 47.38%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15118" data-x="24.0" data-y="1179.0" data-z="1.762551" style="left: 50.75%; top: 86.84%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15119" data-x="-930.0" data-y="711.0" data-z="1.762551" style="left: 20.94%; top: 72.22%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
+        <div class="container" id="container-ShipGraveyard_SeaFortress_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SeaFortress.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="16777" data-x="76.0" data-y="-7.0" data-z="600.0001" style="left: 52.38%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">600</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16783" data-x="888.0" data-y="452.0" data-z="1.7625511" style="left: 77.75%; top: 64.12%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16784" data-x="75.0" data-y="403.0" data-z="4.762551" style="left: 52.34%; top: 62.59%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">4</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16785" data-x="830.0" data-y="-918.0" data-z="1.762551" style="left: 75.94%; top: 21.31%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16786" data-x="152.0" data-y="-150.0" data-z="600.0001" style="left: 54.75%; top: 45.31%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">600</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16787" data-x="344.0" data-y="-435.0" data-z="1.762551" style="left: 60.75%; top: 36.41%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16788" data-x="-777.0" data-y="-1360.0" data-z="0.25127175" style="left: 25.72%; top: 7.50%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="16789" data-x="-1054.0" data-y="191.0" data-z="1.762551" style="left: 17.06%; top: 55.97%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16833" data-x="-447.0" data-y="531.0" data-z="12.600686" style="left: 36.03%; top: 66.59%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">12</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16834" data-x="1069.0" data-y="175.0" data-z="1.762551" style="left: 83.41%; top: 55.47%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16835" data-x="344.0" data-y="-84.0" data-z="1.762551" style="left: 60.75%; top: 47.38%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16836" data-x="24.0" data-y="1179.0" data-z="1.762551" style="left: 50.75%; top: 86.84%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="16837" data-x="-930.0" data-y="711.0" data-z="1.762551" style="left: 20.94%; top: 72.22%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(7点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(5点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(7点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(5点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_SunkenShip_01_D-json" data-monsters="WhiteShark" data-group="group-ShipGraveyard" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">沉没之船<span class='debug-text'> (ShipGraveyard_SunkenShip_01)</span><div class='map-filename'>ShipGraveyard_SunkenShip_01_D.json</div></h3>
@@ -326,9 +327,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SunkenShip_01_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_SunkenShip_01_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_SunkenShip_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SunkenShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="15870" data-x="1004.0" data-y="-1230.0" data-z="-530.0" style="left: 81.38%; top: 11.56%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-530</span></div>
+        <div class="container" id="container-ShipGraveyard_SunkenShip_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SunkenShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="17518" data-x="1004.0" data-y="-1230.0" data-z="-530.0" style="left: 81.38%; top: 11.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-530</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_Trench_D-json" data-monsters="WhiteShark" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">海沟<span class='debug-text'> (ShipGraveyard_Trench)</span><div class='map-filename'>ShipGraveyard_Trench_D.json</div></h3>
@@ -360,9 +361,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Trench_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_Trench_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_Trench_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Trench.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="15936" data-x="-43.020546" data-y="-676.4525" data-z="2157.0" style="left: 48.66%; top: 28.86%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">2157</span></div>
+        <div class="container" id="container-ShipGraveyard_Trench_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Trench.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="17568" data-x="-43.020546" data-y="-676.4525" data-z="2157.0" style="left: 48.66%; top: 28.86%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">2157</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_AbandonedShip_01_HR_D-json" data-monsters="Crocodilian,PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="3" data-init-rotate="3" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="1" data-size-y="2" style="">
         <h3 class="map-title">废弃舰船<span class='debug-text'> (AbandonedShip_01)</span><div class='map-filename'>ShipGraveyard_AbandonedShip_01_HR_D.json</div></h3>
@@ -394,17 +395,17 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_AbandonedShip_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_AbandonedShip_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="12685" data-x="2174.9841" data-y="230.88385" data-z="25.757713" style="left: 117.97%; top: 28.61%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">25</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12670" data-x="-144.24069" data-y="-293.0535" data-z="0.0" style="left: 45.49%; top: 20.42%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12671" data-x="3586.4377" data-y="-376.09967" data-z="45.790222" style="left: 162.08%; top: 19.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">45</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12672" data-x="3405.0" data-y="-340.0" data-z="720.0001" style="left: 156.41%; top: 19.69%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">720</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12673" data-x="866.7619" data-y="359.21875" data-z="617.80853" style="left: 77.09%; top: 30.61%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">617</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12704" data-x="-605.0" data-y="765.2628" data-z="35.0" style="left: 31.09%; top: 36.96%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">35</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12705" data-x="22.684036" data-y="362.08194" data-z="0.0" style="left: 50.71%; top: 30.66%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12706" data-x="337.64688" data-y="-1071.8842" data-z="18.115732" style="left: 60.55%; top: 8.25%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">18</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12707" data-x="1145.0979" data-y="292.045" data-z="130.75772" style="left: 85.78%; top: 29.56%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">130</span></div>
+        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="14346" data-x="2174.9841" data-y="230.88385" data-z="25.757713" style="left: 117.97%; top: 28.61%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">25</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14347" data-x="-144.24069" data-y="-293.0535" data-z="0.0" style="left: 45.49%; top: 20.42%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14348" data-x="3586.4377" data-y="-376.09967" data-z="45.790222" style="left: 162.08%; top: 19.12%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">45</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14349" data-x="3405.0" data-y="-340.0" data-z="720.0001" style="left: 156.41%; top: 19.69%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">720</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14350" data-x="866.7619" data-y="359.21875" data-z="617.80853" style="left: 77.09%; top: 30.61%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">617</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14328" data-x="-605.0" data-y="765.2628" data-z="35.0" style="left: 31.09%; top: 36.96%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">35</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14329" data-x="22.684036" data-y="362.08194" data-z="0.0" style="left: 50.71%; top: 30.66%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14330" data-x="337.64688" data-y="-1071.8842" data-z="18.115732" style="left: 60.55%; top: 8.25%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">18</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14331" data-x="1145.0979" data-y="292.045" data-z="130.75772" style="left: 85.78%; top: 29.56%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">130</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(4点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(4点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_FloatingVillage_D-json" data-monsters="PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="1600.00" data-size-x="1" data-size-y="2" style="">
         <h3 class="map-title">水上村落<span class='debug-text'> (ShipGraveyard_FloatingVillage)</span><div class='map-filename'>ShipGraveyard_FloatingVillage_D.json</div></h3>
@@ -436,20 +437,20 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_FloatingVillage_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_FloatingVillage_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_FloatingVillage_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_FloatingVillage.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13432" data-x="740.17126" data-y="1271.078" data-z="-305.0" style="left: 73.13%; top: 94.86%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-305</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13433" data-x="-650.0" data-y="1890.0" data-z="-340.0" style="left: 29.69%; top: 104.53%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-340</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13434" data-x="-580.0" data-y="1170.0" data-z="-230.0" style="left: 31.88%; top: 93.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-230</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13435" data-x="340.0" data-y="365.0" data-z="-15.0" style="left: 60.62%; top: 80.70%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-15</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13436" data-x="530.0" data-y="-1900.0" data-z="-275.0" style="left: 66.56%; top: 45.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-275</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13437" data-x="555.0" data-y="-2000.0" data-z="175.0" style="left: 67.34%; top: 43.75%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">175</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13438" data-x="-1225.0" data-y="-1395.0" data-z="70.0" style="left: 11.72%; top: 53.20%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">70</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13439" data-x="530.0" data-y="-360.0" data-z="105.0" style="left: 66.56%; top: 69.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">105</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13440" data-x="235.0" data-y="-3420.0" data-z="10.0" style="left: 57.34%; top: 21.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">10</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13441" data-x="-260.0" data-y="-1370.0" data-z="5.0" style="left: 41.87%; top: 53.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">5</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13490" data-x="785.0" data-y="-1865.0" data-z="430.0" style="left: 74.53%; top: 45.86%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">430</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13491" data-x="-875.0" data-y="-3950.0" data-z="515.0" style="left: 22.66%; top: 13.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">515</span></div>
+        <div class="container" id="container-ShipGraveyard_FloatingVillage_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_FloatingVillage.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15101" data-x="740.17126" data-y="1271.078" data-z="-305.0" style="left: 73.13%; top: 94.86%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-305</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15102" data-x="-650.0" data-y="1890.0" data-z="-340.0" style="left: 29.69%; top: 104.53%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-340</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15103" data-x="-580.0" data-y="1170.0" data-z="-230.0" style="left: 31.88%; top: 93.28%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-230</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15104" data-x="340.0" data-y="365.0" data-z="-15.0" style="left: 60.62%; top: 80.70%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-15</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15105" data-x="530.0" data-y="-1900.0" data-z="-275.0" style="left: 66.56%; top: 45.31%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-275</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15106" data-x="555.0" data-y="-2000.0" data-z="175.0" style="left: 67.34%; top: 43.75%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">175</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15107" data-x="-1225.0" data-y="-1395.0" data-z="70.0" style="left: 11.72%; top: 53.20%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">70</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15108" data-x="530.0" data-y="-360.0" data-z="105.0" style="left: 66.56%; top: 69.38%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">105</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15109" data-x="235.0" data-y="-3420.0" data-z="10.0" style="left: 57.34%; top: 21.56%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">10</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15110" data-x="-260.0" data-y="-1370.0" data-z="5.0" style="left: 41.87%; top: 53.59%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">5</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15083" data-x="785.0" data-y="-1865.0" data-z="430.0" style="left: 74.53%; top: 45.86%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">430</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15084" data-x="-875.0" data-y="-3950.0" data-z="515.0" style="left: 22.66%; top: 13.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">515</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(10点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(10点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_HangingShip_HR_D-json" data-monsters="PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="3" data-init-rotate="3" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="0.00" data-size-x="2" data-size-y="1" style="grid-column: span 2;">
         <h3 class="map-title">吊船<span class='debug-text'> (HangingShip)</span><div class='map-filename'>ShipGraveyard_HangingShip_HR_D.json</div></h3>
@@ -481,21 +482,21 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_HangingShip_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_HangingShip_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_HangingShip_HR_D-json" style="aspect-ratio: 2 / 1;"><img src="images/ShipGraveyard_HangingShip.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13724" data-x="-779.0" data-y="3619.0" data-z="1013.0002" style="left: 62.83%; top: 106.55%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1013</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13725" data-x="-618.0" data-y="2676.0" data-z="2023.2268" style="left: 65.34%; top: 91.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">2023</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13726" data-x="104.0" data-y="3451.0" data-z="42.000095" style="left: 76.62%; top: 103.92%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">42</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13727" data-x="192.0" data-y="2635.0" data-z="1849.0002" style="left: 78.00%; top: 91.17%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1849</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="13728" data-x="-159.0" data-y="719.0" data-z="42.000095" style="left: 72.52%; top: 61.23%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">42</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13671" data-x="-513.0" data-y="341.0" data-z="1013.0002" style="left: 66.98%; top: 55.33%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1013</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13672" data-x="-972.0" data-y="3721.0" data-z="1013.0002" style="left: 59.81%; top: 108.14%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1013</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13673" data-x="262.0" data-y="3299.0" data-z="42.000095" style="left: 79.09%; top: 101.55%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">42</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13674" data-x="-809.0" data-y="989.0" data-z="1612.0002" style="left: 62.36%; top: 65.45%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1612</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13675" data-x="358.0" data-y="2429.0" data-z="1849.0002" style="left: 80.59%; top: 87.95%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1849</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="13676" data-x="-1.0" data-y="567.0" data-z="42.000095" style="left: 74.98%; top: 58.86%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">42</span></div>
+        <div class="container" id="container-ShipGraveyard_HangingShip_HR_D-json" style="aspect-ratio: 2 / 1;"><img src="images/ShipGraveyard_HangingShip.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15321" data-x="-779.0" data-y="3619.0" data-z="1013.0002" style="left: 62.83%; top: 106.55%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1013</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15322" data-x="-618.0" data-y="2676.0" data-z="2023.2268" style="left: 65.34%; top: 91.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">2023</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15323" data-x="104.0" data-y="3451.0" data-z="42.000095" style="left: 76.62%; top: 103.92%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">42</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15324" data-x="192.0" data-y="2635.0" data-z="1849.0002" style="left: 78.00%; top: 91.17%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1849</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15325" data-x="-159.0" data-y="719.0" data-z="42.000095" style="left: 72.52%; top: 61.23%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">42</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15381" data-x="-513.0" data-y="341.0" data-z="1013.0002" style="left: 66.98%; top: 55.33%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1013</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15382" data-x="-972.0" data-y="3721.0" data-z="1013.0002" style="left: 59.81%; top: 108.14%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1013</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15383" data-x="262.0" data-y="3299.0" data-z="42.000095" style="left: 79.09%; top: 101.55%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">42</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15384" data-x="-809.0" data-y="989.0" data-z="1612.0002" style="left: 62.36%; top: 65.45%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1612</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15385" data-x="358.0" data-y="2429.0" data-z="1849.0002" style="left: 80.59%; top: 87.95%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1849</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15386" data-x="-1.0" data-y="567.0" data-z="42.000095" style="left: 74.98%; top: 58.86%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">42</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(5点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(6点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(5点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(6点)</span></div>
     </div>
-    <div class="map-card" id="map-card-ShipGraveyard_BladehandRefuge_D-json" data-monsters="PirateSwordman,Bladehand,WhiteShark,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+    <div class="map-card" id="map-card-ShipGraveyard_BladehandRefuge_D-json" data-monsters="WhiteShark,Bladehand,PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
         <h3 class="map-title">钉手的藏身处<span class='debug-text'> (ShipGraveyard_BladehandRefuge)</span><div class='map-filename'>ShipGraveyard_BladehandRefuge_D.json</div></h3>
         <div class="map-info">ShipGraveyard_BladehandRefuge.webp (缓存) | 找到 10 个位置 | 范围: ±3200</div>
         <div class="controls">
@@ -525,18 +526,18 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_BladehandRefuge_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_BladehandRefuge_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_BladehandRefuge_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_BladehandRefuge.webp" class="image">        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12796" data-x="610.5744" data-y="2766.7065" data-z="-359.87082" style="left: 34.54%; top: 68.23%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-359</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12797" data-x="3742.3982" data-y="1573.8453" data-z="336.70682" style="left: 83.47%; top: 49.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">336</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12798" data-x="3711.4844" data-y="975.80505" data-z="202.6717" style="left: 82.99%; top: 40.25%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">202</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="12799" data-x="993.7796" data-y="3159.286" data-z="-325.55954" style="left: 40.53%; top: 74.36%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-325</span></div>
-        <div class="dot monster-dot" data-monster="Bladehand" data-index="12801" data-x="407.8427" data-y="372.8427" data-z="-820.0" style="left: 31.37%; top: 30.83%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-820</span></div>
-        <div class="dot monster-dot" data-monster="WhiteShark" data-index="12860" data-x="2800.0" data-y="1300.0" data-z="-350.0" style="left: 68.75%; top: 45.31%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-350</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12843" data-x="-775.1567" data-y="1308.943" data-z="-143.6772" style="left: 12.89%; top: 45.45%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-143</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12844" data-x="872.0541" data-y="-1061.7954" data-z="-186.96715" style="left: 38.63%; top: 8.41%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-186</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12845" data-x="2725.0" data-y="2610.0" data-z="632.57715" style="left: 67.58%; top: 65.78%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">632</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="12846" data-x="2730.6624" data-y="93.371605" data-z="-354.41412" style="left: 67.67%; top: 26.46%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-354</span></div>
+        <div class="container" id="container-ShipGraveyard_BladehandRefuge_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_BladehandRefuge.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="14478" data-x="2800.0" data-y="1300.0" data-z="-350.0" style="left: 68.75%; top: 45.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-350</span></div>
+        <div class="dot monster-dot" data-monster="Bladehand" data-index="14443" data-x="407.8427" data-y="372.8427" data-z="-820.0" style="left: 31.37%; top: 30.83%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-820</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14474" data-x="610.5744" data-y="2766.7065" data-z="-359.87082" style="left: 34.54%; top: 68.23%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-359</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14475" data-x="3742.3982" data-y="1573.8453" data-z="336.70682" style="left: 83.47%; top: 49.59%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">336</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14476" data-x="3711.4844" data-y="975.80505" data-z="202.6717" style="left: 82.99%; top: 40.25%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">202</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="14477" data-x="993.7796" data-y="3159.286" data-z="-325.55954" style="left: 40.53%; top: 74.36%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-325</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14464" data-x="-775.1567" data-y="1308.943" data-z="-143.6772" style="left: 12.89%; top: 45.45%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-143</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14465" data-x="872.0541" data-y="-1061.7954" data-z="-186.96715" style="left: 38.63%; top: 8.41%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-186</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14466" data-x="2725.0" data-y="2610.0" data-z="632.57715" style="left: 67.58%; top: 65.78%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">632</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="14467" data-x="2730.6624" data-y="93.371605" data-z="-354.41412" style="left: 67.67%; top: 26.46%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-354</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="Bladehand">钉手船长</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(4点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="Bladehand">钉手船长</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(4点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_Hole_HR_D-json" data-monsters="WhiteShark" data-group="group-ShipGraveyard" data-rotate="1" data-init-rotate="1" data-init-range="4800" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
         <h3 class="map-title">蓝洞<span class='debug-text'> (Hole)</span><div class='map-filename'>ShipGraveyard_Hole_HR_D.json</div></h3>
@@ -568,9 +569,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Hole_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_Hole_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_Hole_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_Hole.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="14144" data-x="255.0" data-y="315.0" data-z="555.0" style="left: 52.66%; top: 53.28%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">555</span></div>
+        <div class="container" id="container-ShipGraveyard_Hole_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_Hole.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="15643" data-x="255.0" data-y="315.0" data-z="555.0" style="left: 52.66%; top: 53.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">555</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_SkullIsland_D-json" data-monsters="Crocodilian,PirateSwordman,PirateSwiftblade" data-group="group-ShipGraveyard" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
         <h3 class="map-title">骷髅岛<span class='debug-text'> (ShipGraveyard_SkullIsland)</span><div class='map-filename'>ShipGraveyard_SkullIsland_D.json</div></h3>
@@ -602,16 +603,16 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SkullIsland_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_SkullIsland_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_SkullIsland_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_SkullIsland.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="15412" data-x="-505.64178" data-y="775.7115" data-z="1190.0" style="left: 67.10%; top: 87.12%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1190</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15350" data-x="2610.0" data-y="-2420.0" data-z="100.0" style="left: 115.78%; top: 37.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">100</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15351" data-x="-440.0" data-y="-2190.0" data-z="390.0" style="left: 68.12%; top: 40.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">390</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="15352" data-x="263.8068" data-y="742.15186" data-z="2070.0" style="left: 79.12%; top: 86.60%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">2070</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15459" data-x="-261.60858" data-y="-105.27854" data-z="-145.0" style="left: 70.91%; top: 73.36%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-145</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15460" data-x="1252.8428" data-y="-412.1573" data-z="1800.0" style="left: 94.58%; top: 68.56%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1800</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15461" data-x="331.21234" data-y="-1070.257" data-z="1770.0" style="left: 80.18%; top: 58.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1770</span></div>
-        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="15462" data-x="-238.4214" data-y="577.3669" data-z="2070.0" style="left: 71.27%; top: 84.02%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">2070</span></div>
+        <div class="container" id="container-ShipGraveyard_SkullIsland_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_SkullIsland.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="17048" data-x="-505.64178" data-y="775.7115" data-z="1190.0" style="left: 67.10%; top: 87.12%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1190</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="17058" data-x="2610.0" data-y="-2420.0" data-z="100.0" style="left: 115.78%; top: 37.19%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">100</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="17059" data-x="-440.0" data-y="-2190.0" data-z="390.0" style="left: 68.12%; top: 40.78%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">390</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwordman" data-index="17060" data-x="263.8068" data-y="742.15186" data-z="2070.0" style="left: 79.12%; top: 86.60%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">2070</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="17022" data-x="-261.60858" data-y="-105.27854" data-z="-145.0" style="left: 70.91%; top: 73.36%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-145</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="17023" data-x="1252.8428" data-y="-412.1573" data-z="1800.0" style="left: 94.58%; top: 68.56%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1800</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="17024" data-x="331.21234" data-y="-1070.257" data-z="1770.0" style="left: 80.18%; top: 58.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">1770</span></div>
+        <div class="dot monster-dot" data-monster="PirateSwiftblade" data-index="17025" data-x="-238.4214" data-y="577.3669" data-z="2070.0" style="left: 71.27%; top: 84.02%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">2070</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(4点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="PirateSwordman">海盗剑士</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="PirateSwiftblade">海盗快刀手</span><span class="ms-count">(4点)</span></div>
     </div>
 </div>
     <div class="legend">
@@ -619,8 +620,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-12930">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12930, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-14542">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 14542, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_CircleIsland_D.json</td>
@@ -630,8 +631,8 @@
         <td>749.00</td>
         <td>17.60</td>
     </tr>
-    <tr id="row-12931">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12931, this)"></td>
+    <tr id="row-14543">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 14543, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_CircleIsland_D.json</td>
@@ -641,8 +642,8 @@
         <td>224.00</td>
         <td>16.76</td>
     </tr>
-    <tr id="row-12895">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 12895, this)"></td>
+    <tr id="row-14595">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_CircleIsland_D-json', 14595, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_CircleIsland_D.json</td>
@@ -652,8 +653,8 @@
         <td>-663.00</td>
         <td>25.00</td>
     </tr>
-    <tr id="row-13328">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13328, this)"></td>
+    <tr id="row-14930">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 14930, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingHouse_01_D.json</td>
@@ -663,8 +664,8 @@
         <td>-1221.97</td>
         <td>15.00</td>
     </tr>
-    <tr id="row-13329">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13329, this)"></td>
+    <tr id="row-14931">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 14931, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingHouse_01_D.json</td>
@@ -674,8 +675,8 @@
         <td>-430.00</td>
         <td>235.00</td>
     </tr>
-    <tr id="row-13330">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13330, this)"></td>
+    <tr id="row-14932">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 14932, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingHouse_01_D.json</td>
@@ -685,8 +686,8 @@
         <td>-335.00</td>
         <td>435.00</td>
     </tr>
-    <tr id="row-13331">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13331, this)"></td>
+    <tr id="row-14933">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 14933, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingHouse_01_D.json</td>
@@ -696,8 +697,8 @@
         <td>709.16</td>
         <td>635.00</td>
     </tr>
-    <tr id="row-13283">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13283, this)"></td>
+    <tr id="row-14981">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 14981, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingHouse_01_D.json</td>
@@ -707,8 +708,8 @@
         <td>-555.00</td>
         <td>235.00</td>
     </tr>
-    <tr id="row-13284">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13284, this)"></td>
+    <tr id="row-14982">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 14982, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingHouse_01_D.json</td>
@@ -718,8 +719,8 @@
         <td>-865.00</td>
         <td>235.00</td>
     </tr>
-    <tr id="row-13285">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 13285, this)"></td>
+    <tr id="row-14983">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingHouse_01_D-json', 14983, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingHouse_01_D.json</td>
@@ -729,8 +730,8 @@
         <td>0.00</td>
         <td>15.00</td>
     </tr>
-    <tr id="row-13370">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 13370, this)"></td>
+    <tr id="row-15005">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 15005, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingIsland_D.json</td>
@@ -740,8 +741,8 @@
         <td>-503.00</td>
         <td>195.27</td>
     </tr>
-    <tr id="row-13371">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 13371, this)"></td>
+    <tr id="row-15006">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 15006, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingIsland_D.json</td>
@@ -751,8 +752,8 @@
         <td>224.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-13372">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 13372, this)"></td>
+    <tr id="row-15007">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 15007, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingIsland_D.json</td>
@@ -762,8 +763,8 @@
         <td>-503.00</td>
         <td>195.27</td>
     </tr>
-    <tr id="row-13378">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 13378, this)"></td>
+    <tr id="row-15018">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingIsland_D-json', 15018, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingIsland_D.json</td>
@@ -773,8 +774,8 @@
         <td>220.00</td>
         <td>12.60</td>
     </tr>
-    <tr id="row-15035">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15035, this)"></td>
+    <tr id="row-16710">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 16710, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_RockIsland_D.json</td>
@@ -784,8 +785,8 @@
         <td>-50.00</td>
         <td>7.85</td>
     </tr>
-    <tr id="row-15036">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15036, this)"></td>
+    <tr id="row-16711">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 16711, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_RockIsland_D.json</td>
@@ -795,8 +796,8 @@
         <td>720.00</td>
         <td>1765.00</td>
     </tr>
-    <tr id="row-15060">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15060, this)"></td>
+    <tr id="row-16702">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 16702, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_RockIsland_D.json</td>
@@ -806,8 +807,8 @@
         <td>-900.00</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-15061">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15061, this)"></td>
+    <tr id="row-16703">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 16703, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_RockIsland_D.json</td>
@@ -817,8 +818,8 @@
         <td>-136.00</td>
         <td>2511.00</td>
     </tr>
-    <tr id="row-15062">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15062, this)"></td>
+    <tr id="row-16704">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 16704, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_RockIsland_D.json</td>
@@ -828,8 +829,8 @@
         <td>-50.00</td>
         <td>6.00</td>
     </tr>
-    <tr id="row-15102">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15102, this)"></td>
+    <tr id="row-16777">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16777, this)"></td>
         <td>鳄鱼人</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -839,8 +840,8 @@
         <td>-7.00</td>
         <td>600.00</td>
     </tr>
-    <tr id="row-15157">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15157, this)"></td>
+    <tr id="row-16783">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16783, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -850,8 +851,8 @@
         <td>452.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15158">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15158, this)"></td>
+    <tr id="row-16784">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16784, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -861,8 +862,8 @@
         <td>403.00</td>
         <td>4.76</td>
     </tr>
-    <tr id="row-15159">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15159, this)"></td>
+    <tr id="row-16785">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16785, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -872,8 +873,8 @@
         <td>-918.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15160">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15160, this)"></td>
+    <tr id="row-16786">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16786, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -883,8 +884,8 @@
         <td>-150.00</td>
         <td>600.00</td>
     </tr>
-    <tr id="row-15161">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15161, this)"></td>
+    <tr id="row-16787">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16787, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -894,8 +895,8 @@
         <td>-435.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15162">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15162, this)"></td>
+    <tr id="row-16788">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16788, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -905,8 +906,8 @@
         <td>-1360.00</td>
         <td>0.25</td>
     </tr>
-    <tr id="row-15163">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15163, this)"></td>
+    <tr id="row-16789">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16789, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -916,8 +917,8 @@
         <td>191.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15115">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15115, this)"></td>
+    <tr id="row-16833">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16833, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -927,8 +928,8 @@
         <td>531.00</td>
         <td>12.60</td>
     </tr>
-    <tr id="row-15116">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15116, this)"></td>
+    <tr id="row-16834">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16834, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -938,8 +939,8 @@
         <td>175.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15117">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15117, this)"></td>
+    <tr id="row-16835">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16835, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -949,8 +950,8 @@
         <td>-84.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15118">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15118, this)"></td>
+    <tr id="row-16836">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16836, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -960,8 +961,8 @@
         <td>1179.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15119">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15119, this)"></td>
+    <tr id="row-16837">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16837, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -971,8 +972,8 @@
         <td>711.00</td>
         <td>1.76</td>
     </tr>
-    <tr id="row-15870">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SunkenShip_01_D-json', 15870, this)"></td>
+    <tr id="row-17518">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SunkenShip_01_D-json', 17518, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_SunkenShip_01_D.json</td>
@@ -982,8 +983,8 @@
         <td>-1230.00</td>
         <td>-530.00</td>
     </tr>
-    <tr id="row-15936">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15936, this)"></td>
+    <tr id="row-17568">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 17568, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_Trench_D.json</td>
@@ -993,8 +994,8 @@
         <td>-676.45</td>
         <td>2157.00</td>
     </tr>
-    <tr id="row-12685">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12685, this)"></td>
+    <tr id="row-14346">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14346, this)"></td>
         <td>鳄鱼人</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1004,8 +1005,8 @@
         <td>230.88</td>
         <td>25.76</td>
     </tr>
-    <tr id="row-12670">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12670, this)"></td>
+    <tr id="row-14347">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14347, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1015,8 +1016,8 @@
         <td>-293.05</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-12671">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12671, this)"></td>
+    <tr id="row-14348">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14348, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1026,8 +1027,8 @@
         <td>-376.10</td>
         <td>45.79</td>
     </tr>
-    <tr id="row-12672">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12672, this)"></td>
+    <tr id="row-14349">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14349, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1037,8 +1038,8 @@
         <td>-340.00</td>
         <td>720.00</td>
     </tr>
-    <tr id="row-12673">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12673, this)"></td>
+    <tr id="row-14350">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14350, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1048,8 +1049,8 @@
         <td>359.22</td>
         <td>617.81</td>
     </tr>
-    <tr id="row-12704">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12704, this)"></td>
+    <tr id="row-14328">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14328, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1059,8 +1060,8 @@
         <td>765.26</td>
         <td>35.00</td>
     </tr>
-    <tr id="row-12705">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12705, this)"></td>
+    <tr id="row-14329">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14329, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1070,8 +1071,8 @@
         <td>362.08</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-12706">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12706, this)"></td>
+    <tr id="row-14330">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14330, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1081,8 +1082,8 @@
         <td>-1071.88</td>
         <td>18.12</td>
     </tr>
-    <tr id="row-12707">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12707, this)"></td>
+    <tr id="row-14331">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14331, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -1092,8 +1093,8 @@
         <td>292.05</td>
         <td>130.76</td>
     </tr>
-    <tr id="row-13432">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13432, this)"></td>
+    <tr id="row-15101">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15101, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1103,8 +1104,8 @@
         <td>1271.08</td>
         <td>-305.00</td>
     </tr>
-    <tr id="row-13433">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13433, this)"></td>
+    <tr id="row-15102">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15102, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1114,8 +1115,8 @@
         <td>1890.00</td>
         <td>-340.00</td>
     </tr>
-    <tr id="row-13434">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13434, this)"></td>
+    <tr id="row-15103">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15103, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1125,8 +1126,8 @@
         <td>1170.00</td>
         <td>-230.00</td>
     </tr>
-    <tr id="row-13435">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13435, this)"></td>
+    <tr id="row-15104">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15104, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1136,8 +1137,8 @@
         <td>365.00</td>
         <td>-15.00</td>
     </tr>
-    <tr id="row-13436">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13436, this)"></td>
+    <tr id="row-15105">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15105, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1147,8 +1148,8 @@
         <td>-1900.00</td>
         <td>-275.00</td>
     </tr>
-    <tr id="row-13437">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13437, this)"></td>
+    <tr id="row-15106">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15106, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1158,8 +1159,8 @@
         <td>-2000.00</td>
         <td>175.00</td>
     </tr>
-    <tr id="row-13438">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13438, this)"></td>
+    <tr id="row-15107">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15107, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1169,8 +1170,8 @@
         <td>-1395.00</td>
         <td>70.00</td>
     </tr>
-    <tr id="row-13439">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13439, this)"></td>
+    <tr id="row-15108">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15108, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1180,8 +1181,8 @@
         <td>-360.00</td>
         <td>105.00</td>
     </tr>
-    <tr id="row-13440">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13440, this)"></td>
+    <tr id="row-15109">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15109, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1191,8 +1192,8 @@
         <td>-3420.00</td>
         <td>10.00</td>
     </tr>
-    <tr id="row-13441">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13441, this)"></td>
+    <tr id="row-15110">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15110, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1202,8 +1203,8 @@
         <td>-1370.00</td>
         <td>5.00</td>
     </tr>
-    <tr id="row-13490">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13490, this)"></td>
+    <tr id="row-15083">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15083, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1213,8 +1214,8 @@
         <td>-1865.00</td>
         <td>430.00</td>
     </tr>
-    <tr id="row-13491">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 13491, this)"></td>
+    <tr id="row-15084">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_FloatingVillage_D-json', 15084, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_FloatingVillage_D.json</td>
@@ -1224,8 +1225,8 @@
         <td>-3950.00</td>
         <td>515.00</td>
     </tr>
-    <tr id="row-13724">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13724, this)"></td>
+    <tr id="row-15321">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15321, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1235,8 +1236,8 @@
         <td>3619.00</td>
         <td>1013.00</td>
     </tr>
-    <tr id="row-13725">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13725, this)"></td>
+    <tr id="row-15322">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15322, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1246,8 +1247,8 @@
         <td>2676.00</td>
         <td>2023.23</td>
     </tr>
-    <tr id="row-13726">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13726, this)"></td>
+    <tr id="row-15323">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15323, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1257,8 +1258,8 @@
         <td>3451.00</td>
         <td>42.00</td>
     </tr>
-    <tr id="row-13727">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13727, this)"></td>
+    <tr id="row-15324">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15324, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1268,8 +1269,8 @@
         <td>2635.00</td>
         <td>1849.00</td>
     </tr>
-    <tr id="row-13728">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13728, this)"></td>
+    <tr id="row-15325">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15325, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1279,8 +1280,8 @@
         <td>719.00</td>
         <td>42.00</td>
     </tr>
-    <tr id="row-13671">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13671, this)"></td>
+    <tr id="row-15381">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15381, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1290,8 +1291,8 @@
         <td>341.00</td>
         <td>1013.00</td>
     </tr>
-    <tr id="row-13672">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13672, this)"></td>
+    <tr id="row-15382">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15382, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1301,8 +1302,8 @@
         <td>3721.00</td>
         <td>1013.00</td>
     </tr>
-    <tr id="row-13673">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13673, this)"></td>
+    <tr id="row-15383">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15383, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1312,8 +1313,8 @@
         <td>3299.00</td>
         <td>42.00</td>
     </tr>
-    <tr id="row-13674">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13674, this)"></td>
+    <tr id="row-15384">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15384, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1323,8 +1324,8 @@
         <td>989.00</td>
         <td>1612.00</td>
     </tr>
-    <tr id="row-13675">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13675, this)"></td>
+    <tr id="row-15385">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15385, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1334,8 +1335,8 @@
         <td>2429.00</td>
         <td>1849.00</td>
     </tr>
-    <tr id="row-13676">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 13676, this)"></td>
+    <tr id="row-15386">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_HangingShip_HR_D-json', 15386, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_HangingShip_HR_D.json</td>
@@ -1345,63 +1346,8 @@
         <td>567.00</td>
         <td>42.00</td>
     </tr>
-    <tr id="row-12796">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12796, this)"></td>
-        <td>海盗剑士</td>
-        <td>水图</td>
-        <td>ShipGraveyard_BladehandRefuge_D.json</td>
-        <td>钉手的藏身处</td>
-        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
-        <td>610.57</td>
-        <td>2766.71</td>
-        <td>-359.87</td>
-    </tr>
-    <tr id="row-12797">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12797, this)"></td>
-        <td>海盗剑士</td>
-        <td>水图</td>
-        <td>ShipGraveyard_BladehandRefuge_D.json</td>
-        <td>钉手的藏身处</td>
-        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
-        <td>3742.40</td>
-        <td>1573.85</td>
-        <td>336.71</td>
-    </tr>
-    <tr id="row-12798">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12798, this)"></td>
-        <td>海盗剑士</td>
-        <td>水图</td>
-        <td>ShipGraveyard_BladehandRefuge_D.json</td>
-        <td>钉手的藏身处</td>
-        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
-        <td>3711.48</td>
-        <td>975.81</td>
-        <td>202.67</td>
-    </tr>
-    <tr id="row-12799">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12799, this)"></td>
-        <td>海盗剑士</td>
-        <td>水图</td>
-        <td>ShipGraveyard_BladehandRefuge_D.json</td>
-        <td>钉手的藏身处</td>
-        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
-        <td>993.78</td>
-        <td>3159.29</td>
-        <td>-325.56</td>
-    </tr>
-    <tr id="row-12801">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12801, this)"></td>
-        <td>钉手船长</td>
-        <td>水图</td>
-        <td>ShipGraveyard_BladehandRefuge_D.json</td>
-        <td>钉手的藏身处</td>
-        <td>GameSpawner_Id_Spawner_New_Monster_Bladehand</td>
-        <td>407.84</td>
-        <td>372.84</td>
-        <td>-820.00</td>
-    </tr>
-    <tr id="row-12860">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12860, this)"></td>
+    <tr id="row-14478">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14478, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_BladehandRefuge_D.json</td>
@@ -1411,8 +1357,63 @@
         <td>1300.00</td>
         <td>-350.00</td>
     </tr>
-    <tr id="row-12843">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12843, this)"></td>
+    <tr id="row-14443">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14443, this)"></td>
+        <td>钉手船长</td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Bladehand</td>
+        <td>407.84</td>
+        <td>372.84</td>
+        <td>-820.00</td>
+    </tr>
+    <tr id="row-14474">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14474, this)"></td>
+        <td>海盗剑士</td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
+        <td>610.57</td>
+        <td>2766.71</td>
+        <td>-359.87</td>
+    </tr>
+    <tr id="row-14475">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14475, this)"></td>
+        <td>海盗剑士</td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
+        <td>3742.40</td>
+        <td>1573.85</td>
+        <td>336.71</td>
+    </tr>
+    <tr id="row-14476">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14476, this)"></td>
+        <td>海盗剑士</td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
+        <td>3711.48</td>
+        <td>975.81</td>
+        <td>202.67</td>
+    </tr>
+    <tr id="row-14477">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14477, this)"></td>
+        <td>海盗剑士</td>
+        <td>水图</td>
+        <td>ShipGraveyard_BladehandRefuge_D.json</td>
+        <td>钉手的藏身处</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_PirateSwordman</td>
+        <td>993.78</td>
+        <td>3159.29</td>
+        <td>-325.56</td>
+    </tr>
+    <tr id="row-14464">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14464, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_BladehandRefuge_D.json</td>
@@ -1422,8 +1423,8 @@
         <td>1308.94</td>
         <td>-143.68</td>
     </tr>
-    <tr id="row-12844">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12844, this)"></td>
+    <tr id="row-14465">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14465, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_BladehandRefuge_D.json</td>
@@ -1433,8 +1434,8 @@
         <td>-1061.80</td>
         <td>-186.97</td>
     </tr>
-    <tr id="row-12845">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12845, this)"></td>
+    <tr id="row-14466">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14466, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_BladehandRefuge_D.json</td>
@@ -1444,8 +1445,8 @@
         <td>2610.00</td>
         <td>632.58</td>
     </tr>
-    <tr id="row-12846">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12846, this)"></td>
+    <tr id="row-14467">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14467, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_BladehandRefuge_D.json</td>
@@ -1455,8 +1456,8 @@
         <td>93.37</td>
         <td>-354.41</td>
     </tr>
-    <tr id="row-14144">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14144, this)"></td>
+    <tr id="row-15643">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 15643, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_Hole_HR_D.json</td>
@@ -1466,8 +1467,8 @@
         <td>315.00</td>
         <td>555.00</td>
     </tr>
-    <tr id="row-15412">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15412, this)"></td>
+    <tr id="row-17048">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17048, this)"></td>
         <td>鳄鱼人</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1477,8 +1478,8 @@
         <td>775.71</td>
         <td>1190.00</td>
     </tr>
-    <tr id="row-15350">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15350, this)"></td>
+    <tr id="row-17058">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17058, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1488,8 +1489,8 @@
         <td>-2420.00</td>
         <td>100.00</td>
     </tr>
-    <tr id="row-15351">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15351, this)"></td>
+    <tr id="row-17059">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17059, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1499,8 +1500,8 @@
         <td>-2190.00</td>
         <td>390.00</td>
     </tr>
-    <tr id="row-15352">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15352, this)"></td>
+    <tr id="row-17060">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17060, this)"></td>
         <td>海盗剑士</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1510,8 +1511,8 @@
         <td>742.15</td>
         <td>2070.00</td>
     </tr>
-    <tr id="row-15459">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15459, this)"></td>
+    <tr id="row-17022">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17022, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1521,8 +1522,8 @@
         <td>-105.28</td>
         <td>-145.00</td>
     </tr>
-    <tr id="row-15460">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15460, this)"></td>
+    <tr id="row-17023">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17023, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1532,8 +1533,8 @@
         <td>-412.16</td>
         <td>1800.00</td>
     </tr>
-    <tr id="row-15461">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15461, this)"></td>
+    <tr id="row-17024">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17024, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1543,8 +1544,8 @@
         <td>-1070.26</td>
         <td>1770.00</td>
     </tr>
-    <tr id="row-15462">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15462, this)"></td>
+    <tr id="row-17025">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17025, this)"></td>
         <td>海盗快刀手</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -1559,17 +1560,17 @@
     <script>
         window.monsterColors = {
     'Crocodilian': 'rgba(255, 0, 0, 0.7)',
-    'PirateSwordman': 'rgba(0, 255, 0, 0.7)',
+    'WhiteShark': 'rgba(0, 255, 0, 0.7)',
     'Bladehand': 'rgba(0, 0, 255, 0.7)',
-    'WhiteShark': 'rgba(255, 255, 0, 0.7)',
+    'PirateSwordman': 'rgba(255, 255, 0, 0.7)',
     'PirateSwiftblade': 'rgba(255, 0, 255, 0.7)',
 };
 
         window.monsterVisible = {
     'Crocodilian': true,
-    'PirateSwordman': true,
-    'Bladehand': true,
     'WhiteShark': true,
+    'Bladehand': true,
+    'PirateSwordman': true,
     'PirateSwiftblade': true,
 };
 

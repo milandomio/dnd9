@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>蛇尾鸡的幸运羽毛 >> 蛇尾鸡 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">蛇尾鸡的幸运羽毛 (CockatricesLuckyFeather) >> Cockatrice</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>蛇尾鸡 (9)</div>
 </div></div>
@@ -121,8 +122,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_BossTest_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_BossTest_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Barbican_01_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest</small></div>        <div class="dot monster-dot" data-monster="Cockatrice" data-index="10188" data-x="1042.0" data-y="-1937.0" data-z="0.0" style="left: 82.56%; top: -10.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="Cockatrice" data-index="10189" data-x="84.0" data-y="296.0" data-z="0.0" style="left: 52.62%; top: 59.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest</small></div>        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11577" data-x="1042.0" data-y="-1937.0" data-z="0.0" style="left: 82.56%; top: -10.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11578" data-x="84.0" data-y="296.0" data-z="0.0" style="left: 52.62%; top: 59.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Cockatrice">蛇尾鸡</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -156,8 +157,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="10295" data-x="1042.0" data-y="-1937.0" data-z="0.0" style="left: 82.56%; top: -10.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="Cockatrice" data-index="10296" data-x="84.0" data-y="296.0" data-z="0.0" style="left: 52.62%; top: 59.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11709" data-x="1042.0" data-y="-1937.0" data-z="0.0" style="left: 82.56%; top: -10.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11710" data-x="84.0" data-y="296.0" data-z="0.0" style="left: 52.62%; top: 59.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Cockatrice">蛇尾鸡</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -191,7 +192,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Passage_Outer_04_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Passage_Outer_04_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Passage_Outer_04_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Passage_Outer_04.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11257" data-x="-20.0" data-y="0.0" data-z="0.0001" style="left: 49.38%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Passage_Outer_04_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Passage_Outer_04.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="12827" data-x="-20.0" data-y="0.0" data-z="0.0001" style="left: 49.38%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Cockatrice">蛇尾鸡</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -225,8 +226,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Stables_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Stables_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Stables_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Stables_02.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11703" data-x="81.0" data-y="54.0" data-z="0.0" style="left: 52.53%; top: 51.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11704" data-x="172.0" data-y="-2024.0" data-z="0.0" style="left: 55.38%; top: -13.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Stables_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Stables_02.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="13374" data-x="81.0" data-y="54.0" data-z="0.0" style="left: 52.53%; top: 51.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="Cockatrice" data-index="13375" data-x="172.0" data-y="-2024.0" data-z="0.0" style="left: 55.38%; top: -13.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Cockatrice">蛇尾鸡</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -260,7 +261,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_TowerBridge_Destroyed_SR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_TowerBridge_Destroyed_SR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_TowerBridge_Destroyed_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_TowerBridge_Destroyed_SR, TowerBridge_Destroyed_SR</small></div>        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11938" data-x="-7.999997" data-y="-107.0" data-z="0.000102" style="left: 49.75%; top: 46.66%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_TowerBridge_Destroyed_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_TowerBridge_Destroyed_SR, TowerBridge_Destroyed_SR</small></div>        <div class="dot monster-dot" data-monster="Cockatrice" data-index="13559" data-x="-7.999997" data-y="-107.0" data-z="0.000102" style="left: 49.75%; top: 46.66%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Cockatrice">蛇尾鸡</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -294,7 +295,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_TowerBridge_Destroyed_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_TowerBridge_Destroyed_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_TowerBridge_Destroyed_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/Ruins_TowerBridge_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="11838" data-x="-7.999997" data-y="-107.0" data-z="0.000102" style="left: 49.75%; top: 23.33%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_TowerBridge_Destroyed_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/Ruins_TowerBridge_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="Cockatrice" data-index="13423" data-x="-7.999997" data-y="-107.0" data-z="0.000102" style="left: 49.75%; top: 23.33%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Cockatrice">蛇尾鸡</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -304,8 +305,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-10188">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 10188, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-11577">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11577, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_BossTest_D.json</td>
@@ -315,8 +316,8 @@
         <td>-1937.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10189">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 10189, this)"></td>
+    <tr id="row-11578">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11578, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_BossTest_D.json</td>
@@ -326,8 +327,8 @@
         <td>296.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10295">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 10295, this)"></td>
+    <tr id="row-11709">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11709, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
@@ -337,8 +338,8 @@
         <td>-1937.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10296">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 10296, this)"></td>
+    <tr id="row-11710">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11710, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
@@ -348,8 +349,8 @@
         <td>296.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11257">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Passage_Outer_04_D-json', 11257, this)"></td>
+    <tr id="row-12827">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Passage_Outer_04_D-json', 12827, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_Passage_Outer_04_D.json</td>
@@ -359,8 +360,8 @@
         <td>0.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11703">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_HR_D-json', 11703, this)"></td>
+    <tr id="row-13374">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_HR_D-json', 13374, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_Stables_02_HR_D.json</td>
@@ -370,8 +371,8 @@
         <td>54.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11704">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_HR_D-json', 11704, this)"></td>
+    <tr id="row-13375">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_HR_D-json', 13375, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_Stables_02_HR_D.json</td>
@@ -381,8 +382,8 @@
         <td>-2024.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11938">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_SR_D-json', 11938, this)"></td>
+    <tr id="row-13559">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_SR_D-json', 13559, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_TowerBridge_Destroyed_SR_D.json</td>
@@ -392,8 +393,8 @@
         <td>-107.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11838">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_HR_D-json', 11838, this)"></td>
+    <tr id="row-13423">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_HR_D-json', 13423, this)"></td>
         <td>蛇尾鸡</td>
         <td>废墟1层</td>
         <td>Ruins_TowerBridge_Destroyed_HR_D.json</td>

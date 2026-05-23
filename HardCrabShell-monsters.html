@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>坚硬的蟹壳 >> 钳爪蟹 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">坚硬的蟹壳 (HardCrabShell) >> PinchclawCrab</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>钳爪蟹 (6)</div>
 </div></div>
@@ -121,10 +122,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Oceanvolcano_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_Oceanvolcano_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_Oceanvolcano_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Oceanvolcano.webp" class="image">        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="14416" data-x="-9.0" data-y="882.0" data-z="298.0" style="left: 49.72%; top: 77.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">298</span></div>
-        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="14417" data-x="693.0" data-y="-168.0" data-z="339.0" style="left: 71.66%; top: 44.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">339</span></div>
-        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="14418" data-x="-1029.0" data-y="422.0" data-z="126.0" style="left: 17.84%; top: 63.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">126</span></div>
-        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="14419" data-x="-228.0" data-y="-889.0" data-z="88.0" style="left: 42.88%; top: 22.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">88</span></div>
+        <div class="container" id="container-ShipGraveyard_Oceanvolcano_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Oceanvolcano.webp" class="image">        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="16109" data-x="-9.0" data-y="882.0" data-z="298.0" style="left: 49.72%; top: 77.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">298</span></div>
+        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="16110" data-x="693.0" data-y="-168.0" data-z="339.0" style="left: 71.66%; top: 44.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">339</span></div>
+        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="16111" data-x="-1029.0" data-y="422.0" data-z="126.0" style="left: 17.84%; top: 63.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">126</span></div>
+        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="16112" data-x="-228.0" data-y="-889.0" data-z="88.0" style="left: 42.88%; top: 22.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">88</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="PinchclawCrab">钳爪蟹</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -158,7 +159,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_RockIsland_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_RockIsland_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_RockIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_RockIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="15014" data-x="142.0" data-y="-398.0" data-z="912.0" style="left: 54.44%; top: 37.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">912</span></div>
+        <div class="container" id="container-ShipGraveyard_RockIsland_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_RockIsland.webp" class="image">        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="16693" data-x="142.0" data-y="-398.0" data-z="912.0" style="left: 54.44%; top: 37.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">912</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="PinchclawCrab">钳爪蟹</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -192,7 +193,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_AbandonedShip_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_AbandonedShip_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="12626" data-x="2943.0" data-y="-1206.0" data-z="102.0" style="left: 141.97%; top: 6.16%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">102</span></div>
+        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="PinchclawCrab" data-index="14299" data-x="2943.0" data-y="-1206.0" data-z="102.0" style="left: 141.97%; top: 6.16%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">102</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="PinchclawCrab">钳爪蟹</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -202,8 +203,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-14416">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14416, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-16109">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 16109, this)"></td>
         <td>钳爪蟹</td>
         <td>水图</td>
         <td>ShipGraveyard_Oceanvolcano_D.json</td>
@@ -213,8 +214,8 @@
         <td>882.00</td>
         <td>298.00</td>
     </tr>
-    <tr id="row-14417">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14417, this)"></td>
+    <tr id="row-16110">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 16110, this)"></td>
         <td>钳爪蟹</td>
         <td>水图</td>
         <td>ShipGraveyard_Oceanvolcano_D.json</td>
@@ -224,8 +225,8 @@
         <td>-168.00</td>
         <td>339.00</td>
     </tr>
-    <tr id="row-14418">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14418, this)"></td>
+    <tr id="row-16111">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 16111, this)"></td>
         <td>钳爪蟹</td>
         <td>水图</td>
         <td>ShipGraveyard_Oceanvolcano_D.json</td>
@@ -235,8 +236,8 @@
         <td>422.00</td>
         <td>126.00</td>
     </tr>
-    <tr id="row-14419">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 14419, this)"></td>
+    <tr id="row-16112">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Oceanvolcano_D-json', 16112, this)"></td>
         <td>钳爪蟹</td>
         <td>水图</td>
         <td>ShipGraveyard_Oceanvolcano_D.json</td>
@@ -246,8 +247,8 @@
         <td>-889.00</td>
         <td>88.00</td>
     </tr>
-    <tr id="row-15014">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 15014, this)"></td>
+    <tr id="row-16693">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_RockIsland_D-json', 16693, this)"></td>
         <td>钳爪蟹</td>
         <td>水图</td>
         <td>ShipGraveyard_RockIsland_D.json</td>
@@ -257,8 +258,8 @@
         <td>-398.00</td>
         <td>912.00</td>
     </tr>
-    <tr id="row-12626">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12626, this)"></td>
+    <tr id="row-14299">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14299, this)"></td>
         <td>钳爪蟹</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>

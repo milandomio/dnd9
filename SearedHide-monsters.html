@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>烧焦皮革 >> 火蜥蜴 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">烧焦皮革 (SearedHide) >> FireLizard</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>火蜥蜴 (10)</div>
 </div></div>
@@ -121,8 +122,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_AnvilOutpost_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_AnvilOutpost_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_AnvilOutpost_D-json" style="aspect-ratio: 1 / 1;"><img src="images/AnvilOutpost.webp" class="image">        <div class="dot monster-dot" data-monster="FireLizard" data-index="5531" data-x="2670.0" data-y="-140.0" data-z="250.0" style="left: 133.44%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
-        <div class="dot monster-dot" data-monster="FireLizard" data-index="5532" data-x="-30.0" data-y="-140.0" data-z="250.0" style="left: 49.06%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
+        <div class="container" id="container-Firedeep_AnvilOutpost_D-json" style="aspect-ratio: 1 / 1;"><img src="images/AnvilOutpost.webp" class="image">        <div class="dot monster-dot" data-monster="FireLizard" data-index="6439" data-x="2670.0" data-y="-140.0" data-z="250.0" style="left: 133.44%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
+        <div class="dot monster-dot" data-monster="FireLizard" data-index="6440" data-x="-30.0" data-y="-140.0" data-z="250.0" style="left: 49.06%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">250</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FireLizard">火蜥蜴</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -156,11 +157,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_BlazeTunnel_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_BlazeTunnel_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_BlazeTunnel_D-json" style="aspect-ratio: 1 / 1;"><img src="images/BlazeTunnel.webp" class="image">        <div class="dot monster-dot" data-monster="FireLizard" data-index="5553" data-x="-70.0" data-y="870.0" data-z="380.0" style="left: 47.81%; top: 61.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">380</span></div>
-        <div class="dot monster-dot" data-monster="FireLizard" data-index="5554" data-x="-665.0" data-y="-125.0" data-z="410.0" style="left: 29.22%; top: 30.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">410</span></div>
-        <div class="dot monster-dot" data-monster="FireLizard" data-index="5555" data-x="1100.0" data-y="-550.0" data-z="380.0" style="left: 84.38%; top: 17.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">380</span></div>
-        <div class="dot monster-dot" data-monster="FireLizard" data-index="5556" data-x="0.0" data-y="-750.0" data-z="380.0" style="left: 50.00%; top: 10.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">380</span></div>
-        <div class="dot monster-dot" data-monster="FireLizard" data-index="5557" data-x="-675.22833" data-y="-403.77066" data-z="450.0" style="left: 28.90%; top: 21.76%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">450</span></div>
+        <div class="container" id="container-Firedeep_BlazeTunnel_D-json" style="aspect-ratio: 1 / 1;"><img src="images/BlazeTunnel.webp" class="image">        <div class="dot monster-dot" data-monster="FireLizard" data-index="6465" data-x="-70.0" data-y="870.0" data-z="380.0" style="left: 47.81%; top: 61.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">380</span></div>
+        <div class="dot monster-dot" data-monster="FireLizard" data-index="6466" data-x="-665.0" data-y="-125.0" data-z="410.0" style="left: 29.22%; top: 30.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">410</span></div>
+        <div class="dot monster-dot" data-monster="FireLizard" data-index="6467" data-x="1100.0" data-y="-550.0" data-z="380.0" style="left: 84.38%; top: 17.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">380</span></div>
+        <div class="dot monster-dot" data-monster="FireLizard" data-index="6468" data-x="0.0" data-y="-750.0" data-z="380.0" style="left: 50.00%; top: 10.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">380</span></div>
+        <div class="dot monster-dot" data-monster="FireLizard" data-index="6469" data-x="-675.22833" data-y="-403.77066" data-z="450.0" style="left: 28.90%; top: 21.76%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">450</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FireLizard">火蜥蜴</span><span class="ms-count">(5点)</span></div>
     </div>
@@ -194,9 +195,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_MoltenPit_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_MoltenPit_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_MoltenPit_D-json" style="aspect-ratio: 1 / 1;"><img src="images/MoltenPit.webp" class="image">        <div class="dot monster-dot" data-monster="FireLizard" data-index="5704" data-x="1000.0" data-y="2600.0" data-z="300.0" style="left: 81.25%; top: 131.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
-        <div class="dot monster-dot" data-monster="FireLizard" data-index="5705" data-x="-950.0" data-y="2650.0" data-z="300.0" style="left: 20.31%; top: 132.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
-        <div class="dot monster-dot" data-monster="FireLizard" data-index="5706" data-x="-1150.0" data-y="0.0" data-z="300.0" style="left: 14.06%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
+        <div class="container" id="container-Firedeep_MoltenPit_D-json" style="aspect-ratio: 1 / 1;"><img src="images/MoltenPit.webp" class="image">        <div class="dot monster-dot" data-monster="FireLizard" data-index="6675" data-x="1000.0" data-y="2600.0" data-z="300.0" style="left: 81.25%; top: 131.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
+        <div class="dot monster-dot" data-monster="FireLizard" data-index="6676" data-x="-950.0" data-y="2650.0" data-z="300.0" style="left: 20.31%; top: 132.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
+        <div class="dot monster-dot" data-monster="FireLizard" data-index="6677" data-x="-1150.0" data-y="0.0" data-z="300.0" style="left: 14.06%; top: 50.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FireLizard">火蜥蜴</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -206,8 +207,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-5531">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_AnvilOutpost_D-json', 5531, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6439">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_AnvilOutpost_D-json', 6439, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_AnvilOutpost_D.json</td>
@@ -217,8 +218,8 @@
         <td>-140.00</td>
         <td>250.00</td>
     </tr>
-    <tr id="row-5532">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_AnvilOutpost_D-json', 5532, this)"></td>
+    <tr id="row-6440">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_AnvilOutpost_D-json', 6440, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_AnvilOutpost_D.json</td>
@@ -228,8 +229,8 @@
         <td>-140.00</td>
         <td>250.00</td>
     </tr>
-    <tr id="row-5553">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 5553, this)"></td>
+    <tr id="row-6465">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 6465, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BlazeTunnel_D.json</td>
@@ -239,8 +240,8 @@
         <td>870.00</td>
         <td>380.00</td>
     </tr>
-    <tr id="row-5554">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 5554, this)"></td>
+    <tr id="row-6466">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 6466, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BlazeTunnel_D.json</td>
@@ -250,8 +251,8 @@
         <td>-125.00</td>
         <td>410.00</td>
     </tr>
-    <tr id="row-5555">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 5555, this)"></td>
+    <tr id="row-6467">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 6467, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BlazeTunnel_D.json</td>
@@ -261,8 +262,8 @@
         <td>-550.00</td>
         <td>380.00</td>
     </tr>
-    <tr id="row-5556">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 5556, this)"></td>
+    <tr id="row-6468">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 6468, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BlazeTunnel_D.json</td>
@@ -272,8 +273,8 @@
         <td>-750.00</td>
         <td>380.00</td>
     </tr>
-    <tr id="row-5557">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 5557, this)"></td>
+    <tr id="row-6469">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BlazeTunnel_D-json', 6469, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BlazeTunnel_D.json</td>
@@ -283,8 +284,8 @@
         <td>-403.77</td>
         <td>450.00</td>
     </tr>
-    <tr id="row-5704">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 5704, this)"></td>
+    <tr id="row-6675">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 6675, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_MoltenPit_D.json</td>
@@ -294,8 +295,8 @@
         <td>2600.00</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-5705">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 5705, this)"></td>
+    <tr id="row-6676">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 6676, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_MoltenPit_D.json</td>
@@ -305,8 +306,8 @@
         <td>2650.00</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-5706">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 5706, this)"></td>
+    <tr id="row-6677">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 6677, this)"></td>
         <td>火蜥蜴</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_MoltenPit_D.json</td>

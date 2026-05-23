@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>哥布林耳朵 >> 哥布林弓手、哥布林斧手、哥布林投石手...(+2) 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">哥布林耳朵 (GoblinEars) >> GoblinArcher、GoblinAxeman、GoblinBolaslinger、GoblinMage、GoblinWarrior</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>哥布林弓手 (58)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>哥布林斧手 (61)</div>
@@ -129,7 +130,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('CaveMaze_Center_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('CaveMaze_Center_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CaveMaze_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="179" data-x="-1563.0" data-y="-943.0" data-z="-5.0" style="left: 1.16%; top: 20.53%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-5</span></div>
+        <div class="container" id="container-CaveMaze_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="278" data-x="-1563.0" data-y="-943.0" data-z="-5.0" style="left: 1.16%; top: 20.53%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-5</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -163,12 +164,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('CaveTown_02_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('CaveTown_02_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CaveTown_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="277" data-x="-305.0" data-y="-764.0" data-z="14.447228" style="left: 40.47%; top: 26.12%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">14</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="278" data-x="-1065.8422" data-y="-1052.4071" data-z="-959.9999" style="left: 16.69%; top: 17.11%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="279" data-x="-910.0" data-y="322.0" data-z="242.0" style="left: 21.56%; top: 60.06%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">242</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="280" data-x="-1101.4335" data-y="850.30975" data-z="-959.9999" style="left: 15.58%; top: 76.57%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="281" data-x="1060.9767" data-y="-1140.7778" data-z="-959.9999" style="left: 83.16%; top: 14.35%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="282" data-x="635.0" data-y="1095.0" data-z="-959.9999" style="left: 69.84%; top: 84.22%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="container" id="container-CaveTown_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="317" data-x="-305.0" data-y="-764.0" data-z="14.447228" style="left: 40.47%; top: 26.12%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">14</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="318" data-x="-1065.8422" data-y="-1052.4071" data-z="-959.9999" style="left: 16.69%; top: 17.11%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="319" data-x="-910.0" data-y="322.0" data-z="242.0" style="left: 21.56%; top: 60.06%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">242</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="320" data-x="-1101.4335" data-y="850.30975" data-z="-959.9999" style="left: 15.58%; top: 76.57%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="321" data-x="1060.9767" data-y="-1140.7778" data-z="-959.9999" style="left: 83.16%; top: 14.35%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="322" data-x="635.0" data-y="1095.0" data-z="-959.9999" style="left: 69.84%; top: 84.22%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(6点)</span></div>
     </div>
@@ -202,7 +203,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('CaveTown_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('CaveTown_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CaveTown_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="373" data-x="1107.6002" data-y="-1039.733" data-z="-959.9999" style="left: 84.61%; top: 17.51%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-959</span></div>
+        <div class="container" id="container-CaveTown_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="461" data-x="1107.6002" data-y="-1039.733" data-z="-959.9999" style="left: 84.61%; top: 17.51%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-959</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -236,19 +237,19 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('CaveTown_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('CaveTown_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CaveTown_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1728" data-x="-1015.0" data-y="225.0" data-z="244.0" style="left: 18.28%; top: 57.03%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">244</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1688" data-x="836.10675" data-y="-1206.6754" data-z="-959.9999" style="left: 76.13%; top: 12.29%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1689" data-x="635.0" data-y="1095.0" data-z="-959.9999" style="left: 69.84%; top: 84.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1718" data-x="1107.6002" data-y="-1039.733" data-z="-959.9999" style="left: 84.61%; top: 17.51%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1696" data-x="-729.0" data-y="650.99994" data-z="-959.9999" style="left: 27.22%; top: 70.34%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1697" data-x="1210.0" data-y="-80.0" data-z="320.0" style="left: 87.81%; top: 47.50%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">320</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1698" data-x="1038.0" data-y="-70.00001" data-z="320.0" style="left: 82.44%; top: 47.81%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">320</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1699" data-x="-390.0" data-y="-795.0" data-z="-959.9999" style="left: 37.81%; top: 25.16%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1700" data-x="-1035.9943" data-y="-1311.339" data-z="-959.9999" style="left: 17.63%; top: 9.02%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1701" data-x="-910.0" data-y="322.0" data-z="242.0" style="left: 21.56%; top: 60.06%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">242</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1702" data-x="834.5117" data-y="-784.75275" data-z="-959.9999" style="left: 76.08%; top: 25.48%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1703" data-x="-1170.0" data-y="720.0" data-z="-959.9999" style="left: 13.44%; top: 72.50%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1704" data-x="981.2083" data-y="831.5673" data-z="-959.9999" style="left: 80.66%; top: 75.99%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="container" id="container-CaveTown_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1988" data-x="-1015.0" data-y="225.0" data-z="244.0" style="left: 18.28%; top: 57.03%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">244</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1995" data-x="836.10675" data-y="-1206.6754" data-z="-959.9999" style="left: 76.13%; top: 12.29%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1996" data-x="635.0" data-y="1095.0" data-z="-959.9999" style="left: 69.84%; top: 84.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1994" data-x="1107.6002" data-y="-1039.733" data-z="-959.9999" style="left: 84.61%; top: 17.51%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1966" data-x="-729.0" data-y="650.99994" data-z="-959.9999" style="left: 27.22%; top: 70.34%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1967" data-x="1210.0" data-y="-80.0" data-z="320.0" style="left: 87.81%; top: 47.50%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">320</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1968" data-x="1038.0" data-y="-70.00001" data-z="320.0" style="left: 82.44%; top: 47.81%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">320</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1969" data-x="-390.0" data-y="-795.0" data-z="-959.9999" style="left: 37.81%; top: 25.16%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1970" data-x="-1035.9943" data-y="-1311.339" data-z="-959.9999" style="left: 17.63%; top: 9.02%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1971" data-x="-910.0" data-y="322.0" data-z="242.0" style="left: 21.56%; top: 60.06%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">242</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1972" data-x="834.5117" data-y="-784.75275" data-z="-959.9999" style="left: 76.08%; top: 25.48%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1973" data-x="-1170.0" data-y="720.0" data-z="-959.9999" style="left: 13.44%; top: 72.50%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1974" data-x="981.2083" data-y="831.5673" data-z="-959.9999" style="left: 80.66%; top: 75.99%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-959</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinArcher">哥布林弓手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(9点)</span></div>
     </div>
@@ -282,11 +283,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Altar_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_Altar_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_Altar_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Altar_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="488" data-x="-1149.0" data-y="57.0" data-z="-1.685941" style="left: 14.09%; top: 51.78%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="489" data-x="-1114.0" data-y="1123.0" data-z="12.555218" style="left: 15.19%; top: 85.09%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">12</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="490" data-x="1142.0" data-y="-481.0" data-z="-1.6859411" style="left: 85.69%; top: 34.97%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="491" data-x="941.0" data-y="-1123.0" data-z="-1.6859351" style="left: 79.41%; top: 14.91%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="492" data-x="-1149.0" data-y="-1085.0" data-z="-1.6859411" style="left: 14.09%; top: 16.09%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
+        <div class="container" id="container-Cave_Altar_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Altar_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="576" data-x="-1149.0" data-y="57.0" data-z="-1.685941" style="left: 14.09%; top: 51.78%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="577" data-x="-1114.0" data-y="1123.0" data-z="12.555218" style="left: 15.19%; top: 85.09%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">12</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="578" data-x="1142.0" data-y="-481.0" data-z="-1.6859411" style="left: 85.69%; top: 34.97%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="579" data-x="941.0" data-y="-1123.0" data-z="-1.6859351" style="left: 79.41%; top: 14.91%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="580" data-x="-1149.0" data-y="-1085.0" data-z="-1.6859411" style="left: 14.09%; top: 16.09%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(5点)</span></div>
     </div>
@@ -320,7 +321,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Altar_Center_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_Altar_Center_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_Altar_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Altar_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="548" data-x="983.9388" data-y="606.51196" data-z="-430.9999" style="left: 80.75%; top: 68.95%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-430</span></div>
+        <div class="container" id="container-Cave_Altar_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Altar_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="692" data-x="983.9388" data-y="606.51196" data-z="-430.9999" style="left: 80.75%; top: 68.95%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-430</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -354,14 +355,14 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_AntsNest_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_AntsNest_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_AntsNest_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_AntsNest.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="630" data-x="1107.6002" data-y="-187.73303" data-z="-596.6183" style="left: 84.61%; top: 44.13%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-596</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="631" data-x="-613.0" data-y="-582.0" data-z="0.314089" style="left: 30.84%; top: 31.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="607" data-x="257.0" data-y="-151.0" data-z="0.31408826" style="left: 58.03%; top: 45.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="608" data-x="-852.8421" data-y="-770.4071" data-z="-599.9999" style="left: 23.35%; top: 25.92%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="609" data-x="-59.56544" data-y="-851.32947" data-z="-599.9999" style="left: 48.14%; top: 23.40%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="610" data-x="-910.0" data-y="322.0" data-z="600.3141" style="left: 21.56%; top: 60.06%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">600</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="611" data-x="659.0" data-y="-1148.0" data-z="0.314088" style="left: 70.59%; top: 14.12%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="612" data-x="555.91675" data-y="943.9099" data-z="-599.9999" style="left: 67.37%; top: 79.50%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
+        <div class="container" id="container-Cave_AntsNest_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_AntsNest.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="723" data-x="1107.6002" data-y="-187.73303" data-z="-596.6183" style="left: 84.61%; top: 44.13%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-596</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="724" data-x="-613.0" data-y="-582.0" data-z="0.314089" style="left: 30.84%; top: 31.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="700" data-x="257.0" data-y="-151.0" data-z="0.31408826" style="left: 58.03%; top: 45.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="701" data-x="-852.8421" data-y="-770.4071" data-z="-599.9999" style="left: 23.35%; top: 25.92%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="702" data-x="-59.56544" data-y="-851.32947" data-z="-599.9999" style="left: 48.14%; top: 23.40%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="703" data-x="-910.0" data-y="322.0" data-z="600.3141" style="left: 21.56%; top: 60.06%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">600</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="704" data-x="659.0" data-y="-1148.0" data-z="0.314088" style="left: 70.59%; top: 14.12%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="705" data-x="555.91675" data-y="943.9099" data-z="-599.9999" style="left: 67.37%; top: 79.50%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(6点)</span></div>
     </div>
@@ -395,7 +396,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_BanditCamp_Center_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_BanditCamp_Center_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_BanditCamp_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_BanditCamp_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="663" data-x="-880.0" data-y="337.0" data-z="0.0" style="left: 22.50%; top: 60.53%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Cave_BanditCamp_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_BanditCamp_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="775" data-x="-880.0" data-y="337.0" data-z="0.0" style="left: 22.50%; top: 60.53%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -429,7 +430,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_MoleTunnel_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_MoleTunnel_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_MoleTunnel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_MoleTunnel.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="739" data-x="-546.5519" data-y="366.12552" data-z="0.0" style="left: 32.92%; top: 61.44%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Cave_MoleTunnel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_MoleTunnel.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="868" data-x="-546.5519" data-y="366.12552" data-z="0.0" style="left: 32.92%; top: 61.44%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -463,13 +464,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_PitHall_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_PitHall_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_PitHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_PitHall.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="767" data-x="-1034.7546" data-y="-683.12" data-z="9.366531e-05" style="left: 17.66%; top: 28.65%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="768" data-x="-963.75464" data-y="587.88" data-z="9.4e-05" style="left: 19.88%; top: 68.37%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="769" data-x="-544.75464" data-y="963.88" data-z="9.4e-05" style="left: 32.98%; top: 80.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="772" data-x="84.932" data-y="80.690895" data-z="-219.68593" style="left: 52.65%; top: 52.52%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-219</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="780" data-x="667.1838" data-y="964.3074" data-z="0.0001" style="left: 70.85%; top: 80.13%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="781" data-x="1163.069" data-y="402.9049" data-z="0.0001" style="left: 86.35%; top: 62.59%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="782" data-x="-287.93106" data-y="-992.0951" data-z="0.0001" style="left: 41.00%; top: 19.00%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-Cave_PitHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_PitHall.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="898" data-x="-1034.7546" data-y="-683.12" data-z="9.366531e-05" style="left: 17.66%; top: 28.65%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="899" data-x="-963.75464" data-y="587.88" data-z="9.4e-05" style="left: 19.88%; top: 68.37%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="900" data-x="-544.75464" data-y="963.88" data-z="9.4e-05" style="left: 32.98%; top: 80.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="897" data-x="84.932" data-y="80.690895" data-z="-219.68593" style="left: 52.65%; top: 52.52%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-219</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="894" data-x="667.1838" data-y="964.3074" data-z="0.0001" style="left: 70.85%; top: 80.13%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="895" data-x="1163.069" data-y="402.9049" data-z="0.0001" style="left: 86.35%; top: 62.59%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="896" data-x="-287.93106" data-y="-992.0951" data-z="0.0001" style="left: 41.00%; top: 19.00%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -503,9 +504,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Tomb_Center_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_Tomb_Center_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_Tomb_Center_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Tomb_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="859" data-x="1119.1959" data-y="-108.09841" data-z="4.4552455" style="left: 84.97%; top: 46.62%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">4</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="860" data-x="365.30484" data-y="-989.43353" data-z="95.58612" style="left: 61.42%; top: 19.08%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">95</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="861" data-x="-2.355337" data-y="793.92896" data-z="63.995026" style="left: 49.93%; top: 74.81%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">63</span></div>
+        <div class="container" id="container-Cave_Tomb_Center_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Tomb_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="969" data-x="1119.1959" data-y="-108.09841" data-z="4.4552455" style="left: 84.97%; top: 46.62%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">4</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="970" data-x="365.30484" data-y="-989.43353" data-z="95.58612" style="left: 61.42%; top: 19.08%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">95</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="971" data-x="-2.355337" data-y="793.92896" data-z="63.995026" style="left: 49.93%; top: 74.81%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">63</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -539,8 +540,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Valley_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_Valley_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_Valley_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Valley_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="947" data-x="460.93845" data-y="1087.5117" data-z="-349.9999" style="left: 64.40%; top: 83.98%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-349</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="965" data-x="-149.0" data-y="157.0" data-z="-349.9999" style="left: 45.34%; top: 54.91%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-349</span></div>
+        <div class="container" id="container-Cave_Valley_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Valley_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1176" data-x="460.93845" data-y="1087.5117" data-z="-349.9999" style="left: 64.40%; top: 83.98%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-349</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1152" data-x="-149.0" data-y="157.0" data-z="-349.9999" style="left: 45.34%; top: 54.91%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-349</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -574,8 +575,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Valley_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_Valley_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_Valley_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Valley.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="923" data-x="641.72485" data-y="-342.25842" data-z="0.0" style="left: 70.05%; top: 39.30%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="916" data-x="144.2649" data-y="679.29333" data-z="0.0" style="left: 54.51%; top: 71.23%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Cave_Valley_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Valley.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1135" data-x="641.72485" data-y="-342.25842" data-z="0.0" style="left: 70.05%; top: 39.30%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1140" data-x="144.2649" data-y="679.29333" data-z="0.0" style="left: 54.51%; top: 71.23%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinArcher">哥布林弓手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -609,12 +610,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('CavernLake_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('CavernLake_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CavernLake_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CavernLake_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="997" data-x="-46.0" data-y="152.0" data-z="-5.767966" style="left: 48.56%; top: 54.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-5</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="991" data-x="-73.64774" data-y="90.49329" data-z="-87.0" style="left: 47.70%; top: 52.83%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-87</span></div>
-        <div class="dot monster-dot" data-monster="GoblinBolaslinger" data-index="1016" data-x="810.622" data-y="-680.5764" data-z="-510.0" style="left: 75.33%; top: 28.73%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-510</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="993" data-x="1005.00366" data-y="-449.0887" data-z="-510.0" style="left: 81.41%; top: 35.97%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-510</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1009" data-x="-46.0" data-y="55.0" data-z="-5.767966" style="left: 48.56%; top: 51.72%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-5</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1010" data-x="-515.0" data-y="21.000025" data-z="-507.1922" style="left: 33.91%; top: 50.66%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-507</span></div>
+        <div class="container" id="container-CavernLake_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CavernLake_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1224" data-x="-46.0" data-y="152.0" data-z="-5.767966" style="left: 48.56%; top: 54.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-5</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1229" data-x="-73.64774" data-y="90.49329" data-z="-87.0" style="left: 47.70%; top: 52.83%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-87</span></div>
+        <div class="dot monster-dot" data-monster="GoblinBolaslinger" data-index="1230" data-x="810.622" data-y="-680.5764" data-z="-510.0" style="left: 75.33%; top: 28.73%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-510</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1228" data-x="1005.00366" data-y="-449.0887" data-z="-510.0" style="left: 81.41%; top: 35.97%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-510</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1213" data-x="-46.0" data-y="55.0" data-z="-5.767966" style="left: 48.56%; top: 51.72%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-5</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1214" data-x="-515.0" data-y="21.000025" data-z="-507.1922" style="left: 33.91%; top: 50.66%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-507</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinArcher">哥布林弓手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinBolaslinger">哥布林投石手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -648,7 +649,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('CavernLake_03_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('CavernLake_03_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CavernLake_03_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CavernLake_03.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="970" data-x="540.0" data-y="1220.0" data-z="15.144034" style="left: 66.88%; top: 88.12%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">15</span></div>
+        <div class="container" id="container-CavernLake_03_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CavernLake_03.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1200" data-x="540.0" data-y="1220.0" data-z="15.144034" style="left: 66.88%; top: 88.12%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">15</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -682,13 +683,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinCaveCorner_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('GoblinCaveCorner_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-GoblinCaveCorner_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinCaveCorner_01.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1840" data-x="126.50655" data-y="-25.33064" data-z="0.0001" style="left: 53.95%; top: 49.21%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1841" data-x="1207.6614" data-y="-141.2083" data-z="-399.9999" style="left: 87.74%; top: 45.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-399</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1860" data-x="307.4139" data-y="235.01752" data-z="0.0001" style="left: 59.61%; top: 57.34%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1847" data-x="-747.35986" data-y="720.87274" data-z="0.0001" style="left: 26.65%; top: 72.53%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1848" data-x="-552.43945" data-y="603.7013" data-z="-4.9999" style="left: 32.74%; top: 68.87%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-4</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1849" data-x="143.47713" data-y="-348.0715" data-z="-4.9999" style="left: 54.48%; top: 39.12%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-4</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1850" data-x="1062.1324" data-y="-119.579216" data-z="0.0001" style="left: 83.19%; top: 46.26%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-GoblinCaveCorner_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinCaveCorner_01.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="2182" data-x="126.50655" data-y="-25.33064" data-z="0.0001" style="left: 53.95%; top: 49.21%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="2183" data-x="1207.6614" data-y="-141.2083" data-z="-399.9999" style="left: 87.74%; top: 45.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="2181" data-x="307.4139" data-y="235.01752" data-z="0.0001" style="left: 59.61%; top: 57.34%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="2139" data-x="-747.35986" data-y="720.87274" data-z="0.0001" style="left: 26.65%; top: 72.53%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="2140" data-x="-552.43945" data-y="603.7013" data-z="-4.9999" style="left: 32.74%; top: 68.87%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-4</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="2141" data-x="143.47713" data-y="-348.0715" data-z="-4.9999" style="left: 54.48%; top: 39.12%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-4</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="2142" data-x="1062.1324" data-y="-119.579216" data-z="0.0001" style="left: 83.19%; top: 46.26%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -722,9 +723,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinJail_Center_02_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('GoblinJail_Center_02_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-GoblinJail_Center_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1126" data-x="875.5192" data-y="-1225.4147" data-z="0.0" style="left: 77.36%; top: 11.71%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1127" data-x="229.0" data-y="1302.0" data-z="0.31406456" style="left: 57.16%; top: 90.69%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1128" data-x="-597.0" data-y="54.0" data-z="25.433073" style="left: 31.34%; top: 51.69%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">25</span></div>
+        <div class="container" id="container-GoblinJail_Center_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1316" data-x="875.5192" data-y="-1225.4147" data-z="0.0" style="left: 77.36%; top: 11.71%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1317" data-x="229.0" data-y="1302.0" data-z="0.31406456" style="left: 57.16%; top: 90.69%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1318" data-x="-597.0" data-y="54.0" data-z="25.433073" style="left: 31.34%; top: 51.69%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">25</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -758,7 +759,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinJail_Center_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('GoblinJail_Center_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-GoblinJail_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1139" data-x="-601.0" data-y="48.0" data-z="36.43307" style="left: 31.22%; top: 51.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">36</span></div>
+        <div class="container" id="container-GoblinJail_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1370" data-x="-601.0" data-y="48.0" data-z="36.43307" style="left: 31.22%; top: 51.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">36</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -792,15 +793,15 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinJail_Center_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('GoblinJail_Center_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-GoblinJail_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1068" data-x="640.6413" data-y="-349.9334" data-z="-400.0" style="left: 70.02%; top: 39.06%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1069" data-x="1228.2703" data-y="-393.05533" data-z="-400.0" style="left: 88.38%; top: 37.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1070" data-x="1360.0" data-y="252.85301" data-z="-384.10046" style="left: 92.50%; top: 57.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-384</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1017" data-x="739.0" data-y="-159.0" data-z="0.0" style="left: 73.09%; top: 45.03%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinBolaslinger" data-index="1089" data-x="-440.0" data-y="-210.0" data-z="0.0001" style="left: 36.25%; top: 43.44%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1039" data-x="-710.0" data-y="-60.0" data-z="202.0" style="left: 27.81%; top: 48.12%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">202</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1026" data-x="239.75728" data-y="64.605194" data-z="0.0" style="left: 57.49%; top: 52.02%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1027" data-x="1344.8557" data-y="-880.5" data-z="0.0" style="left: 92.03%; top: 22.48%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1028" data-x="-935.24274" data-y="-657.3948" data-z="0.0" style="left: 20.77%; top: 29.46%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-GoblinJail_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1281" data-x="640.6413" data-y="-349.9334" data-z="-400.0" style="left: 70.02%; top: 39.06%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1282" data-x="1228.2703" data-y="-393.05533" data-z="-400.0" style="left: 88.38%; top: 37.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1283" data-x="1360.0" data-y="252.85301" data-z="-384.10046" style="left: 92.50%; top: 57.90%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-384</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1286" data-x="739.0" data-y="-159.0" data-z="0.0" style="left: 73.09%; top: 45.03%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinBolaslinger" data-index="1290" data-x="-440.0" data-y="-210.0" data-z="0.0001" style="left: 36.25%; top: 43.44%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1284" data-x="-710.0" data-y="-60.0" data-z="202.0" style="left: 27.81%; top: 48.12%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">202</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1235" data-x="239.75728" data-y="64.605194" data-z="0.0" style="left: 57.49%; top: 52.02%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1236" data-x="1344.8557" data-y="-880.5" data-z="0.0" style="left: 92.03%; top: 22.48%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1237" data-x="-935.24274" data-y="-657.3948" data-z="0.0" style="left: 20.77%; top: 29.46%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinArcher">哥布林弓手</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinBolaslinger">哥布林投石手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -834,14 +835,14 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinMineCenter_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('GoblinMineCenter_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-GoblinMineCenter_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinMineCenter_01.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1199" data-x="-803.068" data-y="-703.3091" data-z="-539.9999" style="left: 24.90%; top: 28.02%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-539</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1184" data-x="-1108.7546" data-y="-1243.12" data-z="-6.761496" style="left: 15.35%; top: 11.15%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-6</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1185" data-x="465.74533" data-y="-977.2873" data-z="-539.9999" style="left: 64.55%; top: 19.46%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-539</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1186" data-x="1140.7454" data-y="191.84702" data-z="-539.9999" style="left: 85.65%; top: 56.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-539</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1217" data-x="-330.93106" data-y="-1159.0951" data-z="-5.206235" style="left: 39.66%; top: 13.78%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-5</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1218" data-x="1323.8413" data-y="401.1514" data-z="-15.0" style="left: 91.37%; top: 62.54%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-15</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1219" data-x="1234.1838" data-y="1063.3074" data-z="-15.0" style="left: 88.57%; top: 83.23%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-15</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1220" data-x="608.10944" data-y="1161.7434" data-z="-539.9999" style="left: 69.00%; top: 86.30%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-539</span></div>
+        <div class="container" id="container-GoblinMineCenter_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinMineCenter_01.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1417" data-x="-803.068" data-y="-703.3091" data-z="-539.9999" style="left: 24.90%; top: 28.02%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-539</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1430" data-x="-1108.7546" data-y="-1243.12" data-z="-6.761496" style="left: 15.35%; top: 11.15%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-6</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1431" data-x="465.74533" data-y="-977.2873" data-z="-539.9999" style="left: 64.55%; top: 19.46%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-539</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1432" data-x="1140.7454" data-y="191.84702" data-z="-539.9999" style="left: 85.65%; top: 56.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-539</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1408" data-x="-330.93106" data-y="-1159.0951" data-z="-5.206235" style="left: 39.66%; top: 13.78%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-5</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1409" data-x="1323.8413" data-y="401.1514" data-z="-15.0" style="left: 91.37%; top: 62.54%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-15</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1410" data-x="1234.1838" data-y="1063.3074" data-z="-15.0" style="left: 88.57%; top: 83.23%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-15</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1411" data-x="608.10944" data-y="1161.7434" data-z="-539.9999" style="left: 69.00%; top: 86.30%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-539</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinArcher">哥布林弓手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -875,8 +876,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('HideoutCave_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('HideoutCave_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-HideoutCave_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HideoutCave_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1889" data-x="580.0" data-y="1222.0" data-z="0.314065" style="left: 68.12%; top: 88.19%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1945" data-x="-696.96454" data-y="702.6459" data-z="0.0" style="left: 28.22%; top: 71.96%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-HideoutCave_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HideoutCave_02.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinMage" data-index="2243" data-x="580.0" data-y="1222.0" data-z="0.314065" style="left: 68.12%; top: 88.19%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="2205" data-x="-696.96454" data-y="702.6459" data-z="0.0" style="left: 28.22%; top: 71.96%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -910,15 +911,15 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('HideoutCave_Center_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('HideoutCave_Center_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-HideoutCave_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HideoutCave_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1346" data-x="120.0" data-y="1040.0" data-z="200.0001" style="left: 53.75%; top: 82.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">200</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1315" data-x="495.0" data-y="175.0" data-z="-400.0" style="left: 65.47%; top: 55.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1316" data-x="1160.0" data-y="-320.0" data-z="0.0" style="left: 86.25%; top: 40.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinBolaslinger" data-index="1408" data-x="-495.0" data-y="557.0" data-z="111.23729" style="left: 34.53%; top: 67.41%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">111</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1317" data-x="799.0" data-y="218.0" data-z="-400.0" style="left: 74.97%; top: 56.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1393" data-x="-40.0" data-y="-95.0" data-z="0.0" style="left: 48.75%; top: 47.03%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1394" data-x="-1208.6823" data-y="1026.1099" data-z="0.0" style="left: 12.23%; top: 82.07%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1395" data-x="-1135.0" data-y="-305.0" data-z="0.0" style="left: 14.53%; top: 40.47%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1396" data-x="447.0" data-y="730.0" data-z="0.0" style="left: 63.97%; top: 72.81%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-HideoutCave_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HideoutCave_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1619" data-x="120.0" data-y="1040.0" data-z="200.0001" style="left: 53.75%; top: 82.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">200</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1623" data-x="495.0" data-y="175.0" data-z="-400.0" style="left: 65.47%; top: 55.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="GoblinAxeman" data-index="1624" data-x="1160.0" data-y="-320.0" data-z="0.0" style="left: 86.25%; top: 40.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinBolaslinger" data-index="1627" data-x="-495.0" data-y="557.0" data-z="111.23729" style="left: 34.53%; top: 67.41%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">111</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1621" data-x="799.0" data-y="218.0" data-z="-400.0" style="left: 74.97%; top: 56.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1559" data-x="-40.0" data-y="-95.0" data-z="0.0" style="left: 48.75%; top: 47.03%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1560" data-x="-1208.6823" data-y="1026.1099" data-z="0.0" style="left: 12.23%; top: 82.07%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1561" data-x="-1135.0" data-y="-305.0" data-z="0.0" style="left: 14.53%; top: 40.47%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1562" data-x="447.0" data-y="730.0" data-z="0.0" style="left: 63.97%; top: 72.81%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinArcher">哥布林弓手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinAxeman">哥布林斧手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinBolaslinger">哥布林投石手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -952,17 +953,17 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('StoneGrave_Center_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('StoneGrave_Center_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-StoneGrave_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/StoneGrave_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1471" data-x="1379.1334" data-y="159.2963" data-z="-399.9999" style="left: 93.10%; top: 54.98%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-399</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1459" data-x="792.8479" data-y="-872.5006" data-z="-399.9999" style="left: 74.78%; top: 22.73%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-399</span></div>
-        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1460" data-x="112.924644" data-y="215.2274" data-z="0.0" style="left: 53.53%; top: 56.73%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1494" data-x="-175.14552" data-y="-1182.908" data-z="-399.9999" style="left: 44.53%; top: 13.03%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-399</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1495" data-x="-6.789794" data-y="336.90823" data-z="0.0" style="left: 49.79%; top: 60.53%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1496" data-x="239.85094" data-y="51.05359" data-z="0.0" style="left: 57.50%; top: 51.60%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1497" data-x="408.24802" data-y="870.50024" data-z="-405.0" style="left: 62.76%; top: 77.20%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-405</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1498" data-x="424.06104" data-y="-1286.6649" data-z="0.0" style="left: 63.25%; top: 9.79%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1499" data-x="-333.13348" data-y="-1281.6062" data-z="0.0" style="left: 39.59%; top: 9.95%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1500" data-x="-1201.7898" data-y="-3.091761" data-z="0.0" style="left: 12.44%; top: 49.90%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1501" data-x="-1230.149" data-y="-268.9464" data-z="0.0" style="left: 11.56%; top: 41.60%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-StoneGrave_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/StoneGrave_Center.webp" class="image">        <div class="dot monster-dot" data-monster="GoblinArcher" data-index="1744" data-x="1379.1334" data-y="159.2963" data-z="-399.9999" style="left: 93.10%; top: 54.98%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1751" data-x="792.8479" data-y="-872.5006" data-z="-399.9999" style="left: 74.78%; top: 22.73%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="GoblinMage" data-index="1752" data-x="112.924644" data-y="215.2274" data-z="0.0" style="left: 53.53%; top: 56.73%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1715" data-x="-175.14552" data-y="-1182.908" data-z="-399.9999" style="left: 44.53%; top: 13.03%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-399</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1716" data-x="-6.789794" data-y="336.90823" data-z="0.0" style="left: 49.79%; top: 60.53%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1717" data-x="239.85094" data-y="51.05359" data-z="0.0" style="left: 57.50%; top: 51.60%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1718" data-x="408.24802" data-y="870.50024" data-z="-405.0" style="left: 62.76%; top: 77.20%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-405</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1719" data-x="424.06104" data-y="-1286.6649" data-z="0.0" style="left: 63.25%; top: 9.79%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1720" data-x="-333.13348" data-y="-1281.6062" data-z="0.0" style="left: 39.59%; top: 9.95%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1721" data-x="-1201.7898" data-y="-3.091761" data-z="0.0" style="left: 12.44%; top: 49.90%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="GoblinWarrior" data-index="1722" data-x="-1230.149" data-y="-268.9464" data-z="0.0" style="left: 11.56%; top: 41.60%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinArcher">哥布林弓手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="GoblinMage">哥布林法师</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="GoblinWarrior">哥布林战士</span><span class="ms-count">(8点)</span></div>
     </div>
@@ -972,8 +973,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-179">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveMaze_Center_02_HR_D-json', 179, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-278">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveMaze_Center_02_HR_D-json', 278, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>CaveMaze_Center_02_HR_D.json</td>
@@ -983,8 +984,8 @@
         <td>-943.00</td>
         <td>-5.00</td>
     </tr>
-    <tr id="row-277">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 277, this)"></td>
+    <tr id="row-317">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 317, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_02_D.json</td>
@@ -994,8 +995,8 @@
         <td>-764.00</td>
         <td>14.45</td>
     </tr>
-    <tr id="row-278">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 278, this)"></td>
+    <tr id="row-318">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 318, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_02_D.json</td>
@@ -1005,8 +1006,8 @@
         <td>-1052.41</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-279">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 279, this)"></td>
+    <tr id="row-319">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 319, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_02_D.json</td>
@@ -1016,8 +1017,8 @@
         <td>322.00</td>
         <td>242.00</td>
     </tr>
-    <tr id="row-280">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 280, this)"></td>
+    <tr id="row-320">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 320, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_02_D.json</td>
@@ -1027,8 +1028,8 @@
         <td>850.31</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-281">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 281, this)"></td>
+    <tr id="row-321">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 321, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_02_D.json</td>
@@ -1038,8 +1039,8 @@
         <td>-1140.78</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-282">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 282, this)"></td>
+    <tr id="row-322">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_D-json', 322, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_02_D.json</td>
@@ -1049,8 +1050,8 @@
         <td>1095.00</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-373">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_HR_D-json', 373, this)"></td>
+    <tr id="row-461">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_HR_D-json', 461, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_02_HR_D.json</td>
@@ -1060,8 +1061,8 @@
         <td>-1039.73</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1728">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1728, this)"></td>
+    <tr id="row-1988">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1988, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1071,8 +1072,8 @@
         <td>225.00</td>
         <td>244.00</td>
     </tr>
-    <tr id="row-1688">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1688, this)"></td>
+    <tr id="row-1995">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1995, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1082,8 +1083,8 @@
         <td>-1206.68</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1689">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1689, this)"></td>
+    <tr id="row-1996">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1996, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1093,8 +1094,8 @@
         <td>1095.00</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1718">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1718, this)"></td>
+    <tr id="row-1994">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1994, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1104,8 +1105,8 @@
         <td>-1039.73</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1696">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1696, this)"></td>
+    <tr id="row-1966">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1966, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1115,8 +1116,8 @@
         <td>651.00</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1697">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1697, this)"></td>
+    <tr id="row-1967">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1967, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1126,8 +1127,8 @@
         <td>-80.00</td>
         <td>320.00</td>
     </tr>
-    <tr id="row-1698">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1698, this)"></td>
+    <tr id="row-1968">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1968, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1137,8 +1138,8 @@
         <td>-70.00</td>
         <td>320.00</td>
     </tr>
-    <tr id="row-1699">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1699, this)"></td>
+    <tr id="row-1969">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1969, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1148,8 +1149,8 @@
         <td>-795.00</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1700">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1700, this)"></td>
+    <tr id="row-1970">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1970, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1159,8 +1160,8 @@
         <td>-1311.34</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1701">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1701, this)"></td>
+    <tr id="row-1971">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1971, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1170,8 +1171,8 @@
         <td>322.00</td>
         <td>242.00</td>
     </tr>
-    <tr id="row-1702">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1702, this)"></td>
+    <tr id="row-1972">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1972, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1181,8 +1182,8 @@
         <td>-784.75</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1703">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1703, this)"></td>
+    <tr id="row-1973">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1973, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1192,8 +1193,8 @@
         <td>720.00</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-1704">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1704, this)"></td>
+    <tr id="row-1974">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1974, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CaveTown_HR_D.json</td>
@@ -1203,8 +1204,8 @@
         <td>831.57</td>
         <td>-960.00</td>
     </tr>
-    <tr id="row-488">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 488, this)"></td>
+    <tr id="row-576">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 576, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
@@ -1214,8 +1215,8 @@
         <td>57.00</td>
         <td>-1.69</td>
     </tr>
-    <tr id="row-489">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 489, this)"></td>
+    <tr id="row-577">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 577, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
@@ -1225,8 +1226,8 @@
         <td>1123.00</td>
         <td>12.56</td>
     </tr>
-    <tr id="row-490">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 490, this)"></td>
+    <tr id="row-578">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 578, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
@@ -1236,8 +1237,8 @@
         <td>-481.00</td>
         <td>-1.69</td>
     </tr>
-    <tr id="row-491">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 491, this)"></td>
+    <tr id="row-579">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 579, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
@@ -1247,8 +1248,8 @@
         <td>-1123.00</td>
         <td>-1.69</td>
     </tr>
-    <tr id="row-492">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 492, this)"></td>
+    <tr id="row-580">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 580, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
@@ -1258,8 +1259,8 @@
         <td>-1085.00</td>
         <td>-1.69</td>
     </tr>
-    <tr id="row-548">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_Center_HR_D-json', 548, this)"></td>
+    <tr id="row-692">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_Center_HR_D-json', 692, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Altar_Center_HR_D.json</td>
@@ -1269,8 +1270,8 @@
         <td>606.51</td>
         <td>-431.00</td>
     </tr>
-    <tr id="row-630">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 630, this)"></td>
+    <tr id="row-723">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 723, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1280,8 +1281,8 @@
         <td>-187.73</td>
         <td>-596.62</td>
     </tr>
-    <tr id="row-631">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 631, this)"></td>
+    <tr id="row-724">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 724, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1291,8 +1292,8 @@
         <td>-582.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-607">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 607, this)"></td>
+    <tr id="row-700">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 700, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1302,8 +1303,8 @@
         <td>-151.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-608">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 608, this)"></td>
+    <tr id="row-701">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 701, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1313,8 +1314,8 @@
         <td>-770.41</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-609">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 609, this)"></td>
+    <tr id="row-702">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 702, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1324,8 +1325,8 @@
         <td>-851.33</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-610">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 610, this)"></td>
+    <tr id="row-703">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 703, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1335,8 +1336,8 @@
         <td>322.00</td>
         <td>600.31</td>
     </tr>
-    <tr id="row-611">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 611, this)"></td>
+    <tr id="row-704">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 704, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1346,8 +1347,8 @@
         <td>-1148.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-612">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 612, this)"></td>
+    <tr id="row-705">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 705, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_AntsNest_D.json</td>
@@ -1357,8 +1358,8 @@
         <td>943.91</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-663">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 663, this)"></td>
+    <tr id="row-775">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 775, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_BanditCamp_Center_HR_D.json</td>
@@ -1368,8 +1369,8 @@
         <td>337.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-739">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_MoleTunnel_HR_D-json', 739, this)"></td>
+    <tr id="row-868">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_MoleTunnel_HR_D-json', 868, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_MoleTunnel_HR_D.json</td>
@@ -1379,8 +1380,8 @@
         <td>366.13</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-767">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 767, this)"></td>
+    <tr id="row-898">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 898, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_PitHall_HR_D.json</td>
@@ -1390,8 +1391,8 @@
         <td>-683.12</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-768">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 768, this)"></td>
+    <tr id="row-899">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 899, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_PitHall_HR_D.json</td>
@@ -1401,8 +1402,8 @@
         <td>587.88</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-769">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 769, this)"></td>
+    <tr id="row-900">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 900, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_PitHall_HR_D.json</td>
@@ -1412,8 +1413,8 @@
         <td>963.88</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-772">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 772, this)"></td>
+    <tr id="row-897">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 897, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_PitHall_HR_D.json</td>
@@ -1423,8 +1424,8 @@
         <td>80.69</td>
         <td>-219.69</td>
     </tr>
-    <tr id="row-780">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 780, this)"></td>
+    <tr id="row-894">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 894, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_PitHall_HR_D.json</td>
@@ -1434,8 +1435,8 @@
         <td>964.31</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-781">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 781, this)"></td>
+    <tr id="row-895">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 895, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_PitHall_HR_D.json</td>
@@ -1445,8 +1446,8 @@
         <td>402.90</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-782">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 782, this)"></td>
+    <tr id="row-896">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_PitHall_HR_D-json', 896, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_PitHall_HR_D.json</td>
@@ -1456,8 +1457,8 @@
         <td>-992.10</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-859">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_D-json', 859, this)"></td>
+    <tr id="row-969">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_D-json', 969, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Tomb_Center_D.json</td>
@@ -1467,8 +1468,8 @@
         <td>-108.10</td>
         <td>4.46</td>
     </tr>
-    <tr id="row-860">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_D-json', 860, this)"></td>
+    <tr id="row-970">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_D-json', 970, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Tomb_Center_D.json</td>
@@ -1478,8 +1479,8 @@
         <td>-989.43</td>
         <td>95.59</td>
     </tr>
-    <tr id="row-861">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_D-json', 861, this)"></td>
+    <tr id="row-971">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Tomb_Center_D-json', 971, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Tomb_Center_D.json</td>
@@ -1489,8 +1490,8 @@
         <td>793.93</td>
         <td>64.00</td>
     </tr>
-    <tr id="row-947">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_02_HR_D-json', 947, this)"></td>
+    <tr id="row-1176">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_02_HR_D-json', 1176, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Valley_02_HR_D.json</td>
@@ -1500,8 +1501,8 @@
         <td>1087.51</td>
         <td>-350.00</td>
     </tr>
-    <tr id="row-965">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_02_HR_D-json', 965, this)"></td>
+    <tr id="row-1152">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_02_HR_D-json', 1152, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Valley_02_HR_D.json</td>
@@ -1511,8 +1512,8 @@
         <td>157.00</td>
         <td>-350.00</td>
     </tr>
-    <tr id="row-923">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_HR_D-json', 923, this)"></td>
+    <tr id="row-1135">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_HR_D-json', 1135, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Valley_HR_D.json</td>
@@ -1522,8 +1523,8 @@
         <td>-342.26</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-916">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_HR_D-json', 916, this)"></td>
+    <tr id="row-1140">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_HR_D-json', 1140, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>Cave_Valley_HR_D.json</td>
@@ -1533,8 +1534,8 @@
         <td>679.29</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-997">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 997, this)"></td>
+    <tr id="row-1224">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1224, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>CavernLake_02_HR_D.json</td>
@@ -1544,8 +1545,8 @@
         <td>152.00</td>
         <td>-5.77</td>
     </tr>
-    <tr id="row-991">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 991, this)"></td>
+    <tr id="row-1229">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1229, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>CavernLake_02_HR_D.json</td>
@@ -1555,8 +1556,8 @@
         <td>90.49</td>
         <td>-87.00</td>
     </tr>
-    <tr id="row-1016">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1016, this)"></td>
+    <tr id="row-1230">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1230, this)"></td>
         <td>哥布林投石手</td>
         <td>哥布林洞穴1层</td>
         <td>CavernLake_02_HR_D.json</td>
@@ -1566,8 +1567,8 @@
         <td>-680.58</td>
         <td>-510.00</td>
     </tr>
-    <tr id="row-993">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 993, this)"></td>
+    <tr id="row-1228">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1228, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>CavernLake_02_HR_D.json</td>
@@ -1577,8 +1578,8 @@
         <td>-449.09</td>
         <td>-510.00</td>
     </tr>
-    <tr id="row-1009">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1009, this)"></td>
+    <tr id="row-1213">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1213, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CavernLake_02_HR_D.json</td>
@@ -1588,8 +1589,8 @@
         <td>55.00</td>
         <td>-5.77</td>
     </tr>
-    <tr id="row-1010">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1010, this)"></td>
+    <tr id="row-1214">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1214, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>CavernLake_02_HR_D.json</td>
@@ -1599,8 +1600,8 @@
         <td>21.00</td>
         <td>-507.19</td>
     </tr>
-    <tr id="row-970">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_03_D-json', 970, this)"></td>
+    <tr id="row-1200">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_03_D-json', 1200, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>CavernLake_03_D.json</td>
@@ -1610,8 +1611,8 @@
         <td>1220.00</td>
         <td>15.14</td>
     </tr>
-    <tr id="row-1840">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1840, this)"></td>
+    <tr id="row-2182">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2182, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
@@ -1621,8 +1622,8 @@
         <td>-25.33</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1841">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1841, this)"></td>
+    <tr id="row-2183">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2183, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
@@ -1632,8 +1633,8 @@
         <td>-141.21</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1860">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1860, this)"></td>
+    <tr id="row-2181">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2181, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
@@ -1643,8 +1644,8 @@
         <td>235.02</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1847">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1847, this)"></td>
+    <tr id="row-2139">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2139, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
@@ -1654,8 +1655,8 @@
         <td>720.87</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1848">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1848, this)"></td>
+    <tr id="row-2140">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2140, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
@@ -1665,8 +1666,8 @@
         <td>603.70</td>
         <td>-5.00</td>
     </tr>
-    <tr id="row-1849">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1849, this)"></td>
+    <tr id="row-2141">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2141, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
@@ -1676,8 +1677,8 @@
         <td>-348.07</td>
         <td>-5.00</td>
     </tr>
-    <tr id="row-1850">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 1850, this)"></td>
+    <tr id="row-2142">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2142, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
@@ -1687,8 +1688,8 @@
         <td>-119.58</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1126">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_D-json', 1126, this)"></td>
+    <tr id="row-1316">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_D-json', 1316, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_02_D.json</td>
@@ -1698,8 +1699,8 @@
         <td>-1225.41</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1127">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_D-json', 1127, this)"></td>
+    <tr id="row-1317">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_D-json', 1317, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_02_D.json</td>
@@ -1709,8 +1710,8 @@
         <td>1302.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-1128">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_D-json', 1128, this)"></td>
+    <tr id="row-1318">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_D-json', 1318, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_02_D.json</td>
@@ -1720,8 +1721,8 @@
         <td>54.00</td>
         <td>25.43</td>
     </tr>
-    <tr id="row-1139">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_HR_D-json', 1139, this)"></td>
+    <tr id="row-1370">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_HR_D-json', 1370, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_02_HR_D.json</td>
@@ -1731,8 +1732,8 @@
         <td>48.00</td>
         <td>36.43</td>
     </tr>
-    <tr id="row-1068">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1068, this)"></td>
+    <tr id="row-1281">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1281, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1742,8 +1743,8 @@
         <td>-349.93</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1069">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1069, this)"></td>
+    <tr id="row-1282">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1282, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1753,8 +1754,8 @@
         <td>-393.06</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1070">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1070, this)"></td>
+    <tr id="row-1283">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1283, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1764,8 +1765,8 @@
         <td>252.85</td>
         <td>-384.10</td>
     </tr>
-    <tr id="row-1017">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1017, this)"></td>
+    <tr id="row-1286">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1286, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1775,8 +1776,8 @@
         <td>-159.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1089">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1089, this)"></td>
+    <tr id="row-1290">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1290, this)"></td>
         <td>哥布林投石手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1786,8 +1787,8 @@
         <td>-210.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1039">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1039, this)"></td>
+    <tr id="row-1284">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1284, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1797,8 +1798,8 @@
         <td>-60.00</td>
         <td>202.00</td>
     </tr>
-    <tr id="row-1026">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1026, this)"></td>
+    <tr id="row-1235">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1235, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1808,8 +1809,8 @@
         <td>64.61</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1027">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1027, this)"></td>
+    <tr id="row-1236">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1236, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1819,8 +1820,8 @@
         <td>-880.50</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1028">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1028, this)"></td>
+    <tr id="row-1237">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1237, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinJail_Center_HR_D.json</td>
@@ -1830,8 +1831,8 @@
         <td>-657.39</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1199">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1199, this)"></td>
+    <tr id="row-1417">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1417, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1841,8 +1842,8 @@
         <td>-703.31</td>
         <td>-540.00</td>
     </tr>
-    <tr id="row-1184">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1184, this)"></td>
+    <tr id="row-1430">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1430, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1852,8 +1853,8 @@
         <td>-1243.12</td>
         <td>-6.76</td>
     </tr>
-    <tr id="row-1185">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1185, this)"></td>
+    <tr id="row-1431">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1431, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1863,8 +1864,8 @@
         <td>-977.29</td>
         <td>-540.00</td>
     </tr>
-    <tr id="row-1186">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1186, this)"></td>
+    <tr id="row-1432">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1432, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1874,8 +1875,8 @@
         <td>191.85</td>
         <td>-540.00</td>
     </tr>
-    <tr id="row-1217">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1217, this)"></td>
+    <tr id="row-1408">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1408, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1885,8 +1886,8 @@
         <td>-1159.10</td>
         <td>-5.21</td>
     </tr>
-    <tr id="row-1218">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1218, this)"></td>
+    <tr id="row-1409">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1409, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1896,8 +1897,8 @@
         <td>401.15</td>
         <td>-15.00</td>
     </tr>
-    <tr id="row-1219">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1219, this)"></td>
+    <tr id="row-1410">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1410, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1907,8 +1908,8 @@
         <td>1063.31</td>
         <td>-15.00</td>
     </tr>
-    <tr id="row-1220">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1220, this)"></td>
+    <tr id="row-1411">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinMineCenter_01_HR_D-json', 1411, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>GoblinMineCenter_01_HR_D.json</td>
@@ -1918,8 +1919,8 @@
         <td>1161.74</td>
         <td>-540.00</td>
     </tr>
-    <tr id="row-1889">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_HR_D-json', 1889, this)"></td>
+    <tr id="row-2243">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_HR_D-json', 2243, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_02_HR_D.json</td>
@@ -1929,8 +1930,8 @@
         <td>1222.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-1945">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_HR_D-json', 1945, this)"></td>
+    <tr id="row-2205">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_HR_D-json', 2205, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_02_HR_D.json</td>
@@ -1940,8 +1941,8 @@
         <td>702.65</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1346">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1346, this)"></td>
+    <tr id="row-1619">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1619, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -1951,8 +1952,8 @@
         <td>1040.00</td>
         <td>200.00</td>
     </tr>
-    <tr id="row-1315">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1315, this)"></td>
+    <tr id="row-1623">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1623, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -1962,8 +1963,8 @@
         <td>175.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1316">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1316, this)"></td>
+    <tr id="row-1624">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1624, this)"></td>
         <td>哥布林斧手</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -1973,8 +1974,8 @@
         <td>-320.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1408">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1408, this)"></td>
+    <tr id="row-1627">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1627, this)"></td>
         <td>哥布林投石手</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -1984,8 +1985,8 @@
         <td>557.00</td>
         <td>111.24</td>
     </tr>
-    <tr id="row-1317">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1317, this)"></td>
+    <tr id="row-1621">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1621, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -1995,8 +1996,8 @@
         <td>218.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1393">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1393, this)"></td>
+    <tr id="row-1559">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1559, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -2006,8 +2007,8 @@
         <td>-95.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1394">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1394, this)"></td>
+    <tr id="row-1560">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1560, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -2017,8 +2018,8 @@
         <td>1026.11</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1395">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1395, this)"></td>
+    <tr id="row-1561">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1561, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -2028,8 +2029,8 @@
         <td>-305.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1396">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1396, this)"></td>
+    <tr id="row-1562">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1562, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>HideoutCave_Center_HR_D.json</td>
@@ -2039,8 +2040,8 @@
         <td>730.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1471">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1471, this)"></td>
+    <tr id="row-1744">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1744, this)"></td>
         <td>哥布林弓手</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2050,8 +2051,8 @@
         <td>159.30</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1459">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1459, this)"></td>
+    <tr id="row-1751">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1751, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2061,8 +2062,8 @@
         <td>-872.50</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1460">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1460, this)"></td>
+    <tr id="row-1752">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1752, this)"></td>
         <td>哥布林法师</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2072,8 +2073,8 @@
         <td>215.23</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1494">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1494, this)"></td>
+    <tr id="row-1715">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1715, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2083,8 +2084,8 @@
         <td>-1182.91</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-1495">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1495, this)"></td>
+    <tr id="row-1716">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1716, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2094,8 +2095,8 @@
         <td>336.91</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1496">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1496, this)"></td>
+    <tr id="row-1717">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1717, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2105,8 +2106,8 @@
         <td>51.05</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1497">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1497, this)"></td>
+    <tr id="row-1718">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1718, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2116,8 +2117,8 @@
         <td>870.50</td>
         <td>-405.00</td>
     </tr>
-    <tr id="row-1498">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1498, this)"></td>
+    <tr id="row-1719">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1719, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2127,8 +2128,8 @@
         <td>-1286.66</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1499">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1499, this)"></td>
+    <tr id="row-1720">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1720, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2138,8 +2139,8 @@
         <td>-1281.61</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1500">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1500, this)"></td>
+    <tr id="row-1721">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1721, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>
@@ -2149,8 +2150,8 @@
         <td>-3.09</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-1501">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1501, this)"></td>
+    <tr id="row-1722">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_HR_D-json', 1722, this)"></td>
         <td>哥布林战士</td>
         <td>哥布林洞穴1层</td>
         <td>StoneGrave_Center_HR_D.json</td>

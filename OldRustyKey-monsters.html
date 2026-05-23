@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>生锈的旧钥匙 >> 报丧女妖、鬼灵骑士 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">生锈的旧钥匙 (OldRustyKey) >> Banshee、SpectralKnight</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>报丧女妖 (2)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>鬼灵骑士 (2)</div>
@@ -123,7 +124,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_BossTest_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_BossTest_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Barbican_01_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest</small></div>        <div class="dot monster-dot" data-monster="SpectralKnight" data-index="10231" data-x="-47.709385" data-y="-110.85586" data-z="8.962412e-07" style="left: 48.51%; top: 46.54%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest</small></div>        <div class="dot monster-dot" data-monster="SpectralKnight" data-index="11546" data-x="-47.709385" data-y="-110.85586" data-z="8.962412e-07" style="left: 48.51%; top: 46.54%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="SpectralKnight">鬼灵骑士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -157,7 +158,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot monster-dot" data-monster="SpectralKnight" data-index="10349" data-x="-47.709385" data-y="-110.85586" data-z="8.962412e-07" style="left: 48.51%; top: 46.54%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot monster-dot" data-monster="SpectralKnight" data-index="11664" data-x="-47.709385" data-y="-110.85586" data-z="8.962412e-07" style="left: 48.51%; top: 46.54%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="SpectralKnight">鬼灵骑士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -191,7 +192,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_GreatHall_01_Destroyed_BossTest_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_GreatHall_01_Destroyed_BossTest_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_GreatHall_01_Destroyed_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_GreatHall_01_Destroyed_BossTest, GreatHall_01_Destroyed_BossTest</small></div>        <div class="dot monster-dot" data-monster="Banshee" data-index="10935" data-x="-20.0" data-y="-110.0" data-z="0.0" style="left: 49.38%; top: 46.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_GreatHall_01_Destroyed_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_GreatHall_01_Destroyed_BossTest, GreatHall_01_Destroyed_BossTest</small></div>        <div class="dot monster-dot" data-monster="Banshee" data-index="12387" data-x="-20.0" data-y="-110.0" data-z="0.0" style="left: 49.38%; top: 46.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Banshee">报丧女妖</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -225,7 +226,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_GreatHall_01_Destroyed_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_GreatHall_01_Destroyed_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_GreatHall_01_Destroyed_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_GreatHall_01_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="Banshee" data-index="11047" data-x="10.0" data-y="-85.0" data-z="0.0001" style="left: 50.31%; top: 47.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_GreatHall_01_Destroyed_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_GreatHall_01_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="Banshee" data-index="12541" data-x="10.0" data-y="-85.0" data-z="0.0001" style="left: 50.31%; top: 47.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Banshee">报丧女妖</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -235,8 +236,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-10231">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 10231, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-11546">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11546, this)"></td>
         <td>鬼灵骑士</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_BossTest_D.json</td>
@@ -246,8 +247,8 @@
         <td>-110.86</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10349">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 10349, this)"></td>
+    <tr id="row-11664">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11664, this)"></td>
         <td>鬼灵骑士</td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
@@ -257,8 +258,8 @@
         <td>-110.86</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10935">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_BossTest_D-json', 10935, this)"></td>
+    <tr id="row-12387">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_BossTest_D-json', 12387, this)"></td>
         <td>报丧女妖</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_01_Destroyed_BossTest_D.json</td>
@@ -268,8 +269,8 @@
         <td>-110.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11047">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_HR_D-json', 11047, this)"></td>
+    <tr id="row-12541">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_GreatHall_01_Destroyed_HR_D-json', 12541, this)"></td>
         <td>报丧女妖</td>
         <td>废墟1层</td>
         <td>Ruins_GreatHall_01_Destroyed_HR_D.json</td>

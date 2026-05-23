@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>灵体物质 >> 冰霜怨灵 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">灵体物质 (Ectoplasm) >> FrozenGhost</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>冰霜怨灵 (15)</div>
 </div></div>
@@ -121,8 +122,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_AbyssTooth_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_AbyssTooth_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_AbyssTooth_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_AbyssTooth.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5749" data-x="-105.0" data-y="-445.0" data-z="-149.99992" style="left: 46.72%; top: 36.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-149</span></div>
-        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5750" data-x="-500.0" data-y="105.0" data-z="-149.99992" style="left: 34.38%; top: 53.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-149</span></div>
+        <div class="container" id="container-IceAbyss_AbyssTooth_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_AbyssTooth.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6685" data-x="-105.0" data-y="-445.0" data-z="-149.99992" style="left: 46.72%; top: 36.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-149</span></div>
+        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6686" data-x="-500.0" data-y="105.0" data-z="-149.99992" style="left: 34.38%; top: 53.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-149</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -156,8 +157,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DeathPit_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_DeathPit_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_DeathPit_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeathPit.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5829" data-x="-665.0" data-y="-204.0" data-z="-499.9999" style="left: 29.22%; top: 43.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-499</span></div>
-        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5830" data-x="1098.0" data-y="702.0" data-z="-499.9999" style="left: 84.31%; top: 71.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-499</span></div>
+        <div class="container" id="container-IceAbyss_DeathPit_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeathPit.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6788" data-x="-665.0" data-y="-204.0" data-z="-499.9999" style="left: 29.22%; top: 43.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-499</span></div>
+        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6789" data-x="1098.0" data-y="702.0" data-z="-499.9999" style="left: 84.31%; top: 71.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-499</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -191,7 +192,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DeepFlow_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_DeepFlow_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_DeepFlow_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeepFlow.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5859" data-x="235.0" data-y="90.0" data-z="-125.0" style="left: 57.34%; top: 52.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-125</span></div>
+        <div class="container" id="container-IceAbyss_DeepFlow_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeepFlow.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6818" data-x="235.0" data-y="90.0" data-z="-125.0" style="left: 57.34%; top: 52.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-125</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -225,10 +226,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DemonicDen_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_DemonicDen_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_DemonicDen_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DemonicDen.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5897" data-x="-89.0" data-y="148.0" data-z="0.0" style="left: 47.22%; top: 54.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5898" data-x="-395.0" data-y="664.0" data-z="0.0" style="left: 37.66%; top: 70.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5899" data-x="-808.0" data-y="216.0" data-z="0.0" style="left: 24.75%; top: 56.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="5900" data-x="-297.0" data-y="-242.0" data-z="0.0" style="left: 40.72%; top: 42.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_DemonicDen_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DemonicDen.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6848" data-x="-89.0" data-y="148.0" data-z="0.0" style="left: 47.22%; top: 54.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6849" data-x="-395.0" data-y="664.0" data-z="0.0" style="left: 37.66%; top: 70.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6850" data-x="-808.0" data-y="216.0" data-z="0.0" style="left: 24.75%; top: 56.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6851" data-x="-297.0" data-y="-242.0" data-z="0.0" style="left: 40.72%; top: 42.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -262,8 +263,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FrozenHold_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_FrozenHold_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_FrozenHold_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FrozenHold.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6031" data-x="-393.30127" data-y="375.0" data-z="0.0" style="left: 37.71%; top: 61.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6032" data-x="796.23193" data-y="-567.23883" data-z="0.0" style="left: 74.88%; top: 32.27%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_FrozenHold_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FrozenHold.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6997" data-x="-393.30127" data-y="375.0" data-z="0.0" style="left: 37.71%; top: 61.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6998" data-x="796.23193" data-y="-567.23883" data-z="0.0" style="left: 74.88%; top: 32.27%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -297,8 +298,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_GrandHollow_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_GrandHollow_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_GrandHollow_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_GrandHollow.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6133" data-x="-355.0" data-y="185.0" data-z="0.0" style="left: 38.91%; top: 55.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6134" data-x="275.0" data-y="185.0" data-z="0.0" style="left: 58.59%; top: 55.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_GrandHollow_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_GrandHollow.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="7075" data-x="-355.0" data-y="185.0" data-z="0.0" style="left: 38.91%; top: 55.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="7076" data-x="275.0" data-y="185.0" data-z="0.0" style="left: 58.59%; top: 55.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -332,7 +333,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_Monoliths_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_Monoliths_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_Monoliths_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Monoliths.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6303" data-x="-340.0" data-y="-140.0" data-z="-399.9999" style="left: 39.38%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-399</span></div>
+        <div class="container" id="container-IceAbyss_Monoliths_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Monoliths.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="7249" data-x="-340.0" data-y="-140.0" data-z="-399.9999" style="left: 39.38%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-399</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -366,7 +367,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_ShallowValley_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_ShallowValley_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_ShallowValley_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ShallowValley.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="6386" data-x="-343.0" data-y="-1264.0" data-z="-299.9999" style="left: 39.28%; top: 10.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
+        <div class="container" id="container-IceAbyss_ShallowValley_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ShallowValley.webp" class="image">        <div class="dot monster-dot" data-monster="FrozenGhost" data-index="7350" data-x="-343.0" data-y="-1264.0" data-z="-299.9999" style="left: 39.28%; top: 10.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrozenGhost">冰霜怨灵</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -376,8 +377,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-5749">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_AbyssTooth_D-json', 5749, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6685">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_AbyssTooth_D-json', 6685, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_AbyssTooth_D.json</td>
@@ -387,8 +388,8 @@
         <td>-445.00</td>
         <td>-150.00</td>
     </tr>
-    <tr id="row-5750">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_AbyssTooth_D-json', 5750, this)"></td>
+    <tr id="row-6686">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_AbyssTooth_D-json', 6686, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_AbyssTooth_D.json</td>
@@ -398,8 +399,8 @@
         <td>105.00</td>
         <td>-150.00</td>
     </tr>
-    <tr id="row-5829">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5829, this)"></td>
+    <tr id="row-6788">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 6788, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_DeathPit_HR_D.json</td>
@@ -409,8 +410,8 @@
         <td>-204.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-5830">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 5830, this)"></td>
+    <tr id="row-6789">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeathPit_HR_D-json', 6789, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_DeathPit_HR_D.json</td>
@@ -420,8 +421,8 @@
         <td>702.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-5859">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 5859, this)"></td>
+    <tr id="row-6818">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 6818, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_DeepFlow_HR_D.json</td>
@@ -431,8 +432,8 @@
         <td>90.00</td>
         <td>-125.00</td>
     </tr>
-    <tr id="row-5897">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5897, this)"></td>
+    <tr id="row-6848">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6848, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -442,8 +443,8 @@
         <td>148.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5898">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5898, this)"></td>
+    <tr id="row-6849">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6849, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -453,8 +454,8 @@
         <td>664.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5899">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5899, this)"></td>
+    <tr id="row-6850">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6850, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -464,8 +465,8 @@
         <td>216.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5900">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5900, this)"></td>
+    <tr id="row-6851">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6851, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -475,8 +476,8 @@
         <td>-242.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6031">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6031, this)"></td>
+    <tr id="row-6997">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6997, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_FrozenHold_D.json</td>
@@ -486,8 +487,8 @@
         <td>375.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6032">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6032, this)"></td>
+    <tr id="row-6998">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6998, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_FrozenHold_D.json</td>
@@ -497,8 +498,8 @@
         <td>-567.24</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6133">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 6133, this)"></td>
+    <tr id="row-7075">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 7075, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_GrandHollow_D.json</td>
@@ -508,8 +509,8 @@
         <td>185.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6134">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 6134, this)"></td>
+    <tr id="row-7076">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 7076, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_GrandHollow_D.json</td>
@@ -519,8 +520,8 @@
         <td>185.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6303">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Monoliths_HR_D-json', 6303, this)"></td>
+    <tr id="row-7249">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Monoliths_HR_D-json', 7249, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_Monoliths_HR_D.json</td>
@@ -530,8 +531,8 @@
         <td>-140.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-6386">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ShallowValley_HR_D-json', 6386, this)"></td>
+    <tr id="row-7350">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ShallowValley_HR_D-json', 7350, this)"></td>
         <td>冰霜怨灵</td>
         <td>冰图2层</td>
         <td>IceAbyss_ShallowValley_HR_D.json</td>

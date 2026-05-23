@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>硬化龟壳碎片 >> 熔岩龟 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">硬化龟壳碎片 (HardenedShellFragment) >> LavaTurtle</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>熔岩龟 (6)</div>
 </div></div>
@@ -121,9 +122,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_BurningCourt_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_BurningCourt_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_BurningCourt_D-json" style="aspect-ratio: 1 / 1;"><img src="images/BurningCourt.webp" class="image">        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="5584" data-x="905.0" data-y="170.0" data-z="-5.0" style="left: 78.28%; top: 55.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-5</span></div>
-        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="5585" data-x="-165.0" data-y="765.0" data-z="0.0" style="left: 44.84%; top: 73.91%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="5586" data-x="-570.0" data-y="-930.0" data-z="0.0" style="left: 32.19%; top: 20.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Firedeep_BurningCourt_D-json" style="aspect-ratio: 1 / 1;"><img src="images/BurningCourt.webp" class="image">        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="6517" data-x="905.0" data-y="170.0" data-z="-5.0" style="left: 78.28%; top: 55.31%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-5</span></div>
+        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="6518" data-x="-165.0" data-y="765.0" data-z="0.0" style="left: 44.84%; top: 73.91%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="6519" data-x="-570.0" data-y="-930.0" data-z="0.0" style="left: 32.19%; top: 20.94%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LavaTurtle">熔岩龟</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -157,7 +158,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_CollapsedDigSite_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_CollapsedDigSite_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_CollapsedDigSite_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CollapsedDigSite.webp" class="image">        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="5600" data-x="350.0" data-y="720.0" data-z="10.0" style="left: 60.94%; top: 72.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">10</span></div>
+        <div class="container" id="container-Firedeep_CollapsedDigSite_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CollapsedDigSite.webp" class="image">        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="6535" data-x="350.0" data-y="720.0" data-z="10.0" style="left: 60.94%; top: 72.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">10</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LavaTurtle">熔岩龟</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -191,8 +192,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_LavaCrossway_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_LavaCrossway_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_LavaCrossway_D-json" style="aspect-ratio: 1 / 1;"><img src="images/LavaCrossway.webp" class="image">        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="5616" data-x="-955.0" data-y="5.0" data-z="-140.0" style="left: 20.16%; top: 50.16%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-140</span></div>
-        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="5617" data-x="915.0" data-y="-70.0" data-z="-140.0" style="left: 78.59%; top: 47.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-140</span></div>
+        <div class="container" id="container-Firedeep_LavaCrossway_D-json" style="aspect-ratio: 1 / 1;"><img src="images/LavaCrossway.webp" class="image">        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="6561" data-x="-955.0" data-y="5.0" data-z="-140.0" style="left: 20.16%; top: 50.16%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-140</span></div>
+        <div class="dot monster-dot" data-monster="LavaTurtle" data-index="6562" data-x="915.0" data-y="-70.0" data-z="-140.0" style="left: 78.59%; top: 47.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-140</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LavaTurtle">熔岩龟</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -202,8 +203,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-5584">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 5584, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6517">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 6517, this)"></td>
         <td>熔岩龟</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BurningCourt_D.json</td>
@@ -213,8 +214,8 @@
         <td>170.00</td>
         <td>-5.00</td>
     </tr>
-    <tr id="row-5585">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 5585, this)"></td>
+    <tr id="row-6518">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 6518, this)"></td>
         <td>熔岩龟</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BurningCourt_D.json</td>
@@ -224,8 +225,8 @@
         <td>765.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5586">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 5586, this)"></td>
+    <tr id="row-6519">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 6519, this)"></td>
         <td>熔岩龟</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BurningCourt_D.json</td>
@@ -235,8 +236,8 @@
         <td>-930.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5600">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_CollapsedDigSite_D-json', 5600, this)"></td>
+    <tr id="row-6535">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_CollapsedDigSite_D-json', 6535, this)"></td>
         <td>熔岩龟</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_CollapsedDigSite_D.json</td>
@@ -246,8 +247,8 @@
         <td>720.00</td>
         <td>10.00</td>
     </tr>
-    <tr id="row-5616">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_LavaCrossway_D-json', 5616, this)"></td>
+    <tr id="row-6561">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_LavaCrossway_D-json', 6561, this)"></td>
         <td>熔岩龟</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_LavaCrossway_D.json</td>
@@ -257,8 +258,8 @@
         <td>5.00</td>
         <td>-140.00</td>
     </tr>
-    <tr id="row-5617">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_LavaCrossway_D-json', 5617, this)"></td>
+    <tr id="row-6562">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_LavaCrossway_D-json', 6562, this)"></td>
         <td>熔岩龟</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_LavaCrossway_D.json</td>

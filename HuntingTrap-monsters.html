@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>捕兽夹 >> 鳄鱼人、恶魔犬、冰霜鬼童...(+2) 怪物坐标汇总</title>
+    <title>捕兽夹 >> 鳄鱼人、大白鲨、冰霜鬼童...(+2) 怪物坐标汇总</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -80,22 +81,22 @@
 </head>
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
-    <h1>捕兽夹 >> 鳄鱼人、恶魔犬、冰霜鬼童...(+2) 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
-    <div class="debug-title" id="debug-title">捕兽夹 (HuntingTrap) >> Crocodilian、DemonDog、FrostImp、IceHound、WhiteShark</div>
+    <h1>捕兽夹 >> 鳄鱼人、大白鲨、冰霜鬼童...(+2) 怪物坐标汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">捕兽夹 (HuntingTrap) >> Crocodilian、WhiteShark、FrostImp、DemonDog、IceHound</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>鳄鱼人 (3)</div>
-    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>恶魔犬 (30)</div>
+    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>大白鲨 (4)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 0, 255, 0.7);"></span>冰霜鬼童 (33)</div>
-    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 255, 0, 0.7);"></span>寒冰猎犬 (40)</div>
-    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 255, 0.7);"></span>大白鲨 (4)</div>
+    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 255, 0, 0.7);"></span>恶魔犬 (30)</div>
+    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 255, 0.7);"></span>寒冰猎犬 (40)</div>
 </div></div>
 
     <div class="monster-nav">
     <button class="monster-toggle-btn" id="btn-Crocodilian" data-monster="Crocodilian" onclick="toggleMonster('Crocodilian')" style="background-color: rgba(255, 0, 0, 0.7);">鳄鱼人</button>
-    <button class="monster-toggle-btn" id="btn-DemonDog" data-monster="DemonDog" onclick="toggleMonster('DemonDog')" style="background-color: rgba(0, 255, 0, 0.7);">恶魔犬</button>
+    <button class="monster-toggle-btn" id="btn-WhiteShark" data-monster="WhiteShark" onclick="toggleMonster('WhiteShark')" style="background-color: rgba(0, 255, 0, 0.7);">大白鲨</button>
     <button class="monster-toggle-btn" id="btn-FrostImp" data-monster="FrostImp" onclick="toggleMonster('FrostImp')" style="background-color: rgba(0, 0, 255, 0.7);">冰霜鬼童</button>
-    <button class="monster-toggle-btn" id="btn-IceHound" data-monster="IceHound" onclick="toggleMonster('IceHound')" style="background-color: rgba(255, 255, 0, 0.7);">寒冰猎犬</button>
-    <button class="monster-toggle-btn" id="btn-WhiteShark" data-monster="WhiteShark" onclick="toggleMonster('WhiteShark')" style="background-color: rgba(255, 0, 255, 0.7);">大白鲨</button>
+    <button class="monster-toggle-btn" id="btn-DemonDog" data-monster="DemonDog" onclick="toggleMonster('DemonDog')" style="background-color: rgba(255, 255, 0, 0.7);">恶魔犬</button>
+    <button class="monster-toggle-btn" id="btn-IceHound" data-monster="IceHound" onclick="toggleMonster('IceHound')" style="background-color: rgba(255, 0, 255, 0.7);">寒冰猎犬</button>
 </div>
 
     <div class="maps-grid" id="maps-grid">    <div class="group-header" id="group-IceAbyss">冰图2层</div>
@@ -129,10 +130,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_CharnelHouse_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_CharnelHouse_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_CharnelHouse_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_CharnelHouse.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="5780" data-x="219.0889" data-y="158.94171" data-z="-400.0" style="left: 56.85%; top: 54.97%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-400</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="5781" data-x="525.0" data-y="330.0" data-z="-400.0" style="left: 66.41%; top: 60.31%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-400</span></div>
+        <div class="container" id="container-IceAbyss_CharnelHouse_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_CharnelHouse.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="6755" data-x="219.0889" data-y="158.94171" data-z="-400.0" style="left: 56.85%; top: 54.97%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-400</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="6756" data-x="525.0" data-y="330.0" data-z="-400.0" style="left: 66.41%; top: 60.31%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-400</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_DeepFlow_HR_D-json" data-monsters="IceHound" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">寒渊之流<span class='debug-text'> (IceAbyss_DeepFlow)</span><div class='map-filename'>IceAbyss_DeepFlow_HR_D.json</div></h3>
@@ -164,9 +165,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DeepFlow_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_DeepFlow_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_DeepFlow_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeepFlow.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="5860" data-x="-1340.0" data-y="-110.0" data-z="-100.0" style="left: 8.12%; top: 46.56%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-100</span></div>
+        <div class="container" id="container-IceAbyss_DeepFlow_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DeepFlow.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="6836" data-x="-1340.0" data-y="-110.0" data-z="-100.0" style="left: 8.12%; top: 46.56%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-100</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_DemonicDen_D-json" data-monsters="FrostImp,IceHound" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">冰渊魔窟<span class='debug-text'> (IceAbyss_DemonicDen)</span><div class='map-filename'>IceAbyss_DemonicDen_D.json</div></h3>
@@ -198,16 +199,16 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DemonicDen_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_DemonicDen_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_DemonicDen_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DemonicDen.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="5893" data-x="-110.0" data-y="44.0" data-z="0.0" style="left: 46.56%; top: 51.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrostImp" data-index="5894" data-x="-679.0" data-y="6.0" data-z="0.0" style="left: 28.78%; top: 50.19%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrostImp" data-index="5895" data-x="-638.0" data-y="-632.0" data-z="0.0" style="left: 30.06%; top: 30.25%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrostImp" data-index="5896" data-x="-4.0" data-y="-461.0" data-z="0.0" style="left: 49.88%; top: 35.59%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="5903" data-x="-417.0" data-y="-415.0" data-z="0.0" style="left: 36.97%; top: 37.03%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="5904" data-x="-176.0" data-y="-95.0" data-z="0.0" style="left: 44.50%; top: 47.03%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="5905" data-x="-472.0" data-y="454.0" data-z="0.0" style="left: 35.25%; top: 64.19%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="5906" data-x="-882.0" data-y="-24.0" data-z="0.0" style="left: 22.44%; top: 49.25%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_DemonicDen_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DemonicDen.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="6875" data-x="-110.0" data-y="44.0" data-z="0.0" style="left: 46.56%; top: 51.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrostImp" data-index="6876" data-x="-679.0" data-y="6.0" data-z="0.0" style="left: 28.78%; top: 50.19%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrostImp" data-index="6877" data-x="-638.0" data-y="-632.0" data-z="0.0" style="left: 30.06%; top: 30.25%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrostImp" data-index="6878" data-x="-4.0" data-y="-461.0" data-z="0.0" style="left: 49.88%; top: 35.59%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="6857" data-x="-417.0" data-y="-415.0" data-z="0.0" style="left: 36.97%; top: 37.03%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="6858" data-x="-176.0" data-y="-95.0" data-z="0.0" style="left: 44.50%; top: 47.03%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="6859" data-x="-472.0" data-y="454.0" data-z="0.0" style="left: 35.25%; top: 64.19%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="6860" data-x="-882.0" data-y="-24.0" data-z="0.0" style="left: 22.44%; top: 49.25%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(4点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(4点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(4点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_DividingHill_HR_D-json" data-monsters="FrostImp" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">裂丘<span class='debug-text'> (IceAbyss_DividingHill)</span><div class='map-filename'>IceAbyss_DividingHill_HR_D.json</div></h3>
@@ -239,7 +240,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_DividingHill_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_DividingHill_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_DividingHill_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DividingHill.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="5930" data-x="149.0" data-y="224.0" data-z="5.4594507" style="left: 54.66%; top: 57.00%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">5</span></div>
+        <div class="container" id="container-IceAbyss_DividingHill_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_DividingHill.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="6907" data-x="149.0" data-y="224.0" data-z="5.4594507" style="left: 54.66%; top: 57.00%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">5</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -273,11 +274,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FalseThrone_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_FalseThrone_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_FalseThrone_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FalseThrone.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="5964" data-x="25.00001" data-y="190.0" data-z="-24.999912" style="left: 50.78%; top: 55.94%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-24</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="5965" data-x="240.0" data-y="-410.0" data-z="5.0" style="left: 57.50%; top: 37.19%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">5</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="5966" data-x="-205.0" data-y="-410.0" data-z="5.0" style="left: 43.59%; top: 37.19%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">5</span></div>
+        <div class="container" id="container-IceAbyss_FalseThrone_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FalseThrone.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="6911" data-x="25.00001" data-y="190.0" data-z="-24.999912" style="left: 50.78%; top: 55.94%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-24</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="6912" data-x="240.0" data-y="-410.0" data-z="5.0" style="left: 57.50%; top: 37.19%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">5</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="6913" data-x="-205.0" data-y="-410.0" data-z="5.0" style="left: 43.59%; top: 37.19%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">5</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(3点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(3点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_FrozenHold_D-json" data-monsters="IceHound" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">霜锢堡垒<span class='debug-text'> (IceAbyss_FrozenHold)</span><div class='map-filename'>IceAbyss_FrozenHold_D.json</div></h3>
@@ -309,10 +310,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FrozenHold_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_FrozenHold_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_FrozenHold_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FrozenHold.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="6056" data-x="-393.30127" data-y="375.0" data-z="0.0" style="left: 37.71%; top: 61.72%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6057" data-x="796.23193" data-y="-567.23883" data-z="0.0" style="left: 74.88%; top: 32.27%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_FrozenHold_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FrozenHold.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="7035" data-x="-393.30127" data-y="375.0" data-z="0.0" style="left: 37.71%; top: 61.72%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7036" data-x="796.23193" data-y="-567.23883" data-z="0.0" style="left: 74.88%; top: 32.27%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_Glacivia_D-json" data-monsters="FrostImp" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">冰峡关<span class='debug-text'> (IceAbyss_Glacivia)</span><div class='map-filename'>IceAbyss_Glacivia_D.json</div></h3>
@@ -344,7 +345,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_Glacivia_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_Glacivia_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_Glacivia_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Glacivia.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="6093" data-x="135.0" data-y="25.0" data-z="0.0" style="left: 54.22%; top: 50.78%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_Glacivia_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Glacivia.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="7066" data-x="135.0" data-y="25.0" data-z="0.0" style="left: 54.22%; top: 50.78%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -378,12 +379,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_GrandHollow_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_GrandHollow_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_GrandHollow_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_GrandHollow.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="6131" data-x="-305.0" data-y="120.0" data-z="0.0" style="left: 40.47%; top: 53.75%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrostImp" data-index="6132" data-x="355.0" data-y="120.0" data-z="0.0" style="left: 61.09%; top: 53.75%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6139" data-x="-290.0" data-y="15.0" data-z="0.0" style="left: 40.94%; top: 50.47%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6140" data-x="345.0" data-y="15.0" data-z="0.0" style="left: 60.78%; top: 50.47%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_GrandHollow_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_GrandHollow.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="7117" data-x="-305.0" data-y="120.0" data-z="0.0" style="left: 40.47%; top: 53.75%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrostImp" data-index="7118" data-x="355.0" data-y="120.0" data-z="0.0" style="left: 61.09%; top: 53.75%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7115" data-x="-290.0" data-y="15.0" data-z="0.0" style="left: 40.94%; top: 50.47%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7116" data-x="345.0" data-y="15.0" data-z="0.0" style="left: 60.78%; top: 50.47%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_HoundVale_D-json" data-monsters="FrostImp,IceHound" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">犬啸谷<span class='debug-text'> (IceAbyss_HoundVale)</span><div class='map-filename'>IceAbyss_HoundVale_D.json</div></h3>
@@ -415,21 +416,21 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_HoundVale_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_HoundVale_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_HoundVale_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_HoundVale.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="6172" data-x="40.0" data-y="-145.0" data-z="-1225.0" style="left: 51.25%; top: 45.47%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-1225</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6177" data-x="-550.0" data-y="700.0" data-z="0.0001" style="left: 32.81%; top: 71.88%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6178" data-x="-850.0" data-y="300.0" data-z="-1299.9999" style="left: 23.44%; top: 59.38%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-1299</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6179" data-x="0.0" data-y="700.0" data-z="0.0" style="left: 50.00%; top: 71.88%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6180" data-x="1200.0" data-y="1155.0" data-z="-500.0" style="left: 87.50%; top: 86.09%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-500</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6181" data-x="-1200.0" data-y="-1150.0" data-z="-500.0" style="left: 12.50%; top: 14.06%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-500</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6182" data-x="-850.0" data-y="0.0" data-z="-1300.0" style="left: 23.44%; top: 50.00%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-1300</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6183" data-x="850.0" data-y="-300.0" data-z="-1300.0" style="left: 76.56%; top: 40.62%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-1300</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6184" data-x="850.0" data-y="0.0" data-z="-1300.0" style="left: 76.56%; top: 50.00%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-1300</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6185" data-x="350.0" data-y="-605.0" data-z="0.0" style="left: 60.94%; top: 31.09%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6186" data-x="0.0" data-y="700.0" data-z="0.0" style="left: 50.00%; top: 71.88%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6187" data-x="100.0" data-y="-660.0" data-z="0.0" style="left: 53.12%; top: 29.38%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6188" data-x="0.0" data-y="-650.0" data-z="0.0" style="left: 50.00%; top: 29.69%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceAbyss_HoundVale_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_HoundVale.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="7167" data-x="40.0" data-y="-145.0" data-z="-1225.0" style="left: 51.25%; top: 45.47%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">-1225</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7125" data-x="-550.0" data-y="700.0" data-z="0.0001" style="left: 32.81%; top: 71.88%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7126" data-x="-850.0" data-y="300.0" data-z="-1299.9999" style="left: 23.44%; top: 59.38%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1299</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7127" data-x="0.0" data-y="700.0" data-z="0.0" style="left: 50.00%; top: 71.88%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7128" data-x="1200.0" data-y="1155.0" data-z="-500.0" style="left: 87.50%; top: 86.09%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-500</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7129" data-x="-1200.0" data-y="-1150.0" data-z="-500.0" style="left: 12.50%; top: 14.06%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-500</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7130" data-x="-850.0" data-y="0.0" data-z="-1300.0" style="left: 23.44%; top: 50.00%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1300</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7131" data-x="850.0" data-y="-300.0" data-z="-1300.0" style="left: 76.56%; top: 40.62%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1300</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7132" data-x="850.0" data-y="0.0" data-z="-1300.0" style="left: 76.56%; top: 50.00%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-1300</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7133" data-x="350.0" data-y="-605.0" data-z="0.0" style="left: 60.94%; top: 31.09%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7134" data-x="0.0" data-y="700.0" data-z="0.0" style="left: 50.00%; top: 71.88%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7135" data-x="100.0" data-y="-660.0" data-z="0.0" style="left: 53.12%; top: 29.38%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7136" data-x="0.0" data-y="-650.0" data-z="0.0" style="left: 50.00%; top: 29.69%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(12点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(12点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_ImpRitualRooms_HR_D-json" data-monsters="FrostImp,IceHound" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">恶灵仪式室<span class='debug-text'> (IceAbyss_ImpRitualRooms)</span><div class='map-filename'>IceAbyss_ImpRitualRooms_HR_D.json</div></h3>
@@ -461,13 +462,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_ImpRitualRooms_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_ImpRitualRooms_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_ImpRitualRooms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ImpRitualRooms.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="6258" data-x="-1028.3997" data-y="-1018.83606" data-z="0.0" style="left: 17.86%; top: 18.16%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrostImp" data-index="6259" data-x="-1074.472" data-y="1078.9254" data-z="0.0" style="left: 16.42%; top: 83.72%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6264" data-x="253.58186" data-y="225.09334" data-z="-599.9999" style="left: 57.92%; top: 57.03%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6265" data-x="546.34924" data-y="708.2227" data-z="0.0" style="left: 67.07%; top: 72.13%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6266" data-x="773.58185" data-y="85.09332" data-z="-599.9999" style="left: 74.17%; top: 52.66%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-599</span></div>
+        <div class="container" id="container-IceAbyss_ImpRitualRooms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ImpRitualRooms.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="7241" data-x="-1028.3997" data-y="-1018.83606" data-z="0.0" style="left: 17.86%; top: 18.16%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrostImp" data-index="7242" data-x="-1074.472" data-y="1078.9254" data-z="0.0" style="left: 16.42%; top: 83.72%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7238" data-x="253.58186" data-y="225.09334" data-z="-599.9999" style="left: 57.92%; top: 57.03%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7239" data-x="546.34924" data-y="708.2227" data-z="0.0" style="left: 67.07%; top: 72.13%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7240" data-x="773.58185" data-y="85.09332" data-z="-599.9999" style="left: 74.17%; top: 52.66%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-599</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(3点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(3点)</span></div>
     </div>
     <div class="map-card" id="map-card-IceAbyss_Pillars_HR_D-json" data-monsters="FrostImp" data-group="group-IceAbyss" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">石柱廊<span class='debug-text'> (IceAbyss_Pillars)</span><div class='map-filename'>IceAbyss_Pillars_HR_D.json</div></h3>
@@ -499,7 +500,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_Pillars_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_Pillars_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_Pillars_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Pillars.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="6321" data-x="-224.0" data-y="-20.0" data-z="408.8424" style="left: 43.00%; top: 49.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">408</span></div>
+        <div class="container" id="container-IceAbyss_Pillars_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_Pillars.webp" class="image">        <div class="dot monster-dot" data-monster="FrostImp" data-index="7305" data-x="-224.0" data-y="-20.0" data-z="408.8424" style="left: 43.00%; top: 49.38%; background-color: rgba(0, 0, 255, 0.7); box-shadow: 0 0 6px rgba(0, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 0, 255, 0.7);">408</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 0, 255, 0.7)"></span><span class="ms-name" data-monster="FrostImp">冰霜鬼童</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -533,10 +534,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_StaircaseHill_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceAbyss_StaircaseHill_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_StaircaseHill_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_StaircaseHill.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="6473" data-x="213.0" data-y="-134.0" data-z="-175.9999" style="left: 56.66%; top: 45.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-175</span></div>
-        <div class="dot monster-dot" data-monster="IceHound" data-index="6474" data-x="154.0" data-y="-579.0" data-z="-167.9999" style="left: 54.81%; top: 31.91%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-167</span></div>
+        <div class="container" id="container-IceAbyss_StaircaseHill_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_StaircaseHill.webp" class="image">        <div class="dot monster-dot" data-monster="IceHound" data-index="7453" data-x="213.0" data-y="-134.0" data-z="-175.9999" style="left: 56.66%; top: 45.81%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-175</span></div>
+        <div class="dot monster-dot" data-monster="IceHound" data-index="7454" data-x="154.0" data-y="-579.0" data-z="-167.9999" style="left: 54.81%; top: 31.91%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-167</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="IceHound">寒冰猎犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="group-header" id="group-Inferno">废墟3层炼狱</div>
     <div class="map-card" id="map-card-DeathAltar_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -569,10 +570,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('DeathAltar_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('DeathAltar_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-DeathAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathAltar.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9133" data-x="310.0" data-y="-320.0" data-z="100.0" style="left: 59.69%; top: 40.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">100</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9134" data-x="310.0" data-y="290.0" data-z="100.0" style="left: 59.69%; top: 59.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">100</span></div>
+        <div class="container" id="container-DeathAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathAltar.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="10255" data-x="310.0" data-y="-320.0" data-z="100.0" style="left: 59.69%; top: 40.00%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">100</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="10256" data-x="310.0" data-y="290.0" data-z="100.0" style="left: 59.69%; top: 59.06%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">100</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-DemonDen_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">炼狱魔窟<span class='debug-text'> (Demon_Den)</span><div class='map-filename'>DemonDen_HR_D.json</div></h3>
@@ -604,9 +605,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('DemonDen_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('DemonDen_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9268" data-x="-5.0" data-y="1180.0" data-z="-2.9999" style="left: 49.84%; top: 86.88%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-2</span></div>
+        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="10429" data-x="-5.0" data-y="1180.0" data-z="-2.9999" style="left: 49.84%; top: 86.88%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-2</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-InfernoColumns_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">硫火柱廊<span class='debug-text'> (Blood_Columns)</span><div class='map-filename'>InfernoColumns_HR_D.json</div></h3>
@@ -638,10 +639,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoColumns_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoColumns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoColumns.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9361" data-x="1362.262" data-y="1185.738" data-z="14.0" style="left: 92.57%; top: 87.05%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9362" data-x="1177.0" data-y="1371.0" data-z="14.0" style="left: 86.78%; top: 92.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
+        <div class="container" id="container-InfernoColumns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoColumns.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="10538" data-x="1362.262" data-y="1185.738" data-z="14.0" style="left: 92.57%; top: 87.05%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">14</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="10539" data-x="1177.0" data-y="1371.0" data-z="14.0" style="left: 86.78%; top: 92.84%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">14</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card test-module" id="map-card-InfernoColumns_SR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">SR<span class='debug-text'> (SR)</span><div class='map-filename'>InfernoColumns_SR_D.json</div></h3>
@@ -673,10 +674,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoColumns_SR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoColumns_SR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoColumns_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: InfernoColumns_SR, SR</small></div>        <div class="dot monster-dot" data-monster="DemonDog" data-index="9932" data-x="1177.0" data-y="1371.0" data-z="14.0" style="left: 86.78%; top: 92.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9933" data-x="1362.262" data-y="1185.738" data-z="14.0" style="left: 92.57%; top: 87.05%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">14</span></div>
+        <div class="container" id="container-InfernoColumns_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: InfernoColumns_SR, SR</small></div>        <div class="dot monster-dot" data-monster="DemonDog" data-index="11277" data-x="1177.0" data-y="1371.0" data-z="14.0" style="left: 86.78%; top: 92.84%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">14</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="11278" data-x="1362.262" data-y="1185.738" data-z="14.0" style="left: 92.57%; top: 87.05%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">14</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-InfernoRiver_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">硫火之河<span class='debug-text'> (Blood_River)</span><div class='map-filename'>InfernoRiver_HR_D.json</div></h3>
@@ -708,11 +709,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('InfernoRiver_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9552" data-x="-1020.65967" data-y="1287.7659" data-z="0.0" style="left: 18.10%; top: 90.24%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9553" data-x="1396.0" data-y="1174.0" data-z="0.0" style="left: 93.62%; top: 86.69%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9554" data-x="1226.0" data-y="1345.0" data-z="0.0" style="left: 88.31%; top: 92.03%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="10841" data-x="-1020.65967" data-y="1287.7659" data-z="0.0" style="left: 18.10%; top: 90.24%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="10842" data-x="1396.0" data-y="1174.0" data-z="0.0" style="left: 93.62%; top: 86.69%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="10843" data-x="1226.0" data-y="1345.0" data-z="0.0" style="left: 88.31%; top: 92.03%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(3点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(3点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_Bloodyfalls_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">硫火瀑布<span class='debug-text'> (Bloodyfalls)</span><div class='map-filename'>Inferno_Bloodyfalls_HR_D.json</div></h3>
@@ -744,12 +745,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Bloodyfalls_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Bloodyfalls_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Bloodyfalls_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Bloodyfalls.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="8369" data-x="805.0" data-y="-70.0" data-z="150.0001" style="left: 75.16%; top: 47.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">150</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="8370" data-x="-720.0" data-y="-70.0" data-z="150.0001" style="left: 27.50%; top: 47.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">150</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="8371" data-x="45.0" data-y="670.0" data-z="150.0001" style="left: 51.41%; top: 70.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">150</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="8372" data-x="45.0" data-y="-850.0" data-z="150.0001" style="left: 51.41%; top: 23.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">150</span></div>
+        <div class="container" id="container-Inferno_Bloodyfalls_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Bloodyfalls.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9418" data-x="805.0" data-y="-70.0" data-z="150.0001" style="left: 75.16%; top: 47.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">150</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="9419" data-x="-720.0" data-y="-70.0" data-z="150.0001" style="left: 27.50%; top: 47.81%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">150</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="9420" data-x="45.0" data-y="670.0" data-z="150.0001" style="left: 51.41%; top: 70.94%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">150</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="9421" data-x="45.0" data-y="-850.0" data-z="150.0001" style="left: 51.41%; top: 23.44%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">150</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(4点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(4点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_DeathPlatforms_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">硫火平台<span class='debug-text'> (Blood_Platforms)</span><div class='map-filename'>Inferno_DeathPlatforms_HR_D.json</div></h3>
@@ -781,9 +782,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DeathPlatforms_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_DeathPlatforms_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9208" data-x="1120.0" data-y="-200.0" data-z="100.0" style="left: 85.00%; top: 43.75%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">100</span></div>
+        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="10356" data-x="1120.0" data-y="-200.0" data-z="100.0" style="left: 85.00%; top: 43.75%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">100</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_Doomcage_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">末日囚笼<span class='debug-text'> (Doomcage)</span><div class='map-filename'>Inferno_Doomcage_HR_D.json</div></h3>
@@ -815,10 +816,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Doomcage_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Doomcage_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="8491" data-x="-518.28424" data-y="-503.28427" data-z="0.0" style="left: 33.80%; top: 34.27%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="8492" data-x="514.7487" data-y="508.53552" data-z="0.0" style="left: 66.09%; top: 65.89%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9571" data-x="-518.28424" data-y="-503.28427" data-z="0.0" style="left: 33.80%; top: 34.27%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="9572" data-x="514.7487" data-y="508.53552" data-z="0.0" style="left: 66.09%; top: 65.89%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_DownStair_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">等候室<span class='debug-text'> (Waiting_Room)</span><div class='map-filename'>Inferno_DownStair_HR_D.json</div></h3>
@@ -850,9 +851,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DownStair_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_DownStair_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_DownStair_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DownStair.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="8550" data-x="500.0" data-y="-888.0" data-z="0.0" style="left: 65.62%; top: 22.25%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_DownStair_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DownStair.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9617" data-x="500.0" data-y="-888.0" data-z="0.0" style="left: 65.62%; top: 22.25%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_Drain_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">排水沟<span class='debug-text'> (Drain)</span><div class='map-filename'>Inferno_Drain_HR_D.json</div></h3>
@@ -884,9 +885,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Drain_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Drain_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Drain_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Drain.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="8648" data-x="1292.9904" data-y="1255.1794" data-z="0.0" style="left: 90.41%; top: 89.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_Drain_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Drain.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9707" data-x="1292.9904" data-y="1255.1794" data-z="0.0" style="left: 90.41%; top: 89.22%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_LavaCorner_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">恶魔巢穴<span class='debug-text'> (Demon_Lairs)</span><div class='map-filename'>Inferno_LavaCorner_HR_D.json</div></h3>
@@ -918,10 +919,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_LavaCorner_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_LavaCorner_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_LavaCorner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaCorner.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9718" data-x="-50.0" data-y="400.0" data-z="0.0" style="left: 48.44%; top: 62.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9719" data-x="400.0" data-y="-30.0" data-z="0.0" style="left: 62.50%; top: 49.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Inferno_LavaCorner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaCorner.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="11027" data-x="-50.0" data-y="400.0" data-z="0.0" style="left: 48.44%; top: 62.50%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="11028" data-x="400.0" data-y="-30.0" data-z="0.0" style="left: 62.50%; top: 49.06%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">0</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_LavaStairway_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">恶魔阶梯<span class='debug-text'> (Demon_Stairs)</span><div class='map-filename'>Inferno_LavaStairway_HR_D.json</div></h3>
@@ -953,10 +954,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_LavaStairway_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_LavaStairway_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9779" data-x="-1056.8009" data-y="-97.94019" data-z="-201.08049" style="left: 16.97%; top: 46.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-201</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9780" data-x="-996.8009" data-y="132.0598" data-z="-201.08049" style="left: 18.85%; top: 54.13%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-201</span></div>
+        <div class="container" id="container-Inferno_LavaStairway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaStairway.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="11099" data-x="-1056.8009" data-y="-97.94019" data-z="-201.08049" style="left: 16.97%; top: 46.94%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-201</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="11100" data-x="-996.8009" data-y="132.0598" data-z="-201.08049" style="left: 18.85%; top: 54.13%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-201</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_Obelisk_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">腐化尖碑<span class='debug-text'> (Obelisk)</span><div class='map-filename'>Inferno_Obelisk_HR_D.json</div></h3>
@@ -988,12 +989,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Obelisk_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Obelisk_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Obelisk_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Obelisk.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="8971" data-x="560.0" data-y="-395.0" data-z="-10.0" style="left: 67.50%; top: 37.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-10</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="8972" data-x="560.0" data-y="105.0" data-z="-10.0" style="left: 67.50%; top: 53.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-10</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="8973" data-x="60.0" data-y="105.0" data-z="-10.0" style="left: 51.88%; top: 53.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-10</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="8974" data-x="60.0" data-y="-395.0" data-z="-10.0" style="left: 51.88%; top: 37.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-10</span></div>
+        <div class="container" id="container-Inferno_Obelisk_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Obelisk.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="10074" data-x="560.0" data-y="-395.0" data-z="-10.0" style="left: 67.50%; top: 37.66%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-10</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="10075" data-x="560.0" data-y="105.0" data-z="-10.0" style="left: 67.50%; top: 53.28%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-10</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="10076" data-x="60.0" data-y="105.0" data-z="-10.0" style="left: 51.88%; top: 53.28%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-10</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="10077" data-x="60.0" data-y="-395.0" data-z="-10.0" style="left: 51.88%; top: 37.66%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">-10</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(4点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(4点)</span></div>
     </div>
     <div class="map-card" id="map-card-Inferno_Painfulsteps_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">苦行阶梯<span class='debug-text'> (Painfulsteps)</span><div class='map-filename'>Inferno_Painfulsteps_HR_D.json</div></h3>
@@ -1025,9 +1026,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Painfulsteps_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Painfulsteps_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Painfulsteps_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Painfulsteps.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9015" data-x="1287.2163" data-y="1232.4308" data-z="400.0" style="left: 90.23%; top: 88.51%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">400</span></div>
+        <div class="container" id="container-Inferno_Painfulsteps_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Painfulsteps.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="10173" data-x="1287.2163" data-y="1232.4308" data-z="400.0" style="left: 90.23%; top: 88.51%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">400</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ThroneRoom_02_HR_D-json" data-monsters="DemonDog" data-group="group-Inferno" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">恶魔王座<span class='debug-text'> (Demon_Throne)</span><div class='map-filename'>ThroneRoom_02_HR_D.json</div></h3>
@@ -1059,10 +1060,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ThroneRoom_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ThroneRoom_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="9914" data-x="1038.0673" data-y="-1099.0677" data-z="1.0" style="left: 82.44%; top: 15.65%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="DemonDog" data-index="9915" data-x="924.9306" data-y="817.7947" data-z="1.0" style="left: 78.90%; top: 75.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot monster-dot" data-monster="DemonDog" data-index="11258" data-x="1038.0673" data-y="-1099.0677" data-z="1.0" style="left: 82.44%; top: 15.65%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="DemonDog" data-index="11259" data-x="924.9306" data-y="817.7947" data-z="1.0" style="left: 78.90%; top: 75.56%; background-color: rgba(255, 255, 0, 0.7); box-shadow: 0 0 6px rgba(255, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 255, 0, 0.7);">1</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 255, 0, 0.7)"></span><span class="ms-name" data-monster="DemonDog">恶魔犬</span><span class="ms-count">(2点)</span></div>
     </div>
     <div class="group-header" id="group-ShipGraveyard">水图</div>
     <div class="map-card" id="map-card-ShipGraveyard_SeaFortress_D-json" data-monsters="Crocodilian" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -1095,7 +1096,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SeaFortress_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_SeaFortress_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_SeaFortress_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SeaFortress.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="15102" data-x="76.0" data-y="-7.0" data-z="600.0001" style="left: 52.38%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">600</span></div>
+        <div class="container" id="container-ShipGraveyard_SeaFortress_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SeaFortress.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="16777" data-x="76.0" data-y="-7.0" data-z="600.0001" style="left: 52.38%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">600</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -1129,9 +1130,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SunkenShip_01_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_SunkenShip_01_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_SunkenShip_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SunkenShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="15870" data-x="1004.0" data-y="-1230.0" data-z="-530.0" style="left: 81.38%; top: 11.56%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-530</span></div>
+        <div class="container" id="container-ShipGraveyard_SunkenShip_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_SunkenShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="17518" data-x="1004.0" data-y="-1230.0" data-z="-530.0" style="left: 81.38%; top: 11.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-530</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_Trench_D-json" data-monsters="WhiteShark" data-group="group-ShipGraveyard" data-rotate="0" data-init-rotate="0" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">海沟<span class='debug-text'> (ShipGraveyard_Trench)</span><div class='map-filename'>ShipGraveyard_Trench_D.json</div></h3>
@@ -1163,9 +1164,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Trench_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_Trench_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_Trench_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Trench.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="15936" data-x="-43.020546" data-y="-676.4525" data-z="2157.0" style="left: 48.66%; top: 28.86%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">2157</span></div>
+        <div class="container" id="container-ShipGraveyard_Trench_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_Trench.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="17568" data-x="-43.020546" data-y="-676.4525" data-z="2157.0" style="left: 48.66%; top: 28.86%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">2157</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_AbandonedShip_01_HR_D-json" data-monsters="Crocodilian" data-group="group-ShipGraveyard" data-rotate="3" data-init-rotate="3" data-init-range="3200" data-init-offset-x="-1600.00" data-init-offset-y="-1600.00" data-size-x="1" data-size-y="2" style="">
         <h3 class="map-title">废弃舰船<span class='debug-text'> (AbandonedShip_01)</span><div class='map-filename'>ShipGraveyard_AbandonedShip_01_HR_D.json</div></h3>
@@ -1197,7 +1198,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_AbandonedShip_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_AbandonedShip_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="12685" data-x="2174.9841" data-y="230.88385" data-z="25.757713" style="left: 117.97%; top: 28.61%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">25</span></div>
+        <div class="container" id="container-ShipGraveyard_AbandonedShip_01_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/ShipGraveyard_AbandonedShip_01.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="14346" data-x="2174.9841" data-y="230.88385" data-z="25.757713" style="left: 117.97%; top: 28.61%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">25</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -1231,9 +1232,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_BladehandRefuge_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_BladehandRefuge_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_BladehandRefuge_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_BladehandRefuge.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="12860" data-x="2800.0" data-y="1300.0" data-z="-350.0" style="left: 68.75%; top: 45.31%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">-350</span></div>
+        <div class="container" id="container-ShipGraveyard_BladehandRefuge_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_BladehandRefuge.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="14478" data-x="2800.0" data-y="1300.0" data-z="-350.0" style="left: 68.75%; top: 45.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-350</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_Hole_HR_D-json" data-monsters="WhiteShark" data-group="group-ShipGraveyard" data-rotate="1" data-init-rotate="1" data-init-range="4800" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
         <h3 class="map-title">蓝洞<span class='debug-text'> (Hole)</span><div class='map-filename'>ShipGraveyard_Hole_HR_D.json</div></h3>
@@ -1265,9 +1266,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_Hole_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_Hole_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_Hole_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_Hole.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="14144" data-x="255.0" data-y="315.0" data-z="555.0" style="left: 52.66%; top: 53.28%; background-color: rgba(255, 0, 255, 0.7); box-shadow: 0 0 6px rgba(255, 0, 255, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 255, 0.7);">555</span></div>
+        <div class="container" id="container-ShipGraveyard_Hole_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_Hole.webp" class="image">        <div class="dot monster-dot" data-monster="WhiteShark" data-index="15643" data-x="255.0" data-y="315.0" data-z="555.0" style="left: 52.66%; top: 53.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">555</span></div>
 </div>
-        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 255, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="WhiteShark">大白鲨</span><span class="ms-count">(1点)</span></div>
     </div>
     <div class="map-card" id="map-card-ShipGraveyard_SkullIsland_D-json" data-monsters="Crocodilian" data-group="group-ShipGraveyard" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="1600.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
         <h3 class="map-title">骷髅岛<span class='debug-text'> (ShipGraveyard_SkullIsland)</span><div class='map-filename'>ShipGraveyard_SkullIsland_D.json</div></h3>
@@ -1299,7 +1300,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_SkullIsland_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ShipGraveyard_SkullIsland_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ShipGraveyard_SkullIsland_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_SkullIsland.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="15412" data-x="-505.64178" data-y="775.7115" data-z="1190.0" style="left: 67.10%; top: 87.12%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1190</span></div>
+        <div class="container" id="container-ShipGraveyard_SkullIsland_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_SkullIsland.webp" class="image">        <div class="dot monster-dot" data-monster="Crocodilian" data-index="17048" data-x="-505.64178" data-y="775.7115" data-z="1190.0" style="left: 67.10%; top: 87.12%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">1190</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Crocodilian">鳄鱼人</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -1309,8 +1310,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-5780">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_CharnelHouse_HR_D-json', 5780, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6755">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_CharnelHouse_HR_D-json', 6755, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_CharnelHouse_HR_D.json</td>
@@ -1320,8 +1321,8 @@
         <td>158.94</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-5781">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_CharnelHouse_HR_D-json', 5781, this)"></td>
+    <tr id="row-6756">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_CharnelHouse_HR_D-json', 6756, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_CharnelHouse_HR_D.json</td>
@@ -1331,8 +1332,8 @@
         <td>330.00</td>
         <td>-400.00</td>
     </tr>
-    <tr id="row-5860">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 5860, this)"></td>
+    <tr id="row-6836">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DeepFlow_HR_D-json', 6836, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_DeepFlow_HR_D.json</td>
@@ -1342,8 +1343,8 @@
         <td>-110.00</td>
         <td>-100.00</td>
     </tr>
-    <tr id="row-5893">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5893, this)"></td>
+    <tr id="row-6875">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6875, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1353,8 +1354,8 @@
         <td>44.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5894">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5894, this)"></td>
+    <tr id="row-6876">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6876, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1364,8 +1365,8 @@
         <td>6.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5895">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5895, this)"></td>
+    <tr id="row-6877">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6877, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1375,8 +1376,8 @@
         <td>-632.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5896">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5896, this)"></td>
+    <tr id="row-6878">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6878, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1386,8 +1387,8 @@
         <td>-461.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5903">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5903, this)"></td>
+    <tr id="row-6857">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6857, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1397,8 +1398,8 @@
         <td>-415.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5904">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5904, this)"></td>
+    <tr id="row-6858">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6858, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1408,8 +1409,8 @@
         <td>-95.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5905">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5905, this)"></td>
+    <tr id="row-6859">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6859, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1419,8 +1420,8 @@
         <td>454.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5906">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 5906, this)"></td>
+    <tr id="row-6860">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DemonicDen_D-json', 6860, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_DemonicDen_D.json</td>
@@ -1430,8 +1431,8 @@
         <td>-24.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-5930">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DividingHill_HR_D-json', 5930, this)"></td>
+    <tr id="row-6907">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_DividingHill_HR_D-json', 6907, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_DividingHill_HR_D.json</td>
@@ -1441,8 +1442,8 @@
         <td>224.00</td>
         <td>5.46</td>
     </tr>
-    <tr id="row-5964">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 5964, this)"></td>
+    <tr id="row-6911">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 6911, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_FalseThrone_D.json</td>
@@ -1452,8 +1453,8 @@
         <td>190.00</td>
         <td>-25.00</td>
     </tr>
-    <tr id="row-5965">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 5965, this)"></td>
+    <tr id="row-6912">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 6912, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_FalseThrone_D.json</td>
@@ -1463,8 +1464,8 @@
         <td>-410.00</td>
         <td>5.00</td>
     </tr>
-    <tr id="row-5966">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 5966, this)"></td>
+    <tr id="row-6913">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_D-json', 6913, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_FalseThrone_D.json</td>
@@ -1474,8 +1475,8 @@
         <td>-410.00</td>
         <td>5.00</td>
     </tr>
-    <tr id="row-6056">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6056, this)"></td>
+    <tr id="row-7035">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 7035, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_FrozenHold_D.json</td>
@@ -1485,8 +1486,8 @@
         <td>375.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6057">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 6057, this)"></td>
+    <tr id="row-7036">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FrozenHold_D-json', 7036, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_FrozenHold_D.json</td>
@@ -1496,8 +1497,8 @@
         <td>-567.24</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6093">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Glacivia_D-json', 6093, this)"></td>
+    <tr id="row-7066">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Glacivia_D-json', 7066, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_Glacivia_D.json</td>
@@ -1507,8 +1508,8 @@
         <td>25.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6131">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 6131, this)"></td>
+    <tr id="row-7117">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 7117, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_GrandHollow_D.json</td>
@@ -1518,8 +1519,8 @@
         <td>120.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6132">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 6132, this)"></td>
+    <tr id="row-7118">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 7118, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_GrandHollow_D.json</td>
@@ -1529,8 +1530,8 @@
         <td>120.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6139">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 6139, this)"></td>
+    <tr id="row-7115">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 7115, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_GrandHollow_D.json</td>
@@ -1540,8 +1541,8 @@
         <td>15.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6140">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 6140, this)"></td>
+    <tr id="row-7116">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_GrandHollow_D-json', 7116, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_GrandHollow_D.json</td>
@@ -1551,8 +1552,8 @@
         <td>15.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6172">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6172, this)"></td>
+    <tr id="row-7167">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7167, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1562,8 +1563,8 @@
         <td>-145.00</td>
         <td>-1225.00</td>
     </tr>
-    <tr id="row-6177">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6177, this)"></td>
+    <tr id="row-7125">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7125, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1573,8 +1574,8 @@
         <td>700.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6178">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6178, this)"></td>
+    <tr id="row-7126">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7126, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1584,8 +1585,8 @@
         <td>300.00</td>
         <td>-1300.00</td>
     </tr>
-    <tr id="row-6179">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6179, this)"></td>
+    <tr id="row-7127">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7127, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1595,8 +1596,8 @@
         <td>700.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6180">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6180, this)"></td>
+    <tr id="row-7128">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7128, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1606,8 +1607,8 @@
         <td>1155.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-6181">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6181, this)"></td>
+    <tr id="row-7129">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7129, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1617,8 +1618,8 @@
         <td>-1150.00</td>
         <td>-500.00</td>
     </tr>
-    <tr id="row-6182">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6182, this)"></td>
+    <tr id="row-7130">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7130, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1628,8 +1629,8 @@
         <td>0.00</td>
         <td>-1300.00</td>
     </tr>
-    <tr id="row-6183">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6183, this)"></td>
+    <tr id="row-7131">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7131, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1639,8 +1640,8 @@
         <td>-300.00</td>
         <td>-1300.00</td>
     </tr>
-    <tr id="row-6184">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6184, this)"></td>
+    <tr id="row-7132">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7132, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1650,8 +1651,8 @@
         <td>0.00</td>
         <td>-1300.00</td>
     </tr>
-    <tr id="row-6185">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6185, this)"></td>
+    <tr id="row-7133">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7133, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1661,8 +1662,8 @@
         <td>-605.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6186">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6186, this)"></td>
+    <tr id="row-7134">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7134, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1672,8 +1673,8 @@
         <td>700.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6187">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6187, this)"></td>
+    <tr id="row-7135">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7135, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1683,8 +1684,8 @@
         <td>-660.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6188">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 6188, this)"></td>
+    <tr id="row-7136">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_HoundVale_D-json', 7136, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_HoundVale_D.json</td>
@@ -1694,8 +1695,8 @@
         <td>-650.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6258">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 6258, this)"></td>
+    <tr id="row-7241">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 7241, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_ImpRitualRooms_HR_D.json</td>
@@ -1705,8 +1706,8 @@
         <td>-1018.84</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6259">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 6259, this)"></td>
+    <tr id="row-7242">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 7242, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_ImpRitualRooms_HR_D.json</td>
@@ -1716,8 +1717,8 @@
         <td>1078.93</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6264">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 6264, this)"></td>
+    <tr id="row-7238">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 7238, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_ImpRitualRooms_HR_D.json</td>
@@ -1727,8 +1728,8 @@
         <td>225.09</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-6265">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 6265, this)"></td>
+    <tr id="row-7239">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 7239, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_ImpRitualRooms_HR_D.json</td>
@@ -1738,8 +1739,8 @@
         <td>708.22</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6266">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 6266, this)"></td>
+    <tr id="row-7240">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 7240, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_ImpRitualRooms_HR_D.json</td>
@@ -1749,8 +1750,8 @@
         <td>85.09</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-6321">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Pillars_HR_D-json', 6321, this)"></td>
+    <tr id="row-7305">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_Pillars_HR_D-json', 7305, this)"></td>
         <td>冰霜鬼童</td>
         <td>冰图2层</td>
         <td>IceAbyss_Pillars_HR_D.json</td>
@@ -1760,8 +1761,8 @@
         <td>-20.00</td>
         <td>408.84</td>
     </tr>
-    <tr id="row-6473">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_StaircaseHill_HR_D-json', 6473, this)"></td>
+    <tr id="row-7453">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_StaircaseHill_HR_D-json', 7453, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_StaircaseHill_HR_D.json</td>
@@ -1771,8 +1772,8 @@
         <td>-134.00</td>
         <td>-176.00</td>
     </tr>
-    <tr id="row-6474">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_StaircaseHill_HR_D-json', 6474, this)"></td>
+    <tr id="row-7454">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_StaircaseHill_HR_D-json', 7454, this)"></td>
         <td>寒冰猎犬</td>
         <td>冰图2层</td>
         <td>IceAbyss_StaircaseHill_HR_D.json</td>
@@ -1782,8 +1783,8 @@
         <td>-579.00</td>
         <td>-168.00</td>
     </tr>
-    <tr id="row-9133">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathAltar_HR_D-json', 9133, this)"></td>
+    <tr id="row-10255">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathAltar_HR_D-json', 10255, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>DeathAltar_HR_D.json</td>
@@ -1793,8 +1794,8 @@
         <td>-320.00</td>
         <td>100.00</td>
     </tr>
-    <tr id="row-9134">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathAltar_HR_D-json', 9134, this)"></td>
+    <tr id="row-10256">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathAltar_HR_D-json', 10256, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>DeathAltar_HR_D.json</td>
@@ -1804,8 +1805,8 @@
         <td>290.00</td>
         <td>100.00</td>
     </tr>
-    <tr id="row-9268">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 9268, this)"></td>
+    <tr id="row-10429">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 10429, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>DemonDen_HR_D.json</td>
@@ -1815,8 +1816,8 @@
         <td>1180.00</td>
         <td>-3.00</td>
     </tr>
-    <tr id="row-9361">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9361, this)"></td>
+    <tr id="row-10538">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 10538, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_HR_D.json</td>
@@ -1826,8 +1827,8 @@
         <td>1185.74</td>
         <td>14.00</td>
     </tr>
-    <tr id="row-9362">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 9362, this)"></td>
+    <tr id="row-10539">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_HR_D-json', 10539, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_HR_D.json</td>
@@ -1837,8 +1838,8 @@
         <td>1371.00</td>
         <td>14.00</td>
     </tr>
-    <tr id="row-9932">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 9932, this)"></td>
+    <tr id="row-11277">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 11277, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_SR_D.json</td>
@@ -1848,8 +1849,8 @@
         <td>1371.00</td>
         <td>14.00</td>
     </tr>
-    <tr id="row-9933">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 9933, this)"></td>
+    <tr id="row-11278">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoColumns_SR_D-json', 11278, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>InfernoColumns_SR_D.json</td>
@@ -1859,8 +1860,8 @@
         <td>1185.74</td>
         <td>14.00</td>
     </tr>
-    <tr id="row-9552">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 9552, this)"></td>
+    <tr id="row-10841">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10841, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
@@ -1870,8 +1871,8 @@
         <td>1287.77</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9553">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 9553, this)"></td>
+    <tr id="row-10842">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10842, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
@@ -1881,8 +1882,8 @@
         <td>1174.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9554">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 9554, this)"></td>
+    <tr id="row-10843">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10843, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
@@ -1892,8 +1893,8 @@
         <td>1345.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8369">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8369, this)"></td>
+    <tr id="row-9418">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9418, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -1903,8 +1904,8 @@
         <td>-70.00</td>
         <td>150.00</td>
     </tr>
-    <tr id="row-8370">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8370, this)"></td>
+    <tr id="row-9419">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9419, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -1914,8 +1915,8 @@
         <td>-70.00</td>
         <td>150.00</td>
     </tr>
-    <tr id="row-8371">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8371, this)"></td>
+    <tr id="row-9420">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9420, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -1925,8 +1926,8 @@
         <td>670.00</td>
         <td>150.00</td>
     </tr>
-    <tr id="row-8372">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 8372, this)"></td>
+    <tr id="row-9421">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Bloodyfalls_HR_D-json', 9421, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Bloodyfalls_HR_D.json</td>
@@ -1936,8 +1937,8 @@
         <td>-850.00</td>
         <td>150.00</td>
     </tr>
-    <tr id="row-9208">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 9208, this)"></td>
+    <tr id="row-10356">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10356, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DeathPlatforms_HR_D.json</td>
@@ -1947,8 +1948,8 @@
         <td>-200.00</td>
         <td>100.00</td>
     </tr>
-    <tr id="row-8491">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 8491, this)"></td>
+    <tr id="row-9571">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9571, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
@@ -1958,8 +1959,8 @@
         <td>-503.28</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8492">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 8492, this)"></td>
+    <tr id="row-9572">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9572, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
@@ -1969,8 +1970,8 @@
         <td>508.54</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8550">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 8550, this)"></td>
+    <tr id="row-9617">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DownStair_HR_D-json', 9617, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DownStair_HR_D.json</td>
@@ -1980,8 +1981,8 @@
         <td>-888.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8648">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Drain_HR_D-json', 8648, this)"></td>
+    <tr id="row-9707">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Drain_HR_D-json', 9707, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Drain_HR_D.json</td>
@@ -1991,8 +1992,8 @@
         <td>1255.18</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9718">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaCorner_HR_D-json', 9718, this)"></td>
+    <tr id="row-11027">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaCorner_HR_D-json', 11027, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaCorner_HR_D.json</td>
@@ -2002,8 +2003,8 @@
         <td>400.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9719">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaCorner_HR_D-json', 9719, this)"></td>
+    <tr id="row-11028">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaCorner_HR_D-json', 11028, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaCorner_HR_D.json</td>
@@ -2013,8 +2014,8 @@
         <td>-30.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9779">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 9779, this)"></td>
+    <tr id="row-11099">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 11099, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaStairway_HR_D.json</td>
@@ -2024,8 +2025,8 @@
         <td>-97.94</td>
         <td>-201.08</td>
     </tr>
-    <tr id="row-9780">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 9780, this)"></td>
+    <tr id="row-11100">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaStairway_HR_D-json', 11100, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_LavaStairway_HR_D.json</td>
@@ -2035,8 +2036,8 @@
         <td>132.06</td>
         <td>-201.08</td>
     </tr>
-    <tr id="row-8971">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8971, this)"></td>
+    <tr id="row-10074">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10074, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -2046,8 +2047,8 @@
         <td>-395.00</td>
         <td>-10.00</td>
     </tr>
-    <tr id="row-8972">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8972, this)"></td>
+    <tr id="row-10075">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10075, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -2057,8 +2058,8 @@
         <td>105.00</td>
         <td>-10.00</td>
     </tr>
-    <tr id="row-8973">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8973, this)"></td>
+    <tr id="row-10076">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10076, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -2068,8 +2069,8 @@
         <td>105.00</td>
         <td>-10.00</td>
     </tr>
-    <tr id="row-8974">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 8974, this)"></td>
+    <tr id="row-10077">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Obelisk_HR_D-json', 10077, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Obelisk_HR_D.json</td>
@@ -2079,8 +2080,8 @@
         <td>-395.00</td>
         <td>-10.00</td>
     </tr>
-    <tr id="row-9015">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 9015, this)"></td>
+    <tr id="row-10173">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Painfulsteps_HR_D-json', 10173, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Painfulsteps_HR_D.json</td>
@@ -2090,8 +2091,8 @@
         <td>1232.43</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-9914">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9914, this)"></td>
+    <tr id="row-11258">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 11258, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>ThroneRoom_02_HR_D.json</td>
@@ -2101,8 +2102,8 @@
         <td>-1099.07</td>
         <td>1.00</td>
     </tr>
-    <tr id="row-9915">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 9915, this)"></td>
+    <tr id="row-11259">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 11259, this)"></td>
         <td>恶魔犬</td>
         <td>废墟3层炼狱</td>
         <td>ThroneRoom_02_HR_D.json</td>
@@ -2112,8 +2113,8 @@
         <td>817.79</td>
         <td>1.00</td>
     </tr>
-    <tr id="row-15102">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 15102, this)"></td>
+    <tr id="row-16777">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SeaFortress_D-json', 16777, this)"></td>
         <td>鳄鱼人</td>
         <td>水图</td>
         <td>ShipGraveyard_SeaFortress_D.json</td>
@@ -2123,8 +2124,8 @@
         <td>-7.00</td>
         <td>600.00</td>
     </tr>
-    <tr id="row-15870">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SunkenShip_01_D-json', 15870, this)"></td>
+    <tr id="row-17518">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SunkenShip_01_D-json', 17518, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_SunkenShip_01_D.json</td>
@@ -2134,8 +2135,8 @@
         <td>-1230.00</td>
         <td>-530.00</td>
     </tr>
-    <tr id="row-15936">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 15936, this)"></td>
+    <tr id="row-17568">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Trench_D-json', 17568, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_Trench_D.json</td>
@@ -2145,8 +2146,8 @@
         <td>-676.45</td>
         <td>2157.00</td>
     </tr>
-    <tr id="row-12685">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 12685, this)"></td>
+    <tr id="row-14346">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_AbandonedShip_01_HR_D-json', 14346, this)"></td>
         <td>鳄鱼人</td>
         <td>水图</td>
         <td>ShipGraveyard_AbandonedShip_01_HR_D.json</td>
@@ -2156,8 +2157,8 @@
         <td>230.88</td>
         <td>25.76</td>
     </tr>
-    <tr id="row-12860">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 12860, this)"></td>
+    <tr id="row-14478">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_BladehandRefuge_D-json', 14478, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_BladehandRefuge_D.json</td>
@@ -2167,8 +2168,8 @@
         <td>1300.00</td>
         <td>-350.00</td>
     </tr>
-    <tr id="row-14144">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 14144, this)"></td>
+    <tr id="row-15643">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_Hole_HR_D-json', 15643, this)"></td>
         <td>大白鲨</td>
         <td>水图</td>
         <td>ShipGraveyard_Hole_HR_D.json</td>
@@ -2178,8 +2179,8 @@
         <td>315.00</td>
         <td>555.00</td>
     </tr>
-    <tr id="row-15412">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 15412, this)"></td>
+    <tr id="row-17048">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_SkullIsland_D-json', 17048, this)"></td>
         <td>鳄鱼人</td>
         <td>水图</td>
         <td>ShipGraveyard_SkullIsland_D.json</td>
@@ -2194,18 +2195,18 @@
     <script>
         window.monsterColors = {
     'Crocodilian': 'rgba(255, 0, 0, 0.7)',
-    'DemonDog': 'rgba(0, 255, 0, 0.7)',
+    'WhiteShark': 'rgba(0, 255, 0, 0.7)',
     'FrostImp': 'rgba(0, 0, 255, 0.7)',
-    'IceHound': 'rgba(255, 255, 0, 0.7)',
-    'WhiteShark': 'rgba(255, 0, 255, 0.7)',
+    'DemonDog': 'rgba(255, 255, 0, 0.7)',
+    'IceHound': 'rgba(255, 0, 255, 0.7)',
 };
 
         window.monsterVisible = {
     'Crocodilian': true,
-    'DemonDog': true,
-    'FrostImp': true,
-    'IceHound': true,
     'WhiteShark': true,
+    'FrostImp': true,
+    'DemonDog': true,
+    'IceHound': true,
 };
 
         function toggleMonster(monsterId) {

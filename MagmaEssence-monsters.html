@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>岩浆精华 >> 熔岩史莱姆 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">岩浆精华 (MagmaEssence) >> LavaSlime</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>熔岩史莱姆 (7)</div>
 </div></div>
@@ -121,9 +122,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_BurningCourt_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_BurningCourt_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_BurningCourt_D-json" style="aspect-ratio: 1 / 1;"><img src="images/BurningCourt.webp" class="image">        <div class="dot monster-dot" data-monster="LavaSlime" data-index="5588" data-x="150.0" data-y="1190.0" data-z="205.0" style="left: 54.69%; top: 87.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">205</span></div>
-        <div class="dot monster-dot" data-monster="LavaSlime" data-index="5589" data-x="-1325.0" data-y="175.0" data-z="205.0" style="left: 8.59%; top: 55.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">205</span></div>
-        <div class="dot monster-dot" data-monster="LavaSlime" data-index="5590" data-x="-513.16986" data-y="-265.1314" data-z="210.80829" style="left: 33.96%; top: 41.71%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">210</span></div>
+        <div class="container" id="container-Firedeep_BurningCourt_D-json" style="aspect-ratio: 1 / 1;"><img src="images/BurningCourt.webp" class="image">        <div class="dot monster-dot" data-monster="LavaSlime" data-index="6510" data-x="150.0" data-y="1190.0" data-z="205.0" style="left: 54.69%; top: 87.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">205</span></div>
+        <div class="dot monster-dot" data-monster="LavaSlime" data-index="6511" data-x="-1325.0" data-y="175.0" data-z="205.0" style="left: 8.59%; top: 55.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">205</span></div>
+        <div class="dot monster-dot" data-monster="LavaSlime" data-index="6512" data-x="-513.16986" data-y="-265.1314" data-z="210.80829" style="left: 33.96%; top: 41.71%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">210</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LavaSlime">熔岩史莱姆</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -157,7 +158,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_MagmaFalls_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_MagmaFalls_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_MagmaFalls_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Magmafalls.webp" class="image">        <div class="dot monster-dot" data-monster="LavaSlime" data-index="5637" data-x="5.0" data-y="1035.0" data-z="-26.975525" style="left: 50.16%; top: 82.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-26</span></div>
+        <div class="container" id="container-Firedeep_MagmaFalls_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Magmafalls.webp" class="image">        <div class="dot monster-dot" data-monster="LavaSlime" data-index="6600" data-x="5.0" data-y="1035.0" data-z="-26.975525" style="left: 50.16%; top: 82.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-26</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LavaSlime">熔岩史莱姆</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -191,9 +192,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Firedeep_MoltenPit_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Firedeep_MoltenPit_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Firedeep_MoltenPit_D-json" style="aspect-ratio: 1 / 1;"><img src="images/MoltenPit.webp" class="image">        <div class="dot monster-dot" data-monster="LavaSlime" data-index="5679" data-x="1195.0" data-y="1115.0" data-z="390.0" style="left: 87.34%; top: 84.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">390</span></div>
-        <div class="dot monster-dot" data-monster="LavaSlime" data-index="5680" data-x="-57.365444" data-y="-104.43651" data-z="-0.6301719" style="left: 48.21%; top: 46.74%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="LavaSlime" data-index="5681" data-x="-1355.0" data-y="-1285.0" data-z="390.0" style="left: 7.66%; top: 9.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">390</span></div>
+        <div class="container" id="container-Firedeep_MoltenPit_D-json" style="aspect-ratio: 1 / 1;"><img src="images/MoltenPit.webp" class="image">        <div class="dot monster-dot" data-monster="LavaSlime" data-index="6665" data-x="1195.0" data-y="1115.0" data-z="390.0" style="left: 87.34%; top: 84.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">390</span></div>
+        <div class="dot monster-dot" data-monster="LavaSlime" data-index="6666" data-x="-57.365444" data-y="-104.43651" data-z="-0.6301719" style="left: 48.21%; top: 46.74%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="LavaSlime" data-index="6667" data-x="-1355.0" data-y="-1285.0" data-z="390.0" style="left: 7.66%; top: 9.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">390</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="LavaSlime">熔岩史莱姆</span><span class="ms-count">(3点)</span></div>
     </div>
@@ -203,8 +204,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-5588">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 5588, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6510">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 6510, this)"></td>
         <td>熔岩史莱姆</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BurningCourt_D.json</td>
@@ -214,8 +215,8 @@
         <td>1190.00</td>
         <td>205.00</td>
     </tr>
-    <tr id="row-5589">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 5589, this)"></td>
+    <tr id="row-6511">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 6511, this)"></td>
         <td>熔岩史莱姆</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BurningCourt_D.json</td>
@@ -225,8 +226,8 @@
         <td>175.00</td>
         <td>205.00</td>
     </tr>
-    <tr id="row-5590">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 5590, this)"></td>
+    <tr id="row-6512">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_BurningCourt_D-json', 6512, this)"></td>
         <td>熔岩史莱姆</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_BurningCourt_D.json</td>
@@ -236,8 +237,8 @@
         <td>-265.13</td>
         <td>210.81</td>
     </tr>
-    <tr id="row-5637">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MagmaFalls_D-json', 5637, this)"></td>
+    <tr id="row-6600">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MagmaFalls_D-json', 6600, this)"></td>
         <td>熔岩史莱姆</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_MagmaFalls_D.json</td>
@@ -247,8 +248,8 @@
         <td>1035.00</td>
         <td>-26.98</td>
     </tr>
-    <tr id="row-5679">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 5679, this)"></td>
+    <tr id="row-6665">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 6665, this)"></td>
         <td>熔岩史莱姆</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_MoltenPit_D.json</td>
@@ -258,8 +259,8 @@
         <td>1115.00</td>
         <td>390.00</td>
     </tr>
-    <tr id="row-5680">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 5680, this)"></td>
+    <tr id="row-6666">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 6666, this)"></td>
         <td>熔岩史莱姆</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_MoltenPit_D.json</td>
@@ -269,8 +270,8 @@
         <td>-104.44</td>
         <td>-0.63</td>
     </tr>
-    <tr id="row-5681">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 5681, this)"></td>
+    <tr id="row-6667">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Firedeep_MoltenPit_D-json', 6667, this)"></td>
         <td>熔岩史莱姆</td>
         <td>哥布林洞穴2层</td>
         <td>Firedeep_MoltenPit_D.json</td>

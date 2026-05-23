@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>狗头人耳朵 >> 寒冰狗头人弓手、寒冰狗头人斧手 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">狗头人耳朵 (KoboldEar) >> IceKoboldArcher、IceKoboldAxeman</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>寒冰狗头人弓手 (83)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>寒冰狗头人斧手 (87)</div>
@@ -123,13 +124,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Altar_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Altar_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Altar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Altar.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="6620" data-x="-203.0" data-y="247.0" data-z="0.000115706054" style="left: 43.66%; top: 57.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="6621" data-x="226.99998" data-y="261.99997" data-z="0.00011" style="left: 57.09%; top: 58.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6612" data-x="979.0" data-y="43.99997" data-z="0.0001" style="left: 80.59%; top: 51.37%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6613" data-x="586.0" data-y="669.99994" data-z="-79.9999" style="left: 68.31%; top: 70.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6614" data-x="-395.0" data-y="605.99994" data-z="-79.9999" style="left: 37.66%; top: 68.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6615" data-x="-580.0" data-y="-459.00003" data-z="-79.9999" style="left: 31.88%; top: 35.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6616" data-x="548.0" data-y="-363.00003" data-z="-79.9999" style="left: 67.12%; top: 38.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
+        <div class="container" id="container-IceCave_Altar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Altar.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7592" data-x="-203.0" data-y="247.0" data-z="0.000115706054" style="left: 43.66%; top: 57.72%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7593" data-x="226.99998" data-y="261.99997" data-z="0.00011" style="left: 57.09%; top: 58.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7607" data-x="979.0" data-y="43.99997" data-z="0.0001" style="left: 80.59%; top: 51.37%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7608" data-x="586.0" data-y="669.99994" data-z="-79.9999" style="left: 68.31%; top: 70.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7609" data-x="-395.0" data-y="605.99994" data-z="-79.9999" style="left: 37.66%; top: 68.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7610" data-x="-580.0" data-y="-459.00003" data-z="-79.9999" style="left: 31.88%; top: 35.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7611" data-x="548.0" data-y="-363.00003" data-z="-79.9999" style="left: 67.12%; top: 38.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-79</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(5点)</span></div>
     </div>
@@ -163,10 +164,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Barricade_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Barricade_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Barricade_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Barricade.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6665" data-x="750.0" data-y="766.0" data-z="-299.99988" style="left: 73.44%; top: 73.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6666" data-x="-285.0" data-y="-1.0" data-z="-299.99988" style="left: 41.09%; top: 49.97%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6667" data-x="136.0" data-y="-600.0" data-z="-299.99988" style="left: 54.25%; top: 31.25%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6668" data-x="-76.0" data-y="299.0" data-z="-299.9999" style="left: 47.62%; top: 59.34%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="container" id="container-IceCave_Barricade_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Barricade.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7647" data-x="750.0" data-y="766.0" data-z="-299.99988" style="left: 73.44%; top: 73.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7648" data-x="-285.0" data-y="-1.0" data-z="-299.99988" style="left: 41.09%; top: 49.97%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7649" data-x="136.0" data-y="-600.0" data-z="-299.99988" style="left: 54.25%; top: 31.25%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7650" data-x="-76.0" data-y="299.0" data-z="-299.9999" style="left: 47.62%; top: 59.34%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -200,10 +201,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Bridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Bridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Bridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Bridge.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="6752" data-x="-690.77264" data-y="-964.905" data-z="0.00010236375" style="left: 28.41%; top: 19.85%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="6753" data-x="872.2275" data-y="935.0949" data-z="8.832714e-05" style="left: 77.26%; top: 79.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6750" data-x="-34.99994" data-y="1266.0" data-z="0.00012652393" style="left: 48.91%; top: 89.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6751" data-x="1281.0" data-y="-1095.0001" data-z="0.314061" style="left: 90.03%; top: 15.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_Bridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Bridge.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7745" data-x="-690.77264" data-y="-964.905" data-z="0.00010236375" style="left: 28.41%; top: 19.85%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7746" data-x="872.2275" data-y="935.0949" data-z="8.832714e-05" style="left: 77.26%; top: 79.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7747" data-x="-34.99994" data-y="1266.0" data-z="0.00012652393" style="left: 48.91%; top: 89.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7748" data-x="1281.0" data-y="-1095.0001" data-z="0.314061" style="left: 90.03%; top: 15.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -237,15 +238,15 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_CaveSwamp_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_CaveSwamp_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_CaveSwamp_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_CaveSwamp.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="6909" data-x="-1220.2284" data-y="-499.80222" data-z="5.986067" style="left: 11.87%; top: 34.38%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">5</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="6910" data-x="1272.7726" data-y="56.905056" data-z="5.986067" style="left: 89.77%; top: 51.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">5</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="6911" data-x="-1097.0" data-y="-296.0" data-z="-574.9999" style="left: 15.72%; top: 40.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-574</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6903" data-x="379.0" data-y="1118.0" data-z="-574.9999" style="left: 61.84%; top: 84.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-574</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6904" data-x="175.0" data-y="-6.0" data-z="-198.9999" style="left: 55.47%; top: 49.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-198</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6905" data-x="843.0" data-y="904.0" data-z="6.738009" style="left: 76.34%; top: 78.25%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">6</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6906" data-x="-82.0" data-y="-1050.0" data-z="6.738009" style="left: 47.44%; top: 17.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">6</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6907" data-x="-449.0" data-y="956.0" data-z="-574.9999" style="left: 35.97%; top: 79.88%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-574</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6908" data-x="896.0" data-y="118.0" data-z="-574.9999" style="left: 78.00%; top: 53.69%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-574</span></div>
+        <div class="container" id="container-IceCave_CaveSwamp_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_CaveSwamp.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7906" data-x="-1220.2284" data-y="-499.80222" data-z="5.986067" style="left: 11.87%; top: 34.38%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">5</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7907" data-x="1272.7726" data-y="56.905056" data-z="5.986067" style="left: 89.77%; top: 51.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">5</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7908" data-x="-1097.0" data-y="-296.0" data-z="-574.9999" style="left: 15.72%; top: 40.75%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-574</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7909" data-x="379.0" data-y="1118.0" data-z="-574.9999" style="left: 61.84%; top: 84.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-574</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7910" data-x="175.0" data-y="-6.0" data-z="-198.9999" style="left: 55.47%; top: 49.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-198</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7911" data-x="843.0" data-y="904.0" data-z="6.738009" style="left: 76.34%; top: 78.25%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">6</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7912" data-x="-82.0" data-y="-1050.0" data-z="6.738009" style="left: 47.44%; top: 17.19%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">6</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7913" data-x="-449.0" data-y="956.0" data-z="-574.9999" style="left: 35.97%; top: 79.88%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-574</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7914" data-x="896.0" data-y="118.0" data-z="-574.9999" style="left: 78.00%; top: 53.69%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-574</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(6点)</span></div>
     </div>
@@ -279,12 +280,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_CrossRoad_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_CrossRoad_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_CrossRoad_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_CrossRoad.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7001" data-x="325.7111" data-y="-875.56104" data-z="0.00010844726" style="left: 60.18%; top: 22.64%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7002" data-x="1281.0" data-y="-51.0" data-z="0.314066" style="left: 90.03%; top: 48.41%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6997" data-x="828.0" data-y="917.0" data-z="0.00010844726" style="left: 75.88%; top: 78.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6998" data-x="1157.0" data-y="-423.0" data-z="0.0" style="left: 86.16%; top: 36.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="6999" data-x="1028.0" data-y="-727.0" data-z="1.0" style="left: 82.12%; top: 27.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7000" data-x="1281.0" data-y="-209.0" data-z="0.31406567" style="left: 90.03%; top: 43.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_CrossRoad_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_CrossRoad.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7995" data-x="325.7111" data-y="-875.56104" data-z="0.00010844726" style="left: 60.18%; top: 22.64%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7996" data-x="1281.0" data-y="-51.0" data-z="0.314066" style="left: 90.03%; top: 48.41%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8002" data-x="828.0" data-y="917.0" data-z="0.00010844726" style="left: 75.88%; top: 78.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8003" data-x="1157.0" data-y="-423.0" data-z="0.0" style="left: 86.16%; top: 36.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8004" data-x="1028.0" data-y="-727.0" data-z="1.0" style="left: 82.12%; top: 27.28%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">1</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8005" data-x="1281.0" data-y="-209.0" data-z="0.31406567" style="left: 90.03%; top: 43.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -318,12 +319,12 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_DualCaverns_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_DualCaverns_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_DualCaverns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_DualCaverns.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7093" data-x="-504.2889" data-y="684.43896" data-z="-299.9999" style="left: 34.24%; top: 71.39%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7094" data-x="-850.28894" data-y="-438.561" data-z="-299.9999" style="left: 23.43%; top: 36.29%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7089" data-x="-519.28894" data-y="-959.56104" data-z="-299.9999" style="left: 33.77%; top: 20.01%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7090" data-x="789.0" data-y="687.0" data-z="-299.9999" style="left: 74.66%; top: 71.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7091" data-x="881.0" data-y="-1075.0" data-z="-299.99988" style="left: 77.53%; top: 16.41%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7092" data-x="-848.28894" data-y="170.43898" data-z="-299.9999" style="left: 23.49%; top: 55.33%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="container" id="container-IceCave_DualCaverns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_DualCaverns.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8084" data-x="-504.2889" data-y="684.43896" data-z="-299.9999" style="left: 34.24%; top: 71.39%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8085" data-x="-850.28894" data-y="-438.561" data-z="-299.9999" style="left: 23.43%; top: 36.29%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8087" data-x="-519.28894" data-y="-959.56104" data-z="-299.9999" style="left: 33.77%; top: 20.01%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8088" data-x="789.0" data-y="687.0" data-z="-299.9999" style="left: 74.66%; top: 71.47%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8089" data-x="881.0" data-y="-1075.0" data-z="-299.99988" style="left: 77.53%; top: 16.41%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8090" data-x="-848.28894" data-y="170.43898" data-z="-299.9999" style="left: 23.49%; top: 55.33%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-299</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -357,18 +358,18 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_FourRoute_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_FourRoute_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_FourRoute_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_FourRoute.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7175" data-x="954.37823" data-y="129.0" data-z="-599.9999" style="left: 79.82%; top: 54.03%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7176" data-x="-46.288918" data-y="-872.56104" data-z="0.31406647" style="left: 48.55%; top: 22.73%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7177" data-x="161.37822" data-y="-924.0" data-z="-599.9999" style="left: 55.04%; top: 21.12%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7178" data-x="161.37822" data-y="956.0" data-z="-599.9999" style="left: 55.04%; top: 79.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7179" data-x="-32.0" data-y="1027.0" data-z="0.314064" style="left: 49.00%; top: 82.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7180" data-x="987.0" data-y="18.0" data-z="15.000101" style="left: 80.84%; top: 50.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">15</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7169" data-x="-1199.0" data-y="-1198.0" data-z="0.0" style="left: 12.53%; top: 12.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7170" data-x="-59.0" data-y="830.0" data-z="0.00010844726" style="left: 48.16%; top: 75.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7171" data-x="245.0" data-y="-861.0" data-z="0.000100817866" style="left: 57.66%; top: 23.09%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7172" data-x="671.0" data-y="-795.0" data-z="-599.9999" style="left: 70.97%; top: 25.16%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7173" data-x="-666.0" data-y="814.0" data-z="-599.9999" style="left: 29.19%; top: 75.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-599</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7174" data-x="-1065.0" data-y="294.99994" data-z="0.0" style="left: 16.72%; top: 59.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_FourRoute_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_FourRoute.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8169" data-x="954.37823" data-y="129.0" data-z="-599.9999" style="left: 79.82%; top: 54.03%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8170" data-x="-46.288918" data-y="-872.56104" data-z="0.31406647" style="left: 48.55%; top: 22.73%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8171" data-x="161.37822" data-y="-924.0" data-z="-599.9999" style="left: 55.04%; top: 21.12%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8172" data-x="161.37822" data-y="956.0" data-z="-599.9999" style="left: 55.04%; top: 79.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8173" data-x="-32.0" data-y="1027.0" data-z="0.314064" style="left: 49.00%; top: 82.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8174" data-x="987.0" data-y="18.0" data-z="15.000101" style="left: 80.84%; top: 50.56%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">15</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8175" data-x="-1199.0" data-y="-1198.0" data-z="0.0" style="left: 12.53%; top: 12.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8176" data-x="-59.0" data-y="830.0" data-z="0.00010844726" style="left: 48.16%; top: 75.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8177" data-x="245.0" data-y="-861.0" data-z="0.000100817866" style="left: 57.66%; top: 23.09%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8178" data-x="671.0" data-y="-795.0" data-z="-599.9999" style="left: 70.97%; top: 25.16%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8179" data-x="-666.0" data-y="814.0" data-z="-599.9999" style="left: 29.19%; top: 75.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-599</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8180" data-x="-1065.0" data-y="294.99994" data-z="0.0" style="left: 16.72%; top: 59.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(6点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(6点)</span></div>
     </div>
@@ -402,13 +403,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_FrozenLake_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_FrozenLake_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_FrozenLake_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_FrozenLake.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7216" data-x="-1250.0" data-y="1095.0" data-z="400.0001" style="left: 10.94%; top: 84.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">400</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7217" data-x="100.0" data-y="150.0" data-z="0.0" style="left: 53.12%; top: 54.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7209" data-x="-1200.0" data-y="-80.0" data-z="0.0" style="left: 12.50%; top: 47.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7210" data-x="-470.0" data-y="1420.0" data-z="0.0" style="left: 35.31%; top: 94.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7211" data-x="-1250.0" data-y="795.0" data-z="400.0001" style="left: 10.94%; top: 74.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">400</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7212" data-x="-965.0" data-y="1280.0" data-z="400.0001" style="left: 19.84%; top: 90.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">400</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7213" data-x="-1035.0" data-y="755.0" data-z="0.0" style="left: 17.66%; top: 73.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_FrozenLake_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_FrozenLake.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8217" data-x="-1250.0" data-y="1095.0" data-z="400.0001" style="left: 10.94%; top: 84.22%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">400</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8218" data-x="100.0" data-y="150.0" data-z="0.0" style="left: 53.12%; top: 54.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8222" data-x="-1200.0" data-y="-80.0" data-z="0.0" style="left: 12.50%; top: 47.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8223" data-x="-470.0" data-y="1420.0" data-z="0.0" style="left: 35.31%; top: 94.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8224" data-x="-1250.0" data-y="795.0" data-z="400.0001" style="left: 10.94%; top: 74.84%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">400</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8225" data-x="-965.0" data-y="1280.0" data-z="400.0001" style="left: 19.84%; top: 90.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">400</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8226" data-x="-1035.0" data-y="755.0" data-z="0.0" style="left: 17.66%; top: 73.59%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(5点)</span></div>
     </div>
@@ -442,11 +443,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_IcicleCave_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_IcicleCave_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_IcicleCave_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_IcicleCave.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7543" data-x="-237.0" data-y="323.0" data-z="0.0" style="left: 42.59%; top: 60.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7544" data-x="-1210.0" data-y="105.0" data-z="0.0" style="left: 12.19%; top: 53.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7545" data-x="-370.0" data-y="-90.0" data-z="0.0" style="left: 38.44%; top: 47.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7540" data-x="-203.86974" data-y="826.6103" data-z="0.0" style="left: 43.63%; top: 75.83%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7541" data-x="-6.0" data-y="-134.0" data-z="0.0" style="left: 49.81%; top: 45.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_IcicleCave_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_IcicleCave.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8553" data-x="-237.0" data-y="323.0" data-z="0.0" style="left: 42.59%; top: 60.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8554" data-x="-1210.0" data-y="105.0" data-z="0.0" style="left: 12.19%; top: 53.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8555" data-x="-370.0" data-y="-90.0" data-z="0.0" style="left: 38.44%; top: 47.19%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8558" data-x="-203.86974" data-y="826.6103" data-z="0.0" style="left: 43.63%; top: 75.83%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8559" data-x="-6.0" data-y="-134.0" data-z="0.0" style="left: 49.81%; top: 45.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(3点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -480,13 +481,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_MountainPass_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_MountainPass_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_MountainPass_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_MountainPass.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7706" data-x="-15.0" data-y="-245.0" data-z="300.0" style="left: 49.53%; top: 42.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7707" data-x="360.0" data-y="360.0" data-z="750.0" style="left: 61.25%; top: 61.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">750</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7672" data-x="-95.0" data-y="-150.0" data-z="300.00027" style="left: 47.03%; top: 45.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">300</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7673" data-x="1225.0" data-y="-1330.0" data-z="0.0" style="left: 88.28%; top: 8.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7674" data-x="-925.0" data-y="885.0" data-z="0.0" style="left: 21.09%; top: 77.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7675" data-x="1305.0" data-y="1150.0" data-z="450.0" style="left: 90.78%; top: 85.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">450</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7676" data-x="275.0" data-y="455.0" data-z="750.0" style="left: 58.59%; top: 64.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">750</span></div>
+        <div class="container" id="container-IceCave_MountainPass_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_MountainPass.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8722" data-x="-15.0" data-y="-245.0" data-z="300.0" style="left: 49.53%; top: 42.34%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">300</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8723" data-x="360.0" data-y="360.0" data-z="750.0" style="left: 61.25%; top: 61.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">750</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8724" data-x="-95.0" data-y="-150.0" data-z="300.00027" style="left: 47.03%; top: 45.31%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">300</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8725" data-x="1225.0" data-y="-1330.0" data-z="0.0" style="left: 88.28%; top: 8.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8726" data-x="-925.0" data-y="885.0" data-z="0.0" style="left: 21.09%; top: 77.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8727" data-x="1305.0" data-y="1150.0" data-z="450.0" style="left: 90.78%; top: 85.94%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">450</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8728" data-x="275.0" data-y="455.0" data-z="750.0" style="left: 58.59%; top: 64.22%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">750</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(5点)</span></div>
     </div>
@@ -520,11 +521,11 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_NarrowBridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_NarrowBridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_NarrowBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_NarrowBridge.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7737" data-x="-772.28894" data-y="-159.56102" data-z="0.000108" style="left: 25.87%; top: 45.01%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7733" data-x="-27.357084" data-y="-1020.04675" data-z="8.105498" style="left: 49.15%; top: 18.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">8</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7734" data-x="223.0" data-y="356.0" data-z="20.000093" style="left: 56.97%; top: 61.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">20</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7735" data-x="1157.0" data-y="-423.0" data-z="0.0" style="left: 86.16%; top: 36.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7736" data-x="-153.08217" data-y="290.68362" data-z="8.730229" style="left: 45.22%; top: 59.08%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">8</span></div>
+        <div class="container" id="container-IceCave_NarrowBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_NarrowBridge.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8738" data-x="-772.28894" data-y="-159.56102" data-z="0.000108" style="left: 25.87%; top: 45.01%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8740" data-x="-27.357084" data-y="-1020.04675" data-z="8.105498" style="left: 49.15%; top: 18.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">8</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8741" data-x="223.0" data-y="356.0" data-z="20.000093" style="left: 56.97%; top: 61.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">20</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8742" data-x="1157.0" data-y="-423.0" data-z="0.0" style="left: 86.16%; top: 36.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8743" data-x="-153.08217" data-y="290.68362" data-z="8.730229" style="left: 45.22%; top: 59.08%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">8</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(4点)</span></div>
     </div>
@@ -558,13 +559,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Quarry_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Quarry_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Quarry_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Quarry.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7861" data-x="-235.0" data-y="315.0" data-z="350.0001" style="left: 42.66%; top: 59.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">350</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="7862" data-x="-210.0" data-y="-655.0" data-z="100.0" style="left: 43.44%; top: 29.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">100</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7856" data-x="-535.0" data-y="130.0" data-z="0.0" style="left: 33.28%; top: 54.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7857" data-x="555.0" data-y="-135.0" data-z="-150.0" style="left: 67.34%; top: 45.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-150</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7858" data-x="1355.0" data-y="-550.0" data-z="0.0" style="left: 92.34%; top: 32.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7859" data-x="-1315.0" data-y="980.0" data-z="0.0" style="left: 8.91%; top: 80.62%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="7860" data-x="-1065.0" data-y="-380.0" data-z="0.0" style="left: 16.72%; top: 38.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_Quarry_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Quarry.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8867" data-x="-235.0" data-y="315.0" data-z="350.0001" style="left: 42.66%; top: 59.84%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">350</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8868" data-x="-210.0" data-y="-655.0" data-z="100.0" style="left: 43.44%; top: 29.53%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">100</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8886" data-x="-535.0" data-y="130.0" data-z="0.0" style="left: 33.28%; top: 54.06%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8887" data-x="555.0" data-y="-135.0" data-z="-150.0" style="left: 67.34%; top: 45.78%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-150</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8888" data-x="1355.0" data-y="-550.0" data-z="0.0" style="left: 92.34%; top: 32.81%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8889" data-x="-1315.0" data-y="980.0" data-z="0.0" style="left: 8.91%; top: 80.62%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8890" data-x="-1065.0" data-y="-380.0" data-z="0.0" style="left: 16.72%; top: 38.12%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(5点)</span></div>
     </div>
@@ -598,14 +599,14 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Spiral_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Spiral_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Spiral_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Spiral.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8017" data-x="1157.7726" data-y="-140.09494" data-z="0.31404105" style="left: 86.18%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="8018" data-x="-1237.0" data-y="214.0" data-z="0.31406" style="left: 11.34%; top: 56.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8010" data-x="1071.0" data-y="884.0" data-z="0.314068" style="left: 83.47%; top: 77.62%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8011" data-x="933.0" data-y="1173.0" data-z="0.314068" style="left: 79.16%; top: 86.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8012" data-x="333.0" data-y="-1076.0" data-z="0.31406" style="left: 60.41%; top: 16.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8013" data-x="-764.0" data-y="-910.0" data-z="0.314061" style="left: 26.12%; top: 21.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8014" data-x="-1151.0" data-y="334.0" data-z="0.31406045" style="left: 14.03%; top: 60.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="8015" data-x="217.0" data-y="-1056.0" data-z="0.3140757" style="left: 56.78%; top: 17.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_Spiral_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Spiral.webp" class="image">        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="9032" data-x="1157.7726" data-y="-140.09494" data-z="0.31404105" style="left: 86.18%; top: 45.62%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldArcher" data-index="9033" data-x="-1237.0" data-y="214.0" data-z="0.31406" style="left: 11.34%; top: 56.69%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="9035" data-x="1071.0" data-y="884.0" data-z="0.314068" style="left: 83.47%; top: 77.62%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="9036" data-x="933.0" data-y="1173.0" data-z="0.314068" style="left: 79.16%; top: 86.66%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="9037" data-x="333.0" data-y="-1076.0" data-z="0.31406" style="left: 60.41%; top: 16.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="9038" data-x="-764.0" data-y="-910.0" data-z="0.314061" style="left: 26.12%; top: 21.56%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="9039" data-x="-1151.0" data-y="334.0" data-z="0.31406045" style="left: 14.03%; top: 60.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="IceKoboldAxeman" data-index="9040" data-x="217.0" data-y="-1056.0" data-z="0.3140757" style="left: 56.78%; top: 17.00%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldArcher">寒冰狗头人弓手</span><span class="ms-count">(2点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="IceKoboldAxeman">寒冰狗头人斧手</span><span class="ms-count">(6点)</span></div>
     </div>
@@ -615,8 +616,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6620">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 6620, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-7592">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7592, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Altar_HR_D.json</td>
@@ -626,8 +627,8 @@
         <td>247.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6621">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 6621, this)"></td>
+    <tr id="row-7593">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7593, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Altar_HR_D.json</td>
@@ -637,8 +638,8 @@
         <td>262.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6612">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 6612, this)"></td>
+    <tr id="row-7607">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7607, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Altar_HR_D.json</td>
@@ -648,8 +649,8 @@
         <td>44.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6613">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 6613, this)"></td>
+    <tr id="row-7608">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7608, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Altar_HR_D.json</td>
@@ -659,8 +660,8 @@
         <td>670.00</td>
         <td>-80.00</td>
     </tr>
-    <tr id="row-6614">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 6614, this)"></td>
+    <tr id="row-7609">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7609, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Altar_HR_D.json</td>
@@ -670,8 +671,8 @@
         <td>606.00</td>
         <td>-80.00</td>
     </tr>
-    <tr id="row-6615">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 6615, this)"></td>
+    <tr id="row-7610">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7610, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Altar_HR_D.json</td>
@@ -681,8 +682,8 @@
         <td>-459.00</td>
         <td>-80.00</td>
     </tr>
-    <tr id="row-6616">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 6616, this)"></td>
+    <tr id="row-7611">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7611, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Altar_HR_D.json</td>
@@ -692,8 +693,8 @@
         <td>-363.00</td>
         <td>-80.00</td>
     </tr>
-    <tr id="row-6665">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 6665, this)"></td>
+    <tr id="row-7647">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 7647, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Barricade_HR_D.json</td>
@@ -703,8 +704,8 @@
         <td>766.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-6666">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 6666, this)"></td>
+    <tr id="row-7648">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 7648, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Barricade_HR_D.json</td>
@@ -714,8 +715,8 @@
         <td>-1.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-6667">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 6667, this)"></td>
+    <tr id="row-7649">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 7649, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Barricade_HR_D.json</td>
@@ -725,8 +726,8 @@
         <td>-600.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-6668">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 6668, this)"></td>
+    <tr id="row-7650">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 7650, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Barricade_HR_D.json</td>
@@ -736,8 +737,8 @@
         <td>299.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-6752">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 6752, this)"></td>
+    <tr id="row-7745">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 7745, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Bridge_HR_D.json</td>
@@ -747,8 +748,8 @@
         <td>-964.90</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6753">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 6753, this)"></td>
+    <tr id="row-7746">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 7746, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Bridge_HR_D.json</td>
@@ -758,8 +759,8 @@
         <td>935.09</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6750">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 6750, this)"></td>
+    <tr id="row-7747">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 7747, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Bridge_HR_D.json</td>
@@ -769,8 +770,8 @@
         <td>1266.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6751">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 6751, this)"></td>
+    <tr id="row-7748">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 7748, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Bridge_HR_D.json</td>
@@ -780,8 +781,8 @@
         <td>-1095.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-6909">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6909, this)"></td>
+    <tr id="row-7906">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7906, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -791,8 +792,8 @@
         <td>-499.80</td>
         <td>5.99</td>
     </tr>
-    <tr id="row-6910">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6910, this)"></td>
+    <tr id="row-7907">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7907, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -802,8 +803,8 @@
         <td>56.91</td>
         <td>5.99</td>
     </tr>
-    <tr id="row-6911">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6911, this)"></td>
+    <tr id="row-7908">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7908, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -813,8 +814,8 @@
         <td>-296.00</td>
         <td>-575.00</td>
     </tr>
-    <tr id="row-6903">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6903, this)"></td>
+    <tr id="row-7909">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7909, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -824,8 +825,8 @@
         <td>1118.00</td>
         <td>-575.00</td>
     </tr>
-    <tr id="row-6904">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6904, this)"></td>
+    <tr id="row-7910">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7910, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -835,8 +836,8 @@
         <td>-6.00</td>
         <td>-199.00</td>
     </tr>
-    <tr id="row-6905">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6905, this)"></td>
+    <tr id="row-7911">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7911, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -846,8 +847,8 @@
         <td>904.00</td>
         <td>6.74</td>
     </tr>
-    <tr id="row-6906">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6906, this)"></td>
+    <tr id="row-7912">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7912, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -857,8 +858,8 @@
         <td>-1050.00</td>
         <td>6.74</td>
     </tr>
-    <tr id="row-6907">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6907, this)"></td>
+    <tr id="row-7913">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7913, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -868,8 +869,8 @@
         <td>956.00</td>
         <td>-575.00</td>
     </tr>
-    <tr id="row-6908">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6908, this)"></td>
+    <tr id="row-7914">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7914, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -879,8 +880,8 @@
         <td>118.00</td>
         <td>-575.00</td>
     </tr>
-    <tr id="row-7001">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 7001, this)"></td>
+    <tr id="row-7995">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 7995, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_CrossRoad_HR_D.json</td>
@@ -890,8 +891,8 @@
         <td>-875.56</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7002">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 7002, this)"></td>
+    <tr id="row-7996">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 7996, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_CrossRoad_HR_D.json</td>
@@ -901,8 +902,8 @@
         <td>-51.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-6997">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 6997, this)"></td>
+    <tr id="row-8002">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 8002, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CrossRoad_HR_D.json</td>
@@ -912,8 +913,8 @@
         <td>917.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6998">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 6998, this)"></td>
+    <tr id="row-8003">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 8003, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CrossRoad_HR_D.json</td>
@@ -923,8 +924,8 @@
         <td>-423.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6999">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 6999, this)"></td>
+    <tr id="row-8004">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 8004, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CrossRoad_HR_D.json</td>
@@ -934,8 +935,8 @@
         <td>-727.00</td>
         <td>1.00</td>
     </tr>
-    <tr id="row-7000">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 7000, this)"></td>
+    <tr id="row-8005">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CrossRoad_HR_D-json', 8005, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_CrossRoad_HR_D.json</td>
@@ -945,8 +946,8 @@
         <td>-209.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-7093">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 7093, this)"></td>
+    <tr id="row-8084">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 8084, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_DualCaverns_HR_D.json</td>
@@ -956,8 +957,8 @@
         <td>684.44</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-7094">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 7094, this)"></td>
+    <tr id="row-8085">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 8085, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_DualCaverns_HR_D.json</td>
@@ -967,8 +968,8 @@
         <td>-438.56</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-7089">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 7089, this)"></td>
+    <tr id="row-8087">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 8087, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_DualCaverns_HR_D.json</td>
@@ -978,8 +979,8 @@
         <td>-959.56</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-7090">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 7090, this)"></td>
+    <tr id="row-8088">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 8088, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_DualCaverns_HR_D.json</td>
@@ -989,8 +990,8 @@
         <td>687.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-7091">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 7091, this)"></td>
+    <tr id="row-8089">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 8089, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_DualCaverns_HR_D.json</td>
@@ -1000,8 +1001,8 @@
         <td>-1075.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-7092">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 7092, this)"></td>
+    <tr id="row-8090">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 8090, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_DualCaverns_HR_D.json</td>
@@ -1011,8 +1012,8 @@
         <td>170.44</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-7175">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7175, this)"></td>
+    <tr id="row-8169">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8169, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1022,8 +1023,8 @@
         <td>129.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-7176">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7176, this)"></td>
+    <tr id="row-8170">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8170, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1033,8 +1034,8 @@
         <td>-872.56</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-7177">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7177, this)"></td>
+    <tr id="row-8171">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8171, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1044,8 +1045,8 @@
         <td>-924.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-7178">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7178, this)"></td>
+    <tr id="row-8172">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8172, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1055,8 +1056,8 @@
         <td>956.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-7179">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7179, this)"></td>
+    <tr id="row-8173">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8173, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1066,8 +1067,8 @@
         <td>1027.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-7180">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7180, this)"></td>
+    <tr id="row-8174">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8174, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1077,8 +1078,8 @@
         <td>18.00</td>
         <td>15.00</td>
     </tr>
-    <tr id="row-7169">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7169, this)"></td>
+    <tr id="row-8175">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8175, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1088,8 +1089,8 @@
         <td>-1198.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7170">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7170, this)"></td>
+    <tr id="row-8176">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8176, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1099,8 +1100,8 @@
         <td>830.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7171">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7171, this)"></td>
+    <tr id="row-8177">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8177, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1110,8 +1111,8 @@
         <td>-861.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7172">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7172, this)"></td>
+    <tr id="row-8178">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8178, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1121,8 +1122,8 @@
         <td>-795.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-7173">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7173, this)"></td>
+    <tr id="row-8179">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8179, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1132,8 +1133,8 @@
         <td>814.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-7174">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 7174, this)"></td>
+    <tr id="row-8180">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FourRoute_HR_D-json', 8180, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FourRoute_HR_D.json</td>
@@ -1143,8 +1144,8 @@
         <td>295.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7216">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 7216, this)"></td>
+    <tr id="row-8217">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 8217, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FrozenLake_D.json</td>
@@ -1154,8 +1155,8 @@
         <td>1095.00</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-7217">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 7217, this)"></td>
+    <tr id="row-8218">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 8218, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_FrozenLake_D.json</td>
@@ -1165,8 +1166,8 @@
         <td>150.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7209">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 7209, this)"></td>
+    <tr id="row-8222">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 8222, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FrozenLake_D.json</td>
@@ -1176,8 +1177,8 @@
         <td>-80.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7210">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 7210, this)"></td>
+    <tr id="row-8223">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 8223, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FrozenLake_D.json</td>
@@ -1187,8 +1188,8 @@
         <td>1420.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7211">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 7211, this)"></td>
+    <tr id="row-8224">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 8224, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FrozenLake_D.json</td>
@@ -1198,8 +1199,8 @@
         <td>795.00</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-7212">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 7212, this)"></td>
+    <tr id="row-8225">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 8225, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FrozenLake_D.json</td>
@@ -1209,8 +1210,8 @@
         <td>1280.00</td>
         <td>400.00</td>
     </tr>
-    <tr id="row-7213">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 7213, this)"></td>
+    <tr id="row-8226">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_FrozenLake_D-json', 8226, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_FrozenLake_D.json</td>
@@ -1220,8 +1221,8 @@
         <td>755.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7543">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 7543, this)"></td>
+    <tr id="row-8553">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 8553, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_IcicleCave_HR_D.json</td>
@@ -1231,8 +1232,8 @@
         <td>323.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7544">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 7544, this)"></td>
+    <tr id="row-8554">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 8554, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_IcicleCave_HR_D.json</td>
@@ -1242,8 +1243,8 @@
         <td>105.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7545">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 7545, this)"></td>
+    <tr id="row-8555">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 8555, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_IcicleCave_HR_D.json</td>
@@ -1253,8 +1254,8 @@
         <td>-90.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7540">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 7540, this)"></td>
+    <tr id="row-8558">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 8558, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_IcicleCave_HR_D.json</td>
@@ -1264,8 +1265,8 @@
         <td>826.61</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7541">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 7541, this)"></td>
+    <tr id="row-8559">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 8559, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_IcicleCave_HR_D.json</td>
@@ -1275,8 +1276,8 @@
         <td>-134.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7706">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 7706, this)"></td>
+    <tr id="row-8722">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 8722, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_MountainPass_D.json</td>
@@ -1286,8 +1287,8 @@
         <td>-245.00</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-7707">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 7707, this)"></td>
+    <tr id="row-8723">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 8723, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_MountainPass_D.json</td>
@@ -1297,8 +1298,8 @@
         <td>360.00</td>
         <td>750.00</td>
     </tr>
-    <tr id="row-7672">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 7672, this)"></td>
+    <tr id="row-8724">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 8724, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_MountainPass_D.json</td>
@@ -1308,8 +1309,8 @@
         <td>-150.00</td>
         <td>300.00</td>
     </tr>
-    <tr id="row-7673">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 7673, this)"></td>
+    <tr id="row-8725">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 8725, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_MountainPass_D.json</td>
@@ -1319,8 +1320,8 @@
         <td>-1330.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7674">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 7674, this)"></td>
+    <tr id="row-8726">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 8726, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_MountainPass_D.json</td>
@@ -1330,8 +1331,8 @@
         <td>885.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7675">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 7675, this)"></td>
+    <tr id="row-8727">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 8727, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_MountainPass_D.json</td>
@@ -1341,8 +1342,8 @@
         <td>1150.00</td>
         <td>450.00</td>
     </tr>
-    <tr id="row-7676">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 7676, this)"></td>
+    <tr id="row-8728">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_MountainPass_D-json', 8728, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_MountainPass_D.json</td>
@@ -1352,8 +1353,8 @@
         <td>455.00</td>
         <td>750.00</td>
     </tr>
-    <tr id="row-7737">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 7737, this)"></td>
+    <tr id="row-8738">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 8738, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_NarrowBridge_HR_D.json</td>
@@ -1363,8 +1364,8 @@
         <td>-159.56</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7733">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 7733, this)"></td>
+    <tr id="row-8740">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 8740, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_NarrowBridge_HR_D.json</td>
@@ -1374,8 +1375,8 @@
         <td>-1020.05</td>
         <td>8.11</td>
     </tr>
-    <tr id="row-7734">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 7734, this)"></td>
+    <tr id="row-8741">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 8741, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_NarrowBridge_HR_D.json</td>
@@ -1385,8 +1386,8 @@
         <td>356.00</td>
         <td>20.00</td>
     </tr>
-    <tr id="row-7735">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 7735, this)"></td>
+    <tr id="row-8742">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 8742, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_NarrowBridge_HR_D.json</td>
@@ -1396,8 +1397,8 @@
         <td>-423.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7736">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 7736, this)"></td>
+    <tr id="row-8743">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 8743, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_NarrowBridge_HR_D.json</td>
@@ -1407,8 +1408,8 @@
         <td>290.68</td>
         <td>8.73</td>
     </tr>
-    <tr id="row-7861">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 7861, this)"></td>
+    <tr id="row-8867">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 8867, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Quarry_D.json</td>
@@ -1418,8 +1419,8 @@
         <td>315.00</td>
         <td>350.00</td>
     </tr>
-    <tr id="row-7862">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 7862, this)"></td>
+    <tr id="row-8868">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 8868, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Quarry_D.json</td>
@@ -1429,8 +1430,8 @@
         <td>-655.00</td>
         <td>100.00</td>
     </tr>
-    <tr id="row-7856">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 7856, this)"></td>
+    <tr id="row-8886">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 8886, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Quarry_D.json</td>
@@ -1440,8 +1441,8 @@
         <td>130.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7857">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 7857, this)"></td>
+    <tr id="row-8887">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 8887, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Quarry_D.json</td>
@@ -1451,8 +1452,8 @@
         <td>-135.00</td>
         <td>-150.00</td>
     </tr>
-    <tr id="row-7858">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 7858, this)"></td>
+    <tr id="row-8888">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 8888, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Quarry_D.json</td>
@@ -1462,8 +1463,8 @@
         <td>-550.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7859">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 7859, this)"></td>
+    <tr id="row-8889">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 8889, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Quarry_D.json</td>
@@ -1473,8 +1474,8 @@
         <td>980.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7860">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 7860, this)"></td>
+    <tr id="row-8890">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Quarry_D-json', 8890, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Quarry_D.json</td>
@@ -1484,8 +1485,8 @@
         <td>-380.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8017">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8017, this)"></td>
+    <tr id="row-9032">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9032, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -1495,8 +1496,8 @@
         <td>-140.09</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-8018">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8018, this)"></td>
+    <tr id="row-9033">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9033, this)"></td>
         <td>寒冰狗头人弓手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -1506,8 +1507,8 @@
         <td>214.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-8010">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8010, this)"></td>
+    <tr id="row-9035">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9035, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -1517,8 +1518,8 @@
         <td>884.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-8011">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8011, this)"></td>
+    <tr id="row-9036">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9036, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -1528,8 +1529,8 @@
         <td>1173.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-8012">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8012, this)"></td>
+    <tr id="row-9037">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9037, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -1539,8 +1540,8 @@
         <td>-1076.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-8013">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8013, this)"></td>
+    <tr id="row-9038">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9038, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -1550,8 +1551,8 @@
         <td>-910.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-8014">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8014, this)"></td>
+    <tr id="row-9039">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9039, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -1561,8 +1562,8 @@
         <td>334.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-8015">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8015, this)"></td>
+    <tr id="row-9040">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9040, this)"></td>
         <td>寒冰狗头人斧手</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>

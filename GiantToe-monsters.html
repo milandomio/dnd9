@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>巨人脚趾 >> 冰霜巨人狂战士、冰霜持盾巨人 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">巨人脚趾 (GiantToe) >> FrostGiantBerserker、FrostGiantShielder</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>冰霜巨人狂战士 (6)</div>
     <div class="legend-item"><span class="legend-dot" style="background-color: rgba(0, 255, 0, 0.7);"></span>冰霜持盾巨人 (4)</div>
@@ -123,7 +124,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Barricade_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Barricade_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Barricade_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Barricade.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="6656" data-x="708.0" data-y="-7.0" data-z="0.0001" style="left: 72.12%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_Barricade_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Barricade.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="7646" data-x="708.0" data-y="-7.0" data-z="0.0001" style="left: 72.12%; top: 49.78%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantBerserker">冰霜巨人狂战士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -157,7 +158,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Bridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Bridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Bridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Bridge.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="6742" data-x="644.0" data-y="-157.00002" data-z="-81.902596" style="left: 70.12%; top: 45.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-81</span></div>
+        <div class="container" id="container-IceCave_Bridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Bridge.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="7716" data-x="644.0" data-y="-157.00002" data-z="-81.902596" style="left: 70.12%; top: 45.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-81</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantBerserker">冰霜巨人狂战士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -191,7 +192,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_CaveSwamp_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_CaveSwamp_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_CaveSwamp_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_CaveSwamp.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantShielder" data-index="6926" data-x="161.0" data-y="-112.0" data-z="-198.9999" style="left: 55.03%; top: 46.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-198</span></div>
+        <div class="container" id="container-IceCave_CaveSwamp_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_CaveSwamp.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantShielder" data-index="7928" data-x="161.0" data-y="-112.0" data-z="-198.9999" style="left: 55.03%; top: 46.50%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">-198</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantShielder">冰霜持盾巨人</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -225,7 +226,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_DualCaverns_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_DualCaverns_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_DualCaverns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_DualCaverns.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="7082" data-x="161.0" data-y="-253.0" data-z="-299.99988" style="left: 55.03%; top: 42.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
+        <div class="container" id="container-IceCave_DualCaverns_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_DualCaverns.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="8086" data-x="161.0" data-y="-253.0" data-z="-299.99988" style="left: 55.03%; top: 42.09%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-299</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantBerserker">冰霜巨人狂战士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -259,7 +260,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_IcicleCave_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_IcicleCave_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_IcicleCave_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_IcicleCave.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantShielder" data-index="7559" data-x="-254.0" data-y="1038.0" data-z="0.0" style="left: 42.06%; top: 82.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_IcicleCave_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_IcicleCave.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantShielder" data-index="8572" data-x="-254.0" data-y="1038.0" data-z="0.0" style="left: 42.06%; top: 82.44%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantShielder">冰霜持盾巨人</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -293,7 +294,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_NarrowBridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_NarrowBridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_NarrowBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_NarrowBridge.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="7729" data-x="-21.0" data-y="188.0" data-z="68.46484" style="left: 49.34%; top: 55.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">68</span></div>
+        <div class="container" id="container-IceCave_NarrowBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_NarrowBridge.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="8739" data-x="-21.0" data-y="188.0" data-z="68.46484" style="left: 49.34%; top: 55.88%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">68</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantBerserker">冰霜巨人狂战士</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -327,8 +328,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Spiral_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Spiral_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Spiral_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Spiral.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="8008" data-x="35.999985" data-y="-144.0" data-z="0.00010460351" style="left: 51.12%; top: 45.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="FrostGiantShielder" data-index="8039" data-x="36.0" data-y="172.0" data-z="0.000105" style="left: 51.12%; top: 55.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
+        <div class="container" id="container-IceCave_Spiral_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Spiral.webp" class="image">        <div class="dot monster-dot" data-monster="FrostGiantBerserker" data-index="9034" data-x="35.999985" data-y="-144.0" data-z="0.00010460351" style="left: 51.12%; top: 45.50%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="FrostGiantShielder" data-index="9067" data-x="36.0" data-y="172.0" data-z="0.000105" style="left: 51.12%; top: 55.38%; background-color: rgba(0, 255, 0, 0.7); box-shadow: 0 0 6px rgba(0, 255, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(0, 255, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantBerserker">冰霜巨人狂战士</span><span class="ms-count">(1点)</span> | <span class="ms-dot" style="background:rgba(0, 255, 0, 0.7)"></span><span class="ms-name" data-monster="FrostGiantShielder">冰霜持盾巨人</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -338,8 +339,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6656">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 6656, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-7646">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 7646, this)"></td>
         <td>冰霜巨人狂战士</td>
         <td>冰图1层</td>
         <td>IceCave_Barricade_HR_D.json</td>
@@ -349,8 +350,8 @@
         <td>-7.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6742">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 6742, this)"></td>
+    <tr id="row-7716">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Bridge_HR_D-json', 7716, this)"></td>
         <td>冰霜巨人狂战士</td>
         <td>冰图1层</td>
         <td>IceCave_Bridge_HR_D.json</td>
@@ -360,8 +361,8 @@
         <td>-157.00</td>
         <td>-81.90</td>
     </tr>
-    <tr id="row-6926">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 6926, this)"></td>
+    <tr id="row-7928">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_CaveSwamp_HR_D-json', 7928, this)"></td>
         <td>冰霜持盾巨人</td>
         <td>冰图1层</td>
         <td>IceCave_CaveSwamp_HR_D.json</td>
@@ -371,8 +372,8 @@
         <td>-112.00</td>
         <td>-199.00</td>
     </tr>
-    <tr id="row-7082">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 7082, this)"></td>
+    <tr id="row-8086">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_DualCaverns_HR_D-json', 8086, this)"></td>
         <td>冰霜巨人狂战士</td>
         <td>冰图1层</td>
         <td>IceCave_DualCaverns_HR_D.json</td>
@@ -382,8 +383,8 @@
         <td>-253.00</td>
         <td>-300.00</td>
     </tr>
-    <tr id="row-7559">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 7559, this)"></td>
+    <tr id="row-8572">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_IcicleCave_HR_D-json', 8572, this)"></td>
         <td>冰霜持盾巨人</td>
         <td>冰图1层</td>
         <td>IceCave_IcicleCave_HR_D.json</td>
@@ -393,8 +394,8 @@
         <td>1038.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-7729">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 7729, this)"></td>
+    <tr id="row-8739">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_NarrowBridge_HR_D-json', 8739, this)"></td>
         <td>冰霜巨人狂战士</td>
         <td>冰图1层</td>
         <td>IceCave_NarrowBridge_HR_D.json</td>
@@ -404,8 +405,8 @@
         <td>188.00</td>
         <td>68.46</td>
     </tr>
-    <tr id="row-8008">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8008, this)"></td>
+    <tr id="row-9034">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9034, this)"></td>
         <td>冰霜巨人狂战士</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>
@@ -415,8 +416,8 @@
         <td>-144.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-8039">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 8039, this)"></td>
+    <tr id="row-9067">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Spiral_HR_D-json', 9067, this)"></td>
         <td>冰霜持盾巨人</td>
         <td>冰图1层</td>
         <td>IceCave_Spiral_HR_D.json</td>

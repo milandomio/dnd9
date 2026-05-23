@@ -20,27 +20,8 @@
         .summary-item .name-display { color: white; font-size: 18px; font-weight: bold; }
         .summary-item .name-debug { color: white; font-size: 18px; font-weight: bold; }
         
-        .item-section {{ color: #4CAF50; border-bottom-color: #4CAF50; }}
-        .item-item {{ border-color: #4CAF50; }}
-        .item-item:hover {{ border-color: #81C784; }}
-        .item-item .name-display {{ color: #4CAF50; }}
-        .item-item .name-debug {{ color: #4CAF50; }}
-        .item-item a {{ color: #4CAF50; }}
-        .item-item a:hover {{ color: #81C784; }}
-        .monster-section {{ color: #FF6600; border-bottom-color: #FF6600; }}
-        .monster-item {{ border-color: #FF6600; }}
-        .monster-item:hover {{ border-color: #FF8C00; }}
-        .monster-item .name-display {{ color: #FF6600; }}
-        .monster-item .name-debug {{ color: #FF6600; }}
-        .monster-item a {{ color: #FF6600; }}
-        .monster-item a:hover {{ color: #FF8C00; }}
-        .item-monster-section {{ color: #2196F3; border-bottom-color: #2196F3; }}
-        .item-monster-item {{ border-color: #2196F3; }}
-        .item-monster-item:hover {{ border-color: #64B5F6; }}
-        .item-monster-item .name-display {{ color: #2196F3; }}
-        .item-monster-item .name-debug {{ color: #2196F3; }}
-        .item-monster-item a {{ color: #2196F3; }}
-        .item-monster-item a:hover {{ color: #64B5F6; }}
+        .summary-item.no-coord { display: none; }
+        .summary-item.no-coord.debug-visible { display: block; }
         .back-to-home { text-align: center; margin-bottom: 30px; }
         .back-to-home a { color: #00bcd4; text-decoration: none; font-size: 18px; padding: 10px 20px; border: 2px solid #00bcd4; border-radius: 8px; display: inline-block; transition: all 0.2s; }
         .back-to-home a:hover { background-color: #00bcd4; color: #2c2c2c; }
@@ -51,7 +32,7 @@
 <body>
     <div class="back-to-home"><a href="index.html">← 返回首页</a></div>
     <h1>【怪物表】怪物位置汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="stats">共 120 个怪物</div>
     <div class="section-header monster-section">怪物列表</div>
 <div class="section-content">    <div class="summary-item monster-item">
@@ -785,6 +766,7 @@
             displays.forEach(el => el.style.display = isVisible ? 'inline' : 'none');
             debugs.forEach(el => el.style.display = isVisible ? 'none' : 'inline');
             document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            document.querySelectorAll('.summary-item.no-coord').forEach(el => el.classList.toggle('debug-visible', !isVisible));
             btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
         }
         function updateDots(index, state) {

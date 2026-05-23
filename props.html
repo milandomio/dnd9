@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>【实体表】实体位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 40px; }
+        h1 { text-align: center; color: #00bcd4; margin-bottom: 20px; font-size: 36px; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 16px; margin-bottom: 30px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .stats { text-align: center; color: #aaa; font-size: 14px; margin-bottom: 20px; }
+        .section-header { font-size: 24px; font-weight: bold; margin: 30px 0 10px 0; padding-bottom: 5px; border-bottom: 2px; text-align: left; }
+        .section-header:first-child { margin-top: 0; }
+        .section-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .summary-item { background-color: #3a3a3a; border: 1px solid #555; border-radius: 8px; padding: 20px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .summary-item a { font-size: 18px; text-decoration: none; font-weight: bold; display: block; }
+        .summary-item .name-display { color: white; font-size: 18px; font-weight: bold; }
+        .summary-item .name-debug { color: white; font-size: 18px; font-weight: bold; }
+        
+        .summary-item.no-coord { display: none; }
+        .summary-item.no-coord.debug-visible { display: block; }
+        .back-to-home { text-align: center; margin-bottom: 30px; }
+        .back-to-home a { color: #00bcd4; text-decoration: none; font-size: 18px; padding: 10px 20px; border: 2px solid #00bcd4; border-radius: 8px; display: inline-block; transition: all 0.2s; }
+        .back-to-home a:hover { background-color: #00bcd4; color: #2c2c2c; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+    </style>
+</head>
+<body>
+    <div class="back-to-home"><a href="index.html">← 返回首页</a></div>
+    <h1>【实体表】实体位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="stats">共 206 个实体（81 个有坐标）</div>
+    <div class="section-header props-section">实体列表</div>
+<div class="section-content">    <div class="summary-item props-item">
+        <a href="WoodenCrateMedium.html">
+            <span class="name-display">中型木箱子</span>
+            <span class="name-debug" style="display:none;">中型木箱子【WoodenCrateMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Bookshelf.html">
+            <span class="name-display">书架</span>
+            <span class="name-debug" style="display:none;">书架【Bookshelf】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="MermaidCorpse.html">
+            <span class="name-display">人鱼尸体</span>
+            <span class="name-debug" style="display:none;">人鱼尸体【MermaidCorpse】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="MermaidCoffin_01.html">
+            <span class="name-display">人鱼棺材</span>
+            <span class="name-debug" style="display:none;">人鱼棺材【MermaidCoffin_01】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="FloorPortal.html">
+            <span class="name-display">传送门</span>
+            <span class="name-debug" style="display:none;">传送门【FloorPortal】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="HolyGrailStatue.html">
+            <span class="name-display">伤害神坛</span>
+            <span class="name-debug" style="display:none;">伤害神坛【HolyGrailStatue】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="AngelStatue.html">
+            <span class="name-display">保护神坛</span>
+            <span class="name-debug" style="display:none;">保护神坛【AngelStatue】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="IcePillarDoor.html">
+            <span class="name-display">冰冻柱门</span>
+            <span class="name-debug" style="display:none;">冰冻柱门【IcePillarDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodChestMedium.html">
+            <span class="name-display">加固宝箱</span>
+            <span class="name-debug" style="display:none;">加固宝箱【WoodChestMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="MarvelousChest.html">
+            <span class="name-display">卓越宝箱</span>
+            <span class="name-debug" style="display:none;">卓越宝箱【MarvelousChest】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="PressurePlate.html">
+            <span class="name-display">压力板</span>
+            <span class="name-debug" style="display:none;">压力板【PressurePlate】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="DoubleStoneDoor.html">
+            <span class="name-display">双开石门</span>
+            <span class="name-debug" style="display:none;">双开石门【DoubleStoneDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="BossRewardDoor.html">
+            <span class="name-display">受诅咒的石门</span>
+            <span class="name-debug" style="display:none;">受诅咒的石门【BossRewardDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="FlameSpout.html">
+            <span class="name-display">喷火陷阱</span>
+            <span class="name-debug" style="display:none;">喷火陷阱【FlameSpout】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="FloorSpikes.html">
+            <span class="name-display">地刺陷阱</span>
+            <span class="name-debug" style="display:none;">地刺陷阱【FloorSpikes】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WallSpike.html">
+            <span class="name-display">墙刺陷阱</span>
+            <span class="name-debug" style="display:none;">墙刺陷阱【WallSpike】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodChestLarge.html">
+            <span class="name-display">大型加固宝箱</span>
+            <span class="name-debug" style="display:none;">大型加固宝箱【WoodChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SimpleChestLarge.html">
+            <span class="name-display">大型橡木宝箱</span>
+            <span class="name-debug" style="display:none;">大型橡木宝箱【SimpleChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Hoard.html">
+            <span class="name-display">宝藏堆</span>
+            <span class="name-debug" style="display:none;">宝藏堆【Hoard】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodChestSmall.html">
+            <span class="name-display">小型加固宝箱</span>
+            <span class="name-debug" style="display:none;">小型加固宝箱【WoodChestSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodenCrateSmall.html">
+            <span class="name-display">小型木板箱</span>
+            <span class="name-debug" style="display:none;">小型木板箱【WoodenCrateSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SimpleChestSmall.html">
+            <span class="name-display">小型橡木宝箱</span>
+            <span class="name-debug" style="display:none;">小型橡木宝箱【SimpleChestSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="GiantBarnacle.html">
+            <span class="name-display">巨型藤壶</span>
+            <span class="name-debug" style="display:none;">巨型藤壶【GiantBarnacle】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="GiantClam_Chest.html">
+            <span class="name-display">巨蚌</span>
+            <span class="name-debug" style="display:none;">巨蚌【GiantClam_Chest】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="PhantomFlower.html">
+            <span class="name-display">幻影花</span>
+            <span class="name-debug" style="display:none;">幻影花【PhantomFlower】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Wardweed.html">
+            <span class="name-display">护符草</span>
+            <span class="name-debug" style="display:none;">护符草【Wardweed】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="FloorLever.html">
+            <span class="name-display">拉杆</span>
+            <span class="name-debug" style="display:none;">拉杆【FloorLever】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WallLever.html">
+            <span class="name-display">拉杆</span>
+            <span class="name-debug" style="display:none;">拉杆【WallLever】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="DoubleWoodenDoorArched.html">
+            <span class="name-display">拱形木质双开门</span>
+            <span class="name-debug" style="display:none;">拱形木质双开门【DoubleWoodenDoorArched】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="TrackAxe.html">
+            <span class="name-display">斧闸陷阱</span>
+            <span class="name-debug" style="display:none;">斧闸陷阱【TrackAxe】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="FlatChestLarge.html">
+            <span class="name-display">方型宝箱</span>
+            <span class="name-debug" style="display:none;">方型宝箱【FlatChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Coffin_02.html">
+            <span class="name-display">旧棺材</span>
+            <span class="name-debug" style="display:none;">旧棺材【Coffin_02】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodBarrel.html">
+            <span class="name-display">木桶</span>
+            <span class="name-debug" style="display:none;">木桶【WoodBarrel】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Coffin_05.html">
+            <span class="name-display">木棺材</span>
+            <span class="name-debug" style="display:none;">木棺材【Coffin_05】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodenDoor.html">
+            <span class="name-display">木门</span>
+            <span class="name-debug" style="display:none;">木门【WoodenDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Coffin_03.html">
+            <span class="name-display">棺材</span>
+            <span class="name-debug" style="display:none;">棺材【Coffin_03】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Coffin_04.html">
+            <span class="name-display">棺材</span>
+            <span class="name-debug" style="display:none;">棺材【Coffin_04】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SimpleChestMedium.html">
+            <span class="name-display">橡木宝箱</span>
+            <span class="name-debug" style="display:none;">橡木宝箱【SimpleChestMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Ore_TidestoneOre.html">
+            <span class="name-display">潮汐石矿</span>
+            <span class="name-debug" style="display:none;">潮汐石矿【Ore_TidestoneOre】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Torch.html">
+            <span class="name-display">火把</span>
+            <span class="name-debug" style="display:none;">火把【Torch】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Roaster.html">
+            <span class="name-display">灯架子</span>
+            <span class="name-debug" style="display:none;">灯架子【Roaster】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="AshPile.html">
+            <span class="name-display">灰烬堆</span>
+            <span class="name-debug" style="display:none;">灰烬堆【AshPile】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="TarBarrel.html">
+            <span class="name-display">焦油木桶</span>
+            <span class="name-debug" style="display:none;">焦油木桶【TarBarrel】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="LavaMushroom.html">
+            <span class="name-display">熔岩菇</span>
+            <span class="name-debug" style="display:none;">熔岩菇【LavaMushroom】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="JailDoor.html">
+            <span class="name-display">牢门</span>
+            <span class="name-debug" style="display:none;">牢门【JailDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="OrnateChestLarge.html">
+            <span class="name-display">狮头宝箱</span>
+            <span class="name-debug" style="display:none;">狮头宝箱【OrnateChestLarge】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="AltarOfSacrifice.html">
+            <span class="name-display">献祭神坛</span>
+            <span class="name-debug" style="display:none;">献祭神坛【AltarOfSacrifice】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Lifeleaf.html">
+            <span class="name-display">生命之叶</span>
+            <span class="name-debug" style="display:none;">生命之叶【Lifeleaf】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SageStatue.html">
+            <span class="name-display">生命神坛</span>
+            <span class="name-debug" style="display:none;">生命神坛【SageStatue】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="RustyIronDoor.html">
+            <span class="name-display">生锈的铁门</span>
+            <span class="name-debug" style="display:none;">生锈的铁门【RustyIronDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Saltvine.html">
+            <span class="name-display">盐藤</span>
+            <span class="name-debug" style="display:none;">盐藤【Saltvine】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodenCrate_Firedeep_01.html">
+            <span class="name-display">矮人中型木箱</span>
+            <span class="name-debug" style="display:none;">矮人中型木箱【WoodenCrate_Firedeep_01】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="DwarvenSubGate.html">
+            <span class="name-display">矮人之门</span>
+            <span class="name-debug" style="display:none;">矮人之门【DwarvenSubGate】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="FallenDwarf.html">
+            <span class="name-display">矮人亡骸</span>
+            <span class="name-debug" style="display:none;">矮人亡骸【FallenDwarf】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="WoodenCrate_Firedeep_02.html">
+            <span class="name-display">矮人小型木箱</span>
+            <span class="name-debug" style="display:none;">矮人小型木箱【WoodenCrate_Firedeep_02】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="StoneTomb01.html">
+            <span class="name-display">石棺</span>
+            <span class="name-debug" style="display:none;">石棺【StoneTomb01】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SingleStoneDoor.html">
+            <span class="name-display">石门</span>
+            <span class="name-debug" style="display:none;">石门【SingleStoneDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Coffin_01.html">
+            <span class="name-display">精致棺材</span>
+            <span class="name-debug" style="display:none;">精致棺材【Coffin_01】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Ore_RubysilverOre.html">
+            <span class="name-display">红宝石银矿</span>
+            <span class="name-debug" style="display:none;">红宝石银矿【Ore_RubysilverOre】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Pot.html">
+            <span class="name-display">罐子</span>
+            <span class="name-debug" style="display:none;">罐子【Pot】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="CaptainsSecretVaultDoor.html">
+            <span class="name-display">船长的宝藏密室门</span>
+            <span class="name-debug" style="display:none;">船长的宝藏密室门【CaptainsSecretVaultDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SpiderPot.html">
+            <span class="name-display">蜘蛛罐子</span>
+            <span class="name-debug" style="display:none;">蜘蛛罐子【SpiderPot】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Candle.html">
+            <span class="name-display">蜡烛</span>
+            <span class="name-debug" style="display:none;">蜡烛【Candle】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="TrainingDummy.html">
+            <span class="name-display">训练假人</span>
+            <span class="name-debug" style="display:none;">训练假人【TrainingDummy】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Fountain.html">
+            <span class="name-display">速度之泉</span>
+            <span class="name-debug" style="display:none;">速度之泉【Fountain】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SkeletonCorpse.html">
+            <span class="name-display">遗骸</span>
+            <span class="name-debug" style="display:none;">遗骸【SkeletonCorpse】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="OrnateChestMedium.html">
+            <span class="name-display">重型华丽宝箱</span>
+            <span class="name-debug" style="display:none;">重型华丽宝箱【OrnateChestMedium】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Ore_GoldOre.html">
+            <span class="name-display">金矿</span>
+            <span class="name-debug" style="display:none;">金矿【Ore_GoldOre】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Ore_CobaltOre.html">
+            <span class="name-display">钴矿</span>
+            <span class="name-debug" style="display:none;">钴矿【Ore_CobaltOre】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="ReinforcedDungeonDoor02.html">
+            <span class="name-display">铁门</span>
+            <span class="name-debug" style="display:none;">铁门【ReinforcedDungeonDoor02】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Portcullis.html">
+            <span class="name-display">铁闸门</span>
+            <span class="name-debug" style="display:none;">铁闸门【Portcullis】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Ore_CopperOre.html">
+            <span class="name-display">铜矿</span>
+            <span class="name-debug" style="display:none;">铜矿【Ore_CopperOre】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SecretWallDoor.html">
+            <span class="name-display">隐秘墙体</span>
+            <span class="name-debug" style="display:none;">隐秘墙体【SecretWallDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Ore_FrostStoneOre.html">
+            <span class="name-display">霜石矿</span>
+            <span class="name-debug" style="display:none;">霜石矿【Ore_FrostStoneOre】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="OrnateChestSmall.html">
+            <span class="name-display">青铜华丽宝箱</span>
+            <span class="name-debug" style="display:none;">青铜华丽宝箱【OrnateChestSmall】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="SkullStoneDoor.html">
+            <span class="name-display">骷髅石门</span>
+            <span class="name-debug" style="display:none;">骷髅石门【SkullStoneDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="GoldenChest.html">
+            <span class="name-display">黄金宝箱</span>
+            <span class="name-debug" style="display:none;">黄金宝箱【GoldenChest】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="GoldenDoor.html">
+            <span class="name-display">黄金门</span>
+            <span class="name-debug" style="display:none;">黄金门【GoldenDoor】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="DeathBeetle.html">
+            <span class="name-display">黑暗虫群</span>
+            <span class="name-debug" style="display:none;">黑暗虫群【DeathBeetle】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="Ore_ObsidianOre.html">
+            <span class="name-display">黑曜石矿</span>
+            <span class="name-debug" style="display:none;">黑曜石矿【Ore_ObsidianOre】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item">
+        <a href="BlackRose.html">
+            <span class="name-display">黑玫瑰</span>
+            <span class="name-debug" style="display:none;">黑玫瑰【BlackRose】</span>
+        </a>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">InsaneZeno的双刃斧</span>
+        <span class="name-debug" style="display:none;">InsaneZeno的双刃斧【VeteranTrophy06】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">LatexMonkeynuts的长弓</span>
+        <span class="name-debug" style="display:none;">LatexMonkeynuts的长弓【VeteranTrophy04】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">Lindstrom3TTV的反曲弓</span>
+        <span class="name-debug" style="display:none;">Lindstrom3TTV的反曲弓【VeteranTrophy07】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">Malkavia的斗盾</span>
+        <span class="name-debug" style="display:none;">Malkavia的斗盾【VeteranTrophy01】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">Narikk的伐木斧</span>
+        <span class="name-debug" style="display:none;">Narikk的伐木斧【VeteranTrophy03】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">Xenophobia2027的生存弓</span>
+        <span class="name-debug" style="display:none;">Xenophobia2027的生存弓【VeteranTrophy05】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">YoloRage的圆盘匕首</span>
+        <span class="name-debug" style="display:none;">YoloRage的圆盘匕首【VeteranTrophy02】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">三角钉</span>
+        <span class="name-debug" style="display:none;">三角钉【CaltropProp】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_A01】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_A02】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_A03】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_B01】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_B02】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_B03】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_C01】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_C02】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">书籍</span>
+        <span class="name-debug" style="display:none;">书籍【Bookshelf_Book_C03】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">传送门</span>
+        <span class="name-debug" style="display:none;">传送门【EndlessPortalDown】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">传送门</span>
+        <span class="name-debug" style="display:none;">传送门【EndlessPortalEscape】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">传送门奖杯</span>
+        <span class="name-debug" style="display:none;">传送门奖杯【PortalTrophy】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">传送门底座</span>
+        <span class="name-debug" style="display:none;">传送门底座【PedestalPortal】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">信号盆</span>
+        <span class="name-debug" style="display:none;">信号盆【EscapeSignalBeacon】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">冰封术</span>
+        <span class="name-debug" style="display:none;">冰封术【IceBound】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">冰渊灯架</span>
+        <span class="name-debug" style="display:none;">冰渊灯架【IceAbyssRoaster】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">凶恶巨兽之门</span>
+        <span class="name-debug" style="display:none;">凶恶巨兽之门【DualBossRoomDoor_CaveTroll】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">升降梯</span>
+        <span class="name-debug" style="display:none;">升降梯【Lift】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">午夜诅咒</span>
+        <span class="name-debug" style="display:none;">午夜诅咒【MidnightCurse】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">双开木门</span>
+        <span class="name-debug" style="display:none;">双开木门【DoubleWoodenDoor】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">吊桥</span>
+        <span class="name-debug" style="display:none;">吊桥【Drawbridge】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">吊桥转轮</span>
+        <span class="name-debug" style="display:none;">吊桥转轮【DrawbridgeWheel】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">吊车</span>
+        <span class="name-debug" style="display:none;">吊车【EscapeTagVolume_Crane】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">喷泉（补满生命值）</span>
+        <span class="name-debug" style="display:none;">喷泉（补满生命值）【TestFountainFullHP】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">喷火机关</span>
+        <span class="name-debug" style="display:none;">喷火机关【FlameThrowerTrap】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">坚守阵地</span>
+        <span class="name-debug" style="display:none;">坚守阵地【FortifiedGround】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">坠落冰柱</span>
+        <span class="name-debug" style="display:none;">坠落冰柱【FallingIcicle】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">坠落岩浆</span>
+        <span class="name-debug" style="display:none;">坠落岩浆【DrippingMagma】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">坠落的钟乳石</span>
+        <span class="name-debug" style="display:none;">坠落的钟乳石【FallingStalactite】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">大地之刺</span>
+        <span class="name-debug" style="display:none;">大地之刺【ThornofEarth】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">安全区</span>
+        <span class="name-debug" style="display:none;">安全区【SafetyZone】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">寒霜铁门</span>
+        <span class="name-debug" style="display:none;">寒霜铁门【FrozenIronDoor】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">封印魔像</span>
+        <span class="name-debug" style="display:none;">封印魔像【DemonicGuardians】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">封印魔像</span>
+        <span class="name-debug" style="display:none;">封印魔像【IceAbyss_BossTrigger】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">岩浆爆发</span>
+        <span class="name-debug" style="display:none;">岩浆爆发【MagmaBurst】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">岩浆风暴</span>
+        <span class="name-debug" style="display:none;">岩浆风暴【MagmaStorm】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">巨盾</span>
+        <span class="name-debug" style="display:none;">巨盾【Pavise】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">巨蚌</span>
+        <span class="name-debug" style="display:none;">巨蚌【GiantClam_Trap】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">巫妖战利品</span>
+        <span class="name-debug" style="display:none;">巫妖战利品【LichTrophy】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">幽尘袋子</span>
+        <span class="name-debug" style="display:none;">幽尘袋子【GhostdustPouch】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">废墟向下楼梯</span>
+        <span class="name-debug" style="display:none;">废墟向下楼梯【RuinsDown】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">拉杆</span>
+        <span class="name-debug" style="display:none;">拉杆【Lever】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">捕兽夹</span>
+        <span class="name-debug" style="display:none;">捕兽夹【HuntingTrap】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">撤离传送门</span>
+        <span class="name-debug" style="display:none;">撤离传送门【FloorPortalScrollEscape】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">撤离传送门</span>
+        <span class="name-debug" style="display:none;">撤离传送门【PedestalPortalScrollEscape】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">无铭骑士之门</span>
+        <span class="name-debug" style="display:none;">无铭骑士之门【DualBossRoomDoor_SpectralKnight】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">日耀宝珠</span>
+        <span class="name-debug" style="display:none;">日耀宝珠【SunburstOrb】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">暴风雪</span>
+        <span class="name-debug" style="display:none;">暴风雪【Blizzard】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">木门</span>
+        <span class="name-debug" style="display:none;">木门【WoodenDoorArched】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">极寒</span>
+        <span class="name-debug" style="display:none;">极寒【Bloodfreeze】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">武装训练假人</span>
+        <span class="name-debug" style="display:none;">武装训练假人【TrainingDummy_Armed】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">死海</span>
+        <span class="name-debug" style="display:none;">死海【DeadSeaVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">氧气口</span>
+        <span class="name-debug" style="display:none;">氧气口【OxyVent】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">水</span>
+        <span class="name-debug" style="display:none;">水【Water】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">水晶灯架</span>
+        <span class="name-debug" style="display:none;">水晶灯架【CrystalRoaster】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">泥浆盾</span>
+        <span class="name-debug" style="display:none;">泥浆盾【MudShield】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">洞穴出口</span>
+        <span class="name-debug" style="display:none;">洞穴出口【CaveExit】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">洞穴坍塌</span>
+        <span class="name-debug" style="display:none;">洞穴坍塌【CaveCollapse】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">洞穴巨魔的大腰带</span>
+        <span class="name-debug" style="display:none;">洞穴巨魔的大腰带【TrollBelt】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">测试盒</span>
+        <span class="name-debug" style="display:none;">测试盒【TestBox】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">海洋风暴</span>
+        <span class="name-debug" style="display:none;">海洋风暴【OceanStorm】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">深层传送门</span>
+        <span class="name-debug" style="display:none;">深层传送门【FloorPortalScrollDown】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">深层传送门</span>
+        <span class="name-debug" style="display:none;">深层传送门【PedestalPortalScrollDown】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">溺水诅咒</span>
+        <span class="name-debug" style="display:none;">溺水诅咒【DrownedCurse】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">滑索</span>
+        <span class="name-debug" style="display:none;">滑索【Zipline】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">火墙</span>
+        <span class="name-debug" style="display:none;">火墙【WallofFire】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">灯</span>
+        <span class="name-debug" style="display:none;">灯【Lamp】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">炼狱平台</span>
+        <span class="name-debug" style="display:none;">炼狱平台【InfernoPlate】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">热喷泉口</span>
+        <span class="name-debug" style="display:none;">热喷泉口【HydrothermalVent】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">熔岩</span>
+        <span class="name-debug" style="display:none;">熔岩【FireDeepModuleVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">熔岩平台</span>
+        <span class="name-debug" style="display:none;">熔岩平台【MagmaPlate】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">熔岩抗伤区域</span>
+        <span class="name-debug" style="display:none;">熔岩抗伤区域【AntiFireDeepModuleVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">熔岩柱门</span>
+        <span class="name-debug" style="display:none;">熔岩柱门【FiredeepPillarDoor】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">燃烧</span>
+        <span class="name-debug" style="display:none;">燃烧【BurnVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">物品分配器</span>
+        <span class="name-debug" style="display:none;">物品分配器【ItemDispenser】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">独眼巨人的旧腰带</span>
+        <span class="name-debug" style="display:none;">独眼巨人的旧腰带【CyclopsBelt】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">独眼巨兽之门</span>
+        <span class="name-debug" style="display:none;">独眼巨兽之门【DualBossRoomDoor_Cyclops】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">狺女的哀伤灵焰</span>
+        <span class="name-debug" style="display:none;">狺女的哀伤灵焰【Banshee_Soulflame】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">白蜡树</span>
+        <span class="name-debug" style="display:none;">白蜡树【AshTree】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">皇家棺材</span>
+        <span class="name-debug" style="display:none;">皇家棺材【Coffin_06】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">矮人木桶</span>
+        <span class="name-debug" style="display:none;">矮人木桶【WoodBarrel_Firedeep】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">矮人雕像</span>
+        <span class="name-debug" style="display:none;">矮人雕像【DwarvenStatue】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">石门</span>
+        <span class="name-debug" style="display:none;">石门【GoblinStoneDoor】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">码头</span>
+        <span class="name-debug" style="display:none;">码头【Dock】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">硫磺喷口</span>
+        <span class="name-debug" style="display:none;">硫磺喷口【SulfurSeep】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">硫磺喷射陷阱</span>
+        <span class="name-debug" style="display:none;">硫磺喷射陷阱【SulfurThrowerTrap】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">硫磺风暴</span>
+        <span class="name-debug" style="display:none;">硫磺风暴【SulfurStorm】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">篝火</span>
+        <span class="name-debug" style="display:none;">篝火【Campfire】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">绳索</span>
+        <span class="name-debug" style="display:none;">绳索【Rope】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">腐化的召唤法阵</span>
+        <span class="name-debug" style="display:none;">腐化的召唤法阵【Inferno_BossTrigger】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">腐败之潮</span>
+        <span class="name-debug" style="display:none;">腐败之潮【DecayVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">至暗法阵</span>
+        <span class="name-debug" style="display:none;">至暗法阵【Crypt_BossTrigger】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">荆棘刺</span>
+        <span class="name-debug" style="display:none;">荆棘刺【ThornyBramble】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">荆棘屏障</span>
+        <span class="name-debug" style="display:none;">荆棘屏障【ThornBarrier】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">落石</span>
+        <span class="name-debug" style="display:none;">落石【FallingStone】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">虚空</span>
+        <span class="name-debug" style="display:none;">虚空【KillVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">蜘蛛网</span>
+        <span class="name-debug" style="display:none;">蜘蛛网【SpiderWeb】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">诅咒的船墓之门</span>
+        <span class="name-debug" style="display:none;">诅咒的船墓之门【BossRewardDoor_CursedShipGraveyardDoor】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">迷你宝盒</span>
+        <span class="name-debug" style="display:none;">迷你宝盒【CofferSmall】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">逃离标签音量</span>
+        <span class="name-debug" style="display:none;">逃离标签音量【EscapeTagVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">通缉海报</span>
+        <span class="name-debug" style="display:none;">通缉海报【Wanted01】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">通缉海报</span>
+        <span class="name-debug" style="display:none;">通缉海报【Wanted02】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">通过杀死怪物解锁拉杆</span>
+        <span class="name-debug" style="display:none;">通过杀死怪物解锁拉杆【UnlockingLeverByMonsterKill】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">金圣杯</span>
+        <span class="name-debug" style="display:none;">金圣杯【GoldGoblet】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">金酒杯</span>
+        <span class="name-debug" style="display:none;">金酒杯【GoldChalice】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">铁矿</span>
+        <span class="name-debug" style="display:none;">铁矿【Ore_IronOre】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">铁门</span>
+        <span class="name-debug" style="display:none;">铁门【ReinforcedDungeonDoor01】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">铭文</span>
+        <span class="name-debug" style="display:none;">铭文【CommemorativePlaque】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">银圣杯</span>
+        <span class="name-debug" style="display:none;">银圣杯【Goblet】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">银矿</span>
+        <span class="name-debug" style="display:none;">银矿【Ore_SilverOre】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">银酒杯</span>
+        <span class="name-debug" style="display:none;">银酒杯【SilverChalice】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">隐蔽雕像拉杆</span>
+        <span class="name-debug" style="display:none;">隐蔽雕像拉杆【StatueLever】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">鬼新娘之门</span>
+        <span class="name-debug" style="display:none;">鬼新娘之门【DualBossRoomDoor_Banshee】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">鬼灵骑士的魂焰</span>
+        <span class="name-debug" style="display:none;">鬼灵骑士的魂焰【SpectralKnight_Soulflame】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">鸦群</span>
+        <span class="name-debug" style="display:none;">鸦群【MurderofCrowsVolume】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">黏焦油</span>
+        <span class="name-debug" style="display:none;">黏焦油【StickyTar】</span>
+    </div>
+    <div class="summary-item props-item no-coord">
+        <span class="name-display">黑暗虫群</span>
+        <span class="name-debug" style="display:none;">黑暗虫群【DeathSwarm】</span>
+    </div>
+</div>
+
+    <script>
+        function toggleDebugInfo() {
+            const displays = document.querySelectorAll('.name-display');
+            const debugs = document.querySelectorAll('.name-debug');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = debugs.length > 0 && debugs[0].style.display !== 'none';
+            displays.forEach(el => el.style.display = isVisible ? 'inline' : 'none');
+            debugs.forEach(el => el.style.display = isVisible ? 'none' : 'inline');
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            document.querySelectorAll('.summary-item.no-coord').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => { if (dot.style.display === 'none') return; dot.style.left = '50%'; dot.style.top = '50%'; });
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

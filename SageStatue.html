@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>生命神坛 位置汇总</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #2c2c2c; color: white; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .back-link { display: block; text-align: center; margin-bottom: 10px; color: #FFC107; font-size: 18px; text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; color: #fff; }
+        h1 { margin-bottom: 8px; font-size: 28px; text-align: center; color: #00bcd4; }
+        .disclaimer { text-align: center; color: #ff6b6b; font-size: 14px; margin-bottom: 10px; padding: 8px; background-color: #3a3a3a; border-radius: 5px; }
+        .disclaimer .time { color: #aaa; margin-left: 15px; }
+        .disclaimer .designer { color: #aaa; font-size: 10px; }
+        .debug-title { display: none; font-size: 16px; color: #888; text-align: center; margin-bottom: 5px; }
+        .debug-title.visible { display: block; }
+        :root { --cols: 4; --card-width: 325px; }
+        .maps-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, var(--card-width))); gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .group-header { grid-column: 1 / -1; font-size: 22px; font-weight: bold; color: #FFC107; padding: 5px 0; margin-top: 10px; border-bottom: 2px solid #FFC107; }
+        .map-card { padding: 5px; background-color: #3a3a3a; border-radius: 5px; border: 1px solid #555; display: flex; flex-direction: column; align-items: center; }
+        .map-card.test-module { display: none; }
+        .map-title { font-size: 22px; margin-bottom: 2px; color: #00bcd4; text-align: center; width: 100%; line-height: 1.3; }
+        .debug-text { display: none; font-size: 13px; color: #888; }
+        .debug-text.visible { display: inline; }
+        .map-filename { font-size: 13px; color: #888; font-weight: normal; margin-top: 1px; display: none; }
+        .map-info { margin-bottom: 5px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+        .controls { display: none; gap:3px; margin-bottom: 5px; justify-content: center; flex-wrap: wrap; width: 100%; align-items: center; }
+        .controls.visible { display: flex; }
+        .debug-panel { display: none; position: fixed; top: 80px; right: 20px; background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 10px; z-index: 9998; }
+        .debug-panel.visible { display: block; }
+        .debug-panel label { font-size: 14px; color: #aaa; margin-right: 5px; }
+        .debug-panel input { width: 50px; padding: 3px; border-radius: 3px; border: 1px solid #555; background-color: #222; color: white; font-size: 14px; }
+        .debug-panel-dir-row { display: flex; gap: 2px; justify-content: center; margin-top: 3px; }
+        .debug-btn { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: all 0.2s; }
+        .debug-btn:hover { background-color: #FF9800; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        .input-group { display: flex; align-items: center; gap:2px; background-color: #222; padding: 2px 5px; border-radius: 3px; }
+        .input-group label { font-size: 13px; color: #aaa; }
+        .input-group input { padding: 1px; border-radius:2px; border:1px solid #555; background-color: #333; color: white; font-size: 13px; width: 50px; text-align: center; }
+        .btn-scale { padding: 2px 4px; background-color: #555; color: white; border: none; border-radius: 2px; font-size: 13px; cursor: pointer; }
+        .btn-scale:hover { background-color: #777; }
+        .controls button { padding: 3px 6px; border: none; border-radius: 3px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .btn-rotate { background-color: #4CAF50; color: white; }
+        .btn-rotate:hover { background-color: #45a049; }
+        .btn-rotate.active { background-color: #FFC107; color: #000; box-shadow: 0 0 10px #FFC107; }
+        .btn-mirror-x { background-color: #2196F3; color: white; }
+        .btn-mirror-x:hover { background-color: #1976D2; }
+        .btn-mirror-x.active { background-color: #FF5722; box-shadow: 0 0 10px #FF5722; }
+        .btn-mirror-y { background-color: #9C27B0; color: white; }
+        .btn-mirror-y:hover { background-color: #7B1FA2; }
+        .btn-mirror-y.active { background-color: #E91E63; box-shadow: 0 0 10px #E91E63; }
+        .btn-reset { background-color: #9E9E9E; color: white; }
+        .btn-reset:hover { background-color: #757575; }
+        .container { position: relative; width: 100%; margin: 0 auto; background-color: #1a1a1a; border: 1px solid #444; border-radius: 3px; }
+        .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
+        .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
+        .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
+        .summary { display: none; margin-top: 20px; padding: 10px; background-color: #3a3a3a; border-radius: 5px; }
+        .summary.visible { display: block; }
+        .summary h2 { font-size: 18px; margin-bottom: 10px; text-align: center; color: #00bcd4; }
+        .summary table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .summary th, .summary td { text-align: left; padding: 4px; border-bottom:1px solid #555; }
+        .summary th { background-color: #555; font-weight: bold; }
+        .summary .label-group-row { background-color: #424242; }
+        .label-toggle-btn { margin: 2px 4px; padding: 4px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+        .label-toggle-btn:hover { background-color: #45a049; transform: scale(1.05); }
+        .label-toggle-btn:active { transform: scale(0.95); }
+        .legend { margin: 10px 0; padding: 10px; background-color: #3a3a3a; border-radius: 5px; font-size: 15px; text-align: center; color: #aaa; }
+        .color-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
+    <h1>生命神坛 位置汇总</h1>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="debug-title" id="debug-title">生命神坛 (SageStatue)</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header">哥布林洞穴1层</div>
+    <div class="map-card" id="map-card-Cave_Valley_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">峡谷 B<span class='debug-text'> (Valley_B)</span><div class='map-filename'>Cave_Valley_02_HR_D.json</div></h3>
+        <div class="map-info">Cave_Valley_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cave_Valley_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cave_Valley_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cave_Valley_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cave_Valley_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cave_Valley_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cave_Valley_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Valley_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Valley_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Valley_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cave_Valley_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cave_Valley_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_Valley_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cave_Valley_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cave_Valley_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cave_Valley_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cave_Valley_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Valley_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cave_Valley_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cave_Valley_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Valley_02.webp" class="image">        <div class="dot" data-index="1153" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="121.87307" data-y="1111.0287" data-z="-349.9999" style="left: 53.81%; top: 84.72%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-349</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-CavernLake_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">岩洞湖 A<span class='debug-text'> (Cavern_Lake_A)</span><div class='map-filename'>CavernLake_02_HR_D.json</div></h3>
+        <div class="map-info">CavernLake_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('CavernLake_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-CavernLake_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('CavernLake_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('CavernLake_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-CavernLake_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-CavernLake_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('CavernLake_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('CavernLake_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('CavernLake_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('CavernLake_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-CavernLake_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CavernLake_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-CavernLake_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CavernLake_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('CavernLake_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('CavernLake_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('CavernLake_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('CavernLake_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-CavernLake_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CavernLake_02.webp" class="image">        <div class="dot" data-index="1225" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="10.0" data-y="83.0" data-z="-6.0" style="left: 50.31%; top: 52.59%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-6</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-GoblinCaveCorner_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洞穴隧道<span class='debug-text'> (CaveTunnels)</span><div class='map-filename'>GoblinCaveCorner_01_HR_D.json</div></h3>
+        <div class="map-info">GoblinCaveCorner_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('GoblinCaveCorner_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-GoblinCaveCorner_01_HR_D-json" value="1600" step="100" onchange="updateMapRange('GoblinCaveCorner_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('GoblinCaveCorner_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-GoblinCaveCorner_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-GoblinCaveCorner_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinCaveCorner_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-GoblinCaveCorner_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinCaveCorner_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-GoblinCaveCorner_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinCaveCorner_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('GoblinCaveCorner_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('GoblinCaveCorner_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinCaveCorner_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('GoblinCaveCorner_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-GoblinCaveCorner_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinCaveCorner_01.webp" class="image">        <div class="dot" data-index="2198" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-849.16736" data-y="-941.7421" data-z="-399.9999" style="left: 23.46%; top: 20.57%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-399</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-GoblinJail_Center_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">哥布林监狱 B<span class='debug-text'> (GoblinPrisons_B)</span><div class='map-filename'>GoblinJail_Center_02_HR_D.json</div></h3>
+        <div class="map-info">GoblinJail_Center_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('GoblinJail_Center_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-GoblinJail_Center_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('GoblinJail_Center_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('GoblinJail_Center_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-GoblinJail_Center_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-GoblinJail_Center_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-GoblinJail_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinJail_Center_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-GoblinJail_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinJail_Center_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('GoblinJail_Center_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('GoblinJail_Center_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinJail_Center_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('GoblinJail_Center_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-GoblinJail_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center_02.webp" class="image">        <div class="dot" data-index="1388" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-364.0" data-y="-50.0" data-z="-1.2574742" style="left: 38.62%; top: 48.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-1</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-GoblinJail_Center_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">哥布林监狱 A<span class='debug-text'> (GoblinPrisons_A)</span><div class='map-filename'>GoblinJail_Center_HR_D.json</div></h3>
+        <div class="map-info">GoblinJail_Center.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('GoblinJail_Center_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-GoblinJail_Center_HR_D-json" value="1600" step="100" onchange="updateMapRange('GoblinJail_Center_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('GoblinJail_Center_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-GoblinJail_Center_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-GoblinJail_Center_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('GoblinJail_Center_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-GoblinJail_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinJail_Center_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-GoblinJail_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('GoblinJail_Center_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('GoblinJail_Center_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('GoblinJail_Center_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinJail_Center_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('GoblinJail_Center_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-GoblinJail_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinJail_Center.webp" class="image">        <div class="dot" data-index="1304" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1090.0" data-y="-50.0" data-z="200.0" style="left: 15.94%; top: 48.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">200</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-HideoutCave_Center_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洞穴藏身处 A<span class='debug-text'> (CaveHideout_A)</span><div class='map-filename'>HideoutCave_Center_HR_D.json</div></h3>
+        <div class="map-info">HideoutCave_Center.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('HideoutCave_Center_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-HideoutCave_Center_HR_D-json" value="1600" step="100" onchange="updateMapRange('HideoutCave_Center_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('HideoutCave_Center_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-HideoutCave_Center_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-HideoutCave_Center_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_Center_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_Center_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_Center_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_Center_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-HideoutCave_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('HideoutCave_Center_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-HideoutCave_Center_HR_D-json" value="0" step="10" onchange="applyOffsetInput('HideoutCave_Center_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('HideoutCave_Center_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('HideoutCave_Center_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('HideoutCave_Center_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('HideoutCave_Center_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-HideoutCave_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HideoutCave_Center.webp" class="image">        <div class="dot" data-index="1642" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="200.0" data-y="94.0" data-z="-14.0" style="left: 56.25%; top: 52.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-14</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-StoneGrave_Center_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">石坟 B<span class='debug-text'> (Stone_Graves_B)</span><div class='map-filename'>StoneGrave_Center_02_HR_D.json</div></h3>
+        <div class="map-info">StoneGrave_Center_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-StoneGrave_Center_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('StoneGrave_Center_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-StoneGrave_Center_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-StoneGrave_Center_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-StoneGrave_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-StoneGrave_Center_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('StoneGrave_Center_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('StoneGrave_Center_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('StoneGrave_Center_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('StoneGrave_Center_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-StoneGrave_Center_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/StoneGrave_Center_02.webp" class="image">        <div class="dot" data-index="1884" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-48.627583" data-y="1429.0956" data-z="0.0" style="left: 48.48%; top: 94.66%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟2层地牢</div>
+    <div class="map-card" id="map-card-ComplexHall_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">门控房间<span class='debug-text'> (Gated_Rooms)</span><div class='map-filename'>ComplexHall_HR_D.json</div></h3>
+        <div class="map-info">ComplexHall.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ComplexHall_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ComplexHall_HR_D-json" value="1600" step="100" onchange="updateMapRange('ComplexHall_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ComplexHall_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ComplexHall_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ComplexHall_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ComplexHall_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ComplexHall_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ComplexHall_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ComplexHall_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ComplexHall_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ComplexHall_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ComplexHall_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ComplexHall_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ComplexHall_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ComplexHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ComplexHall.webp" class="image">        <div class="dot" data-index="3023" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-860.0" data-y="-155.0" data-z="0.0" style="left: 23.12%; top: 45.16%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Crypt_FourRooms_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">四方房<span class='debug-text'> (Four_Rooms)</span><div class='map-filename'>Crypt_FourRooms_HR_D.json</div></h3>
+        <div class="map-info">Crypt_FourRooms.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Crypt_FourRooms_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Crypt_FourRooms_HR_D-json" value="1600" step="100" onchange="updateMapRange('Crypt_FourRooms_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Crypt_FourRooms_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Crypt_FourRooms_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Crypt_FourRooms_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_FourRooms_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_FourRooms_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_FourRooms_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Crypt_FourRooms_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Crypt_FourRooms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_FourRooms_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Crypt_FourRooms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Crypt_FourRooms_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Crypt_FourRooms_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Crypt_FourRooms_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_FourRooms_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Crypt_FourRooms_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Crypt_FourRooms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_FourRooms.webp" class="image">        <div class="dot" data-index="3592" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="1146.1064" data-y="1157.3401" data-z="3.75295" style="left: 85.82%; top: 86.17%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">3</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-HighPriestOssuary_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">大祭司<span class='debug-text'> (High_Priests)</span><div class='map-filename'>HighPriestOssuary_HR_D.json</div></h3>
+        <div class="map-info">HighPriestOssuary.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('HighPriestOssuary_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-HighPriestOssuary_HR_D-json" value="1600" step="100" onchange="updateMapRange('HighPriestOssuary_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('HighPriestOssuary_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-HighPriestOssuary_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-HighPriestOssuary_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('HighPriestOssuary_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('HighPriestOssuary_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('HighPriestOssuary_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('HighPriestOssuary_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-HighPriestOssuary_HR_D-json" value="0" step="10" onchange="applyOffsetInput('HighPriestOssuary_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-HighPriestOssuary_HR_D-json" value="0" step="10" onchange="applyOffsetInput('HighPriestOssuary_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('HighPriestOssuary_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('HighPriestOssuary_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('HighPriestOssuary_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('HighPriestOssuary_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-HighPriestOssuary_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/HighPriestOssuary.webp" class="image">        <div class="dot" data-index="5639" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1180.6066" data-y="-1187.3224" data-z="-455.0" style="left: 13.11%; top: 12.90%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-455</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Maze_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">迷宫<span class='debug-text'> (Maze)</span><div class='map-filename'>Maze_HR_D.json</div></h3>
+        <div class="map-info">Maze.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Maze_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Maze_HR_D-json" value="1600" step="100" onchange="updateMapRange('Maze_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Maze_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Maze_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Maze_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Maze_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Maze_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Maze_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Maze_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Maze_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Maze_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Maze_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Maze_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Maze_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Maze_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Maze_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Maze_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Maze_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Maze.webp" class="image">        <div class="dot" data-index="4411" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-304.0" data-y="690.0" data-z="0.0" style="left: 40.50%; top: 71.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Sanctum_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">圣所<span class='debug-text'> (Sanctum)</span><div class='map-filename'>Sanctum_HR_D.json</div></h3>
+        <div class="map-info">Sanctum.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Sanctum_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Sanctum_HR_D-json" value="1600" step="100" onchange="updateMapRange('Sanctum_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Sanctum_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Sanctum_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Sanctum_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Sanctum_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Sanctum_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Sanctum_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Sanctum_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Sanctum_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Sanctum_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Sanctum_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Sanctum_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Sanctum_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Sanctum.webp" class="image">        <div class="dot" data-index="6036" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-5.456968e-12" data-y="640.0" data-z="-9.9999" style="left: 50.00%; top: 70.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-9</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-SingleLogBridge_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">长桥<span class='debug-text'> (Long_Bridge)</span><div class='map-filename'>SingleLogBridge_HR_D.json</div></h3>
+        <div class="map-info">SingleLogBridge.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('SingleLogBridge_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-SingleLogBridge_HR_D-json" value="1600" step="100" onchange="updateMapRange('SingleLogBridge_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('SingleLogBridge_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-SingleLogBridge_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-SingleLogBridge_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('SingleLogBridge_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('SingleLogBridge_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('SingleLogBridge_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('SingleLogBridge_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-SingleLogBridge_HR_D-json" value="0" step="10" onchange="applyOffsetInput('SingleLogBridge_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-SingleLogBridge_HR_D-json" value="0" step="10" onchange="applyOffsetInput('SingleLogBridge_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('SingleLogBridge_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('SingleLogBridge_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('SingleLogBridge_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('SingleLogBridge_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-SingleLogBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/SingleLogBridge.webp" class="image">        <div class="dot" data-index="6151" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-960.0091" data-y="-975.0091" data-z="0.0" style="left: 20.00%; top: 19.53%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Swamp_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">沼泽<span class='debug-text'> (Swamp)</span><div class='map-filename'>Swamp_HR_D.json</div></h3>
+        <div class="map-info">Swamp.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Swamp_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Swamp_HR_D-json" value="1600" step="100" onchange="updateMapRange('Swamp_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Swamp_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Swamp_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Swamp_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Swamp_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Swamp_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Swamp_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Swamp_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Swamp_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Swamp_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Swamp_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Swamp_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Swamp_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Swamp_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Swamp_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Swamp_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Swamp_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Swamp.webp" class="image">        <div class="dot" data-index="6369" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1419.0" data-y="122.0" data-z="0.0" style="left: 5.66%; top: 53.81%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ThePit_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">角斗坑<span class='debug-text'> (Pit)</span><div class='map-filename'>ThePit_HR_D.json</div></h3>
+        <div class="map-info">ThePit.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ThePit_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ThePit_HR_D-json" value="1600" step="100" onchange="updateMapRange('ThePit_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ThePit_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ThePit_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ThePit_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ThePit_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ThePit_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ThePit_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ThePit_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ThePit_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThePit_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ThePit_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThePit_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ThePit_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ThePit_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ThePit_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ThePit_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ThePit_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThePit.webp" class="image">        <div class="dot" data-index="4755" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1121.4596" data-y="-36.570854" data-z="-299.9999" style="left: 14.95%; top: 48.86%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-299</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-CenterTower_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">巨型环厅<span class='debug-text'> (Wheel)</span><div class='map-filename'>CenterTower_HR_D.json</div></h3>
+        <div class="map-info">CenterTower.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('CenterTower_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-CenterTower_HR_D-json" value="3200" step="100" onchange="updateMapRange('CenterTower_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('CenterTower_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-CenterTower_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-CenterTower_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('CenterTower_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('CenterTower_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('CenterTower_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('CenterTower_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-CenterTower_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CenterTower_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-CenterTower_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CenterTower_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('CenterTower_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('CenterTower_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('CenterTower_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('CenterTower_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-CenterTower_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/CenterTower.webp" class="image">        <div class="dot" data-index="2801" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="1469.0" data-y="-1104.0" data-z="0.0" style="left: 72.95%; top: 32.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="group-header">冰图2层</div>
+    <div class="map-card" id="map-card-IceAbyss_ImpRitualRooms_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶灵仪式室<span class='debug-text'> (IceAbyss_ImpRitualRooms)</span><div class='map-filename'>IceAbyss_ImpRitualRooms_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_ImpRitualRooms.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ImpRitualRooms_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_ImpRitualRooms_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_ImpRitualRooms_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ImpRitualRooms_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_ImpRitualRooms_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_ImpRitualRooms_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ImpRitualRooms_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_ImpRitualRooms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ImpRitualRooms_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_ImpRitualRooms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ImpRitualRooms_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_ImpRitualRooms_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_ImpRitualRooms_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_ImpRitualRooms_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_ImpRitualRooms_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_ImpRitualRooms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ImpRitualRooms.webp" class="image">        <div class="dot" data-index="7234" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-810.0" data-y="-805.0" data-z="0.0" style="left: 24.69%; top: 24.84%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_StaircaseHill_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">阶梯山丘<span class='debug-text'> (IceAbyss_StaircaseHill)</span><div class='map-filename'>IceAbyss_StaircaseHill_HR_D.json</div></h3>
+        <div class="map-info">IceAbyss_StaircaseHill.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_StaircaseHill_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_StaircaseHill_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_StaircaseHill_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_StaircaseHill_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_StaircaseHill_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_StaircaseHill_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_StaircaseHill_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_StaircaseHill_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_StaircaseHill_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_StaircaseHill_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_StaircaseHill_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_StaircaseHill_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_StaircaseHill_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_StaircaseHill_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_StaircaseHill_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_StaircaseHill_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_StaircaseHill.webp" class="image">        <div class="dot" data-index="7446" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1454.0114" data-y="1.8189894e-12" data-z="7.792968e-05" style="left: 4.56%; top: 50.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="group-header">冰图1层</div>
+    <div class="map-card" id="map-card-IceCave_Altar_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">圣坛<span class='debug-text'> (IceCave_Altar)</span><div class='map-filename'>IceCave_Altar_HR_D.json</div></h3>
+        <div class="map-info">IceCave_Altar.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceCave_Altar_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceCave_Altar_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceCave_Altar_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceCave_Altar_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceCave_Altar_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceCave_Altar_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Altar_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Altar_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Altar_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Altar_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceCave_Altar_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Altar_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceCave_Altar_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Altar_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceCave_Altar_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceCave_Altar_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Altar_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceCave_Altar_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceCave_Altar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Altar.webp" class="image">        <div class="dot" data-index="7613" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="1300.0" data-y="-1320.0" data-z="0.0001" style="left: 90.62%; top: 8.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-IceCave_Barricade_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">拒马阵地<span class='debug-text'> (IceCave_Barricade)</span><div class='map-filename'>IceCave_Barricade_HR_D.json</div></h3>
+        <div class="map-info">IceCave_Barricade.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceCave_Barricade_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceCave_Barricade_HR_D-json" value="1600" step="100" onchange="updateMapRange('IceCave_Barricade_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceCave_Barricade_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceCave_Barricade_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceCave_Barricade_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Barricade_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Barricade_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Barricade_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Barricade_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceCave_Barricade_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Barricade_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceCave_Barricade_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Barricade_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceCave_Barricade_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceCave_Barricade_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Barricade_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceCave_Barricade_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceCave_Barricade_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/IceCave_Barricade.webp" class="image">        <div class="dot" data-index="7653" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1425.0" data-y="-26.0" data-z="0.0" style="left: 5.47%; top: 49.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-IceCave_Hive_03_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="2" style="">
+        <h3 class="map-title">蜂巢<span class='debug-text'> (IceCave_Hive)</span><div class='map-filename'>IceCave_Hive_03_HR_D.json</div></h3>
+        <div class="map-info">IceCave_Hive_03.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceCave_Hive_03_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceCave_Hive_03_HR_D-json" value="3200" step="100" onchange="updateMapRange('IceCave_Hive_03_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('IceCave_Hive_03_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceCave_Hive_03_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceCave_Hive_03_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceCave_Hive_03_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceCave_Hive_03_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Hive_03_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceCave_Hive_03_HR_D-json" value="0" step="10" onchange="applyOffsetInput('IceCave_Hive_03_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceCave_Hive_03_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceCave_Hive_03_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Hive_03_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceCave_Hive_03_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceCave_Hive_03_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/IceCave_Hive_03.webp" class="image">        <div class="dot" data-index="8393" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-708.7137" data-y="-1233.0009" data-z="-500.0" style="left: 77.85%; top: 30.73%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-500</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟3层炼狱</div>
+    <div class="map-card" id="map-card-DemonDen_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">炼狱魔窟<span class='debug-text'> (Demon_Den)</span><div class='map-filename'>DemonDen_HR_D.json</div></h3>
+        <div class="map-info">DemonDen.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-DemonDen_HR_D-json" value="1600" step="100" onchange="updateMapRange('DemonDen_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-DemonDen_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-DemonDen_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('DemonDen_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('DemonDen_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('DemonDen_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('DemonDen_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot" data-index="10430" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1300.0" data-y="-1300.0" data-z="1025.0" style="left: 9.38%; top: 9.38%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1025</span></div>
+        <div class="dot" data-index="10431" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="10.0" data-y="200.0" data-z="-10.0" style="left: 50.31%; top: 56.25%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-10</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-InfernoCastleConner_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火城堡<span class='debug-text'> (Blood_Castle)</span><div class='map-filename'>InfernoCastleConner_HR_D.json</div></h3>
+        <div class="map-info">InfernoCastleConner.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoCastleConner_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoCastleConner_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoCastleConner_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoCastleConner_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoCastleConner_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoCastleConner_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoCastleConner_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoCastleConner_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoCastleConner_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoCastleConner_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoCastleConner_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoCastleConner_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoCastleConner_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoCastleConner_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoCastleConner_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoCastleConner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoCastleConner.webp" class="image">        <div class="dot" data-index="10509" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="790.0" data-y="790.0" data-z="0.0" style="left: 74.69%; top: 74.69%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-InfernoMouth_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶魔之口<span class='debug-text'> (Demon_Mouth)</span><div class='map-filename'>InfernoMouth_HR_D.json</div></h3>
+        <div class="map-info">InfernoMouth.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoMouth_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoMouth_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoMouth_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoMouth_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoMouth_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoMouth_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoMouth_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoMouth_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoMouth_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoMouth_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoMouth_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoMouth_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoMouth_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoMouth_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoMouth_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoMouth_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoMouth_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoMouth_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoMouth_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoMouth.webp" class="image">        <div class="dot" data-index="10722" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-80.0" data-y="-1340.0" data-z="-800.0" style="left: 47.50%; top: 8.12%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-800</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-InfernoRiver_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火之河<span class='debug-text'> (Blood_River)</span><div class='map-filename'>InfernoRiver_HR_D.json</div></h3>
+        <div class="map-info">InfernoRiver.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoRiver_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoRiver_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoRiver_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoRiver_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoRiver_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoRiver_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoRiver_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot" data-index="10850" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-572.9937" data-y="-1358.6943" data-z="-3.0" style="left: 32.09%; top: 7.54%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-3</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_DeathPlatforms_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火平台<span class='debug-text'> (Blood_Platforms)</span><div class='map-filename'>Inferno_DeathPlatforms_HR_D.json</div></h3>
+        <div class="map-info">Inferno_DeathPlatforms.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_DeathPlatforms_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_DeathPlatforms_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_DeathPlatforms_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_DeathPlatforms_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_DeathPlatforms_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_DeathPlatforms_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DeathPlatforms_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_DeathPlatforms_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot" data-index="10359" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="1115.0" data-y="1115.0" data-z="500.0" style="left: 84.84%; top: 84.84%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">500</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_Hellcrossbridge_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="-600.00" data-init-offset-y="300.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">百鬼桥<span class='debug-text'> (Hellcrossbridge)</span><div class='map-filename'>Inferno_Hellcrossbridge_HR_D.json</div></h3>
+        <div class="map-info">Inferno_Hellcrossbridge.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_Hellcrossbridge_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_Hellcrossbridge_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_Hellcrossbridge_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_Hellcrossbridge_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_Hellcrossbridge_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_Hellcrossbridge_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_Hellcrossbridge_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_Hellcrossbridge_HR_D-json" value="-600" step="10" onchange="applyOffsetInput('Inferno_Hellcrossbridge_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_Hellcrossbridge_HR_D-json" value="300" step="10" onchange="applyOffsetInput('Inferno_Hellcrossbridge_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_Hellcrossbridge_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_Hellcrossbridge_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Hellcrossbridge_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_Hellcrossbridge_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot" data-index="9894" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-100.0" data-y="-80.0" data-z="-69.9999" style="left: 28.12%; top: 56.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-69</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_LavaCorner_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶魔巢穴<span class='debug-text'> (Demon_Lairs)</span><div class='map-filename'>Inferno_LavaCorner_HR_D.json</div></h3>
+        <div class="map-info">Inferno_LavaCorner.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_LavaCorner_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_LavaCorner_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_LavaCorner_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_LavaCorner_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_LavaCorner_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_LavaCorner_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaCorner_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaCorner_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaCorner_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_LavaCorner_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_LavaCorner_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_LavaCorner_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_LavaCorner_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_LavaCorner_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_LavaCorner_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_LavaCorner_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_LavaCorner_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_LavaCorner_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_LavaCorner_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_LavaCorner.webp" class="image">        <div class="dot" data-index="11030" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="-1213.6863" data-y="-1215.3137" data-z="300.0" style="left: 12.07%; top: 12.02%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">300</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ThroneRoom_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">恶魔王座<span class='debug-text'> (Demon_Throne)</span><div class='map-filename'>ThroneRoom_02_HR_D.json</div></h3>
+        <div class="map-info">ThroneRoom_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ThroneRoom_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ThroneRoom_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('ThroneRoom_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ThroneRoom_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ThroneRoom_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ThroneRoom_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ThroneRoom_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ThroneRoom_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThroneRoom_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ThroneRoom_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ThroneRoom_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ThroneRoom_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ThroneRoom_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ThroneRoom_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ThroneRoom_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ThroneRoom_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ThroneRoom_02.webp" class="image">        <div class="dot" data-index="11268" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="1127.3763" data-y="1121.5182" data-z="0.0001" style="left: 85.23%; top: 85.05%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟1层</div>
+    <div class="map-card" id="map-card-Ruins_Chapel_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">废弃圣所<span class='debug-text'> (Abandoned_Sanctuary)</span><div class='map-filename'>Ruins_Chapel_HR_D.json</div></h3>
+        <div class="map-info">Ruins_Chapel.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Chapel_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Chapel_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Chapel_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Chapel_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Chapel_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Chapel_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Chapel_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Chapel_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Chapel_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Chapel_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_Chapel_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Chapel_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_Chapel_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Chapel_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Chapel_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Chapel_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Chapel_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Chapel_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_Chapel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Chapel.webp" class="image">        <div class="dot" data-index="11894" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="350.0" data-y="7.059364e-05" data-z="200.0" style="left: 60.94%; top: 50.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">200</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Ruins_ForsakenCloister_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">寂灭回廊<span class='debug-text'> (ForsakenCloister)</span><div class='map-filename'>Ruins_ForsakenCloister_HR_D.json</div></h3>
+        <div class="map-info">Ruins_ForsakenCloister.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_ForsakenCloister_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_ForsakenCloister_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_ForsakenCloister_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_ForsakenCloister_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_ForsakenCloister_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_ForsakenCloister_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_ForsakenCloister_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_ForsakenCloister_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_ForsakenCloister_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_ForsakenCloister_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_ForsakenCloister_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_ForsakenCloister_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_ForsakenCloister_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_ForsakenCloister_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_ForsakenCloister_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_ForsakenCloister_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_ForsakenCloister_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_ForsakenCloister_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_ForsakenCloister_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_ForsakenCloister.webp" class="image">        <div class="dot" data-index="12240" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="610.0" data-y="0.0" data-z="-475.0" style="left: 69.06%; top: 50.00%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-475</span></div>
+</div>
+    </div>
+    <div class="group-header">水图</div>
+    <div class="map-card" id="map-card-ShipGraveyard_MermaidTomb_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">人鱼冢<span class='debug-text'> (MermaidTomb)</span><div class='map-filename'>ShipGraveyard_MermaidTomb_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_MermaidTomb.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MermaidTomb_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_MermaidTomb_HR_D-json" value="1600" step="100" onchange="updateMapRange('ShipGraveyard_MermaidTomb_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_MermaidTomb_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_MermaidTomb_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_MermaidTomb_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_MermaidTomb_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_MermaidTomb_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MermaidTomb_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_MermaidTomb_HR_D-json" value="0" step="10" onchange="applyOffsetInput('ShipGraveyard_MermaidTomb_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_MermaidTomb_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_MermaidTomb_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_MermaidTomb_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_MermaidTomb_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_MermaidTomb_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ShipGraveyard_MermaidTomb.webp" class="image">        <div class="dot" data-index="15926" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="350.0" data-y="-300.0" data-z="-1400.0" style="left: 60.94%; top: 40.62%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1400</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-ShipGraveyard_PiratePrison_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="-3200.00" data-init-offset-y="3200.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">海盗监狱<span class='debug-text'> (PiratePrison)</span><div class='map-filename'>ShipGraveyard_PiratePrison_HR_D.json</div></h3>
+        <div class="map-info">ShipGraveyard_PiratePrison.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_PiratePrison_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-ShipGraveyard_PiratePrison_HR_D-json" value="3200" step="100" onchange="updateMapRange('ShipGraveyard_PiratePrison_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('ShipGraveyard_PiratePrison_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-ShipGraveyard_PiratePrison_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-ShipGraveyard_PiratePrison_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('ShipGraveyard_PiratePrison_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-ShipGraveyard_PiratePrison_HR_D-json" value="-3200" step="10" onchange="applyOffsetInput('ShipGraveyard_PiratePrison_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-ShipGraveyard_PiratePrison_HR_D-json" value="3200" step="10" onchange="applyOffsetInput('ShipGraveyard_PiratePrison_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('ShipGraveyard_PiratePrison_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('ShipGraveyard_PiratePrison_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('ShipGraveyard_PiratePrison_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('ShipGraveyard_PiratePrison_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-ShipGraveyard_PiratePrison_HR_D-json" style="aspect-ratio: 2 / 2;"><img src="images/ShipGraveyard_PiratePrison.webp" class="image">        <div class="dot" data-index="16667" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" data-x="2550.0" data-y="4575.0" data-z="700.0" style="left: 39.84%; top: 171.48%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">700</span></div>
+</div>
+    </div>
+</div>
+    <div class="legend">
+        <strong>颜色说明：</strong>
+        <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
+        <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
+        <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
+        <br><strong>位置统计：共 34 个位置点</strong><br><strong>包含地图：</strong> 人鱼冢, 哥布林监狱 A, 哥布林监狱 B, 四方房, 圣坛, 圣所, 大祭司, 寂灭回廊, 岩洞湖 A, 峡谷 B, 巨型环厅, 废弃圣所, 恶灵仪式室, 恶魔之口, 恶魔巢穴, 恶魔王座, 拒马阵地, 沼泽, 洞穴藏身处 A, 洞穴隧道, 海盗监狱, 炼狱魔窟, 百鬼桥, 石坟 B, 硫火之河, 硫火城堡, 硫火平台, 蜂巢, 角斗坑, 迷宫, 长桥, 门控房间, 阶梯山丘
+    </div>
+    <div class="summary" id="summary-section">
+        <h2>所有坐标详情</h2>
+        <table>
+            <tr><th>显示</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>
+                <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签分组开关（点击全选/取消同标签）</th>
+        <th colspan='3' style='text-align:center; background-color:#558b2f; font-weight:bold;'>标签数量</th>
+    </tr>
+    <tr class='label-group-row'>
+        <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_Statue01" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_Statue01')">GameSpawner_Id_Spawner_New_Props_Statue01 (34)</button>
+        </th>
+        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
+    </tr>
+
+                <tr id="row-1153" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Valley_02_HR_D-json', 1153, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>Cave_Valley_02_HR_D.json</td>
+        <td>峡谷 B</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>121.87</td>
+        <td>1111.03</td>
+        <td>-350.00</td>
+    </tr>
+    <tr id="row-1225" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CavernLake_02_HR_D-json', 1225, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>CavernLake_02_HR_D.json</td>
+        <td>岩洞湖 A</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>10.00</td>
+        <td>83.00</td>
+        <td>-6.00</td>
+    </tr>
+    <tr id="row-2198" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2198, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>GoblinCaveCorner_01_HR_D.json</td>
+        <td>洞穴隧道</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-849.17</td>
+        <td>-941.74</td>
+        <td>-400.00</td>
+    </tr>
+    <tr id="row-1388" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_02_HR_D-json', 1388, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>GoblinJail_Center_02_HR_D.json</td>
+        <td>哥布林监狱 B</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-364.00</td>
+        <td>-50.00</td>
+        <td>-1.26</td>
+    </tr>
+    <tr id="row-1304" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinJail_Center_HR_D-json', 1304, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>GoblinJail_Center_HR_D.json</td>
+        <td>哥布林监狱 A</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1090.00</td>
+        <td>-50.00</td>
+        <td>200.00</td>
+    </tr>
+    <tr id="row-1642" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_Center_HR_D-json', 1642, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>HideoutCave_Center_HR_D.json</td>
+        <td>洞穴藏身处 A</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>200.00</td>
+        <td>94.00</td>
+        <td>-14.00</td>
+    </tr>
+    <tr id="row-1884" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_HR_D-json', 1884, this)"></td>
+        <td>哥布林洞穴1层</td>
+        <td>StoneGrave_Center_02_HR_D.json</td>
+        <td>石坟 B</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-48.63</td>
+        <td>1429.10</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-3023" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ComplexHall_HR_D-json', 3023, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>ComplexHall_HR_D.json</td>
+        <td>门控房间</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-860.00</td>
+        <td>-155.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-3592" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_FourRooms_HR_D-json', 3592, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Crypt_FourRooms_HR_D.json</td>
+        <td>四方房</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>1146.11</td>
+        <td>1157.34</td>
+        <td>3.75</td>
+    </tr>
+    <tr id="row-5639" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HighPriestOssuary_HR_D-json', 5639, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>HighPriestOssuary_HR_D.json</td>
+        <td>大祭司</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1180.61</td>
+        <td>-1187.32</td>
+        <td>-455.00</td>
+    </tr>
+    <tr id="row-4411" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Maze_HR_D-json', 4411, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Maze_HR_D.json</td>
+        <td>迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-304.00</td>
+        <td>690.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-6036" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sanctum_HR_D-json', 6036, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Sanctum_HR_D.json</td>
+        <td>圣所</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-0.00</td>
+        <td>640.00</td>
+        <td>-10.00</td>
+    </tr>
+    <tr id="row-6151" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SingleLogBridge_HR_D-json', 6151, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>SingleLogBridge_HR_D.json</td>
+        <td>长桥</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-960.01</td>
+        <td>-975.01</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-6369" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Swamp_HR_D-json', 6369, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Swamp_HR_D.json</td>
+        <td>沼泽</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1419.00</td>
+        <td>122.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-4755" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThePit_HR_D-json', 4755, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>ThePit_HR_D.json</td>
+        <td>角斗坑</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1121.46</td>
+        <td>-36.57</td>
+        <td>-300.00</td>
+    </tr>
+    <tr id="row-2801" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CenterTower_HR_D-json', 2801, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>CenterTower_HR_D.json</td>
+        <td>巨型环厅</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>1469.00</td>
+        <td>-1104.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-7234" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ImpRitualRooms_HR_D-json', 7234, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ImpRitualRooms_HR_D.json</td>
+        <td>恶灵仪式室</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-810.00</td>
+        <td>-805.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-7446" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_StaircaseHill_HR_D-json', 7446, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_StaircaseHill_HR_D.json</td>
+        <td>阶梯山丘</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1454.01</td>
+        <td>0.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-7613" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Altar_HR_D-json', 7613, this)"></td>
+        <td>冰图1层</td>
+        <td>IceCave_Altar_HR_D.json</td>
+        <td>圣坛</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>1300.00</td>
+        <td>-1320.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-7653" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Barricade_HR_D-json', 7653, this)"></td>
+        <td>冰图1层</td>
+        <td>IceCave_Barricade_HR_D.json</td>
+        <td>拒马阵地</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1425.00</td>
+        <td>-26.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-8393" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 8393, this)"></td>
+        <td>冰图1层</td>
+        <td>IceCave_Hive_03_HR_D.json</td>
+        <td>蜂巢</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-708.71</td>
+        <td>-1233.00</td>
+        <td>-500.00</td>
+    </tr>
+    <tr id="row-10430" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 10430, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>DemonDen_HR_D.json</td>
+        <td>炼狱魔窟</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1300.00</td>
+        <td>-1300.00</td>
+        <td>1025.00</td>
+    </tr>
+    <tr id="row-10431" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 10431, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>DemonDen_HR_D.json</td>
+        <td>炼狱魔窟</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>10.00</td>
+        <td>200.00</td>
+        <td>-10.00</td>
+    </tr>
+    <tr id="row-10509" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoCastleConner_HR_D-json', 10509, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoCastleConner_HR_D.json</td>
+        <td>硫火城堡</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>790.00</td>
+        <td>790.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-10722" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoMouth_HR_D-json', 10722, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoMouth_HR_D.json</td>
+        <td>恶魔之口</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-80.00</td>
+        <td>-1340.00</td>
+        <td>-800.00</td>
+    </tr>
+    <tr id="row-10850" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10850, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>InfernoRiver_HR_D.json</td>
+        <td>硫火之河</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-572.99</td>
+        <td>-1358.69</td>
+        <td>-3.00</td>
+    </tr>
+    <tr id="row-10359" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10359, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_DeathPlatforms_HR_D.json</td>
+        <td>硫火平台</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>1115.00</td>
+        <td>1115.00</td>
+        <td>500.00</td>
+    </tr>
+    <tr id="row-9894" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9894, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_Hellcrossbridge_HR_D.json</td>
+        <td>百鬼桥</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-100.00</td>
+        <td>-80.00</td>
+        <td>-70.00</td>
+    </tr>
+    <tr id="row-11030" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_LavaCorner_HR_D-json', 11030, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>Inferno_LavaCorner_HR_D.json</td>
+        <td>恶魔巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>-1213.69</td>
+        <td>-1215.31</td>
+        <td>300.00</td>
+    </tr>
+    <tr id="row-11268" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ThroneRoom_02_HR_D-json', 11268, this)"></td>
+        <td>废墟3层炼狱</td>
+        <td>ThroneRoom_02_HR_D.json</td>
+        <td>恶魔王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>1127.38</td>
+        <td>1121.52</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-11894" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Chapel_HR_D-json', 11894, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Chapel_HR_D.json</td>
+        <td>废弃圣所</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>350.00</td>
+        <td>0.00</td>
+        <td>200.00</td>
+    </tr>
+    <tr id="row-12240" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_ForsakenCloister_HR_D-json', 12240, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_ForsakenCloister_HR_D.json</td>
+        <td>寂灭回廊</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>610.00</td>
+        <td>0.00</td>
+        <td>-475.00</td>
+    </tr>
+    <tr id="row-15926" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_MermaidTomb_HR_D-json', 15926, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_MermaidTomb_HR_D.json</td>
+        <td>人鱼冢</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>350.00</td>
+        <td>-300.00</td>
+        <td>-1400.00</td>
+    </tr>
+    <tr id="row-16667" data-label="GameSpawner_Id_Spawner_New_Props_Statue01">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ShipGraveyard_PiratePrison_HR_D-json', 16667, this)"></td>
+        <td>水图</td>
+        <td>ShipGraveyard_PiratePrison_HR_D.json</td>
+        <td>海盗监狱</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Statue01</td>
+        <td>2550.00</td>
+        <td>4575.00</td>
+        <td>700.00</td>
+    </tr>
+
+        </table>
+    </div>
+    <script>
+        window.mapStates = {};
+        window.labelStates = {};
+        function togglePoint(cardId, pointIndex, checkbox) {
+            const dot = document.querySelector(`#map-card-${cardId} .dot[data-index="${pointIndex}"]`);
+            if (dot) { dot.style.display = checkbox.checked ? 'block' : 'none'; }
+            const row = checkbox.closest('tr');
+            if (row) { row.style.opacity = checkbox.checked ? '1' : '0.4'; }
+            // 检查卡片是否还有可见点，自动隐藏/显示卡片
+            checkCardVisibility(cardId);
+        }
+        function checkCardVisibility(cardId) {
+            const card = document.getElementById('map-card-' + cardId);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            let hasVisibleDot = false;
+            dots.forEach(dot => {
+                if (dot.style.display !== 'none') {
+                    hasVisibleDot = true;
+                }
+            });
+            // 如果所有点都隐藏，隐藏整个卡片；否则显示卡片
+            card.style.display = hasVisibleDot ? 'flex' : 'none';
+        }
+        function toggleLabelGroup(label) {
+            // 切换标签状态的选中/取消
+            if (!window.labelStates[label]) {
+                window.labelStates[label] = true; // 默认为true（显示）
+            }
+            window.labelStates[label] = !window.labelStates[label];
+            const shouldShow = window.labelStates[label];
+
+            // 更新所有同标签的点和复选框
+            const allLabelRows = document.querySelectorAll(`tr[data-label="${label}"]`);
+            allLabelRows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = shouldShow;
+                    // 触发togglePoint函数
+                    const rowId = row.id;
+                    const pointIndex = rowId.replace('row-', '');
+                    // 获取对应的cardId（从data属性或其他方式）
+                    const dot = document.querySelector(`.dot[data-label="${label}"][data-index="${pointIndex}"]`);
+                    if (dot) {
+                        const card = dot.closest('.map-card');
+                        if (card) {
+                            const cardId = card.id.replace('map-card-', '');
+                            // 手动调用togglePoint
+                            dot.style.display = shouldShow ? 'block' : 'none';
+                            row.style.opacity = shouldShow ? '1' : '0.4';
+                            checkCardVisibility(cardId);
+                        }
+                    }
+                }
+            });
+
+            // 更新按钮样式
+            const toggleBtn = document.querySelector(`.label-toggle-btn[data-label="${label}"]`);
+            if (toggleBtn) {
+                toggleBtn.style.backgroundColor = shouldShow ? '#4CAF50' : '#f44336';
+                toggleBtn.style.color = shouldShow ? 'white' : 'white';
+            }
+        }
+        function scaleRange(id, factor) {
+            const input = document.getElementById('range-input-' + id);
+            let val = parseFloat(input.value);
+            if (val > 0) { val = val * factor; input.value = val; updateMapRange(id); }
+        }
+        function updateMapRange(id) {
+            const input = document.getElementById('range-input-' + id);
+            const val = parseFloat(input.value);
+            if (val > 0) { if (!window.mapStates[id]) window.mapStates[id] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 }; window.mapStates[id].range = val; updateDots(id, window.mapStates[id]); }
+        }
+        function updateDots(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const dots = card.querySelectorAll('.dot');
+            dots.forEach(dot => {
+                if (dot.style.display === 'none') return;
+                let x = parseFloat(dot.getAttribute('data-x'));
+                let y = parseFloat(dot.getAttribute('data-y'));
+                const range = state.range || 1600;
+                const sx = parseInt(card.getAttribute('data-size-x')) || 1;
+                const sy = parseInt(card.getAttribute('data-size-y')) || 1;
+                let multX = 50, multY = 50, centerX = 50, centerY = 50;
+                if (sx === 1 && sy === 2) { centerX = 100; multX = 100; }
+                if (state.rotate === 1) { const newX = y; const newY = -x; x = newX; y = newY; }
+                else if (state.rotate === 2) { x = -x; y = -y; }
+                else if (state.rotate === 3) { const newX = -y; const newY = x; x = newX; y = newY; }
+                if (state.mirrorX) x = -x;
+                if (state.mirrorY) y = -y;
+                if (state.offsetX) x += state.offsetX;
+                if (state.offsetY) y += state.offsetY;
+                const left = centerX + (x / range) * multX;
+                const top = centerY + (y / range) * multY;
+                dot.style.left = Math.max(0, Math.min(100, left)).toFixed(2) + '%';
+                dot.style.top = Math.max(0, Math.min(100, top)).toFixed(2) + '%';
+            });
+        }
+        function updateButtonUI(index, state) {
+            const card = document.getElementById('map-card-' + index);
+            if (!card) return;
+            const rotateBtn = card.querySelector('.btn-rotate');
+            const mirrorXBtn = card.querySelector('.btn-mirror-x');
+            const mirrorYBtn = card.querySelector('.btn-mirror-y');
+            const rotateLabels = ['↻ 旋转', '↻ 90°', '↻ 180°', '↻ 270°'];
+            rotateBtn.textContent = rotateLabels[state.rotate];
+            rotateBtn.classList.toggle('active', state.rotate !== 0);
+            const rotateIndicator = card.querySelector('.rotate-indicator');
+            if (rotateIndicator) rotateIndicator.textContent = '↻' + state.rotate;
+            mirrorXBtn.classList.toggle('active', state.mirrorX);
+            mirrorYBtn.classList.toggle('active', state.mirrorY);
+            const offsetDisplay = card.querySelector('#offset-display-' + index);
+            if (offsetDisplay) {
+                const ox = state.offsetX || 0;
+                const oy = state.offsetY || 0;
+                offsetDisplay.textContent = (ox !== 0 || oy !== 0) ? '偏移:' + ox + ',' + oy : '';
+            }
+            syncOffsetInputs(index);
+        }
+        function toggleRotate(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].rotate = (window.mapStates[index].rotate + 1) % 4;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorX(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorX = !window.mapStates[index].mirrorX;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function toggleMirrorY(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            window.mapStates[index].mirrorY = !window.mapStates[index].mirrorY;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function adjustOffset(index, direction, amount) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const step = 50;
+            if (direction === 'up') window.mapStates[index].offsetY -= step;
+            else if (direction === 'down') window.mapStates[index].offsetY += step;
+            else if (direction === 'left') window.mapStates[index].offsetX -= step;
+            else if (direction === 'right') window.mapStates[index].offsetX += step;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function applyOffsetInput(index) {
+            if (!window.mapStates[index]) window.mapStates[index] = { rotate: 1, mirrorX: false, mirrorY: false, offsetX: 0, offsetY: 0 };
+            const ox = parseFloat(document.getElementById('offset-x-' + index).value) || 0;
+            const oy = parseFloat(document.getElementById('offset-y-' + index).value) || 0;
+            window.mapStates[index].offsetX = ox;
+            window.mapStates[index].offsetY = oy;
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+        }
+        function syncOffsetInputs(index) {
+            const state = window.mapStates[index];
+            if (!state) return;
+            const ox = document.getElementById('offset-x-' + index);
+            const oy = document.getElementById('offset-y-' + index);
+            if (ox) ox.value = state.offsetX || 0;
+            if (oy) oy.value = state.offsetY || 0;
+        }
+        function resetMap(index) {
+            const card = document.getElementById('map-card-' + index);
+            const initRotate = card ? parseFloat(card.dataset.initRotate) : DEFAULT_ROTATE;
+            const initRange = card ? parseFloat(card.dataset.initRange) : 1600;
+            const initOffsetX = card ? parseFloat(card.dataset.initOffsetX) || 0 : 0;
+            const initOffsetY = card ? parseFloat(card.dataset.initOffsetY) || 0 : 0;
+            window.mapStates[index] = { rotate: initRotate, mirrorX: false, mirrorY: false, range: initRange, offsetX: initOffsetX, offsetY: initOffsetY };
+            updateDots(index, window.mapStates[index]);
+            updateButtonUI(index, window.mapStates[index]);
+            syncOffsetInputs(index);
+        }
+        function setColumns(cols) {
+            document.documentElement.style.setProperty('--cols', cols);
+        }
+        function toggleDebugInfo() {
+            const filenames = document.querySelectorAll('.map-filename');
+            const infos = document.querySelectorAll('.map-info');
+            const controls = document.querySelectorAll('.controls');
+            const debugTexts = document.querySelectorAll('.debug-text');
+            const debugTitle = document.getElementById('debug-title');
+            const summary = document.getElementById('summary-section');
+            const debugPanel = document.getElementById('debug-panel');
+            const btn = document.getElementById('debug-toggle-btn');
+            const isVisible = filenames.length > 0 && filenames[0].style.display === 'block';
+            
+            filenames.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            infos.forEach(el => el.style.display = isVisible ? 'none' : 'block');
+            controls.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTexts.forEach(el => el.classList.toggle('visible', !isVisible));
+            debugTitle.classList.toggle('visible', !isVisible);
+            summary.classList.toggle('visible', !isVisible);
+            debugPanel.classList.toggle('visible', !isVisible);
+            document.querySelectorAll('.map-card.test-module').forEach(el => el.classList.toggle('debug-visible', !isVisible));
+            btn.textContent = isVisible ? '显示调试信息' : '隐藏调试信息';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const mapCards = document.querySelectorAll('.map-card');
+            mapCards.forEach((card) => {
+                const idParts = card.id.split('map-card-')[1];
+                const initOffsetX = parseFloat(card.dataset.initOffsetX) || 0;
+                const initOffsetY = parseFloat(card.dataset.initOffsetY) || 0;
+                window.mapStates[idParts] = { rotate: parseFloat(card.dataset.initRotate), mirrorX: false, mirrorY: false, range: parseFloat(card.dataset.initRange) || 1600, offsetX: initOffsetX, offsetY: initOffsetY };
+                updateDots(idParts, window.mapStates[idParts]);
+                updateButtonUI(idParts, window.mapStates[idParts]);
+                syncOffsetInputs(idParts);
+            });
+        });
+    </script>
+    <div id="debug-panel" class="debug-panel">
+        <label>每行卡片数:</label>
+        <input type="number" id="cols-input" value="4" min="1" max="10" onchange="setColumns(this.value)">
+    </div>
+    <button id="debug-toggle-btn" class="debug-btn" onclick="toggleDebugInfo()">显示调试信息</button>
+</body>
+</html>

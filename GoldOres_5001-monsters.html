@@ -67,6 +67,7 @@
         .image { width: 100%; height: 100%; display: block; border-radius: 2px; object-fit: cover; }
         .image-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; background-color: #222; border-radius: 2px; font-size: 13px; }
         .dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; transition: left 0.3s ease, top 0.3s ease, opacity 0.3s ease; display: block; }
+        .dot-height { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font-size: 11px; color: #ddd; white-space: nowrap; text-shadow: 0 0 4px #fff, 0 0 2px #000; line-height: 1; margin-top: 1px; }
         .monster-dot.hidden { opacity: 0.2; }
         .group-header.hidden { display: none; }
         .map-card.empty { display: none; }
@@ -81,7 +82,7 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>金矿 >> 废墟魔像 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日11点    <span class="designer">地图网页设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-23日23点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">金矿 (GoldOres_5001) >> RuinsGolem</div>
     <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>废墟魔像 (6)</div>
 </div></div>
@@ -121,7 +122,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Passage_Inner_04_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Passage_Inner_04_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Passage_Inner_04_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Passage_Inner_04.webp" class="image">        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="11256" data-x="30.0" data-y="595.0" data-z="55.93702" style="left: 50.94%; top: 68.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">55</span></div>
+        <div class="container" id="container-Ruins_Passage_Inner_04_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Passage_Inner_04.webp" class="image">        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="12825" data-x="30.0" data-y="595.0" data-z="55.93702" style="left: 50.94%; top: 68.59%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">55</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="RuinsGolem">废墟魔像</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -155,7 +156,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Square_01_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Square_01_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Square_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Square_01.webp" class="image">        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="11462" data-x="71.00001" data-y="-50.0" data-z="0.000101" style="left: 52.22%; top: 48.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_Square_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Square_01.webp" class="image">        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="13031" data-x="71.00001" data-y="-50.0" data-z="0.000101" style="left: 52.22%; top: 48.44%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="RuinsGolem">废墟魔像</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -189,8 +190,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_TowerBridge_Destroyed_SR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_TowerBridge_Destroyed_SR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_TowerBridge_Destroyed_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_TowerBridge_Destroyed_SR, TowerBridge_Destroyed_SR</small></div>        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="11952" data-x="-102.00003" data-y="-1111.0" data-z="0.0" style="left: 46.81%; top: 15.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="11953" data-x="-7.999997" data-y="-107.0" data-z="7.8e-05" style="left: 49.75%; top: 46.66%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_TowerBridge_Destroyed_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_TowerBridge_Destroyed_SR, TowerBridge_Destroyed_SR</small></div>        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="13613" data-x="-102.00003" data-y="-1111.0" data-z="0.0" style="left: 46.81%; top: 15.28%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="13614" data-x="-7.999997" data-y="-107.0" data-z="7.8e-05" style="left: 49.75%; top: 46.66%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="RuinsGolem">废墟魔像</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -224,8 +225,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_TowerBridge_Destroyed_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_TowerBridge_Destroyed_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_TowerBridge_Destroyed_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/Ruins_TowerBridge_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="11852" data-x="-102.00003" data-y="-1111.0" data-z="0.0" style="left: 46.81%; top: 7.64%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
-        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="11853" data-x="-7.999997" data-y="-107.0" data-z="7.8e-05" style="left: 49.75%; top: 23.33%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-Ruins_TowerBridge_Destroyed_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/Ruins_TowerBridge_Destroyed.webp" class="image">        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="13506" data-x="-102.00003" data-y="-1111.0" data-z="0.0" style="left: 46.81%; top: 7.64%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="dot monster-dot" data-monster="RuinsGolem" data-index="13507" data-x="-7.999997" data-y="-107.0" data-z="7.8e-05" style="left: 49.75%; top: 23.33%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="RuinsGolem">废墟魔像</span><span class="ms-count">(2点)</span></div>
     </div>
@@ -235,8 +236,8 @@
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-11256">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Passage_Inner_04_D-json', 11256, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-12825">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Passage_Inner_04_D-json', 12825, this)"></td>
         <td>废墟魔像</td>
         <td>废墟1层</td>
         <td>Ruins_Passage_Inner_04_D.json</td>
@@ -246,8 +247,8 @@
         <td>595.00</td>
         <td>55.94</td>
     </tr>
-    <tr id="row-11462">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_D-json', 11462, this)"></td>
+    <tr id="row-13031">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_D-json', 13031, this)"></td>
         <td>废墟魔像</td>
         <td>废墟1层</td>
         <td>Ruins_Square_01_D.json</td>
@@ -257,8 +258,8 @@
         <td>-50.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11952">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_SR_D-json', 11952, this)"></td>
+    <tr id="row-13613">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_SR_D-json', 13613, this)"></td>
         <td>废墟魔像</td>
         <td>废墟1层</td>
         <td>Ruins_TowerBridge_Destroyed_SR_D.json</td>
@@ -268,8 +269,8 @@
         <td>-1111.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11953">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_SR_D-json', 11953, this)"></td>
+    <tr id="row-13614">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_SR_D-json', 13614, this)"></td>
         <td>废墟魔像</td>
         <td>废墟1层</td>
         <td>Ruins_TowerBridge_Destroyed_SR_D.json</td>
@@ -279,8 +280,8 @@
         <td>-107.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11852">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_HR_D-json', 11852, this)"></td>
+    <tr id="row-13506">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_HR_D-json', 13506, this)"></td>
         <td>废墟魔像</td>
         <td>废墟1层</td>
         <td>Ruins_TowerBridge_Destroyed_HR_D.json</td>
@@ -290,8 +291,8 @@
         <td>-1111.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-11853">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_HR_D-json', 11853, this)"></td>
+    <tr id="row-13507">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TowerBridge_Destroyed_HR_D-json', 13507, this)"></td>
         <td>废墟魔像</td>
         <td>废墟1层</td>
         <td>Ruins_TowerBridge_Destroyed_HR_D.json</td>
