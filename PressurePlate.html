@@ -72,9 +72,42 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>压力板 位置汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-24日00点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-25    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">压力板 (PressurePlate)</div>
     <div class="maps-grid" id="maps-grid">    <div class="group-header">废墟2层地牢</div>
+    <div class="map-card" id="map-card-Cistern_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">蓄水池<span class='debug-text'> (Cistern)</span><div class='map-filename'>Cistern_A.json</div></h3>
+        <div class="map-info">Cistern.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cistern_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cistern_A-json" value="1600" step="100" onchange="updateMapRange('Cistern_A-json')">
+                <button class="btn-scale" onclick="scaleRange('Cistern_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cistern_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cistern_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cistern_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cistern_A-json" value="0" step="10" onchange="applyOffsetInput('Cistern_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cistern_A-json" value="0" step="10" onchange="applyOffsetInput('Cistern_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cistern_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cistern_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cistern_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cistern_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cistern_A-json" style="aspect-ratio: 1 / 1;"><img src="images/Cistern.webp" class="image">        <div class="dot" data-index="3632" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="162.0" data-y="-128.0" data-z="3.0" style="left: 55.06%; top: 46.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">3</span></div>
+</div>
+    </div>
     <div class="map-card" id="map-card-Crypt_TorchboundVault_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">炬封宝库<span class='debug-text'> (TorchboundVault)</span><div class='map-filename'>Crypt_TorchboundVault_D.json</div></h3>
         <div class="map-info">未找到 (尝试: Crypt_TorchboundVault, TorchboundVault) | 找到 4 个位置 | 范围: ±1600</div>
@@ -105,10 +138,289 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_TorchboundVault_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_TorchboundVault_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_TorchboundVault_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_TorchboundVault, TorchboundVault</small></div>        <div class="dot" data-index="4875" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="350.0" data-y="200.0" data-z="550.0" style="left: 60.94%; top: 56.25%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
-        <div class="dot" data-index="4876" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-350.0" data-y="-200.0" data-z="550.0" style="left: 39.06%; top: 43.75%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
-        <div class="dot" data-index="4877" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="200.0" data-y="-350.0" data-z="550.0" style="left: 56.25%; top: 39.06%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
-        <div class="dot" data-index="4878" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-200.0" data-y="350.0" data-z="550.0" style="left: 43.75%; top: 60.94%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
+        <div class="container" id="container-Crypt_TorchboundVault_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_TorchboundVault, TorchboundVault</small></div>        <div class="dot" data-index="6049" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="350.0" data-y="200.0" data-z="550.0" style="left: 60.94%; top: 56.25%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
+        <div class="dot" data-index="6050" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-350.0" data-y="-200.0" data-z="550.0" style="left: 39.06%; top: 43.75%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
+        <div class="dot" data-index="6051" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="200.0" data-y="-350.0" data-z="550.0" style="left: 56.25%; top: 39.06%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
+        <div class="dot" data-index="6052" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-200.0" data-y="350.0" data-z="550.0" style="left: 43.75%; top: 60.94%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">550</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-GuardPost_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">岗哨<span class='debug-text'> (Guard_Posts)</span><div class='map-filename'>GuardPost_A.json</div></h3>
+        <div class="map-info">GuardPost.png | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('GuardPost_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-GuardPost_A-json" value="1600" step="100" onchange="updateMapRange('GuardPost_A-json')">
+                <button class="btn-scale" onclick="scaleRange('GuardPost_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-GuardPost_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-GuardPost_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('GuardPost_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('GuardPost_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('GuardPost_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('GuardPost_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-GuardPost_A-json" value="0" step="10" onchange="applyOffsetInput('GuardPost_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-GuardPost_A-json" value="0" step="10" onchange="applyOffsetInput('GuardPost_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('GuardPost_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('GuardPost_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('GuardPost_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('GuardPost_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-GuardPost_A-json" style="aspect-ratio: 1 / 1;"><img src="images/GuardPost.webp" class="image">        <div class="dot" data-index="8937" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="21.0" data-y="184.0" data-z="2.0001" style="left: 50.66%; top: 55.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">2</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Hallways_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">回廊<span class='debug-text'> (Hallways)</span><div class='map-filename'>Hallways_A.json</div></h3>
+        <div class="map-info">Hallways.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Hallways_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Hallways_A-json" value="1600" step="100" onchange="updateMapRange('Hallways_A-json')">
+                <button class="btn-scale" onclick="scaleRange('Hallways_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Hallways_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Hallways_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Hallways_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Hallways_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Hallways_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Hallways_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Hallways_A-json" value="0" step="10" onchange="applyOffsetInput('Hallways_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Hallways_A-json" value="0" step="10" onchange="applyOffsetInput('Hallways_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Hallways_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Hallways_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Hallways_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Hallways_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Hallways_A-json" style="aspect-ratio: 1 / 1;"><img src="images/Hallways.webp" class="image">        <div class="dot" data-index="9194" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="37.11382" data-y="161.77377" data-z="2.0" style="left: 51.16%; top: 55.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">2</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Maze_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">迷宫<span class='debug-text'> (Maze)</span><div class='map-filename'>Maze_A.json</div></h3>
+        <div class="map-info">Maze.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Maze_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Maze_A-json" value="1600" step="100" onchange="updateMapRange('Maze_A-json')">
+                <button class="btn-scale" onclick="scaleRange('Maze_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Maze_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Maze_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Maze_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Maze_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Maze_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Maze_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Maze_A-json" value="0" step="10" onchange="applyOffsetInput('Maze_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Maze_A-json" value="0" step="10" onchange="applyOffsetInput('Maze_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Maze_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Maze_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Maze_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Maze_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Maze_A-json" style="aspect-ratio: 1 / 1;"><img src="images/Maze.webp" class="image">        <div class="dot" data-index="16584" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="325.0" data-y="-86.0" data-z="0.0" style="left: 60.16%; top: 47.31%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="16585" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-105.0" data-y="-44.0" data-z="3.0" style="left: 46.72%; top: 48.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">3</span></div>
+        <div class="dot" data-index="16586" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-6.0" data-y="-53.0" data-z="2.0" style="left: 49.81%; top: 48.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">2</span></div>
+</div>
+    </div>
+    <div class="group-header">哥布林1层</div>
+    <div class="map-card" id="map-card-HideoutCave_02_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">洞穴藏身处 B<span class='debug-text'> (CaveHideout_B)</span><div class='map-filename'>HideoutCave_02_A.json</div></h3>
+        <div class="map-info">HideoutCave_02.png | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('HideoutCave_02_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-HideoutCave_02_A-json" value="1600" step="100" onchange="updateMapRange('HideoutCave_02_A-json')">
+                <button class="btn-scale" onclick="scaleRange('HideoutCave_02_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-HideoutCave_02_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-HideoutCave_02_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('HideoutCave_02_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-HideoutCave_02_A-json" value="0" step="10" onchange="applyOffsetInput('HideoutCave_02_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-HideoutCave_02_A-json" value="0" step="10" onchange="applyOffsetInput('HideoutCave_02_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('HideoutCave_02_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('HideoutCave_02_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('HideoutCave_02_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('HideoutCave_02_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-HideoutCave_02_A-json" style="aspect-ratio: 1 / 1;"><img src="images/HideoutCave_02.webp" class="image">        <div class="dot" data-index="9825" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="90.0" data-y="-138.0" data-z="0.0" style="left: 52.81%; top: 45.69%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="9826" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-382.0" data-y="-1088.0" data-z="0.0" style="left: 38.06%; top: 16.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-StoneGrave_Center_02_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">中心桥<span class='debug-text'> (Center_02)</span><div class='map-filename'>StoneGrave_Center_02_A.json</div></h3>
+        <div class="map-info">StoneGrave_Center_02.png | 找到 5 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-StoneGrave_Center_02_A-json" value="1600" step="100" onchange="updateMapRange('StoneGrave_Center_02_A-json')">
+                <button class="btn-scale" onclick="scaleRange('StoneGrave_Center_02_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-StoneGrave_Center_02_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-StoneGrave_Center_02_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('StoneGrave_Center_02_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-StoneGrave_Center_02_A-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-StoneGrave_Center_02_A-json" value="0" step="10" onchange="applyOffsetInput('StoneGrave_Center_02_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('StoneGrave_Center_02_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('StoneGrave_Center_02_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('StoneGrave_Center_02_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('StoneGrave_Center_02_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-StoneGrave_Center_02_A-json" style="aspect-ratio: 1 / 1;"><img src="images/StoneGrave_Center_02.webp" class="image">        <div class="dot" data-index="26534" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate" data-x="157.94702" data-y="91.481804" data-z="0.0" style="left: 54.94%; top: 52.86%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="26535" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate" data-x="-52.866283" data-y="-346.28052" data-z="0.0" style="left: 48.35%; top: 39.18%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="26536" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate" data-x="319.0" data-y="491.0" data-z="0.0" style="left: 59.97%; top: 65.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="26537" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate" data-x="437.42313" data-y="161.17343" data-z="14.0" style="left: 63.67%; top: 55.04%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">14</span></div>
+        <div class="dot" data-index="26538" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate" data-x="-43.0" data-y="195.0" data-z="-0.0001" style="left: 48.66%; top: 56.09%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟1层</div>
+    <div class="map-card" id="map-card-Ruins_SlimeForest_01_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">史莱姆森林<span class='debug-text'> (Slime_Forest)</span><div class='map-filename'>Ruins_SlimeForest_01_A.json</div></h3>
+        <div class="map-info">Ruins_SlimeForest_01.png | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_SlimeForest_01_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_SlimeForest_01_A-json" value="1600" step="100" onchange="updateMapRange('Ruins_SlimeForest_01_A-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_SlimeForest_01_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_SlimeForest_01_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_SlimeForest_01_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_SlimeForest_01_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_SlimeForest_01_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_SlimeForest_01_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_SlimeForest_01_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_SlimeForest_01_A-json" value="0" step="10" onchange="applyOffsetInput('Ruins_SlimeForest_01_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_SlimeForest_01_A-json" value="0" step="10" onchange="applyOffsetInput('Ruins_SlimeForest_01_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_SlimeForest_01_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_SlimeForest_01_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_SlimeForest_01_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_SlimeForest_01_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_SlimeForest_01_A-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_SlimeForest_01.webp" class="image">        <div class="dot" data-index="19954" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="680.0" data-y="-70.0" data-z="0.0" style="left: 71.25%; top: 47.81%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Ruins_Stables_02_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">马厩<span class='debug-text'> (Stables)</span><div class='map-filename'>Ruins_Stables_02_A.json</div></h3>
+        <div class="map-info">Ruins_Stables_02.png | 找到 5 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Stables_02_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Stables_02_A-json" value="1600" step="100" onchange="updateMapRange('Ruins_Stables_02_A-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Stables_02_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Stables_02_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Stables_02_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Stables_02_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Stables_02_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Stables_02_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Stables_02_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_Stables_02_A-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Stables_02_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_Stables_02_A-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Stables_02_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Stables_02_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Stables_02_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Stables_02_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Stables_02_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_Stables_02_A-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Stables_02.webp" class="image">        <div class="dot" data-index="20356" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="74.0" data-y="-283.0" data-z="0.0" style="left: 52.31%; top: 41.16%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20357" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="1208.0" data-y="-240.0" data-z="0.0" style="left: 87.75%; top: 42.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20358" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-254.0" data-y="-240.0" data-z="0.0" style="left: 42.06%; top: 42.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20359" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="1019.0" data-y="2249.0" data-z="0.0" style="left: 81.84%; top: 120.28%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20360" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="-161.0" data-y="2311.0" data-z="0.0" style="left: 44.97%; top: 122.22%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Ruins_Tower_01_Destroyed_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">废弃塔楼<span class='debug-text'> (Destroyed_Tower)</span><div class='map-filename'>Ruins_Tower_01_Destroyed_A.json</div></h3>
+        <div class="map-info">Ruins_Tower_01_Destroyed.png | 找到 3 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Tower_01_Destroyed_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Tower_01_Destroyed_A-json" value="1600" step="100" onchange="updateMapRange('Ruins_Tower_01_Destroyed_A-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Tower_01_Destroyed_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Tower_01_Destroyed_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Tower_01_Destroyed_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Tower_01_Destroyed_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Tower_01_Destroyed_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Tower_01_Destroyed_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Tower_01_Destroyed_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Ruins_Tower_01_Destroyed_A-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Tower_01_Destroyed_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Ruins_Tower_01_Destroyed_A-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Tower_01_Destroyed_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Tower_01_Destroyed_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Tower_01_Destroyed_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Tower_01_Destroyed_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Tower_01_Destroyed_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Ruins_Tower_01_Destroyed_A-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Tower_01_Destroyed.webp" class="image">        <div class="dot" data-index="20761" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="670.0" data-y="190.0" data-z="0.0" style="left: 70.94%; top: 55.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20762" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="70.0" data-y="190.0" data-z="0.0" style="left: 52.19%; top: 55.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20763" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" data-x="370.0" data-y="55.0" data-z="0.0" style="left: 61.56%; top: 51.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
 </div>
@@ -117,7 +429,7 @@
         <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
         <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
         <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
-        <br><strong>位置统计：共 4 个位置点</strong><br><strong>包含地图：</strong> 炬封宝库
+        <br><strong>位置统计：共 26 个位置点</strong><br><strong>包含地图：</strong> 中心桥, 史莱姆森林, 回廊, 岗哨, 废弃塔楼, 洞穴藏身处 B, 炬封宝库, 蓄水池, 迷宫, 马厩
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
@@ -129,13 +441,24 @@
     </tr>
     <tr class='label-group-row'>
         <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
-            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_PressurePlate')">GameSpawner_Id_Spawner_New_Props_PressurePlate (4)</button>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_PressurePlate')">GameSpawner_Id_Spawner_New_Props_PressurePlate (21)</button>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate')">GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate (5)</button>
         </th>
-        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
+        <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>2 个标签</th>
     </tr>
 
-                <tr id="row-4875" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 4875, this)"></td>
+                <tr id="row-3632" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cistern_A-json', 3632, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cistern_A.json</td>
+        <td>蓄水池</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>162.00</td>
+        <td>-128.00</td>
+        <td>3.00</td>
+    </tr>
+    <tr id="row-6049" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 6049, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_TorchboundVault_D.json</td>
         <td>炬封宝库</td>
@@ -144,8 +467,8 @@
         <td>200.00</td>
         <td>550.00</td>
     </tr>
-    <tr id="row-4876" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 4876, this)"></td>
+    <tr id="row-6050" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 6050, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_TorchboundVault_D.json</td>
         <td>炬封宝库</td>
@@ -154,8 +477,8 @@
         <td>-200.00</td>
         <td>550.00</td>
     </tr>
-    <tr id="row-4877" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 4877, this)"></td>
+    <tr id="row-6051" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 6051, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_TorchboundVault_D.json</td>
         <td>炬封宝库</td>
@@ -164,8 +487,8 @@
         <td>-350.00</td>
         <td>550.00</td>
     </tr>
-    <tr id="row-4878" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 4878, this)"></td>
+    <tr id="row-6052" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_TorchboundVault_D-json', 6052, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_TorchboundVault_D.json</td>
         <td>炬封宝库</td>
@@ -173,6 +496,216 @@
         <td>-200.00</td>
         <td>350.00</td>
         <td>550.00</td>
+    </tr>
+    <tr id="row-8937" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GuardPost_A-json', 8937, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>GuardPost_A.json</td>
+        <td>岗哨</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>21.00</td>
+        <td>184.00</td>
+        <td>2.00</td>
+    </tr>
+    <tr id="row-9194" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Hallways_A-json', 9194, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Hallways_A.json</td>
+        <td>回廊</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>37.11</td>
+        <td>161.77</td>
+        <td>2.00</td>
+    </tr>
+    <tr id="row-16584" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Maze_A-json', 16584, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Maze_A.json</td>
+        <td>迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>325.00</td>
+        <td>-86.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-16585" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Maze_A-json', 16585, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Maze_A.json</td>
+        <td>迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>-105.00</td>
+        <td>-44.00</td>
+        <td>3.00</td>
+    </tr>
+    <tr id="row-16586" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Maze_A-json', 16586, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Maze_A.json</td>
+        <td>迷宫</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>-6.00</td>
+        <td>-53.00</td>
+        <td>2.00</td>
+    </tr>
+    <tr id="row-9825" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_A-json', 9825, this)"></td>
+        <td>哥布林1层</td>
+        <td>HideoutCave_02_A.json</td>
+        <td>洞穴藏身处 B</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>90.00</td>
+        <td>-138.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-9826" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('HideoutCave_02_A-json', 9826, this)"></td>
+        <td>哥布林1层</td>
+        <td>HideoutCave_02_A.json</td>
+        <td>洞穴藏身处 B</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>-382.00</td>
+        <td>-1088.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-26534" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_A-json', 26534, this)"></td>
+        <td>哥布林1层</td>
+        <td>StoneGrave_Center_02_A.json</td>
+        <td>中心桥</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate</td>
+        <td>157.95</td>
+        <td>91.48</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-26535" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_A-json', 26535, this)"></td>
+        <td>哥布林1层</td>
+        <td>StoneGrave_Center_02_A.json</td>
+        <td>中心桥</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate</td>
+        <td>-52.87</td>
+        <td>-346.28</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-26536" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_A-json', 26536, this)"></td>
+        <td>哥布林1层</td>
+        <td>StoneGrave_Center_02_A.json</td>
+        <td>中心桥</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate</td>
+        <td>319.00</td>
+        <td>491.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-26537" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_A-json', 26537, this)"></td>
+        <td>哥布林1层</td>
+        <td>StoneGrave_Center_02_A.json</td>
+        <td>中心桥</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate</td>
+        <td>437.42</td>
+        <td>161.17</td>
+        <td>14.00</td>
+    </tr>
+    <tr id="row-26538" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('StoneGrave_Center_02_A-json', 26538, this)"></td>
+        <td>哥布林1层</td>
+        <td>StoneGrave_Center_02_A.json</td>
+        <td>中心桥</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate_OnlyActivate</td>
+        <td>-43.00</td>
+        <td>195.00</td>
+        <td>-0.00</td>
+    </tr>
+    <tr id="row-19954" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_SlimeForest_01_A-json', 19954, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_SlimeForest_01_A.json</td>
+        <td>史莱姆森林</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>680.00</td>
+        <td>-70.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20356" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_A-json', 20356, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Stables_02_A.json</td>
+        <td>马厩</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>74.00</td>
+        <td>-283.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20357" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_A-json', 20357, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Stables_02_A.json</td>
+        <td>马厩</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>1208.00</td>
+        <td>-240.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20358" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_A-json', 20358, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Stables_02_A.json</td>
+        <td>马厩</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>-254.00</td>
+        <td>-240.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20359" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_A-json', 20359, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Stables_02_A.json</td>
+        <td>马厩</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>1019.00</td>
+        <td>2249.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20360" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Stables_02_A-json', 20360, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Stables_02_A.json</td>
+        <td>马厩</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>-161.00</td>
+        <td>2311.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20761" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Tower_01_Destroyed_A-json', 20761, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Tower_01_Destroyed_A.json</td>
+        <td>废弃塔楼</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>670.00</td>
+        <td>190.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20762" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Tower_01_Destroyed_A-json', 20762, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Tower_01_Destroyed_A.json</td>
+        <td>废弃塔楼</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>70.00</td>
+        <td>190.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20763" data-label="GameSpawner_Id_Spawner_New_Props_PressurePlate">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Tower_01_Destroyed_A-json', 20763, this)"></td>
+        <td>废墟1层</td>
+        <td>Ruins_Tower_01_Destroyed_A.json</td>
+        <td>废弃塔楼</td>
+        <td>GameSpawner_Id_Spawner_New_Props_PressurePlate</td>
+        <td>370.00</td>
+        <td>55.00</td>
+        <td>0.00</td>
     </tr>
 
         </table>

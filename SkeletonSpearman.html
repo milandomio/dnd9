@@ -72,11 +72,44 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>骷髅长枪兵 位置汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-24日00点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-25    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">骷髅长枪兵 (SkeletonSpearman)</div>
     <div class="maps-grid" id="maps-grid">    <div class="group-header">废墟2层地牢</div>
+    <div class="map-card" id="map-card-Cemetery_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">双子墓地<span class='debug-text'> (Twin_Cemeteries)</span><div class='map-filename'>Cemetery_01_HR_D.json</div></h3>
+        <div class="map-info">Cemetery_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Cemetery_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cemetery_01_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cemetery_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cemetery_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cemetery_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cemetery_01_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_01_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Cemetery_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_01_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Cemetery_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_01_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Cemetery_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cemetery_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cemetery_01_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Cemetery_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_01.webp" class="image">        <div class="dot" data-index="3024" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-16.999222" data-y="80.00027" data-z="-5.707523" style="left: 49.47%; top: 52.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-5</span></div>
+</div>
+    </div>
     <div class="map-card" id="map-card-Cemetery_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">双子墓地<span class='debug-text'> (Twin_Cemeteries)</span><div class='map-filename'>Cemetery_01_D.json</div></h3>
+        <h3 class="map-title">双子墓地 (D)<span class='debug-text'> (Twin_Cemeteries)</span><div class='map-filename'>Cemetery_01_D.json</div></h3>
         <div class="map-info">Cemetery_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
@@ -105,40 +138,40 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_01_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cemetery_01_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cemetery_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_01.webp" class="image">        <div class="dot" data-index="2564" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-855.9992" data-y="-195.99974" data-z="27.292477" style="left: 23.25%; top: 43.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">27</span></div>
+        <div class="container" id="container-Cemetery_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_01.webp" class="image">        <div class="dot" data-index="3025" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-855.9992" data-y="-195.99974" data-z="27.292477" style="left: 23.25%; top: 43.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">27</span></div>
 </div>
     </div>
-    <div class="map-card" id="map-card-Cemetery_02_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">棺材房<span class='debug-text'> (Coffin_Rooms)</span><div class='map-filename'>Cemetery_02_D.json</div></h3>
+    <div class="map-card" id="map-card-Cemetery_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">棺材房<span class='debug-text'> (Coffin_Rooms)</span><div class='map-filename'>Cemetery_02_HR_D.json</div></h3>
         <div class="map-info">Cemetery_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
                 <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Cemetery_02_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Cemetery_02_D-json" value="1600" step="100" onchange="updateMapRange('Cemetery_02_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Cemetery_02_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Cemetery_02_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cemetery_02_D-json"></span>
+                <button class="btn-scale" onclick="scaleRange('Cemetery_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cemetery_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cemetery_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cemetery_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cemetery_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cemetery_02_HR_D-json"></span>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'right')">→</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'right')">→</button>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>X:</label>
-                <input type="number" id="offset-x-Cemetery_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_D-json')" style="width:50px;">
+                <input type="number" id="offset-x-Cemetery_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_HR_D-json')" style="width:50px;">
                 <label>Y:</label>
-                <input type="number" id="offset-y-Cemetery_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_D-json')" style="width:50px;">
+                <input type="number" id="offset-y-Cemetery_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_HR_D-json')" style="width:50px;">
             </div>
-            <button class="btn-rotate" onclick="toggleRotate('Cemetery_02_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Cemetery_02_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_02_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Cemetery_02_D-json')">↺ 重置</button>
+            <button class="btn-rotate" onclick="toggleRotate('Cemetery_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cemetery_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cemetery_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cemetery_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_02.webp" class="image">        <div class="dot" data-index="2678" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-125.99936" data-y="461.00104" data-z="0.0" style="left: 46.06%; top: 64.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-Cemetery_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_02.webp" class="image">        <div class="dot" data-index="3175" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-125.99936" data-y="461.00104" data-z="0.0" style="left: 46.06%; top: 64.41%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Crypt_BlindfallPit_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -171,10 +204,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_BlindfallPit_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_BlindfallPit_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_BlindfallPit_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_BlindfallPit, BlindfallPit</small></div>        <div class="dot" data-index="2549" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="290.0" data-y="50.00001" data-z="0.0" style="left: 59.06%; top: 51.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="2550" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-700.0" data-y="49.999966" data-z="0.0" style="left: 28.12%; top: 51.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="2551" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-715.0" data-y="-8.726646e-07" data-z="0.0" style="left: 27.66%; top: 50.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="2552" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-95.0" data-y="500.0" data-z="0.0" style="left: 47.03%; top: 65.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-Crypt_BlindfallPit_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Crypt_BlindfallPit, BlindfallPit</small></div>        <div class="dot" data-index="5018" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="290.0" data-y="50.00001" data-z="0.0" style="left: 59.06%; top: 51.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="5019" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-700.0" data-y="49.999966" data-z="0.0" style="left: 28.12%; top: 51.56%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="5020" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-715.0" data-y="-8.726646e-07" data-z="0.0" style="left: 27.66%; top: 50.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="5021" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-95.0" data-y="500.0" data-z="0.0" style="left: 47.03%; top: 65.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Crypt_GreatWalkway_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -207,7 +240,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_GreatWalkway_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_GreatWalkway_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_GreatWalkway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_GreatWalkway.webp" class="image">        <div class="dot" data-index="3932" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-1120.0" data-y="715.0" data-z="0.000126" style="left: 15.00%; top: 72.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-Crypt_GreatWalkway_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_GreatWalkway.webp" class="image">        <div class="dot" data-index="5505" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-1120.0" data-y="715.0" data-z="0.000126" style="left: 15.00%; top: 72.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Crypt_Ramparts_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -240,8 +273,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Crypt_Ramparts_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Crypt_Ramparts_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Crypt_Ramparts_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_Ramparts.webp" class="image">        <div class="dot" data-index="4442" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-1031.2816" data-y="-17.002699" data-z="290.0001" style="left: 17.77%; top: 49.47%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">290</span></div>
-        <div class="dot" data-index="4443" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="1088.7184" data-y="-7.002772" data-z="290.0001" style="left: 84.02%; top: 49.78%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">290</span></div>
+        <div class="container" id="container-Crypt_Ramparts_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Crypt_Ramparts.webp" class="image">        <div class="dot" data-index="6030" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-1031.2816" data-y="-17.002699" data-z="290.0001" style="left: 17.77%; top: 49.47%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">290</span></div>
+        <div class="dot" data-index="6031" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="1088.7184" data-y="-7.002772" data-z="290.0001" style="left: 84.02%; top: 49.78%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">290</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-UndergroundAltar_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -274,13 +307,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('UndergroundAltar_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('UndergroundAltar_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-UndergroundAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/UndergroundAltar.webp" class="image">        <div class="dot" data-index="6400" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="6401" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="6402" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="6403" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="6404" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="6405" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="6406" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-UndergroundAltar_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/UndergroundAltar.webp" class="image">        <div class="dot" data-index="27596" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="27597" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="27598" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="27599" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="27600" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="27601" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="27602" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="92.0" data-y="14.0" data-z="0.0" style="left: 52.88%; top: 50.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
     <div class="group-header">废墟3层炼狱</div>
@@ -314,7 +347,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('ConectorDoubleBridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('ConectorDoubleBridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot" data-index="9310" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="22.0" data-y="-66.0" data-z="0.0" style="left: 50.69%; top: 47.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-ConectorDoubleBridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/ConectorDoubleBridge.webp" class="image">        <div class="dot" data-index="4033" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="22.0" data-y="-66.0" data-z="0.0" style="left: 50.69%; top: 47.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Inferno_Doomcage_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -347,8 +380,8 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Doomcage_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Doomcage_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot" data-index="9548" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-1380.0" data-y="95.0" data-z="250.0" style="left: 6.88%; top: 52.97%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">250</span></div>
-        <div class="dot" data-index="9549" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="1410.0" data-y="110.0" data-z="250.0" style="left: 94.06%; top: 53.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">250</span></div>
+        <div class="container" id="container-Inferno_Doomcage_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Doomcage.webp" class="image">        <div class="dot" data-index="6872" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="-1380.0" data-y="95.0" data-z="250.0" style="left: 6.88%; top: 52.97%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">250</span></div>
+        <div class="dot" data-index="6873" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="1410.0" data-y="110.0" data-z="250.0" style="left: 94.06%; top: 53.44%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">250</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Inferno_Hellcrossbridge_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="-600.00" data-init-offset-y="300.00" data-size-x="1" data-size-y="1" style="">
@@ -381,7 +414,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_Hellcrossbridge_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Inferno_Hellcrossbridge_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot" data-index="9855" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="1265.0" data-y="-1170.0" data-z="-500.0" style="left: 70.78%; top: 22.81%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-500</span></div>
+        <div class="container" id="container-Inferno_Hellcrossbridge_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_Hellcrossbridge.webp" class="image">        <div class="dot" data-index="9255" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" data-x="1265.0" data-y="-1170.0" data-z="-500.0" style="left: 70.78%; top: 22.81%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-500</span></div>
 </div>
     </div>
 </div>
@@ -390,7 +423,7 @@
         <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
         <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
         <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
-        <br><strong>位置统计：共 27 个位置点</strong><br><strong>包含地图：</strong> 双子墓地, 地下神坛, 城墙, 大长廊, 末日囚笼, 棺材房, 百鬼桥, 盲坑, 硫火之桥
+        <br><strong>位置统计：共 21 个位置点</strong><br><strong>包含地图：</strong> 双子墓地, 地下神坛, 城墙, 大长廊, 末日囚笼, 棺材房, 百鬼桥, 盲坑, 硫火之桥
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
@@ -402,13 +435,23 @@
     </tr>
     <tr class='label-group-row'>
         <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
-            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman')">GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman (20)</button>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman')">GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman (21)</button>
         </th>
         <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
     </tr>
 
-                <tr id="row-2564" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_01_D-json', 2564, this)"></td>
+                <tr id="row-3024" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_01_HR_D-json', 3024, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cemetery_01_HR_D.json</td>
+        <td>双子墓地</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman</td>
+        <td>-17.00</td>
+        <td>80.00</td>
+        <td>-5.71</td>
+    </tr>
+    <tr id="row-3025" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_01_D-json', 3025, this)"></td>
         <td>废墟2层地牢</td>
         <td>Cemetery_01_D.json</td>
         <td>双子墓地</td>
@@ -417,18 +460,18 @@
         <td>-196.00</td>
         <td>27.29</td>
     </tr>
-    <tr id="row-2678" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_D-json', 2678, this)"></td>
+    <tr id="row-3175" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_HR_D-json', 3175, this)"></td>
         <td>废墟2层地牢</td>
-        <td>Cemetery_02_D.json</td>
+        <td>Cemetery_02_HR_D.json</td>
         <td>棺材房</td>
         <td>GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman</td>
         <td>-126.00</td>
         <td>461.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2549" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2549, this)"></td>
+    <tr id="row-5018" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 5018, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
         <td>盲坑</td>
@@ -437,8 +480,8 @@
         <td>50.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2550" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2550, this)"></td>
+    <tr id="row-5019" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 5019, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
         <td>盲坑</td>
@@ -447,8 +490,8 @@
         <td>50.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2551" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2551, this)"></td>
+    <tr id="row-5020" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 5020, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
         <td>盲坑</td>
@@ -457,8 +500,8 @@
         <td>-0.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-2552" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 2552, this)"></td>
+    <tr id="row-5021" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_BlindfallPit_D-json', 5021, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_BlindfallPit_D.json</td>
         <td>盲坑</td>
@@ -467,8 +510,8 @@
         <td>500.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-3932" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_GreatWalkway_HR_D-json', 3932, this)"></td>
+    <tr id="row-5505" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_GreatWalkway_HR_D-json', 5505, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_GreatWalkway_HR_D.json</td>
         <td>大长廊</td>
@@ -477,8 +520,8 @@
         <td>715.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-4442" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 4442, this)"></td>
+    <tr id="row-6030" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 6030, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_Ramparts_HR_D.json</td>
         <td>城墙</td>
@@ -487,8 +530,8 @@
         <td>-17.00</td>
         <td>290.00</td>
     </tr>
-    <tr id="row-4443" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 4443, this)"></td>
+    <tr id="row-6031" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Crypt_Ramparts_HR_D-json', 6031, this)"></td>
         <td>废墟2层地牢</td>
         <td>Crypt_Ramparts_HR_D.json</td>
         <td>城墙</td>
@@ -497,8 +540,8 @@
         <td>-7.00</td>
         <td>290.00</td>
     </tr>
-    <tr id="row-6400" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6400, this)"></td>
+    <tr id="row-27596" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 27596, this)"></td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
         <td>地下神坛</td>
@@ -507,8 +550,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6401" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6401, this)"></td>
+    <tr id="row-27597" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 27597, this)"></td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
         <td>地下神坛</td>
@@ -517,8 +560,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6402" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6402, this)"></td>
+    <tr id="row-27598" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 27598, this)"></td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
         <td>地下神坛</td>
@@ -527,8 +570,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6403" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6403, this)"></td>
+    <tr id="row-27599" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 27599, this)"></td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
         <td>地下神坛</td>
@@ -537,8 +580,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6404" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6404, this)"></td>
+    <tr id="row-27600" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 27600, this)"></td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
         <td>地下神坛</td>
@@ -547,8 +590,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6405" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6405, this)"></td>
+    <tr id="row-27601" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 27601, this)"></td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
         <td>地下神坛</td>
@@ -557,8 +600,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6406" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 6406, this)"></td>
+    <tr id="row-27602" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('UndergroundAltar_HR_D-json', 27602, this)"></td>
         <td>废墟2层地牢</td>
         <td>UndergroundAltar_HR_D.json</td>
         <td>地下神坛</td>
@@ -567,8 +610,8 @@
         <td>14.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9310" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 9310, this)"></td>
+    <tr id="row-4033" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('ConectorDoubleBridge_HR_D-json', 4033, this)"></td>
         <td>废墟3层炼狱</td>
         <td>ConectorDoubleBridge_HR_D.json</td>
         <td>硫火之桥</td>
@@ -577,8 +620,8 @@
         <td>-66.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-9548" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9548, this)"></td>
+    <tr id="row-6872" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 6872, this)"></td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
         <td>末日囚笼</td>
@@ -587,8 +630,8 @@
         <td>95.00</td>
         <td>250.00</td>
     </tr>
-    <tr id="row-9549" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 9549, this)"></td>
+    <tr id="row-6873" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Doomcage_HR_D-json', 6873, this)"></td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Doomcage_HR_D.json</td>
         <td>末日囚笼</td>
@@ -597,8 +640,8 @@
         <td>110.00</td>
         <td>250.00</td>
     </tr>
-    <tr id="row-9855" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9855, this)"></td>
+    <tr id="row-9255" data-label="GameSpawner_Id_Spawner_New_Monster_SkeletonSpearman">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_Hellcrossbridge_HR_D-json', 9255, this)"></td>
         <td>废墟3层炼狱</td>
         <td>Inferno_Hellcrossbridge_HR_D.json</td>
         <td>百鬼桥</td>

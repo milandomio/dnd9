@@ -72,42 +72,44 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>箭 位置汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-24日00点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-25    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">箭 (Arrow)</div>
-    <div class="maps-grid" id="maps-grid">    <div class="group-header">哥布林洞穴1层</div>
-    <div class="map-card" id="map-card-CaveTown_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">哥布林小镇 B<span class='debug-text'> (Goblin_Town_B)</span><div class='map-filename'>CaveTown_02_HR_D.json</div></h3>
-        <div class="map-info">CaveTown_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header">废墟2层地牢</div>
+    <div class="map-card" id="map-card-Cemetery_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">棺材房<span class='debug-text'> (Coffin_Rooms)</span><div class='map-filename'>Cemetery_02_HR_D.json</div></h3>
+        <div class="map-info">Cemetery_02.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
                 <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('CaveTown_02_HR_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-CaveTown_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('CaveTown_02_HR_D-json')">
-                <button class="btn-scale" onclick="scaleRange('CaveTown_02_HR_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-CaveTown_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-CaveTown_02_HR_D-json"></span>
+                <button class="btn-scale" onclick="scaleRange('Cemetery_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Cemetery_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('Cemetery_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Cemetery_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Cemetery_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cemetery_02_HR_D-json"></span>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'right')">→</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_HR_D-json', 'right')">→</button>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>X:</label>
-                <input type="number" id="offset-x-CaveTown_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CaveTown_02_HR_D-json')" style="width:50px;">
+                <input type="number" id="offset-x-Cemetery_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_HR_D-json')" style="width:50px;">
                 <label>Y:</label>
-                <input type="number" id="offset-y-CaveTown_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CaveTown_02_HR_D-json')" style="width:50px;">
+                <input type="number" id="offset-y-Cemetery_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_HR_D-json')" style="width:50px;">
             </div>
-            <button class="btn-rotate" onclick="toggleRotate('CaveTown_02_HR_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('CaveTown_02_HR_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('CaveTown_02_HR_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('CaveTown_02_HR_D-json')">↺ 重置</button>
+            <button class="btn-rotate" onclick="toggleRotate('Cemetery_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Cemetery_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Cemetery_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CaveTown_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown_02.webp" class="image">        <div class="dot" data-index="458" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="532.0821" data-y="-779.94086" data-z="-739.96985" style="left: 66.63%; top: 25.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-739</span></div>
+        <div class="container" id="container-Cemetery_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_02.webp" class="image">        <div class="dot" data-index="3135" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="859.6783" data-y="-345.04327" data-z="107.098465" style="left: 76.86%; top: 39.22%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">107</span></div>
+        <div class="dot" data-index="3136" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="914.87134" data-y="-382.25656" data-z="67.69143" style="left: 78.59%; top: 38.05%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">67</span></div>
 </div>
     </div>
+    <div class="group-header">哥布林1层</div>
     <div class="map-card" id="map-card-CaveTown_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
         <h3 class="map-title">哥布林小镇 A<span class='debug-text'> (Goblin_Town_A)</span><div class='map-filename'>CaveTown_HR_D.json</div></h3>
         <div class="map-info">CaveTown.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
@@ -138,7 +140,40 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('CaveTown_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('CaveTown_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-CaveTown_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown.webp" class="image">        <div class="dot" data-index="1983" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="532.0821" data-y="-779.94086" data-z="-739.96985" style="left: 66.63%; top: 25.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-739</span></div>
+        <div class="container" id="container-CaveTown_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown.webp" class="image">        <div class="dot" data-index="1263" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="532.0821" data-y="-779.94086" data-z="-739.96985" style="left: 66.63%; top: 25.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-739</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-CaveTown_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">哥布林小镇 B<span class='debug-text'> (Goblin_Town_B)</span><div class='map-filename'>CaveTown_02_HR_D.json</div></h3>
+        <div class="map-info">CaveTown_02.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('CaveTown_02_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-CaveTown_02_HR_D-json" value="1600" step="100" onchange="updateMapRange('CaveTown_02_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('CaveTown_02_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-CaveTown_02_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-CaveTown_02_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('CaveTown_02_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-CaveTown_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CaveTown_02_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-CaveTown_02_HR_D-json" value="0" step="10" onchange="applyOffsetInput('CaveTown_02_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('CaveTown_02_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('CaveTown_02_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('CaveTown_02_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('CaveTown_02_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-CaveTown_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/CaveTown_02.webp" class="image">        <div class="dot" data-index="1513" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="532.0821" data-y="-779.94086" data-z="-739.96985" style="left: 66.63%; top: 25.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-739</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Cave_Altar_02_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -171,9 +206,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_Altar_02_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_Altar_02_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_Altar_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Altar_02.webp" class="image">        <div class="dot" data-index="606" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-400.19504" data-y="-323.9666" data-z="-189.00003" style="left: 37.49%; top: 39.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-189</span></div>
-        <div class="dot" data-index="607" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="122.0" data-y="550.0" data-z="-99.99991" style="left: 53.81%; top: 67.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-99</span></div>
-        <div class="dot" data-index="608" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-126.0" data-y="482.0" data-z="-60.666565" style="left: 46.06%; top: 65.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-60</span></div>
+        <div class="container" id="container-Cave_Altar_02_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_Altar_02.webp" class="image">        <div class="dot" data-index="670" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-400.19504" data-y="-323.9666" data-z="-189.00003" style="left: 37.49%; top: 39.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-189</span></div>
+        <div class="dot" data-index="671" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="122.0" data-y="550.0" data-z="-99.99991" style="left: 53.81%; top: 67.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-99</span></div>
+        <div class="dot" data-index="672" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-126.0" data-y="482.0" data-z="-60.666565" style="left: 46.06%; top: 65.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-60</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Cave_AntsNest_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -206,7 +241,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_AntsNest_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_AntsNest_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_AntsNest_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_AntsNest.webp" class="image">        <div class="dot" data-index="738" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="532.0821" data-y="-779.94086" data-z="-582.32764" style="left: 66.63%; top: 25.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-582</span></div>
+        <div class="container" id="container-Cave_AntsNest_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_AntsNest.webp" class="image">        <div class="dot" data-index="1663" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="532.0821" data-y="-779.94086" data-z="-582.32764" style="left: 66.63%; top: 25.63%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-582</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Cave_BanditCamp_Center_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -239,10 +274,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Cave_BanditCamp_Center_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Cave_BanditCamp_Center_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Cave_BanditCamp_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_BanditCamp_Center.webp" class="image">        <div class="dot" data-index="808" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-59.50867" data-y="-40.026913" data-z="107.77216" style="left: 48.14%; top: 48.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">107</span></div>
-        <div class="dot" data-index="809" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-70.99934" data-y="-49.668728" data-z="137.77216" style="left: 47.78%; top: 48.45%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">137</span></div>
-        <div class="dot" data-index="810" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="122.0" data-y="550.0" data-z="103.0" style="left: 53.81%; top: 67.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
-        <div class="dot" data-index="811" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="116.0" data-y="560.0" data-z="103.0" style="left: 53.62%; top: 67.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
+        <div class="container" id="container-Cave_BanditCamp_Center_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cave_BanditCamp_Center.webp" class="image">        <div class="dot" data-index="1804" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-59.50867" data-y="-40.026913" data-z="107.77216" style="left: 48.14%; top: 48.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">107</span></div>
+        <div class="dot" data-index="1805" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-70.99934" data-y="-49.668728" data-z="137.77216" style="left: 47.78%; top: 48.45%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">137</span></div>
+        <div class="dot" data-index="1806" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="122.0" data-y="550.0" data-z="103.0" style="left: 53.81%; top: 67.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
+        <div class="dot" data-index="1807" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="116.0" data-y="560.0" data-z="103.0" style="left: 53.62%; top: 67.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-GoblinCaveCorner_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -275,42 +310,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('GoblinCaveCorner_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('GoblinCaveCorner_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-GoblinCaveCorner_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinCaveCorner_01.webp" class="image">        <div class="dot" data-index="2159" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="10.1602545" data-y="26.0" data-z="12.401924" style="left: 50.32%; top: 50.81%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">12</span></div>
-</div>
-    </div>
-    <div class="group-header">废墟2层地牢</div>
-    <div class="map-card" id="map-card-Cemetery_02_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">棺材房<span class='debug-text'> (Coffin_Rooms)</span><div class='map-filename'>Cemetery_02_D.json</div></h3>
-        <div class="map-info">Cemetery_02.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
-        <div class="controls">
-            <div class="input-group">
-                <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Cemetery_02_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Cemetery_02_D-json" value="1600" step="100" onchange="updateMapRange('Cemetery_02_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Cemetery_02_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Cemetery_02_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Cemetery_02_D-json"></span>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Cemetery_02_D-json', 'right')">→</button>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>X:</label>
-                <input type="number" id="offset-x-Cemetery_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_D-json')" style="width:50px;">
-                <label>Y:</label>
-                <input type="number" id="offset-y-Cemetery_02_D-json" value="0" step="10" onchange="applyOffsetInput('Cemetery_02_D-json')" style="width:50px;">
-            </div>
-            <button class="btn-rotate" onclick="toggleRotate('Cemetery_02_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Cemetery_02_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Cemetery_02_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Cemetery_02_D-json')">↺ 重置</button>
-        </div>
-        <div class="container" id="container-Cemetery_02_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Cemetery_02.webp" class="image">        <div class="dot" data-index="2679" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="859.6783" data-y="-345.04327" data-z="107.098465" style="left: 76.86%; top: 39.22%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">107</span></div>
-        <div class="dot" data-index="2680" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="914.87134" data-y="-382.25656" data-z="67.69143" style="left: 78.59%; top: 38.05%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">67</span></div>
+        <div class="container" id="container-GoblinCaveCorner_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/GoblinCaveCorner_01.webp" class="image">        <div class="dot" data-index="8509" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="10.1602545" data-y="26.0" data-z="12.401924" style="left: 50.32%; top: 50.81%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">12</span></div>
 </div>
     </div>
     <div class="group-header">冰图1层</div>
@@ -344,9 +344,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('IceCave_Hive_03_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('IceCave_Hive_03_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceCave_Hive_03_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/IceCave_Hive_03.webp" class="image">        <div class="dot" data-index="8346" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-8.988402" data-y="-35.24153" data-z="-6.888481" style="left: 49.72%; top: 24.45%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-6</span></div>
-        <div class="dot" data-index="8347" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-2.6185763" data-y="-88.561554" data-z="-8.262242" style="left: 49.92%; top: 23.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-8</span></div>
-        <div class="dot" data-index="8348" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="34.8636" data-y="-106.34037" data-z="-7.1476502" style="left: 51.09%; top: 23.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-7</span></div>
+        <div class="container" id="container-IceCave_Hive_03_HR_D-json" style="aspect-ratio: 1 / 2;"><img src="images/IceCave_Hive_03.webp" class="image">        <div class="dot" data-index="13566" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-8.988402" data-y="-35.24153" data-z="-6.888481" style="left: 49.72%; top: 24.45%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-6</span></div>
+        <div class="dot" data-index="13567" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-2.6185763" data-y="-88.561554" data-z="-8.262242" style="left: 49.92%; top: 23.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-8</span></div>
+        <div class="dot" data-index="13568" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="34.8636" data-y="-106.34037" data-z="-7.1476502" style="left: 51.09%; top: 23.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-7</span></div>
 </div>
     </div>
     <div class="group-header">废墟1层</div>
@@ -380,13 +380,13 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Armory_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Armory_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Armory_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Armory.webp" class="image">        <div class="dot" data-index="11305" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-1280.0" data-y="-59.999996" data-z="125.0" style="left: 10.00%; top: 48.13%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">125</span></div>
-        <div class="dot" data-index="11306" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-1414.0" data-y="75.00001" data-z="121.0" style="left: 5.81%; top: 52.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">121</span></div>
-        <div class="dot" data-index="11307" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-1071.0" data-y="-71.5" data-z="90.296906" style="left: 16.53%; top: 47.77%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">90</span></div>
-        <div class="dot" data-index="11308" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="108.0" data-y="-11.0" data-z="149.0" style="left: 53.38%; top: 49.66%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">149</span></div>
-        <div class="dot" data-index="11309" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="127.0" data-y="-5.0" data-z="162.0" style="left: 53.97%; top: 49.84%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">162</span></div>
-        <div class="dot" data-index="11310" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-152.46207" data-y="-39.913956" data-z="116.0" style="left: 45.24%; top: 48.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">116</span></div>
-        <div class="dot" data-index="11311" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-134.0" data-y="-32.0" data-z="129.0" style="left: 45.81%; top: 49.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">129</span></div>
+        <div class="container" id="container-Ruins_Armory_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Armory.webp" class="image">        <div class="dot" data-index="17305" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-1280.0" data-y="-59.999996" data-z="125.0" style="left: 10.00%; top: 48.13%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">125</span></div>
+        <div class="dot" data-index="17306" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-1414.0" data-y="75.00001" data-z="121.0" style="left: 5.81%; top: 52.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">121</span></div>
+        <div class="dot" data-index="17307" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-1071.0" data-y="-71.5" data-z="90.296906" style="left: 16.53%; top: 47.77%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">90</span></div>
+        <div class="dot" data-index="17308" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="108.0" data-y="-11.0" data-z="149.0" style="left: 53.38%; top: 49.66%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">149</span></div>
+        <div class="dot" data-index="17309" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="127.0" data-y="-5.0" data-z="162.0" style="left: 53.97%; top: 49.84%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">162</span></div>
+        <div class="dot" data-index="17310" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-152.46207" data-y="-39.913956" data-z="116.0" style="left: 45.24%; top: 48.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">116</span></div>
+        <div class="dot" data-index="17311" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-134.0" data-y="-32.0" data-z="129.0" style="left: 45.81%; top: 49.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">129</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Ruins_BanditCamp_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -419,92 +419,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_BanditCamp_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_BanditCamp_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_BanditCamp_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_BanditCamp.webp" class="image">        <div class="dot" data-index="11395" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-159.01744" data-y="-374.59058" data-z="80.0" style="left: 45.03%; top: 38.29%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">80</span></div>
-        <div class="dot" data-index="11396" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-173.50633" data-y="-378.47287" data-z="110.0" style="left: 44.58%; top: 38.17%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">110</span></div>
-        <div class="dot" data-index="11397" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="450.0" data-y="-71.99999" data-z="103.0" style="left: 64.06%; top: 47.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
-        <div class="dot" data-index="11398" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="460.0" data-y="-65.99999" data-z="103.0" style="left: 64.38%; top: 47.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
-</div>
-    </div>
-    <div class="map-card test-module" id="map-card-Ruins_BanditCamp_SR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">强盗营地SR<span class='debug-text'> (BanditCamp_SR)</span><div class='map-filename'>Ruins_BanditCamp_SR_D.json</div></h3>
-        <div class="map-info">未找到 (尝试: Ruins_BanditCamp_SR, BanditCamp_SR) | 找到 4 个位置 | 范围: ±1600</div>
-        <div class="controls">
-            <div class="input-group">
-                <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Ruins_BanditCamp_SR_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Ruins_BanditCamp_SR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_BanditCamp_SR_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Ruins_BanditCamp_SR_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Ruins_BanditCamp_SR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_BanditCamp_SR_D-json"></span>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_BanditCamp_SR_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_BanditCamp_SR_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_BanditCamp_SR_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_BanditCamp_SR_D-json', 'right')">→</button>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>X:</label>
-                <input type="number" id="offset-x-Ruins_BanditCamp_SR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_BanditCamp_SR_D-json')" style="width:50px;">
-                <label>Y:</label>
-                <input type="number" id="offset-y-Ruins_BanditCamp_SR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_BanditCamp_SR_D-json')" style="width:50px;">
-            </div>
-            <button class="btn-rotate" onclick="toggleRotate('Ruins_BanditCamp_SR_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_BanditCamp_SR_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_BanditCamp_SR_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Ruins_BanditCamp_SR_D-json')">↺ 重置</button>
-        </div>
-        <div class="container" id="container-Ruins_BanditCamp_SR_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_BanditCamp_SR, BanditCamp_SR</small></div>        <div class="dot" data-index="11448" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-159.01744" data-y="-374.59058" data-z="80.0" style="left: 45.03%; top: 38.29%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">80</span></div>
-        <div class="dot" data-index="11449" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-173.50633" data-y="-378.47287" data-z="110.0" style="left: 44.58%; top: 38.17%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">110</span></div>
-        <div class="dot" data-index="11450" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="450.0" data-y="-71.99999" data-z="103.0" style="left: 64.06%; top: 47.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
-        <div class="dot" data-index="11451" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="460.0" data-y="-65.99999" data-z="103.0" style="left: 64.38%; top: 47.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
-</div>
-    </div>
-    <div class="map-card test-module" id="map-card-Ruins_Barbican_01_BossTest_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">瓮城01BossTest<span class='debug-text'> (Barbican_01_BossTest)</span><div class='map-filename'>Ruins_Barbican_01_BossTest_D.json</div></h3>
-        <div class="map-info">未找到 (尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest) | 找到 14 个位置 | 范围: ±1600</div>
-        <div class="controls">
-            <div class="input-group">
-                <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Ruins_Barbican_01_BossTest_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Ruins_Barbican_01_BossTest_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Barbican_01_BossTest_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Ruins_Barbican_01_BossTest_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Ruins_Barbican_01_BossTest_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Barbican_01_BossTest_D-json"></span>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_BossTest_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_BossTest_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_BossTest_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_BossTest_D-json', 'right')">→</button>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>X:</label>
-                <input type="number" id="offset-x-Ruins_Barbican_01_BossTest_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Barbican_01_BossTest_D-json')" style="width:50px;">
-                <label>Y:</label>
-                <input type="number" id="offset-y-Ruins_Barbican_01_BossTest_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Barbican_01_BossTest_D-json')" style="width:50px;">
-            </div>
-            <button class="btn-rotate" onclick="toggleRotate('Ruins_Barbican_01_BossTest_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Barbican_01_BossTest_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_BossTest_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_BossTest_D-json')">↺ 重置</button>
-        </div>
-        <div class="container" id="container-Ruins_Barbican_01_BossTest_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_Barbican_01_BossTest, Barbican_01_BossTest</small></div>        <div class="dot" data-index="11562" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="563.80743" data-y="-8.941334" data-z="157.0" style="left: 67.62%; top: 49.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">157</span></div>
-        <div class="dot" data-index="11563" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="468.8074" data-y="-25.941334" data-z="120.0" style="left: 64.65%; top: 49.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11564" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="615.14886" data-y="157.46498" data-z="113.0" style="left: 69.22%; top: 54.92%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">113</span></div>
-        <div class="dot" data-index="11565" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="169.0" data-y="43.0" data-z="120.0" style="left: 55.28%; top: 51.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11566" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="156.66866" data-y="153.70053" data-z="153.0" style="left: 54.90%; top: 54.80%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">153</span></div>
-        <div class="dot" data-index="11567" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="146.0" data-y="157.0" data-z="160.0" style="left: 54.56%; top: 54.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">160</span></div>
-        <div class="dot" data-index="11568" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-558.3334" data-y="133.67075" data-z="132.0" style="left: 32.55%; top: 54.18%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">132</span></div>
-        <div class="dot" data-index="11569" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="63.0" data-y="132.0" data-z="120.0" style="left: 51.97%; top: 54.12%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11570" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-560.3334" data-y="120.67074" data-z="107.0" style="left: 32.49%; top: 53.77%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">107</span></div>
-        <div class="dot" data-index="11571" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="62.0" data-y="157.0" data-z="120.0" style="left: 51.94%; top: 54.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11572" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-381.33337" data-y="-225.68237" data-z="104.662384" style="left: 38.08%; top: 42.95%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">104</span></div>
-        <div class="dot" data-index="11573" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-380.0" data-y="-245.47047" data-z="132.14815" style="left: 38.12%; top: 42.33%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">132</span></div>
-        <div class="dot" data-index="11574" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-53.33339" data-y="-183.19518" data-z="110.74895" style="left: 48.33%; top: 44.28%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">110</span></div>
-        <div class="dot" data-index="11575" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-51.0" data-y="-169.0" data-z="108.0" style="left: 48.41%; top: 44.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">108</span></div>
+        <div class="container" id="container-Ruins_BanditCamp_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_BanditCamp.webp" class="image">        <div class="dot" data-index="17417" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-159.01744" data-y="-374.59058" data-z="80.0" style="left: 45.03%; top: 38.29%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">80</span></div>
+        <div class="dot" data-index="17418" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-173.50633" data-y="-378.47287" data-z="110.0" style="left: 44.58%; top: 38.17%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">110</span></div>
+        <div class="dot" data-index="17419" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="450.0" data-y="-71.99999" data-z="103.0" style="left: 64.06%; top: 47.75%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
+        <div class="dot" data-index="17420" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="460.0" data-y="-65.99999" data-z="103.0" style="left: 64.38%; top: 47.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">103</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Ruins_Barbican_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -537,20 +455,20 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot" data-index="11681" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="563.80743" data-y="-8.941334" data-z="157.0" style="left: 67.62%; top: 49.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">157</span></div>
-        <div class="dot" data-index="11682" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="468.8074" data-y="-25.941334" data-z="120.0" style="left: 64.65%; top: 49.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11683" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="615.14886" data-y="157.46498" data-z="113.0" style="left: 69.22%; top: 54.92%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">113</span></div>
-        <div class="dot" data-index="11684" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="169.0" data-y="43.0" data-z="120.0" style="left: 55.28%; top: 51.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11685" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="156.66866" data-y="153.70053" data-z="153.0" style="left: 54.90%; top: 54.80%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">153</span></div>
-        <div class="dot" data-index="11686" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="146.0" data-y="157.0" data-z="160.0" style="left: 54.56%; top: 54.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">160</span></div>
-        <div class="dot" data-index="11687" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-558.3334" data-y="133.67075" data-z="132.0" style="left: 32.55%; top: 54.18%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">132</span></div>
-        <div class="dot" data-index="11688" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="63.0" data-y="132.0" data-z="120.0" style="left: 51.97%; top: 54.12%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11689" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-560.3334" data-y="120.67074" data-z="107.0" style="left: 32.49%; top: 53.77%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">107</span></div>
-        <div class="dot" data-index="11690" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="62.0" data-y="157.0" data-z="120.0" style="left: 51.94%; top: 54.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
-        <div class="dot" data-index="11691" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-381.33337" data-y="-225.68237" data-z="104.662384" style="left: 38.08%; top: 42.95%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">104</span></div>
-        <div class="dot" data-index="11692" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-380.0" data-y="-245.47047" data-z="132.14815" style="left: 38.12%; top: 42.33%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">132</span></div>
-        <div class="dot" data-index="11693" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-53.33339" data-y="-183.19518" data-z="110.74895" style="left: 48.33%; top: 44.28%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">110</span></div>
-        <div class="dot" data-index="11694" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-51.0" data-y="-169.0" data-z="108.0" style="left: 48.41%; top: 44.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">108</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot" data-index="17635" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="563.80743" data-y="-8.941334" data-z="157.0" style="left: 67.62%; top: 49.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">157</span></div>
+        <div class="dot" data-index="17636" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="468.8074" data-y="-25.941334" data-z="120.0" style="left: 64.65%; top: 49.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
+        <div class="dot" data-index="17637" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="615.14886" data-y="157.46498" data-z="113.0" style="left: 69.22%; top: 54.92%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">113</span></div>
+        <div class="dot" data-index="17638" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="169.0" data-y="43.0" data-z="120.0" style="left: 55.28%; top: 51.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
+        <div class="dot" data-index="17639" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="156.66866" data-y="153.70053" data-z="153.0" style="left: 54.90%; top: 54.80%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">153</span></div>
+        <div class="dot" data-index="17640" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="146.0" data-y="157.0" data-z="160.0" style="left: 54.56%; top: 54.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">160</span></div>
+        <div class="dot" data-index="17641" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-558.3334" data-y="133.67075" data-z="132.0" style="left: 32.55%; top: 54.18%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">132</span></div>
+        <div class="dot" data-index="17642" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="63.0" data-y="132.0" data-z="120.0" style="left: 51.97%; top: 54.12%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
+        <div class="dot" data-index="17643" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-560.3334" data-y="120.67074" data-z="107.0" style="left: 32.49%; top: 53.77%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">107</span></div>
+        <div class="dot" data-index="17644" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="62.0" data-y="157.0" data-z="120.0" style="left: 51.94%; top: 54.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">120</span></div>
+        <div class="dot" data-index="17645" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-381.33337" data-y="-225.68237" data-z="104.662384" style="left: 38.08%; top: 42.95%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">104</span></div>
+        <div class="dot" data-index="17646" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-380.0" data-y="-245.47047" data-z="132.14815" style="left: 38.12%; top: 42.33%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">132</span></div>
+        <div class="dot" data-index="17647" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-53.33339" data-y="-183.19518" data-z="110.74895" style="left: 48.33%; top: 44.28%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">110</span></div>
+        <div class="dot" data-index="17648" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="-51.0" data-y="-169.0" data-z="108.0" style="left: 48.41%; top: 44.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">108</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Ruins_Keep_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -583,7 +501,7 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Keep_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Keep_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Keep_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Keep.webp" class="image">        <div class="dot" data-index="12765" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="125.4788" data-y="-30.0" data-z="14.339411" style="left: 53.92%; top: 49.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">14</span></div>
+        <div class="container" id="container-Ruins_Keep_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Keep.webp" class="image">        <div class="dot" data-index="19330" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" data-x="125.4788" data-y="-30.0" data-z="14.339411" style="left: 53.92%; top: 49.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">14</span></div>
 </div>
     </div>
 </div>
@@ -592,7 +510,7 @@
         <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
         <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
         <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
-        <br><strong>位置统计：共 84 个位置点</strong><br><strong>包含地图：</strong> 哥布林匪窝, 哥布林小镇 A, 哥布林小镇 B, 城堡军械库, 强盗营地, 强盗营地SR, 棺材房, 洞穴祭坛 B, 洞穴隧道, 瓮城, 瓮城01BossTest, 蚁巢, 蜂巢, 要塞
+        <br><strong>位置统计：共 42 个位置点</strong><br><strong>包含地图：</strong> 哥布林匪窝, 哥布林小镇 A, 哥布林小镇 B, 城堡军械库, 强盗营地, 棺材房, 洞穴祭坛 B, 洞穴隧道, 瓮城, 蚁巢, 蜂巢, 要塞
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
@@ -604,24 +522,34 @@
     </tr>
     <tr class='label-group-row'>
         <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
-            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow')">GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow (60)</button>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow')">GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow (42)</button>
         </th>
         <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
     </tr>
 
-                <tr id="row-458" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_HR_D-json', 458, this)"></td>
-        <td>哥布林洞穴1层</td>
-        <td>CaveTown_02_HR_D.json</td>
-        <td>哥布林小镇 B</td>
+                <tr id="row-3135" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_HR_D-json', 3135, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cemetery_02_HR_D.json</td>
+        <td>棺材房</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>532.08</td>
-        <td>-779.94</td>
-        <td>-739.97</td>
+        <td>859.68</td>
+        <td>-345.04</td>
+        <td>107.10</td>
     </tr>
-    <tr id="row-1983" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1983, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-3136" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_HR_D-json', 3136, this)"></td>
+        <td>废墟2层地牢</td>
+        <td>Cemetery_02_HR_D.json</td>
+        <td>棺材房</td>
+        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
+        <td>914.87</td>
+        <td>-382.26</td>
+        <td>67.69</td>
+    </tr>
+    <tr id="row-1263" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_HR_D-json', 1263, this)"></td>
+        <td>哥布林1层</td>
         <td>CaveTown_HR_D.json</td>
         <td>哥布林小镇 A</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -629,9 +557,19 @@
         <td>-779.94</td>
         <td>-739.97</td>
     </tr>
-    <tr id="row-606" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 606, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-1513" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('CaveTown_02_HR_D-json', 1513, this)"></td>
+        <td>哥布林1层</td>
+        <td>CaveTown_02_HR_D.json</td>
+        <td>哥布林小镇 B</td>
+        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
+        <td>532.08</td>
+        <td>-779.94</td>
+        <td>-739.97</td>
+    </tr>
+    <tr id="row-670" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 670, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
         <td>洞穴祭坛 B</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -639,9 +577,9 @@
         <td>-323.97</td>
         <td>-189.00</td>
     </tr>
-    <tr id="row-607" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 607, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-671" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 671, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
         <td>洞穴祭坛 B</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -649,9 +587,9 @@
         <td>550.00</td>
         <td>-100.00</td>
     </tr>
-    <tr id="row-608" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 608, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-672" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_Altar_02_HR_D-json', 672, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_Altar_02_HR_D.json</td>
         <td>洞穴祭坛 B</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -659,9 +597,9 @@
         <td>482.00</td>
         <td>-60.67</td>
     </tr>
-    <tr id="row-738" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 738, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-1663" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_AntsNest_D-json', 1663, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_AntsNest_D.json</td>
         <td>蚁巢</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -669,9 +607,9 @@
         <td>-779.94</td>
         <td>-582.33</td>
     </tr>
-    <tr id="row-808" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 808, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-1804" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 1804, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_BanditCamp_Center_HR_D.json</td>
         <td>哥布林匪窝</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -679,9 +617,9 @@
         <td>-40.03</td>
         <td>107.77</td>
     </tr>
-    <tr id="row-809" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 809, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-1805" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 1805, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_BanditCamp_Center_HR_D.json</td>
         <td>哥布林匪窝</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -689,9 +627,9 @@
         <td>-49.67</td>
         <td>137.77</td>
     </tr>
-    <tr id="row-810" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 810, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-1806" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 1806, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_BanditCamp_Center_HR_D.json</td>
         <td>哥布林匪窝</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -699,9 +637,9 @@
         <td>550.00</td>
         <td>103.00</td>
     </tr>
-    <tr id="row-811" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 811, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-1807" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cave_BanditCamp_Center_HR_D-json', 1807, this)"></td>
+        <td>哥布林1层</td>
         <td>Cave_BanditCamp_Center_HR_D.json</td>
         <td>哥布林匪窝</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -709,9 +647,9 @@
         <td>560.00</td>
         <td>103.00</td>
     </tr>
-    <tr id="row-2159" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 2159, this)"></td>
-        <td>哥布林洞穴1层</td>
+    <tr id="row-8509" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('GoblinCaveCorner_01_HR_D-json', 8509, this)"></td>
+        <td>哥布林1层</td>
         <td>GoblinCaveCorner_01_HR_D.json</td>
         <td>洞穴隧道</td>
         <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
@@ -719,28 +657,8 @@
         <td>26.00</td>
         <td>12.40</td>
     </tr>
-    <tr id="row-2679" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_D-json', 2679, this)"></td>
-        <td>废墟2层地牢</td>
-        <td>Cemetery_02_D.json</td>
-        <td>棺材房</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>859.68</td>
-        <td>-345.04</td>
-        <td>107.10</td>
-    </tr>
-    <tr id="row-2680" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Cemetery_02_D-json', 2680, this)"></td>
-        <td>废墟2层地牢</td>
-        <td>Cemetery_02_D.json</td>
-        <td>棺材房</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>914.87</td>
-        <td>-382.26</td>
-        <td>67.69</td>
-    </tr>
-    <tr id="row-8346" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 8346, this)"></td>
+    <tr id="row-13566" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 13566, this)"></td>
         <td>冰图1层</td>
         <td>IceCave_Hive_03_HR_D.json</td>
         <td>蜂巢</td>
@@ -749,8 +667,8 @@
         <td>-35.24</td>
         <td>-6.89</td>
     </tr>
-    <tr id="row-8347" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 8347, this)"></td>
+    <tr id="row-13567" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 13567, this)"></td>
         <td>冰图1层</td>
         <td>IceCave_Hive_03_HR_D.json</td>
         <td>蜂巢</td>
@@ -759,8 +677,8 @@
         <td>-88.56</td>
         <td>-8.26</td>
     </tr>
-    <tr id="row-8348" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 8348, this)"></td>
+    <tr id="row-13568" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceCave_Hive_03_HR_D-json', 13568, this)"></td>
         <td>冰图1层</td>
         <td>IceCave_Hive_03_HR_D.json</td>
         <td>蜂巢</td>
@@ -769,8 +687,8 @@
         <td>-106.34</td>
         <td>-7.15</td>
     </tr>
-    <tr id="row-11305" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11305, this)"></td>
+    <tr id="row-17305" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 17305, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
         <td>城堡军械库</td>
@@ -779,8 +697,8 @@
         <td>-60.00</td>
         <td>125.00</td>
     </tr>
-    <tr id="row-11306" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11306, this)"></td>
+    <tr id="row-17306" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 17306, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
         <td>城堡军械库</td>
@@ -789,8 +707,8 @@
         <td>75.00</td>
         <td>121.00</td>
     </tr>
-    <tr id="row-11307" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11307, this)"></td>
+    <tr id="row-17307" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 17307, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
         <td>城堡军械库</td>
@@ -799,8 +717,8 @@
         <td>-71.50</td>
         <td>90.30</td>
     </tr>
-    <tr id="row-11308" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11308, this)"></td>
+    <tr id="row-17308" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 17308, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
         <td>城堡军械库</td>
@@ -809,8 +727,8 @@
         <td>-11.00</td>
         <td>149.00</td>
     </tr>
-    <tr id="row-11309" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11309, this)"></td>
+    <tr id="row-17309" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 17309, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
         <td>城堡军械库</td>
@@ -819,8 +737,8 @@
         <td>-5.00</td>
         <td>162.00</td>
     </tr>
-    <tr id="row-11310" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11310, this)"></td>
+    <tr id="row-17310" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 17310, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
         <td>城堡军械库</td>
@@ -829,8 +747,8 @@
         <td>-39.91</td>
         <td>116.00</td>
     </tr>
-    <tr id="row-11311" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 11311, this)"></td>
+    <tr id="row-17311" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Armory_HR_D-json', 17311, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Armory_HR_D.json</td>
         <td>城堡军械库</td>
@@ -839,8 +757,8 @@
         <td>-32.00</td>
         <td>129.00</td>
     </tr>
-    <tr id="row-11395" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 11395, this)"></td>
+    <tr id="row-17417" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 17417, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_BanditCamp_HR_D.json</td>
         <td>强盗营地</td>
@@ -849,8 +767,8 @@
         <td>-374.59</td>
         <td>80.00</td>
     </tr>
-    <tr id="row-11396" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 11396, this)"></td>
+    <tr id="row-17418" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 17418, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_BanditCamp_HR_D.json</td>
         <td>强盗营地</td>
@@ -859,8 +777,8 @@
         <td>-378.47</td>
         <td>110.00</td>
     </tr>
-    <tr id="row-11397" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 11397, this)"></td>
+    <tr id="row-17419" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 17419, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_BanditCamp_HR_D.json</td>
         <td>强盗营地</td>
@@ -869,8 +787,8 @@
         <td>-72.00</td>
         <td>103.00</td>
     </tr>
-    <tr id="row-11398" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 11398, this)"></td>
+    <tr id="row-17420" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_HR_D-json', 17420, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_BanditCamp_HR_D.json</td>
         <td>强盗营地</td>
@@ -879,188 +797,8 @@
         <td>-66.00</td>
         <td>103.00</td>
     </tr>
-    <tr id="row-11448" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_SR_D-json', 11448, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_BanditCamp_SR_D.json</td>
-        <td>强盗营地SR</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-159.02</td>
-        <td>-374.59</td>
-        <td>80.00</td>
-    </tr>
-    <tr id="row-11449" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_SR_D-json', 11449, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_BanditCamp_SR_D.json</td>
-        <td>强盗营地SR</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-173.51</td>
-        <td>-378.47</td>
-        <td>110.00</td>
-    </tr>
-    <tr id="row-11450" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_SR_D-json', 11450, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_BanditCamp_SR_D.json</td>
-        <td>强盗营地SR</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>450.00</td>
-        <td>-72.00</td>
-        <td>103.00</td>
-    </tr>
-    <tr id="row-11451" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditCamp_SR_D-json', 11451, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_BanditCamp_SR_D.json</td>
-        <td>强盗营地SR</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>460.00</td>
-        <td>-66.00</td>
-        <td>103.00</td>
-    </tr>
-    <tr id="row-11562" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11562, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>563.81</td>
-        <td>-8.94</td>
-        <td>157.00</td>
-    </tr>
-    <tr id="row-11563" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11563, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>468.81</td>
-        <td>-25.94</td>
-        <td>120.00</td>
-    </tr>
-    <tr id="row-11564" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11564, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>615.15</td>
-        <td>157.46</td>
-        <td>113.00</td>
-    </tr>
-    <tr id="row-11565" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11565, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>169.00</td>
-        <td>43.00</td>
-        <td>120.00</td>
-    </tr>
-    <tr id="row-11566" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11566, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>156.67</td>
-        <td>153.70</td>
-        <td>153.00</td>
-    </tr>
-    <tr id="row-11567" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11567, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>146.00</td>
-        <td>157.00</td>
-        <td>160.00</td>
-    </tr>
-    <tr id="row-11568" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11568, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-558.33</td>
-        <td>133.67</td>
-        <td>132.00</td>
-    </tr>
-    <tr id="row-11569" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11569, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>63.00</td>
-        <td>132.00</td>
-        <td>120.00</td>
-    </tr>
-    <tr id="row-11570" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11570, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-560.33</td>
-        <td>120.67</td>
-        <td>107.00</td>
-    </tr>
-    <tr id="row-11571" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11571, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>62.00</td>
-        <td>157.00</td>
-        <td>120.00</td>
-    </tr>
-    <tr id="row-11572" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11572, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-381.33</td>
-        <td>-225.68</td>
-        <td>104.66</td>
-    </tr>
-    <tr id="row-11573" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11573, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-380.00</td>
-        <td>-245.47</td>
-        <td>132.15</td>
-    </tr>
-    <tr id="row-11574" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11574, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-53.33</td>
-        <td>-183.20</td>
-        <td>110.75</td>
-    </tr>
-    <tr id="row-11575" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_BossTest_D-json', 11575, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_Barbican_01_BossTest_D.json</td>
-        <td>瓮城01BossTest</td>
-        <td>GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow</td>
-        <td>-51.00</td>
-        <td>-169.00</td>
-        <td>108.00</td>
-    </tr>
-    <tr id="row-11681" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11681, this)"></td>
+    <tr id="row-17635" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17635, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1069,8 +807,8 @@
         <td>-8.94</td>
         <td>157.00</td>
     </tr>
-    <tr id="row-11682" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11682, this)"></td>
+    <tr id="row-17636" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17636, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1079,8 +817,8 @@
         <td>-25.94</td>
         <td>120.00</td>
     </tr>
-    <tr id="row-11683" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11683, this)"></td>
+    <tr id="row-17637" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17637, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1089,8 +827,8 @@
         <td>157.46</td>
         <td>113.00</td>
     </tr>
-    <tr id="row-11684" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11684, this)"></td>
+    <tr id="row-17638" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17638, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1099,8 +837,8 @@
         <td>43.00</td>
         <td>120.00</td>
     </tr>
-    <tr id="row-11685" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11685, this)"></td>
+    <tr id="row-17639" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17639, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1109,8 +847,8 @@
         <td>153.70</td>
         <td>153.00</td>
     </tr>
-    <tr id="row-11686" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11686, this)"></td>
+    <tr id="row-17640" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17640, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1119,8 +857,8 @@
         <td>157.00</td>
         <td>160.00</td>
     </tr>
-    <tr id="row-11687" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11687, this)"></td>
+    <tr id="row-17641" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17641, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1129,8 +867,8 @@
         <td>133.67</td>
         <td>132.00</td>
     </tr>
-    <tr id="row-11688" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11688, this)"></td>
+    <tr id="row-17642" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17642, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1139,8 +877,8 @@
         <td>132.00</td>
         <td>120.00</td>
     </tr>
-    <tr id="row-11689" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11689, this)"></td>
+    <tr id="row-17643" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17643, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1149,8 +887,8 @@
         <td>120.67</td>
         <td>107.00</td>
     </tr>
-    <tr id="row-11690" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11690, this)"></td>
+    <tr id="row-17644" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17644, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1159,8 +897,8 @@
         <td>157.00</td>
         <td>120.00</td>
     </tr>
-    <tr id="row-11691" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11691, this)"></td>
+    <tr id="row-17645" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17645, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1169,8 +907,8 @@
         <td>-225.68</td>
         <td>104.66</td>
     </tr>
-    <tr id="row-11692" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11692, this)"></td>
+    <tr id="row-17646" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17646, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1179,8 +917,8 @@
         <td>-245.47</td>
         <td>132.15</td>
     </tr>
-    <tr id="row-11693" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11693, this)"></td>
+    <tr id="row-17647" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17647, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1189,8 +927,8 @@
         <td>-183.20</td>
         <td>110.75</td>
     </tr>
-    <tr id="row-11694" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11694, this)"></td>
+    <tr id="row-17648" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17648, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -1199,8 +937,8 @@
         <td>-169.00</td>
         <td>108.00</td>
     </tr>
-    <tr id="row-12765" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Keep_HR_D-json', 12765, this)"></td>
+    <tr id="row-19330" data-label="GameSpawner_Id_Spawner_New_Lootdrop_Spawn_Arrow">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Keep_HR_D-json', 19330, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Keep_HR_D.json</td>
         <td>要塞</td>

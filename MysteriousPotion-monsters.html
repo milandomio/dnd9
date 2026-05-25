@@ -82,9 +82,9 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>神秘药水 >> 畸形骨魔 怪物坐标汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-24日00点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-25    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">神秘药水 (MysteriousPotion) >> Dreadspine</div>
-    <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>畸形骨魔 (3)</div>
+    <div class="monster-legend"><strong>怪物图例：</strong><div class="legend-items">    <div class="legend-item"><span class="legend-dot" style="background-color: rgba(255, 0, 0, 0.7);"></span>畸形骨魔 (5)</div>
 </div></div>
 
     <div class="monster-nav">
@@ -122,7 +122,41 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('DeathHall_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('DeathHall_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-DeathHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathHall.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="5403" data-x="9.0" data-y="26.0" data-z="0.0" style="left: 50.28%; top: 50.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+        <div class="container" id="container-DeathHall_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathHall.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="6633" data-x="9.0" data-y="26.0" data-z="0.0" style="left: 50.28%; top: 50.81%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Dreadspine">畸形骨魔</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-DeathHall_D-json" data-monsters="Dreadspine" data-group="group-Crypt" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">死亡厅堂 (D)<span class='debug-text'> (Death_Hall)</span><div class='map-filename'>DeathHall_D.json</div></h3>
+        <div class="map-info">DeathHall.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('DeathHall_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-DeathHall_D-json" value="1600" step="100" onchange="updateMapRange('DeathHall_D-json')">
+                <button class="btn-scale" onclick="scaleRange('DeathHall_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-DeathHall_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-DeathHall_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('DeathHall_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('DeathHall_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('DeathHall_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('DeathHall_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-DeathHall_D-json" value="0" step="10" onchange="applyOffsetInput('DeathHall_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-DeathHall_D-json" value="0" step="10" onchange="applyOffsetInput('DeathHall_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('DeathHall_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('DeathHall_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('DeathHall_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('DeathHall_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-DeathHall_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DeathHall.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="6634" data-x="9.0" data-y="-24.0" data-z="0.0" style="left: 50.28%; top: 49.25%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Dreadspine">畸形骨魔</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -156,7 +190,41 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Sanctum_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Sanctum_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Sanctum_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Sanctum.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="6013" data-x="-7.533883" data-y="357.0118" data-z="-9.9999" style="left: 49.76%; top: 61.16%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-9</span></div>
+        <div class="container" id="container-Sanctum_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Sanctum.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="21463" data-x="-7.533883" data-y="357.0118" data-z="-9.9999" style="left: 49.76%; top: 61.16%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-9</span></div>
+</div>
+        <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Dreadspine">畸形骨魔</span><span class="ms-count">(1点)</span></div>
+    </div>
+    <div class="map-card" id="map-card-Sanctum_D-json" data-monsters="Dreadspine" data-group="group-Crypt" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">圣所 (D)<span class='debug-text'> (Sanctum)</span><div class='map-filename'>Sanctum_D.json</div></h3>
+        <div class="map-info">Sanctum.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Sanctum_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Sanctum_D-json" value="1600" step="100" onchange="updateMapRange('Sanctum_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Sanctum_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Sanctum_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Sanctum_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Sanctum_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Sanctum_D-json" value="0" step="10" onchange="applyOffsetInput('Sanctum_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Sanctum_D-json" value="0" step="10" onchange="applyOffsetInput('Sanctum_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Sanctum_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Sanctum_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Sanctum_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Sanctum_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Sanctum_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Sanctum.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="21464" data-x="7.4661174" data-y="367.0118" data-z="0.000100817866" style="left: 50.23%; top: 61.47%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">0</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Dreadspine">畸形骨魔</span><span class="ms-count">(1点)</span></div>
     </div>
@@ -190,18 +258,18 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('TheMiniWheel_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('TheMiniWheel_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-TheMiniWheel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TheMiniWheel.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="4689" data-x="45.0" data-y="160.0" data-z="-500.0" style="left: 51.41%; top: 55.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
+        <div class="container" id="container-TheMiniWheel_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TheMiniWheel.webp" class="image">        <div class="dot monster-dot" data-monster="Dreadspine" data-index="27030" data-x="45.0" data-y="160.0" data-z="-500.0" style="left: 51.41%; top: 55.00%; background-color: rgba(255, 0, 0, 0.7); box-shadow: 0 0 6px rgba(255, 0, 0, 0.7); border: 1px solid #fff;"><span class="dot-height" style="color:rgba(255, 0, 0, 0.7);">-500</span></div>
 </div>
         <div class="monster-summary"><span class="ms-dot" style="background:rgba(255, 0, 0, 0.7)"></span><span class="ms-name" data-monster="Dreadspine">畸形骨魔</span><span class="ms-count">(1点)</span></div>
     </div>
 </div>
     <div class="legend">
-        <strong>位置统计：共 1 个怪物，3 个位置点</strong>
+        <strong>位置统计：共 1 个怪物，5 个位置点</strong>
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
-        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-5403">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathHall_HR_D-json', 5403, this)"></td>
+        <table><tr><th>显示</th><th>怪物</th><th>分组</th><th>地图文件</th><th>地图汉化</th><th>标签</th><th>位置 X</th><th>位置 Y</th><th>位置 Z</th></tr>    <tr id="row-6633">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathHall_HR_D-json', 6633, this)"></td>
         <td>畸形骨魔</td>
         <td>废墟2层地牢</td>
         <td>DeathHall_HR_D.json</td>
@@ -211,8 +279,19 @@
         <td>26.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-6013">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sanctum_HR_D-json', 6013, this)"></td>
+    <tr id="row-6634">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DeathHall_D-json', 6634, this)"></td>
+        <td>畸形骨魔</td>
+        <td>废墟2层地牢</td>
+        <td>DeathHall_D.json</td>
+        <td>死亡厅堂</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Dreadspine</td>
+        <td>9.00</td>
+        <td>-24.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-21463">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sanctum_HR_D-json', 21463, this)"></td>
         <td>畸形骨魔</td>
         <td>废墟2层地牢</td>
         <td>Sanctum_HR_D.json</td>
@@ -222,8 +301,19 @@
         <td>357.01</td>
         <td>-10.00</td>
     </tr>
-    <tr id="row-4689">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('TheMiniWheel_HR_D-json', 4689, this)"></td>
+    <tr id="row-21464">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Sanctum_D-json', 21464, this)"></td>
+        <td>畸形骨魔</td>
+        <td>废墟2层地牢</td>
+        <td>Sanctum_D.json</td>
+        <td>圣所</td>
+        <td>GameSpawner_Id_Spawner_New_Monster_Dreadspine</td>
+        <td>7.47</td>
+        <td>367.01</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-27030">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('TheMiniWheel_HR_D-json', 27030, this)"></td>
         <td>畸形骨魔</td>
         <td>废墟2层地牢</td>
         <td>TheMiniWheel_HR_D.json</td>

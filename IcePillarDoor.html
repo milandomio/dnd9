@@ -72,40 +72,117 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>冰冻柱门 位置汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-24日00点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-25    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">冰冻柱门 (IcePillarDoor)</div>
     <div class="maps-grid" id="maps-grid">    <div class="group-header">冰图2层</div>
-    <div class="map-card" id="map-card-IceAbyss_WyvernLair_D-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="-2400.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
-        <h3 class="map-title">冰龙巢穴<span class='debug-text'> (IceAbyss_WyvernLair)</span><div class='map-filename'>IceAbyss_WyvernLair_D.json</div></h3>
-        <div class="map-info">IceAbyss_WyvernLair.webp (缓存) | 找到 1 个位置 | 范围: ±3200</div>
+    <div class="map-card" id="map-card-IceAbyss_FalseThrone_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">伪王座<span class='debug-text'> (IceAbyss_FalseThrone)</span><div class='map-filename'>IceAbyss_FalseThrone_A.json</div></h3>
+        <div class="map-info">IceAbyss_FalseThrone.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
                 <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('IceAbyss_WyvernLair_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-IceAbyss_WyvernLair_D-json" value="3200" step="100" onchange="updateMapRange('IceAbyss_WyvernLair_D-json')">
-                <button class="btn-scale" onclick="scaleRange('IceAbyss_WyvernLair_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_WyvernLair_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_WyvernLair_D-json"></span>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FalseThrone_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_FalseThrone_A-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_FalseThrone_A-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_FalseThrone_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_FalseThrone_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_FalseThrone_A-json"></span>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_D-json', 'right')">→</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_FalseThrone_A-json', 'right')">→</button>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>X:</label>
-                <input type="number" id="offset-x-IceAbyss_WyvernLair_D-json" value="1600" step="10" onchange="applyOffsetInput('IceAbyss_WyvernLair_D-json')" style="width:50px;">
+                <input type="number" id="offset-x-IceAbyss_FalseThrone_A-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FalseThrone_A-json')" style="width:50px;">
                 <label>Y:</label>
-                <input type="number" id="offset-y-IceAbyss_WyvernLair_D-json" value="-2400" step="10" onchange="applyOffsetInput('IceAbyss_WyvernLair_D-json')" style="width:50px;">
+                <input type="number" id="offset-y-IceAbyss_FalseThrone_A-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_FalseThrone_A-json')" style="width:50px;">
             </div>
-            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_WyvernLair_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_WyvernLair_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_WyvernLair_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('IceAbyss_WyvernLair_D-json')">↺ 重置</button>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_FalseThrone_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_FalseThrone_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_FalseThrone_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_FalseThrone_A-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-IceAbyss_WyvernLair_D-json" style="aspect-ratio: 2 / 2;"><img src="images/IceAbyss_WyvernLair.webp" class="image">        <div class="dot" data-index="7473" data-label="GameSpawner_Id_Spawner_New_Props_BossReward_IcePillarDoor" data-x="-774.641" data-y="232.67949" data-z="-460.0" style="left: 62.90%; top: 16.14%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-460</span></div>
+        <div class="container" id="container-IceAbyss_FalseThrone_A-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_FalseThrone.webp" class="image">        <div class="dot" data-index="10534" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="550.0" data-y="-600.0" data-z="0.0" style="left: 67.19%; top: 31.25%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="10535" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="1050.0" data-y="400.0" data-z="0.0" style="left: 82.81%; top: 62.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="10536" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-1054.0" data-y="400.0" data-z="0.0" style="left: 17.06%; top: 62.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="10537" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-556.0" data-y="-600.0" data-z="0.0" style="left: 32.62%; top: 31.25%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_ShallowValley_A-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">浅谷<span class='debug-text'> (IceAbyss_ShallowValley)</span><div class='map-filename'>IceAbyss_ShallowValley_A.json</div></h3>
+        <div class="map-info">IceAbyss_ShallowValley.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ShallowValley_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_ShallowValley_A-json" value="1600" step="100" onchange="updateMapRange('IceAbyss_ShallowValley_A-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_ShallowValley_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_ShallowValley_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_ShallowValley_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ShallowValley_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ShallowValley_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ShallowValley_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_ShallowValley_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_ShallowValley_A-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ShallowValley_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_ShallowValley_A-json" value="0" step="10" onchange="applyOffsetInput('IceAbyss_ShallowValley_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_ShallowValley_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_ShallowValley_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_ShallowValley_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_ShallowValley_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_ShallowValley_A-json" style="aspect-ratio: 1 / 1;"><img src="images/IceAbyss_ShallowValley.webp" class="image">        <div class="dot" data-index="11832" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="960.0" data-y="-800.0" data-z="0.0" style="left: 80.00%; top: 25.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="11833" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="960.0" data-y="800.0" data-z="0.0" style="left: 80.00%; top: 75.00%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-IceAbyss_WyvernLair_A-json" data-rotate="1" data-init-rotate="1" data-init-range="3200" data-init-offset-x="1600.00" data-init-offset-y="-2400.00" data-size-x="2" data-size-y="2" style="grid-column: span 2;">
+        <h3 class="map-title">冰龙巢穴<span class='debug-text'> (IceAbyss_WyvernLair)</span><div class='map-filename'>IceAbyss_WyvernLair_A.json</div></h3>
+        <div class="map-info">IceAbyss_WyvernLair.webp (缓存) | 找到 8 个位置 | 范围: ±3200</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_WyvernLair_A-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-IceAbyss_WyvernLair_A-json" value="3200" step="100" onchange="updateMapRange('IceAbyss_WyvernLair_A-json')">
+                <button class="btn-scale" onclick="scaleRange('IceAbyss_WyvernLair_A-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-IceAbyss_WyvernLair_A-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-IceAbyss_WyvernLair_A-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_A-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_A-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_A-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('IceAbyss_WyvernLair_A-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-IceAbyss_WyvernLair_A-json" value="1600" step="10" onchange="applyOffsetInput('IceAbyss_WyvernLair_A-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-IceAbyss_WyvernLair_A-json" value="-2400" step="10" onchange="applyOffsetInput('IceAbyss_WyvernLair_A-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('IceAbyss_WyvernLair_A-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('IceAbyss_WyvernLair_A-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('IceAbyss_WyvernLair_A-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('IceAbyss_WyvernLair_A-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-IceAbyss_WyvernLair_A-json" style="aspect-ratio: 2 / 2;"><img src="images/IceAbyss_WyvernLair.webp" class="image">        <div class="dot" data-index="12130" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-4323.5356" data-y="470.29724" data-z="0.0" style="left: 7.44%; top: 19.85%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="12131" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-4322.5356" data-y="2730.2974" data-z="5.0" style="left: 7.46%; top: 55.16%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">5</span></div>
+        <div class="dot" data-index="12132" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="1115.4642" data-y="470.29724" data-z="0.0" style="left: 92.43%; top: 19.85%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="12133" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="1116.4642" data-y="2730.2974" data-z="5.0" style="left: 92.44%; top: 55.16%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">5</span></div>
+        <div class="dot" data-index="12134" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-2747.8513" data-y="4323.6846" data-z="0.0" style="left: 32.06%; top: 80.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="12135" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-487.85138" data-y="4322.6846" data-z="5.0" style="left: 67.38%; top: 80.04%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">5</span></div>
+        <div class="dot" data-index="12136" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-2735.8513" data-y="-1116.3157" data-z="0.0" style="left: 32.25%; top: -4.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="12137" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" data-x="-475.85138" data-y="-1117.3156" data-z="5.0" style="left: 67.56%; top: -4.96%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">5</span></div>
 </div>
     </div>
 </div>
@@ -114,7 +191,7 @@
         <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
         <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
         <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
-        <br><strong>位置统计：共 1 个位置点</strong><br><strong>包含地图：</strong> 冰龙巢穴
+        <br><strong>位置统计：共 14 个位置点</strong><br><strong>包含地图：</strong> 伪王座, 冰龙巢穴, 浅谷
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
@@ -126,20 +203,150 @@
     </tr>
     <tr class='label-group-row'>
         <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
-            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_BossReward_IcePillarDoor" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_BossReward_IcePillarDoor')">GameSpawner_Id_Spawner_New_Props_BossReward_IcePillarDoor (1)</button>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_IcePillarDoor')">GameSpawner_Id_Spawner_New_Props_IcePillarDoor (14)</button>
         </th>
         <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>1 个标签</th>
     </tr>
 
-                <tr id="row-7473" data-label="GameSpawner_Id_Spawner_New_Props_BossReward_IcePillarDoor">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_D-json', 7473, this)"></td>
+                <tr id="row-10534" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_A-json', 10534, this)"></td>
         <td>冰图2层</td>
-        <td>IceAbyss_WyvernLair_D.json</td>
+        <td>IceAbyss_FalseThrone_A.json</td>
+        <td>伪王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>550.00</td>
+        <td>-600.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-10535" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_A-json', 10535, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FalseThrone_A.json</td>
+        <td>伪王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>1050.00</td>
+        <td>400.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-10536" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_A-json', 10536, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FalseThrone_A.json</td>
+        <td>伪王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-1054.00</td>
+        <td>400.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-10537" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_FalseThrone_A-json', 10537, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_FalseThrone_A.json</td>
+        <td>伪王座</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-556.00</td>
+        <td>-600.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-11832" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ShallowValley_A-json', 11832, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ShallowValley_A.json</td>
+        <td>浅谷</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>960.00</td>
+        <td>-800.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-11833" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_ShallowValley_A-json', 11833, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_ShallowValley_A.json</td>
+        <td>浅谷</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>960.00</td>
+        <td>800.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-12130" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12130, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
         <td>冰龙巢穴</td>
-        <td>GameSpawner_Id_Spawner_New_Props_BossReward_IcePillarDoor</td>
-        <td>-774.64</td>
-        <td>232.68</td>
-        <td>-460.00</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-4323.54</td>
+        <td>470.30</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-12131" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12131, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
+        <td>冰龙巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-4322.54</td>
+        <td>2730.30</td>
+        <td>5.00</td>
+    </tr>
+    <tr id="row-12132" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12132, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
+        <td>冰龙巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>1115.46</td>
+        <td>470.30</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-12133" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12133, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
+        <td>冰龙巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>1116.46</td>
+        <td>2730.30</td>
+        <td>5.00</td>
+    </tr>
+    <tr id="row-12134" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12134, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
+        <td>冰龙巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-2747.85</td>
+        <td>4323.68</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-12135" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12135, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
+        <td>冰龙巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-487.85</td>
+        <td>4322.68</td>
+        <td>5.00</td>
+    </tr>
+    <tr id="row-12136" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12136, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
+        <td>冰龙巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-2735.85</td>
+        <td>-1116.32</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-12137" data-label="GameSpawner_Id_Spawner_New_Props_IcePillarDoor">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('IceAbyss_WyvernLair_A-json', 12137, this)"></td>
+        <td>冰图2层</td>
+        <td>IceAbyss_WyvernLair_A.json</td>
+        <td>冰龙巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_IcePillarDoor</td>
+        <td>-475.85</td>
+        <td>-1117.32</td>
+        <td>5.00</td>
     </tr>
 
         </table>

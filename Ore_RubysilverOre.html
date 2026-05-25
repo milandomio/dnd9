@@ -72,109 +72,79 @@
 <body>
     <a href="index.html" class="back-link">&lt;&lt; 返回总览</a>
     <h1>红宝石银矿 位置汇总</h1>
-    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-24日00点    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
+    <div class="disclaimer">⚠️ 数据有误差，以实际游戏内为准<span class="time">地图生成日期：2026-05-25    <span class="designer">地图页面设计-雪鸡Official</span></span></div>
     <div class="debug-title" id="debug-title">红宝石银矿 (Ore_RubysilverOre)</div>
-    <div class="maps-grid" id="maps-grid">    <div class="group-header">废墟3层炼狱</div>
-    <div class="map-card" id="map-card-DemonDen_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">炼狱魔窟<span class='debug-text'> (Demon_Den)</span><div class='map-filename'>DemonDen_HR_D.json</div></h3>
-        <div class="map-info">DemonDen.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+    <div class="maps-grid" id="maps-grid">    <div class="group-header"></div>
+    <div class="map-card" id="map-card-Ruins_TreasureRoom_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">王之宝库<span class='debug-text'> (TreasureRoom)</span><div class='map-filename'>Ruins_TreasureRoom_HR_D.json</div></h3>
+        <div class="map-info">TreasureRoom_01.png | 找到 4 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
                 <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-DemonDen_HR_D-json" value="1600" step="100" onchange="updateMapRange('DemonDen_HR_D-json')">
-                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-DemonDen_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-DemonDen_HR_D-json"></span>
+                <button class="btn-scale" onclick="scaleRange('Ruins_TreasureRoom_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_TreasureRoom_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_TreasureRoom_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_TreasureRoom_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_TreasureRoom_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_TreasureRoom_HR_D-json"></span>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'right')">→</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'right')">→</button>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>X:</label>
-                <input type="number" id="offset-x-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+                <input type="number" id="offset-x-Ruins_TreasureRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_TreasureRoom_HR_D-json')" style="width:50px;">
                 <label>Y:</label>
-                <input type="number" id="offset-y-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+                <input type="number" id="offset-y-Ruins_TreasureRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_TreasureRoom_HR_D-json')" style="width:50px;">
             </div>
-            <button class="btn-rotate" onclick="toggleRotate('DemonDen_HR_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('DemonDen_HR_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('DemonDen_HR_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('DemonDen_HR_D-json')">↺ 重置</button>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_TreasureRoom_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_TreasureRoom_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_TreasureRoom_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_TreasureRoom_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot" data-index="10424" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-45.0" data-y="625.0" data-z="0.0" style="left: 48.59%; top: 69.53%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="10425" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="1455.0" data-y="1440.0" data-z="1025.0001" style="left: 95.47%; top: 95.00%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1025</span></div>
+        <div class="container" id="container-Ruins_TreasureRoom_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TreasureRoom_01.webp" class="image">        <div class="dot" data-index="20840" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="788.0" data-y="-557.0" data-z="-246.99991" style="left: 74.62%; top: 32.59%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-246</span></div>
+        <div class="dot" data-index="20841" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="213.0" data-y="573.0" data-z="0.314065" style="left: 56.66%; top: 67.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20842" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-862.0" data-y="-532.0" data-z="-244.1134" style="left: 23.06%; top: 33.38%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-244</span></div>
+        <div class="dot" data-index="20843" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-357.0" data-y="-112.0" data-z="0.314065" style="left: 38.84%; top: 46.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
-    <div class="map-card" id="map-card-InfernoRiver_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">硫火之河<span class='debug-text'> (Blood_River)</span><div class='map-filename'>InfernoRiver_HR_D.json</div></h3>
-        <div class="map-info">InfernoRiver.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+    <div class="map-card" id="map-card-Ruins_TreasureRoom_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">王之宝库 (D)<span class='debug-text'> (TreasureRoom)</span><div class='map-filename'>Ruins_TreasureRoom_D.json</div></h3>
+        <div class="map-info">TreasureRoom_01.png | 找到 4 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
                 <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-InfernoRiver_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoRiver_HR_D-json')">
-                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-InfernoRiver_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoRiver_HR_D-json"></span>
+                <button class="btn-scale" onclick="scaleRange('Ruins_TreasureRoom_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_TreasureRoom_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_TreasureRoom_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_TreasureRoom_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_TreasureRoom_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_TreasureRoom_D-json"></span>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'right')">→</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_D-json', 'right')">→</button>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>X:</label>
-                <input type="number" id="offset-x-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+                <input type="number" id="offset-x-Ruins_TreasureRoom_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_TreasureRoom_D-json')" style="width:50px;">
                 <label>Y:</label>
-                <input type="number" id="offset-y-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+                <input type="number" id="offset-y-Ruins_TreasureRoom_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_TreasureRoom_D-json')" style="width:50px;">
             </div>
-            <button class="btn-rotate" onclick="toggleRotate('InfernoRiver_HR_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoRiver_HR_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_HR_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('InfernoRiver_HR_D-json')">↺ 重置</button>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_TreasureRoom_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_TreasureRoom_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_TreasureRoom_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_TreasureRoom_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot" data-index="10827" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-570.0" data-y="330.0" data-z="-159.9999" style="left: 32.19%; top: 60.31%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-159</span></div>
-        <div class="dot" data-index="10828" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-1325.0" data-y="-1470.0" data-z="0.0" style="left: 8.59%; top: 4.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-</div>
-    </div>
-    <div class="map-card" id="map-card-Inferno_DeathPlatforms_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">硫火平台<span class='debug-text'> (Blood_Platforms)</span><div class='map-filename'>Inferno_DeathPlatforms_HR_D.json</div></h3>
-        <div class="map-info">Inferno_DeathPlatforms.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
-        <div class="controls">
-            <div class="input-group">
-                <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Inferno_DeathPlatforms_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_DeathPlatforms_HR_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Inferno_DeathPlatforms_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_DeathPlatforms_HR_D-json"></span>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'right')">→</button>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>X:</label>
-                <input type="number" id="offset-x-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
-                <label>Y:</label>
-                <input type="number" id="offset-y-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
-            </div>
-            <button class="btn-rotate" onclick="toggleRotate('Inferno_DeathPlatforms_HR_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_DeathPlatforms_HR_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DeathPlatforms_HR_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Inferno_DeathPlatforms_HR_D-json')">↺ 重置</button>
-        </div>
-        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot" data-index="10341" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="1090.0" data-y="500.0" data-z="-200.0" style="left: 84.06%; top: 65.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-200</span></div>
-        <div class="dot" data-index="10342" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="1235.0" data-y="935.0" data-z="500.00015" style="left: 88.59%; top: 79.22%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">500</span></div>
+        <div class="container" id="container-Ruins_TreasureRoom_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TreasureRoom_01.webp" class="image">        <div class="dot" data-index="20844" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="815.0" data-y="-770.0" data-z="9.3e-05" style="left: 75.47%; top: 25.94%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="20845" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="240.0" data-y="360.0" data-z="247.31407" style="left: 57.50%; top: 61.25%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">247</span></div>
+        <div class="dot" data-index="20846" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-835.0" data-y="-745.0" data-z="2.886598" style="left: 23.91%; top: 26.72%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">2</span></div>
+        <div class="dot" data-index="20847" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-330.0" data-y="-325.0" data-z="247.31407" style="left: 39.69%; top: 39.84%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">247</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-SpiderCave_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -207,8 +177,144 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('SpiderCave_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('SpiderCave_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-SpiderCave_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/SpiderCave_01.webp" class="image">        <div class="dot" data-index="2334" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-95.0" data-y="-277.0" data-z="25.0" style="left: 47.03%; top: 41.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">25</span></div>
-        <div class="dot" data-index="2335" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-238.53024" data-y="656.4852" data-z="0.0" style="left: 42.55%; top: 70.52%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-SpiderCave_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/SpiderCave_01.webp" class="image">        <div class="dot" data-index="26073" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-95.0" data-y="-277.0" data-z="25.0" style="left: 47.03%; top: 41.34%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">25</span></div>
+        <div class="dot" data-index="26074" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-238.53024" data-y="656.4852" data-z="0.0" style="left: 42.55%; top: 70.52%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-SpiderCave_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">蜘蛛巢穴 (D)<span class='debug-text'> (Spider_Lair)</span><div class='map-filename'>SpiderCave_01_D.json</div></h3>
+        <div class="map-info">SpiderCave_01.webp (缓存) | 找到 1 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('SpiderCave_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-SpiderCave_01_D-json" value="1600" step="100" onchange="updateMapRange('SpiderCave_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('SpiderCave_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-SpiderCave_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-SpiderCave_01_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('SpiderCave_01_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-SpiderCave_01_D-json" value="0" step="10" onchange="applyOffsetInput('SpiderCave_01_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-SpiderCave_01_D-json" value="0" step="10" onchange="applyOffsetInput('SpiderCave_01_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('SpiderCave_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('SpiderCave_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('SpiderCave_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('SpiderCave_01_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-SpiderCave_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/SpiderCave_01.webp" class="image">        <div class="dot" data-index="26075" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-579.0" data-y="-1220.0" data-z="0.0" style="left: 31.91%; top: 11.88%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="group-header">废墟3层炼狱</div>
+    <div class="map-card" id="map-card-DemonDen_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">炼狱魔窟<span class='debug-text'> (Demon_Den)</span><div class='map-filename'>DemonDen_HR_D.json</div></h3>
+        <div class="map-info">DemonDen.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-DemonDen_HR_D-json" value="1600" step="100" onchange="updateMapRange('DemonDen_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('DemonDen_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-DemonDen_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-DemonDen_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('DemonDen_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-DemonDen_HR_D-json" value="0" step="10" onchange="applyOffsetInput('DemonDen_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('DemonDen_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('DemonDen_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('DemonDen_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('DemonDen_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-DemonDen_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/DemonDen.webp" class="image">        <div class="dot" data-index="6709" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-45.0" data-y="625.0" data-z="0.0" style="left: 48.59%; top: 69.53%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="6710" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="1455.0" data-y="1440.0" data-z="1025.0001" style="left: 95.47%; top: 95.00%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">1025</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-InfernoRiver_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火之河<span class='debug-text'> (Blood_River)</span><div class='map-filename'>InfernoRiver_HR_D.json</div></h3>
+        <div class="map-info">InfernoRiver.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-InfernoRiver_HR_D-json" value="1600" step="100" onchange="updateMapRange('InfernoRiver_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('InfernoRiver_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-InfernoRiver_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-InfernoRiver_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('InfernoRiver_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-InfernoRiver_HR_D-json" value="0" step="10" onchange="applyOffsetInput('InfernoRiver_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('InfernoRiver_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('InfernoRiver_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('InfernoRiver_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('InfernoRiver_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-InfernoRiver_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/InfernoRiver.webp" class="image">        <div class="dot" data-index="15786" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-570.0" data-y="330.0" data-z="-159.9999" style="left: 32.19%; top: 60.31%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-159</span></div>
+        <div class="dot" data-index="15787" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-1325.0" data-y="-1470.0" data-z="0.0" style="left: 8.59%; top: 4.06%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+</div>
+    </div>
+    <div class="map-card" id="map-card-Inferno_DeathPlatforms_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">硫火平台<span class='debug-text'> (Blood_Platforms)</span><div class='map-filename'>Inferno_DeathPlatforms_HR_D.json</div></h3>
+        <div class="map-info">Inferno_DeathPlatforms.webp (缓存) | 找到 2 个位置 | 范围: ±1600</div>
+        <div class="controls">
+            <div class="input-group">
+                <label>范围:</label>
+                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Inferno_DeathPlatforms_HR_D-json" value="1600" step="100" onchange="updateMapRange('Inferno_DeathPlatforms_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Inferno_DeathPlatforms_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Inferno_DeathPlatforms_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Inferno_DeathPlatforms_HR_D-json"></span>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>偏移:</label>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Inferno_DeathPlatforms_HR_D-json', 'right')">→</button>
+            </div>
+            <div class="input-group" style="margin-left:4px;">
+                <label>X:</label>
+                <input type="number" id="offset-x-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
+                <label>Y:</label>
+                <input type="number" id="offset-y-Inferno_DeathPlatforms_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Inferno_DeathPlatforms_HR_D-json')" style="width:50px;">
+            </div>
+            <button class="btn-rotate" onclick="toggleRotate('Inferno_DeathPlatforms_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Inferno_DeathPlatforms_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Inferno_DeathPlatforms_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Inferno_DeathPlatforms_HR_D-json')">↺ 重置</button>
+        </div>
+        <div class="container" id="container-Inferno_DeathPlatforms_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Inferno_DeathPlatforms.webp" class="image">        <div class="dot" data-index="16052" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="1090.0" data-y="500.0" data-z="-200.0" style="left: 84.06%; top: 65.62%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-200</span></div>
+        <div class="dot" data-index="16053" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="1235.0" data-y="935.0" data-z="500.00015" style="left: 88.59%; top: 79.22%; background-color: cyan; box-shadow: 0 0 6px cyan; border: 1px solid #fff;"><span class="dot-height" style="color:cyan;">500</span></div>
 </div>
     </div>
     <div class="group-header">废墟1层</div>
@@ -242,9 +348,9 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_BanditForest_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_BanditForest_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_BanditForest_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_BanditForest.webp" class="image">        <div class="dot" data-index="11533" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-1413.0" data-y="1411.0" data-z="-600.0" style="left: 5.84%; top: 94.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-600</span></div>
-        <div class="dot" data-index="11534" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-703.0" data-y="1407.0" data-z="-600.0" style="left: 28.03%; top: 93.97%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-600</span></div>
-        <div class="dot" data-index="11535" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-568.21606" data-y="1154.5831" data-z="-600.0" style="left: 32.24%; top: 86.08%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-600</span></div>
+        <div class="container" id="container-Ruins_BanditForest_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_BanditForest.webp" class="image">        <div class="dot" data-index="17554" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-1413.0" data-y="1411.0" data-z="-600.0" style="left: 5.84%; top: 94.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-600</span></div>
+        <div class="dot" data-index="17555" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-703.0" data-y="1407.0" data-z="-600.0" style="left: 28.03%; top: 93.97%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-600</span></div>
+        <div class="dot" data-index="17556" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-568.21606" data-y="1154.5831" data-z="-600.0" style="left: 32.24%; top: 86.08%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-600</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Ruins_Barbican_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -277,46 +383,46 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot" data-index="11697" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="788.0" data-y="-557.0" data-z="-246.99991" style="left: 74.62%; top: 32.59%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-246</span></div>
-        <div class="dot" data-index="11698" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="213.0" data-y="573.0" data-z="0.314065" style="left: 56.66%; top: 67.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="11699" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-862.0" data-y="-532.0" data-z="-244.1134" style="left: 23.06%; top: 33.38%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-244</span></div>
-        <div class="dot" data-index="11700" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-357.0" data-y="-112.0" data-z="0.314065" style="left: 38.84%; top: 46.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot" data-index="17721" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="788.0" data-y="-557.0" data-z="-246.99991" style="left: 74.62%; top: 32.59%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-246</span></div>
+        <div class="dot" data-index="17722" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="213.0" data-y="573.0" data-z="0.314065" style="left: 56.66%; top: 67.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="17723" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-862.0" data-y="-532.0" data-z="-244.1134" style="left: 23.06%; top: 33.38%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-244</span></div>
+        <div class="dot" data-index="17724" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-357.0" data-y="-112.0" data-z="0.314065" style="left: 38.84%; top: 46.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
-    <div class="map-card" id="map-card-Ruins_DualBossTreasureRoom_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">DualBossTreasureRoom<span class='debug-text'> (DualBossTreasureRoom)</span><div class='map-filename'>Ruins_DualBossTreasureRoom_D.json</div></h3>
-        <div class="map-info">未找到 (尝试: Ruins_DualBossTreasureRoom, DualBossTreasureRoom) | 找到 4 个位置 | 范围: ±1600</div>
+    <div class="map-card" id="map-card-Ruins_Barbican_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">瓮城 (D)<span class='debug-text'> (Barbican)</span><div class='map-filename'>Ruins_Barbican_01_D.json</div></h3>
+        <div class="map-info">Ruins_Barbican_01.webp (缓存) | 找到 4 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
                 <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Ruins_DualBossTreasureRoom_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Ruins_DualBossTreasureRoom_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_DualBossTreasureRoom_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Ruins_DualBossTreasureRoom_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Ruins_DualBossTreasureRoom_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_DualBossTreasureRoom_D-json"></span>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Barbican_01_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Barbican_01_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Barbican_01_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Barbican_01_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Barbican_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Barbican_01_D-json"></span>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_DualBossTreasureRoom_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_DualBossTreasureRoom_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_DualBossTreasureRoom_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_DualBossTreasureRoom_D-json', 'right')">→</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Barbican_01_D-json', 'right')">→</button>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>X:</label>
-                <input type="number" id="offset-x-Ruins_DualBossTreasureRoom_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_DualBossTreasureRoom_D-json')" style="width:50px;">
+                <input type="number" id="offset-x-Ruins_Barbican_01_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Barbican_01_D-json')" style="width:50px;">
                 <label>Y:</label>
-                <input type="number" id="offset-y-Ruins_DualBossTreasureRoom_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_DualBossTreasureRoom_D-json')" style="width:50px;">
+                <input type="number" id="offset-y-Ruins_Barbican_01_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Barbican_01_D-json')" style="width:50px;">
             </div>
-            <button class="btn-rotate" onclick="toggleRotate('Ruins_DualBossTreasureRoom_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_DualBossTreasureRoom_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_DualBossTreasureRoom_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Ruins_DualBossTreasureRoom_D-json')">↺ 重置</button>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Barbican_01_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Barbican_01_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Barbican_01_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Barbican_01_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_DualBossTreasureRoom_D-json" style="aspect-ratio: 1 / 1;"><div class="image-placeholder">未找到图片<br><small style="color:#888;">尝试: Ruins_DualBossTreasureRoom, DualBossTreasureRoom</small></div>        <div class="dot" data-index="11909" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="815.0" data-y="-770.0" data-z="-1999.9999" style="left: 75.47%; top: 25.94%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1999</span></div>
-        <div class="dot" data-index="11910" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="240.0" data-y="360.0" data-z="-1752.6859" style="left: 57.50%; top: 61.25%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1752</span></div>
-        <div class="dot" data-index="11911" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-835.0" data-y="-745.0" data-z="-1997.1134" style="left: 23.91%; top: 26.72%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1997</span></div>
-        <div class="dot" data-index="11912" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-330.0" data-y="-325.0" data-z="-1752.6859" style="left: 39.69%; top: 39.84%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1752</span></div>
+        <div class="container" id="container-Ruins_Barbican_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Barbican_01.webp" class="image">        <div class="dot" data-index="17725" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-770.0" data-y="2385.0" data-z="-1999.9999" style="left: 25.94%; top: 124.53%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1999</span></div>
+        <div class="dot" data-index="17726" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="360.0" data-y="2960.0" data-z="-1752.6859" style="left: 61.25%; top: 142.50%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1752</span></div>
+        <div class="dot" data-index="17727" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-745.0" data-y="4035.0" data-z="-1997.1134" style="left: 26.72%; top: 176.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1997</span></div>
+        <div class="dot" data-index="17728" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-325.0" data-y="3530.0" data-z="-1752.6859" style="left: 39.84%; top: 160.31%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-1752</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Ruins_SlimeForest_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -349,79 +455,43 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_SlimeForest_01_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_SlimeForest_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_SlimeForest_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_SlimeForest_01.webp" class="image">        <div class="dot" data-index="12999" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="1433.0" data-y="-410.00006" data-z="0.0" style="left: 94.78%; top: 37.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="13000" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="1329.0" data-y="-410.00006" data-z="0.0" style="left: 91.53%; top: 37.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-Ruins_SlimeForest_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_SlimeForest_01.webp" class="image">        <div class="dot" data-index="19959" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="1433.0" data-y="-410.00006" data-z="0.0" style="left: 94.78%; top: 37.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="dot" data-index="19960" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="1329.0" data-y="-410.00006" data-z="0.0" style="left: 91.53%; top: 37.19%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
 </div>
     </div>
-    <div class="map-card" id="map-card-Ruins_Square_01_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">广场 A<span class='debug-text'> (Square_A)</span><div class='map-filename'>Ruins_Square_01_D.json</div></h3>
+    <div class="map-card" id="map-card-Ruins_Square_01_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
+        <h3 class="map-title">广场 A<span class='debug-text'> (Square_A)</span><div class='map-filename'>Ruins_Square_01_HR_D.json</div></h3>
         <div class="map-info">Ruins_Square_01.webp (缓存) | 找到 3 个位置 | 范围: ±1600</div>
         <div class="controls">
             <div class="input-group">
                 <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Ruins_Square_01_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Ruins_Square_01_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Square_01_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Ruins_Square_01_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Ruins_Square_01_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Square_01_D-json"></span>
+                <button class="btn-scale" onclick="scaleRange('Ruins_Square_01_HR_D-json', 0.5)">÷2</button>
+                <input type="number" id="range-input-Ruins_Square_01_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_Square_01_HR_D-json')">
+                <button class="btn-scale" onclick="scaleRange('Ruins_Square_01_HR_D-json', 2.0)">x2</button>
+                <span class="rotate-indicator" id="rotate-indicator-Ruins_Square_01_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
+                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_Square_01_HR_D-json"></span>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_D-json', 'right')">→</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_HR_D-json', 'up')">↑</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_HR_D-json', 'down')">↓</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_HR_D-json', 'left')">←</button>
+                <button class="btn-scale" onclick="adjustOffset('Ruins_Square_01_HR_D-json', 'right')">→</button>
             </div>
             <div class="input-group" style="margin-left:4px;">
                 <label>X:</label>
-                <input type="number" id="offset-x-Ruins_Square_01_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Square_01_D-json')" style="width:50px;">
+                <input type="number" id="offset-x-Ruins_Square_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Square_01_HR_D-json')" style="width:50px;">
                 <label>Y:</label>
-                <input type="number" id="offset-y-Ruins_Square_01_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Square_01_D-json')" style="width:50px;">
+                <input type="number" id="offset-y-Ruins_Square_01_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_Square_01_HR_D-json')" style="width:50px;">
             </div>
-            <button class="btn-rotate" onclick="toggleRotate('Ruins_Square_01_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Square_01_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Square_01_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Ruins_Square_01_D-json')">↺ 重置</button>
+            <button class="btn-rotate" onclick="toggleRotate('Ruins_Square_01_HR_D-json')">↻ 旋转</button>
+            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_Square_01_HR_D-json')">⇄ 左右</button>
+            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_Square_01_HR_D-json')">⇅ 上下</button>
+            <button class="btn-reset" onclick="resetMap('Ruins_Square_01_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_Square_01_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Square_01.webp" class="image">        <div class="dot" data-index="13011" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-299.97336" data-y="-710.8818" data-z="-599.9999" style="left: 40.63%; top: 27.78%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
-        <div class="dot" data-index="13012" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-555.139" data-y="-714.82056" data-z="-478.9999" style="left: 32.65%; top: 27.66%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-478</span></div>
-        <div class="dot" data-index="13013" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="606.37067" data-y="456.44568" data-z="-599.9999" style="left: 68.95%; top: 64.26%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
-</div>
-    </div>
-    <div class="map-card" id="map-card-Ruins_TreasureRoom_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
-        <h3 class="map-title">王之宝库<span class='debug-text'> (TreasureRoom)</span><div class='map-filename'>Ruins_TreasureRoom_HR_D.json</div></h3>
-        <div class="map-info">TreasureRoom_01.png | 找到 4 个位置 | 范围: ±1600</div>
-        <div class="controls">
-            <div class="input-group">
-                <label>范围:</label>
-                <button class="btn-scale" onclick="scaleRange('Ruins_TreasureRoom_HR_D-json', 0.5)">÷2</button>
-                <input type="number" id="range-input-Ruins_TreasureRoom_HR_D-json" value="1600" step="100" onchange="updateMapRange('Ruins_TreasureRoom_HR_D-json')">
-                <button class="btn-scale" onclick="scaleRange('Ruins_TreasureRoom_HR_D-json', 2.0)">x2</button>
-                <span class="rotate-indicator" id="rotate-indicator-Ruins_TreasureRoom_HR_D-json" style="color:#aaa;font-size:12px;margin-left:4px;">↻1</span>
-                <span style="color:#888;font-size:11px;margin-left:8px;" id="offset-display-Ruins_TreasureRoom_HR_D-json"></span>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>偏移:</label>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'up')">↑</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'down')">↓</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'left')">←</button>
-                <button class="btn-scale" onclick="adjustOffset('Ruins_TreasureRoom_HR_D-json', 'right')">→</button>
-            </div>
-            <div class="input-group" style="margin-left:4px;">
-                <label>X:</label>
-                <input type="number" id="offset-x-Ruins_TreasureRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_TreasureRoom_HR_D-json')" style="width:50px;">
-                <label>Y:</label>
-                <input type="number" id="offset-y-Ruins_TreasureRoom_HR_D-json" value="0" step="10" onchange="applyOffsetInput('Ruins_TreasureRoom_HR_D-json')" style="width:50px;">
-            </div>
-            <button class="btn-rotate" onclick="toggleRotate('Ruins_TreasureRoom_HR_D-json')">↻ 旋转</button>
-            <button class="btn-mirror-x" onclick="toggleMirrorX('Ruins_TreasureRoom_HR_D-json')">⇄ 左右</button>
-            <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_TreasureRoom_HR_D-json')">⇅ 上下</button>
-            <button class="btn-reset" onclick="resetMap('Ruins_TreasureRoom_HR_D-json')">↺ 重置</button>
-        </div>
-        <div class="container" id="container-Ruins_TreasureRoom_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/TreasureRoom_01.webp" class="image">        <div class="dot" data-index="13778" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="788.0" data-y="-557.0" data-z="-246.99991" style="left: 74.62%; top: 32.59%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-246</span></div>
-        <div class="dot" data-index="13779" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="213.0" data-y="573.0" data-z="0.314065" style="left: 56.66%; top: 67.91%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
-        <div class="dot" data-index="13780" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-862.0" data-y="-532.0" data-z="-244.1134" style="left: 23.06%; top: 33.38%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">-244</span></div>
-        <div class="dot" data-index="13781" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-357.0" data-y="-112.0" data-z="0.314065" style="left: 38.84%; top: 46.50%; background-color: yellow; box-shadow: 0 0 6px yellow; border: 1px solid #fff;"><span class="dot-height" style="color:yellow;">0</span></div>
+        <div class="container" id="container-Ruins_Square_01_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_Square_01.webp" class="image">        <div class="dot" data-index="20033" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" data-x="-299.97336" data-y="-710.8818" data-z="-599.9999" style="left: 40.63%; top: 27.78%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
+        <div class="dot" data-index="20034" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-555.139" data-y="-714.82056" data-z="-478.9999" style="left: 32.65%; top: 27.66%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-478</span></div>
+        <div class="dot" data-index="20035" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="606.37067" data-y="456.44568" data-z="-599.9999" style="left: 68.95%; top: 64.26%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
 </div>
     </div>
     <div class="map-card" id="map-card-Ruins_WaterHole_HR_D-json" data-rotate="1" data-init-rotate="1" data-init-range="1600" data-init-offset-x="0.00" data-init-offset-y="0.00" data-size-x="1" data-size-y="1" style="">
@@ -454,10 +524,10 @@
             <button class="btn-mirror-y" onclick="toggleMirrorY('Ruins_WaterHole_HR_D-json')">⇅ 上下</button>
             <button class="btn-reset" onclick="resetMap('Ruins_WaterHole_HR_D-json')">↺ 重置</button>
         </div>
-        <div class="container" id="container-Ruins_WaterHole_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_WaterHole.webp" class="image">        <div class="dot" data-index="13998" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="912.00006" data-y="1045.9999" data-z="-599.9999" style="left: 78.50%; top: 82.69%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
-        <div class="dot" data-index="13999" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="997.55615" data-y="827.3979" data-z="-599.9999" style="left: 81.17%; top: 75.86%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
-        <div class="dot" data-index="14000" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-1178.9999" data-y="232.00009" data-z="-599.9999" style="left: 13.16%; top: 57.25%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
-        <div class="dot" data-index="14001" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="1047.0001" data-y="962.99994" data-z="-599.9999" style="left: 82.72%; top: 80.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
+        <div class="container" id="container-Ruins_WaterHole_HR_D-json" style="aspect-ratio: 1 / 1;"><img src="images/Ruins_WaterHole.webp" class="image">        <div class="dot" data-index="21187" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="912.00006" data-y="1045.9999" data-z="-599.9999" style="left: 78.50%; top: 82.69%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
+        <div class="dot" data-index="21188" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="997.55615" data-y="827.3979" data-z="-599.9999" style="left: 81.17%; top: 75.86%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
+        <div class="dot" data-index="21189" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="-1178.9999" data-y="232.00009" data-z="-599.9999" style="left: 13.16%; top: 57.25%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
+        <div class="dot" data-index="21190" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" data-x="1047.0001" data-y="962.99994" data-z="-599.9999" style="left: 82.72%; top: 80.09%; background-color: red; box-shadow: 0 0 6px red; border: 1px solid #fff;"><span class="dot-height" style="color:red;">-599</span></div>
 </div>
     </div>
 </div>
@@ -466,7 +536,7 @@
         <span class="color-dot" style="background-color: cyan;"></span> Z &gt; 299 (高于地面)
         <span class="color-dot" style="background-color: yellow;"></span> -299 ≤ Z ≤ 299 (正常高度)
         <span class="color-dot" style="background-color: red;"></span> Z &lt; -299 (低于地面)
-        <br><strong>位置统计：共 53 个位置点</strong><br><strong>包含地图：</strong> 史莱姆森林, 广场 A, 强盗森林, 炼狱魔窟, 王之宝库, 瓮城, 硫火之河, 硫火平台, 蜘蛛巢穴, 饮水池
+        <br><strong>位置统计：共 37 个位置点</strong><br><strong>包含地图：</strong> 史莱姆森林, 广场 A, 强盗森林, 炼狱魔窟, 王之宝库, 瓮城, 硫火之河, 硫火平台, 蜘蛛巢穴, 饮水池
     </div>
     <div class="summary" id="summary-section">
         <h2>所有坐标详情</h2>
@@ -478,14 +548,124 @@
     </tr>
     <tr class='label-group-row'>
         <th colspan='5' style='text-align:center; background-color:#3a3a3a; padding:4px;'>
-            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre')">GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre (21)</button>
+            <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre')">GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre (26)</button>
             <button class="label-toggle-btn" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom" onclick="toggleLabelGroup('GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom')">GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom (11)</button>
         </th>
         <th colspan='3' style='text-align:center; background-color:#3a3a3a;'>2 个标签</th>
     </tr>
 
-                <tr id="row-10424" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 10424, this)"></td>
+                <tr id="row-20840" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 20840, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_HR_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>788.00</td>
+        <td>-557.00</td>
+        <td>-247.00</td>
+    </tr>
+    <tr id="row-20841" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 20841, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_HR_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>213.00</td>
+        <td>573.00</td>
+        <td>0.31</td>
+    </tr>
+    <tr id="row-20842" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 20842, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_HR_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>-862.00</td>
+        <td>-532.00</td>
+        <td>-244.11</td>
+    </tr>
+    <tr id="row-20843" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 20843, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_HR_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>-357.00</td>
+        <td>-112.00</td>
+        <td>0.31</td>
+    </tr>
+    <tr id="row-20844" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_D-json', 20844, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>815.00</td>
+        <td>-770.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-20845" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_D-json', 20845, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>240.00</td>
+        <td>360.00</td>
+        <td>247.31</td>
+    </tr>
+    <tr id="row-20846" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_D-json', 20846, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>-835.00</td>
+        <td>-745.00</td>
+        <td>2.89</td>
+    </tr>
+    <tr id="row-20847" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_D-json', 20847, this)"></td>
+        <td></td>
+        <td>Ruins_TreasureRoom_D.json</td>
+        <td>王之宝库</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>-330.00</td>
+        <td>-325.00</td>
+        <td>247.31</td>
+    </tr>
+    <tr id="row-26073" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 26073, this)"></td>
+        <td></td>
+        <td>SpiderCave_01_HR_D.json</td>
+        <td>蜘蛛巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>-95.00</td>
+        <td>-277.00</td>
+        <td>25.00</td>
+    </tr>
+    <tr id="row-26074" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 26074, this)"></td>
+        <td></td>
+        <td>SpiderCave_01_HR_D.json</td>
+        <td>蜘蛛巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>-238.53</td>
+        <td>656.49</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-26075" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_D-json', 26075, this)"></td>
+        <td></td>
+        <td>SpiderCave_01_D.json</td>
+        <td>蜘蛛巢穴</td>
+        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
+        <td>-579.00</td>
+        <td>-1220.00</td>
+        <td>0.00</td>
+    </tr>
+    <tr id="row-6709" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 6709, this)"></td>
         <td>废墟3层炼狱</td>
         <td>DemonDen_HR_D.json</td>
         <td>炼狱魔窟</td>
@@ -494,8 +674,8 @@
         <td>625.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10425" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 10425, this)"></td>
+    <tr id="row-6710" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('DemonDen_HR_D-json', 6710, this)"></td>
         <td>废墟3层炼狱</td>
         <td>DemonDen_HR_D.json</td>
         <td>炼狱魔窟</td>
@@ -504,8 +684,8 @@
         <td>1440.00</td>
         <td>1025.00</td>
     </tr>
-    <tr id="row-10827" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10827, this)"></td>
+    <tr id="row-15786" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 15786, this)"></td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
         <td>硫火之河</td>
@@ -514,8 +694,8 @@
         <td>330.00</td>
         <td>-160.00</td>
     </tr>
-    <tr id="row-10828" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 10828, this)"></td>
+    <tr id="row-15787" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('InfernoRiver_HR_D-json', 15787, this)"></td>
         <td>废墟3层炼狱</td>
         <td>InfernoRiver_HR_D.json</td>
         <td>硫火之河</td>
@@ -524,8 +704,8 @@
         <td>-1470.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-10341" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10341, this)"></td>
+    <tr id="row-16052" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 16052, this)"></td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DeathPlatforms_HR_D.json</td>
         <td>硫火平台</td>
@@ -534,8 +714,8 @@
         <td>500.00</td>
         <td>-200.00</td>
     </tr>
-    <tr id="row-10342" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 10342, this)"></td>
+    <tr id="row-16053" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Inferno_DeathPlatforms_HR_D-json', 16053, this)"></td>
         <td>废墟3层炼狱</td>
         <td>Inferno_DeathPlatforms_HR_D.json</td>
         <td>硫火平台</td>
@@ -544,28 +724,8 @@
         <td>935.00</td>
         <td>500.00</td>
     </tr>
-    <tr id="row-2334" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 2334, this)"></td>
-        <td>废墟3层炼狱</td>
-        <td>SpiderCave_01_HR_D.json</td>
-        <td>蜘蛛巢穴</td>
-        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>-95.00</td>
-        <td>-277.00</td>
-        <td>25.00</td>
-    </tr>
-    <tr id="row-2335" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('SpiderCave_01_HR_D-json', 2335, this)"></td>
-        <td>废墟3层炼狱</td>
-        <td>SpiderCave_01_HR_D.json</td>
-        <td>蜘蛛巢穴</td>
-        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>-238.53</td>
-        <td>656.49</td>
-        <td>0.00</td>
-    </tr>
-    <tr id="row-11533" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditForest_HR_D-json', 11533, this)"></td>
+    <tr id="row-17554" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditForest_HR_D-json', 17554, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_BanditForest_HR_D.json</td>
         <td>强盗森林</td>
@@ -574,8 +734,8 @@
         <td>1411.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-11534" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditForest_HR_D-json', 11534, this)"></td>
+    <tr id="row-17555" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditForest_HR_D-json', 17555, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_BanditForest_HR_D.json</td>
         <td>强盗森林</td>
@@ -584,8 +744,8 @@
         <td>1407.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-11535" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditForest_HR_D-json', 11535, this)"></td>
+    <tr id="row-17556" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_BanditForest_HR_D-json', 17556, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_BanditForest_HR_D.json</td>
         <td>强盗森林</td>
@@ -594,8 +754,8 @@
         <td>1154.58</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-11697" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11697, this)"></td>
+    <tr id="row-17721" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17721, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -604,8 +764,8 @@
         <td>-557.00</td>
         <td>-247.00</td>
     </tr>
-    <tr id="row-11698" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11698, this)"></td>
+    <tr id="row-17722" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17722, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -614,8 +774,8 @@
         <td>573.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-11699" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11699, this)"></td>
+    <tr id="row-17723" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17723, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -624,8 +784,8 @@
         <td>-532.00</td>
         <td>-244.11</td>
     </tr>
-    <tr id="row-11700" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 11700, this)"></td>
+    <tr id="row-17724" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_HR_D-json', 17724, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_Barbican_01_HR_D.json</td>
         <td>瓮城</td>
@@ -634,48 +794,48 @@
         <td>-112.00</td>
         <td>0.31</td>
     </tr>
-    <tr id="row-11909" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_DualBossTreasureRoom_D-json', 11909, this)"></td>
+    <tr id="row-17725" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_D-json', 17725, this)"></td>
         <td>废墟1层</td>
-        <td>Ruins_DualBossTreasureRoom_D.json</td>
-        <td></td>
+        <td>Ruins_Barbican_01_D.json</td>
+        <td>瓮城</td>
         <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>815.00</td>
         <td>-770.00</td>
+        <td>2385.00</td>
         <td>-2000.00</td>
     </tr>
-    <tr id="row-11910" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_DualBossTreasureRoom_D-json', 11910, this)"></td>
+    <tr id="row-17726" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_D-json', 17726, this)"></td>
         <td>废墟1层</td>
-        <td>Ruins_DualBossTreasureRoom_D.json</td>
-        <td></td>
+        <td>Ruins_Barbican_01_D.json</td>
+        <td>瓮城</td>
         <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>240.00</td>
         <td>360.00</td>
+        <td>2960.00</td>
         <td>-1752.69</td>
     </tr>
-    <tr id="row-11911" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_DualBossTreasureRoom_D-json', 11911, this)"></td>
+    <tr id="row-17727" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_D-json', 17727, this)"></td>
         <td>废墟1层</td>
-        <td>Ruins_DualBossTreasureRoom_D.json</td>
-        <td></td>
+        <td>Ruins_Barbican_01_D.json</td>
+        <td>瓮城</td>
         <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>-835.00</td>
         <td>-745.00</td>
+        <td>4035.00</td>
         <td>-1997.11</td>
     </tr>
-    <tr id="row-11912" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_DualBossTreasureRoom_D-json', 11912, this)"></td>
+    <tr id="row-17728" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Barbican_01_D-json', 17728, this)"></td>
         <td>废墟1层</td>
-        <td>Ruins_DualBossTreasureRoom_D.json</td>
-        <td></td>
+        <td>Ruins_Barbican_01_D.json</td>
+        <td>瓮城</td>
         <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>-330.00</td>
         <td>-325.00</td>
+        <td>3530.00</td>
         <td>-1752.69</td>
     </tr>
-    <tr id="row-12999" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_SlimeForest_01_HR_D-json', 12999, this)"></td>
+    <tr id="row-19959" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_SlimeForest_01_HR_D-json', 19959, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_SlimeForest_01_HR_D.json</td>
         <td>史莱姆森林</td>
@@ -684,8 +844,8 @@
         <td>-410.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-13000" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_SlimeForest_01_HR_D-json', 13000, this)"></td>
+    <tr id="row-19960" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_SlimeForest_01_HR_D-json', 19960, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_SlimeForest_01_HR_D.json</td>
         <td>史莱姆森林</td>
@@ -694,78 +854,38 @@
         <td>-410.00</td>
         <td>0.00</td>
     </tr>
-    <tr id="row-13011" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_D-json', 13011, this)"></td>
+    <tr id="row-20033" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_HR_D-json', 20033, this)"></td>
         <td>废墟1层</td>
-        <td>Ruins_Square_01_D.json</td>
+        <td>Ruins_Square_01_HR_D.json</td>
         <td>广场 A</td>
         <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
         <td>-299.97</td>
         <td>-710.88</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-13012" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_D-json', 13012, this)"></td>
+    <tr id="row-20034" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_HR_D-json', 20034, this)"></td>
         <td>废墟1层</td>
-        <td>Ruins_Square_01_D.json</td>
+        <td>Ruins_Square_01_HR_D.json</td>
         <td>广场 A</td>
         <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom</td>
         <td>-555.14</td>
         <td>-714.82</td>
         <td>-479.00</td>
     </tr>
-    <tr id="row-13013" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_D-json', 13013, this)"></td>
+    <tr id="row-20035" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_Square_01_HR_D-json', 20035, this)"></td>
         <td>废墟1层</td>
-        <td>Ruins_Square_01_D.json</td>
+        <td>Ruins_Square_01_HR_D.json</td>
         <td>广场 A</td>
         <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom</td>
         <td>606.37</td>
         <td>456.45</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-13778" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 13778, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_TreasureRoom_HR_D.json</td>
-        <td>王之宝库</td>
-        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>788.00</td>
-        <td>-557.00</td>
-        <td>-247.00</td>
-    </tr>
-    <tr id="row-13779" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 13779, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_TreasureRoom_HR_D.json</td>
-        <td>王之宝库</td>
-        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>213.00</td>
-        <td>573.00</td>
-        <td>0.31</td>
-    </tr>
-    <tr id="row-13780" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 13780, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_TreasureRoom_HR_D.json</td>
-        <td>王之宝库</td>
-        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>-862.00</td>
-        <td>-532.00</td>
-        <td>-244.11</td>
-    </tr>
-    <tr id="row-13781" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_TreasureRoom_HR_D-json', 13781, this)"></td>
-        <td>废墟1层</td>
-        <td>Ruins_TreasureRoom_HR_D.json</td>
-        <td>王之宝库</td>
-        <td>GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOre</td>
-        <td>-357.00</td>
-        <td>-112.00</td>
-        <td>0.31</td>
-    </tr>
-    <tr id="row-13998" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 13998, this)"></td>
+    <tr id="row-21187" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 21187, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_WaterHole_HR_D.json</td>
         <td>饮水池</td>
@@ -774,8 +894,8 @@
         <td>1046.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-13999" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 13999, this)"></td>
+    <tr id="row-21188" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 21188, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_WaterHole_HR_D.json</td>
         <td>饮水池</td>
@@ -784,8 +904,8 @@
         <td>827.40</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-14000" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 14000, this)"></td>
+    <tr id="row-21189" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 21189, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_WaterHole_HR_D.json</td>
         <td>饮水池</td>
@@ -794,8 +914,8 @@
         <td>232.00</td>
         <td>-600.00</td>
     </tr>
-    <tr id="row-14001" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
-        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 14001, this)"></td>
+    <tr id="row-21190" data-label="GameSpawner_Id_Spawner_New_Props_Ore_RubysilverOreRandom">
+        <td style="text-align:center; vertical-align:middle;"><input type="checkbox" checked onchange="togglePoint('Ruins_WaterHole_HR_D-json', 21190, this)"></td>
         <td>废墟1层</td>
         <td>Ruins_WaterHole_HR_D.json</td>
         <td>饮水池</td>
