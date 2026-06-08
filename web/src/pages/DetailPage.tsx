@@ -11,6 +11,11 @@ function zColor(z: number): string {
   return "#ff4444";
 }
 
+function zTextShadow(col: string): string {
+  if (col === "#ff4444") return "0 0 2px #fff, 0 0 4px #fff, 0 0 2px #000";
+  return "0 0 4px #fff, 0 0 2px #000";
+}
+
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
   const [entity, setEntity] = useState<Entity | null>(null);
@@ -142,10 +147,10 @@ export default function DetailPage() {
                         top: "100%",
                         transform: "translateX(-50%)",
                         fontSize: 11,
-                        fontWeight: 700,
+                        fontWeight: 400,
                         color: col,
                         whiteSpace: "nowrap",
-                        textShadow: "0 0 4px #fff, 0 0 2px #000",
+                        textShadow: zTextShadow(col),
                         lineHeight: 1,
                         marginTop: 1,
                       }}>
