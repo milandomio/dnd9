@@ -85,71 +85,71 @@ export default function DetailPage() {
           const mod = modules.get(mapName);
           const sx = mod?.size_x ?? 1;
           const sy = mod?.size_y ?? 1;
-          const cardStyle: React.CSSProperties = {
-            gridColumn: sx >= 2 ? `span ${sx}` : undefined,
-            aspectRatio: `${sx} / ${sy}`,
-            background: "#141414",
-            border: "1px solid #333",
-            borderRadius: 8,
-            padding: 12,
-            position: "relative",
-            overflow: "hidden",
-          };
-          if (mod?.sl_base_name) {
-            cardStyle.backgroundImage = `url(./data/img/${mod.sl_base_name}.webp)`;
-            cardStyle.backgroundSize = "cover";
-            cardStyle.backgroundPosition = "center";
-          }
           const range = Math.max(sx, sy) * 1600;
           return (
-            <div key={mapName} style={cardStyle}>
-              <div style={{
-                background: "rgba(0,0,0,0.6)",
-                padding: "4px 8px",
-                borderRadius: 4,
-                fontSize: 12,
-                marginBottom: 4,
-                display: "inline-block",
+            <div key={mapName} style={{
+              gridColumn: sx >= 2 ? `span ${sx}` : undefined,
+            }}>
+              <h3 style={{
+                margin: "0 0 4px 0",
+                fontSize: 16,
+                fontWeight: 600,
+                color: "#e0e0e0",
               }}>
                 {mod?.translation || mapName}
-              </div>
-              {mapCoords.map((c, i) => {
-                const px = ((c.x + range) / (range * 2)) * 100;
-                const py = ((-c.y + range) / (range * 2)) * 100;
-                const col = zColor(c.z);
-                return (
-                  <div key={i} style={{
-                    position: "absolute",
-                    left: `${px}%`,
-                    top: `${py}%`,
-                    transform: "translate(-50%, -50%)",
-                    pointerEvents: "none",
-                  }}>
-                    <div style={{
-                      width: 9,
-                      height: 9,
-                      borderRadius: "50%",
-                      background: col,
-                      boxShadow: `0 0 6px ${col}`,
-                      border: "1px solid #fff",
-                    }} />
-                    <span style={{
+              </h3>
+              <div style={{
+                aspectRatio: `${sx} / ${sy}`,
+                background: "#141414",
+                border: "1px solid #333",
+                borderRadius: 8,
+                padding: 12,
+                position: "relative",
+                overflow: "hidden",
+                ...(mod?.sl_base_name ? {
+                  backgroundImage: `url(./data/img/${mod.sl_base_name}.webp)`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                } : {}),
+              }}>
+                {mapCoords.map((c, i) => {
+                  const px = ((c.x + range) / (range * 2)) * 100;
+                  const py = ((-c.y + range) / (range * 2)) * 100;
+                  const col = zColor(c.z);
+                  return (
+                    <div key={i} style={{
                       position: "absolute",
-                      left: "50%",
-                      top: "100%",
-                      transform: "translateX(-50%)",
-                      fontSize: 11,
-                      color: col,
-                      whiteSpace: "nowrap",
-                      textShadow: "0 0 4px #fff, 0 0 2px #000",
-                      lineHeight: 1,
-                      marginTop: 1,
+                      left: `${px}%`,
+                      top: `${py}%`,
+                      transform: "translate(-50%, -50%)",
+                      pointerEvents: "none",
                     }}>
-                      {Math.round(c.z)}
-                    </span>
-                  </div>
-                );
-              })}
+                      <div style={{
+                        width: 9,
+                        height: 9,
+                        borderRadius: "50%",
+                        background: col,
+                        boxShadow: `0 0 6px ${col}`,
+                        border: "1px solid #fff",
+                      }} />
+                      <span style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "100%",
+                        transform: "translateX(-50%)",
+                        fontSize: 11,
+                        color: col,
+                        whiteSpace: "nowrap",
+                        textShadow: "0 0 4px #fff, 0 0 2px #000",
+                        lineHeight: 1,
+                        marginTop: 1,
+                      }}>
+                        {Math.round(c.z)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           );
         })}
