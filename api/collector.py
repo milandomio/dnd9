@@ -1,9 +1,13 @@
 import json
+import re
+from collections import defaultdict
 from pathlib import Path
 
 from config import DB_PATH, OUTPUT_DIR
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
+
+_VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 
 
 def run():
@@ -38,7 +42,7 @@ def run():
     count = db.import_dungeon_modules()
     print(f"  -> {count} dungeon modules")
 
-    # 6. Import lootdrops
+    # 6. Import lootdrops (with raw variant names)
     print("[6/7] Importing lootdrop relationships...")
     count = db.import_lootdrops()
     print(f"  -> {count} lootdrop relationships")
@@ -82,31 +86,53 @@ def run():
         suffix = key.rsplit("_", 1)[-1]
         return translations.get(suffix, suffix)
 
-    # ── items.json: only items with coordinates ──
-    items_with_matches = db.get_items_with_matches()
+    # ── Build merged lootdrop map with variant family merging ──
+    loot_raw = db.get_lootdrop_relationships()
+    loot_map: dict[str, set[str]] = {}
+    for r in loot_raw:
+        loot_map.setdefault(r["item_name"], set()).add(r["monster_name"])
+
+    # detect variant families (_\d{4} suffix, ≥2 members)
+    families: dict[str, list[str]] = {}
+    for item_name in loot_map:
+        m = _VARIANT_RE.match(item_name)
+        if m:
+            base = m.group(1)
+            families.setdefault(base, []).append(item_name)
+    families = {k: sorted(v) for k, v in families.items() if len(v) >= 2}
+    skip_variants: set[str] = set()
+    for variants in families.values():
+        skip_variants.update(variants)
+
+    # merge: base_name → union of all monsters from its variants
+    merged_loot: dict[str, list[str]] = {}
+    for item_name, monster_set in loot_map.items():
+        m = _VARIANT_RE.match(item_name)
+        base = m.group(1) if m else item_name
+        merged_loot.setdefault(base, set()).update(monster_set)
+    merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
+    print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
+    print(f"  unique items after merge: {len(merged_loot)}")
+
+    # ── items.json: only items with coordinates, using merged loot ──
     items_data = []
-    for r in items_with_matches:
-        coords = db.get_item_coordinates(r["item_name"])
+    for r in items:
+        name = r["item_name"]
+        if name in skip_variants:
+            continue
+        coords = db.get_item_coordinates(name)
         if not coords:
             continue
-        item = {
-            "name": r["item_name"],
+        items_data.append({
+            "name": name,
             "translation": t(r["translation_key"]),
             "category": r["category"],
-            "monsters": r["monster_names"],
+            "monsters": merged_loot.get(name, []),
             "coords": [
-                {
-                    "x": c["x"],
-                    "y": c["y"],
-                    "z": c["z"],
-                    "map": c["map_base"],
-                    "file": c["json_filename"],
-                    "version": c["version"],
-                }
+                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
                 for c in coords
             ],
-        }
-        items_data.append(item)
+        })
     _save("items.json", items_data)
 
     # ── monsters.json: only monsters with coordinates ──
@@ -154,16 +180,19 @@ def run():
     _save("dungeon_modules.json", modules_data)
 
     # ── lootdrops.json ──
-    loot = db.get_lootdrop_relationships()
-    _save("lootdrops.json", loot)
+    loot_out = []
+    for item_name, monster_names in merged_loot.items():
+        for mon in monster_names:
+            loot_out.append({"item_name": item_name, "monster_name": mon})
+    _save("lootdrops.json", loot_out)
 
-    # ── index.json: page index (counts = with coords) ──
+    # ── index.json: page index ──
     index_data = [
         {"page": "items", "label": "物品表", "count": len(items_data)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_data)},
         {"page": "props", "label": "实体表", "count": len(props_data)},
         {"page": "dungeon_modules", "label": "模块表", "count": len(modules_data)},
-        {"page": "lootdrops", "label": "掉落关系", "count": len(loot)},
+        {"page": "lootdrops", "label": "掉落关系", "count": len(loot_out)},
     ]
     _save("index.json", index_data)
 

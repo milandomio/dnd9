@@ -367,7 +367,6 @@ class DatabaseManager:
                     continue
                 item_name = _ue_asset_base_name(item_asset) or ""
                 item_name = item_name.removeprefix("Id_Item_")
-                item_name = _VARIANT_RE.sub("", item_name)
                 for mon in monsters:
                     rows.append((item_name, mon, ld_name))
         seen = set()
