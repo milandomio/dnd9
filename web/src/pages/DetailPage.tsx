@@ -99,7 +99,6 @@ export default function DetailPage() {
               <h3 style={{
                 margin: "0 0 6px 0",
                 fontSize: 22,
-                fontWeight: 600,
                 color: "#00bcd4",
                 textAlign: "center",
                 width: "100%",
@@ -144,7 +143,6 @@ export default function DetailPage() {
                         top: "100%",
                         transform: "translateX(-50%)",
                         fontSize: 11,
-                        fontWeight: 400,
                         fontFamily: "Arial, sans-serif",
                         color: col,
                         whiteSpace: "nowrap",
