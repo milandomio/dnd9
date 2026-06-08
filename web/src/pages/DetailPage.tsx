@@ -90,6 +90,7 @@ export default function DetailPage() {
           const range = Math.max(sx, sy) * 1600;
           return (
             <div key={mapName} style={{
+              minWidth: 0,
               background: "#3a3a3a",
               border: "1px solid #555",
               borderRadius: 5,
@@ -97,11 +98,14 @@ export default function DetailPage() {
             }}>
               <h3 style={{
                 margin: "0 0 6px 0",
-                fontSize: 22,
+                fontSize: 14,
                 color: "#00bcd4",
                 textAlign: "center",
                 width: "100%",
                 lineHeight: 1.3,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
               }}>
                 {mod?.translation || mapName}
               </h3>
