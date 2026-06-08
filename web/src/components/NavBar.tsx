@@ -45,12 +45,10 @@ export default function NavBar() {
         <BulbOutlined style={{ color: dark ? "#ffd700" : "#333", fontSize: 16 }} />
         <Switch checked={!dark} onChange={toggle} size="small" />
       </div>
-      {parts.length > 0 && (
-        <a onClick={() => navigate("/")} style={linkStyle}
+      <a onClick={() => navigate("/")} style={linkStyle}
           onMouseEnter={(e) => { e.currentTarget.style.background = tokens.accent; e.currentTarget.style.color = dark ? "#2c2c2c" : "#fff"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = tokens.accent; }}
         >返回首页</a>
-      )}
       {parts.map((part, i) => {
         const label = LABEL_MAP[part] || decodeURIComponent(part);
         const path = "/" + parts.slice(0, i + 1).join("/");
