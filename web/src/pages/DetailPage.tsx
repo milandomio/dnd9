@@ -11,7 +11,7 @@ function zColor(z: number): string {
   return "#ff4444";
 }
 
-const GLOW = "1px 1px 1px rgba(255,255,255,0.33)";
+const GLOW = "0 0 4px #fff, 0 0 2px #000";
 
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
