@@ -123,6 +123,7 @@ export default function DetailPage() {
                   const px = ((c.x + range) / (range * 2)) * 100;
                   const py = ((-c.y + range) / (range * 2)) * 100;
                   const col = zColor(c.z);
+                  const textCol = col === "#ff3333" ? "#ffffff" : col;
                   return (
                     <div key={i} style={{
                       position: "absolute",
@@ -144,7 +145,7 @@ export default function DetailPage() {
                         transform: "translateX(-50%)",
                         fontSize: 11,
                         fontFamily: "Arial, sans-serif",
-                        color: col,
+                        color: textCol,
                         whiteSpace: "nowrap",
                         textShadow: GLOW,
                         lineHeight: 1,
