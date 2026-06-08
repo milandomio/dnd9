@@ -17,7 +17,7 @@ function App() {
       }}
     >
       <HashRouter>
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout style={{ minHeight: "100vh", background: "#2c2c2c" }}>
           <Header>
             <Typography.Title
               level={3}
