@@ -211,7 +211,7 @@ def run():
         sy = override.get("size_y", r["size_y"])
         custom_range = override.get("range", 0)
         offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
-        rotate = module_rotations.get(r["sl_base_name"], 0)
+        rotate = module_rotations.get(r["sl_base_name"], 1)
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
@@ -233,6 +233,10 @@ def run():
                 "size_x": 1,
                 "size_y": 1,
                 "sl_base_name": override_name,
+                "offset_x": 0,
+                "offset_y": 0,
+                "rotate": 1,
+                "range": 0,
             }
     modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
     _save("dungeon_modules.json", modules_data)
