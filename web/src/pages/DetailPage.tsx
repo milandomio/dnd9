@@ -55,7 +55,7 @@ export default function DetailPage() {
   });
 
   return (
-    <div>
+    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <Typography.Title level={4}>
         {entity.translation || entity.name}
         <Typography.Text code style={{ fontSize: 14, marginLeft: 12 }}>
