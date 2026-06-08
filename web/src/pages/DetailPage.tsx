@@ -135,12 +135,6 @@ export default function DetailPage() {
         padding: 8, background: "#3a3a3a", borderRadius: 5, maxWidth: 700, marginLeft: "auto", marginRight: "auto",
       }}>⚠️ 数据有误差，以实际游戏内为准</div>
 
-      <div style={{ marginBottom: 12, display: "flex", gap: 16, fontSize: 12 }}>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#00ffff", marginRight: 4 }}></span> Z &gt; 299 (高于地面)</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ffff00", marginRight: 4 }}></span> -299 ≤ Z ≤ 299 (正常高度)</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ff4444", marginRight: 4 }}></span> Z &lt; -299 (低于地面)</span>
-      </div>
-
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(4, 1fr)" }}>
         {sortedGroups.map(([groupName, items]) => (<>
           {groupName && <div key={`h-${groupName}`} style={{
@@ -281,6 +275,12 @@ export default function DetailPage() {
           );
           })}
         </>))}
+      </div>
+
+      <div style={{ marginTop: 24, display: "flex", justifyContent: "center", gap: 24, fontSize: 12, color: "#aaa" }}>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#00ffff", marginRight: 4 }}></span> Z &gt; 299 (高于地面)</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ffff00", marginRight: 4 }}></span> -299 ≤ Z ≤ 299 (正常高度)</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ff4444", marginRight: 4 }}></span> Z &lt; -299 (低于地面)</span>
       </div>
     </div>
   );
