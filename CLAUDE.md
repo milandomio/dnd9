@@ -28,19 +28,57 @@ DarkFindV5/
 
 ## 开发流程
 
+### 迭代工作流
+
+```
+[阶段修改前]  git commit -m "WIP: <描述>"   # 本地提交当前进度
+       ↓
+[修改代码]   编辑 api/ 或 web/ 代码
+       ↓
+[准备验证]   停止修改，执行构建部署
+       ↓
+[验证页面]   打开浏览器预览
+       ↓
+[循环]       继续修改或完成
+```
+
+### 构建部署（本地验证）
+
 ```bash
-# 1. 后端：读取原始 JSON → 清洗 → 输出
+# 1. 提交当前进度（修改前 / 阶段性完成时）
+git commit -am "WIP: <描述>"
+
+# 2. 运行数据管道（清洗 JSON → 输出到 api/data/）
 cd api && python main.py
 
-# 2. 前端：安装依赖、开发、构建
-cd web
-npm install        # 首次
-npm run dev        # 开发服务器
-npm run build      # SSG 生产构建（输出到 dist/）
+# 3. 复制数据到前端静态目录
+rm -rf ../web/public/data && cp -r data ../web/public/data
 
-# 3. 预览构建产物
+# 4. 前端类型检查 + 生产构建
+cd ../web && npm run build
+
+# 5. 预览构建产物（打开 http://localhost:4173）
 npm run preview
 ```
+
+### 开发服务器（实时修改）
+
+```bash
+# 后端数据管道
+cd api && python main.py         # 每次数据变更后运行
+
+# 前端开发服务器（热更新）
+cd web && npm run dev
+
+# 预览生产构建
+cd web && npm run preview
+```
+
+### 注意
+
+- `python main.py` 必须在前端 `npm run build` 之前运行，否则前端数据是旧的
+- TypeScript 类型检查在 `npm run build` 中自动执行，也可手动：`npx tsc --noEmit`
+- 构建产物在 `web/dist/`，用 `npm run preview` 本地预览
 
 ## CI/CD（GitHub Actions）
 
@@ -118,10 +156,10 @@ npm run preview
 ## 数据流
 
 ```
-原始 JSON (api/data/)
-    ↓ Python: main.py (清洗/转换)
-后端 JSON (api/output/data.json → 前端静态资源)
-    ↓ Vite build 复制到 dist/
-    ↓ GitHub Actions 部署到 Pages
-    ↓ 浏览器 fetch("./data.json") → 注水渲染
+游戏原始 JSON（Output/Exports/DungeonCrawler/...）
+    ↓ Python: api/main.py (清洗/转换 + SQLite + FTS5)
+后端 JSON（api/data/ → 复制到 web/public/data/）
+    ↓ Vite build 打包到 web/dist/data/
+    ↓ GitHub Actions 部署到 gh-pages
+    ↓ 浏览器 fetch("./data/index.json") → 注水渲染
 ```
