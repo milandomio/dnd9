@@ -29,7 +29,7 @@ export default function ListPage() {
   if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
 
   return (
-    <div>
+    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <Typography.Title level={4}>{LABEL_MAP[page!] ?? page}（{data.length}）</Typography.Title>
       <Row gutter={[16, 16]}>
         {data.map((entity) => (
