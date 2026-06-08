@@ -48,10 +48,10 @@ npm run preview
 
 | 事件 | 操作 |
 |------|------|
-| push `main` | `npm ci` → `tsc --noEmit` → `vite build` → deploy to GitHub Pages |
+| push `main` | `npm ci` → `tsc --noEmit` → `vite build` → push to `gh-pages` branch |
 | PR `main` | `npm ci` → `tsc --noEmit` → `vite build`（不部署） |
 
-**部署前提**：在 GitHub 仓库 Settings → Pages → 选择 "GitHub Actions" 作为 Source。
+**部署前提**：在 GitHub 仓库 Settings → Pages → Source 选择 "Deploy from a branch" → `gh-pages` branch → `/ (root)`。
 
 ## 数据流
 
