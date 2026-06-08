@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from config import DB_PATH, OUTPUT_DIR
+from config import DB_PATH, OUTPUT_DIR, HARDCODED_TRANSLATIONS, MODULE_NAME_OVERRIDE, TRANSLATION_ALIAS_MAP
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
 
@@ -78,13 +78,25 @@ def run():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     translations = db.get_translations_map()
 
-    def t(key: str) -> str:
-        if not key:
-            return ""
-        if key in translations:
-            return translations[key]
-        suffix = key.rsplit("_", 1)[-1]
-        return translations.get(suffix, suffix)
+    def resolve_name(name: str, translation_key: str, scope: str = "item") -> str:
+        if translation_key and translation_key in translations:
+            return translations[translation_key]
+        alias_name = TRANSLATION_ALIAS_MAP.get(name, name)
+        if alias_name != name:
+            for prefix in [
+                "Text_DesignData_Item_Item_",
+                "Text_DesignData_Monster_Monster_",
+                "Text_DesignData_Props_Props_",
+                "Text_DesignData_Dungeon_DungeonModule_",
+            ]:
+                alias_key = prefix + alias_name
+                if alias_key in translations:
+                    return translations[alias_key]
+        if name in HARDCODED_TRANSLATIONS:
+            return HARDCODED_TRANSLATIONS[name]
+        if scope == "module" and name in MODULE_NAME_OVERRIDE:
+            return MODULE_NAME_OVERRIDE[name]
+        return name
 
     # ── Build merged lootdrop map with variant family merging ──
     loot_raw = db.get_lootdrop_relationships()
@@ -125,7 +137,7 @@ def run():
             continue
         items_data.append({
             "name": name,
-            "translation": t(r["translation_key"]),
+            "translation": resolve_name(name, r["translation_key"], "item"),
             "category": r["category"],
             "monsters": merged_loot.get(name, []),
             "coords": [
@@ -143,7 +155,7 @@ def run():
             continue
         monsters_data.append({
             "name": r["monster_name"],
-            "translation": t(r["translation_key"]),
+            "translation": resolve_name(r["monster_name"], r["translation_key"], "monster"),
             "coords": [
                 {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
                 for c in coords
@@ -159,7 +171,7 @@ def run():
             continue
         props_data.append({
             "name": r["asset_name"],
-            "translation": t(r["translation_key"]),
+            "translation": resolve_name(r["asset_name"], r["translation_key"], "props"),
             "coords": [
                 {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
                 for c in coords
@@ -169,14 +181,27 @@ def run():
 
     # ── dungeon_modules.json ──
     modules = db.get_dungeon_modules()
-    modules_data = [{
-        "name": r["module_name"],
-        "translation": t(r["translation_key"]),
-        "group": r["module_group"],
-        "size_x": r["size_x"],
-        "size_y": r["size_y"],
-        "sl_base_name": r["sl_base_name"],
-    } for r in modules]
+    modules_map: dict[str, dict] = {}
+    for r in modules:
+        modules_map[r["module_name"]] = {
+            "name": r["module_name"],
+            "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
+            "group": r["module_group"],
+            "size_x": r["size_x"],
+            "size_y": r["size_y"],
+            "sl_base_name": r["sl_base_name"],
+        }
+    for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
+        if override_name not in modules_map:
+            modules_map[override_name] = {
+                "name": override_name,
+                "translation": override_translation,
+                "group": "",
+                "size_x": 1,
+                "size_y": 1,
+                "sl_base_name": override_name,
+            }
+    modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
     _save("dungeon_modules.json", modules_data)
 
     # ── lootdrops.json ──
