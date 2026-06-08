@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import { ThemeProvider, useTheme } from "./hooks/useTheme";
+import { DebugProvider } from "./hooks/useDebug";
 import HomePage from "./pages/HomePage";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
@@ -17,9 +18,11 @@ function App() {
       theme={{ algorithm: theme.darkAlgorithm, token: { colorPrimary: "#1677ff" } }}
     >
       <ThemeProvider>
-        <HashRouter>
-          <AppInner />
-        </HashRouter>
+        <DebugProvider>
+          <HashRouter>
+            <AppInner />
+          </HashRouter>
+        </DebugProvider>
       </ThemeProvider>
     </ConfigProvider>
   );

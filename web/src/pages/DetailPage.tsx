@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { useParams } from "react-router-dom";
 import { Spin, Typography } from "antd";
 import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } from "../types/data";
+import { useDebug } from "../hooks/useDebug";
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: "废墟2层地牢",
@@ -34,8 +35,7 @@ export default function DetailPage() {
   const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
   const [loading, setLoading] = useState(true);
 
-  const [debug, setDebug] = useState(false);
-  const [adjOffsets, setAdjOffsets] = useState<Record<string, {x: number; y: number; range: number; rotate: number; mirrorX: boolean; mirrorY: boolean}>>({});
+  const { debug, adjOffsets, setAdjOffsets } = useDebug();
 
   function getAdj(mapName: string, mod: DungeonModule | undefined) {
     const a = adjOffsets[mapName];
@@ -103,21 +103,11 @@ export default function DetailPage() {
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, margin: "0 0 12px" }}>
         {entity.translation || entity.name} 位置汇总
       </h1>
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <button onClick={() => setDebug(!debug)} style={{
-          marginLeft: 16, padding: "4px 16px",
-          background: debug ? "#4CAF50" : "#FFC107", color: debug ? "#fff" : "#000",
-          border: debug ? "2px solid #388E3C" : "2px solid #FF9800",
-          borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: "bold",
-        }}>
-          {debug ? "退出调试" : "显示调试信息"}
-        </button>
-      </div>
 
       <div style={{
         textAlign: "center", color: "#ff6b6b", fontSize: 14, marginBottom: 20,
         padding: 8, background: "#3a3a3a", borderRadius: 5, maxWidth: 700, marginLeft: "auto", marginRight: "auto",
-      }}>⚠️ 数据有误差，以实际游戏内为准</div>
+      }}>⚠️ 数据有误差，以实际游戏内为准<span style={{ color: "#aaa", marginLeft: 15 }}>地图生成日期：2026-06-08 <span style={{ fontSize: 10 }}>地图页面设计-雪鸡Official</span></span></div>
 
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(4, 1fr)" }}>
         {sortedGroups.map(([groupName, items]) => (<>
@@ -127,7 +117,8 @@ export default function DetailPage() {
             fontWeight: "bold",
             color: "#FFC107",
             padding: "5px 0",
-            marginTop: 8,
+            marginTop: 10,
+            borderBottom: "2px solid #FFC107",
           }}>{GROUP_LABELS[groupName] || groupName}</div>}
           {items.map(({mapName, mod, coords: mapCoords}) => {
           const sx = mod?.size_x ?? 1;

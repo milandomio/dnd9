@@ -59,8 +59,9 @@ rm -rf ../web/public/data && cp -r data ../web/public/data
 # 4. 前端类型检查 + 生产构建
 cd ../web && npm run build
 
-# 5. 预览构建产物（打开 http://localhost:4173）
-npm run preview
+# 5. 预览构建产物（打开 http://localhost:8080）
+# 若端口被占用，先 fuser -k 8080/tcp 关闭再开
+nohup npm run preview -- --port 8080 > /dev/null 2>&1 &
 ```
 
 ### 开发服务器（实时修改）
@@ -72,15 +73,15 @@ cd api && python main.py         # 每次数据变更后运行
 # 前端开发服务器（热更新）
 cd web && npm run dev
 
-# 预览生产构建
-cd web && npm run preview
+# 预览生产构建（后台运行，端口 8080）
+cd web && nohup npm run preview -- --port 8080 > /dev/null 2>&1 &
 ```
 
 ### 注意
 
 - `python main.py` 必须在前端 `npm run build` 之前运行，否则前端数据是旧的
 - TypeScript 类型检查在 `npm run build` 中自动执行，也可手动：`npx tsc --noEmit`
-- 构建产物在 `web/dist/`，用 `npm run preview` 本地预览
+- 构建产物在 `web/dist/`，用 `npm run preview` 本地预览（**必须在后台运行，不能占用前台线程**）
 
 ## CI/CD（GitHub Actions）
 
