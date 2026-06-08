@@ -12,6 +12,7 @@ function zColor(z: number): string {
 }
 
 const GLOW = "0 0 4px #fff, 0 0 2px #000";
+const RED_OUTLINE = "-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff,0 0 4px #fff,0 0 2px #000";
 
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
@@ -146,7 +147,7 @@ export default function DetailPage() {
                         fontFamily: "Arial, sans-serif",
                         color: col,
                         whiteSpace: "nowrap",
-                        textShadow: GLOW,
+                        textShadow: col === "#ff4444" ? RED_OUTLINE : GLOW,
                         lineHeight: 1,
                         marginTop: 1,
                       }}>
