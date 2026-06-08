@@ -248,8 +248,10 @@ def run():
         {"page": "items", "label": "物品表", "count": len(items_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
-        {"page": "dungeon_modules", "label": "模块表", "count": len(modules_data)},
         {"page": "lootdrops", "label": "掉落关系", "count": len(loot_out)},
+        {"page": "explore", "label": "探索地点表", "count": 0},
+        {"page": "quest_items", "label": "任务物品表", "count": 0},
+        {"page": "quest_npc", "label": "任务NPC表", "count": 0},
     ]
     _save("index.json", index_data)
 

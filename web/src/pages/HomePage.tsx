@@ -8,7 +8,9 @@ const CARD_THEME: Record<string, { border: string; hoverBg: string; icon: string
   monsters: { border: "#FF6600", hoverBg: "linear-gradient(145deg, #4a3a2a, #5a4a3a)", icon: "👹", titleColor: "#fff" },
   props:    { border: "#9C27B0", hoverBg: "linear-gradient(145deg, #3a2a4a, #4a3a5a)", icon: "🏛️", titleColor: "#CE93D8" },
   lootdrops: { border: "#2196F3", hoverBg: "linear-gradient(145deg, #2a3a4a, #3a4a5a)", icon: "💎", titleColor: "#fff" },
-  dungeon_modules: { border: "#00bcd4", hoverBg: "linear-gradient(145deg, #2a4a4a, #3a5a5a)", icon: "🗺️", titleColor: "#00bcd4" },
+  explore: { border: "#00bcd4", hoverBg: "linear-gradient(145deg, #2a4a4a, #3a5a5a)", icon: "🗺️", titleColor: "#00bcd4" },
+  quest_items: { border: "#E91E63", hoverBg: "linear-gradient(145deg, #4a2a3a, #5a3a4a)", icon: "📋", titleColor: "#F06292" },
+  quest_npc: { border: "#FFC107", hoverBg: "linear-gradient(145deg, #4a4a2a, #5a5a3a)", icon: "🗡️", titleColor: "#FFD54F" },
 };
 
 const DEFAULT_THEME = { border: "#555", hoverBg: "linear-gradient(145deg, #3a3a3a, #444)", icon: "📄", titleColor: "#fff" };
@@ -85,7 +87,9 @@ export default function HomePage() {
                 {entry.page === "monsters" && "查看怪物位置"}
                 {entry.page === "props" && "查看实体位置"}
                 {entry.page === "lootdrops" && "查看物品掉落怪物"}
-                {entry.page === "dungeon_modules" && "地图模块预览"}
+                {entry.page === "explore" && "地图模块预览"}
+                {entry.page === "quest_items" && "按地图分组查看任务物品"}
+                {entry.page === "quest_npc" && "查看NPC任务详情"}
               </div>
             </div>
           );

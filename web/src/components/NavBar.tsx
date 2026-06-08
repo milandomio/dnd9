@@ -8,7 +8,9 @@ const LABEL_MAP: Record<string, string> = {
   monsters: "怪物表",
   props: "实体表",
   lootdrops: "掉落表",
-  dungeon_modules: "模块表",
+  explore: "探索地点表",
+  quest_items: "任务物品表",
+  quest_npc: "任务NPC表",
 };
 
 export default function NavBar() {
