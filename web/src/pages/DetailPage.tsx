@@ -21,13 +21,13 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (!page || !name) return;
+    const decoded = decodeURIComponent(name!);
     Promise.all([
-      fetch(`./data/${page}.json`).then<Entity[]>((r) => r.json()),
+      fetch(`./data/${page}/${decoded}.json`).then<Entity>((r) => r.json()),
       fetch(`./data/dungeon_modules.json`).then<DungeonModule[]>((r) => r.json()),
     ])
-      .then(([entities, mods]) => {
-        const found = entities.find((e) => e.name === decodeURIComponent(name!));
-        setEntity(found ?? null);
+      .then(([entity, mods]) => {
+        setEntity(entity);
         setModules(new Map(mods.map((m) => [m.sl_base_name, m])));
       })
       .catch(console.error)

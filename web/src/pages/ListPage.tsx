@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
-import type { ItemEntity, MonsterEntity, PropsEntity } from "../types/data";
-
-type Entity = ItemEntity | MonsterEntity | PropsEntity;
+interface IndexEntry {
+  name: string;
+  translation: string;
+  category?: string;
+  monsters?: string[];
+  coordCount: number;
+}
 
 const LABEL_MAP: Record<string, string> = {
   items: "物品表",
@@ -14,7 +18,7 @@ const LABEL_MAP: Record<string, string> = {
 export default function ListPage() {
   const { page } = useParams<{ page: string }>();
   const navigate = useNavigate();
-  const [data, setData] = useState<Entity[]>([]);
+  const [data, setData] = useState<IndexEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [debug, setDebug] = useState(false);
 
@@ -92,13 +96,13 @@ export default function ListPage() {
                 {entity.translation}【{entity.name}】
               </div>
             )}
-            {"monsters" in entity && entity.monsters && entity.monsters.length > 0 && (
+              {entity.monsters && entity.monsters.length > 0 && (
               <div style={{ color: "#aaa", fontSize: 13, marginTop: 6 }}>
                 掉落来源: {entity.monsters.length}个
               </div>
             )}
             <div style={{ color: "#888", fontSize: 12, marginTop: 2 }}>
-              {entity.coords.length} 个坐标
+              {entity.coordCount} 个坐标
             </div>
           </div>
         ))}

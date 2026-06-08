@@ -126,8 +126,8 @@ def run():
     print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
     print(f"  unique items after merge: {len(merged_loot)}")
 
-    # ── items.json: only items with coordinates, using merged loot ──
-    items_data = []
+    # ── items: index + individual files ──
+    items_index = []
     for r in items:
         name = r["item_name"]
         if name in skip_variants:
@@ -135,9 +135,17 @@ def run():
         coords = db.get_item_coordinates(name)
         if not coords:
             continue
-        items_data.append({
+        translation = resolve_name(name, r["translation_key"], "item")
+        items_index.append({
             "name": name,
-            "translation": resolve_name(name, r["translation_key"], "item"),
+            "translation": translation,
+            "category": r["category"],
+            "monsters": merged_loot.get(name, []),
+            "coordCount": len(coords),
+        })
+        _save(f"items/{name}.json", {
+            "name": name,
+            "translation": translation,
             "category": r["category"],
             "monsters": merged_loot.get(name, []),
             "coords": [
@@ -145,39 +153,51 @@ def run():
                 for c in coords
             ],
         })
-    _save("items.json", items_data)
+    _save("items.json", items_index)
 
-    # ── monsters.json: only monsters with coordinates ──
-    monsters_data = []
+    # ── monsters: index + individual files ──
+    monsters_index = []
     for r in monsters:
         coords = db.get_item_coordinates(r["monster_name"])
         if not coords:
             continue
-        monsters_data.append({
+        translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
+        monsters_index.append({
             "name": r["monster_name"],
-            "translation": resolve_name(r["monster_name"], r["translation_key"], "monster"),
+            "translation": translation,
+            "coordCount": len(coords),
+        })
+        _save(f"monsters/{r['monster_name']}.json", {
+            "name": r["monster_name"],
+            "translation": translation,
             "coords": [
                 {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
                 for c in coords
             ],
         })
-    _save("monsters.json", monsters_data)
+    _save("monsters.json", monsters_index)
 
-    # ── props.json: only props with coordinates ──
-    props_data = []
+    # ── props: index + individual files ──
+    props_index = []
     for r in props:
         coords = db.get_item_coordinates(r["asset_name"])
         if not coords:
             continue
-        props_data.append({
+        translation = resolve_name(r["asset_name"], r["translation_key"], "props")
+        props_index.append({
             "name": r["asset_name"],
-            "translation": resolve_name(r["asset_name"], r["translation_key"], "props"),
+            "translation": translation,
+            "coordCount": len(coords),
+        })
+        _save(f"props/{r['asset_name']}.json", {
+            "name": r["asset_name"],
+            "translation": translation,
             "coords": [
                 {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
                 for c in coords
             ],
         })
-    _save("props.json", props_data)
+    _save("props.json", props_index)
 
     # ── dungeon_modules.json ──
     modules = db.get_dungeon_modules()
@@ -213,9 +233,9 @@ def run():
 
     # ── index.json: page index ──
     index_data = [
-        {"page": "items", "label": "物品表", "count": len(items_data)},
-        {"page": "monsters", "label": "怪物表", "count": len(monsters_data)},
-        {"page": "props", "label": "实体表", "count": len(props_data)},
+        {"page": "items", "label": "物品表", "count": len(items_index)},
+        {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
+        {"page": "props", "label": "实体表", "count": len(props_index)},
         {"page": "dungeon_modules", "label": "模块表", "count": len(modules_data)},
         {"page": "lootdrops", "label": "掉落关系", "count": len(loot_out)},
     ]
@@ -228,7 +248,8 @@ def run():
     db.close()
 
 
-def _save(filename: str, data: list):
+def _save(filename: str, data: list | dict):
     path = OUTPUT_DIR / filename
+    path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)

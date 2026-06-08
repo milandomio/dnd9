@@ -1,0 +1,718 @@
+{
+  "name": "Arrow",
+  "translation": "箭",
+  "category": "",
+  "monsters": [
+    "Arrow",
+    "Bookshelf",
+    "FrostSkeletonArcher_Hard",
+    "GoblinArcher_Hard",
+    "Ground",
+    "ID_LootdropGroup_LavaSlime",
+    "ID_LootdropGroup_PirateBowman",
+    "ID_LootdropGroup_WoodenBarrel_UnderSea",
+    "IceKoboldArcher_Hard",
+    "Id_LootDropGroup_Barrel",
+    "Id_LootDropGroup_Coffin_Poor",
+    "Id_LootDropGroup_FrostSkeletonArcher",
+    "Id_LootDropGroup_GoblinArcher",
+    "Id_LootDropGroup_IceKoboldArcher",
+    "Id_LootDropGroup_Pot",
+    "Id_LootDropGroup_SkeletonArcher",
+    "Id_LootDropGroup_Slime",
+    "Id_LootDropGroup_SlimeUnique",
+    "Id_LootDropGroup_SpiderPot",
+    "SkeletonArcher_Hard",
+    "Slime_Hard"
+  ],
+  "coords": [
+    {
+      "x": 532.0821,
+      "y": -779.94086,
+      "z": -739.96985,
+      "map": "CaveTown",
+      "file": "CaveTown_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 532.0821,
+      "y": -779.94086,
+      "z": -739.96985,
+      "map": "CaveTown",
+      "file": "CaveTown_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 532.0821,
+      "y": -779.94086,
+      "z": -739.96985,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 532.0821,
+      "y": -779.94086,
+      "z": -739.96985,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -400.19504,
+      "y": -323.9666,
+      "z": -189.00003,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 122.0,
+      "y": 550.0,
+      "z": -99.99991,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -126.0,
+      "y": 482.0,
+      "z": -60.666565,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -400.19504,
+      "y": -323.9666,
+      "z": -189.00003,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 122.0,
+      "y": 550.0,
+      "z": -99.99991,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -126.0,
+      "y": 482.0,
+      "z": -60.666565,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 532.0821,
+      "y": -779.94086,
+      "z": -582.32764,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -59.50867,
+      "y": -40.026913,
+      "z": 107.77216,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -70.99934,
+      "y": -49.668728,
+      "z": 137.77216,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 122.0,
+      "y": 550.0,
+      "z": 103.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 116.0,
+      "y": 560.0,
+      "z": 103.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 859.6783,
+      "y": -345.04327,
+      "z": 107.098465,
+      "map": "Cemetery_02",
+      "file": "Cemetery_02_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 914.87134,
+      "y": -382.25656,
+      "z": 67.69143,
+      "map": "Cemetery_02",
+      "file": "Cemetery_02_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 859.6783,
+      "y": -345.04327,
+      "z": 107.098465,
+      "map": "Cemetery_02",
+      "file": "Cemetery_02_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 914.87134,
+      "y": -382.25656,
+      "z": 67.69143,
+      "map": "Cemetery_02",
+      "file": "Cemetery_02_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 10.1602545,
+      "y": 26.0,
+      "z": 12.401924,
+      "map": "GoblinCaveCorner_01",
+      "file": "GoblinCaveCorner_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 10.1602545,
+      "y": 26.0,
+      "z": 12.401924,
+      "map": "GoblinCaveCorner_01",
+      "file": "GoblinCaveCorner_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -8.988402,
+      "y": -35.24153,
+      "z": -6.888481,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -2.6185763,
+      "y": -88.561554,
+      "z": -8.262242,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 34.8636,
+      "y": -106.34037,
+      "z": -7.1476502,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -1280.0,
+      "y": -59.999996,
+      "z": 125.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -1414.0,
+      "y": 75.00001,
+      "z": 121.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -1071.0,
+      "y": -71.5,
+      "z": 90.296906,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 108.0,
+      "y": -11.0,
+      "z": 149.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 127.0,
+      "y": -5.0,
+      "z": 162.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -152.46207,
+      "y": -39.913956,
+      "z": 116.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -134.0,
+      "y": -32.0,
+      "z": 129.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -159.01744,
+      "y": -374.59058,
+      "z": 80.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -173.50633,
+      "y": -378.47287,
+      "z": 110.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 450.0,
+      "y": -71.99999,
+      "z": 103.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 460.0,
+      "y": -65.99999,
+      "z": 103.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -159.01744,
+      "y": -374.59058,
+      "z": 80.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -173.50633,
+      "y": -378.47287,
+      "z": 110.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 450.0,
+      "y": -71.99999,
+      "z": 103.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 460.0,
+      "y": -65.99999,
+      "z": 103.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -159.01744,
+      "y": -374.59058,
+      "z": 80.0,
+      "map": "Ruins_BanditCamp_SR",
+      "file": "Ruins_BanditCamp_SR_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -173.50633,
+      "y": -378.47287,
+      "z": 110.0,
+      "map": "Ruins_BanditCamp_SR",
+      "file": "Ruins_BanditCamp_SR_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 450.0,
+      "y": -71.99999,
+      "z": 103.0,
+      "map": "Ruins_BanditCamp_SR",
+      "file": "Ruins_BanditCamp_SR_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 460.0,
+      "y": -65.99999,
+      "z": 103.0,
+      "map": "Ruins_BanditCamp_SR",
+      "file": "Ruins_BanditCamp_SR_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 563.80743,
+      "y": -8.941334,
+      "z": 157.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 468.8074,
+      "y": -25.941334,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 615.14886,
+      "y": 157.46498,
+      "z": 113.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 169.0,
+      "y": 43.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 156.66866,
+      "y": 153.70053,
+      "z": 153.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 146.0,
+      "y": 157.0,
+      "z": 160.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -558.3334,
+      "y": 133.67075,
+      "z": 132.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 63.0,
+      "y": 132.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -560.3334,
+      "y": 120.67074,
+      "z": 107.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 62.0,
+      "y": 157.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -381.33337,
+      "y": -225.68237,
+      "z": 104.662384,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -380.0,
+      "y": -245.47047,
+      "z": 132.14815,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -53.33339,
+      "y": -183.19518,
+      "z": 110.74895,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -51.0,
+      "y": -169.0,
+      "z": 108.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 563.80743,
+      "y": -8.941334,
+      "z": 157.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 468.8074,
+      "y": -25.941334,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 615.14886,
+      "y": 157.46498,
+      "z": 113.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 169.0,
+      "y": 43.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 156.66866,
+      "y": 153.70053,
+      "z": 153.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 146.0,
+      "y": 157.0,
+      "z": 160.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -558.3334,
+      "y": 133.67075,
+      "z": 132.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 63.0,
+      "y": 132.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -560.3334,
+      "y": 120.67074,
+      "z": 107.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 62.0,
+      "y": 157.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -381.33337,
+      "y": -225.68237,
+      "z": 104.662384,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -380.0,
+      "y": -245.47047,
+      "z": 132.14815,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -53.33339,
+      "y": -183.19518,
+      "z": 110.74895,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": -51.0,
+      "y": -169.0,
+      "z": 108.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": ""
+    },
+    {
+      "x": 563.80743,
+      "y": -8.941334,
+      "z": 157.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 468.8074,
+      "y": -25.941334,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 615.14886,
+      "y": 157.46498,
+      "z": 113.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 169.0,
+      "y": 43.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 156.66866,
+      "y": 153.70053,
+      "z": 153.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 146.0,
+      "y": 157.0,
+      "z": 160.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -558.3334,
+      "y": 133.67075,
+      "z": 132.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 63.0,
+      "y": 132.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -560.3334,
+      "y": 120.67074,
+      "z": 107.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 62.0,
+      "y": 157.0,
+      "z": 120.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -381.33337,
+      "y": -225.68237,
+      "z": 104.662384,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -380.0,
+      "y": -245.47047,
+      "z": 132.14815,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -53.33339,
+      "y": -183.19518,
+      "z": 110.74895,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": -51.0,
+      "y": -169.0,
+      "z": 108.0,
+      "map": "Ruins_Barbican_01_BossTest",
+      "file": "Ruins_Barbican_01_BossTest_D.json",
+      "version": "(D)"
+    },
+    {
+      "x": 125.4788,
+      "y": -30.0,
+      "z": 14.339411,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": ""
+    }
+  ]
+}
