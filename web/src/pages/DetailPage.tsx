@@ -91,19 +91,22 @@ export default function DetailPage() {
               gridColumn: sx >= 2 ? `span ${sx}` : undefined,
             }}>
               <h3 style={{
-                margin: "0 0 4px 0",
-                fontSize: 16,
+                margin: 0,
+                fontSize: 22,
                 fontWeight: 600,
-                color: "#e0e0e0",
+                color: "#00bcd4",
+                textAlign: "center",
+                width: "100%",
+                lineHeight: 1.3,
               }}>
                 {mod?.translation || mapName}
               </h3>
               <div style={{
                 aspectRatio: `${sx} / ${sy}`,
-                background: "#141414",
-                border: "1px solid #333",
-                borderRadius: 8,
-                padding: 12,
+                background: "#3a3a3a",
+                border: "1px solid #555",
+                borderRadius: 5,
+                padding: 5,
                 position: "relative",
                 overflow: "hidden",
                 ...(mod?.sl_base_name ? {

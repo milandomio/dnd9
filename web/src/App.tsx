@@ -27,7 +27,7 @@ function App() {
               DarkFindV5
             </Typography.Title>
           </Header>
-          <Content style={{ padding: "24px" }}>
+          <Content style={{ padding: "24px", background: "#2c2c2c" }}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/:page" element={<ListPage />} />
