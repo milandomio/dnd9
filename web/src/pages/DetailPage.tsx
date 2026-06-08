@@ -91,6 +91,8 @@ export default function DetailPage() {
           return (
             <div key={mapName} style={{
               minWidth: 0,
+              gridColumn: sx >= 2 ? `span ${sx}` : undefined,
+              gridRow: sy >= 2 ? `span ${sy}` : undefined,
               background: "#3a3a3a",
               border: "1px solid #555",
               borderRadius: 5,
@@ -110,7 +112,7 @@ export default function DetailPage() {
                 {mod?.translation || mapName}
               </h3>
               <div style={{
-                aspectRatio: "1",
+                aspectRatio: `${sx} / ${sy}`,
                 background: "#2c2c2c",
                 border: "1px solid #666",
                 borderRadius: 4,
