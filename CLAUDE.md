@@ -2,6 +2,8 @@
 
 读取游戏原始 JSON 数据 → Python 清洗 → 输出后端 JSON 数据文件 → Ant Design React SSG (Vite) → 静态部署 → 浏览器端注水渲染。
 
+> **参考项目**：文中所提「原项目」「v4」「findItemV4」均指 `/home/mio/fmod/findItemV4/`。
+
 ## 项目结构
 
 ```
