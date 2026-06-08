@@ -35,7 +35,7 @@ export default function DetailPage() {
   const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
   const [loading, setLoading] = useState(true);
 
-  const { debug, adjOffsets, setAdjOffsets } = useDebug();
+  const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
 
   function getAdj(mapName: string, mod: DungeonModule | undefined) {
     const a = adjOffsets[mapName];
@@ -103,6 +103,16 @@ export default function DetailPage() {
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, margin: "0 0 12px" }}>
         {entity.translation || entity.name} 位置汇总
       </h1>
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <button onClick={toggle} style={{
+          marginLeft: 16, padding: "4px 16px",
+          background: debug ? "#4CAF50" : "#FFC107", color: debug ? "#fff" : "#000",
+          border: debug ? "2px solid #388E3C" : "2px solid #FF9800",
+          borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: "bold",
+        }}>
+          {debug ? "退出调试" : "显示调试信息"}
+        </button>
+      </div>
 
       <div style={{
         textAlign: "center", color: "#ff6b6b", fontSize: 14, marginBottom: 20,
