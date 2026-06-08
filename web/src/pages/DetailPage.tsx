@@ -35,15 +35,16 @@ export default function DetailPage() {
   const [loading, setLoading] = useState(true);
 
   const [debug, setDebug] = useState(false);
-  const [adjOffsets, setAdjOffsets] = useState<Record<string, {x: number; y: number; range: number}>>({});
+  const [adjOffsets, setAdjOffsets] = useState<Record<string, {x: number; y: number; range: number; rotate: number; mirrorX: boolean; mirrorY: boolean}>>({});
 
-  function getAdj(mapName: string) {
-    return adjOffsets[mapName] || {x: 0, y: 0, range: 0};
+  function getAdj(mapName: string, mod: DungeonModule | undefined) {
+    const a = adjOffsets[mapName];
+    return {x: a?.x ?? 0, y: a?.y ?? 0, range: a?.range ?? 0, rotate: a?.rotate ?? mod?.rotate ?? 1, mirrorX: a?.mirrorX ?? false, mirrorY: a?.mirrorY ?? false};
   }
 
-  function setAdj(mapName: string, field: string, value: number) {
+  function setAdj(mapName: string, field: string, value: number | boolean) {
     setAdjOffsets(prev => {
-      const cur = prev[mapName] || {x: 0, y: 0, range: 0};
+      const cur = prev[mapName] || {x: 0, y: 0, range: 0, rotate: 0, mirrorX: false, mirrorY: false};
       return {...prev, [mapName]: {...cur, [field]: value}};
     });
   }
@@ -149,7 +150,7 @@ export default function DetailPage() {
           const sx = mod?.size_x ?? 1;
           const sy = mod?.size_y ?? 1;
           const baseRange = mod?.range || Math.max(sx, sy) * 1600;
-          const adj = getAdj(mapName);
+          const adj = getAdj(mapName, mod);
           const range = (baseRange + adj.range) || 1600;
           const offX = (mod?.offset_x ?? 0) + adj.x;
           const offY = (mod?.offset_y ?? 0) + adj.y;
@@ -197,10 +198,12 @@ export default function DetailPage() {
                 {mapCoords.map((c, i) => {
                   let x = c.x + offX;
                   let y = c.y + offY;
-                  const r = mod?.rotate ?? 0;
+                  const r = adj.rotate;
                   if (r === 1) { const nx = y; const ny = -x; x = nx; y = ny; }
                   else if (r === 2) { x = -x; y = -y; }
                   else if (r === 3) { const nx = -y; const ny = x; x = nx; y = ny; }
+                  if (adj.mirrorX) x = -x;
+                  if (adj.mirrorY) y = -y;
                   const multX = sx === 1 && sy === 2 ? 100 : 50;
                   const centerX = sx === 1 && sy === 2 ? 100 : 50;
                   const multY = 50;
@@ -244,20 +247,33 @@ export default function DetailPage() {
                 })}
               </div>
               {debug && (
-              <div style={{ marginTop: 4, fontSize: 11, color: "#aaa", display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
+              <div>
+              <div style={{ fontSize: 11, color: "#aaa", marginTop: 4, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
                 <span style={{ color: "#888" }}>范围:</span>
                 <button onClick={() => setAdj(mapName, "range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
                 <input type="number" value={range} onChange={e => setAdj(mapName, "range", Number(e.target.value) - baseRange)} style={ctrlInput} step={100} />
                 <button onClick={() => setAdj(mapName, "range", range * 2 - baseRange)} style={ctrlBtn}>x2</button>
-                <span style={{ color: "#888", marginLeft: 6 }}>偏移X:</span>
-                <button onClick={() => setAdj(mapName, "x", adj.x - 50)} style={ctrlBtn}>-50</button>
+                <span style={{ color: "#aaa", fontSize: 12, marginLeft: 4 }}>↻{adj.rotate}</span>
+              </div>
+              <div style={{ fontSize: 11, color: "#aaa", marginTop: 2, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
+                <span style={{ color: "#888" }}>偏移:</span>
+                <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>↑</button>
+                <button onClick={() => setAdj(mapName, "y", adj.y - 50)} style={ctrlBtn}>↓</button>
+                <button onClick={() => setAdj(mapName, "x", adj.x - 50)} style={ctrlBtn}>←</button>
+                <button onClick={() => setAdj(mapName, "x", adj.x + 50)} style={ctrlBtn}>→</button>
+              </div>
+              <div style={{ fontSize: 11, color: "#aaa", marginTop: 2, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
+                <span style={{ color: "#888" }}>X:</span>
                 <input type="number" value={offX} onChange={e => setAdj(mapName, "x", Number(e.target.value) - (mod?.offset_x ?? 0))} style={ctrlInput} step={10} />
-                <button onClick={() => setAdj(mapName, "x", adj.x + 50)} style={ctrlBtn}>+50</button>
-                <span style={{ color: "#888", marginLeft: 6 }}>偏移Y:</span>
-                <button onClick={() => setAdj(mapName, "y", adj.y - 50)} style={ctrlBtn}>-50</button>
+                <span style={{ color: "#888" }}>Y:</span>
                 <input type="number" value={offY} onChange={e => setAdj(mapName, "y", Number(e.target.value) - (mod?.offset_y ?? 0))} style={ctrlInput} step={10} />
-                <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>+50</button>
-                {(mod?.rotate || 0) !== 0 && <span style={{ marginLeft: 6 }}>↻{mod?.rotate}</span>}
+              </div>
+              <div style={{ fontSize: 11, color: "#aaa", marginTop: 2, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
+                <button onClick={() => setAdj(mapName, "rotate", (adj.rotate + 1) % 4)} style={ctrlBtn}>↻ 旋转</button>
+                <button onClick={() => setAdj(mapName, "mirrorX", !adj.mirrorX)} style={{...ctrlBtn, background: adj.mirrorX ? "#4CAF50" : "#555"}}>⇄ 左右</button>
+                <button onClick={() => setAdj(mapName, "mirrorY", !adj.mirrorY)} style={{...ctrlBtn, background: adj.mirrorY ? "#4CAF50" : "#555"}}>⇅ 上下</button>
+                <button onClick={() => setAdjOffsets(prev => { const n = {...prev}; delete n[mapName]; return n; })} style={ctrlBtn}>↺ 重置</button>
+              </div>
               </div>
               )}
             </div>
