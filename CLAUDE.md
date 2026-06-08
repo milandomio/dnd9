@@ -112,6 +112,7 @@ npm run preview
   - `size_x >= 2`→ `grid-column: span 2`（宽度占 2 列）
   - `size_y >= 2`→ 通过 `grid-row: span 2` 或内部 stretch（高度自适应）
   - 容器 `aspect-ratio: {size_x} / {size_y}` 保持比例
+- 地图卡片排序：按 `size_y, size_x` 升序，即 1x1 → 2x1 → 1x2 → 2x2
 - 坐标范围：`range = max(size_x, size_y) * 1600`（默认 1600 单位/格）
 
 ## 数据流
