@@ -12,10 +12,11 @@ env/
 node_modules/
 frontend/dist/
 backend/output/
+frontend/public/data/
 
-# Data
 *.db
 *.csv
+backend/darkfind.db
 
 # OS
 .DS_Store
