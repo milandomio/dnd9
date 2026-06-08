@@ -11,7 +11,7 @@ function zColor(z: number): string {
   return "#ff4444";
 }
 
-const GLOW = "0 0 2px #fff";
+const GLOW = "0 0 2px rgba(255,255,255,0.33)";
 
 function zTextShadow(col: string): string {
   return col === "#ff4444" ? "-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff" : GLOW;
