@@ -243,6 +243,7 @@ export default function DetailPage() {
                   );
                 })}
               </div>
+              {debug && (
               <div style={{ marginTop: 4, fontSize: 11, color: "#aaa", display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
                 <span style={{ color: "#888" }}>范围:</span>
                 <button onClick={() => setAdj(mapName, "range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
@@ -258,6 +259,7 @@ export default function DetailPage() {
                 <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>+50</button>
                 {(mod?.rotate || 0) !== 0 && <span style={{ marginLeft: 6 }}>↻{mod?.rotate}</span>}
               </div>
+              )}
             </div>
           );
           })}
