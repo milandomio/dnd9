@@ -21,6 +21,7 @@ interface NPCEntry {
   npc_name: string;
   npc_name_display: string;
   quest_count: number;
+  category: string;
   quests: NPCQuest[];
 }
 
@@ -47,7 +48,23 @@ export default function QuestNPCPage() {
       <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginBottom: 20 }}>
         共 {data.length} 个活跃NPC
       </div>
-      {data.map((npc) => (
+      {(() => {
+        const grouped = new Map<string, NPCEntry[]>();
+        for (const npc of data) {
+          const cat = npc.category || "其他";
+          if (!grouped.has(cat)) grouped.set(cat, []);
+          grouped.get(cat)!.push(npc);
+        }
+        const order = ["装备NPC", "优选NPC", "可用NPC", ""];
+        return [...grouped.entries()].sort(([a], [b]) => order.indexOf(a) - order.indexOf(b));
+      })().map(([category, npcs]) => (<div key={category}>
+        <div style={{
+          fontSize: 22, fontWeight: "bold", color: "#FFC107",
+          padding: "5px 0", borderBottom: "2px solid #FFC107", marginBottom: 12, marginTop: 24,
+        }}>
+          {category || "其他"} ({npcs.length})
+        </div>
+        {npcs.map((npc) => (
         <div key={npc.npc_name} style={{
           background: "#3a3a3a", border: "1px solid #555", borderRadius: 8,
           padding: 16, marginBottom: 16, cursor: "pointer",
@@ -101,6 +118,8 @@ export default function QuestNPCPage() {
             </div>
           )}
         </div>
+      ))}
+      </div>
       ))}
     </div>
   );

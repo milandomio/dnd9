@@ -110,6 +110,18 @@ def _extract_fetch(translator, extractor, quests):
     return fetch_items
 
 
+def _get_npc_category(npc_en):
+    equipment = {"Armourer", "Goldsmith", "Leathersmith", "Tailor", "Weaponsmith"}
+    preferred = {"GoblinMerchant", "TavernMaster"}
+    not_recommended = {"Squire", "Dealmaker", "Cockatrice", "Huntress"}
+    if npc_en in equipment:
+        return "装备NPC"
+    if npc_en in preferred:
+        return "优选NPC"
+    if npc_en in not_recommended:
+        return ""
+    return "可用NPC"
+
 def _extract_npc_list(translator, extractor, quests):
     grouped_en = extractor.group_quests_by_npc(use_translated_names=False)
     result = []
@@ -142,6 +154,7 @@ def _extract_npc_list(translator, extractor, quests):
             "npc_name": npc_en,
             "npc_name_display": npc_display,
             "quest_count": len(quests_out),
+            "category": _get_npc_category(npc_en),
             "quests": quests_out,
         })
     return result
