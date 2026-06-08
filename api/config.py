@@ -78,3 +78,8 @@ MODULE_NAME_OVERRIDE = {
     "EmptyModule_1F_15": "7-4模块",
     "EmptyModule_1F_13": "6-5模块",
 }
+
+MODULE_DISPLAY_OVERRIDE = {
+    "ShipGraveyard_Hole": {"size_x": 2, "size_y": 2, "range": 4800},
+    "ShipGraveyard_HangingShip": {"size_x": 2, "size_y": 1},
+}

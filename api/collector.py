@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from config import DB_PATH, OUTPUT_DIR, HARDCODED_TRANSLATIONS, MODULE_NAME_OVERRIDE, TRANSLATION_ALIAS_MAP
+from config import DB_PATH, OUTPUT_DIR, HARDCODED_TRANSLATIONS, MODULE_NAME_OVERRIDE, MODULE_DISPLAY_OVERRIDE, TRANSLATION_ALIAS_MAP
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
 
@@ -203,12 +203,15 @@ def run():
     modules = db.get_dungeon_modules()
     modules_map: dict[str, dict] = {}
     for r in modules:
+        override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
+        sx = override.get("size_x", r["size_x"])
+        sy = override.get("size_y", r["size_y"])
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
             "group": r["module_group"],
-            "size_x": r["size_x"],
-            "size_y": r["size_y"],
+            "size_x": sx,
+            "size_y": sy,
             "sl_base_name": r["sl_base_name"],
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
