@@ -12,7 +12,7 @@ function zColor(z: number): string {
 }
 
 function zTextShadow(col: string): string {
-  if (col === "#ff4444") return "0 0 2px #fff, 0 0 4px #fff, 0 0 2px #000";
+  if (col === "#ff4444") return "0 0 2px #fff, 0 0 2px #000";
   return "0 0 4px #fff, 0 0 2px #000";
 }
 
