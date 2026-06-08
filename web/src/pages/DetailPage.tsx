@@ -100,12 +100,22 @@ export default function DetailPage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-      <Typography.Title level={4}>
-        {entity.translation || entity.name}
-        <Typography.Text code style={{ fontSize: 14, marginLeft: 12 }}>
+      <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, margin: "0 0 12px" }}>
+        {entity.translation || entity.name} 位置汇总
+      </h1>
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <Typography.Text code style={{ fontSize: 14 }}>
           {entity.name}
         </Typography.Text>
-      </Typography.Title>
+        <button onClick={() => setDebug(!debug)} style={{
+          marginLeft: 16, padding: "4px 16px",
+          background: debug ? "#4CAF50" : "#FFC107", color: debug ? "#fff" : "#000",
+          border: debug ? "2px solid #388E3C" : "2px solid #FF9800",
+          borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: "bold",
+        }}>
+          {debug ? "退出调试" : "显示调试信息"}
+        </button>
+      </div>
 
       {"monsters" in entity && entity.monsters && entity.monsters.length > 0 && (
         <div style={{ marginBottom: 16 }}>
@@ -124,16 +134,6 @@ export default function DetailPage() {
         textAlign: "center", color: "#ff6b6b", fontSize: 14, marginBottom: 20,
         padding: 8, background: "#3a3a3a", borderRadius: 5, maxWidth: 700, marginLeft: "auto", marginRight: "auto",
       }}>⚠️ 数据有误差，以实际游戏内为准</div>
-
-      <button onClick={() => setDebug(!debug)} style={{
-        position: "fixed", top: 20, right: 20, padding: "10px 20px",
-        background: debug ? "#4CAF50" : "#FFC107", color: debug ? "#fff" : "#000",
-        border: debug ? "2px solid #388E3C" : "2px solid #FF9800",
-        borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: "bold",
-        zIndex: 9999, boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-      }}>
-        {debug ? "退出调试" : "显示调试信息"}
-      </button>
 
       <div style={{ marginBottom: 12, display: "flex", gap: 16, fontSize: 12 }}>
         <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#00ffff", marginRight: 4 }}></span> Z &gt; 299 (高于地面)</span>
@@ -190,6 +190,7 @@ export default function DetailPage() {
                 {mapCoords[0].file}<br/>
                 旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},{mod?.offset_y ?? 0}) 大小:{sx}x{sy}
               </div>}
+
               <div style={{
                 aspectRatio: `${sx} / ${sy}`,
                 background: "#2c2c2c",
