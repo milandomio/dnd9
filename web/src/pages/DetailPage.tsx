@@ -106,7 +106,7 @@ export default function DetailPage() {
                 {mod?.translation || mapName}
               </h3>
               <div style={{
-                aspectRatio: `${sx} / ${sy}`,
+                aspectRatio: "1",
                 background: "#2c2c2c",
                 border: "1px solid #666",
                 borderRadius: 4,
