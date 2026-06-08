@@ -247,33 +247,25 @@ export default function DetailPage() {
                 })}
               </div>
               {debug && (
-              <div>
-              <div style={{ fontSize: 11, color: "#aaa", marginTop: 4, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
+              <div style={{ fontSize: 11, color: "#aaa", marginTop: 4, display: "flex", gap: 4, alignItems: "center", flexWrap: "nowrap" }}>
                 <span style={{ color: "#888" }}>范围:</span>
                 <button onClick={() => setAdj(mapName, "range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
                 <input type="number" value={range} onChange={e => setAdj(mapName, "range", Number(e.target.value) - baseRange)} style={ctrlInput} step={100} />
                 <button onClick={() => setAdj(mapName, "range", range * 2 - baseRange)} style={ctrlBtn}>x2</button>
                 <span style={{ color: "#aaa", fontSize: 12, marginLeft: 4 }}>↻{adj.rotate}</span>
-              </div>
-              <div style={{ fontSize: 11, color: "#aaa", marginTop: 2, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
-                <span style={{ color: "#888" }}>偏移:</span>
-                <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>↑</button>
-                <button onClick={() => setAdj(mapName, "y", adj.y - 50)} style={ctrlBtn}>↓</button>
+                <span style={{ color: "#888", marginLeft: 8 }}>偏移:</span>
+                <button onClick={() => setAdj(mapName, "y", adj.y - 50)} style={ctrlBtn}>↑</button>
+                <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>↓</button>
                 <button onClick={() => setAdj(mapName, "x", adj.x - 50)} style={ctrlBtn}>←</button>
                 <button onClick={() => setAdj(mapName, "x", adj.x + 50)} style={ctrlBtn}>→</button>
-              </div>
-              <div style={{ fontSize: 11, color: "#aaa", marginTop: 2, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
-                <span style={{ color: "#888" }}>X:</span>
+                <span style={{ color: "#888", marginLeft: 8 }}>X:</span>
                 <input type="number" value={offX} onChange={e => setAdj(mapName, "x", Number(e.target.value) - (mod?.offset_x ?? 0))} style={ctrlInput} step={10} />
                 <span style={{ color: "#888" }}>Y:</span>
                 <input type="number" value={offY} onChange={e => setAdj(mapName, "y", Number(e.target.value) - (mod?.offset_y ?? 0))} style={ctrlInput} step={10} />
-              </div>
-              <div style={{ fontSize: 11, color: "#aaa", marginTop: 2, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
                 <button onClick={() => setAdj(mapName, "rotate", (adj.rotate + 1) % 4)} style={ctrlBtn}>↻ 旋转</button>
                 <button onClick={() => setAdj(mapName, "mirrorX", !adj.mirrorX)} style={{...ctrlBtn, background: adj.mirrorX ? "#4CAF50" : "#555"}}>⇄ 左右</button>
                 <button onClick={() => setAdj(mapName, "mirrorY", !adj.mirrorY)} style={{...ctrlBtn, background: adj.mirrorY ? "#4CAF50" : "#555"}}>⇅ 上下</button>
                 <button onClick={() => setAdjOffsets(prev => { const n = {...prev}; delete n[mapName]; return n; })} style={ctrlBtn}>↺ 重置</button>
-              </div>
               </div>
               )}
             </div>
