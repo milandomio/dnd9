@@ -114,10 +114,6 @@ export default function DetailPage() {
         </button>
       </div>
 
-      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginBottom: 20 }}>
-        共 {coords.length} 个坐标，分布在 {grouped.size} 个模块
-      </div>
-
       <div style={{
         textAlign: "center", color: "#ff6b6b", fontSize: 14, marginBottom: 20,
         padding: 8, background: "#3a3a3a", borderRadius: 5, maxWidth: 700, marginLeft: "auto", marginRight: "auto",
@@ -165,9 +161,9 @@ export default function DetailPage() {
                 {mod?.translation || mapName}
                 {debug && <span style={{ color: "#888", fontSize: 11 }}> ({mapName})</span>}
               </h3>
-              <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4 }}>
+              {debug && <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4 }}>
                 {mod?.sl_base_name || mapName}.webp | 找到 {mapCoords.length} 个位置 | 范围: ±{range}
-              </div>
+              </div>}
               {debug && <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4, lineHeight: 1.4 }}>
                 {mapCoords[0].file}<br/>
                 旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},{mod?.offset_y ?? 0}) 大小:{sx}x{sy}
@@ -263,6 +259,11 @@ export default function DetailPage() {
           );
           })}
         </>))}
+      </div>
+
+      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginTop: 20 }}>
+        共 {coords.length} 个坐标，分布在 {grouped.size} 个模块
+        （{[...grouped.keys()].join(", ")}）
       </div>
 
       <div style={{ marginTop: 24, display: "flex", justifyContent: "center", gap: 24, fontSize: 12, color: "#aaa" }}>
