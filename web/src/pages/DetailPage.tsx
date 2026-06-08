@@ -165,7 +165,7 @@ export default function DetailPage() {
             }}>
               <h3 style={{
                 margin: "0 0 6px 0",
-                fontSize: 14,
+                fontSize: 22,
                 color: "#00bcd4",
                 textAlign: "center",
                 width: "100%",
