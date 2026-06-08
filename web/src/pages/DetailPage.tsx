@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { useParams } from "react-router-dom";
-import { Spin, Typography, Tag } from "antd";
+import { Spin, Typography } from "antd";
 import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } from "../types/data";
 
 const GROUP_LABELS: Record<string, string> = {
@@ -104,9 +104,6 @@ export default function DetailPage() {
         {entity.translation || entity.name} 位置汇总
       </h1>
       <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <Typography.Text code style={{ fontSize: 14 }}>
-          {entity.name}
-        </Typography.Text>
         <button onClick={() => setDebug(!debug)} style={{
           marginLeft: 16, padding: "4px 16px",
           background: debug ? "#4CAF50" : "#FFC107", color: debug ? "#fff" : "#000",
@@ -117,18 +114,9 @@ export default function DetailPage() {
         </button>
       </div>
 
-      {"monsters" in entity && entity.monsters && entity.monsters.length > 0 && (
-        <div style={{ marginBottom: 16 }}>
-          <Typography.Text strong>掉落来源：</Typography.Text>
-          {entity.monsters.map((m) => (
-            <Tag key={m} style={{ marginTop: 4 }}>{m}</Tag>
-          ))}
-        </div>
-      )}
-
-      <Typography.Text type="secondary" style={{ display: "block", marginBottom: 12 }}>
+      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginBottom: 20 }}>
         共 {coords.length} 个坐标，分布在 {grouped.size} 个模块
-      </Typography.Text>
+      </div>
 
       <div style={{
         textAlign: "center", color: "#ff6b6b", fontSize: 14, marginBottom: 20,
