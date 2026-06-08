@@ -7,6 +7,7 @@ from config import DB_PATH, OUTPUT_DIR, HARDCODED_TRANSLATIONS, MODULE_DISPLAY_O
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
 from layout_utils import load_all_layout_rotations
+from quest_collector import run_quest_extraction
 
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 
@@ -243,15 +244,19 @@ def run():
             loot_out.append({"item_name": item_name, "monster_name": mon})
     _save("lootdrops.json", loot_out)
 
+    # ── Quest extraction ──
+    print("\nExtracting quest data...")
+    explore_count, quest_items_count, quest_npc_count = run_quest_extraction()
+
     # ── index.json: page index ──
     index_data = [
         {"page": "items", "label": "物品表", "count": len(items_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
         {"page": "lootdrops", "label": "掉落关系", "count": len(loot_out)},
-        {"page": "explore", "label": "探索地点表", "count": 0},
-        {"page": "quest_items", "label": "任务物品表", "count": 0},
-        {"page": "quest_npc", "label": "任务NPC表", "count": 0},
+        {"page": "explore", "label": "探索地点表", "count": explore_count},
+        {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
+        {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
     ]
     _save("index.json", index_data)
 

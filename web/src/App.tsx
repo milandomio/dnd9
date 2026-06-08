@@ -5,6 +5,9 @@ import { ThemeProvider, useTheme } from "./hooks/useTheme";
 import HomePage from "./pages/HomePage";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
+import ExplorePage from "./pages/ExplorePage";
+import QuestItemsPage from "./pages/QuestItemsPage";
+import QuestNPCPage from "./pages/QuestNPCPage";
 import NavBar from "./components/NavBar";
 
 function App() {
@@ -28,9 +31,12 @@ function AppInner() {
     <div style={{ minHeight: "100vh", padding: "24px", background: tokens.bg }}>
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/:page" element={<ListPage />} />
-        <Route path="/:page/:name" element={<DetailPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/quest_items" element={<QuestItemsPage />} />
+          <Route path="/quest_npc" element={<QuestNPCPage />} />
+          <Route path="/:page" element={<ListPage />} />
+          <Route path="/:page/:name" element={<DetailPage />} />
       </Routes>
     </div>
   );
