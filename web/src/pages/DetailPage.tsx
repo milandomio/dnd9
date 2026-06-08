@@ -19,6 +19,8 @@ export default function DetailPage() {
   const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
   const [loading, setLoading] = useState(true);
 
+  const [debug, setDebug] = useState(false);
+
   useEffect(() => {
     if (!page || !name) return;
     const decoded = decodeURIComponent(name!);
@@ -76,6 +78,16 @@ export default function DetailPage() {
         共 {coords.length} 个坐标，分布在 {grouped.size} 个模块
       </Typography.Text>
 
+      <button onClick={() => setDebug(!debug)} style={{
+        position: "fixed", top: 20, right: 20, padding: "10px 20px",
+        background: debug ? "#4CAF50" : "#FFC107", color: debug ? "#fff" : "#000",
+        border: debug ? "2px solid #388E3C" : "2px solid #FF9800",
+        borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: "bold",
+        zIndex: 9999, boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+      }}>
+        {debug ? "退出调试" : "显示调试信息"}
+      </button>
+
       <div style={{ marginBottom: 12, display: "flex", gap: 16, fontSize: 12 }}>
         <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#00ffff", marginRight: 4 }}></span> Z &gt; 299 (高于地面)</span>
         <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ffff00", marginRight: 4 }}></span> -299 ≤ Z ≤ 299 (正常高度)</span>
@@ -110,7 +122,12 @@ export default function DetailPage() {
                 whiteSpace: "nowrap",
               }}>
                 {mod?.translation || mapName}
+                {debug && <span style={{ color: "#888", fontSize: 11 }}> ({mapName})</span>}
               </h3>
+              {debug && <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4, lineHeight: 1.4 }}>
+                {mapCoords[0].file}<br/>
+                旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},{mod?.offset_y ?? 0}) 大小:{sx}x{sy} 范围:{range} 坐标:{mapCoords.length}
+              </div>}
               <div style={{
                 aspectRatio: `${sx} / ${sy}`,
                 background: "#2c2c2c",
