@@ -4,6 +4,17 @@ import { useParams } from "react-router-dom";
 import { Spin, Typography, Tag } from "antd";
 import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } from "../types/data";
 
+const GROUP_LABELS: Record<string, string> = {
+  Crypt: "废墟2层地牢",
+  FireDeep: "哥布林洞穴2层",
+  GoblinCave: "哥布林洞穴1层",
+  IceAbyss: "冰图2层",
+  IceCavern: "冰图1层",
+  Inferno: "废墟3层炼狱",
+  Ruins: "废墟1层",
+  ShipGraveyard: "水图",
+};
+
 type Entity = ItemEntity | MonsterEntity | PropsEntity;
 
 function zColor(z: number): string {
@@ -62,14 +73,28 @@ export default function DetailPage() {
     grouped.get(c.map)!.push(c);
   }
 
-  const sorted = [...grouped.entries()].sort((a, b) => {
-    const ma = modules.get(a[0]);
-    const mb = modules.get(b[0]);
-    const sx_a = ma?.size_x ?? 1;
-    const sy_a = ma?.size_y ?? 1;
-    const sx_b = mb?.size_x ?? 1;
-    const sy_b = mb?.size_y ?? 1;
-    return sy_a - sy_b || sx_a - sx_b;
+  const groupedByType = new Map<string, Array<{mapName: string; mod: DungeonModule | undefined; coords: Coord[]}>>();
+  for (const [mapName, mapCoords] of grouped) {
+    const mod = modules.get(mapName);
+    const g = mod?.group || "";
+    if (!groupedByType.has(g)) groupedByType.set(g, []);
+    groupedByType.get(g)!.push({mapName, mod, coords: mapCoords});
+  }
+
+  // Sort items within each group by size_x, size_y
+  for (const [_, items] of groupedByType) {
+    items.sort((a, b) => {
+      const sy_a = a.mod?.size_y ?? 1;
+      const sy_b = b.mod?.size_y ?? 1;
+      const sx_a = a.mod?.size_x ?? 1;
+      const sx_b = b.mod?.size_x ?? 1;
+      return sy_a - sy_b || sx_a - sx_b;
+    });
+  }
+
+  const groupOrder = Object.keys(GROUP_LABELS);
+  const sortedGroups = [...groupedByType.entries()].sort(([a], [b]) => {
+    return groupOrder.indexOf(a) - groupOrder.indexOf(b);
   });
 
   return (
@@ -111,8 +136,16 @@ export default function DetailPage() {
       </div>
 
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(4, 1fr)" }}>
-        {sorted.map(([mapName, mapCoords]) => {
-          const mod = modules.get(mapName);
+        {sortedGroups.map(([groupName, items]) => (<>
+          {groupName && <div key={`h-${groupName}`} style={{
+            gridColumn: "1 / -1",
+            fontSize: 22,
+            fontWeight: "bold",
+            color: "#FFC107",
+            padding: "5px 0",
+            marginTop: 8,
+          }}>{GROUP_LABELS[groupName] || groupName}</div>}
+          {items.map(({mapName, mod, coords: mapCoords}) => {
           const sx = mod?.size_x ?? 1;
           const sy = mod?.size_y ?? 1;
           const baseRange = mod?.range || Math.max(sx, sy) * 1600;
@@ -227,7 +260,8 @@ export default function DetailPage() {
               </div>
             </div>
           );
-        })}
+          })}
+        </>))}
       </div>
     </div>
   );
