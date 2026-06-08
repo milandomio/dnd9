@@ -42,7 +42,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const tokens = dark ? DARK : LIGHT;
 
   useEffect(() => {
+    const bg = dark ? "#2c2c2c" : "#f5f5f5";
     document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    document.documentElement.style.background = bg;
+    document.body.style.background = bg;
+    document.body.style.margin = "0";
   }, [dark]);
 
   return <ThemeCtx.Provider value={{ dark, tokens, toggle }}>{children}</ThemeCtx.Provider>;
