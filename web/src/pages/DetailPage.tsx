@@ -11,9 +11,18 @@ function zColor(z: number): string {
   return "#ff4444";
 }
 
+const STROKE_2PX = [
+  "-2px -2px 0 #fff", "-1px -2px 0 #fff", "0px -2px 0 #fff", "1px -2px 0 #fff", "2px -2px 0 #fff",
+  "-2px -1px 0 #fff", "2px -1px 0 #fff",
+  "-2px 0px 0 #fff", "2px 0px 0 #fff",
+  "-2px 1px 0 #fff", "2px 1px 0 #fff",
+  "-2px 2px 0 #fff", "-1px 2px 0 #fff", "0px 2px 0 #fff", "1px 2px 0 #fff", "2px 2px 0 #fff",
+].join(",");
+
+const GLOW = "0 0 4px #fff, 0 0 2px #000";
+
 function zTextShadow(col: string): string {
-  if (col === "#ff4444") return "0 0 2px #fff, 0 0 2px #000";
-  return "0 0 4px #fff, 0 0 2px #000";
+  return col === "#ff4444" ? STROKE_2PX + ",0 0 2px #000" : GLOW;
 }
 
 export default function DetailPage() {
