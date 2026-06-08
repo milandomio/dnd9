@@ -6,12 +6,12 @@
 
 ```
 DarkFindV5/
-├── backend/                  # Python 数据处理管道
+├── api/                  # Python 数据处理管道
 │   ├── main.py               # 入口：读取 data/ 原始 JSON，清洗后输出到 output/
 │   ├── config.py             # 路径配置
 │   ├── data/                 # 原始 JSON 输入（.gitignore 忽略？根据需求）
 │   └── output/               # 清洗后的 JSON 输出（供前端消费）
-├── frontend/                 # React 前端（SSG）
+├── web/                 # React 前端（SSG）
 │   ├── src/
 │   │   ├── main.tsx          # 入口：注水渲染
 │   │   ├── App.tsx           # Ant Design 暗色主题 + zhCN 配置
@@ -30,10 +30,10 @@ DarkFindV5/
 
 ```bash
 # 1. 后端：读取原始 JSON → 清洗 → 输出
-cd backend && python main.py
+cd api && python main.py
 
 # 2. 前端：安装依赖、开发、构建
-cd frontend
+cd web
 npm install        # 首次
 npm run dev        # 开发服务器
 npm run build      # SSG 生产构建（输出到 dist/）
@@ -56,9 +56,9 @@ npm run preview
 ## 数据流
 
 ```
-原始 JSON (backend/data/)
+原始 JSON (api/data/)
     ↓ Python: main.py (清洗/转换)
-后端 JSON (backend/output/data.json → 前端静态资源)
+后端 JSON (api/output/data.json → 前端静态资源)
     ↓ Vite build 复制到 dist/
     ↓ GitHub Actions 部署到 Pages
     ↓ 浏览器 fetch("./data.json") → 注水渲染
