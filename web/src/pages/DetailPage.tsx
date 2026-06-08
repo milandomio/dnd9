@@ -8,11 +8,10 @@ type Entity = ItemEntity | MonsterEntity | PropsEntity;
 function zColor(z: number): string {
   if (z > 299) return "#00ffff";
   if (z >= -299) return "#ffff00";
-  return "#ff4444";
+  return "#ff3333";
 }
 
 const GLOW = "0 0 4px #fff, 0 0 2px #000";
-const RED_OUTLINE = "-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff,0 0 4px #fff,0 0 2px #000";
 
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
@@ -147,7 +146,7 @@ export default function DetailPage() {
                         fontFamily: "Arial, sans-serif",
                         color: col,
                         whiteSpace: "nowrap",
-                        textShadow: col === "#ff4444" ? RED_OUTLINE : GLOW,
+                        textShadow: GLOW,
                         lineHeight: 1,
                         marginTop: 1,
                       }}>
