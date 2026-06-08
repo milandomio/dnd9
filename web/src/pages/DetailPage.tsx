@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 import { useParams } from "react-router-dom";
 import { Spin, Typography, Tag } from "antd";
 import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } from "../types/data";
@@ -13,6 +14,9 @@ function zColor(z: number): string {
 
 const GLOW = "0 0 4px #fff, 0 0 2px #000";
 
+const ctrlBtn: CSSProperties = { background: "#555", color: "#ccc", border: "1px solid #777", borderRadius: 3, padding: "1px 6px", cursor: "pointer", fontSize: 11 };
+const ctrlInput: CSSProperties = { width: 55, background: "#333", color: "#fff", border: "1px solid #666", borderRadius: 3, padding: "1px 4px", fontSize: 11, textAlign: "center" };
+
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
   const [entity, setEntity] = useState<Entity | null>(null);
@@ -20,6 +24,18 @@ export default function DetailPage() {
   const [loading, setLoading] = useState(true);
 
   const [debug, setDebug] = useState(false);
+  const [adjOffsets, setAdjOffsets] = useState<Record<string, {x: number; y: number; range: number}>>({});
+
+  function getAdj(mapName: string) {
+    return adjOffsets[mapName] || {x: 0, y: 0, range: 0};
+  }
+
+  function setAdj(mapName: string, field: string, value: number) {
+    setAdjOffsets(prev => {
+      const cur = prev[mapName] || {x: 0, y: 0, range: 0};
+      return {...prev, [mapName]: {...cur, [field]: value}};
+    });
+  }
 
   useEffect(() => {
     if (!page || !name) return;
@@ -99,7 +115,11 @@ export default function DetailPage() {
           const mod = modules.get(mapName);
           const sx = mod?.size_x ?? 1;
           const sy = mod?.size_y ?? 1;
-          const range = mod?.range || Math.max(sx, sy) * 1600;
+          const baseRange = mod?.range || Math.max(sx, sy) * 1600;
+          const adj = getAdj(mapName);
+          const range = (baseRange + adj.range) || 1600;
+          const offX = (mod?.offset_x ?? 0) + adj.x;
+          const offY = (mod?.offset_y ?? 0) + adj.y;
           return (
             <div key={mapName} style={{
               minWidth: 0,
@@ -142,8 +162,8 @@ export default function DetailPage() {
                 } : {}),
               }}>
                 {mapCoords.map((c, i) => {
-                  let x = c.x + (mod?.offset_x ?? 0);
-                  let y = c.y + (mod?.offset_y ?? 0);
+                  let x = c.x + offX;
+                  let y = c.y + offY;
                   const r = mod?.rotate ?? 0;
                   if (r === 1) { const nx = y; const ny = -x; x = nx; y = ny; }
                   else if (r === 2) { x = -x; y = -y; }
@@ -157,7 +177,7 @@ export default function DetailPage() {
                   const col = zColor(c.z);
                   const textCol = col === "#ff3333" ? "#ffffff" : col;
                   const textShadow = col === "#ff3333" ? "0.5px 0.5px 0 #ff3333,-0.5px -0.5px 0 #ff3333,0 0 4px #fff,0 0 2px #000" : GLOW;
-                  return (
+                   return (
                     <div key={i} style={{
                       position: "absolute",
                       left: `${px}%`,
@@ -189,6 +209,21 @@ export default function DetailPage() {
                     </div>
                   );
                 })}
+              </div>
+              <div style={{ marginTop: 4, fontSize: 11, color: "#aaa", display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" }}>
+                <span style={{ color: "#888" }}>范围:</span>
+                <button onClick={() => setAdj(mapName, "range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
+                <input type="number" value={range} onChange={e => setAdj(mapName, "range", Number(e.target.value) - baseRange)} style={ctrlInput} step={100} />
+                <button onClick={() => setAdj(mapName, "range", range * 2 - baseRange)} style={ctrlBtn}>x2</button>
+                <span style={{ color: "#888", marginLeft: 6 }}>偏移X:</span>
+                <button onClick={() => setAdj(mapName, "x", adj.x - 50)} style={ctrlBtn}>-50</button>
+                <input type="number" value={offX} onChange={e => setAdj(mapName, "x", Number(e.target.value) - (mod?.offset_x ?? 0))} style={ctrlInput} step={10} />
+                <button onClick={() => setAdj(mapName, "x", adj.x + 50)} style={ctrlBtn}>+50</button>
+                <span style={{ color: "#888", marginLeft: 6 }}>偏移Y:</span>
+                <button onClick={() => setAdj(mapName, "y", adj.y - 50)} style={ctrlBtn}>-50</button>
+                <input type="number" value={offY} onChange={e => setAdj(mapName, "y", Number(e.target.value) - (mod?.offset_y ?? 0))} style={ctrlInput} step={10} />
+                <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>+50</button>
+                {(mod?.rotate || 0) !== 0 && <span style={{ marginLeft: 6 }}>↻{mod?.rotate}</span>}
               </div>
             </div>
           );
