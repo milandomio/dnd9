@@ -46,6 +46,16 @@ def _sl_base_name(name: str) -> str:
     return name
 
 
+def _extract_actor_name(outer_str: str) -> str:
+    if "'" in outer_str:
+        parts = outer_str.split("'")
+        last_part = parts[-2] if len(parts) > 2 and parts[-1] == "" else parts[-1]
+        if "." in last_part:
+            return last_part.split(".")[-1]
+        return last_part
+    return outer_str
+
+
 def _list_map_jsons(root: str | Path) -> list[Path]:
     root = Path(root)
     if not root.exists():
@@ -68,49 +78,48 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
     if not isinstance(data, list):
         return []
 
-    spawners_list = []
-    scene_components = {}
+    spawners: dict[str, dict] = {}
+    scene: dict[str, dict] = {}
 
     for entry in data:
         if not isinstance(entry, dict):
             continue
         t = entry.get("Type", "")
-        if t == "SphereComponent":
+
+        if t == "BP_GameSpawner_C":
             props = entry.get("Properties", {}) or {}
-            loc = props.get("RelativeLocation", {}) or {}
-            x = loc.get("X", 0)
-            y = loc.get("Y", 0)
-            z = loc.get("Z", 0)
+            sd = props.get("SpawnerDataAsset", {}) or {}
+            raw_obj = sd.get("ObjectName", "")
+            keyword = strip_id_prefix(raw_obj)
+            if not keyword:
+                continue
+            pd = props.get("PreviewData", {}) or {}
+            asset_path = pd.get("AssetPathName", "")
+            spawner_type = _preview_type(asset_path)
+            spawner_name = entry.get("Name", "")
+            if spawner_name:
+                spawners[spawner_name] = {
+                    "keyword": keyword,
+                    "spawner_type": spawner_type,
+                }
+
+        elif t == "SphereComponent" and entry.get("Name") == "SceneComponent":
             outer_raw = entry.get("Outer", "")
             if isinstance(outer_raw, dict):
-                outer_raw = (outer_raw or {}).get("ObjectName", "") or ""
-            elif not isinstance(outer_raw, str):
-                outer_raw = str(outer_raw) if outer_raw else ""
-            scene_components[outer_raw] = {"x": x, "y": y, "z": z}
+                outer_raw = (outer_raw or {}).get("ObjectName", "")
+            if not outer_raw or not isinstance(outer_raw, str):
+                continue
+            actor_name = _extract_actor_name(outer_raw)
+            if not actor_name:
+                continue
+            loc = (entry.get("Properties", {}) or {}).get("RelativeLocation", {}) or {}
+            scene[actor_name] = {"x": loc.get("X", 0), "y": loc.get("Y", 0), "z": loc.get("Z", 0)}
 
-    for entry in data:
-        if not isinstance(entry, dict):
-            continue
-        t = entry.get("Type", "")
-        if t != "BP_GameSpawner_C":
-            continue
-        props = entry.get("Properties", {}) or {}
-        sd = props.get("SpawnerDataAsset", {}) or {}
-        raw_obj = sd.get("ObjectName", "")
-        keyword = strip_id_prefix(raw_obj)
-        if not keyword:
-            continue
-        pd = props.get("PreviewData", {}) or {}
-        asset_path = pd.get("AssetPathName", "")
-        spawner_type = _preview_type(asset_path)
-        rc = props.get("RootComponent", "") or ""
-        if isinstance(rc, dict):
-            component_ref = rc.get("ObjectName", "")
-        else:
-            component_ref = str(rc) if rc else ""
-        coord = scene_components.get(component_ref, {"x": 0, "y": 0, "z": 0})
-        version = ""
+    results = []
+    for name, info in spawners.items():
+        coord = scene.get(name, {"x": 0, "y": 0, "z": 0})
         stem = map_json_path.stem
+        version = ""
         if stem.endswith("_HR_D"):
             version = ""
         elif stem.endswith("_D"):
@@ -118,10 +127,10 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
         elif stem.endswith("_A"):
             version = "(A)"
         map_base = _sl_base_name(stem)
-        spawners_list.append({
-            "keyword": keyword,
-            "original_keyword": keyword,
-            "spawner_type": spawner_type,
+        results.append({
+            "keyword": info["keyword"],
+            "original_keyword": info["keyword"],
+            "spawner_type": info["spawner_type"],
             "x": coord["x"],
             "y": coord["y"],
             "z": coord["z"],
@@ -129,7 +138,7 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
             "map_base": map_base,
             "version": version,
         })
-    return spawners_list
+    return results
 
 
 def build_automaton(terms: list[str]) -> ahocorasick.Automaton:
@@ -208,8 +217,6 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
     for idx, s in enumerate(all_spawners):
         kw = s["keyword"]
         matched = match_keyword(kw, terms_set, auto)
-        if not matched:
-            kw_upper = kw[0].upper() + kw[1:] if kw else kw
         for m in matched:
             if m not in matches:
                 matches[m] = []
