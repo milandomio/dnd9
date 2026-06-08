@@ -82,11 +82,13 @@ def run():
         suffix = key.rsplit("_", 1)[-1]
         return translations.get(suffix, suffix)
 
-    # ── items.json: items with coordinates ──
+    # ── items.json: only items with coordinates ──
     items_with_matches = db.get_items_with_matches()
     items_data = []
     for r in items_with_matches:
         coords = db.get_item_coordinates(r["item_name"])
+        if not coords:
+            continue
         item = {
             "name": r["item_name"],
             "translation": t(r["translation_key"]),
@@ -107,12 +109,36 @@ def run():
         items_data.append(item)
     _save("items.json", items_data)
 
-    # ── monsters.json ──
-    monsters_data = [{"name": r["monster_name"], "translation": t(r["translation_key"])} for r in monsters]
+    # ── monsters.json: only monsters with coordinates ──
+    monsters_data = []
+    for r in monsters:
+        coords = db.get_item_coordinates(r["monster_name"])
+        if not coords:
+            continue
+        monsters_data.append({
+            "name": r["monster_name"],
+            "translation": t(r["translation_key"]),
+            "coords": [
+                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
+                for c in coords
+            ],
+        })
     _save("monsters.json", monsters_data)
 
-    # ── props.json ──
-    props_data = [{"name": r["asset_name"], "translation": t(r["translation_key"])} for r in props]
+    # ── props.json: only props with coordinates ──
+    props_data = []
+    for r in props:
+        coords = db.get_item_coordinates(r["asset_name"])
+        if not coords:
+            continue
+        props_data.append({
+            "name": r["asset_name"],
+            "translation": t(r["translation_key"]),
+            "coords": [
+                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
+                for c in coords
+            ],
+        })
     _save("props.json", props_data)
 
     # ── dungeon_modules.json ──
@@ -131,7 +157,7 @@ def run():
     loot = db.get_lootdrop_relationships()
     _save("lootdrops.json", loot)
 
-    # ── index.json: page index ──
+    # ── index.json: page index (counts = with coords) ──
     index_data = [
         {"page": "items", "label": "物品表", "count": len(items_data)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_data)},
