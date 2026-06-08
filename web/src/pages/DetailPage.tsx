@@ -5,6 +5,12 @@ import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } fro
 
 type Entity = ItemEntity | MonsterEntity | PropsEntity;
 
+function zColor(z: number): string {
+  if (z > 299) return "#00ffff";
+  if (z >= -299) return "#ffff00";
+  return "#ff4444";
+}
+
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
   const [entity, setEntity] = useState<Entity | null>(null);
@@ -30,7 +36,6 @@ export default function DetailPage() {
   if (!entity) return <Typography.Text type="danger">未找到</Typography.Text>;
 
   const coords = entity.coords;
-
   const grouped = new Map<string, Coord[]>();
   for (const c of coords) {
     if (!grouped.has(c.map)) grouped.set(c.map, []);
@@ -69,12 +74,18 @@ export default function DetailPage() {
         共 {coords.length} 个坐标，分布在 {grouped.size} 个模块
       </Typography.Text>
 
+      <div style={{ marginBottom: 12, display: "flex", gap: 16, fontSize: 12 }}>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#00ffff", marginRight: 4 }}></span> Z &gt; 299 (高于地面)</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ffff00", marginRight: 4 }}></span> -299 ≤ Z ≤ 299 (正常高度)</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ff4444", marginRight: 4 }}></span> Z &lt; -299 (低于地面)</span>
+      </div>
+
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(4, 1fr)" }}>
         {sorted.map(([mapName, mapCoords]) => {
           const mod = modules.get(mapName);
           const sx = mod?.size_x ?? 1;
           const sy = mod?.size_y ?? 1;
-          const style: React.CSSProperties = {
+          const cardStyle: React.CSSProperties = {
             gridColumn: sx >= 2 ? `span ${sx}` : undefined,
             aspectRatio: `${sx} / ${sy}`,
             background: "#141414",
@@ -85,14 +96,13 @@ export default function DetailPage() {
             overflow: "hidden",
           };
           if (mod?.sl_base_name) {
-            const imgUrl = `./data/img/${mod.sl_base_name}.webp`;
-            style.backgroundImage = `url(${imgUrl})`;
-            style.backgroundSize = "cover";
-            style.backgroundPosition = "center";
+            cardStyle.backgroundImage = `url(./data/img/${mod.sl_base_name}.webp)`;
+            cardStyle.backgroundSize = "cover";
+            cardStyle.backgroundPosition = "center";
           }
           const range = Math.max(sx, sy) * 1600;
           return (
-            <div key={mapName} style={style}>
+            <div key={mapName} style={cardStyle}>
               <div style={{
                 background: "rgba(0,0,0,0.6)",
                 padding: "4px 8px",
@@ -106,18 +116,38 @@ export default function DetailPage() {
               {mapCoords.map((c, i) => {
                 const px = ((c.x + range) / (range * 2)) * 100;
                 const py = ((-c.y + range) / (range * 2)) * 100;
+                const col = zColor(c.z);
                 return (
                   <div key={i} style={{
                     position: "absolute",
                     left: `${px}%`,
                     top: `${py}%`,
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: "#1677ff",
                     transform: "translate(-50%, -50%)",
                     pointerEvents: "none",
-                  }} title={`(${c.x}, ${c.y}, ${c.z})`} />
+                  }}>
+                    <div style={{
+                      width: 9,
+                      height: 9,
+                      borderRadius: "50%",
+                      background: col,
+                      boxShadow: `0 0 6px ${col}`,
+                      border: "1px solid #fff",
+                    }} />
+                    <span style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "100%",
+                      transform: "translateX(-50%)",
+                      fontSize: 11,
+                      color: col,
+                      whiteSpace: "nowrap",
+                      textShadow: "0 0 4px #fff, 0 0 2px #000",
+                      lineHeight: 1,
+                      marginTop: 1,
+                    }}>
+                      {Math.round(c.z)}
+                    </span>
+                  </div>
                 );
               })}
             </div>
