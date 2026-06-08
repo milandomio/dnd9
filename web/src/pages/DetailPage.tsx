@@ -90,7 +90,6 @@ export default function DetailPage() {
           const range = Math.max(sx, sy) * 1600;
           return (
             <div key={mapName} style={{
-              gridColumn: sx >= 2 ? `span ${sx}` : undefined,
               background: "#3a3a3a",
               border: "1px solid #555",
               borderRadius: 5,
