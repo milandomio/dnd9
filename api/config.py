@@ -83,3 +83,25 @@ MODULE_DISPLAY_OVERRIDE = {
     "ShipGraveyard_Hole": {"size_x": 2, "size_y": 2, "range": 4800},
     "ShipGraveyard_HangingShip": {"size_x": 2, "size_y": 1},
 }
+
+MODULE_OFFSET_MAP = {
+    "ShipGraveyard_PiratePrison": (-3200, 3200),
+    "ShipGraveyard_BladehandRefuge": (-1600, -1600),
+    "ShipGraveyard_HangingShip": (1600, 0),
+    "Inferno_Hellcrossbridge": (-600, 300),
+    "Inferno_Judgementroad": (-1000, -1000),
+    "Inferno_Painfulsteps": (-800, 0),
+    "IceAbyss_WyvernLair": (1600, -2400),
+    "CenterTower": (-1600, -1600),
+    "IceCave_Watchtower": (-150, 900),
+    "IceCave_Hive_03": (-1600, -1600),
+    "IceAbyss_IceMaze": (-1150, 0),
+    "Firedeep_BlazeTunnel": (0, -500),
+    "Ruins_TowerBridge_Destroyed": (-1600, -1600),
+    "ShipGraveyard_SkullIsland": (1600, 1600),
+    "ShipGraveyard_AbandonedShip_01": (-1600, -1600),
+    "ShipGraveyard_ElephantIsland": (-1600, 1600),
+    "ShipGraveyard_FloatingVillage": (-1600, 1600),
+}
+
+LAYOUT_DIR = GAME_ROOT / "Maps" / "Dungeon" / "Layouts"

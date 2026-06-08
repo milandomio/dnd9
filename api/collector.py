@@ -3,9 +3,10 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from config import DB_PATH, OUTPUT_DIR, HARDCODED_TRANSLATIONS, MODULE_NAME_OVERRIDE, MODULE_DISPLAY_OVERRIDE, TRANSLATION_ALIAS_MAP
+from config import DB_PATH, OUTPUT_DIR, HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE, MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
+from layout_utils import load_all_layout_rotations
 
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 
@@ -200,12 +201,15 @@ def run():
     _save("props.json", props_index)
 
     # ── dungeon_modules.json ──
+    module_rotations = load_all_layout_rotations()
     modules = db.get_dungeon_modules()
     modules_map: dict[str, dict] = {}
     for r in modules:
         override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
         sx = override.get("size_x", r["size_x"])
         sy = override.get("size_y", r["size_y"])
+        offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
+        rotate = module_rotations.get(r["sl_base_name"], 0)
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
@@ -213,6 +217,9 @@ def run():
             "size_x": sx,
             "size_y": sy,
             "sl_base_name": r["sl_base_name"],
+            "offset_x": offset_x,
+            "offset_y": offset_y,
+            "rotate": rotate,
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:

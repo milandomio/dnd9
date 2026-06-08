@@ -125,8 +125,18 @@ export default function DetailPage() {
                 } : {}),
               }}>
                 {mapCoords.map((c, i) => {
-                  const px = ((c.x + range) / (range * 2)) * 100;
-                  const py = ((-c.y + range) / (range * 2)) * 100;
+                  let x = c.x + (mod?.offset_x ?? 0);
+                  let y = c.y + (mod?.offset_y ?? 0);
+                  const r = mod?.rotate ?? 0;
+                  if (r === 1) { const nx = y; const ny = -x; x = nx; y = ny; }
+                  else if (r === 2) { x = -x; y = -y; }
+                  else if (r === 3) { const nx = -y; const ny = x; x = nx; y = ny; }
+                  const multX = sx === 1 && sy === 2 ? 100 : 50;
+                  const centerX = sx === 1 && sy === 2 ? 100 : 50;
+                  const multY = 50;
+                  const centerY = 50;
+                  const px = centerX + (x / range) * multX;
+                  const py = centerY + (y / range) * multY;
                   const col = zColor(c.z);
                   const textCol = col === "#ff3333" ? "#ffffff" : col;
                   const textShadow = col === "#ff3333" ? "0.5px 0.5px 0 #ff3333,-0.5px -0.5px 0 #ff3333,0 0 4px #fff,0 0 2px #000" : GLOW;
