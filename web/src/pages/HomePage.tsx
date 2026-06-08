@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
-        DarkFindV5
+        DarkFindV5游戏导航
       </h1>
       <div style={{
         textAlign: "center", color: "#ff6b6b", fontSize: 16, marginBottom: 30,
