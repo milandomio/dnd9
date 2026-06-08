@@ -2,7 +2,7 @@ from pathlib import Path
 
 BACKEND_DIR = Path(__file__).parent
 PROJECT_DIR = BACKEND_DIR.parent
-OUTPUT_DIR = BACKEND_DIR / "output"
+OUTPUT_DIR = BACKEND_DIR / "data"
 
 GAME_ROOT = (
     PROJECT_DIR.parent

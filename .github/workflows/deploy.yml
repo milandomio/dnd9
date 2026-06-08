@@ -32,7 +32,7 @@ jobs:
         run: python api/main.py
 
       - name: Copy data to web
-        run: cp -r api/output web/public/data
+        run: cp -r api/data web/public/data
 
       - name: Install web deps
         run: npm ci
