@@ -99,7 +99,7 @@ export default function DetailPage() {
           const mod = modules.get(mapName);
           const sx = mod?.size_x ?? 1;
           const sy = mod?.size_y ?? 1;
-          const range = Math.max(sx, sy) * 1600;
+          const range = mod?.range || Math.max(sx, sy) * 1600;
           return (
             <div key={mapName} style={{
               minWidth: 0,

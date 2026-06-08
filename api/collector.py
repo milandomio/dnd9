@@ -208,6 +208,7 @@ def run():
         override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
         sx = override.get("size_x", r["size_x"])
         sy = override.get("size_y", r["size_y"])
+        custom_range = override.get("range", 0)
         offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
         rotate = module_rotations.get(r["sl_base_name"], 0)
         modules_map[r["module_name"]] = {
@@ -220,6 +221,7 @@ def run():
             "offset_x": offset_x,
             "offset_y": offset_y,
             "rotate": rotate,
+            "range": custom_range,
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:

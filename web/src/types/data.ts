@@ -43,4 +43,5 @@ export interface DungeonModule {
   offset_x: number;
   offset_y: number;
   rotate: number;
+  range: number;
 }
