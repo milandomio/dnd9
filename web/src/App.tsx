@@ -1,42 +1,38 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { ConfigProvider, Layout, Typography, theme } from "antd";
+import { ConfigProvider, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
+import { ThemeProvider, useTheme } from "./hooks/useTheme";
 import HomePage from "./pages/HomePage";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
-
-const { Header, Content } = Layout;
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <ConfigProvider
       locale={zhCN}
-      theme={{
-        algorithm: theme.darkAlgorithm,
-        token: { colorPrimary: "#1677ff" },
-      }}
+      theme={{ algorithm: theme.darkAlgorithm, token: { colorPrimary: "#1677ff" } }}
     >
-      <HashRouter>
-        <Layout style={{ minHeight: "100vh", background: "#2c2c2c" }}>
-          <Header>
-            <Typography.Title
-              level={3}
-              style={{ color: "#fff", margin: 0, lineHeight: "64px", cursor: "pointer" }}
-              onClick={() => window.location.hash = "#/"}
-            >
-              DarkFindV5
-            </Typography.Title>
-          </Header>
-          <Content style={{ padding: "24px", background: "#2c2c2c" }}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/:page" element={<ListPage />} />
-              <Route path="/:page/:name" element={<DetailPage />} />
-            </Routes>
-          </Content>
-        </Layout>
-      </HashRouter>
+      <ThemeProvider>
+        <HashRouter>
+          <AppInner />
+        </HashRouter>
+      </ThemeProvider>
     </ConfigProvider>
+  );
+}
+
+function AppInner() {
+  const { tokens } = useTheme();
+  return (
+    <div style={{ minHeight: "100vh", padding: "24px", background: tokens.bg }}>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/:page" element={<ListPage />} />
+        <Route path="/:page/:name" element={<DetailPage />} />
+      </Routes>
+    </div>
   );
 }
 
