@@ -264,6 +264,20 @@ class DatabaseManager:
             if r[0] not in seen:
                 seen.add(r[0])
                 deduped.append(r)
+
+        # Fallback: also import monsters from spawner files
+        spawner_files = _load_json_dir(SPAWNER_DIR)
+        for raw_name, data_list in spawner_files.items():
+            if not data_list:
+                continue
+            raw = raw_name.removeprefix("Id_Spawner_Monster_")
+            if raw != raw_name and raw not in seen:
+                seen.add(raw)
+                entry = data_list[0]
+                props = entry.get("Properties", {}) or {}
+                name_key = (props.get("Name") or {}).get("Key", "")
+                deduped.append((raw, raw_name, name_key))
+
         c.executemany(
             "INSERT OR REPLACE INTO monster_entities (monster_name, raw_name, translation_key) VALUES (?, ?, ?)",
             deduped,
@@ -336,19 +350,25 @@ class DatabaseManager:
         c = self.conn.cursor()
         c.execute("DELETE FROM lootdrop_items")
 
+        def _strip_prefix(name: str, *prefixes: str) -> str:
+            for p in sorted(prefixes, key=len, reverse=True):
+                if name.lower().startswith(p.lower()):
+                    return name[len(p):]
+            return name
+
         ld_group = {}
         for raw_name, data_list in groups.items():
             if not data_list:
                 continue
             entry = data_list[0]
-            monster_name = raw_name.removeprefix("ID_LootDropGroup_")
+            monster_name = _strip_prefix(raw_name, "Id_LootDropGroup_", "ID_LootDropGroup_")
             items = entry.get("Properties", {}).get("LootDropGroupItemArray", []) or []
             for item in items:
                 asset = (item.get("LootDropId") or {}).get("AssetPathName", "")
                 if not asset:
                     continue
                 ld_name = _ue_asset_base_name(asset) or ""
-                ld_name = ld_name.removeprefix("ID_Lootdrop_")
+                ld_name = _strip_prefix(ld_name, "Id_Lootdrop_", "ID_Lootdrop_")
                 if ld_name not in ld_group:
                     ld_group[ld_name] = []
                 ld_group[ld_name].append(monster_name)
@@ -358,15 +378,16 @@ class DatabaseManager:
             if not data_list:
                 continue
             entry = data_list[0]
-            ld_name = raw_name.removeprefix("ID_Lootdrop_")
+            ld_name = _strip_prefix(raw_name, "Id_Lootdrop_", "ID_Lootdrop_")
             monsters = ld_group.get(ld_name, [])
+
             items_arr = entry.get("Properties", {}).get("LootDropItemArray", []) or []
             for drop_item in items_arr:
                 item_asset = (drop_item.get("ItemId") or {}).get("AssetPathName", "")
                 if not item_asset:
                     continue
                 item_name = _ue_asset_base_name(item_asset) or ""
-                item_name = item_name.removeprefix("Id_Item_")
+                item_name = _strip_prefix(item_name, "Id_Item_", "Id_Props_")
                 for mon in monsters:
                     rows.append((item_name, mon, ld_name))
         seen = set()
@@ -458,7 +479,7 @@ class DatabaseManager:
     def get_item_coordinates(self, item_name: str) -> list[dict]:
         c = self.conn.cursor()
         c.execute("""
-            SELECT DISTINCT s.x, s.y, s.z, s.json_filename, s.version, s.map_base, s.module_type
+            SELECT DISTINCT s.x, s.y, s.z, s.json_filename, s.version, s.map_base, s.module_type, s.original_keyword
             FROM search_term_matches sm
             JOIN spawners s ON s.id = sm.spawner_id
             WHERE sm.search_term = ?

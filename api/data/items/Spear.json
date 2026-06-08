@@ -3,30 +3,29 @@
   "translation": "长矛",
   "category": "",
   "monsters": [
+    "AncientStingray",
+    "CentaurDemon",
     "CentaurDemon_Hard",
+    "Cyclops",
+    "DwarfSecretWeapon",
+    "FlatChestLarge",
+    "FrostSkeletonHalberdier",
     "FrostSkeletonHalberdier_Hard",
+    "GiantWorm",
     "GiantWorm_Hard",
-    "ID_LootdropGroup_AncientStingray",
-    "ID_LootdropGroup_DwarfSecretWeapon",
-    "ID_LootdropGroup_Reefling",
-    "Id_LootDropGroup_CentaurDemon",
-    "Id_LootDropGroup_Cyclops",
-    "Id_LootDropGroup_FlatChestLarge",
-    "Id_LootDropGroup_FrostSkeletonHalberdier",
-    "Id_LootDropGroup_GiantWorm",
-    "Id_LootDropGroup_GoldChest",
-    "Id_LootDropGroup_Hoard",
-    "Id_LootDropGroup_MarvelousChest",
-    "Id_LootDropGroup_MidnightStag",
-    "Id_LootDropGroup_MimicLarge",
-    "Id_LootDropGroup_MimicMedium",
-    "Id_LootDropGroup_MimicSmall",
-    "Id_LootDropGroup_SkeletonSpearman",
-    "Id_LootDropGroup_SpectralKnight",
-    "Id_LootDropGroup_TidewalkerSpearer",
-    "Id_LootDropGroup_WoodChestLarge",
+    "GoldChest",
+    "Hoard",
+    "MarvelousChest",
+    "MidnightStag",
+    "MimicLarge",
+    "MimicMedium",
+    "MimicSmall",
+    "Reefling",
+    "SkeletonSpearman",
     "SkeletonSpearman_Hard",
+    "SpectralKnight",
     "SuperHoard",
+    "TidewalkerSpearer",
     "Weapon",
     "Weapon_Common",
     "Weapon_DualBoss",
@@ -35,7 +34,8 @@
     "Weapon_GoldenRoom",
     "Weapon_MysticalTreasureRoom",
     "Weapon_Rare",
-    "Weapon_SkullRoom"
+    "Weapon_SkullRoom",
+    "WoodChestLarge"
   ],
   "coords": [
     {
@@ -44,7 +44,8 @@
       "z": 27.292477,
       "map": "Cemetery_01",
       "file": "Cemetery_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -16.999222,
@@ -52,7 +53,8 @@
       "z": -5.707523,
       "map": "Cemetery_01",
       "file": "Cemetery_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -125.99936,
@@ -60,7 +62,8 @@
       "z": 0.0,
       "map": "Cemetery_02",
       "file": "Cemetery_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -125.99936,
@@ -68,7 +71,8 @@
       "z": 0.0,
       "map": "Cemetery_02",
       "file": "Cemetery_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 22.0,
@@ -76,7 +80,8 @@
       "z": 0.0,
       "map": "ConectorDoubleBridge",
       "file": "ConectorDoubleBridge_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 22.0,
@@ -84,7 +89,8 @@
       "z": 0.0,
       "map": "ConectorDoubleBridge",
       "file": "ConectorDoubleBridge_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 290.0,
@@ -92,7 +98,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -700.0,
@@ -100,7 +107,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -715.0,
@@ -108,7 +116,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -95.0,
@@ -116,7 +125,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -1120.0,
@@ -124,7 +134,8 @@
       "z": 0.000126,
       "map": "Crypt_GreatWalkway",
       "file": "Crypt_GreatWalkway_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -1120.0,
@@ -132,7 +143,8 @@
       "z": 0.000126,
       "map": "Crypt_GreatWalkway",
       "file": "Crypt_GreatWalkway_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -1031.2816,
@@ -140,7 +152,8 @@
       "z": 290.0001,
       "map": "Crypt_Ramparts",
       "file": "Crypt_Ramparts_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 1088.7184,
@@ -148,7 +161,8 @@
       "z": 290.0001,
       "map": "Crypt_Ramparts",
       "file": "Crypt_Ramparts_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -1031.2816,
@@ -156,7 +170,8 @@
       "z": 290.0001,
       "map": "Crypt_Ramparts",
       "file": "Crypt_Ramparts_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 1088.7184,
@@ -164,7 +179,8 @@
       "z": 290.0001,
       "map": "Crypt_Ramparts",
       "file": "Crypt_Ramparts_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -45.0,
@@ -172,7 +188,8 @@
       "z": 210.0,
       "map": "EmptyModule_1F_09",
       "file": "EmptyModule_1F_09_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 115.0,
@@ -180,7 +197,8 @@
       "z": 155.0,
       "map": "EmptyModule_1F_13",
       "file": "EmptyModule_1F_13_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 1410.0,
@@ -188,7 +206,8 @@
       "z": 250.0,
       "map": "Inferno_Doomcage",
       "file": "Inferno_Doomcage_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -1380.0,
@@ -196,7 +215,8 @@
       "z": 250.0,
       "map": "Inferno_Doomcage",
       "file": "Inferno_Doomcage_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": -1380.0,
@@ -204,7 +224,8 @@
       "z": 250.0,
       "map": "Inferno_Doomcage",
       "file": "Inferno_Doomcage_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 1410.0,
@@ -212,7 +233,8 @@
       "z": 250.0,
       "map": "Inferno_Doomcage",
       "file": "Inferno_Doomcage_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 1265.0,
@@ -220,7 +242,8 @@
       "z": -500.0,
       "map": "Inferno_Hellcrossbridge",
       "file": "Inferno_Hellcrossbridge_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 1265.0,
@@ -228,7 +251,8 @@
       "z": -500.0,
       "map": "Inferno_Hellcrossbridge",
       "file": "Inferno_Hellcrossbridge_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     },
     {
       "x": 1467.0,
@@ -236,7 +260,8 @@
       "z": -990.0,
       "map": "ShipGraveyard_AbandonedShip_01",
       "file": "ShipGraveyard_AbandonedShip_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 1467.0,
@@ -244,7 +269,8 @@
       "z": -990.0,
       "map": "ShipGraveyard_AbandonedShip_01",
       "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 549.0,
@@ -252,7 +278,8 @@
       "z": -951.41455,
       "map": "ShipGraveyard_CircleIsland",
       "file": "ShipGraveyard_CircleIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -376.0,
@@ -260,7 +287,8 @@
       "z": -999.9999,
       "map": "ShipGraveyard_CircleIsland",
       "file": "ShipGraveyard_CircleIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -561.0,
@@ -268,7 +296,8 @@
       "z": -780.0,
       "map": "ShipGraveyard_CoralForest_01",
       "file": "ShipGraveyard_CoralForest_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 519.0,
@@ -276,7 +305,8 @@
       "z": -660.0,
       "map": "ShipGraveyard_CoralForest_01",
       "file": "ShipGraveyard_CoralForest_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 18.999985,
@@ -284,7 +314,8 @@
       "z": -860.0,
       "map": "ShipGraveyard_CoralForest_01",
       "file": "ShipGraveyard_CoralForest_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -36.0,
@@ -292,7 +323,8 @@
       "z": -510.0,
       "map": "ShipGraveyard_CoralForest_01",
       "file": "ShipGraveyard_CoralForest_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -935.0,
@@ -300,7 +332,8 @@
       "z": 12.920696,
       "map": "ShipGraveyard_FlippedShip",
       "file": "ShipGraveyard_FlippedShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 850.0,
@@ -308,7 +341,8 @@
       "z": 25.261934,
       "map": "ShipGraveyard_FlippedShip",
       "file": "ShipGraveyard_FlippedShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 1235.0,
@@ -316,7 +350,8 @@
       "z": -308.37976,
       "map": "ShipGraveyard_FlippedShip",
       "file": "ShipGraveyard_FlippedShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 520.0,
@@ -324,7 +359,8 @@
       "z": -775.9999,
       "map": "ShipGraveyard_FlippedShip",
       "file": "ShipGraveyard_FlippedShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 760.0,
@@ -332,7 +368,8 @@
       "z": 397.0,
       "map": "ShipGraveyard_FlippedShip",
       "file": "ShipGraveyard_FlippedShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 386.0,
@@ -340,7 +377,8 @@
       "z": -775.9999,
       "map": "ShipGraveyard_FlippedShip",
       "file": "ShipGraveyard_FlippedShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -551.0,
@@ -348,7 +386,8 @@
       "z": -999.9999,
       "map": "ShipGraveyard_FlippedShip",
       "file": "ShipGraveyard_FlippedShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 701.0,
@@ -356,7 +395,8 @@
       "z": -999.9999,
       "map": "ShipGraveyard_FloatingIsland",
       "file": "ShipGraveyard_FloatingIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 1151.0,
@@ -364,7 +404,8 @@
       "z": -999.99994,
       "map": "ShipGraveyard_FloatingIsland",
       "file": "ShipGraveyard_FloatingIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 516.0,
@@ -372,7 +413,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 748.0,
@@ -380,7 +422,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -844.0,
@@ -388,7 +431,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -117.0,
@@ -396,7 +440,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 516.0,
@@ -404,7 +449,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 748.0,
@@ -412,7 +458,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -844.0,
@@ -420,7 +467,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -117.0,
@@ -428,7 +476,8 @@
       "z": -507.9999,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -95.0,
@@ -436,7 +485,8 @@
       "z": 0.0,
       "map": "ShipGraveyard_Hole",
       "file": "ShipGraveyard_Hole_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -95.0,
@@ -444,7 +494,8 @@
       "z": 0.0,
       "map": "ShipGraveyard_Hole",
       "file": "ShipGraveyard_Hole_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 480.0,
@@ -452,7 +503,8 @@
       "z": 0.0,
       "map": "ShipGraveyard_MistWatch",
       "file": "ShipGraveyard_MistWatch_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -260.0,
@@ -460,7 +512,8 @@
       "z": -36.830524,
       "map": "ShipGraveyard_MistWatch",
       "file": "ShipGraveyard_MistWatch_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 510.0,
@@ -468,7 +521,8 @@
       "z": -1000.0,
       "map": "ShipGraveyard_MistWatch",
       "file": "ShipGraveyard_MistWatch_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -850.0,
@@ -476,7 +530,8 @@
       "z": -2835.0,
       "map": "ShipGraveyard_SunkenShip_01",
       "file": "ShipGraveyard_SunkenShip_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 744.59064,
@@ -484,7 +539,8 @@
       "z": -1080.0,
       "map": "ShipGraveyard_SunkenShip_01",
       "file": "ShipGraveyard_SunkenShip_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -155.0,
@@ -492,7 +548,8 @@
       "z": 0.0,
       "map": "ShipGraveyard_Trench",
       "file": "ShipGraveyard_Trench_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": -10.0,
@@ -500,7 +557,8 @@
       "z": 165.0,
       "map": "Shipgraveyard_TwinChamber",
       "file": "Shipgraveyard_TwinChamber_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "TideWalkerSpearer"
     },
     {
       "x": 92.0,
@@ -508,7 +566,8 @@
       "z": 0.0,
       "map": "UndergroundAltar",
       "file": "UndergroundAltar_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonSpearman"
     }
   ]
 }

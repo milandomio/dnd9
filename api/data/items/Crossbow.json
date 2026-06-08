@@ -3,33 +3,31 @@
   "translation": "十字弩",
   "category": "",
   "monsters": [
+    "Cockatrice",
     "Cockatrice_Hard",
     "Cockatrice_VeryHard",
     "DreadSpine_Hard",
     "Dreadspine",
+    "DwarfSecretWeapon",
+    "FireLizard",
+    "FlatChestLarge",
+    "FrostSkeletonCrossbowman",
     "FrostSkeletonCrossbowman_Hard",
+    "FrostWyvern",
+    "GiantCentipede",
     "GiantCentipede_Hard",
+    "GoldChest",
     "HellHunter",
-    "ID_LootdropGroup_DwarfSecretWeapon",
-    "ID_LootdropGroup_FireLizard",
-    "ID_LootdropGroup_PirateCrossbow",
-    "Id_LootDropGroup_Cockatrice",
-    "Id_LootDropGroup_FlatChestLarge",
-    "Id_LootDropGroup_FrostSkeletonCrossbowman",
-    "Id_LootDropGroup_FrostWyvern",
-    "Id_LootDropGroup_GiantCentipede",
-    "Id_LootDropGroup_GoldChest",
-    "Id_LootDropGroup_Hoard",
-    "Id_LootDropGroup_MarvelousChest",
-    "Id_LootDropGroup_MidnightStag",
-    "Id_LootDropGroup_MimicLarge",
-    "Id_LootDropGroup_MimicMedium",
-    "Id_LootDropGroup_MimicSmall",
-    "Id_LootDropGroup_OrnateChestLarge",
-    "Id_LootDropGroup_OrnateChestMedium",
-    "Id_LootDropGroup_SkeletonCrossbowman",
-    "Id_LootDropGroup_WoodChestLarge",
-    "Id_LootDropGroup_WoodChestMedium",
+    "Hoard",
+    "MarvelousChest",
+    "MidnightStag",
+    "MimicLarge",
+    "MimicMedium",
+    "MimicSmall",
+    "OrnateChestLarge",
+    "OrnateChestMedium",
+    "PirateCrossbow",
+    "SkeletonCrossbowman",
     "SkeletonCrossbowman_Hard",
     "SuperHoard",
     "Weapon",
@@ -40,7 +38,9 @@
     "Weapon_GoldenRoom",
     "Weapon_MysticalTreasureRoom",
     "Weapon_Rare",
-    "Weapon_SkullRoom"
+    "Weapon_SkullRoom",
+    "WoodChestLarge",
+    "WoodChestMedium"
   ],
   "coords": [
     {
@@ -49,7 +49,8 @@
       "z": 0.0,
       "map": "ConectorDoubleBridge",
       "file": "ConectorDoubleBridge_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -108.0,
@@ -57,7 +58,8 @@
       "z": 0.0,
       "map": "ConectorDoubleBridge",
       "file": "ConectorDoubleBridge_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 52.0,
@@ -65,7 +67,8 @@
       "z": 0.0,
       "map": "ConectorDoubleBridge",
       "file": "ConectorDoubleBridge_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -108.0,
@@ -73,7 +76,8 @@
       "z": 0.0,
       "map": "ConectorDoubleBridge",
       "file": "ConectorDoubleBridge_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -139.0,
@@ -81,7 +85,8 @@
       "z": 0.0001,
       "map": "Crypt_AltarRoomAB",
       "file": "Crypt_AltarRoomAB_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 100.0,
@@ -89,7 +94,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 685.0,
@@ -97,7 +103,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -285.0,
@@ -105,7 +112,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 105.00002,
@@ -113,7 +121,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 295.0,
@@ -121,7 +130,8 @@
       "z": 0.0,
       "map": "Crypt_BlindfallPit",
       "file": "Crypt_BlindfallPit_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -1400.9872,
@@ -129,7 +139,8 @@
       "z": 600.0002,
       "map": "Crypt_GreatWalkway",
       "file": "Crypt_GreatWalkway_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 790.0,
@@ -137,7 +148,8 @@
       "z": 600.0002,
       "map": "Crypt_GreatWalkway",
       "file": "Crypt_GreatWalkway_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -1400.9872,
@@ -145,7 +157,8 @@
       "z": 600.0002,
       "map": "Crypt_GreatWalkway",
       "file": "Crypt_GreatWalkway_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 790.0,
@@ -153,7 +166,8 @@
       "z": 600.0002,
       "map": "Crypt_GreatWalkway",
       "file": "Crypt_GreatWalkway_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -556.28156,
@@ -161,7 +175,8 @@
       "z": 590.0005,
       "map": "Crypt_Ramparts",
       "file": "Crypt_Ramparts_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -556.28156,
@@ -169,7 +184,8 @@
       "z": 590.0005,
       "map": "Crypt_Ramparts",
       "file": "Crypt_Ramparts_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -170.0,
@@ -177,7 +193,8 @@
       "z": 0.0001,
       "map": "IceAbyss_FrostMaw",
       "file": "IceAbyss_FrostMaw_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 805.0,
@@ -185,7 +202,8 @@
       "z": 500.0,
       "map": "IceAbyss_FrozenHold",
       "file": "IceAbyss_FrozenHold_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 1100.0,
@@ -193,7 +211,8 @@
       "z": 300.0,
       "map": "IceAbyss_Monoliths",
       "file": "IceAbyss_Monoliths_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": -839.5526,
@@ -201,7 +220,8 @@
       "z": 575.1587,
       "map": "IceAbyss_Monoliths",
       "file": "IceAbyss_Monoliths_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 12.0,
@@ -209,7 +229,8 @@
       "z": 425.0001,
       "map": "IceAbyss_StaircaseHill",
       "file": "IceAbyss_StaircaseHill_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 41.0,
@@ -217,7 +238,8 @@
       "z": 425.0001,
       "map": "IceAbyss_StaircaseHill",
       "file": "IceAbyss_StaircaseHill_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 535.0,
@@ -225,7 +247,8 @@
       "z": -599.99994,
       "map": "IceCave_CrossRoad",
       "file": "IceCave_CrossRoad_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 535.0,
@@ -233,7 +256,8 @@
       "z": -599.99994,
       "map": "IceCave_CrossRoad",
       "file": "IceCave_CrossRoad_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": -21.0,
@@ -241,7 +265,8 @@
       "z": -84.840065,
       "map": "IceCave_Hive_03",
       "file": "IceCave_Hive_03_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 26.438984,
@@ -249,7 +274,8 @@
       "z": -599.99994,
       "map": "IceCave_Hut_01",
       "file": "IceCave_Hut_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 157.43898,
@@ -257,7 +283,8 @@
       "z": -6.1085205,
       "map": "IceCave_Hut_01",
       "file": "IceCave_Hut_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 26.438984,
@@ -265,7 +292,8 @@
       "z": -599.99994,
       "map": "IceCave_Hut_01",
       "file": "IceCave_Hut_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 157.43898,
@@ -273,7 +301,8 @@
       "z": -6.1085205,
       "map": "IceCave_Hut_01",
       "file": "IceCave_Hut_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 736.85333,
@@ -281,7 +310,8 @@
       "z": -584.9999,
       "map": "IceCave_Hut_03",
       "file": "IceCave_Hut_03_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 184.0,
@@ -289,7 +319,8 @@
       "z": 0.000105,
       "map": "IceCave_Spiral",
       "file": "IceCave_Spiral_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 184.0,
@@ -297,7 +328,8 @@
       "z": 0.000105,
       "map": "IceCave_Spiral",
       "file": "IceCave_Spiral_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 184.0,
@@ -305,7 +337,8 @@
       "z": 0.000105,
       "map": "IceCave_Spiral",
       "file": "IceCave_Spiral_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 184.0,
@@ -313,7 +346,8 @@
       "z": 0.000105,
       "map": "IceCave_Spiral",
       "file": "IceCave_Spiral_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
     },
     {
       "x": 1260.0,
@@ -321,7 +355,8 @@
       "z": -500.0,
       "map": "Inferno_Hellcrossbridge",
       "file": "Inferno_Hellcrossbridge_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 1260.0,
@@ -329,7 +364,8 @@
       "z": -500.0,
       "map": "Inferno_Hellcrossbridge",
       "file": "Inferno_Hellcrossbridge_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -450.0,
@@ -337,7 +373,8 @@
       "z": 550.0,
       "map": "Inferno_Painfulsteps",
       "file": "Inferno_Painfulsteps_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 450.0,
@@ -345,7 +382,8 @@
       "z": 550.0,
       "map": "Inferno_Painfulsteps",
       "file": "Inferno_Painfulsteps_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -450.0,
@@ -353,7 +391,8 @@
       "z": 550.0,
       "map": "Inferno_Painfulsteps",
       "file": "Inferno_Painfulsteps_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": 450.0,
@@ -361,7 +400,8 @@
       "z": 550.0,
       "map": "Inferno_Painfulsteps",
       "file": "Inferno_Painfulsteps_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkeletonCrossbowman"
     },
     {
       "x": -178.0,
@@ -369,7 +409,8 @@
       "z": 1103.0002,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     },
     {
       "x": -178.0,
@@ -377,7 +418,8 @@
       "z": 1103.0002,
       "map": "ShipGraveyard_HangingShip",
       "file": "ShipGraveyard_HangingShip_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "PirateCrossbow"
     },
     {
       "x": 100.0,
@@ -385,7 +427,8 @@
       "z": 800.0,
       "map": "ShipGraveyard_RockIsland",
       "file": "ShipGraveyard_RockIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     },
     {
       "x": -900.0,
@@ -393,7 +436,8 @@
       "z": 1500.0,
       "map": "ShipGraveyard_RockIsland",
       "file": "ShipGraveyard_RockIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     },
     {
       "x": -618.68274,
@@ -401,7 +445,8 @@
       "z": 100.0,
       "map": "ShipGraveyard_RockIsland",
       "file": "ShipGraveyard_RockIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     },
     {
       "x": 200.0,
@@ -409,7 +454,8 @@
       "z": 415.47705,
       "map": "ShipGraveyard_RockIsland",
       "file": "ShipGraveyard_RockIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     },
     {
       "x": 20.0,
@@ -417,7 +463,8 @@
       "z": -75.0,
       "map": "ShipGraveyard_SkullIsland",
       "file": "ShipGraveyard_SkullIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     },
     {
       "x": 970.0,
@@ -425,7 +472,8 @@
       "z": 1800.0,
       "map": "ShipGraveyard_SkullIsland",
       "file": "ShipGraveyard_SkullIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     },
     {
       "x": -52.52718,
@@ -433,7 +481,8 @@
       "z": 2070.0,
       "map": "ShipGraveyard_SkullIsland",
       "file": "ShipGraveyard_SkullIsland_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "PirateCrossbow"
     }
   ]
 }

@@ -6,6 +6,7 @@ interface IndexEntry {
   translation: string;
   category?: string;
   monsters?: string[];
+  monster_translations?: string[];
   coordCount: number;
 }
 
@@ -13,6 +14,7 @@ const LABEL_MAP: Record<string, string> = {
   items: "物品表",
   monsters: "怪物表",
   props: "实体表",
+  lootdrops: "掉落表",
 };
 
 export default function ListPage() {
@@ -23,7 +25,7 @@ export default function ListPage() {
   const [debug, setDebug] = useState(false);
 
   useEffect(() => {
-    if (!page || !["items", "monsters", "props"].includes(page)) return;
+    if (!page || !["items", "monsters", "props", "lootdrops"].includes(page)) return;
     fetch(`./data/${page}.json`)
       .then((r) => r.json())
       .then(setData)
@@ -69,7 +71,14 @@ export default function ListPage() {
         {data.map((entity) => (
           <div
             key={entity.name}
-            onClick={() => navigate(`/${page}/${entity.name}`)}
+            onClick={() => {
+              if (page === "lootdrops") {
+                // Lootdrops items navigate to items detail page
+                navigate(`/lootdrops/${entity.name}`);
+              } else {
+                navigate(`/${page}/${entity.name}`);
+              }
+            }}
             style={{
               background: "#3a3a3a",
               border: "1px solid #555",
@@ -96,15 +105,17 @@ export default function ListPage() {
                 {entity.translation}【{entity.name}】
               </div>
             )}
-              {entity.monsters && entity.monsters.length > 0 && (
+            {entity.monsters && entity.monsters.length > 0 && page === "lootdrops" && (
+              <div style={{ color: "#aaa", fontSize: 13, marginTop: 6 }}>
+                掉落来源({entity.monsters.length}个): {entity.monster_translations?.join("、") || entity.monsters.join("、")}
+              </div>
+            )}
+            {entity.monsters && entity.monsters.length > 0 && page !== "lootdrops" && (
               <div style={{ color: "#aaa", fontSize: 13, marginTop: 6 }}>
                 掉落来源: {entity.monsters.length}个
               </div>
             )}
-            <div style={{ color: "#888", fontSize: 12, marginTop: 2 }}>
-              {entity.coordCount} 个坐标
             </div>
-          </div>
         ))}
       </div>
     </div>

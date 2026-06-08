@@ -1,11 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Switch } from "antd";
 import { BulbOutlined } from "@ant-design/icons";
 import { useTheme } from "../hooks/useTheme";
 
+const LABEL_MAP: Record<string, string> = {
+  items: "物品表",
+  monsters: "怪物表",
+  props: "实体表",
+  lootdrops: "掉落表",
+  explore: "探索地点表",
+  quest_items: "任务物品表",
+  quest_npc: "任务NPC表",
+};
+
 export default function NavBar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const { dark, tokens, toggle } = useTheme();
+  const parts = location.pathname.split("/").filter(Boolean);
 
   const linkStyle = {
     color: tokens.accent,
@@ -18,6 +30,8 @@ export default function NavBar() {
     cursor: "pointer" as const,
     transition: "all 0.2s",
   };
+
+  const listPart = parts[0] ? { label: LABEL_MAP[parts[0]] || parts[0], path: "/" + parts[0] } : null;
 
   return (
     <div style={{
@@ -35,6 +49,12 @@ export default function NavBar() {
         <BulbOutlined style={{ color: dark ? "#ffd700" : "#333", fontSize: 16 }} />
         <Switch checked={!dark} onChange={toggle} size="small" />
       </div>
+      {listPart && parts.length >= 2 && (
+        <a onClick={() => navigate(listPart.path)} style={linkStyle}
+            onMouseEnter={(e) => { e.currentTarget.style.background = tokens.accent; e.currentTarget.style.color = dark ? "#2c2c2c" : "#fff"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = tokens.accent; }}
+          >{listPart.label}</a>
+      )}
       <a onClick={() => navigate("/")} style={linkStyle}
           onMouseEnter={(e) => { e.currentTarget.style.background = tokens.accent; e.currentTarget.style.color = dark ? "#2c2c2c" : "#fff"; }}
           onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = tokens.accent; }}

@@ -3,8 +3,8 @@
   "translation": "温香乱炖",
   "category": "",
   "monsters": [
-    "Id_LootDropGroup_Zombie",
     "LukewarmStew",
+    "Zombie",
     "Zombie_Hard"
   ],
   "coords": [
@@ -14,7 +14,8 @@
       "z": 0.0,
       "map": "Prison_01",
       "file": "Prison_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_Lootdrop_LukewarmStew"
     },
     {
       "x": 270.0,
@@ -22,7 +23,8 @@
       "z": 254.0,
       "map": "Storeroom",
       "file": "Storeroom_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_Lootdrop_LukewarmStew"
     },
     {
       "x": 301.0,
@@ -30,7 +32,8 @@
       "z": 248.0,
       "map": "Storeroom",
       "file": "Storeroom_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_Lootdrop_LukewarmStew"
     }
   ]
 }

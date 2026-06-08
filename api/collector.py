@@ -151,7 +151,7 @@ def run():
             "category": r["category"],
             "monsters": merged_loot.get(name, []),
             "coords": [
-                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
+                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"], "label": c["original_keyword"]}
                 for c in coords
             ],
         })
@@ -173,30 +173,37 @@ def run():
             "name": r["monster_name"],
             "translation": translation,
             "coords": [
-                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
+                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"], "label": c["original_keyword"]}
                 for c in coords
             ],
         })
     _save("monsters.json", monsters_index)
 
-    # ── props: index + individual files ──
+    # ── props: index + individual files (merged by translation) ──
     props_index = []
+    props_by_translation: dict[str, list[dict]] = {}
     for r in props:
-        coords = db.get_item_coordinates(r["asset_name"])
-        if not coords:
-            continue
         translation = resolve_name(r["asset_name"], r["translation_key"], "props")
+        props_by_translation.setdefault(translation, []).append(r)
+    for translation, group in props_by_translation.items():
+        merged_coords = []
+        for r in group:
+            coords = db.get_item_coordinates(r["asset_name"])
+            merged_coords.extend(coords)
+        if not merged_coords:
+            continue
+        name_key = group[0]["asset_name"]
         props_index.append({
-            "name": r["asset_name"],
+            "name": name_key,
             "translation": translation,
-            "coordCount": len(coords),
+            "coordCount": len(merged_coords),
         })
-        _save(f"props/{r['asset_name']}.json", {
-            "name": r["asset_name"],
+        _save(f"props/{name_key}.json", {
+            "name": name_key,
             "translation": translation,
             "coords": [
-                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
-                for c in coords
+                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"], "label": c["original_keyword"]}
+                for c in merged_coords
             ],
         })
     _save("props.json", props_index)
@@ -204,6 +211,7 @@ def run():
     # ── dungeon_modules.json ──
     module_rotations = load_all_layout_rotations()
     modules = db.get_dungeon_modules()
+    art_root = Path(__file__).parent.parent.parent / "Output" / "Exports" / "DungeonCrawler" / "Content" / "DungeonCrawler" / "Data" / "Art" / "DungeonModuleMapImage"
     modules_map: dict[str, dict] = {}
     for r in modules:
         override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
@@ -212,13 +220,16 @@ def run():
         custom_range = override.get("range", 0)
         offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
         rotate = module_rotations.get(r["sl_base_name"], 1)
+        sl = r["sl_base_name"]
+        img_name = _resolve_img(art_root, r["module_group"], sl)
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
             "group": r["module_group"],
             "size_x": sx,
             "size_y": sy,
-            "sl_base_name": r["sl_base_name"],
+            "sl_base_name": sl,
+            "img_name": img_name,
             "offset_x": offset_x,
             "offset_y": offset_y,
             "rotate": rotate,
@@ -233,6 +244,7 @@ def run():
                 "size_x": 1,
                 "size_y": 1,
                 "sl_base_name": override_name,
+                "img_name": _resolve_img(art_root, "", override_name),
                 "offset_x": 0,
                 "offset_y": 0,
                 "rotate": 1,
@@ -241,12 +253,54 @@ def run():
     modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
     _save("dungeon_modules.json", modules_data)
 
-    # ── lootdrops.json ──
-    loot_out = []
+    # ── lootdrops.json (grouped by item for list page) ──
+    items_lookup = {r["item_name"]: r for r in items}
+    monsters_lookup = {r["monster_name"]: r for r in monsters}
+    loot_index = []
     for item_name, monster_names in merged_loot.items():
-        for mon in monster_names:
-            loot_out.append({"item_name": item_name, "monster_name": mon})
-    _save("lootdrops.json", loot_out)
+        item_row = items_lookup.get(item_name)
+        translation = resolve_name(item_name, item_row["translation_key"] if item_row else None, "item") if item_row else (resolve_name(item_name, None, "item") or item_name)
+        mon_translations = []
+        for m in sorted(monster_names):
+            mon_row = monsters_lookup.get(m)
+            mon_translations.append(resolve_name(m, mon_row["translation_key"] if mon_row else None, "monster") if mon_row else (resolve_name(m, None, "monster") or m))
+        loot_index.append({
+            "name": item_name,
+            "translation": translation,
+            "monsters": sorted(monster_names),
+            "monster_translations": mon_translations,
+        })
+    loot_index.sort(key=lambda x: x["translation"] or x["name"])
+    _save("lootdrops.json", loot_index)
+
+    # ── lootdrops detail files ──
+    _MONSTER_COLORS = ["#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C","#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085","#C0392B","#2C3E50","#7F8C8D","#FF6B35","#00BFFF","#FFD700","#FF69B4","#32CD32","#FF4500","#9370DB","#00FA9A","#DC143C","#00CED1"]
+    monster_coord_cache: dict[str, list] = {}
+    for entry in loot_index:
+        item_name = entry["name"]
+        monsters_out = []
+        for i, m_name in enumerate(entry["monsters"]):
+            if m_name not in monster_coord_cache:
+                monster_coord_cache[m_name] = db.get_item_coordinates(m_name)
+            coords = monster_coord_cache[m_name]
+            if not coords:
+                continue
+            m_trans = entry["monster_translations"][entry["monsters"].index(m_name)]
+            monsters_out.append({
+                "name": m_name,
+                "translation": m_trans,
+                "color": _MONSTER_COLORS[i % len(_MONSTER_COLORS)],
+                "coords": [
+                    {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
+                    for c in coords
+                ],
+            })
+        if monsters_out:
+            _save(f"lootdrops/{item_name}.json", {
+                "name": item_name,
+                "translation": entry["translation"],
+                "monsters": monsters_out,
+            })
 
     # ── Quest extraction ──
     print("\nExtracting quest data...")
@@ -257,7 +311,7 @@ def run():
         {"page": "items", "label": "物品表", "count": len(items_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
-        {"page": "lootdrops", "label": "掉落关系", "count": len(loot_out)},
+        {"page": "lootdrops", "label": "掉落表", "count": len(loot_index)},
         {"page": "explore", "label": "探索地点表", "count": explore_count},
         {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
         {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
@@ -269,6 +323,28 @@ def run():
         print(f"  {entry['page']}: {entry['count']}")
 
     db.close()
+
+
+def _resolve_img(art_root: Path, group: str, sl: str) -> str:
+    if not art_root.exists() or not group:
+        return sl
+    group_dir = art_root / group
+    if not group_dir.exists():
+        return sl
+    png = group_dir / f"{sl}.png"
+    if png.exists():
+        return sl
+    for p in group_dir.iterdir():
+        if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl.lower():
+            return p.stem
+    tail = sl.split("_", 1)[-1] if "_" in sl else sl
+    png = group_dir / f"{tail}.png"
+    if png.exists():
+        return tail
+    for p in group_dir.iterdir():
+        if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail.lower():
+            return p.stem
+    return sl
 
 
 def _save(filename: str, data: list | dict):

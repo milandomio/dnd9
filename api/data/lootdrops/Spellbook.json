@@ -1,0 +1,6067 @@
+{
+  "name": "Spellbook",
+  "translation": "魔法书",
+  "monsters": [
+    {
+      "name": "Banshee",
+      "translation": "报丧女妖",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 10.0,
+          "y": -95.0,
+          "z": 0.0001,
+          "map": "Ruins_GreatHall_01_Destroyed",
+          "file": "Ruins_GreatHall_01_Destroyed_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 10.0,
+          "y": -85.0,
+          "z": 0.0001,
+          "map": "Ruins_GreatHall_01_Destroyed",
+          "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -20.0,
+          "y": -110.0,
+          "z": 0.0,
+          "map": "Ruins_GreatHall_01_Destroyed_BossTest",
+          "file": "Ruins_GreatHall_01_Destroyed_BossTest_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "Cerberus",
+      "translation": "地狱三头犬",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 331.0,
+          "y": 382.0,
+          "z": -449.9999,
+          "map": "InfernoColumns",
+          "file": "InfernoColumns_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 331.0,
+          "y": 382.0,
+          "z": -449.9999,
+          "map": "InfernoColumns",
+          "file": "InfernoColumns_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 331.0,
+          "y": 382.0,
+          "z": -449.9999,
+          "map": "InfernoColumns_SR",
+          "file": "InfernoColumns_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 0.0,
+          "y": 200.0,
+          "z": 0.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 0.0,
+          "y": 200.0,
+          "z": 0.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 0.0,
+          "y": 150.0,
+          "z": -900.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -70.0,
+          "y": 150.0,
+          "z": 0.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -70.0,
+          "y": 150.0,
+          "z": 0.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 0.0,
+          "y": 150.0,
+          "z": -900.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 986.1547,
+          "y": -59.017056,
+          "z": 0.000100817866,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 986.1547,
+          "y": -59.017056,
+          "z": 0.000101,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "DemonImp",
+      "translation": "恶魔鬼童",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 53.0,
+          "y": -25.0,
+          "z": 98.0,
+          "map": "DeathAltar",
+          "file": "DeathAltar_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 53.0,
+          "y": -25.0,
+          "z": 98.0,
+          "map": "DeathAltar",
+          "file": "DeathAltar_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -33.0,
+          "y": -610.0,
+          "z": 410.0,
+          "map": "DemonDen",
+          "file": "DemonDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -33.0,
+          "y": -610.0,
+          "z": 410.0,
+          "map": "DemonDen",
+          "file": "DemonDen_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 526.0,
+          "y": 681.0,
+          "z": -3.0,
+          "map": "InfernoCastleConner",
+          "file": "InfernoCastleConner_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 526.0,
+          "y": 681.0,
+          "z": -3.0,
+          "map": "InfernoCastleConner",
+          "file": "InfernoCastleConner_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 39.0,
+          "y": -125.0,
+          "z": 0.0,
+          "map": "InfernoColumns",
+          "file": "InfernoColumns_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1901.0,
+          "y": 256.0,
+          "z": 0.0,
+          "map": "InfernoColumns",
+          "file": "InfernoColumns_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 39.0,
+          "y": -125.0,
+          "z": 0.0,
+          "map": "InfernoColumns",
+          "file": "InfernoColumns_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1901.0,
+          "y": 256.0,
+          "z": 0.0,
+          "map": "InfernoColumns",
+          "file": "InfernoColumns_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 39.0,
+          "y": -125.0,
+          "z": 0.0,
+          "map": "InfernoColumns_SR",
+          "file": "InfernoColumns_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1901.0,
+          "y": 256.0,
+          "z": 0.0,
+          "map": "InfernoColumns_SR",
+          "file": "InfernoColumns_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -919.0,
+          "y": -1068.0,
+          "z": -1.0,
+          "map": "InfernoRiver",
+          "file": "InfernoRiver_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -919.0,
+          "y": -1068.0,
+          "z": -1.0,
+          "map": "InfernoRiver",
+          "file": "InfernoRiver_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 148.0,
+          "y": -5.0,
+          "z": 400.0,
+          "map": "Inferno_Bloodyfalls",
+          "file": "Inferno_Bloodyfalls_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 785.0,
+          "y": 779.0,
+          "z": 496.0,
+          "map": "Inferno_DeathPlatforms",
+          "file": "Inferno_DeathPlatforms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 785.0,
+          "y": 779.0,
+          "z": 496.0,
+          "map": "Inferno_DeathPlatforms",
+          "file": "Inferno_DeathPlatforms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -211.0,
+          "y": -58.0,
+          "z": 149.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -211.0,
+          "y": -58.0,
+          "z": 149.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -468.0,
+          "y": 1059.0,
+          "z": -3.0,
+          "map": "Inferno_DownStair",
+          "file": "Inferno_DownStair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -165.0,
+          "y": -1133.0,
+          "z": -3.0,
+          "map": "Inferno_DownStair",
+          "file": "Inferno_DownStair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -468.0,
+          "y": 1059.0,
+          "z": -3.0,
+          "map": "Inferno_DownStair",
+          "file": "Inferno_DownStair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -165.0,
+          "y": -1133.0,
+          "z": -3.0,
+          "map": "Inferno_DownStair",
+          "file": "Inferno_DownStair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -48.0,
+          "y": 104.0,
+          "z": -500.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -48.0,
+          "y": 104.0,
+          "z": -500.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -13.0,
+          "y": -61.0,
+          "z": 0.0,
+          "map": "Inferno_Judgementroad",
+          "file": "Inferno_Judgementroad_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1068.0,
+          "y": 120.0,
+          "z": -200.0,
+          "map": "Inferno_LavaStairway",
+          "file": "Inferno_LavaStairway_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1068.0,
+          "y": 120.0,
+          "z": -200.0,
+          "map": "Inferno_LavaStairway",
+          "file": "Inferno_LavaStairway_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -90.0,
+          "y": 58.0,
+          "z": 100.0,
+          "map": "Inferno_Painfulsteps",
+          "file": "Inferno_Painfulsteps_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -90.0,
+          "y": 58.0,
+          "z": 100.0,
+          "map": "Inferno_Painfulsteps",
+          "file": "Inferno_Painfulsteps_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 227.0,
+          "y": 670.0,
+          "z": -670.0,
+          "map": "Skull",
+          "file": "Skull_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 227.0,
+          "y": 670.0,
+          "z": -670.0,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -683.0,
+          "y": 190.0,
+          "z": 397.0,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -683.0,
+          "y": 190.0,
+          "z": 397.0,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "FireElemental",
+      "translation": "火元素",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 275.0,
+          "y": -395.0,
+          "z": -204.9999,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -650.0,
+          "y": 490.0,
+          "z": -204.9999,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "FireSpirit",
+      "translation": "火灵",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 125.0,
+          "y": -145.0,
+          "z": -110.0,
+          "map": "Firedeep_BrokenStonebridge",
+          "file": "Firedeep_BrokenStonebridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -675.0,
+          "y": 535.0,
+          "z": -480.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1380.0,
+          "y": 325.0,
+          "z": -480.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -615.0,
+          "y": -65.0,
+          "z": -480.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -880.0,
+          "y": -430.0,
+          "z": -480.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -65.0,
+          "y": -240.0,
+          "z": -480.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 735.0,
+          "y": 140.0,
+          "z": -480.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -300.0,
+          "y": 1800.0,
+          "z": -554.9999,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 700.0,
+          "y": 2550.0,
+          "z": 0.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1750.0,
+          "y": -200.0,
+          "z": 0.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -600.0,
+          "y": 450.0,
+          "z": -554.9999,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "FrostImp",
+      "translation": "冰霜鬼童",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": -110.0,
+          "y": 44.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -679.0,
+          "y": 6.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -638.0,
+          "y": -632.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -4.0,
+          "y": -461.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 149.0,
+          "y": 224.0,
+          "z": 5.4594507,
+          "map": "IceAbyss_DividingHill",
+          "file": "IceAbyss_DividingHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 135.0,
+          "y": 25.0,
+          "z": 0.0,
+          "map": "IceAbyss_Glacivia",
+          "file": "IceAbyss_Glacivia_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -305.0,
+          "y": 120.0,
+          "z": 0.0,
+          "map": "IceAbyss_GrandHollow",
+          "file": "IceAbyss_GrandHollow_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 355.0,
+          "y": 120.0,
+          "z": 0.0,
+          "map": "IceAbyss_GrandHollow",
+          "file": "IceAbyss_GrandHollow_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 40.0,
+          "y": -145.0,
+          "z": -1225.0,
+          "map": "IceAbyss_HoundVale",
+          "file": "IceAbyss_HoundVale_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1028.3997,
+          "y": -1018.83606,
+          "z": 0.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1074.472,
+          "y": 1078.9254,
+          "z": 0.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1028.3997,
+          "y": -1018.83606,
+          "z": 0.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1074.472,
+          "y": 1078.9254,
+          "z": 0.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -224.0,
+          "y": -20.0,
+          "z": 408.8424,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "FrostWyvern",
+      "translation": "冰霜飞龙",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 630.0,
+          "y": -290.0,
+          "z": 0.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 645.0,
+          "y": -196.0,
+          "z": -108.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 630.0,
+          "y": -290.0,
+          "z": 0.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "FrozenGhost",
+      "translation": "冰霜怨灵",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -105.0,
+          "y": -445.0,
+          "z": -149.99992,
+          "map": "IceAbyss_AbyssTooth",
+          "file": "IceAbyss_AbyssTooth_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -500.0,
+          "y": 105.0,
+          "z": -149.99992,
+          "map": "IceAbyss_AbyssTooth",
+          "file": "IceAbyss_AbyssTooth_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -665.0,
+          "y": -204.0,
+          "z": -499.9999,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1098.0,
+          "y": 702.0,
+          "z": -499.9999,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -665.0,
+          "y": -204.0,
+          "z": -499.9999,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1098.0,
+          "y": 702.0,
+          "z": -499.9999,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 235.0,
+          "y": 90.0,
+          "z": -125.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -89.0,
+          "y": 148.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -395.0,
+          "y": 664.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -808.0,
+          "y": 216.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -297.0,
+          "y": -242.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -393.30127,
+          "y": 375.0,
+          "z": 0.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 796.23193,
+          "y": -567.23883,
+          "z": 0.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -355.0,
+          "y": 185.0,
+          "z": 0.0,
+          "map": "IceAbyss_GrandHollow",
+          "file": "IceAbyss_GrandHollow_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 275.0,
+          "y": 185.0,
+          "z": 0.0,
+          "map": "IceAbyss_GrandHollow",
+          "file": "IceAbyss_GrandHollow_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -340.0,
+          "y": -140.0,
+          "z": -399.9999,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -343.0,
+          "y": -1264.0,
+          "z": -299.9999,
+          "map": "IceAbyss_ShallowValley",
+          "file": "IceAbyss_ShallowValley_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "Ghoul",
+      "translation": "食尸鬼",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 200.0,
+          "y": -300.0,
+          "z": -350.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -200.0,
+          "y": 300.0,
+          "z": -350.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 200.0,
+          "y": -300.0,
+          "z": -350.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -200.0,
+          "y": 300.0,
+          "z": -350.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -595.7538,
+          "y": 601.4645,
+          "z": 0.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 600.0,
+          "y": -585.0,
+          "z": 0.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 600.0,
+          "y": -585.0,
+          "z": 0.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -595.7538,
+          "y": 601.4645,
+          "z": 0.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1355.0,
+          "y": 1310.0,
+          "z": 450.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1355.0,
+          "y": 1310.0,
+          "z": 450.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 810.0,
+          "y": -891.60254,
+          "z": 0.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 810.0,
+          "y": -891.60254,
+          "z": 0.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1170.0,
+          "y": -89.0,
+          "z": 0.010099139,
+          "map": "Skull",
+          "file": "Skull_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -539.0,
+          "y": 349.0,
+          "z": 9.0,
+          "map": "Skull",
+          "file": "Skull_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1170.0,
+          "y": -89.0,
+          "z": 0.010099,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -539.0,
+          "y": 349.0,
+          "z": 9.0,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -989.48193,
+          "y": 963.9551,
+          "z": 0.0001,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -989.48193,
+          "y": 963.9551,
+          "z": 0.0001,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "GiantBat",
+      "translation": "巨型蝙蝠",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 37.00747,
+          "y": -37.142914,
+          "z": 45.0,
+          "map": "CaveTown",
+          "file": "CaveTown_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 229.11417,
+          "y": 72.87126,
+          "z": 5.0,
+          "map": "CaveTown",
+          "file": "CaveTown_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 37.00747,
+          "y": -37.142914,
+          "z": 45.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 229.11417,
+          "y": 72.87126,
+          "z": 5.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 37.00747,
+          "y": -37.142914,
+          "z": 45.0,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 229.11417,
+          "y": 72.87126,
+          "z": 5.0,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 37.00747,
+          "y": -37.142914,
+          "z": 45.0,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 229.11417,
+          "y": 72.87126,
+          "z": 5.0,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -14.0,
+          "y": -39.0,
+          "z": -379.68594,
+          "map": "Cave_Altar_02",
+          "file": "Cave_Altar_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -14.0,
+          "y": -39.0,
+          "z": -379.68594,
+          "map": "Cave_Altar_02",
+          "file": "Cave_Altar_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 21.114166,
+          "y": 72.87126,
+          "z": 5.0,
+          "map": "Cave_AntsNest",
+          "file": "Cave_AntsNest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -14.0,
+          "y": -39.0,
+          "z": 0.0,
+          "map": "Cave_BanditCamp_Center",
+          "file": "Cave_BanditCamp_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 29.766598,
+          "y": 284.10403,
+          "z": 146.0001,
+          "map": "Cave_SpiderNest_02",
+          "file": "Cave_SpiderNest_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -161.38206,
+          "y": -883.4565,
+          "z": 352.0,
+          "map": "Cave_Tomb_Center",
+          "file": "Cave_Tomb_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -161.38206,
+          "y": -883.4565,
+          "z": 352.0,
+          "map": "Cave_Tomb_Center",
+          "file": "Cave_Tomb_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 82.21051,
+          "y": 1165.188,
+          "z": -250.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -230.11151,
+          "y": 1196.0903,
+          "z": -250.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -375.12076,
+          "y": 1128.4714,
+          "z": -250.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1094.8964,
+          "y": -597.3397,
+          "z": -159.9999,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1094.8964,
+          "y": -597.3397,
+          "z": -159.9999,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 137.0,
+          "y": -1078.0,
+          "z": 180.00009,
+          "map": "IceCave_Altar",
+          "file": "IceCave_Altar_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 137.0,
+          "y": -1078.0,
+          "z": 180.00009,
+          "map": "IceCave_Altar",
+          "file": "IceCave_Altar_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -94.0,
+          "y": 15.0,
+          "z": 332.0,
+          "map": "IceCave_CaveSwamp",
+          "file": "IceCave_CaveSwamp_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1136.0,
+          "y": -52.0,
+          "z": 487.0,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 126.0,
+          "y": -1274.0,
+          "z": 448.0,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1136.0,
+          "y": -52.0,
+          "z": 487.0,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 126.0,
+          "y": -1274.0,
+          "z": 448.0,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -595.0,
+          "y": -211.99998,
+          "z": 719.0001,
+          "map": "Ruins_Armory",
+          "file": "Ruins_Armory_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -605.0,
+          "y": 246.00002,
+          "z": 719.0001,
+          "map": "Ruins_Armory",
+          "file": "Ruins_Armory_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1056.0,
+          "y": -91.99998,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1056.0,
+          "y": -91.99998,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 45.0,
+          "y": 100.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 35.0,
+          "y": -65.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 285.0,
+          "y": 685.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 285.0,
+          "y": -2010.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 35.0,
+          "y": -1260.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 45.0,
+          "y": 2190.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -660.0,
+          "y": 2310.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1950.0,
+          "y": 2310.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -2515.0,
+          "y": 2310.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -690.0,
+          "y": -295.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 45.0,
+          "y": -295.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 45.0,
+          "y": 655.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 45.0,
+          "y": 1820.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -945.0,
+          "y": 2320.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1650.0,
+          "y": 2320.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -2615.0,
+          "y": 1350.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 45.0,
+          "y": 100.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 35.0,
+          "y": -65.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 285.0,
+          "y": 685.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 285.0,
+          "y": -2010.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 35.0,
+          "y": -1260.0,
+          "z": 360.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 45.0,
+          "y": 2190.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -660.0,
+          "y": 2310.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1950.0,
+          "y": 2310.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -2515.0,
+          "y": 2310.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -690.0,
+          "y": -295.0,
+          "z": 350.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 45.0,
+          "y": -295.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 45.0,
+          "y": 655.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 45.0,
+          "y": 1820.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -945.0,
+          "y": 2320.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1650.0,
+          "y": 2320.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -2615.0,
+          "y": 1350.0,
+          "z": 950.0,
+          "map": "Ruins_ForsakenCloister",
+          "file": "Ruins_ForsakenCloister_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -30.0,
+          "y": -15.0,
+          "z": 1490.0,
+          "map": "ShipGraveyard_ElephantIsland",
+          "file": "ShipGraveyard_ElephantIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -30.0,
+          "y": -15.0,
+          "z": 1490.0,
+          "map": "ShipGraveyard_ElephantIsland",
+          "file": "ShipGraveyard_ElephantIsland_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 628.7939,
+          "y": -311.8404,
+          "z": 535.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -200.0,
+          "y": 470.0,
+          "z": 740.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1220.0,
+          "y": -140.0,
+          "z": 2630.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 598.89087,
+          "y": -301.10913,
+          "z": 1360.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1265.0,
+          "y": 480.00003,
+          "z": 330.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -670.0,
+          "y": -370.00003,
+          "z": 355.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 8.993598,
+          "y": 399.99976,
+          "z": 470.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1240.0,
+          "y": -554.99994,
+          "z": 405.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 434.28598,
+          "y": -381.24298,
+          "z": 575.0001,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1265.0,
+          "y": 480.00003,
+          "z": 330.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -670.0,
+          "y": -370.00003,
+          "z": 355.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 8.993598,
+          "y": 399.99976,
+          "z": 470.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1240.0,
+          "y": -554.99994,
+          "z": 405.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 434.28598,
+          "y": -381.24298,
+          "z": 575.0001,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 29.766594,
+          "y": 284.10403,
+          "z": 146.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 113.06888,
+          "y": -332.9013,
+          "z": 162.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -51.64032,
+          "y": 365.10147,
+          "z": 177.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "GiantJellyfish",
+      "translation": "巨型水母",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -42.660778,
+          "y": -184.62463,
+          "z": -871.3096,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -260.0,
+          "y": 315.0,
+          "z": 285.0,
+          "map": "ShipGraveyard_Hole",
+          "file": "ShipGraveyard_Hole_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -260.0,
+          "y": 315.0,
+          "z": 285.0,
+          "map": "ShipGraveyard_Hole",
+          "file": "ShipGraveyard_Hole_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 768.53955,
+          "y": -2019.1057,
+          "z": -653.9147,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "GiantSpider",
+      "translation": "巨型蜘蛛",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": -510.58752,
+          "y": 458.52625,
+          "z": 0.31406483,
+          "map": "Cave_SpiderNest_02",
+          "file": "Cave_SpiderNest_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 82.13521,
+          "y": 898.8908,
+          "z": -400.0,
+          "map": "HideoutCave_02",
+          "file": "HideoutCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -295.0,
+          "y": -248.99997,
+          "z": -399.9999,
+          "map": "HideoutCave_02",
+          "file": "HideoutCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1061.0,
+          "y": -387.0,
+          "z": -400.0,
+          "map": "HideoutCave_02",
+          "file": "HideoutCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1225.0,
+          "y": -50.0,
+          "z": -400.0,
+          "map": "IceAbyss_CharnelHouse",
+          "file": "IceAbyss_CharnelHouse_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 140.0,
+          "y": 391.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -571.0,
+          "y": 443.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 730.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -685.0,
+          "y": -261.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -710.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -132.0,
+          "y": 339.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -441.0,
+          "y": 819.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 201.0,
+          "y": 22.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 140.0,
+          "y": 391.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -571.0,
+          "y": 443.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 730.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -685.0,
+          "y": -261.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -710.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -132.0,
+          "y": 339.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -441.0,
+          "y": 819.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 201.0,
+          "y": 22.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 573.0848,
+          "y": 37.642357,
+          "z": 110.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 10.161445,
+          "y": -140.68327,
+          "z": -270.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 10.161455,
+          "y": 324.31674,
+          "z": 165.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 93.08479,
+          "y": -897.35767,
+          "z": 210.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 483.0,
+          "y": -1077.0,
+          "z": 0.000102447266,
+          "map": "IceAbyss_DividingHill",
+          "file": "IceAbyss_DividingHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 308.0,
+          "y": 14.0,
+          "z": 9.000103,
+          "map": "IceAbyss_DividingHill",
+          "file": "IceAbyss_DividingHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 357.0,
+          "y": 980.0,
+          "z": 0.00010282421,
+          "map": "IceAbyss_DividingHill",
+          "file": "IceAbyss_DividingHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1050.0,
+          "y": -1060.0,
+          "z": -305.0,
+          "map": "IceAbyss_FalseThrone",
+          "file": "IceAbyss_FalseThrone_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -890.0,
+          "y": -780.00006,
+          "z": -460.0,
+          "map": "IceAbyss_FalseThrone",
+          "file": "IceAbyss_FalseThrone_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 475.0,
+          "y": 120.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 675.0,
+          "y": -430.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -270.0,
+          "y": 420.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -775.0,
+          "y": -180.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -446.0,
+          "y": 27.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 508.0,
+          "y": -52.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1160.0,
+          "y": -1061.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1106.0,
+          "y": 1436.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 462.0,
+          "y": 850.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -161.0,
+          "y": 27.0,
+          "z": 214.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -580.0,
+          "y": 510.0,
+          "z": 375.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 265.0,
+          "y": -680.0,
+          "z": 265.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1080.0,
+          "y": -540.0,
+          "z": 280.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 175.0,
+          "y": -815.0,
+          "z": 655.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -202.0,
+          "y": -972.0,
+          "z": -541.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1017.0,
+          "y": 1085.0,
+          "z": -443.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 671.0,
+          "y": 1147.0,
+          "z": -497.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -853.0,
+          "y": -132.0,
+          "z": -443.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 130.0,
+          "y": 149.0,
+          "z": -600.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 130.0,
+          "y": 149.0,
+          "z": -600.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 2116.0,
+          "y": -308.0,
+          "z": 205.00009,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -540.0,
+          "y": -375.0,
+          "z": 0.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 835.0,
+          "y": -510.0,
+          "z": -250.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1000.0,
+          "y": 68.0,
+          "z": -84.99991,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 620.0,
+          "y": -1295.0,
+          "z": 170.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -460.0,
+          "y": -30.0,
+          "z": -580.0,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1227.0,
+          "y": 921.0,
+          "z": 0.00010944726,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 303.0,
+          "y": 2060.0,
+          "z": 0.6426265,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -897.0,
+          "y": 1103.0,
+          "z": 0.00010181787,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 274.0,
+          "y": -8.0,
+          "z": 2.4163082,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1227.0,
+          "y": 921.0,
+          "z": 0.00010944726,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 303.0,
+          "y": 2060.0,
+          "z": 0.6426265,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -897.0,
+          "y": 1103.0,
+          "z": 0.00010181787,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 274.0,
+          "y": -8.0,
+          "z": 2.4163082,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -10.468796,
+          "y": 38.05613,
+          "z": 270.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -400.0,
+          "y": -265.0,
+          "z": -480.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 905.0,
+          "y": -260.0,
+          "z": -480.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -12.0,
+          "y": 520.0,
+          "z": -535.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 370.0,
+          "y": -1000.0,
+          "z": -442.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 747.0,
+          "y": 17.0,
+          "z": 0.0,
+          "map": "IceAbyss_StaircaseHill",
+          "file": "IceAbyss_StaircaseHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1280.0,
+          "y": -82.0,
+          "z": 0.0,
+          "map": "IceCave_Hive_03",
+          "file": "IceCave_Hive_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 423.95605,
+          "y": -1133.1196,
+          "z": 367.84778,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 108.03975,
+          "y": -1080.5371,
+          "z": 321.03485,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -30.0,
+          "y": -30.0,
+          "z": 0.0,
+          "map": "Ruins_UndergroundAltar_01",
+          "file": "Ruins_UndergroundAltar_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -923.9034,
+          "y": -813.4376,
+          "z": 1005.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 777.20105,
+          "y": 276.8101,
+          "z": -399.9999,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -29.68737,
+          "y": -64.61478,
+          "z": 0.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 102.632454,
+          "y": -386.6194,
+          "z": 0.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 252.23357,
+          "y": -397.0839,
+          "z": 0.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 61.84033,
+          "y": 31.224115,
+          "z": 0.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 170.85094,
+          "y": -119.94641,
+          "z": 1005.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1176.7898,
+          "y": 1035.9082,
+          "z": 0.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -719.0,
+          "y": -164.0,
+          "z": -400.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -79.36898,
+          "y": 399.7519,
+          "z": 0.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 254.94606,
+          "y": -253.0598,
+          "z": -399.9999,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 64.11028,
+          "y": 289.15488,
+          "z": 0.0001,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "GoblinMage",
+      "translation": "哥布林法师",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 1107.6002,
+          "y": -1039.733,
+          "z": -959.9999,
+          "map": "CaveTown",
+          "file": "CaveTown_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1107.6002,
+          "y": -1039.733,
+          "z": -959.9999,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1107.6002,
+          "y": -1039.733,
+          "z": -959.9999,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1107.6002,
+          "y": -1039.733,
+          "z": -959.9999,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 983.9388,
+          "y": 606.51196,
+          "z": -430.9999,
+          "map": "Cave_Altar_Center",
+          "file": "Cave_Altar_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1107.6002,
+          "y": -187.73303,
+          "z": -596.6183,
+          "map": "Cave_AntsNest",
+          "file": "Cave_AntsNest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -613.0,
+          "y": -582.0,
+          "z": 0.314089,
+          "map": "Cave_AntsNest",
+          "file": "Cave_AntsNest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -546.5519,
+          "y": 366.12552,
+          "z": 0.0,
+          "map": "Cave_MoleTunnel",
+          "file": "Cave_MoleTunnel_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 84.932,
+          "y": 80.690895,
+          "z": -219.68593,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 84.932,
+          "y": 80.690895,
+          "z": -219.68593,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 144.2649,
+          "y": 679.29333,
+          "z": 0.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 460.93845,
+          "y": 1087.5117,
+          "z": -349.9999,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1005.00366,
+          "y": -449.0887,
+          "z": -510.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1005.00366,
+          "y": -449.0887,
+          "z": -510.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 540.0,
+          "y": 1220.0,
+          "z": 15.144034,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 540.0,
+          "y": 1220.0,
+          "z": 15.144034,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 307.4139,
+          "y": 235.01752,
+          "z": 0.0001,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 307.4139,
+          "y": 235.01752,
+          "z": 0.0001,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -710.0,
+          "y": -60.0,
+          "z": 202.0,
+          "map": "GoblinJail_Center",
+          "file": "GoblinJail_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 580.0,
+          "y": 1222.0,
+          "z": 0.314065,
+          "map": "HideoutCave_02",
+          "file": "HideoutCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 799.0,
+          "y": 218.0,
+          "z": -400.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 799.0,
+          "y": 218.0,
+          "z": -400.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 792.8479,
+          "y": -872.5006,
+          "z": -399.9999,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 112.924644,
+          "y": 215.2274,
+          "z": 0.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 792.8479,
+          "y": -872.5006,
+          "z": -399.9999,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 112.924644,
+          "y": 215.2274,
+          "z": 0.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "GoldChest",
+      "translation": "黄金宝箱",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -208.44365,
+          "y": -1175.4436,
+          "z": 9.9e-05,
+          "map": "AdmirerRoom",
+          "file": "AdmirerRoom_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 800.0,
+          "y": -7.275958e-12,
+          "z": 0.0,
+          "map": "Barracks",
+          "file": "Barracks_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1404.0,
+          "y": 775.00006,
+          "z": -430.9999,
+          "map": "Cave_Altar_Center",
+          "file": "Cave_Altar_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 571.1863,
+          "y": -939.4354,
+          "z": -499.9999,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 351.38617,
+          "y": -27.869164,
+          "z": -356.4122,
+          "map": "Cave_Tomb_Center",
+          "file": "Cave_Tomb_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 351.38617,
+          "y": -27.869164,
+          "z": -356.4122,
+          "map": "Cave_Tomb_Center",
+          "file": "Cave_Tomb_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -872.2757,
+          "y": 1678.0258,
+          "z": -1318.0,
+          "map": "CenterTower",
+          "file": "CenterTower_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 76.0,
+          "y": 1388.0,
+          "z": -102.0,
+          "map": "Cistern",
+          "file": "Cistern_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 76.0,
+          "y": 1388.0,
+          "z": -102.0,
+          "map": "Cistern_SR",
+          "file": "Cistern_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -885.0,
+          "y": -1407.0063,
+          "z": -649.9999,
+          "map": "Crypt_LargeRoomPit",
+          "file": "Crypt_LargeRoomPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -885.0,
+          "y": -1407.0063,
+          "z": -649.9999,
+          "map": "Crypt_LargeRoomPit",
+          "file": "Crypt_LargeRoomPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -885.0,
+          "y": -1407.0063,
+          "z": -649.9999,
+          "map": "Crypt_LargeRoomPit_SR",
+          "file": "Crypt_LargeRoomPit_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -253.33453,
+          "y": -180.88286,
+          "z": 0.0,
+          "map": "Crypt_LightlessChamber_01",
+          "file": "Crypt_LightlessChamber_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 298.91586,
+          "y": 371.36752,
+          "z": 1.0,
+          "map": "Crypt_LightlessChamber_01",
+          "file": "Crypt_LightlessChamber_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 3.650389e-07,
+          "y": 770.0,
+          "z": -50.0,
+          "map": "Firedeep_AnvilOutpost",
+          "file": "Firedeep_AnvilOutpost_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -676.3892,
+          "y": 348.67987,
+          "z": 0.0,
+          "map": "Firedeep_BlazeTunnel",
+          "file": "Firedeep_BlazeTunnel_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1775.0,
+          "y": -40.0,
+          "z": -100.0,
+          "map": "Firedeep_BlazeTunnel",
+          "file": "Firedeep_BlazeTunnel_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 997.5736,
+          "y": 1348.7867,
+          "z": 400.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1054.5459,
+          "y": -1338.9175,
+          "z": 400.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 415.0,
+          "y": -180.0,
+          "z": -400.0,
+          "map": "FourWayConnect",
+          "file": "FourWayConnect_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 415.0,
+          "y": -180.0,
+          "z": -400.0,
+          "map": "FourWayConnect",
+          "file": "FourWayConnect_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 415.0,
+          "y": -180.0,
+          "z": -400.0,
+          "map": "FourWayConnect_SR",
+          "file": "FourWayConnect_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1439.2024,
+          "y": 3.7013783,
+          "z": -400.0,
+          "map": "GoblinJail_Center",
+          "file": "GoblinJail_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1112.0,
+          "y": -428.0,
+          "z": -700.0,
+          "map": "HighPriestOssuary",
+          "file": "HighPriestOssuary_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1112.0,
+          "y": -428.0,
+          "z": -700.0,
+          "map": "HighPriestOssuary",
+          "file": "HighPriestOssuary_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -710.0,
+          "y": -1110.0,
+          "z": -1050.0,
+          "map": "IceAbyss_FalseThrone",
+          "file": "IceAbyss_FalseThrone_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -532.78174,
+          "y": -575.5635,
+          "z": -500.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -42.32146,
+          "y": 57.810764,
+          "z": -1299.9619,
+          "map": "IceAbyss_HoundVale",
+          "file": "IceAbyss_HoundVale_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1525.0,
+          "y": 995.0,
+          "z": 0.0001,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 150.0,
+          "y": -85.0,
+          "z": 0.0001,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 755.0,
+          "y": 2340.0,
+          "z": 0.0001,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -700.0,
+          "y": 2335.0,
+          "z": 0.0001,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1.0000003e-06,
+          "y": -390.0,
+          "z": 150.0,
+          "map": "IceCave_Altar",
+          "file": "IceCave_Altar_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1.0000003e-06,
+          "y": -390.0,
+          "z": 150.0,
+          "map": "IceCave_Altar",
+          "file": "IceCave_Altar_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 43.0,
+          "y": -505.0,
+          "z": 0.0,
+          "map": "IceCave_IcicleCave",
+          "file": "IceCave_IcicleCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 43.0,
+          "y": -505.0,
+          "z": 0.0,
+          "map": "IceCave_IcicleCave",
+          "file": "IceCave_IcicleCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 605.0925,
+          "y": -20.984829,
+          "z": -599.9999,
+          "map": "IceCave_Maze",
+          "file": "IceCave_Maze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 605.0925,
+          "y": -20.984829,
+          "z": -599.9999,
+          "map": "IceCave_Maze",
+          "file": "IceCave_Maze_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 190.0,
+          "y": -780.0,
+          "z": -400.0,
+          "map": "IceCave_Pyramid",
+          "file": "IceCave_Pyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -192.48108,
+          "y": -11.620509,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 805.5189,
+          "y": 1138.3795,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1931.5189,
+          "y": -426.6205,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 803.5189,
+          "y": -863.6205,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -192.48108,
+          "y": -11.620509,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 805.5189,
+          "y": 1138.3795,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1931.5189,
+          "y": -426.6205,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 803.5189,
+          "y": -863.6205,
+          "z": 0.00011,
+          "map": "IceCave_Watchtower",
+          "file": "IceCave_Watchtower_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -20.0,
+          "y": 0.0,
+          "z": -680.0,
+          "map": "InfernoMouth",
+          "file": "InfernoMouth_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -510.0,
+          "y": -710.0,
+          "z": 500.0,
+          "map": "InfernoRooms",
+          "file": "InfernoRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -510.0,
+          "y": -710.0,
+          "z": 500.0,
+          "map": "InfernoRooms",
+          "file": "InfernoRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1189.0,
+          "y": 800.0,
+          "z": 500.0,
+          "map": "Inferno_DeathPlatforms",
+          "file": "Inferno_DeathPlatforms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1189.0,
+          "y": 800.0,
+          "z": 500.0,
+          "map": "Inferno_DeathPlatforms",
+          "file": "Inferno_DeathPlatforms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 850.0,
+          "y": 1250.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 850.0,
+          "y": -50.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -60.0,
+          "y": -50.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -60.0,
+          "y": 1250.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 850.0,
+          "y": 1250.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 850.0,
+          "y": -50.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -60.0,
+          "y": -50.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -60.0,
+          "y": 1250.0,
+          "z": 0.0001,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 30.0,
+          "y": 1795.0,
+          "z": -200.0,
+          "map": "Inferno_Judgementroad",
+          "file": "Inferno_Judgementroad_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 30.0,
+          "y": 95.0,
+          "z": -200.0,
+          "map": "Inferno_Judgementroad",
+          "file": "Inferno_Judgementroad_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 137.7762,
+          "y": -542.4574,
+          "z": 520.0,
+          "map": "Ruins_EndWall",
+          "file": "Ruins_EndWall_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 137.7762,
+          "y": -542.4574,
+          "z": 520.0,
+          "map": "Ruins_EndWall",
+          "file": "Ruins_EndWall_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1378.0,
+          "y": 245.0,
+          "z": 626.3126,
+          "map": "Ruins_Keep",
+          "file": "Ruins_Keep_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -321.73218,
+          "y": -214.8194,
+          "z": 1197.0001,
+          "map": "Ruins_TowerBridge_Destroyed",
+          "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -321.73218,
+          "y": -214.8194,
+          "z": 1197.0001,
+          "map": "Ruins_TowerBridge_Destroyed_SR",
+          "file": "Ruins_TowerBridge_Destroyed_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -237.9825,
+          "y": -366.26562,
+          "z": -1252.8065,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 455.66452,
+          "y": -344.9903,
+          "z": 2112.0002,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 455.66452,
+          "y": -344.9903,
+          "z": 2112.0002,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 3187.8599,
+          "y": 1683.9426,
+          "z": -1009.3638,
+          "map": "ShipGraveyard_Hole",
+          "file": "ShipGraveyard_Hole_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 3187.8599,
+          "y": 1683.9426,
+          "z": -1009.3638,
+          "map": "ShipGraveyard_Hole",
+          "file": "ShipGraveyard_Hole_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1364.4249,
+          "y": 3308.438,
+          "z": -399.9999,
+          "map": "ShipGraveyard_PiratePrison",
+          "file": "ShipGraveyard_PiratePrison_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1364.4249,
+          "y": 3308.438,
+          "z": -399.9999,
+          "map": "ShipGraveyard_PiratePrison",
+          "file": "ShipGraveyard_PiratePrison_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1209.565,
+          "y": -902.7578,
+          "z": 2330.954,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 950.6681,
+          "y": -1991.1252,
+          "z": -1129.9999,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -568.2845,
+          "y": -1075.219,
+          "z": -2132.589,
+          "map": "ShipGraveyard_SunkenShip_01",
+          "file": "ShipGraveyard_SunkenShip_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 136.12161,
+          "y": 41.605637,
+          "z": 0.000101,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 136.12161,
+          "y": 41.605637,
+          "z": 0.000101,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1170.0,
+          "y": 520.00006,
+          "z": -399.9999,
+          "map": "TreasureRoom_01",
+          "file": "TreasureRoom_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 170.0,
+          "y": -1.0,
+          "z": 6.0,
+          "map": "UndergroundAltar",
+          "file": "UndergroundAltar_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "IceGiantSpider",
+      "translation": "冰霜巨型蜘蛛",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -1225.0,
+          "y": -50.0,
+          "z": -400.0,
+          "map": "IceAbyss_CharnelHouse",
+          "file": "IceAbyss_CharnelHouse_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 140.0,
+          "y": 391.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -571.0,
+          "y": 443.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 730.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -685.0,
+          "y": -261.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -710.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -132.0,
+          "y": 339.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -441.0,
+          "y": 819.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 201.0,
+          "y": 22.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 140.0,
+          "y": 391.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -571.0,
+          "y": 443.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 730.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -685.0,
+          "y": -261.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -710.0,
+          "y": 30.0,
+          "z": -500.0,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -132.0,
+          "y": 339.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -441.0,
+          "y": 819.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 201.0,
+          "y": 22.0,
+          "z": 1.2604399,
+          "map": "IceAbyss_DeathPit",
+          "file": "IceAbyss_DeathPit_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 573.0848,
+          "y": 37.642357,
+          "z": 110.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 10.161445,
+          "y": -140.68327,
+          "z": -270.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 10.161455,
+          "y": 324.31674,
+          "z": 165.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 93.08479,
+          "y": -897.35767,
+          "z": 210.0,
+          "map": "IceAbyss_DeepFlow",
+          "file": "IceAbyss_DeepFlow_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 483.0,
+          "y": -1077.0,
+          "z": 0.000102447266,
+          "map": "IceAbyss_DividingHill",
+          "file": "IceAbyss_DividingHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 308.0,
+          "y": 14.0,
+          "z": 9.000103,
+          "map": "IceAbyss_DividingHill",
+          "file": "IceAbyss_DividingHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 357.0,
+          "y": 980.0,
+          "z": 0.00010282421,
+          "map": "IceAbyss_DividingHill",
+          "file": "IceAbyss_DividingHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1050.0,
+          "y": -1060.0,
+          "z": -305.0,
+          "map": "IceAbyss_FalseThrone",
+          "file": "IceAbyss_FalseThrone_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -890.0,
+          "y": -780.00006,
+          "z": -460.0,
+          "map": "IceAbyss_FalseThrone",
+          "file": "IceAbyss_FalseThrone_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 475.0,
+          "y": 120.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 675.0,
+          "y": -430.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -270.0,
+          "y": 420.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -775.0,
+          "y": -180.0,
+          "z": 205.0,
+          "map": "IceAbyss_FrostMaw",
+          "file": "IceAbyss_FrostMaw_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -446.0,
+          "y": 27.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 508.0,
+          "y": -52.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1160.0,
+          "y": -1061.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1106.0,
+          "y": 1436.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 462.0,
+          "y": 850.0,
+          "z": -304.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -161.0,
+          "y": 27.0,
+          "z": 214.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -580.0,
+          "y": 510.0,
+          "z": 375.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 265.0,
+          "y": -680.0,
+          "z": 265.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1080.0,
+          "y": -540.0,
+          "z": 280.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 175.0,
+          "y": -815.0,
+          "z": 655.0,
+          "map": "IceAbyss_FrozenHold",
+          "file": "IceAbyss_FrozenHold_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -202.0,
+          "y": -972.0,
+          "z": -541.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1017.0,
+          "y": 1085.0,
+          "z": -443.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 671.0,
+          "y": 1147.0,
+          "z": -497.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -853.0,
+          "y": -132.0,
+          "z": -443.9999,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 130.0,
+          "y": 149.0,
+          "z": -600.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 130.0,
+          "y": 149.0,
+          "z": -600.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 2116.0,
+          "y": -308.0,
+          "z": 205.00009,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -540.0,
+          "y": -375.0,
+          "z": 0.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 835.0,
+          "y": -510.0,
+          "z": -250.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1000.0,
+          "y": 68.0,
+          "z": -84.99991,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 620.0,
+          "y": -1295.0,
+          "z": 170.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -460.0,
+          "y": -30.0,
+          "z": -580.0,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1227.0,
+          "y": 921.0,
+          "z": 0.00010944726,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 303.0,
+          "y": 2060.0,
+          "z": 0.6426265,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -897.0,
+          "y": 1103.0,
+          "z": 0.00010181787,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 274.0,
+          "y": -8.0,
+          "z": 2.4163082,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1227.0,
+          "y": 921.0,
+          "z": 0.00010944726,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 303.0,
+          "y": 2060.0,
+          "z": 0.6426265,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -897.0,
+          "y": 1103.0,
+          "z": 0.00010181787,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 274.0,
+          "y": -8.0,
+          "z": 2.4163082,
+          "map": "IceAbyss_ReversedPyramid",
+          "file": "IceAbyss_ReversedPyramid_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -10.468796,
+          "y": 38.05613,
+          "z": 270.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -400.0,
+          "y": -265.0,
+          "z": -480.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 905.0,
+          "y": -260.0,
+          "z": -480.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -12.0,
+          "y": 520.0,
+          "z": -535.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 370.0,
+          "y": -1000.0,
+          "z": -442.0,
+          "map": "IceAbyss_SinkingPillars",
+          "file": "IceAbyss_SinkingPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 747.0,
+          "y": 17.0,
+          "z": 0.0,
+          "map": "IceAbyss_StaircaseHill",
+          "file": "IceAbyss_StaircaseHill_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1280.0,
+          "y": -82.0,
+          "z": 0.0,
+          "map": "IceCave_Hive_03",
+          "file": "IceCave_Hive_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 423.95605,
+          "y": -1133.1196,
+          "z": 367.84778,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 108.03975,
+          "y": -1080.5371,
+          "z": 321.03485,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "IceHarpy",
+      "translation": "寒冰鹰身女妖",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -245.0,
+          "y": 0.0,
+          "z": 1460.0,
+          "map": "IceAbyss_FrostwovenPillars",
+          "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -720.0,
+          "y": -835.0,
+          "z": 550.0,
+          "map": "IceAbyss_HoundVale",
+          "file": "IceAbyss_HoundVale_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 610.0,
+          "y": 750.0,
+          "z": 550.0,
+          "map": "IceAbyss_HoundVale",
+          "file": "IceAbyss_HoundVale_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 843.90405,
+          "y": -808.7112,
+          "z": 1414.0001,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -731.1524,
+          "y": 681.6526,
+          "z": 1414.0001,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1170.0,
+          "y": 260.0,
+          "z": 330.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -390.0,
+          "y": -280.0,
+          "z": 330.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1170.0,
+          "y": 260.0,
+          "z": 330.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -390.0,
+          "y": -280.0,
+          "z": 330.0,
+          "map": "IceAbyss_ImpRitualRooms",
+          "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -937.71716,
+          "y": -398.4182,
+          "z": 915.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 970.0,
+          "y": -40.0,
+          "z": 795.0,
+          "map": "IceAbyss_Monoliths",
+          "file": "IceAbyss_Monoliths_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -406.0,
+          "y": -22.0,
+          "z": 1121.7721,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 251.78893,
+          "y": 1350.9513,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1521.1696,
+          "y": 3501.3467,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -3364.1694,
+          "y": 1679.3467,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1611.1696,
+          "y": -328.6533,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 251.78893,
+          "y": 1350.9513,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1611.1696,
+          "y": -328.6533,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1521.1696,
+          "y": 3501.3467,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -3364.1694,
+          "y": 1679.3467,
+          "z": 510.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 100.0,
+          "y": 150.0,
+          "z": 500.0,
+          "map": "IceCave_FrozenLake",
+          "file": "IceCave_FrozenLake_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 146.0,
+          "y": -69.0,
+          "z": 1649.0,
+          "map": "IceCave_Guardpost",
+          "file": "IceCave_Guardpost_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 146.0,
+          "y": -69.0,
+          "z": 1649.0,
+          "map": "IceCave_Guardpost",
+          "file": "IceCave_Guardpost_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -237.0,
+          "y": -31.0,
+          "z": 969.0,
+          "map": "IceCave_Hive_03",
+          "file": "IceCave_Hive_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -2354.0,
+          "y": -31.0,
+          "z": 969.0,
+          "map": "IceCave_Hive_03",
+          "file": "IceCave_Hive_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -73.0,
+          "y": 686.0,
+          "z": 1083.0001,
+          "map": "IceCave_Hut_01",
+          "file": "IceCave_Hut_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -73.0,
+          "y": 686.0,
+          "z": 1079.0001,
+          "map": "IceCave_Hut_01",
+          "file": "IceCave_Hut_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 846.0086,
+          "y": 238.74516,
+          "z": 547.0,
+          "map": "IceCave_Hut_03",
+          "file": "IceCave_Hut_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -35.406887,
+          "y": 0.30146644,
+          "z": 601.1039,
+          "map": "IceCave_MountainPass",
+          "file": "IceCave_MountainPass_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -410.96027,
+          "y": -1070.5371,
+          "z": 441.03485,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -10.0,
+          "y": -5.0,
+          "z": 1105.0,
+          "map": "IceCave_Quarry",
+          "file": "IceCave_Quarry_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "IceSpider",
+      "translation": "冰霜蜘蛛",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -114.0,
+          "y": -500.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -194.0,
+          "y": -641.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -534.0,
+          "y": -693.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -728.0,
+          "y": -525.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -715.0,
+          "y": -195.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -613.0,
+          "y": 114.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -229.0,
+          "y": 111.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -25.0,
+          "y": -118.0,
+          "z": 0.0,
+          "map": "IceAbyss_DemonicDen",
+          "file": "IceAbyss_DemonicDen_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 653.0,
+          "y": -1133.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 744.0,
+          "y": -1202.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 556.0,
+          "y": 460.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 660.0,
+          "y": 540.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1456.0,
+          "y": 45.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1476.0,
+          "y": -197.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 412.0,
+          "y": 1210.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 337.0,
+          "y": 1120.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1425.0,
+          "y": -81.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 433.0,
+          "y": 460.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 780.0,
+          "y": -1069.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 240.0,
+          "y": 1210.0,
+          "z": 0.0,
+          "map": "IceAbyss_IceMaze",
+          "file": "IceAbyss_IceMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -480.0,
+          "y": 314.0,
+          "z": 9.9e-05,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 47.0,
+          "y": -119.0,
+          "z": 0.00011044726,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -564.0,
+          "y": -658.0,
+          "z": 9.937378e-05,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -957.0,
+          "y": -121.0,
+          "z": 9.9e-05,
+          "map": "IceAbyss_Pillars",
+          "file": "IceAbyss_Pillars_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -16.0,
+          "y": -569.0,
+          "z": -299.9999,
+          "map": "IceAbyss_ShallowValley",
+          "file": "IceAbyss_ShallowValley_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -492.0,
+          "y": -1093.0,
+          "z": -299.9999,
+          "map": "IceAbyss_ShallowValley",
+          "file": "IceAbyss_ShallowValley_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -622.0,
+          "y": -345.0,
+          "z": -299.9999,
+          "map": "IceAbyss_ShallowValley",
+          "file": "IceAbyss_ShallowValley_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -196.0,
+          "y": 1203.0,
+          "z": -299.9999,
+          "map": "IceAbyss_ShallowValley",
+          "file": "IceAbyss_ShallowValley_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "LavaGolem",
+      "translation": "熔岩魔像",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 675.0,
+          "y": 120.0,
+          "z": -3.2717965,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "LavaTurtle",
+      "translation": "熔岩龟",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 905.0,
+          "y": 170.0,
+          "z": -5.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -165.0,
+          "y": 765.0,
+          "z": 0.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -570.0,
+          "y": -930.0,
+          "z": 0.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 350.0,
+          "y": 720.0,
+          "z": 10.0,
+          "map": "Firedeep_CollapsedDigSite",
+          "file": "Firedeep_CollapsedDigSite_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -955.0,
+          "y": 5.0,
+          "z": -140.0,
+          "map": "Firedeep_LavaCrossway",
+          "file": "Firedeep_LavaCrossway_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 915.0,
+          "y": -70.0,
+          "z": -140.0,
+          "map": "Firedeep_LavaCrossway",
+          "file": "Firedeep_LavaCrossway_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "Lich",
+      "translation": "巫妖",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": -50.0,
+          "z": -25.0,
+          "map": "Crypt_DarkRitualRoom_01",
+          "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "MarvelousChest",
+      "translation": "MarvelousChest",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -503.1868,
+          "y": 54.593746,
+          "z": 239.0,
+          "map": "Armory",
+          "file": "Armory_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -296.38202,
+          "y": 511.2822,
+          "z": -604.67175,
+          "map": "CaveMaze",
+          "file": "CaveMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -338.54425,
+          "y": 523.24615,
+          "z": -607.07904,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -301.41132,
+          "y": 458.20493,
+          "z": -606.4851,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -324.4968,
+          "y": 462.2206,
+          "z": -606.4851,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 128.19551,
+          "y": -384.1783,
+          "z": 9.3e-05,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 127.07107,
+          "y": -126.497475,
+          "z": -30.0,
+          "map": "CenterTower",
+          "file": "CenterTower_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1546.301,
+          "y": -44.30689,
+          "z": 0.0,
+          "map": "Crypt_DarkRitualRoom_01",
+          "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1546.301,
+          "y": -1.306888,
+          "z": 0.0,
+          "map": "DarkRitualRoom_04",
+          "file": "DarkRitualRoom_04_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 43.295982,
+          "y": 79.779236,
+          "z": 3.0,
+          "map": "Firedeep_BrokenStonebridge",
+          "file": "Firedeep_BrokenStonebridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -2500.0,
+          "y": 1900.0,
+          "z": -304.24768,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -315.0,
+          "y": 235.00002,
+          "z": 0.0,
+          "map": "IceAbyss_CharnelHouse",
+          "file": "IceAbyss_CharnelHouse_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -360.0,
+          "y": 80.0,
+          "z": -460.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -360.0,
+          "y": 80.0,
+          "z": -460.0,
+          "map": "IceAbyss_WyvernLair",
+          "file": "IceAbyss_WyvernLair_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 240.0,
+          "y": -159.0,
+          "z": 0.0,
+          "map": "InfernoGate",
+          "file": "InfernoGate_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 117.0,
+          "y": 460.5,
+          "z": -785.0,
+          "map": "Inferno_DemonOverseersDominion",
+          "file": "Inferno_DemonOverseersDominion_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 117.0,
+          "y": 460.5,
+          "z": -785.0,
+          "map": "Inferno_DemonOverseersDominion_Resize",
+          "file": "Inferno_DemonOverseersDominion_Resize_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 117.0,
+          "y": 460.5,
+          "z": -785.0,
+          "map": "Inferno_DemonOverseersDominion_Test",
+          "file": "Inferno_DemonOverseersDominion_Test_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -230.0,
+          "y": 875.0,
+          "z": -700.0,
+          "map": "Ruins_Barbican_01",
+          "file": "Ruins_Barbican_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -230.0,
+          "y": 875.0,
+          "z": -700.0,
+          "map": "Ruins_Barbican_01",
+          "file": "Ruins_Barbican_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -230.0,
+          "y": 875.0,
+          "z": -700.0,
+          "map": "Ruins_Barbican_01_BossTest",
+          "file": "Ruins_Barbican_01_BossTest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 225.0,
+          "y": 60.0,
+          "z": -800.0,
+          "map": "Ruins_GreatHall_01_Destroyed",
+          "file": "Ruins_GreatHall_01_Destroyed_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 225.0,
+          "y": 60.0,
+          "z": -800.0,
+          "map": "Ruins_GreatHall_01_Destroyed",
+          "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 215.0,
+          "y": 145.0,
+          "z": -1600.0,
+          "map": "Ruins_GreatHall_01_Destroyed_BossTest",
+          "file": "Ruins_GreatHall_01_Destroyed_BossTest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 512.0,
+          "y": -625.0,
+          "z": 0.0,
+          "map": "Ruins_TowerBridge_Destroyed",
+          "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 512.0,
+          "y": -625.0,
+          "z": 0.0,
+          "map": "Ruins_TowerBridge_Destroyed_SR",
+          "file": "Ruins_TowerBridge_Destroyed_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -924.1538,
+          "y": -495.97543,
+          "z": -830.41895,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1024.0885,
+          "y": 99.58111,
+          "z": -982.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -274.79385,
+          "y": 10.159597,
+          "z": 0.0,
+          "map": "TreasureRoom_01",
+          "file": "TreasureRoom_01_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "OrnateChestSmall",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": -550.59827,
+          "y": -825.0,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 545.70764,
+          "y": 829.99994,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -550.00006,
+          "y": -825.0,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 547.2622,
+          "y": 829.99994,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -314.3166,
+          "y": -98.20786,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 318.1782,
+          "y": 101.87726,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -929.3374,
+          "y": 315.00006,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 928.3867,
+          "y": -335.00006,
+          "z": -399.9999,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 696.6831,
+          "y": 690.9619,
+          "z": 590.0006,
+          "map": "Crypt_Ramparts",
+          "file": "Crypt_Ramparts_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -692.78174,
+          "y": -698.5029,
+          "z": 590.0006,
+          "map": "Crypt_Ramparts",
+          "file": "Crypt_Ramparts_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 696.6831,
+          "y": 690.9619,
+          "z": 590.0006,
+          "map": "Crypt_Ramparts",
+          "file": "Crypt_Ramparts_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -692.78174,
+          "y": -698.5029,
+          "z": 590.0006,
+          "map": "Crypt_Ramparts",
+          "file": "Crypt_Ramparts_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -249.0676,
+          "y": -447.2203,
+          "z": -400.0,
+          "map": "FourWayConnect",
+          "file": "FourWayConnect_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -175.0,
+          "y": 89.0765,
+          "z": 95.118484,
+          "map": "FourWayConnect",
+          "file": "FourWayConnect_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -249.0676,
+          "y": -447.2203,
+          "z": -400.0,
+          "map": "FourWayConnect_SR",
+          "file": "FourWayConnect_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -175.0,
+          "y": 89.0765,
+          "z": 95.118484,
+          "map": "FourWayConnect_SR",
+          "file": "FourWayConnect_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -854.9903,
+          "y": -519.9942,
+          "z": 0.0,
+          "map": "GuardPost",
+          "file": "GuardPost_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -845.9903,
+          "y": 519.9942,
+          "z": 0.0,
+          "map": "GuardPost",
+          "file": "GuardPost_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 677.0,
+          "y": 1222.0,
+          "z": 0.0,
+          "map": "InfernoRooms",
+          "file": "InfernoRooms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 677.0,
+          "y": 1222.0,
+          "z": 0.0,
+          "map": "InfernoRooms",
+          "file": "InfernoRooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1090.0,
+          "y": 685.0,
+          "z": -200.0,
+          "map": "Inferno_DeathPlatforms",
+          "file": "Inferno_DeathPlatforms_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 690.0,
+          "y": 1000.0,
+          "z": -200.0,
+          "map": "Inferno_DeathPlatforms",
+          "file": "Inferno_DeathPlatforms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1090.0,
+          "y": 685.0,
+          "z": -200.0,
+          "map": "Inferno_DeathPlatforms",
+          "file": "Inferno_DeathPlatforms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -727.0,
+          "y": -979.0,
+          "z": -499.9999,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -727.0,
+          "y": -979.0,
+          "z": -499.9999,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 863.0,
+          "y": -713.0,
+          "z": 0.0,
+          "map": "Skull",
+          "file": "Skull_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 863.0,
+          "y": -713.0,
+          "z": 0.0,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -260.0,
+          "y": 1120.0,
+          "z": -500.0,
+          "map": "TheCage",
+          "file": "TheCage_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "SeaHarpy",
+      "translation": "海洋鹰身女妖",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 1028.1771,
+          "y": 704.3205,
+          "z": 670.0,
+          "map": "EmptyModule_1F_09",
+          "file": "EmptyModule_1F_09_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 550.0802,
+          "y": 243.994,
+          "z": 670.0,
+          "map": "EmptyModule_1F_13",
+          "file": "EmptyModule_1F_13_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -578.0,
+          "y": -638.0,
+          "z": 1317.7876,
+          "map": "ShipGraveyard_FlippedShip",
+          "file": "ShipGraveyard_FlippedShip_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 635.0,
+          "y": 286.0,
+          "z": 1317.7876,
+          "map": "ShipGraveyard_FlippedShip",
+          "file": "ShipGraveyard_FlippedShip_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -8.0,
+          "y": 379.0,
+          "z": 3291.8486,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -167.0,
+          "y": 2445.0,
+          "z": 3291.8486,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -8.0,
+          "y": 379.0,
+          "z": 3291.8486,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -167.0,
+          "y": 2445.0,
+          "z": 3291.8486,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 115.0,
+          "y": 322.0,
+          "z": 1259.0,
+          "map": "ShipGraveyard_Oceanvolcano",
+          "file": "ShipGraveyard_Oceanvolcano_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 180.0,
+          "y": 105.0,
+          "z": 3125.0,
+          "map": "ShipGraveyard_RockIsland",
+          "file": "ShipGraveyard_RockIsland_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 940.0,
+          "y": -1410.0,
+          "z": 670.0,
+          "map": "ShipGraveyard_Trench",
+          "file": "ShipGraveyard_Trench_D.json",
+          "version": "(D)"
+        }
+      ]
+    },
+    {
+      "name": "SkeletonMage",
+      "translation": "骷髅法师",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -109.0,
+          "y": 0.0,
+          "z": 1.508981,
+          "map": "CaveMaze",
+          "file": "CaveMaze_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -109.0,
+          "y": 0.0,
+          "z": 1.508981,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 716.0,
+          "y": -404.00003,
+          "z": -499.9999,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -160.0,
+          "y": 1130.0,
+          "z": 0.0,
+          "map": "Cemetery_03",
+          "file": "Cemetery_03_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1602.0,
+          "y": 3960.0,
+          "z": 287.98273,
+          "map": "CenterTower",
+          "file": "CenterTower_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 645.0,
+          "y": 95.0,
+          "z": -465.0,
+          "map": "CorridorofDarkPriests",
+          "file": "CorridorofDarkPriests_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 570.0,
+          "y": 1165.0,
+          "z": -465.0,
+          "map": "CorridorofDarkPriests",
+          "file": "CorridorofDarkPriests_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 230.0,
+          "y": 1085.0,
+          "z": -25.0,
+          "map": "CorridorofDarkPriests",
+          "file": "CorridorofDarkPriests_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 315.0,
+          "y": -15.0,
+          "z": -25.0,
+          "map": "CorridorofDarkPriests",
+          "file": "CorridorofDarkPriests_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -330.0,
+          "y": -1150.0,
+          "z": -25.0,
+          "map": "CorridorofDarkPriests",
+          "file": "CorridorofDarkPriests_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -405.0,
+          "y": 300.0,
+          "z": -25.0,
+          "map": "CorridorofDarkPriests",
+          "file": "CorridorofDarkPriests_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -60.000015,
+          "y": -19.99999,
+          "z": -189.99966,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -60.000015,
+          "y": -19.99999,
+          "z": -189.99966,
+          "map": "Crypt_Atrium",
+          "file": "Crypt_Atrium_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -18.511719,
+          "y": 1038.9376,
+          "z": 100.98538,
+          "map": "Crypt_Chapel",
+          "file": "Crypt_Chapel_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 3.718422,
+          "y": -2.002717,
+          "z": 390.00027,
+          "map": "Crypt_Ramparts",
+          "file": "Crypt_Ramparts_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 3.718422,
+          "y": -2.002717,
+          "z": 390.00027,
+          "map": "Crypt_Ramparts",
+          "file": "Crypt_Ramparts_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 185.0,
+          "y": 665.0,
+          "z": 0.31406483,
+          "map": "DarkMagicLibrary_Center",
+          "file": "DarkMagicLibrary_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 24.0,
+          "y": -1093.0,
+          "z": 0.0,
+          "map": "DarkMagicLibrary_Center",
+          "file": "DarkMagicLibrary_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 24.0,
+          "y": -1093.0,
+          "z": 0.0,
+          "map": "DarkMagicLibrary_Center",
+          "file": "DarkMagicLibrary_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 675.0,
+          "y": -4.5474735e-13,
+          "z": 300.0,
+          "map": "DeathAltar",
+          "file": "DeathAltar_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 675.0,
+          "y": -4.5474735e-13,
+          "z": 300.0,
+          "map": "DeathAltar",
+          "file": "DeathAltar_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -469.99466,
+          "y": -809.9908,
+          "z": 100.0,
+          "map": "FishingGround",
+          "file": "FishingGround_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1300.0,
+          "y": 80.0,
+          "z": -350.0,
+          "map": "HBridge",
+          "file": "HBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 87.70965,
+          "y": -107.94037,
+          "z": 0.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1275.0,
+          "y": -1275.0,
+          "z": 80.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1275.0,
+          "y": -1275.0,
+          "z": 80.0,
+          "map": "Inferno_Hellcrossbridge",
+          "file": "Inferno_Hellcrossbridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -15.0,
+          "y": 695.0,
+          "z": 450.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -15.0,
+          "y": 695.0,
+          "z": 450.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 835.0,
+          "y": -735.0,
+          "z": -250.0,
+          "map": "Inferno_Judgementroad",
+          "file": "Inferno_Judgementroad_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 830.0,
+          "y": 765.0,
+          "z": -255.0,
+          "map": "Inferno_Judgementroad",
+          "file": "Inferno_Judgementroad_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 920.0,
+          "y": 975.0,
+          "z": -150.0,
+          "map": "Inferno_LavaCorner",
+          "file": "Inferno_LavaCorner_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 920.0,
+          "y": 975.0,
+          "z": -150.0,
+          "map": "Inferno_LavaCorner",
+          "file": "Inferno_LavaCorner_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -3.6503884e-06,
+          "y": -1150.0,
+          "z": 850.0,
+          "map": "Inferno_Painfulsteps",
+          "file": "Inferno_Painfulsteps_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -4e-06,
+          "y": -1150.0,
+          "z": 850.0,
+          "map": "Inferno_Painfulsteps",
+          "file": "Inferno_Painfulsteps_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -470.0,
+          "y": 1295.0,
+          "z": 0.0,
+          "map": "OssuaryEdge",
+          "file": "OssuaryEdge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -470.0,
+          "y": 1295.0,
+          "z": 0.0,
+          "map": "OssuaryEdge",
+          "file": "OssuaryEdge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -730.0,
+          "y": 5.0000706,
+          "z": -599.9999,
+          "map": "Ruins_Chapel",
+          "file": "Ruins_Chapel_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -730.0,
+          "y": 5.0000706,
+          "z": -599.9999,
+          "map": "Ruins_Chapel",
+          "file": "Ruins_Chapel_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1325.4623,
+          "y": 114.69384,
+          "z": 0.0,
+          "map": "Ruins_Forest_02",
+          "file": "Ruins_Forest_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -208.92566,
+          "y": -503.24026,
+          "z": -80.0,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1052.7372,
+          "y": -1555.5831,
+          "z": -80.0,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -208.92566,
+          "y": -503.24026,
+          "z": -80.0,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1052.7372,
+          "y": -1555.5831,
+          "z": -80.0,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 10.0,
+          "y": 1055.0,
+          "z": 60.0,
+          "map": "Ruins_Grave",
+          "file": "Ruins_Grave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 10.0,
+          "y": 1055.0,
+          "z": 60.0,
+          "map": "Ruins_Grave",
+          "file": "Ruins_Grave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 10.0,
+          "y": 1055.0,
+          "z": 60.0,
+          "map": "Ruins_Grave_SR",
+          "file": "Ruins_Grave_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 465.6006,
+          "y": 299.00955,
+          "z": 0.313934,
+          "map": "Ruins_GreatHall_01_Destroyed",
+          "file": "Ruins_GreatHall_01_Destroyed_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 465.6006,
+          "y": 299.00955,
+          "z": 0.313934,
+          "map": "Ruins_GreatHall_01_Destroyed",
+          "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 465.6006,
+          "y": 299.00955,
+          "z": 0.313934,
+          "map": "Ruins_GreatHall_01_Destroyed_BossTest",
+          "file": "Ruins_GreatHall_01_Destroyed_BossTest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1309.0,
+          "y": -50.0,
+          "z": -510.0,
+          "map": "Ruins_GreatHall_03_Destroyed",
+          "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1309.0,
+          "y": -50.0,
+          "z": -510.0,
+          "map": "Ruins_GreatHall_03_Destroyed_SR",
+          "file": "Ruins_GreatHall_03_Destroyed_SR_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -523.0,
+          "y": 14.0,
+          "z": 0.0,
+          "map": "Ruins_Keep",
+          "file": "Ruins_Keep_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 380.0,
+          "y": 30.0,
+          "z": -440.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 380.0,
+          "y": 30.0,
+          "z": -440.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 152.00002,
+          "y": 360.0,
+          "z": 0.0,
+          "map": "Ruins_Stonehenge",
+          "file": "Ruins_Stonehenge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 2365.0,
+          "y": 1335.0,
+          "z": 700.0,
+          "map": "ShipGraveyard_PiratePrison",
+          "file": "ShipGraveyard_PiratePrison_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 2365.0,
+          "y": 1335.0,
+          "z": 700.0,
+          "map": "ShipGraveyard_PiratePrison",
+          "file": "ShipGraveyard_PiratePrison_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -808.14905,
+          "y": 825.0536,
+          "z": 1011.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 110.9999,
+          "y": -536.99994,
+          "z": 0.0,
+          "map": "Storeroom",
+          "file": "Storeroom_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -135.05539,
+          "y": -812.49115,
+          "z": -400.0,
+          "map": "Swamp",
+          "file": "Swamp_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -135.0554,
+          "y": -812.49115,
+          "z": -400.0,
+          "map": "Swamp",
+          "file": "Swamp_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1.8189894e-12,
+          "y": 990.0,
+          "z": -500.0,
+          "map": "TheCage",
+          "file": "TheCage_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1.8189894e-12,
+          "y": 990.0,
+          "z": -500.0,
+          "map": "TheCage",
+          "file": "TheCage_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 160.0,
+          "y": 1105.0,
+          "z": -149.9999,
+          "map": "TheMiniWheel",
+          "file": "TheMiniWheel_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 160.0,
+          "y": 1105.0,
+          "z": -149.9999,
+          "map": "TheMiniWheel",
+          "file": "TheMiniWheel_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1150.0,
+          "y": 150.0,
+          "z": 10.0,
+          "map": "Tomb_Center",
+          "file": "Tomb_Center_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1150.0,
+          "y": 150.0,
+          "z": 10.0,
+          "map": "Tomb_Center",
+          "file": "Tomb_Center_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1019.0,
+          "y": -1020.0,
+          "z": -285.0,
+          "map": "UndergroundAltar",
+          "file": "UndergroundAltar_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "Wisp",
+      "translation": "幻灵",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 1106.0034,
+          "y": 715.1544,
+          "z": 0.0,
+          "map": "Ruins_Forest_01",
+          "file": "Ruins_Forest_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1105.0034,
+          "y": 714.1544,
+          "z": 0.0,
+          "map": "Ruins_Forest_01",
+          "file": "Ruins_Forest_01_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -881.4913,
+          "y": 1.2259072,
+          "z": 0.0,
+          "map": "Ruins_Forest_08",
+          "file": "Ruins_Forest_08_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 400.58746,
+          "y": 68.19546,
+          "z": 0.0,
+          "map": "Ruins_Forest_08",
+          "file": "Ruins_Forest_08_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -881.4913,
+          "y": 1.2259072,
+          "z": 0.0,
+          "map": "Ruins_Forest_08",
+          "file": "Ruins_Forest_08_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 400.58746,
+          "y": 68.19546,
+          "z": 0.0,
+          "map": "Ruins_Forest_08",
+          "file": "Ruins_Forest_08_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -448.0,
+          "y": -102.0,
+          "z": 0.0,
+          "map": "Ruins_Wells_02",
+          "file": "Ruins_Wells_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -359.0,
+          "y": -81.00001,
+          "z": 0.0,
+          "map": "Ruins_Wells_02",
+          "file": "Ruins_Wells_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 244.0,
+          "y": 252.0,
+          "z": 9.318847e-05,
+          "map": "Ruins_Wells_02",
+          "file": "Ruins_Wells_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -855.0,
+          "y": 814.0,
+          "z": 0.0001,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -856.0,
+          "y": 827.0,
+          "z": 0.0001,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1096.0,
+          "y": -526.0,
+          "z": 0.0001,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "WoodChestSmall",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 1018.6497,
+          "y": -65.12699,
+          "z": 0.3140635,
+          "map": "Cave_AntsNest",
+          "file": "Cave_AntsNest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -165.8859,
+          "y": -1156.9062,
+          "z": 9.5e-05,
+          "map": "Cave_MoleTunnel",
+          "file": "Cave_MoleTunnel_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -140.0,
+          "y": -890.0,
+          "z": -310.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 200.0,
+          "y": -890.0,
+          "z": -310.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -160.0,
+          "y": 800.0,
+          "z": -400.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 160.0,
+          "y": 800.0,
+          "z": -400.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 778.0,
+          "y": 829.0,
+          "z": -399.9999,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 483.0,
+          "y": 829.0,
+          "z": -399.9999,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 900.0,
+          "y": 1090.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 890.0,
+          "y": -1090.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -885.0,
+          "y": -1090.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -905.0,
+          "y": 1085.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -140.0,
+          "y": -890.0,
+          "z": -310.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 200.0,
+          "y": -890.0,
+          "z": -310.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -160.0,
+          "y": 800.0,
+          "z": -400.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 160.0,
+          "y": 800.0,
+          "z": -400.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 900.0,
+          "y": 1090.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 778.0,
+          "y": 823.0,
+          "z": -399.9999,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 483.0,
+          "y": 823.0,
+          "z": -399.9999,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 890.0,
+          "y": -1090.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -885.0,
+          "y": -1090.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -905.0,
+          "y": 1085.0,
+          "z": 0.0,
+          "map": "ConectorDoubleBridge",
+          "file": "ConectorDoubleBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -672.0,
+          "y": 1255.0,
+          "z": -500.0,
+          "map": "Crypt_LightlessTomb_01",
+          "file": "Crypt_LightlessTomb_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1120.0,
+          "y": 595.0,
+          "z": 0.0,
+          "map": "Crypt_LightlessTomb_01",
+          "file": "Crypt_LightlessTomb_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -671.0,
+          "y": -504.0,
+          "z": 250.31407,
+          "map": "Crypt_LightlessTomb_01",
+          "file": "Crypt_LightlessTomb_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 542.6147,
+          "y": -1279.8859,
+          "z": -500.0,
+          "map": "Crypt_LightlessTomb_01",
+          "file": "Crypt_LightlessTomb_01_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1192.0,
+          "y": -810.0,
+          "z": 0.0,
+          "map": "HideoutCave_02",
+          "file": "HideoutCave_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -126.999916,
+          "y": 1159.0,
+          "z": 0.31407583,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -126.999916,
+          "y": 1159.0,
+          "z": 0.31407583,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -300.0,
+          "y": -870.0,
+          "z": 9.2e-05,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -290.0,
+          "y": 830.0,
+          "z": 0.0,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -300.0,
+          "y": -870.0,
+          "z": 9.2e-05,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1010.0,
+          "y": 400.0,
+          "z": 0.0,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -290.0,
+          "y": 830.0,
+          "z": 0.0,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 360.0,
+          "y": -1230.0,
+          "z": 0.0,
+          "map": "Tomb_Center",
+          "file": "Tomb_Center_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "Wraith",
+      "translation": "幽鬼",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 355.0,
+          "y": -45.0,
+          "z": 0.0,
+          "map": "Crypt_BlindfallPit",
+          "file": "Crypt_BlindfallPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -755.0,
+          "y": -45.00002,
+          "z": 0.0,
+          "map": "Crypt_BlindfallPit",
+          "file": "Crypt_BlindfallPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -200.00002,
+          "y": 460.0,
+          "z": 0.0,
+          "map": "Crypt_BlindfallPit",
+          "file": "Crypt_BlindfallPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -199.99998,
+          "y": -430.0,
+          "z": 0.0,
+          "map": "Crypt_BlindfallPit",
+          "file": "Crypt_BlindfallPit_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0001,
+          "map": "Crypt_GreatWalkway",
+          "file": "Crypt_GreatWalkway_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0001,
+          "map": "Crypt_GreatWalkway",
+          "file": "Crypt_GreatWalkway_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 326.0,
+          "y": 299.0,
+          "z": -47.0,
+          "map": "Crypt_Vault",
+          "file": "Crypt_Vault_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 30.0,
+          "y": 14.0,
+          "z": 0.0,
+          "map": "DeathHall",
+          "file": "DeathHall_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 30.0,
+          "y": 14.0,
+          "z": 0.0,
+          "map": "DeathHall",
+          "file": "DeathHall_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -4.092726e-12,
+          "y": 9.999874,
+          "z": 0.0,
+          "map": "EightToOne_02",
+          "file": "EightToOne_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1.8189894e-12,
+          "y": 9.999874,
+          "z": 0.0,
+          "map": "EightToOne_02",
+          "file": "EightToOne_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 899.0022,
+          "y": -955.00214,
+          "z": 0.0,
+          "map": "GuardPost",
+          "file": "GuardPost_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 918.0025,
+          "y": -704.00214,
+          "z": 0.0,
+          "map": "GuardPost",
+          "file": "GuardPost_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -785.0,
+          "y": -760.0,
+          "z": -500.0,
+          "map": "HBridge",
+          "file": "HBridge_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1171.0,
+          "y": 240.0,
+          "z": -299.9998,
+          "map": "InfernoMouth",
+          "file": "InfernoMouth_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 107.00001,
+          "y": 74.00004,
+          "z": -5.0,
+          "map": "OldTomb",
+          "file": "OldTomb_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 107.00001,
+          "y": 74.00004,
+          "z": -5.0,
+          "map": "OldTomb",
+          "file": "OldTomb_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 56.0,
+          "y": -1447.0,
+          "z": 0.0,
+          "map": "Ruins_Barbican_01_BossTest",
+          "file": "Ruins_Barbican_01_BossTest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -557.0,
+          "y": 430.0,
+          "z": 0.0,
+          "map": "Ruins_Barbican_01_BossTest",
+          "file": "Ruins_Barbican_01_BossTest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -10.0,
+          "y": -115.0,
+          "z": 540.0,
+          "map": "TheCage",
+          "file": "TheCage_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -10.0,
+          "y": -114.0,
+          "z": 540.0,
+          "map": "TheCage",
+          "file": "TheCage_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 730.0,
+          "y": 10.000009,
+          "z": -499.9999,
+          "map": "TheMiniWheel",
+          "file": "TheMiniWheel_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 730.0,
+          "y": 10.000009,
+          "z": -499.9999,
+          "map": "TheMiniWheel",
+          "file": "TheMiniWheel_HR_D.json",
+          "version": ""
+        }
+      ]
+    }
+  ]
+}

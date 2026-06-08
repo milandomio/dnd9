@@ -1,0 +1,596 @@
+{
+  "name": "WolfFang",
+  "translation": "狼牙",
+  "monsters": [
+    {
+      "name": "DireWolf",
+      "translation": "恐狼",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -206.95398,
+          "y": -164.04562,
+          "z": 0.0001,
+          "map": "Ruins_BanditForest",
+          "file": "Ruins_BanditForest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 308.04605,
+          "y": 145.95436,
+          "z": 0.0001,
+          "map": "Ruins_BanditForest",
+          "file": "Ruins_BanditForest_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -206.95398,
+          "y": -164.04562,
+          "z": 0.0001,
+          "map": "Ruins_BanditForest",
+          "file": "Ruins_BanditForest_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 308.04605,
+          "y": 145.95436,
+          "z": 0.0001,
+          "map": "Ruins_BanditForest",
+          "file": "Ruins_BanditForest_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1375.0,
+          "y": 580.00006,
+          "z": 0.0,
+          "map": "Ruins_Chapel",
+          "file": "Ruins_Chapel_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1090.0,
+          "y": -424.99997,
+          "z": 0.0,
+          "map": "Ruins_Chapel",
+          "file": "Ruins_Chapel_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1375.0,
+          "y": 580.00006,
+          "z": 0.0,
+          "map": "Ruins_Chapel",
+          "file": "Ruins_Chapel_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1090.0,
+          "y": -424.99997,
+          "z": 0.0,
+          "map": "Ruins_Chapel",
+          "file": "Ruins_Chapel_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -394.99997,
+          "y": -445.0,
+          "z": 0.0,
+          "map": "Ruins_Forest_02",
+          "file": "Ruins_Forest_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 29.999979,
+          "y": 590.0,
+          "z": 0.0,
+          "map": "Ruins_Forest_02",
+          "file": "Ruins_Forest_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 727.87933,
+          "y": 683.8803,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 577.21783,
+          "y": -314.81943,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1256.0,
+          "y": 1308.0,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 727.87933,
+          "y": 683.8803,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 577.21783,
+          "y": -314.81943,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1256.0,
+          "y": 1308.0,
+          "z": -599.9999,
+          "map": "Ruins_Forest_06",
+          "file": "Ruins_Forest_06_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1254.7081,
+          "y": -1329.8824,
+          "z": 0.0001,
+          "map": "Ruins_Square_02",
+          "file": "Ruins_Square_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1266.2919,
+          "y": -1327.8824,
+          "z": 0.0001,
+          "map": "Ruins_Square_02",
+          "file": "Ruins_Square_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1254.7081,
+          "y": -1329.8824,
+          "z": 0.0001,
+          "map": "Ruins_Square_02",
+          "file": "Ruins_Square_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1266.2919,
+          "y": -1327.8824,
+          "z": 0.0001,
+          "map": "Ruins_Square_02",
+          "file": "Ruins_Square_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -455.0,
+          "y": 415.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 887.0,
+          "y": 765.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 983.0,
+          "y": -92.00002,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1329.0,
+          "y": 1280.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -421.0,
+          "y": -395.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1335.0,
+          "y": -1030.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -455.0,
+          "y": 415.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 887.0,
+          "y": 765.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 983.0,
+          "y": -92.00002,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1329.0,
+          "y": 1280.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -421.0,
+          "y": -395.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1335.0,
+          "y": -1030.0,
+          "z": 0.0,
+          "map": "Ruins_Stables_02",
+          "file": "Ruins_Stables_02_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -584.6119,
+          "y": 142.43481,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -39.0,
+          "y": 101.0,
+          "z": 514.8726,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 143.0,
+          "y": -397.0,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -95.0,
+          "y": -171.0,
+          "z": 9.951757e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -1054.0,
+          "y": 811.0,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 321.79758,
+          "y": 119.12324,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -584.6119,
+          "y": 142.43481,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -39.0,
+          "y": 101.0,
+          "z": 514.8726,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 143.0,
+          "y": -397.0,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -95.0,
+          "y": -171.0,
+          "z": 9.951757e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -1054.0,
+          "y": 811.0,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 321.79758,
+          "y": 119.12324,
+          "z": 9.7e-05,
+          "map": "Ruins_WollfColony",
+          "file": "Ruins_WollfColony_HR_D.json",
+          "version": ""
+        }
+      ]
+    },
+    {
+      "name": "FrostWolf",
+      "translation": "冰霜狼",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 895.0,
+          "y": -775.0,
+          "z": 0.0,
+          "map": "IceCave_FrozenLake",
+          "file": "IceCave_FrozenLake_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1025.0,
+          "y": -45.0,
+          "z": 0.0,
+          "map": "IceCave_FrozenLake",
+          "file": "IceCave_FrozenLake_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 895.0,
+          "y": 475.0,
+          "z": 0.0,
+          "map": "IceCave_FrozenLake",
+          "file": "IceCave_FrozenLake_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -359.23615,
+          "y": 19.253876,
+          "z": 0.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -2.236155,
+          "y": -250.74612,
+          "z": 0.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -440.0,
+          "y": 1060.0,
+          "z": -600.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -853.664,
+          "y": 712.8947,
+          "z": -600.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 125.61371,
+          "y": 543.8013,
+          "z": -600.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -125.23615,
+          "y": -33.746124,
+          "z": 0.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 691.2668,
+          "y": -130.31786,
+          "z": -600.0,
+          "map": "IceCave_Path",
+          "file": "IceCave_Path_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1109.0236,
+          "y": -159.04872,
+          "z": -228.63554,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -117.08607,
+          "y": -87.02511,
+          "z": 0.000101,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -992.2902,
+          "y": -54.30661,
+          "z": -271.5659,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 553.8645,
+          "y": -271.03564,
+          "z": 0.000101,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -938.10114,
+          "y": 109.55168,
+          "z": -185.8255,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 213.104,
+          "y": 907.8295,
+          "z": -31.45429,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1090.601,
+          "y": -8.633221,
+          "z": -238.23637,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": -198.07501,
+          "y": -75.56774,
+          "z": 9.657666e-05,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 268.59015,
+          "y": 90.98569,
+          "z": 0.00010103467,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_D.json",
+          "version": "(D)"
+        },
+        {
+          "x": 1000.02356,
+          "y": -49.048717,
+          "z": -281.89365,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -103.08607,
+          "y": -174.02512,
+          "z": 0.000101,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -992.2902,
+          "y": -54.30661,
+          "z": -271.5659,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 588.8645,
+          "y": -219.03564,
+          "z": 0.000101,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -938.10114,
+          "y": 109.55168,
+          "z": -185.8255,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 210.104,
+          "y": 912.8295,
+          "z": -31.45429,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 1090.601,
+          "y": -8.633221,
+          "z": -238.23637,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": -347.075,
+          "y": -17.56774,
+          "z": 9.657666e-05,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        },
+        {
+          "x": 282.59015,
+          "y": 3.9856908,
+          "z": 0.00010103467,
+          "map": "IceCave_WolfCave",
+          "file": "IceCave_WolfCave_HR_D.json",
+          "version": ""
+        }
+      ]
+    }
+  ]
+}

@@ -103,23 +103,31 @@ export default function DetailPage() {
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, margin: "0 0 12px" }}>
         {entity.translation || entity.name} 位置汇总
       </h1>
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <button onClick={toggle} style={{
-          marginLeft: 16, padding: "4px 16px",
-          background: debug ? "#4CAF50" : "#FFC107", color: debug ? "#fff" : "#000",
-          border: debug ? "2px solid #388E3C" : "2px solid #FF9800",
-          borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: "bold",
-        }}>
-          {debug ? "退出调试" : "显示调试信息"}
-        </button>
-      </div>
+
+      <button onClick={toggle} style={{
+        position: "fixed",
+        top: 20,
+        right: 20,
+        padding: "4px 16px",
+        background: debug ? "#4CAF50" : "#FFC107",
+        color: debug ? "#fff" : "#000",
+        border: debug ? "2px solid #388E3C" : "2px solid #FF9800",
+        borderRadius: 6,
+        cursor: "pointer",
+        fontSize: 13,
+        fontWeight: "bold",
+        zIndex: 9999,
+        boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+      }}>
+        {debug ? "退出调试" : "显示调试信息"}
+      </button>
 
       <div style={{
         textAlign: "center", color: "#ff6b6b", fontSize: 14, marginBottom: 20,
         padding: 8, background: "#3a3a3a", borderRadius: 5, maxWidth: 700, marginLeft: "auto", marginRight: "auto",
       }}>⚠️ 数据有误差，以实际游戏内为准<span style={{ color: "#aaa", marginLeft: 15 }}>地图生成日期：2026-06-08 <span style={{ fontSize: 10 }}>地图页面设计-雪鸡Official</span></span></div>
 
-      <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(4, 1fr)" }}>
+      <div style={{ display: "grid", gap: 6, gridTemplateColumns: "repeat(4, 1fr)" }}>
         {sortedGroups.map(([groupName, items]) => (<>
           {groupName && <div key={`h-${groupName}`} style={{
             gridColumn: "1 / -1",
@@ -163,7 +171,7 @@ export default function DetailPage() {
                 {debug && <span style={{ color: "#888", fontSize: 11 }}> ({mapName})</span>}
               </h3>
               {debug && <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4 }}>
-                {mod?.sl_base_name || mapName}.webp | 找到 {mapCoords.length} 个位置 | 范围: ±{range}
+                {mod?.img_name || mod?.sl_base_name || mapName}.webp | 找到 {mapCoords.length} 个位置 | 范围: ±{range}
               </div>}
               {debug && <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4, lineHeight: 1.4 }}>
                 {mapCoords[0].file}<br/>
@@ -178,7 +186,7 @@ export default function DetailPage() {
                 position: "relative",
                 overflow: "hidden",
                 ...(mod?.sl_base_name ? {
-                  backgroundImage: `url(./data/img/${mod.sl_base_name}.webp)`,
+                  backgroundImage: `url(./data/img/${mod.img_name || mod.sl_base_name}.webp)`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 } : {}),
@@ -235,25 +243,31 @@ export default function DetailPage() {
                 })}
               </div>
               {debug && (
-              <div style={{ fontSize: 11, color: "#aaa", marginTop: 4, display: "flex", gap: 4, alignItems: "center", flexWrap: "nowrap" }}>
-                <span style={{ color: "#888" }}>范围:</span>
-                <button onClick={() => setAdj(mapName, "range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
-                <input type="number" value={range} onChange={e => setAdj(mapName, "range", Number(e.target.value) - baseRange)} style={ctrlInput} step={100} />
-                <button onClick={() => setAdj(mapName, "range", range * 2 - baseRange)} style={ctrlBtn}>x2</button>
-                <span style={{ color: "#aaa", fontSize: 12, marginLeft: 4 }}>↻{adj.rotate}</span>
-                <span style={{ color: "#888", marginLeft: 8 }}>偏移:</span>
-                <button onClick={() => setAdj(mapName, "y", adj.y - 50)} style={ctrlBtn}>↑</button>
-                <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>↓</button>
-                <button onClick={() => setAdj(mapName, "x", adj.x - 50)} style={ctrlBtn}>←</button>
-                <button onClick={() => setAdj(mapName, "x", adj.x + 50)} style={ctrlBtn}>→</button>
-                <span style={{ color: "#888", marginLeft: 8 }}>X:</span>
-                <input type="number" value={offX} onChange={e => setAdj(mapName, "x", Number(e.target.value) - (mod?.offset_x ?? 0))} style={ctrlInput} step={10} />
-                <span style={{ color: "#888" }}>Y:</span>
-                <input type="number" value={offY} onChange={e => setAdj(mapName, "y", Number(e.target.value) - (mod?.offset_y ?? 0))} style={ctrlInput} step={10} />
-                <button onClick={() => setAdj(mapName, "rotate", (adj.rotate + 1) % 4)} style={ctrlBtn}>↻ 旋转</button>
-                <button onClick={() => setAdj(mapName, "mirrorX", !adj.mirrorX)} style={{...ctrlBtn, background: adj.mirrorX ? "#4CAF50" : "#555"}}>⇄ 左右</button>
-                <button onClick={() => setAdj(mapName, "mirrorY", !adj.mirrorY)} style={{...ctrlBtn, background: adj.mirrorY ? "#4CAF50" : "#555"}}>⇅ 上下</button>
-                <button onClick={() => setAdjOffsets(prev => { const n = {...prev}; delete n[mapName]; return n; })} style={ctrlBtn}>↺ 重置</button>
+              <div style={{ fontSize: 11, color: "#aaa", marginTop: 4, display: "flex", flexDirection: "column", gap: 3 }}>
+                <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                  <span style={{ color: "#888" }}>范围:</span>
+                  <button onClick={() => setAdj(mapName, "range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
+                  <input type="number" value={range} onChange={e => setAdj(mapName, "range", Number(e.target.value) - baseRange)} style={ctrlInput} step={100} />
+                  <button onClick={() => setAdj(mapName, "range", range * 2 - baseRange)} style={ctrlBtn}>x2</button>
+                  <span style={{ color: "#aaa", fontSize: 12, marginLeft: 4 }}>↻{adj.rotate}</span>
+                </div>
+                <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                  <span style={{ color: "#888" }}>偏移:</span>
+                  <button onClick={() => setAdj(mapName, "y", adj.y - 50)} style={ctrlBtn}>↑</button>
+                  <button onClick={() => setAdj(mapName, "y", adj.y + 50)} style={ctrlBtn}>↓</button>
+                  <button onClick={() => setAdj(mapName, "x", adj.x - 50)} style={ctrlBtn}>←</button>
+                  <button onClick={() => setAdj(mapName, "x", adj.x + 50)} style={ctrlBtn}>→</button>
+                  <span style={{ color: "#888", marginLeft: 8 }}>X:</span>
+                  <input type="number" value={offX} onChange={e => setAdj(mapName, "x", Number(e.target.value) - (mod?.offset_x ?? 0))} style={ctrlInput} step={10} />
+                  <span style={{ color: "#888" }}>Y:</span>
+                  <input type="number" value={offY} onChange={e => setAdj(mapName, "y", Number(e.target.value) - (mod?.offset_y ?? 0))} style={ctrlInput} step={10} />
+                </div>
+                <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                  <button onClick={() => setAdj(mapName, "rotate", (adj.rotate + 1) % 4)} style={ctrlBtn}>↻ 旋转</button>
+                  <button onClick={() => setAdj(mapName, "mirrorX", !adj.mirrorX)} style={{...ctrlBtn, background: adj.mirrorX ? "#4CAF50" : "#555"}}>⇄ 左右</button>
+                  <button onClick={() => setAdj(mapName, "mirrorY", !adj.mirrorY)} style={{...ctrlBtn, background: adj.mirrorY ? "#4CAF50" : "#555"}}>⇅ 上下</button>
+                  <button onClick={() => setAdjOffsets(prev => { const n = {...prev}; delete n[mapName]; return n; })} style={ctrlBtn}>↺ 重置</button>
+                </div>
               </div>
               )}
             </div>
@@ -262,16 +276,58 @@ export default function DetailPage() {
         </>))}
       </div>
 
-      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginTop: 20 }}>
-        共 {coords.length} 个坐标，分布在 {grouped.size} 个模块
-        （{[...grouped.keys()].join(", ")}）
+      <div style={{
+        marginTop: 10,
+        padding: 10,
+        background: "#3a3a3a",
+        borderRadius: 5,
+        fontSize: 15,
+        textAlign: "center",
+        color: "#aaa",
+      }}>
+        <strong>颜色说明：</strong>
+        <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#00ffff", marginRight: 3 }}></span> Z &gt; 299 (高于地面)
+        <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#ffff00", margin: "0 3px 0 12px" }}></span> -299 ≤ Z ≤ 299 (正常高度)
+        <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", background: "#ff4444", margin: "0 3px 0 12px" }}></span> Z &lt; -299 (低于地面)
+        <br /><strong>位置统计：共 {coords.length} 个位置点</strong>
+        <br /><strong>包含地图：</strong> {[...grouped.keys()].map(k => modules.get(k)?.translation || k).join(", ")}
       </div>
 
-      <div style={{ marginTop: 24, display: "flex", justifyContent: "center", gap: 24, fontSize: 12, color: "#aaa" }}>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#00ffff", marginRight: 4 }}></span> Z &gt; 299 (高于地面)</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ffff00", marginRight: 4 }}></span> -299 ≤ Z ≤ 299 (正常高度)</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "50%", background: "#ff4444", marginRight: 4 }}></span> Z &lt; -299 (低于地面)</span>
+      {debug && (
+      <div style={{ marginTop: 12, background: "#3a3a3a", borderRadius: 5, padding: 10, overflowX: "auto" }}>
+        <h3 style={{ textAlign: "center", color: "#00bcd4", fontSize: 18, margin: "0 0 10px" }}>所有坐标详情</h3>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, color: "#aaa" }}>
+          <thead>
+            <tr style={{ background: "#555", fontWeight: "bold" }}>
+              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>分组</th>
+              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>地图文件</th>
+              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>地图汉化</th>
+              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>标签</th>
+              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>位置 X</th>
+              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>位置 Y</th>
+              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>位置 Z</th>
+            </tr>
+          </thead>
+          <tbody>
+            {coords.map((c, i) => {
+              const mod = modules.get(c.map);
+              const g = mod?.group || "";
+              return (
+                <tr key={i} style={{ background: i % 2 === 0 ? "#333" : "#3a3a3a" }}>
+                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{GROUP_LABELS[g] || g}</td>
+                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.file}</td>
+                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{mod?.translation || c.map}</td>
+                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center", fontSize: 11 }}>{c.label}</td>
+                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.x.toFixed(2)}</td>
+                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.y.toFixed(2)}</td>
+                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.z.toFixed(2)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
+      )}
     </div>
   );
 }

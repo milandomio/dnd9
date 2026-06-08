@@ -6,6 +6,7 @@ import { DebugProvider } from "./hooks/useDebug";
 import HomePage from "./pages/HomePage";
 import ListPage from "./pages/ListPage";
 import DetailPage from "./pages/DetailPage";
+import LootdropDetailPage from "./pages/LootdropDetailPage";
 import ExplorePage from "./pages/ExplorePage";
 import QuestItemsPage from "./pages/QuestItemsPage";
 import QuestNPCPage from "./pages/QuestNPCPage";
@@ -39,6 +40,7 @@ function AppInner() {
           <Route path="/quest_items" element={<QuestItemsPage />} />
           <Route path="/quest_npc" element={<QuestNPCPage />} />
           <Route path="/:page" element={<ListPage />} />
+          <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
           <Route path="/:page/:name" element={<DetailPage />} />
       </Routes>
     </div>

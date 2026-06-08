@@ -3,7 +3,7 @@
   "translation": "战争号角",
   "category": "",
   "monsters": [
-    "ID_LootdropGroup_WarHorn"
+    "WarHorn"
   ],
   "coords": [
     {
@@ -12,7 +12,8 @@
       "z": 522.0,
       "map": "ShipGraveyard_BladehandRefuge",
       "file": "ShipGraveyard_BladehandRefuge_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_Lootdrop_WarHorn"
     },
     {
       "x": -411.67966,
@@ -20,7 +21,8 @@
       "z": -1000.0,
       "map": "ShipGraveyard_ShipRest",
       "file": "ShipGraveyard_ShipRest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_Lootdrop_WarHorn"
     }
   ]
 }

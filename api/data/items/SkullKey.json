@@ -3,12 +3,12 @@
   "translation": "骷髅钥匙",
   "category": "",
   "monsters": [
+    "CofferSmall",
     "DemonOverseer",
-    "Id_LootDropGroup_CofferSmall",
-    "Id_LootDropGroup_GoldChest",
-    "Id_LootDropGroup_OrnateChestLarge",
-    "Id_LootDropGroup_OrnateChestMedium",
-    "Id_LootDropGroup_OrnateChestSmall",
+    "GoldChest",
+    "OrnateChestLarge",
+    "OrnateChestMedium",
+    "OrnateChestSmall",
     "SkullKey"
   ],
   "coords": [
@@ -18,7 +18,8 @@
       "z": 400.00012,
       "map": "ThroneRoom_02",
       "file": "ThroneRoom_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "SkullKey"
     },
     {
       "x": -563.0,
@@ -26,7 +27,8 @@
       "z": 400.00012,
       "map": "ThroneRoom_02",
       "file": "ThroneRoom_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "SkullKey"
     }
   ]
 }

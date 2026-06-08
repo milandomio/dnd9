@@ -4,26 +4,26 @@
   "category": "",
   "monsters": [
     "Arrow",
+    "Barrel",
     "Bookshelf",
+    "Coffin_Poor",
+    "FrostSkeletonArcher",
     "FrostSkeletonArcher_Hard",
+    "GoblinArcher",
     "GoblinArcher_Hard",
     "Ground",
-    "ID_LootdropGroup_LavaSlime",
-    "ID_LootdropGroup_PirateBowman",
-    "ID_LootdropGroup_WoodenBarrel_UnderSea",
+    "IceKoboldArcher",
     "IceKoboldArcher_Hard",
-    "Id_LootDropGroup_Barrel",
-    "Id_LootDropGroup_Coffin_Poor",
-    "Id_LootDropGroup_FrostSkeletonArcher",
-    "Id_LootDropGroup_GoblinArcher",
-    "Id_LootDropGroup_IceKoboldArcher",
-    "Id_LootDropGroup_Pot",
-    "Id_LootDropGroup_SkeletonArcher",
-    "Id_LootDropGroup_Slime",
-    "Id_LootDropGroup_SlimeUnique",
-    "Id_LootDropGroup_SpiderPot",
+    "LavaSlime",
+    "PirateBowman",
+    "Pot",
+    "SkeletonArcher",
     "SkeletonArcher_Hard",
-    "Slime_Hard"
+    "Slime",
+    "SlimeUnique",
+    "Slime_Hard",
+    "SpiderPot",
+    "WoodenBarrel_UnderSea"
   ],
   "coords": [
     {
@@ -32,7 +32,8 @@
       "z": -739.96985,
       "map": "CaveTown",
       "file": "CaveTown_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 532.0821,
@@ -40,7 +41,8 @@
       "z": -739.96985,
       "map": "CaveTown",
       "file": "CaveTown_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 532.0821,
@@ -48,7 +50,8 @@
       "z": -739.96985,
       "map": "CaveTown_02",
       "file": "CaveTown_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 532.0821,
@@ -56,7 +59,8 @@
       "z": -739.96985,
       "map": "CaveTown_02",
       "file": "CaveTown_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -400.19504,
@@ -64,7 +68,8 @@
       "z": -189.00003,
       "map": "Cave_Altar_02",
       "file": "Cave_Altar_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 122.0,
@@ -72,7 +77,8 @@
       "z": -99.99991,
       "map": "Cave_Altar_02",
       "file": "Cave_Altar_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -126.0,
@@ -80,7 +86,8 @@
       "z": -60.666565,
       "map": "Cave_Altar_02",
       "file": "Cave_Altar_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -400.19504,
@@ -88,7 +95,8 @@
       "z": -189.00003,
       "map": "Cave_Altar_02",
       "file": "Cave_Altar_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 122.0,
@@ -96,7 +104,8 @@
       "z": -99.99991,
       "map": "Cave_Altar_02",
       "file": "Cave_Altar_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -126.0,
@@ -104,7 +113,8 @@
       "z": -60.666565,
       "map": "Cave_Altar_02",
       "file": "Cave_Altar_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 532.0821,
@@ -112,7 +122,8 @@
       "z": -582.32764,
       "map": "Cave_AntsNest",
       "file": "Cave_AntsNest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -59.50867,
@@ -120,7 +131,8 @@
       "z": 107.77216,
       "map": "Cave_BanditCamp_Center",
       "file": "Cave_BanditCamp_Center_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -70.99934,
@@ -128,7 +140,8 @@
       "z": 137.77216,
       "map": "Cave_BanditCamp_Center",
       "file": "Cave_BanditCamp_Center_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 122.0,
@@ -136,7 +149,8 @@
       "z": 103.0,
       "map": "Cave_BanditCamp_Center",
       "file": "Cave_BanditCamp_Center_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 116.0,
@@ -144,7 +158,8 @@
       "z": 103.0,
       "map": "Cave_BanditCamp_Center",
       "file": "Cave_BanditCamp_Center_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 859.6783,
@@ -152,7 +167,8 @@
       "z": 107.098465,
       "map": "Cemetery_02",
       "file": "Cemetery_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 914.87134,
@@ -160,7 +176,8 @@
       "z": 67.69143,
       "map": "Cemetery_02",
       "file": "Cemetery_02_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 859.6783,
@@ -168,7 +185,8 @@
       "z": 107.098465,
       "map": "Cemetery_02",
       "file": "Cemetery_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 914.87134,
@@ -176,7 +194,8 @@
       "z": 67.69143,
       "map": "Cemetery_02",
       "file": "Cemetery_02_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 10.1602545,
@@ -184,7 +203,8 @@
       "z": 12.401924,
       "map": "GoblinCaveCorner_01",
       "file": "GoblinCaveCorner_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 10.1602545,
@@ -192,7 +212,8 @@
       "z": 12.401924,
       "map": "GoblinCaveCorner_01",
       "file": "GoblinCaveCorner_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -8.988402,
@@ -200,7 +221,8 @@
       "z": -6.888481,
       "map": "IceCave_Hive_03",
       "file": "IceCave_Hive_03_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -2.6185763,
@@ -208,7 +230,8 @@
       "z": -8.262242,
       "map": "IceCave_Hive_03",
       "file": "IceCave_Hive_03_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 34.8636,
@@ -216,7 +239,8 @@
       "z": -7.1476502,
       "map": "IceCave_Hive_03",
       "file": "IceCave_Hive_03_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -1280.0,
@@ -224,7 +248,8 @@
       "z": 125.0,
       "map": "Ruins_Armory",
       "file": "Ruins_Armory_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -1414.0,
@@ -232,7 +257,8 @@
       "z": 121.0,
       "map": "Ruins_Armory",
       "file": "Ruins_Armory_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -1071.0,
@@ -240,7 +266,8 @@
       "z": 90.296906,
       "map": "Ruins_Armory",
       "file": "Ruins_Armory_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 108.0,
@@ -248,7 +275,8 @@
       "z": 149.0,
       "map": "Ruins_Armory",
       "file": "Ruins_Armory_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 127.0,
@@ -256,7 +284,8 @@
       "z": 162.0,
       "map": "Ruins_Armory",
       "file": "Ruins_Armory_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -152.46207,
@@ -264,7 +293,8 @@
       "z": 116.0,
       "map": "Ruins_Armory",
       "file": "Ruins_Armory_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -134.0,
@@ -272,7 +302,8 @@
       "z": 129.0,
       "map": "Ruins_Armory",
       "file": "Ruins_Armory_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -159.01744,
@@ -280,7 +311,8 @@
       "z": 80.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -173.50633,
@@ -288,7 +320,8 @@
       "z": 110.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 450.0,
@@ -296,7 +329,8 @@
       "z": 103.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 460.0,
@@ -304,7 +338,8 @@
       "z": 103.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -159.01744,
@@ -312,7 +347,8 @@
       "z": 80.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -173.50633,
@@ -320,7 +356,8 @@
       "z": 110.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 450.0,
@@ -328,7 +365,8 @@
       "z": 103.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 460.0,
@@ -336,7 +374,8 @@
       "z": 103.0,
       "map": "Ruins_BanditCamp",
       "file": "Ruins_BanditCamp_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -159.01744,
@@ -344,7 +383,8 @@
       "z": 80.0,
       "map": "Ruins_BanditCamp_SR",
       "file": "Ruins_BanditCamp_SR_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -173.50633,
@@ -352,7 +392,8 @@
       "z": 110.0,
       "map": "Ruins_BanditCamp_SR",
       "file": "Ruins_BanditCamp_SR_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 450.0,
@@ -360,7 +401,8 @@
       "z": 103.0,
       "map": "Ruins_BanditCamp_SR",
       "file": "Ruins_BanditCamp_SR_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 460.0,
@@ -368,7 +410,8 @@
       "z": 103.0,
       "map": "Ruins_BanditCamp_SR",
       "file": "Ruins_BanditCamp_SR_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 563.80743,
@@ -376,7 +419,8 @@
       "z": 157.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 468.8074,
@@ -384,7 +428,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 615.14886,
@@ -392,7 +437,8 @@
       "z": 113.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 169.0,
@@ -400,7 +446,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 156.66866,
@@ -408,7 +455,8 @@
       "z": 153.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 146.0,
@@ -416,7 +464,8 @@
       "z": 160.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -558.3334,
@@ -424,7 +473,8 @@
       "z": 132.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 63.0,
@@ -432,7 +482,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -560.3334,
@@ -440,7 +491,8 @@
       "z": 107.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 62.0,
@@ -448,7 +500,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -381.33337,
@@ -456,7 +509,8 @@
       "z": 104.662384,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -380.0,
@@ -464,7 +518,8 @@
       "z": 132.14815,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -53.33339,
@@ -472,7 +527,8 @@
       "z": 110.74895,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -51.0,
@@ -480,7 +536,8 @@
       "z": 108.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 563.80743,
@@ -488,7 +545,8 @@
       "z": 157.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 468.8074,
@@ -496,7 +554,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 615.14886,
@@ -504,7 +563,8 @@
       "z": 113.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 169.0,
@@ -512,7 +572,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 156.66866,
@@ -520,7 +581,8 @@
       "z": 153.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 146.0,
@@ -528,7 +590,8 @@
       "z": 160.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -558.3334,
@@ -536,7 +599,8 @@
       "z": 132.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 63.0,
@@ -544,7 +608,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -560.3334,
@@ -552,7 +617,8 @@
       "z": 107.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 62.0,
@@ -560,7 +626,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -381.33337,
@@ -568,7 +635,8 @@
       "z": 104.662384,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -380.0,
@@ -576,7 +644,8 @@
       "z": 132.14815,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -53.33339,
@@ -584,7 +653,8 @@
       "z": 110.74895,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -51.0,
@@ -592,7 +662,8 @@
       "z": 108.0,
       "map": "Ruins_Barbican_01",
       "file": "Ruins_Barbican_01_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 563.80743,
@@ -600,7 +671,8 @@
       "z": 157.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 468.8074,
@@ -608,7 +680,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 615.14886,
@@ -616,7 +689,8 @@
       "z": 113.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 169.0,
@@ -624,7 +698,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 156.66866,
@@ -632,7 +707,8 @@
       "z": 153.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 146.0,
@@ -640,7 +716,8 @@
       "z": 160.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -558.3334,
@@ -648,7 +725,8 @@
       "z": 132.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 63.0,
@@ -656,7 +734,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -560.3334,
@@ -664,7 +743,8 @@
       "z": 107.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 62.0,
@@ -672,7 +752,8 @@
       "z": 120.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -381.33337,
@@ -680,7 +761,8 @@
       "z": 104.662384,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -380.0,
@@ -688,7 +770,8 @@
       "z": 132.14815,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -53.33339,
@@ -696,7 +779,8 @@
       "z": 110.74895,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": -51.0,
@@ -704,7 +788,8 @@
       "z": 108.0,
       "map": "Ruins_Barbican_01_BossTest",
       "file": "Ruins_Barbican_01_BossTest_D.json",
-      "version": "(D)"
+      "version": "(D)",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     },
     {
       "x": 125.4788,
@@ -712,7 +797,8 @@
       "z": 14.339411,
       "map": "Ruins_Keep",
       "file": "Ruins_Keep_HR_D.json",
-      "version": ""
+      "version": "",
+      "label": "Id_Spawner_New_Lootdrop_Spawn_Arrow"
     }
   ]
 }
