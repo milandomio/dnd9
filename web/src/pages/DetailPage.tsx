@@ -145,6 +145,7 @@ export default function DetailPage() {
                         transform: "translateX(-50%)",
                         fontSize: 11,
                         fontWeight: 400,
+                        fontFamily: "Arial, sans-serif",
                         color: col,
                         whiteSpace: "nowrap",
                         textShadow: GLOW,
