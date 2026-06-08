@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Row, Spin, Typography, Tag } from "antd";
+import { Spin } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
 import type { ItemEntity, MonsterEntity, PropsEntity } from "../types/data";
 
@@ -16,6 +16,7 @@ export default function ListPage() {
   const navigate = useNavigate();
   const [data, setData] = useState<Entity[]>([]);
   const [loading, setLoading] = useState(true);
+  const [debug, setDebug] = useState(false);
 
   useEffect(() => {
     if (!page || !["items", "monsters", "props"].includes(page)) return;
@@ -30,29 +31,78 @@ export default function ListPage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-      <Typography.Title level={4}>{LABEL_MAP[page!] ?? page}（{data.length}）</Typography.Title>
-      <Row gutter={[16, 16]}>
+      <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
+        【{LABEL_MAP[page!] ?? page}】实体位置汇总
+      </h1>
+      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginBottom: 20 }}>
+        有效实体{data.length}个
+      </div>
+      {debug && (
+        <button onClick={() => setDebug(false)}
+          style={{
+            position: "fixed", top: 20, right: 20, padding: "10px 20px",
+            background: "#4CAF50", color: "#fff", border: "2px solid #388E3C",
+            borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: "bold",
+            zIndex: 9999, boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+          }}
+        >退出调试</button>
+      )}
+      {!debug && (
+        <button onClick={() => setDebug(true)}
+          style={{
+            position: "fixed", top: 20, right: 20, padding: "10px 20px",
+            background: "#FFC107", color: "#000", border: "2px solid #FF9800",
+            borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: "bold",
+            zIndex: 9999, boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+          }}
+        >显示全部</button>
+      )}
+      <div className="section-content" style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gap: 20,
+      }}>
         {data.map((entity) => (
-          <Col key={entity.name} xs={24} sm={12} md={8}>
-            <Card
-              title={entity.translation || entity.name}
-              size="small"
-              hoverable
-              onClick={() => navigate(`/${page}/${entity.name}`)}
-            >
-              <Typography.Text code>{entity.name}</Typography.Text>
-              {"monsters" in entity && entity.monsters && entity.monsters.length > 0 && (
-                <div style={{ marginTop: 8 }}>
-                  <Tag color="blue">{entity.monsters.length} 掉落</Tag>
-                </div>
-              )}
-              <div style={{ marginTop: 4 }}>
-                <Tag>{entity.coords.length} 坐标</Tag>
+          <div
+            key={entity.name}
+            onClick={() => navigate(`/${page}/${entity.name}`)}
+            style={{
+              background: "#3a3a3a",
+              border: "1px solid #555",
+              borderRadius: 8,
+              padding: 20,
+              textAlign: "center",
+              cursor: "pointer",
+              transition: "transform 0.2s, box-shadow 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-5px)";
+              e.currentTarget.style.boxShadow = "0 5px 15px rgba(0,0,0,0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "none";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <div style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
+              {entity.translation || entity.name}
+            </div>
+            {debug && (
+              <div style={{ color: "#888", fontSize: 12, marginTop: 4 }}>
+                {entity.translation}【{entity.name}】
               </div>
-            </Card>
-          </Col>
+            )}
+            {"monsters" in entity && entity.monsters && entity.monsters.length > 0 && (
+              <div style={{ color: "#aaa", fontSize: 13, marginTop: 6 }}>
+                掉落来源: {entity.monsters.length}个
+              </div>
+            )}
+            <div style={{ color: "#888", fontSize: 12, marginTop: 2 }}>
+              {entity.coords.length} 个坐标
+            </div>
+          </div>
         ))}
-      </Row>
+      </div>
     </div>
   );
 }
