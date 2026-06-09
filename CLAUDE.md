@@ -33,19 +33,21 @@ DarkFindV5/
 │   │   ├── explore.json
 │   │   ├── index.json
 │   │   ├── quest_items.json
+│   │   ├── quest_items_groups.json / quest_items_groups/
 │   │   └── quest_npc.json
 │   └── img/               # → api/src/img/（管道后复制）
 ├── web/                 # React 前端（SSG）
 │   ├── src/
 │   │   ├── main.tsx, App.tsx
 │   │   ├── pages/            # 页面组件
-│   │   ├── components/       # 通用组件（MapDebug, Disclaimer, DebugCoordTable）
-│   │   ├── hooks/            # useDebug hook
+│   │   ├── components/       # 通用组件（MapDebug, Disclaimer, DebugCoordTable, NavBar）
+│   │   ├── hooks/            # useDebug, useTheme
 │   │   └── types/
 │   ├── public/
-│   │   └── data/             # prebuild 从 ../data/ 复制
+│   │   └── data/             # 构建时从 ../data/ 复制
 │   └── package.json
 ├── .github/workflows/deploy.yml
+├── LICENSE
 └── CLAUDE.md
 ```
 
@@ -75,7 +77,7 @@ git commit -am "WIP: <描述>"
 # 2. 运行数据管道（运行后自动交付 JSON + 图片到 data/）
 cd api && python main.py
 
-# 3. 构建前端（prebuild 自动从 data/ 复制到 public/data/）
+# 3. 构建前端（SSG 脚本自动从 data/ 复制到 public/data/）
 cd ../web && npm run build
 
 # 4. 预览（后台运行，端口 8080）
@@ -92,18 +94,19 @@ kill $(lsof -t -i:8080) 2>/dev/null; setsid sh -c './node_modules/.bin/vite prev
     ↓ api/main.py (清洗 + SQLite + FTS5)
 api/output/json/ + api/src/img/
     ↓ main.py 自动交付 → data/{json/, img/}
-    ↓ npm run prebuild → web/public/data/
+    ↓ npm run build → web/public/data/（SSG 脚本内复制）
     ↓ Vite build → dist/data/
     ↓ GitHub Actions → gh-pages branch
     ↓ 浏览器 fetch("./data/json/index.json") → 注水渲染
-```
+
+**无游戏文件部署：** DB（`api/data/darkfindv5.db`）不纳入 git，从 GitHub Actions 构建产物中下载后放入 `api/data/` 即可。
 
 ## 页面布局
 
 | 级别 | 页面 | 一行列数 |
 |------|------|---------|
 | 主页 | `index` | 4 |
-| 列表页 | `items`, `monsters`, `props`, `lootdrops` | 3 |
+| 列表页 | `items`, `monsters`, `props`, `lootdrops`, `explore`, `quest_items`, `quest_npc` | 3 |
 | 详情页 | 实体详情 | 4 (CSS Grid, 支持 1x1/2x1/1x2/2x2) |
 
 详情页地图卡片：按 `size_y` → `size_x` 升序排列，坐标范围 `Math.max(size_x, size_y) * 1600`。
@@ -115,7 +118,25 @@ api/output/json/ + api/src/img/
 | `components/MapDebug.tsx` | 坐标变换、像素映射、调试按钮/输入框样式 | DetailPage, LootdropDetailPage |
 | `components/Disclaimer.tsx` | 统一"数据有误差"警告 | HomePage, DetailPage, LootdropDetailPage |
 | `components/DebugCoordTable.tsx` | 调试模式坐标详情表（含勾选隐藏/地图/怪物切换） | DetailPage, LootdropDetailPage |
+| `components/NavBar.tsx` | 导航栏 | 全局 |
 | `hooks/useDebug.tsx` | 调试开关、偏移量状态 | DetailPage, LootdropDetailPage |
+| `hooks/useTheme.tsx` | 主题切换 | 全局 |
+
+## 数据管道
+
+### DB 过期判断时序
+
+`collector.py` 的 `run()` 中，`_is_db_stale()` 必须在 `DatabaseManager()` 构造**之前**调用，
+否则 `sqlite3.connect()` 会先创建空 DB 文件，导致 mtime 为"现在"，过期判断始终返回 False，导入步骤被跳过。
+
+**修复前**需要手动 `touch Game.json` 才能触发重建。**修复后**直接 `rm db && python main.py` 即可。
+
+### `_SR` 地图文件过滤
+
+`search_engine.py` 的 `_list_map_jsons()` 遍历地图文件时需排除 `_SR` 后缀变体。
+`_SR` 是地图的旧版变体（如 `FourWayConnect_SR_D.json`），不应出现在 spawner 搜索结果中。
+
+**修复前** 39034 个 spawner，**修复后** 38444 个（减少 590 条）。
 
 ## 数据库
 
