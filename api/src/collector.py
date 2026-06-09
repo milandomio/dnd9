@@ -590,15 +590,19 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name):
                         "name": mn, "translation": mtrans, "type": "monster",
                         "color": _COLORS[ci % len(_COLORS)], "coords": [],
                         "quest_items": [item_name],
+                        "_seen_coords": set(),
                     }
                     ci += 1
                 else:
                     if item_name not in groups[mt]["entities"][ek]["quest_items"]:
                         groups[mt]["entities"][ek]["quest_items"].append(item_name)
-                groups[mt]["entities"][ek]["coords"].append({
-                    "x":c["x"],"y":c["y"],"z":c["z"],"map":mb,
-                    "file":c["json_filename"],"version":c["version"],
-                })
+                coord_key = (c["x"], c["y"], c["z"], mb, c["json_filename"])
+                if coord_key not in groups[mt]["entities"][ek]["_seen_coords"]:
+                    groups[mt]["entities"][ek]["_seen_coords"].add(coord_key)
+                    groups[mt]["entities"][ek]["coords"].append({
+                        "x":c["x"],"y":c["y"],"z":c["z"],"map":mb,
+                        "file":c["json_filename"],"version":c["version"],
+                    })
 
     GROUP_LABELS = {
         "Crypt":"废墟2层地牢","FireDeep":"哥布林洞穴2层","GoblinCave":"哥布林洞穴1层",
@@ -610,6 +614,8 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name):
         g = groups[gname]
         g["group_display"] = GROUP_LABELS.get(gname, gname)
         entities = list(g["entities"].values())
+        for e in entities:
+            e.pop("_seen_coords", None)
         pos_count = sum(len(e["coords"]) for e in entities)
         groups_index.append({
             "group": gname, "group_display": g["group_display"],
