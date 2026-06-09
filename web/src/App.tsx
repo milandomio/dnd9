@@ -12,6 +12,9 @@ import ExplorePage from "./pages/ExplorePage";
 import QuestItemsPage from "./pages/QuestItemsPage";
 import QuestItemGroupPage from "./pages/QuestItemGroupPage";
 import QuestNPCPage from "./pages/QuestNPCPage";
+import DungeonModulesPage from "./pages/DungeonModulesPage";
+import DungeonModuleGroupPage from "./pages/DungeonModuleGroupPage";
+import DungeonModuleDetailPage from "./pages/DungeonModuleDetailPage";
 import NavBar from "./components/NavBar";
 
 /** Shared page content (routes only, no router wrapper). */
@@ -26,6 +29,9 @@ export function AppInner() {
           <Route path="/quest_items" element={<QuestItemsPage />} />
           <Route path="/quest_items/:group" element={<QuestItemGroupPage />} />
           <Route path="/quest_npc" element={<QuestNPCPage />} />
+          <Route path="/dungeon_modules" element={<DungeonModulesPage />} />
+          <Route path="/dungeon_modules/:group" element={<DungeonModuleGroupPage />} />
+          <Route path="/dungeon_modules/:group/:name" element={<DungeonModuleDetailPage />} />
           <Route path="/:page" element={<ListPage />} />
           <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
           <Route path="/:page/:name" element={<DetailPage />} />

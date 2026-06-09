@@ -48,7 +48,7 @@ const index = readJSON(join(DATA, "index.json"));
 const moduleData = readJSON(join(DATA, "dungeon_modules.json"));
 
 const PAGES = ["items", "monsters", "props", "lootdrops"];
-const SINGLE = ["explore", "quest_items", "quest_npc"];
+const SINGLE = ["explore", "quest_items", "quest_npc", "dungeon_modules"];
 
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
@@ -92,12 +92,27 @@ for (const e of questNpcData) {
   });
 }
 
-for (const g of questGroups) {
+// Dungeon modules search entries
+const dmGroupsArr = [...new Set(moduleData.map(m => m.group).filter(Boolean))];
+const GROUP_LABELS = {
+  Crypt: "废墟2层地牢", FireDeep: "哥布林洞穴2层", GoblinCave: "哥布林洞穴1层",
+  IceAbyss: "冰图2层", IceCavern: "冰图1层", Inferno: "废墟3层炼狱",
+  Ruins: "废墟1层", ShipGraveyard: "水图", Swamp: "沼泽",
+};
+for (const g of dmGroupsArr) {
   searchIndex.push({
-    name: g.group,
-    translation: g.group_display || "",
-    page: "quest_items",
-    url: `/quest_items/${encodeURIComponent(g.group)}`,
+    name: g,
+    translation: GROUP_LABELS[g] || g,
+    page: "dungeon_modules",
+    url: `/dungeon_modules/${encodeURIComponent(g)}`,
+  });
+}
+for (const m of moduleData) {
+  searchIndex.push({
+    name: m.name,
+    translation: m.translation || m.name,
+    page: "dungeon_modules",
+    url: `/dungeon_modules/${encodeURIComponent(m.group || "")}/${encodeURIComponent(m.name)}`,
   });
 }
 
@@ -108,8 +123,8 @@ const LIST_PAGES = [
   { name: "props", translation: "实体表", page: "props", url: "/props" },
   { name: "lootdrops", translation: "掉落表", page: "lootdrops", url: "/lootdrops" },
   { name: "explore", translation: "探索地点表", page: "explore", url: "/explore" },
-  { name: "quest_items", translation: "任务物品表", page: "quest_items", url: "/quest_items" },
   { name: "quest_npc", translation: "任务NPC表", page: "quest_npc", url: "/quest_npc" },
+  { name: "dungeon_modules", translation: "地图模块表", page: "dungeon_modules", url: "/dungeon_modules" },
 ];
 for (const lp of LIST_PAGES) searchIndex.push(lp);
 
@@ -122,6 +137,16 @@ for (const p of PAGES) routes.push({ path: `/${p}`, file: `${p}/index.html` });
 for (const p of SINGLE) routes.push({ path: `/${p}`, file: `${p}/index.html` });
 for (const g of questGroups) {
   routes.push({ path: `/quest_items/${g.group}`, file: `quest_items/${g.group}/index.html` });
+}
+
+// Dungeon modules: group pages and module detail pages
+const dmGroups = new Set(moduleData.map(m => m.group).filter(Boolean));
+for (const g of dmGroups) {
+  routes.push({ path: `/dungeon_modules/${g}`, file: `dungeon_modules/${g}/index.html` });
+}
+for (const m of moduleData) {
+  const group = m.group || "";
+  routes.push({ path: `/dungeon_modules/${group}/${m.name}`, file: `dungeon_modules/${group}/${m.name}/index.html` });
 }
 
 for (const p of PAGES) {
@@ -152,6 +177,13 @@ for (const g of questGroups) {
     ssrDataMap[`quest_items_groups/${g.group}`] = { group: g.group, group_display: g.group_display, entities: [] };
   }
 }
+
+// Dungeon modules group pages
+for (const g of dmGroupsArr) {
+  const groupMods = moduleData.filter(m => m.group === g);
+  ssrDataMap[`dungeon_modules/${g}`] = groupMods;
+}
+// Dungeon modules module data is available globally for detail pages
 
 // Explore page needs module data too
 ssrDataMap["explore-modules"] = moduleData;
@@ -204,6 +236,12 @@ function routeDataKey(path) {
   if (path.startsWith("/quest_items/")) return `quest_items_groups/${path.split("/")[2]}`;
   if (path === "/quest_items") return "quest_items";
   if (path === "/quest_npc") return "quest_npc";
+  if (path === "/dungeon_modules") return "dungeon_modules";
+  if (path.startsWith("/dungeon_modules/")) {
+    const parts = path.split("/");
+    if (parts.length === 3) return `dungeon_modules/${parts[2]}`;
+    return ""; // detail pages: no SSR data needed
+  }
   if (path === "/explore") return "explore";
   return `list-${path.slice(1)}`;
 }

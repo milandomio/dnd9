@@ -384,6 +384,44 @@ def run():
     modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
     _save("dungeon_modules.json", modules_data)
 
+    # ── dungeon_module_coords: per-module entity coordinates ──
+    _MODULE_COLORS = [
+        "#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C",
+        "#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085",
+        "#C0392B","#2C3E50","#7F8C8D","#FF6B35","#00BFFF","#FFD700",
+        "#FF69B4","#32CD32","#FF4500","#9370DB","#00FA9A","#DC143C",
+        "#00CED1",
+    ]
+    rows = db.connect().execute("SELECT keyword, spawner_type, x, y, z, version, map_base FROM spawners ORDER BY map_base, keyword").fetchall()
+    module_coords: dict[str, dict] = {}
+    color_idx = 0
+    for row in rows:
+        mb = row["map_base"]
+        if not mb:
+            continue
+        if mb not in module_coords:
+            module_coords[mb] = {"map_base": mb, "entities": {}}
+        ek = row["keyword"]
+        if ek not in module_coords[mb]["entities"]:
+            entity_type = "item" if row["spawner_type"] == "lootdrop" else row["spawner_type"]
+            module_coords[mb]["entities"][ek] = {
+                "name": ek,
+                "type": entity_type,
+                "color": _MODULE_COLORS[color_idx % len(_MODULE_COLORS)],
+                "coords": [],
+            }
+            color_idx += 1
+        module_coords[mb]["entities"][ek]["coords"].append({
+            "x": row["x"], "y": row["y"], "z": row["z"], "version": row["version"] or "",
+        })
+    for mb, data in module_coords.items():
+        entities_out = list(data["entities"].values())
+        _save(f"dungeon_modules_coords/{mb}.json", {
+            "map_base": mb,
+            "entities": entities_out,
+        })
+    print(f"  module coords: {len(module_coords)} modules with coordinates")
+
     # ── lootdrops.json (grouped by item for list page) ──
     items_lookup = {r["item_name"]: r for r in items}
     monsters_lookup = {r["monster_name"]: r for r in monsters}

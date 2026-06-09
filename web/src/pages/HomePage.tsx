@@ -13,6 +13,7 @@ const CARD_THEME: Record<string, { border: string; hoverBg: string; icon: string
   explore: { border: "#00bcd4", hoverBg: "linear-gradient(145deg, #2a4a4a, #3a5a5a)", icon: "🗺️", titleColor: "#00bcd4" },
   quest_items: { border: "#E91E63", hoverBg: "linear-gradient(145deg, #4a2a3a, #5a3a4a)", icon: "📋", titleColor: "#F06292" },
   quest_npc: { border: "#FFC107", hoverBg: "linear-gradient(145deg, #4a4a2a, #5a5a3a)", icon: "🗡️", titleColor: "#FFD54F" },
+  dungeon_modules: { border: "#8BC34A", hoverBg: "linear-gradient(145deg, #2a4a3a, #3a5a4a)", icon: "🧩", titleColor: "#AED581" },
 };
 
 const DEFAULT_THEME = { border: "#555", hoverBg: "linear-gradient(145deg, #3a3a3a, #444)", icon: "📄", titleColor: "#fff" };
@@ -92,6 +93,7 @@ export default function HomePage() {
                 {entry.page === "explore" && "地图模块预览"}
                 {entry.page === "quest_items" && "按地图分组查看任务物品"}
                 {entry.page === "quest_npc" && "查看NPC任务详情"}
+                {entry.page === "dungeon_modules" && "按地图分组查看所有模块"}
               </div>
             </div>
           );

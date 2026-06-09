@@ -12,6 +12,7 @@ const LABEL_MAP: Record<string, string> = {
   explore: "探索地点表",
   quest_items: "任务物品表",
   quest_npc: "任务NPC表",
+  dungeon_modules: "地图模块表",
 };
 
 const PAGE_TAG: Record<string, string> = {
@@ -22,6 +23,7 @@ const PAGE_TAG: Record<string, string> = {
   explore: "探索",
   quest_npc: "NPC",
   quest_items: "任务",
+  dungeon_modules: "模块",
 };
 
 interface SearchHit {
