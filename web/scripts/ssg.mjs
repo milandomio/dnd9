@@ -136,25 +136,28 @@ for (let i = 0; i < routes.length; i++) {
   const dataKey = routeDataKey(urlPath);
   const routeData = ssrDataMap[dataKey];
 
+  // Base tag must be first in <head> so script/link assets resolve correctly.
+  const templated = template.replace("</title>", `</title>\n    <base href="${baseHref}">`);
+
   let page;
   if (routeData) {
     const payload = { [dataKey]: routeData };
     try {
       const result = render(urlPath, ssrDataMap);
       // Remove the default SPA title before injecting SSR-generated head content
-      const headlessTemplate = template.replace(/<title>[^<]*<\/title>\s*/, "");
+      const headlessTemplate = templated.replace(/<title>[^<]*<\/title>\s*/, "");
       page = headlessTemplate
         .replace(ROOT_MARKER, `<div id="root">${result.html}`)
         .replace(
           HEAD_CLOSE,
-          `<base href="${baseHref}">\n${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
+          `${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
         );
     } catch (err) {
       console.error(`  [err]  ${urlPath}: ${err.message}`);
       // Fallback: serve the shell SPA (client will fetch on its own)
-      page = template.replace(
+      page = templated.replace(
         HEAD_CLOSE,
-        `<base href="${baseHref}">\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
+        `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
       );
     }
   } else {
@@ -174,9 +177,9 @@ for (let i = 0; i < routes.length; i++) {
         payload = { [dataKey]: { item: readJSON(join(DATA, "lootdrops", `${name}.json`)), modules: moduleData } };
       }
     } catch {}
-    page = template.replace(
+    page = templated.replace(
       HEAD_CLOSE,
-      `<base href="${baseHref}">\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
+      `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
     );
   }
 
