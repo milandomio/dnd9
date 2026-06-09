@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { IndexEntry } from "../types/data";
+import Disclaimer from "../components/Disclaimer";
 
 const CARD_THEME: Record<string, { border: string; hoverBg: string; icon: string; titleColor: string }> = {
   items:    { border: "#4CAF50", hoverBg: "linear-gradient(145deg, #2a4a2a, #3a5a3a)", icon: "📦", titleColor: "#fff" },
@@ -35,12 +36,7 @@ export default function HomePage() {
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
         DarkFindV5游戏导航
       </h1>
-      <div style={{
-        textAlign: "center", color: "#ff6b6b", fontSize: 16, marginBottom: 30,
-        padding: 10, background: "#3a3a3a", borderRadius: 5, maxWidth: 700, marginLeft: "auto", marginRight: "auto",
-      }}>
-        ⚠️ 数据有误差，以实际游戏内为准
-      </div>
+      <Disclaimer />
       <div style={{
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",

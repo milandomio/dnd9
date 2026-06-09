@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import type { CSSProperties } from "react";
 import { useParams } from "react-router-dom";
 import { Spin, Typography } from "antd";
 import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } from "../types/data";
 import { useDebug } from "../hooks/useDebug";
+import { getAdj, applyTransform, computePixel, ctrlBtn, ctrlInput, type AdjState } from "../components/MapDebug";
+import Disclaimer from "../components/Disclaimer";
+import DebugCoordTable from "../components/DebugCoordTable";
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: "废墟2层地牢",
@@ -26,24 +28,30 @@ function zColor(z: number): string {
 
 const GLOW = "0 0 4px #fff, 0 0 2px #000";
 
-const ctrlBtn: CSSProperties = { background: "#555", color: "#ccc", border: "1px solid #777", borderRadius: 3, padding: "1px 6px", cursor: "pointer", fontSize: 11 };
-const ctrlInput: CSSProperties = { width: 55, background: "#333", color: "#fff", border: "1px solid #666", borderRadius: 3, padding: "1px 4px", fontSize: 11, textAlign: "center" };
-
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
   const [entity, setEntity] = useState<Entity | null>(null);
   const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
   const [loading, setLoading] = useState(true);
+  const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
 
-  function getAdj(mapName: string, mod: DungeonModule | undefined) {
-    const a = adjOffsets[mapName];
-    return {x: a?.x ?? 0, y: a?.y ?? 0, range: a?.range ?? 0, rotate: a?.rotate ?? mod?.rotate ?? 1, mirrorX: a?.mirrorX ?? false, mirrorY: a?.mirrorY ?? false};
+  const toggleRow = (key: string) => {
+    setHiddenRows(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  };
+
+  function myGetAdj(mapName: string, mod: DungeonModule | undefined) {
+    return getAdj(mapName, mod?.rotate, adjOffsets);
   }
 
   function setAdj(mapName: string, field: string, value: number | boolean) {
-    setAdjOffsets(prev => {
+    setAdjOffsets((prev: AdjState) => {
       const cur = prev[mapName] || {x: 0, y: 0, range: 0, rotate: 0, mirrorX: false, mirrorY: false};
       return {...prev, [mapName]: {...cur, [field]: value}};
     });
@@ -58,7 +66,9 @@ export default function DetailPage() {
     ])
       .then(([entity, mods]) => {
         setEntity(entity);
-        setModules(new Map(mods.map((m) => [m.sl_base_name, m])));
+        const mm = new Map<string, DungeonModule>();
+        mods.forEach((m) => { mm.set(m.name, m); mm.set(m.sl_base_name, m); });
+        setModules(mm);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -122,10 +132,7 @@ export default function DetailPage() {
         {debug ? "退出调试" : "显示调试信息"}
       </button>
 
-      <div style={{
-        textAlign: "center", color: "#ff6b6b", fontSize: 14, marginBottom: 20,
-        padding: 8, background: "#3a3a3a", borderRadius: 5, maxWidth: 700, marginLeft: "auto", marginRight: "auto",
-      }}>⚠️ 数据有误差，以实际游戏内为准<span style={{ color: "#aaa", marginLeft: 15 }}>地图生成日期：2026-06-08 <span style={{ fontSize: 10 }}>地图页面设计-雪鸡Official</span></span></div>
+      <Disclaimer />
 
       <div style={{ display: "grid", gap: 6, gridTemplateColumns: "repeat(4, 1fr)" }}>
         {sortedGroups.map(([groupName, items]) => (<>
@@ -142,7 +149,7 @@ export default function DetailPage() {
           const sx = mod?.size_x ?? 1;
           const sy = mod?.size_y ?? 1;
           const baseRange = mod?.range || Math.max(sx, sy) * 1600;
-          const adj = getAdj(mapName, mod);
+          const adj = myGetAdj(mapName, mod);
           const range = (baseRange + adj.range) || 1600;
           const offX = (mod?.offset_x ?? 0) + adj.x;
           const offY = (mod?.offset_y ?? 0) + adj.y;
@@ -185,27 +192,13 @@ export default function DetailPage() {
                 borderRadius: 4,
                 position: "relative",
                 overflow: "hidden",
-                ...(mod?.sl_base_name ? {
-                  backgroundImage: `url(./data/img/${mod.img_name || mod.sl_base_name}.webp)`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                } : {}),
+                backgroundImage: `url(./data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp)`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}>
                 {mapCoords.map((c, i) => {
-                  let x = c.x + offX;
-                  let y = c.y + offY;
-                  const r = adj.rotate;
-                  if (r === 1) { const nx = y; const ny = -x; x = nx; y = ny; }
-                  else if (r === 2) { x = -x; y = -y; }
-                  else if (r === 3) { const nx = -y; const ny = x; x = nx; y = ny; }
-                  if (adj.mirrorX) x = -x;
-                  if (adj.mirrorY) y = -y;
-                  const multX = sx === 1 && sy === 2 ? 100 : 50;
-                  const centerX = sx === 1 && sy === 2 ? 100 : 50;
-                  const multY = 50;
-                  const centerY = 50;
-                  const px = centerX + (x / range) * multX;
-                  const py = centerY + (y / range) * multY;
+                  const [x, y] = applyTransform(c.x, c.y, offX, offY, adj);
+                  const [px, py] = computePixel(x, y, range, sx, sy);
                   const col = zColor(c.z);
                   const textCol = col === "#ff3333" ? "#ffffff" : col;
                   const textShadow = col === "#ff3333" ? "0.5px 0.5px 0 #ff3333,-0.5px -0.5px 0 #ff3333,0 0 4px #fff,0 0 2px #000" : GLOW;
@@ -293,41 +286,40 @@ export default function DetailPage() {
         <br /><strong>包含地图：</strong> {[...grouped.keys()].map(k => modules.get(k)?.translation || k).join(", ")}
       </div>
 
-      {debug && (
-      <div style={{ marginTop: 12, background: "#3a3a3a", borderRadius: 5, padding: 10, overflowX: "auto" }}>
-        <h3 style={{ textAlign: "center", color: "#00bcd4", fontSize: 18, margin: "0 0 10px" }}>所有坐标详情</h3>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, color: "#aaa" }}>
-          <thead>
-            <tr style={{ background: "#555", fontWeight: "bold" }}>
-              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>分组</th>
-              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>地图文件</th>
-              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>地图汉化</th>
-              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>标签</th>
-              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>位置 X</th>
-              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>位置 Y</th>
-              <th style={{ padding: 4, borderBottom: "1px solid #555", textAlign: "center" }}>位置 Z</th>
-            </tr>
-          </thead>
-          <tbody>
-            {coords.map((c, i) => {
-              const mod = modules.get(c.map);
-              const g = mod?.group || "";
-              return (
-                <tr key={i} style={{ background: i % 2 === 0 ? "#333" : "#3a3a3a" }}>
-                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{GROUP_LABELS[g] || g}</td>
-                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.file}</td>
-                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{mod?.translation || c.map}</td>
-                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center", fontSize: 11 }}>{c.label}</td>
-                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.x.toFixed(2)}</td>
-                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.y.toFixed(2)}</td>
-                  <td style={{ padding: 3, borderBottom: "1px solid #555", textAlign: "center" }}>{c.z.toFixed(2)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      )}
+      {debug && (() => {
+        const rows = coords.map((c, i) => {
+          const mod = modules.get(c.map);
+          const g = mod?.group || "";
+          const rowKey = `${c.file}-${i}`;
+          return {
+            key: rowKey,
+            group: GROUP_LABELS[g] || g,
+            groupKey: g,
+            file: c.file,
+            mapName: c.map,
+            mapLabel: mod?.translation || c.map,
+            label: c.label || "",
+            x: c.x,
+            y: c.y,
+            z: c.z,
+            hidden: hiddenRows.has(rowKey),
+          };
+        });
+        function batchToggle(pred: (r: typeof rows[number]) => boolean) {
+          const matched = rows.filter(pred);
+          if (matched.length === 0) return;
+          const allHidden = matched.every(r => r.hidden);
+          for (const r of matched) {
+            if (allHidden && r.hidden) toggleRow(r.key);
+            else if (!allHidden && !r.hidden) toggleRow(r.key);
+          }
+        }
+        return <DebugCoordTable rows={rows} onToggleRow={toggleRow}
+          onToggleGroup={(gk) => batchToggle(r => r.groupKey === gk)}
+          onToggleFile={(f) => batchToggle(r => r.file === f)}
+          onToggleMap={(mn) => batchToggle(r => r.mapName === mn)}
+          onToggleLabel={(l) => batchToggle(r => r.label === l)} />;
+      })()}
     </div>
   );
 }

@@ -116,7 +116,8 @@ class DatabaseManager:
                 item_name TEXT PRIMARY KEY,
                 raw_name TEXT NOT NULL,
                 translation_key TEXT NOT NULL DEFAULT '',
-                category TEXT NOT NULL DEFAULT ''
+                category TEXT NOT NULL DEFAULT '',
+                variant_count INTEGER NOT NULL DEFAULT 1
             );
 
             CREATE TABLE IF NOT EXISTS monster_entities (
@@ -137,7 +138,8 @@ class DatabaseManager:
                 module_group TEXT NOT NULL DEFAULT '',
                 size_x INTEGER DEFAULT 1,
                 size_y INTEGER DEFAULT 1,
-                sl_base_name TEXT NOT NULL DEFAULT ''
+                sl_base_name TEXT NOT NULL DEFAULT '',
+                map_image_name TEXT NOT NULL DEFAULT ''
             );
 
             CREATE TABLE IF NOT EXISTS lootdrop_items (
@@ -218,6 +220,9 @@ class DatabaseManager:
         files = _load_json_dir(ITEM_DIR)
         c = self.conn.cursor()
         c.execute("DELETE FROM item_entities")
+        # Count variants per item_name from raw filenames
+        from collections import Counter
+        variant_counts: Counter = Counter()
         rows = []
         for raw_name, data_list in files.items():
             if not data_list:
@@ -228,15 +233,17 @@ class DatabaseManager:
             if "Name" in props:
                 name_key = (props["Name"] or {}).get("Key", "")
             item_name = _extract_item_name(raw_name)
+            variant_counts[item_name] += 1
             rows.append((item_name, raw_name, name_key, ""))
         seen = set()
         deduped = []
         for r in rows:
             if r[0] not in seen:
                 seen.add(r[0])
-                deduped.append(r)
+                row = r + (variant_counts.get(r[0], 1),)
+                deduped.append(row)
         c.executemany(
-            "INSERT OR REPLACE INTO item_entities (item_name, raw_name, translation_key, category) VALUES (?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO item_entities (item_name, raw_name, translation_key, category, variant_count) VALUES (?, ?, ?, ?, ?)",
             deduped,
         )
         self._rebuild_fts("items_fts", "item_entities")
@@ -314,6 +321,18 @@ class DatabaseManager:
         files = _load_json_dir(DUNGEON_MODULE_DIR)
         c = self.conn.cursor()
         c.execute("DELETE FROM dungeon_modules")
+        # First pass: build module_name → (ModuleType, entry data) map
+        type_map: dict[str, str] = {}
+        for raw_name, data_list in files.items():
+            if not data_list:
+                continue
+            entry = data_list[0]
+            props = entry.get("Properties", {}) or {}
+            module_name = _extract_dungeon_module_name(raw_name)
+            module_type = (props.get("ModuleType") or "").removeprefix("EDCDungeonModuleType::")
+            if module_type:
+                type_map[module_name] = module_type
+        # Second pass: build rows with ModuleType fallback via sl_base lookup
         rows = []
         for raw_name, data_list in files.items():
             if not data_list:
@@ -333,9 +352,30 @@ class DatabaseManager:
                     base = _ue_asset_base_name(asset) or ""
                     sl_base = _sl_base_name(base)
                     break
-            rows.append((module_name, name_key, module_type, size_x, size_y, sl_base))
+            # If ModuleType is empty, try sl_base → find the module that owns this map's ModuleType
+            if not module_type and sl_base:
+                module_type = type_map.get(sl_base, "")
+            # Fallback: infer from module name prefix
+            if not module_type:
+                for prefix, group in [("ShipGraveyard", "ShipGraveyard"), ("Shipgraveyard", "ShipGraveyard"),
+                                       ("GoblinCave", "GoblinCave"), ("GoblinJail", "GoblinCave"),
+                                       ("GoblinMine", "GoblinCave"), ("Goblin", "GoblinCave"),
+                                       ("Firedeep", "FireDeep"), ("FireDeep", "FireDeep"),
+                                       ("IceCavern", "IceCavern"), ("IceAbyss", "IceAbyss"),
+                                       ("IceCave", "IceCavern"), ("Crypt", "Crypt"),
+                                       ("Inferno", "Inferno"), ("Ruins", "Ruins"),
+                                       ("Swamp", "Swamp"), ("Cave_", "GoblinCave"),
+                                       ("CorridorCrypt", "Crypt"), ("Cemetery", "Crypt"),
+                                       ("SpiderCave", "GoblinCave"), ("Prison", "Ruins")]:
+                    if module_name.lower().startswith(prefix.lower()):
+                        module_type = group
+                        break
+            # Extract MapImage (direct Art file reference, e.g. CaveMaze_02)
+            mi_asset = (props.get("MapImage") or {}).get("AssetPathName", "")
+            map_image = _ue_asset_base_name(mi_asset) or ""
+            rows.append((module_name, name_key, module_type, size_x, size_y, sl_base, map_image))
         c.executemany(
-            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
         self.conn.commit()
@@ -437,7 +477,7 @@ class DatabaseManager:
 
     def get_item_entities(self) -> list[dict]:
         c = self.conn.cursor()
-        c.execute("SELECT item_name, translation_key, category FROM item_entities ORDER BY item_name")
+        c.execute("SELECT item_name, translation_key, category, variant_count FROM item_entities ORDER BY item_name")
         return [dict(r) for r in c.fetchall()]
 
     def get_monster_entities(self) -> list[dict]:
@@ -452,7 +492,7 @@ class DatabaseManager:
 
     def get_dungeon_modules(self) -> list[dict]:
         c = self.conn.cursor()
-        c.execute("SELECT module_name, translation_key, module_group, size_x, size_y, sl_base_name FROM dungeon_modules ORDER BY module_name")
+        c.execute("SELECT module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name FROM dungeon_modules ORDER BY module_name")
         return [dict(r) for r in c.fetchall()]
 
     def get_lootdrop_relationships(self) -> list[dict]:
@@ -493,7 +533,7 @@ class DatabaseManager:
             SELECT e.item_name, e.translation_key, e.category,
                    GROUP_CONCAT(DISTINCT l.monster_name) as monster_names
             FROM item_entities e
-            LEFT JOIN lootdrop_items l ON l.item_name = e.item_name
+            LEFT JOIN lootdrop_items l ON e.item_name = SUBSTR(l.item_name, 1, INSTR(l.item_name||'_', '_') - 1)
             GROUP BY e.item_name
             ORDER BY e.item_name
         """)

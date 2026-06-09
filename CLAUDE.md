@@ -9,160 +9,142 @@
 ```
 DarkFindV5/
 ├── api/                  # Python 数据处理管道
-│   ├── main.py               # 入口：读取 data/ 原始 JSON，清洗后输出到 output/
+│   ├── main.py               # 入口
 │   ├── config.py             # 路径配置
-│   ├── data/                 # 原始 JSON 输入（.gitignore 忽略？根据需求）
-│   └── output/               # 清洗后的 JSON 输出（供前端消费）
+│   ├── db_manager.py         # SQLite 建表/导入/查询
+│   ├── collector.py          # 数据清洗 + JSON 输出
+│   ├── search_engine.py      # 地图文件遍历 + 关键词匹配
+│   ├── layout_utils.py       # 地图旋转值计算
+│   ├── data/                 # 原始 JSON 输入
+│   └── output/               # 清洗后 JSON（被前端消费）
 ├── web/                 # React 前端（SSG）
 │   ├── src/
-│   │   ├── main.tsx          # 入口：注水渲染
-│   │   ├── App.tsx           # Ant Design 暗色主题 + zhCN 配置
+│   │   ├── main.tsx, App.tsx
 │   │   ├── pages/            # 页面组件
-│   │   ├── components/       # 通用组件
-│   │   ├── hooks/            # 自定义 hooks
-│   │   └── types/            # TypeScript 类型定义
-│   ├── index.html
-│   ├── vite.config.ts
+│   │   ├── components/       # 通用组件（MapDebug, Disclaimer, DebugCoordTable）
+│   │   ├── hooks/            # useDebug hook
+│   │   └── types/
 │   └── package.json
-├── .github/workflows/        # GitHub Actions CI/CD
-└── .gitignore
+├── .github/workflows/deploy.yml
+└── CLAUDE.md
 ```
 
 ## 开发流程
 
-### 迭代工作流
+### 前置规则：改动前先提交
 
-```
-[阶段修改前]  git commit -m "WIP: <描述>"   # 本地提交当前进度
-       ↓
-[修改代码]   编辑 api/ 或 web/ 代码
-       ↓
-[准备验证]   停止修改，执行构建部署
-       ↓
-[验证页面]   打开浏览器预览
-       ↓
-[循环]       继续修改或完成
-```
-
-### 构建部署（本地验证）
+每次对代码做任何改动之前（包括 Python 后端、React 前端、配置文件），必须先执行本地 git 提交，
+将当前工作区状态落盘为 checkpoint。目的是让每次改动有清晰的边界，方便回退和追溯。
 
 ```bash
-# 1. 提交当前进度（修改前 / 阶段性完成时）
+git commit -am "WIP: <改动摘要>"
+```
+
+如果当前有未跟踪的新文件（`??` 状态），先用 `git add` 纳入后再提交：
+
+```bash
+git add <新文件路径> && git commit -am "WIP: <改动摘要>"
+```
+
+### 完整构建流程
+
+```bash
+# 1. 提交当前进度（改动前 checkpoint）
 git commit -am "WIP: <描述>"
 
-# 2. 运行数据管道（清洗 JSON → 输出到 api/data/）
-cd api && python main.py
+# 2. 运行数据管道
+cd api && rm -f darkfind.db && python main.py
 
-# 3. 复制数据到前端静态目录
+# 3. 复制数据到前端
 rm -rf ../web/public/data && cp -r data ../web/public/data
 
-# 4. 前端类型检查 + 生产构建
+# 4. 构建前端
 cd ../web && npm run build
 
-# 5. 预览构建产物（打开 http://localhost:8080）
-# 若端口被占用，先 fuser -k 8080/tcp 关闭再开
-nohup npm run preview -- --port 8080 > /dev/null 2>&1 &
+# 5. 预览（后台运行，端口 8080）
+# ⚠️ codewhale 中 nohup + & 会被回收，改用 setsid：
+setsid sh -c 'vite preview --port 8080 --host 0.0.0.0 > /tmp/vite-preview.log 2>&1 &'
 ```
 
-### 开发服务器（实时修改）
-
-```bash
-# 后端数据管道
-cd api && python main.py         # 每次数据变更后运行
-
-# 前端开发服务器（热更新）
-cd web && npm run dev
-
-# 预览生产构建（后台运行，端口 8080）
-cd web && nohup npm run preview -- --port 8080 > /dev/null 2>&1 &
-```
-
-### 注意
-
-- `python main.py` 必须在前端 `npm run build` 之前运行，否则前端数据是旧的
-- TypeScript 类型检查在 `npm run build` 中自动执行，也可手动：`npx tsc --noEmit`
-- 构建产物在 `web/dist/`，用 `npm run preview` 本地预览（**必须在后台运行，不能占用前台线程**）
-
-## CI/CD（GitHub Actions）
-
-工作流 `.github/workflows/deploy.yml`：
-
-| 事件 | 操作 |
-|------|------|
-| push `main` | `npm ci` → `tsc --noEmit` → `vite build` → push to `gh-pages` branch |
-| PR `main` | `npm ci` → `tsc --noEmit` → `vite build`（不部署） |
-
-**部署前提**：在 GitHub 仓库 Settings → Pages → Source 选择 "Deploy from a branch" → `gh-pages` branch → `/ (root)`。
-
-## 布局说明
-
-页面分为三级，每级栅格列数不同：
-
-| 级别 | 页面 | 一行列数 | 组件 |
-|------|------|---------|------|
-| 主页 | `index` | 4 | Card 导航卡片（1x1 等宽） |
-| 子页列表 | `items`, `monsters`, `props` | 3 | Card 列表项（1x1 等宽） |
-| 最终页 | 单个实体详情页 | 4 | 地图卡片（兼容 1x1 / 2x1 / 1x2 / 2x2） |
-
-### 主页（index）— 一行 4 列
-
-```
-┌────┐┌────┐┌────┐┌────┐
-│物品 ││怪物 ││实体 ││模块 │
-└────┘└────┘└────┘└────┘  ← Row gutter=16, Col span=6 (24/4)
-```
-
-- 使用 `<Row gutter={16}>` + `<Col span={6}>`
-- 每个卡片内 `Statistic` 显示数量
-
-### 子页列表 — 一行 3 列
-
-```
-┌──────┐┌──────┐┌──────┐
-│ 物品1 ││ 物品2 ││ 物品3 │
-└──────┘└──────┘└──────┘
-│ 物品4 ││ 物品5 ││ 物品6 │
-└──────┘└──────┘└──────┘  ← Col span=8 (24/3)
-```
-
-- `<Col xs={24} sm={12} md={8}>`（小屏 1 列，中屏 2 列，大屏 3 列）
-- 卡片点击跳转到最终页
-
-### 最终页（详情页）— 一行 4 列，兼容异形模块
-
-```
-┌──┐┌──┐┌──┐┌──┐
-│1x1││1x1││1x1││1x1│
-└──┘└──┘└──┘└──┘
-
-异形模块用 grid-column span 处理：
-┌──────┐┌──┐┌──┐
-│ 2x1  ││1x1││1x1│  ← 2x1 span 2 列
-└──────┘└──┘└──┘
-┌──────┐┌──┐┌──┐   ← 下一行
-│ 2x2  ││1x1││1x1│
-│      │└──┘└──┘
-└──────┘          ← 2x2 span 2 列 + 2 行
-┌──┐┌──────┐
-│1x1││ 1x2  │        ← 1x2 竖排
-└──┘└──────┘
-```
-
-- 基础栅格 `<Col span={6}>`（一行 4 列）
-- 地图卡片容器用 CSS Grid 布局：
-  - `size_x >= 2`→ `grid-column: span 2`（宽度占 2 列）
-  - `size_y >= 2`→ 通过 `grid-row: span 2` 或内部 stretch（高度自适应）
-  - 容器 `aspect-ratio: {size_x} / {size_y}` 保持比例
-- 地图卡片排序：按 `size_y, size_x` 升序，即 1x1 → 2x1 → 1x2 → 2x2
-- 坐标范围：`range = max(size_x, size_y) * 1600`（默认 1600 单位/格）
+**注意：** `python main.py` 必须在 `npm run build` 之前运行。TS 类型检查在构建中自动执行 (`npx tsc --noEmit`)。
 
 ## 数据流
 
 ```
-游戏原始 JSON（Output/Exports/DungeonCrawler/...）
-    ↓ Python: api/main.py (清洗/转换 + SQLite + FTS5)
+游戏原始 JSON（/home/mio/fmod/Output/Exports/DungeonCrawler/...）
+    ↓ api/main.py (清洗 + SQLite + FTS5)
 后端 JSON（api/data/ → 复制到 web/public/data/）
-    ↓ Vite build 打包到 web/dist/data/
-    ↓ GitHub Actions 部署到 gh-pages
+    ↓ Vite build → dist/data/
+    ↓ GitHub Actions → gh-pages branch
     ↓ 浏览器 fetch("./data/index.json") → 注水渲染
 ```
+
+## 页面布局
+
+| 级别 | 页面 | 一行列数 |
+|------|------|---------|
+| 主页 | `index` | 4 |
+| 列表页 | `items`, `monsters`, `props`, `lootdrops` | 3 |
+| 详情页 | 实体详情 | 4 (CSS Grid, 支持 1x1/2x1/1x2/2x2) |
+
+详情页地图卡片：按 `size_y` → `size_x` 升序排列，坐标范围 `Math.max(size_x, size_y) * 1600`。
+
+## 组件架构
+
+| 组件 | 用途 | 消费页面 |
+|------|------|---------|
+| `components/MapDebug.tsx` | 坐标变换、像素映射、调试按钮/输入框样式 | DetailPage, LootdropDetailPage |
+| `components/Disclaimer.tsx` | 统一"数据有误差"警告 | HomePage, DetailPage, LootdropDetailPage |
+| `components/DebugCoordTable.tsx` | 调试模式坐标详情表（含勾选隐藏/地图/怪物切换） | DetailPage, LootdropDetailPage |
+| `hooks/useDebug.tsx` | 调试开关、偏移量状态 | DetailPage, LootdropDetailPage |
+
+## 数据库
+
+### 地图 ModuleType 缺失
+
+部分 dungeon module JSON 的 `ModuleType` 为空，分组推断策略（`db_manager.py` 的 `import_dungeon_modules`）：
+
+1. **sl_base 反查** — 从 SubLevelAsset 提取地图名，在已加载模块字典中查找其 ModuleType
+2. **前缀推断（兜底）** — 从模块名前缀判断
+
+**已推断示例：** Shipgraveyard_UnderSeaCave_02 → sl_base Shipgraveyard_TwinChamber → 反查到 ShipGraveyard
+
+**剩余 19 个通用跨区域模块（无分组）：**
+
+| # | 模块名 | sl_base |
+|---|--------|---------|
+| 1 | AltarRoomAB_Center | AltarRoomAB_Center |
+| 2 | Armory_Center | (空) |
+| 3-6 | Connector_Half_01~04 | (空) |
+| 7 | CorridorofDarkPriests_Center | (空) |
+| 8 | DarkMagicLibrary | (空) |
+| 9-11 | DarkRitualRoom_01~03 | (空) |
+| 12 | DarkRitualRoom_04 | DarkRitualRoom_04 |
+| 13 | DeathHall_Center | DeathHall_Center |
+| 14 | GuardPost_Center | (空) |
+| 15 | MimicRoom_Center | (空) |
+| 16 | MummyRoom | MummyRoom |
+| 17 | PassingRoad_03 | (空) |
+| 18 | Sewers_Center | (空) |
+| 19 | Tomb | (空) |
+
+这些模块在前端无分组标题栏，直接排列在地图网格底部。sl_base 为空表示 JSON 中无 SubLevelAsset 属性。
+
+### 地图图片匹配
+
+`collector.py` 中 `_resolve_img()` 返回三态：
+
+- `found` — Art 目录存在且找到匹配（含大小写/tail/数值后缀处理）
+- `not_found` — Art 目录存在但无匹配 → 尝试 module_name
+- `no_art` — 无 Art 目录（如 ShipGraveyard）→ sl_base_name 作为最终答案
+
+**图片名优先级链：** SubLevelAsset(sl_base) → Module name → MapImage  
+**占位图跳过：** `RareModule_1x1` 和 `UnderConstruction_1x1` 在匹配链中被跳过，仅作前端最终兜底。
+
+### 坐标合并
+
+`_Hard`/`_VeryHard`/`_Unique` 后缀变体的坐标合入基础怪物，避免同一怪物显示多个重复按钮。
+
+### 旋转值
+
+从 Layout JSON 文件计算，优先级：`module_name` → `sl_base_name`，默认 1（90°）。

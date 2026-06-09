@@ -5,6 +5,7 @@ interface IndexEntry {
   name: string;
   translation: string;
   category?: string;
+  variant_count?: number;
   monsters?: string[];
   monster_translations?: string[];
   coordCount: number;
@@ -106,8 +107,17 @@ export default function ListPage() {
               </div>
             )}
             {entity.monsters && entity.monsters.length > 0 && page === "lootdrops" && (
-              <div style={{ color: "#aaa", fontSize: 13, marginTop: 6 }}>
-                掉落来源({entity.monsters.length}个): {entity.monster_translations?.join("、") || entity.monsters.join("、")}
+              <div style={{ color: "#ccc", fontSize: 13, marginTop: 6, lineHeight: 1.5 }}>
+                {entity.variant_count && entity.variant_count > 1 ? (
+                  <> [{entity.variant_count}变体] -目标- </>
+                ) : (
+                  <> -目标- </>
+                )}
+                <span style={{ color: "#aaa" }}>
+                  {entity.monster_translations && entity.monster_translations.length <= 6
+                    ? entity.monster_translations.join("、")
+                    : entity.monster_translations?.slice(0, 5).join("、") + "..."}
+                </span>
               </div>
             )}
             {entity.monsters && entity.monsters.length > 0 && page !== "lootdrops" && (

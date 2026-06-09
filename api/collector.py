@@ -3,13 +3,15 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from config import DB_PATH, OUTPUT_DIR, HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE, MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP
+from config import DB_PATH, OUTPUT_DIR, GROUP_TO_ART_DIR, HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE, MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
 from layout_utils import load_all_layout_rotations
 from quest_collector import run_quest_extraction
 
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
+_HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
+_UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
 
 
 def run():
@@ -84,16 +86,15 @@ def run():
         if translation_key and translation_key in translations:
             return translations[translation_key]
         alias_name = TRANSLATION_ALIAS_MAP.get(name, name)
-        if alias_name != name:
-            for prefix in [
-                "Text_DesignData_Item_Item_",
-                "Text_DesignData_Monster_Monster_",
-                "Text_DesignData_Props_Props_",
-                "Text_DesignData_Dungeon_DungeonModule_",
-            ]:
-                alias_key = prefix + alias_name
-                if alias_key in translations:
-                    return translations[alias_key]
+        for prefix in [
+            "Text_DesignData_Item_Item_",
+            "Text_DesignData_Monster_Monster_",
+            "Text_DesignData_Props_Props_",
+            "Text_DesignData_Dungeon_DungeonModule_",
+        ]:
+            alias_key = prefix + alias_name
+            if alias_key in translations:
+                return translations[alias_key]
         if name in HARDCODED_TRANSLATIONS:
             return HARDCODED_TRANSLATIONS[name]
         if scope == "module" and name in MODULE_NAME_OVERRIDE:
@@ -138,10 +139,12 @@ def run():
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
+        variant_count = r.get("variant_count", 1)
         items_index.append({
             "name": name,
             "translation": translation,
             "category": r["category"],
+            "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
             "coordCount": len(coords),
         })
@@ -149,6 +152,7 @@ def run():
             "name": name,
             "translation": translation,
             "category": r["category"],
+            "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
             "coords": [
                 {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"], "label": c["original_keyword"]}
@@ -219,9 +223,58 @@ def run():
         sy = override.get("size_y", r["size_y"])
         custom_range = override.get("range", 0)
         offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
-        rotate = module_rotations.get(r["sl_base_name"], 1)
+        rot1 = module_rotations.get(r["module_name"])
+        rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 1)
         sl = r["sl_base_name"]
-        img_name = _resolve_img(art_root, r["module_group"], sl)
+        map_image = r.get("map_image_name", "")
+        module_name = r["module_name"]
+        PLACEHOLDERS = ('RareModule_1x1', 'UnderConstruction_1x1')
+
+        def _try_resolve(name: str):
+            """Return (resolved_name, status). status: 'found'|'not_found'|'no_art'."""
+            resolved, status = _resolve_img(art_root, r["module_group"], name)
+            if resolved in PLACEHOLDERS:
+                return resolved, status  # placeholder — don't accept
+            return resolved, status
+
+        img_name, art_status = _try_resolve(sl)
+
+        # Priority logic:
+        # 1. sl_base_name (SubLevelAsset) — always primary
+        # 2. module_name — only when Art dir exists AND sl was not found
+        # 3. MapImage — last resort
+        if art_status == 'no_art':
+            # No Art dir → sl is the best guess (matches webp in img/ dir)
+            # BUT if MapImage is a placeholder, the module's own image might differ from sl
+            if map_image in PLACEHOLDERS and module_name != sl:
+                candidate, c_status = _try_resolve(module_name)
+                if c_status in ('no_art', 'found'):
+                    img_name = candidate
+        elif art_status == 'not_found':
+            # Art dir exists but no match for sl → try module_name (may differ)
+            if module_name != sl:
+                candidate, c_status = _try_resolve(module_name)
+                if c_status == 'found':
+                    img_name = candidate
+                elif c_status == 'not_found':
+                    pass  # neither found; keep sl
+        else:
+            # 'found' → sl had an exact match in Art; use it
+            pass
+
+        # If result is still a placeholder, try MapImage
+        if img_name in PLACEHOLDERS and map_image and map_image not in PLACEHOLDERS:
+            candidate, _ = _try_resolve(map_image)
+            if candidate not in PLACEHOLDERS:
+                img_name = candidate
+
+        # Final fallback: if nothing matched and the only candidate was a placeholder,
+        # keep the placeholder so the frontend shows RareModule_1x1.webp.
+        # Only when Art was searched (not_found) AND sl == module_name (single source) AND MapImage was a placeholder.
+        if not img_name or img_name in PLACEHOLDERS:
+            img_name = module_name or ''
+        elif art_status == 'not_found' and img_name == module_name == sl and map_image in PLACEHOLDERS:
+            img_name = map_image
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
@@ -262,13 +315,50 @@ def run():
         translation = resolve_name(item_name, item_row["translation_key"] if item_row else None, "item") if item_row else (resolve_name(item_name, None, "item") or item_name)
         mon_translations = []
         for m in sorted(monster_names):
+            # Try direct monster lookup
             mon_row = monsters_lookup.get(m)
-            mon_translations.append(resolve_name(m, mon_row["translation_key"] if mon_row else None, "monster") if mon_row else (resolve_name(m, None, "monster") or m))
+            if mon_row:
+                mon_translations.append(resolve_name(m, mon_row["translation_key"], "monster"))
+                continue
+            # Try stripping _Hard/_VeryHard suffix → base monster lookup
+            base = _HARD_SUFFIX_RE.sub("", m) if _HARD_SUFFIX_RE.search(m) else m
+            if base != m:
+                mon_row = monsters_lookup.get(base)
+                if mon_row:
+                    mon_translations.append(resolve_name(base, mon_row["translation_key"], "monster"))
+                    continue
+            # Try stripping trailing Unique → base monster lookup (e.g. FrostImpUnique → FrostImp)
+            base2 = _UNIQUE_SUFFIX_RE.sub("", base) if _UNIQUE_SUFFIX_RE.search(base) else base
+            if base2 != base:
+                mon_row = monsters_lookup.get(base2)
+                if mon_row:
+                    mon_translations.append(resolve_name(base2, mon_row["translation_key"], "monster"))
+                    continue
+            # Try item lookup (item names used as drop sources)
+            item_row = items_lookup.get(m)
+            if item_row:
+                mon_translations.append(resolve_name(m, item_row["translation_key"], "item"))
+                continue
+            # Generic fallback
+            mon_translations.append(resolve_name(m, None, "monster") or m)
+        variant_count = item_row.get("variant_count", 1) if item_row else 1
+        # Merge _Hard/_VeryHard/Unique variants in loot_index too
+        merged_names: list[str] = []
+        merged_translations: list[str] = []
+        seen_bases: set[str] = set()
+        for mn, mt in zip(monster_names, mon_translations):
+            base = _HARD_SUFFIX_RE.sub("", mn)
+            base = _UNIQUE_SUFFIX_RE.sub("", base)
+            if base not in seen_bases:
+                seen_bases.add(base)
+                merged_names.append(mn)
+                merged_translations.append(mt)
         loot_index.append({
             "name": item_name,
             "translation": translation,
-            "monsters": sorted(monster_names),
-            "monster_translations": mon_translations,
+            "variant_count": variant_count,
+            "monsters": sorted(merged_names),
+            "monster_translations": merged_translations,
         })
     loot_index.sort(key=lambda x: x["translation"] or x["name"])
     _save("lootdrops.json", loot_index)
@@ -276,25 +366,46 @@ def run():
     # ── lootdrops detail files ──
     _MONSTER_COLORS = ["#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C","#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085","#C0392B","#2C3E50","#7F8C8D","#FF6B35","#00BFFF","#FFD700","#FF69B4","#32CD32","#FF4500","#9370DB","#00FA9A","#DC143C","#00CED1"]
     monster_coord_cache: dict[str, list] = {}
+    _HARD_RE = re.compile(r"_(Hard|VeryHard)$")
+    _SUFFIX_RE = re.compile(r"Unique$")
+
+    def _base_monster_name(name: str) -> str:
+        """Strip _Hard/_VeryHard/Unique suffix to get base name."""
+        base = _HARD_RE.sub("", name)
+        base = _SUFFIX_RE.sub("", base)
+        return base
+
     for entry in loot_index:
         item_name = entry["name"]
-        monsters_out = []
+        # Build merged monsters: base_name → {name, translation, coords}
+        merged: dict[str, dict] = {}
         for i, m_name in enumerate(entry["monsters"]):
             if m_name not in monster_coord_cache:
-                monster_coord_cache[m_name] = db.get_item_coordinates(m_name)
+                coords_list = db.get_item_coordinates(m_name)
+                if not coords_list:
+                    alias = TRANSLATION_ALIAS_MAP.get(m_name)
+                    if alias:
+                        coords_list = db.get_item_coordinates(alias)
+                monster_coord_cache[m_name] = coords_list
             coords = monster_coord_cache[m_name]
             if not coords:
                 continue
             m_trans = entry["monster_translations"][entry["monsters"].index(m_name)]
-            monsters_out.append({
-                "name": m_name,
-                "translation": m_trans,
-                "color": _MONSTER_COLORS[i % len(_MONSTER_COLORS)],
-                "coords": [
-                    {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"]}
-                    for c in coords
-                ],
-            })
+            base = _base_monster_name(m_name)
+            if base not in merged:
+                merged[base] = {
+                    "name": base,
+                    "translation": m_trans,
+                    "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
+                    "coords": [],
+                }
+            for c in coords:
+                merged[base]["coords"].append({
+                    "x": c["x"], "y": c["y"], "z": c["z"],
+                    "map": c["map_base"], "file": c["json_filename"], "version": c["version"],
+                    "label": c.get("original_keyword", ""),
+                })
+        monsters_out = list(merged.values())
         if monsters_out:
             _save(f"lootdrops/{item_name}.json", {
                 "name": item_name,
@@ -325,26 +436,45 @@ def run():
     db.close()
 
 
-def _resolve_img(art_root: Path, group: str, sl: str) -> str:
+def _resolve_img(art_root: Path, group: str, sl: str):
+    """Return (resolved_name, status).
+    status: 'found' (exact match in Art), 'not_found' (Art dir searched, no match),
+            'no_art' (Art dir doesn't exist for this group).
+    """
     if not art_root.exists() or not group:
-        return sl
-    group_dir = art_root / group
+        return sl, 'no_art'
+    art_dir_name = GROUP_TO_ART_DIR.get(group, group)
+    group_dir = art_root / art_dir_name
     if not group_dir.exists():
-        return sl
+        return sl, 'no_art'
+    # Try exact match (case-insensitive)
     png = group_dir / f"{sl}.png"
     if png.exists():
-        return sl
+        return sl, 'found'
     for p in group_dir.iterdir():
         if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl.lower():
-            return p.stem
+            return p.stem, 'found'
+    # Try tail match (part after first underscore)
     tail = sl.split("_", 1)[-1] if "_" in sl else sl
     png = group_dir / f"{tail}.png"
     if png.exists():
-        return tail
+        return tail, 'found'
     for p in group_dir.iterdir():
         if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail.lower():
-            return p.stem
-    return sl
+            return p.stem, 'found'
+    # Try stripping numeric suffix (_01, _02 etc.)
+    import re
+    sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
+    if sl_stripped != sl:
+        for p in group_dir.iterdir():
+            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_stripped.lower():
+                return p.stem, 'found'
+        tail_stripped = re.sub(r"_\d{2,4}$", "", tail)
+        if tail_stripped != tail:
+            for p in group_dir.iterdir():
+                if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail_stripped.lower():
+                    return p.stem, 'found'
+    return sl, 'not_found'
 
 
 def _save(filename: str, data: list | dict):
