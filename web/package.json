@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:build": "node scripts/ssg.mjs --quick",
-    "build": "node scripts/ssg.mjs",
+    "build": "node scripts/ssg.mjs --quick",
+    "build:full": "node scripts/ssg.mjs",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview"
   },
