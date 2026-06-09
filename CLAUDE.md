@@ -104,11 +104,22 @@ api/output/json/ + api/src/img/
 ### DB 临时提交（push 前）
 
 ```bash
+# 1. 备份
+cp api/data/darkfindv5.db /tmp/darkfindv5.db
+
+# 2. 提交 + rebase + push
 git add -f api/data/darkfindv5.db && git commit -m "update DB"
+git pull --rebase
 git push
-git rm --cached api/data/darkfindv5.db && git commit -m "untrack DB"
-git push
+
+# 3. 回退本地跟踪
+git reset HEAD~1
+
+# 4. 删临时备份
+rm /tmp/darkfindv5.db
 ```
+
+**注意：** 下次 push 前必须 `git pull --rebase`，可能因二进制冲突导致失败。推荐直接正常跟踪 DB 避免此问题。
 
 ## 页面布局
 
