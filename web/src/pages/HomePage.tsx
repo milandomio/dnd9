@@ -49,7 +49,7 @@ export default function HomePage() {
         gridTemplateColumns: "repeat(4, 1fr)",
         gap: 20,
       }}>
-        {data.map((entry) => {
+        {data.filter((e) => !("_comment" in e)).map((entry) => {
           const t = CARD_THEME[entry.page] ?? DEFAULT_THEME;
           return (
             <div

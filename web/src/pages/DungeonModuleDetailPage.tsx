@@ -20,6 +20,7 @@ const GROUP_LABELS: Record<string, string> = {
 
 interface CoordEntity {
   name: string;
+  translation?: string;
   type: string;
   color: string;
   coords: { x: number; y: number; z: number; version: string }[];
@@ -90,7 +91,6 @@ export default function DungeonModuleDetailPage() {
 
   const entities = coordsData?.entities ?? [];
   const totalCoords = entities.reduce((s, e) => s + (hidden.has(e.name) ? 0 : e.coords.length), 0);
-  const visibleCount = entities.filter(e => !hidden.has(e.name)).length;
 
   const toggle = (entityName: string) => {
     setHidden(prev => {
@@ -130,82 +130,14 @@ export default function DungeonModuleDetailPage() {
       </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 28, margin: "0 0 8px" }}>
         【{m.translation}】地图模块
-        <span style={{ color: "#aaa", fontSize: 14, marginLeft: 12 }}>{groupLabel} | {sx}x{sy} | 旋转:{m.rotate}</span>
+        <span style={{ color: "#aaa", fontSize: 14, marginLeft: 12 }}>{groupLabel} | {sx}x{sy}</span>
       </h1>
 
-      {entities.length > 0 && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", margin: "15px 0", padding: 10, background: "#3a3a3a", borderRadius: 5 }}>
-          <button onClick={() => {
-            if (hidden.size === 0) {
-              setHidden(new Set(entities.map(e => e.name)));
-            } else {
-              setHidden(new Set());
-            }
-          }} style={{
-            padding: "8px 15px", border: "2px solid #888", borderRadius: 5,
-            cursor: "pointer", fontSize: 14, fontWeight: "bold", color: "#ccc",
-            background: "transparent", transition: "all 0.2s",
-          }}>
-            {hidden.size === 0 ? "隐藏全部" : "全部显示"}
-          </button>
-          {entities.map(e => (
-            <button key={e.name} onClick={() => toggle(e.name)} style={{
-              padding: "8px 15px", border: `2px solid ${e.color}`, borderRadius: 5,
-              cursor: "pointer", fontSize: 14, fontWeight: "bold", color: "#fff",
-              background: hidden.has(e.name) ? "transparent" : e.color,
-              opacity: hidden.has(e.name) ? 0.3 : 1,
-              transition: "all 0.2s",
-            }}>
-              {e.type === "item" ? "📦" : e.type === "props" ? "🏛️" : "👹"} {e.name} ({e.coords.length})
-            </button>
-          ))}
-        </div>
-      )}
-
-      <div style={{ display: "grid", gap: 6, gridTemplateColumns: "repeat(4, 1fr)" }}>
+      <div style={{ display: "grid", gap: 6, gridTemplateColumns: "repeat(8, 1fr)" }}>
         <div key={m.name} style={{
-          gridColumn: "1 / -1", background: "#3a3a3a", border: "1px solid #555",
+          gridColumn: "span 5", background: "#3a3a3a", border: "1px solid #555",
           borderRadius: 5, padding: 8,
         }}>
-          <h3 style={{ margin: "0 0 6px 0", fontSize: 22, color: "#00bcd4", textAlign: "center", width: "100%" }}>
-            {m.translation || m.name}
-            {debug && <span style={{ color: "#888", fontSize: 11 }}> ({m.name})</span>}
-          </h3>
-          {debug && <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4 }}>
-            {m.img_name || m.sl_base_name || m.name}.webp | 共 {totalCoords} 个位置 | 范围: ±{range}
-          </div>}
-          {debug && <div style={{ fontSize: 10, color: "#888", textAlign: "center", marginBottom: 4, lineHeight: 1.4 }}>
-            sl_base: {m.sl_base_name}<br />
-            旋转:{m.rotate} 偏移:({m.offset_x},{m.offset_y}) 大小:{sx}x{sy} 组:{groupLabel}
-          </div>}
-          {debug && (
-            <div style={{ fontSize: 11, color: "#aaa", marginBottom: 4, display: "flex", flexDirection: "column", gap: 3 }}>
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-                <span style={{ color: "#888" }}>范围:</span>
-                <button onClick={() => setAdjField("range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
-                <input type="number" value={range} onChange={e => setAdjField("range", Number(e.target.value) - baseRange)} style={ctrlInput} step={100} />
-                <button onClick={() => setAdjField("range", range * 2 - baseRange)} style={ctrlBtn}>x2</button>
-                <span style={{ color: "#aaa", fontSize: 12, marginLeft: 4 }}>↻{adj.rotate}</span>
-              </div>
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-                <span style={{ color: "#888" }}>偏移:</span>
-                <button onClick={() => setAdjField("y", adj.y - 50)} style={ctrlBtn}>↑</button>
-                <button onClick={() => setAdjField("y", adj.y + 50)} style={ctrlBtn}>↓</button>
-                <button onClick={() => setAdjField("x", adj.x - 50)} style={ctrlBtn}>←</button>
-                <button onClick={() => setAdjField("x", adj.x + 50)} style={ctrlBtn}>→</button>
-                <span style={{ color: "#888", marginLeft: 8 }}>X:</span>
-                <input type="number" value={offX} onChange={e => setAdjField("x", Number(e.target.value) - (m.offset_x || 0))} style={ctrlInput} step={10} />
-                <span style={{ color: "#888" }}>Y:</span>
-                <input type="number" value={offY} onChange={e => setAdjField("y", Number(e.target.value) - (m.offset_y || 0))} style={ctrlInput} step={10} />
-              </div>
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-                <button onClick={() => setAdjField("rotate", (adj.rotate + 1) % 4)} style={ctrlBtn}>↻ 旋转</button>
-                <button onClick={() => setAdjField("mirrorX", !adj.mirrorX)} style={{ ...ctrlBtn, background: adj.mirrorX ? "#4CAF50" : "#555" }}>⇄ 左右</button>
-                <button onClick={() => setAdjField("mirrorY", !adj.mirrorY)} style={{ ...ctrlBtn, background: adj.mirrorY ? "#4CAF50" : "#555" }}>⇅ 上下</button>
-                <button onClick={() => setAdjOffsets(prev => { const n = { ...prev }; delete n[m.name]; return n; })} style={ctrlBtn}>↺ 重置</button>
-              </div>
-            </div>
-          )}
           <div style={{
             aspectRatio: `${sx} / ${sy}`,
             background: "#2c2c2c", border: "1px solid #666", borderRadius: 4,
@@ -237,28 +169,92 @@ export default function DungeonModuleDetailPage() {
               );
             })}
           </div>
-          {dots.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 10px", justifyContent: "center", marginTop: 5, fontSize: 13, color: "#ccc", alignItems: "center" }}>
-              {[...new Set(dots.map(d => d.entity.name))].map(en => {
-                const e = entities.find(x => x.name === en)!;
-                return (
-                  <span key={en} style={{ display: "flex", alignItems: "center", gap: 3 }}>
-                    <span style={{ width: 10, height: 10, borderRadius: "50%", background: e.color, flexShrink: 0 }}></span>
-                    <span style={{ cursor: "pointer" }} onClick={() => toggle(en)}>{e.name}</span>
-                    <span style={{ color: "#888" }}>({dots.filter(d => d.entity.name === en).length}点)</span>
-                  </span>
-                );
-              })}
-            </div>
-          )}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 10px", justifyContent: "center", marginTop: 8, fontSize: 13, color: "#ccc", alignItems: "center" }}>
-            <span>名称: {m.name}</span>
-            <span>大小: {sx}x{sy}</span>
-            <span>旋转: {m.rotate} ({m.rotate * 90}°)</span>
-            <span>偏移: ({m.offset_x}, {m.offset_y})</span>
-            <span>范围: ±{baseRange}</span>
-          </div>
         </div>
+
+        {entities.length > 0 && (
+          <div style={{
+            gridColumn: "span 3", background: "#3a3a3a", border: "1px solid #555",
+            borderRadius: 5, padding: 8, display: "flex", flexDirection: "column", gap: 8,
+          }}>
+            <button onClick={() => {
+              if (hidden.size === 0) {
+                setHidden(new Set(entities.map(e => e.name)));
+              } else {
+                setHidden(new Set());
+              }
+            }} style={{
+              padding: "8px 0", border: "2px solid #888", borderRadius: 5,
+              cursor: "pointer", fontSize: 22, fontWeight: "bold", color: "#ccc",
+              background: "transparent", transition: "all 0.2s", width: "100%",
+            }}>
+              {hidden.size === 0 ? "隐藏全部" : "全部显示"}
+            </button>
+            {(["monster", "item", "props"] as const).map(type => {
+              const group = entities.filter(e => e.type === type);
+              if (!group.length) return null;
+              const labels: Record<string, { icon: string; label: string }> = {
+                monster: { icon: "👹", label: "怪物" },
+                item: { icon: "📦", label: "物品" },
+                props: { icon: "🏛️", label: "实体" },
+              };
+              const { icon, label } = labels[type];
+              return (
+                <div key={type}>
+                  <div style={{ fontSize: 20, fontWeight: "bold", color: "#FFC107", marginBottom: 4, paddingLeft: 2 }}>
+                    {icon} {label}
+                  </div>
+                  <div>
+                    {group.map(e => (
+                      <button key={e.name} onClick={() => toggle(e.name)} style={{
+                        padding: "4px 8px", border: `2px solid ${e.color}`, borderRadius: 5,
+                        cursor: "pointer", fontSize: 19, fontWeight: "bold", color: "#fff",
+                        background: hidden.has(e.name) ? "transparent" : e.color,
+                        opacity: hidden.has(e.name) ? 0.3 : 1,
+                        transition: "all 0.2s", margin: 2, display: "inline-flex", alignItems: "center",
+                      }}>
+                        {e.translation || e.name}
+                        <span style={{ fontSize: 14, marginLeft: 4 }}>({e.coords.length})</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {debug && (
+          <div style={{
+            gridColumn: "1 / -1", fontSize: 11, color: "#aaa", marginBottom: 4,
+            display: "flex", flexDirection: "column", gap: 3,
+            background: "#3a3a3a", borderRadius: 5, padding: 8,
+          }}>
+            <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+              <span style={{ color: "#888" }}>范围:</span>
+              <button onClick={() => setAdjField("range", Math.round(range / 2) - baseRange)} style={ctrlBtn}>÷2</button>
+              <input type="number" value={range} onChange={e => setAdjField("range", Number(e.target.value) - baseRange)} style={ctrlInput} step={100} />
+              <button onClick={() => setAdjField("range", range * 2 - baseRange)} style={ctrlBtn}>x2</button>
+              <span style={{ color: "#aaa", fontSize: 12, marginLeft: 4 }}>↻{adj.rotate}</span>
+            </div>
+            <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+              <span style={{ color: "#888" }}>偏移:</span>
+              <button onClick={() => setAdjField("y", adj.y - 50)} style={ctrlBtn}>↑</button>
+              <button onClick={() => setAdjField("y", adj.y + 50)} style={ctrlBtn}>↓</button>
+              <button onClick={() => setAdjField("x", adj.x - 50)} style={ctrlBtn}>←</button>
+              <button onClick={() => setAdjField("x", adj.x + 50)} style={ctrlBtn}>→</button>
+              <span style={{ color: "#888", marginLeft: 8 }}>X:</span>
+              <input type="number" value={offX} onChange={e => setAdjField("x", Number(e.target.value) - (m.offset_x || 0))} style={ctrlInput} step={10} />
+              <span style={{ color: "#888" }}>Y:</span>
+              <input type="number" value={offY} onChange={e => setAdjField("y", Number(e.target.value) - (m.offset_y || 0))} style={ctrlInput} step={10} />
+            </div>
+            <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+              <button onClick={() => setAdjField("rotate", (adj.rotate + 1) % 4)} style={ctrlBtn}>↻ 旋转</button>
+              <button onClick={() => setAdjField("mirrorX", !adj.mirrorX)} style={{ ...ctrlBtn, background: adj.mirrorX ? "#4CAF50" : "#555" }}>⇄ 左右</button>
+              <button onClick={() => setAdjField("mirrorY", !adj.mirrorY)} style={{ ...ctrlBtn, background: adj.mirrorY ? "#4CAF50" : "#555" }}>⇅ 上下</button>
+              <button onClick={() => setAdjOffsets(prev => { const n = { ...prev }; delete n[m.name]; return n; })} style={ctrlBtn}>↺ 重置</button>
+            </div>
+          </div>
+        )}
       </div>
 
       {debug && (() => {

@@ -49,6 +49,7 @@ def _load_game_json() -> dict[str, str]:
 
 _VARIANT_RE = re.compile(r"_\d{4}$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
+_MONSTER_SUBTYPE_RE = re.compile(r"_(BoneWall|BonePrison)$", re.IGNORECASE)
 
 
 def _strip_ids_prefix(name: str, prefix: str) -> str:
@@ -71,11 +72,14 @@ def _extract_item_name(raw_name: str) -> str:
 def _extract_monster_name(raw_name: str) -> str:
     name = raw_name.removeprefix("Id_Monster_")
     name = _QUALITY_RE.sub("", name)
+    name = _MONSTER_SUBTYPE_RE.sub("", name)
     return name
 
 
 def _extract_props_name(raw_name: str) -> str:
-    return raw_name.removeprefix("Id_Props_")
+    name = raw_name.removeprefix("Id_Props_")
+    name = re.sub(r"_Dummy$", "", name)
+    return name
 
 
 def _extract_dungeon_module_name(raw_name: str) -> str:
@@ -267,12 +271,19 @@ class DatabaseManager:
             name_key = (props.get("Name") or {}).get("Key", "")
             monster_name = _extract_monster_name(raw_name)
             rows.append((monster_name, raw_name, name_key))
-        seen = set()
+        seen_lower: dict[str, int] = {}
         deduped = []
         for r in rows:
-            if r[0] not in seen:
-                seen.add(r[0])
+            key = r[0].lower()
+            if key not in seen_lower:
+                seen_lower[key] = len(deduped)
                 deduped.append(r)
+            else:
+                idx = seen_lower[key]
+                existing = deduped[idx]
+                if r[2] and (not existing[2] or (r[2].startswith("Text_DesignData_") and not existing[2].startswith("Text_DesignData_"))):
+                    # 保留首遇的名称大小写，只替换翻译键
+                    deduped[idx] = (existing[0], existing[1], r[2])
 
         # Fallback: also import monsters from spawner files
         spawner_files = _load_json_dir(SPAWNER_DIR)
@@ -280,8 +291,8 @@ class DatabaseManager:
             if not data_list:
                 continue
             raw = raw_name.removeprefix("Id_Spawner_Monster_")
-            if raw != raw_name and raw not in seen:
-                seen.add(raw)
+            if raw.lower() not in seen_lower:
+                seen_lower[raw.lower()] = len(deduped)
                 entry = data_list[0]
                 props = entry.get("Properties", {}) or {}
                 name_key = (props.get("Name") or {}).get("Key", "")

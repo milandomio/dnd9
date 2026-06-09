@@ -68,6 +68,16 @@ git commit -am "WIP: <改动摘要>"
 git add <新文件路径> && git commit -am "WIP: <改动摘要>"
 ```
 
+### 修改入口 / 列表页时注意：不要直接改 data/ 下的自动生成文件
+
+以下文件每次运行 `python main.py` 都会由 `api/src/collector.py` 重新生成并覆盖：
+- `data/json/index.json` — 首页入口列表
+- `data/json/items.json` / `monsters.json` / `props.json` / `lootdrops.json`
+- `data/json/dungeon_modules.json`
+
+如需添加/修改这些文件的内容，必须在 `api/src/collector.py` 中找到对应的生成代码进行修改，
+而不是直接改 `data/json/` 下的产物文件，否则管道运行后会被覆盖丢失。
+
 ### 完整构建流程
 
 ```bash
@@ -128,6 +138,7 @@ rm /tmp/darkfindv5.db
 | 主页 | `index` | 4 |
 | 列表页 | `items`, `monsters`, `props`, `lootdrops`, `explore`, `quest_items`, `quest_npc` | 3 |
 | 详情页 | 实体详情 | 4 (CSS Grid, 支持 1x1/2x1/1x2/2x2) |
+| 地图模块表 | `dungeon_modules` | 4 (分组列表) → 4 (模块网格) → 全宽 (详情+坐标) |
 
 详情页地图卡片：按 `size_y` → `size_x` 升序排列，坐标范围 `Math.max(size_x, size_y) * 1600`。
 

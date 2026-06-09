@@ -31,6 +31,7 @@ interface SearchHit {
   translation: string;
   page: string;
   url: string;
+  tag?: string;
 }
 
 async function buildSearchIndex(): Promise<SearchHit[]> {
@@ -207,7 +208,7 @@ export default function NavBar() {
                   color: tokens.muted,
                   whiteSpace: "nowrap",
                 }}>
-                  {PAGE_TAG[hit.page] || hit.page}
+                  {hit.tag || PAGE_TAG[hit.page] || hit.page}
                 </span>
               </div>
             ))}

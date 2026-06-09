@@ -12,21 +12,52 @@ from config import MAPS_DIR
 _VARIANT_RE = re.compile(r"_\d{4}$")
 
 
+_PREFIXES = [
+    "DCSpawnerDataAsset'Id_Spawner_New_Monster_",
+    "DCSpawnerDataAsset'Id_Spawner_New_Props_",
+    "DCSpawnerDataAsset'Id_Spawner_New_LootDrop_",
+    "DCSpawnerDataAsset'Id_Spawner_Monster_",
+    "DCSpawnerDataAsset'Id_Spawner_Props_",
+    "DCSpawnerDataAsset'Id_Spawner_LootDrop_",
+    "DCSpawnerDataAsset'Id_Spawner_New_Lootdrop_",
+    "DCSpawnerDataAsset'Id_Spawner_Lootdrop_",
+    "DCSpawnerDataAsset'Id_Spawner_New_NPC_",
+    "DCSpawnerDataAsset'Id_Spawner_NPC_",
+    "DCSpawnerDataAsset'",
+    "Id_Spawner_New_Monster_",
+    "Id_Spawner_New_Props_",
+    "Id_Spawner_New_LootDrop_",
+    "Id_Spawner_New_NPC_",
+    "Id_Spawner_Monster_",
+    "Id_Spawner_Props_",
+    "Id_Spawner_LootDrop_",
+    "Id_Spawner_Lootdrop_",
+    "Spawn_",
+    "Spawner_New_",
+]
+
+_SUFFIXES = [
+    "_Elite", "_Random", "_2type", "_3type", "_4type", "_5type",
+]
+
+
 def strip_id_prefix(name: str) -> str:
-    for prefix in [
-        "DCSpawnerDataAsset'Id_Spawner_New_Monster_",
-        "DCSpawnerDataAsset'Id_Spawner_New_Props_",
-        "DCSpawnerDataAsset'Id_Spawner_New_LootDrop_",
-        "DCSpawnerDataAsset'",
-        "Id_Spawner_New_Monster_",
-        "Id_Spawner_New_Props_",
-        "Id_Spawner_New_LootDrop_",
-    ]:
-        if name.startswith(prefix):
-            return name[len(prefix):].rstrip("'\"")
-    if name.startswith("Id_"):
-        return name[3:]
-    return name
+    result = name
+    changed = True
+    while changed:
+        changed = False
+        for prefix in _PREFIXES:
+            if result.startswith(prefix):
+                result = result[len(prefix):].rstrip("'\"")
+                changed = True
+                break
+        if not changed and result.startswith("Id_"):
+            result = result[3:]
+            changed = True
+    for suffix in _SUFFIXES:
+        if result.endswith(suffix):
+            result = result[:-len(suffix)]
+    return result
 
 
 def _preview_type(asset_path: str) -> str:

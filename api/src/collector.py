@@ -20,6 +20,84 @@ from quest_collector import run_quest_extraction
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
 _UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
+_QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
+
+# Props 目录中的 _Dummy 实体同时也是怪物
+_DUMMY_AS_MONSTER = {
+    "LivingArmor", "LivingStatue",
+    "LivingArmor_Elite", "LivingArmor_Nightmare",
+    "LivingStatue_Elite", "LivingStatue_Nightmare",
+}
+
+
+def _build_entity_classification(translations: dict[str, str] | None = None) -> dict[str, dict]:
+    """Scan source dirs and return { normalized_name: { types: [str], translation_key: str } }.
+    Provides ground truth classification, supporting entities that exist in multiple categories.
+    """
+    from db_manager import _extract_item_name, _extract_monster_name, _extract_props_name
+    classification: dict[str, dict] = {}
+    seen_lower: dict[str, str] = {}
+
+    def _key_valid(tk: str) -> bool:
+        """key 非空且能在翻译表中解析才视为有效"""
+        if not tk:
+            return False
+        if translations is not None:
+            return tk in translations
+        return tk.startswith("Text_DesignData_")
+
+    def _scan_dir(directory, prefix_strip_fn, type_label):
+        from pathlib import Path
+        if not Path(directory).exists():
+            return
+        for fp in sorted(Path(directory).glob("*.json")):
+            raw_name = fp.stem
+            name = prefix_strip_fn(raw_name)
+            if not name:
+                continue
+            try:
+                with open(fp) as f:
+                    data = json.load(f)
+            except Exception:
+                continue
+            if not data:
+                continue
+            entry = data[0]
+            props = (entry.get("Properties") or {}) or {}
+            tk = (props.get("Name") or {}).get("Key", "") or ""
+            key = name.lower()
+            if key not in seen_lower:
+                seen_lower[key] = name
+                classification[name] = {"types": [type_label], "translation_key": tk}
+            else:
+                existing_name = seen_lower[key]
+                existing = classification[existing_name]
+                if type_label not in existing["types"]:
+                    existing["types"].append(type_label)
+                existing_tk = existing["translation_key"]
+                if not _key_valid(existing_tk) and _key_valid(tk):
+                    existing["translation_key"] = tk
+
+    _scan_dir(ITEM_DIR, lambda r: _extract_item_name(r), "item")
+    _scan_dir(MONSTER_DIR, lambda r: _extract_monster_name(r), "monster")
+    _scan_dir(PROPS_DIR, lambda r: _extract_props_name(r), "props")
+
+    # _Dummy 实体同时也是怪物，补全 monster 翻译键
+    for name in _DUMMY_AS_MONSTER:
+        if name in classification:
+            if "monster" not in classification[name]["types"]:
+                classification[name]["types"].append("monster")
+            if not classification[name]["translation_key"]:
+                base = _QUALITY_RE.sub("", name)
+                if base != name:
+                    monster_key = "Text_DesignData_Monster_Monster_" + base
+                    classification[name]["translation_key"] = monster_key
+        else:
+            base = _QUALITY_RE.sub("", name)
+            monster_key = "Text_DesignData_Monster_Monster_" + base
+            classification[name] = {"types": ["props", "monster"], "translation_key": monster_key}
+
+    return classification
 
 
 _SOURCE_PATHS = [
@@ -148,6 +226,8 @@ def run():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     translations = db.get_translations_map()
 
+    _RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique)$")
+
     def resolve_name(name: str, translation_key: str, scope: str = "item") -> str:
         if translation_key and translation_key in translations:
             return translations[translation_key]
@@ -163,6 +243,10 @@ def run():
                 return translations[alias_key]
         if name in HARDCODED_TRANSLATIONS:
             return HARDCODED_TRANSLATIONS[name]
+        # 剥离末尾数字/难度后缀后重试兜底翻译
+        stripped = _RESOLVE_STRIP_RE.sub("", name)
+        if stripped != name and stripped in HARDCODED_TRANSLATIONS:
+            return HARDCODED_TRANSLATIONS[stripped]
         if scope == "module":
             if name in MODULE_NAME_OVERRIDE:
                 return MODULE_NAME_OVERRIDE[name]
@@ -385,6 +469,22 @@ def run():
     _save("dungeon_modules.json", modules_data)
 
     # ── dungeon_module_coords: per-module entity coordinates ──
+    # Build entity classification index from source directories (ground truth type)
+    entity_class = _build_entity_classification(translations)
+    _save("entity_index.json", [
+        {"name": n, "types": v["types"], "translation_key": v["translation_key"]}
+        for n, v in sorted(entity_class.items())
+    ])
+
+    # Build translation lookup from DB entity tables (covers all names including props variants)
+    trans_lookup = {}
+    for r in items:
+        trans_lookup[r["item_name"]] = resolve_name(r["item_name"], r["translation_key"], "item")
+    for r in monsters:
+        trans_lookup[r["monster_name"]] = resolve_name(r["monster_name"], r["translation_key"], "monster")
+    for r in props:
+        trans_lookup[r["asset_name"]] = resolve_name(r["asset_name"], r["translation_key"], "props")
+
     _MODULE_COLORS = [
         "#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C",
         "#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085",
@@ -403,9 +503,18 @@ def run():
             module_coords[mb] = {"map_base": mb, "entities": {}}
         ek = row["keyword"]
         if ek not in module_coords[mb]["entities"]:
-            entity_type = "item" if row["spawner_type"] == "lootdrop" else row["spawner_type"]
+            cls = entity_class.get(ek, {})
+            st = row["spawner_type"]
+            mapped_st = "item" if st == "lootdrop" else st
+            if cls:
+                types = cls.get("types", [])
+                entity_type = mapped_st if mapped_st in types else types[0]
+            else:
+                entity_type = mapped_st
+            translation = trans_lookup.get(ek) or resolve_name(ek, None, entity_type)
             module_coords[mb]["entities"][ek] = {
                 "name": ek,
+                "translation": translation,
                 "type": entity_type,
                 "color": _MODULE_COLORS[color_idx % len(_MODULE_COLORS)],
                 "coords": [],
@@ -431,6 +540,19 @@ def run():
         translation = resolve_name(item_name, item_row["translation_key"] if item_row else None, "item") if item_row else (resolve_name(item_name, None, "item") or item_name)
         mon_translations = []
         for m in sorted(monster_names):
+            cls = entity_class.get(m)
+            if cls and "item" in cls["types"]:
+                item_row = items_lookup.get(m)
+                if item_row:
+                    mon_translations.append(resolve_name(m, item_row["translation_key"], "item"))
+                    continue
+                tk = cls.get("translation_key", "")
+                if tk:
+                    mon_translations.append(resolve_name(m, tk, "item"))
+                    continue
+            elif cls and "props" in cls["types"]:
+                mon_translations.append(resolve_name(m, cls.get("translation_key", ""), "props"))
+                continue
             # Try direct monster lookup
             mon_row = monsters_lookup.get(m)
             if mon_row:
@@ -450,10 +572,9 @@ def run():
                 if mon_row:
                     mon_translations.append(resolve_name(base2, mon_row["translation_key"], "monster"))
                     continue
-            # Try item lookup (item names used as drop sources)
-            item_row = items_lookup.get(m)
-            if item_row:
-                mon_translations.append(resolve_name(m, item_row["translation_key"], "item"))
+            # Try entity_class translation key as fallback
+            if cls and cls.get("translation_key"):
+                mon_translations.append(resolve_name(m, cls["translation_key"], cls["types"][0]))
                 continue
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
@@ -540,6 +661,7 @@ def run():
     qg_path = OUTPUT_DIR / "quest_items_groups.json"
     qg = json.loads(qg_path.read_text()) if qg_path.exists() else []
     index_data = [
+        {"_comment": "该文件由 api/src/collector.py 自动生成，请勿手动编辑。如需修改，请编辑 collector.py 中的 index_data 列表。"},
         {"page": "items", "label": "物品表", "count": len(items_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
@@ -547,12 +669,14 @@ def run():
         {"page": "explore", "label": "探索地点表", "count": explore_count},
         {"page": "quest_items", "label": "任务物品表", "count": len(qg)},
         {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
+        {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
     ]
     _save("index.json", index_data)
 
     print(f"\n[DONE] Output written to {OUTPUT_DIR}")
     for entry in index_data:
-        print(f"  {entry['page']}: {entry['count']}")
+        if "page" in entry:
+            print(f"  {entry['page']}: {entry['count']}")
 
     db.close()
 

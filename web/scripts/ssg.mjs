@@ -112,6 +112,7 @@ for (const m of moduleData) {
     name: m.name,
     translation: m.translation || m.name,
     page: "dungeon_modules",
+    tag: GROUP_LABELS[m.group] || m.group || "模块",
     url: `/dungeon_modules/${encodeURIComponent(m.group || "")}/${encodeURIComponent(m.name)}`,
   });
 }
