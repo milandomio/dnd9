@@ -19,7 +19,6 @@ const GROUP_LABELS: Record<string, string> = {
   Inferno: "废墟3层炼狱",
   Ruins: "废墟1层",
   ShipGraveyard: "水图",
-  Swamp: "沼泽",
 };
 
 const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
@@ -31,10 +30,9 @@ const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
   Inferno: { border: "#F44336", icon: "🌋" },
   Ruins: { border: "#9C27B0", icon: "🏛️" },
   ShipGraveyard: { border: "#607D8B", icon: "⚓" },
-  Swamp: { border: "#8BC34A", icon: "🌿" },
 };
 
-const GROUP_ORDER = ["Crypt", "FireDeep", "GoblinCave", "IceAbyss", "IceCavern", "Inferno", "Ruins", "ShipGraveyard", "Swamp"];
+const GROUP_ORDER = ["Crypt", "FireDeep", "GoblinCave", "IceAbyss", "IceCavern", "Inferno", "Ruins", "ShipGraveyard"];
 
 export default function DungeonModulesPage() {
   const [groups, setGroups] = useState<GroupSummary[]>([]);

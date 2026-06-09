@@ -409,7 +409,7 @@ class DatabaseManager:
                                        ("IceCavern", "IceCavern"), ("IceAbyss", "IceAbyss"),
                                        ("IceCave", "IceCavern"), ("Crypt", "Crypt"),
                                        ("Inferno", "Inferno"), ("Ruins", "Ruins"),
-                                       ("Swamp", "Swamp"), ("Cave_", "GoblinCave"),
+                                        ("Swamp", "Crypt"), ("Cave_", "GoblinCave"),
                                        ("CorridorCrypt", "Crypt"), ("Cemetery", "Crypt"),
                                        ("SpiderCave", "GoblinCave"), ("Prison", "Ruins")]:
                     if module_name.lower().startswith(prefix.lower()):

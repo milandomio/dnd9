@@ -12,7 +12,6 @@ const GROUP_LABELS: Record<string, string> = {
   Inferno: "废墟3层炼狱",
   Ruins: "废墟1层",
   ShipGraveyard: "水图",
-  Swamp: "沼泽",
 };
 
 export default function DungeonModuleGroupPage() {

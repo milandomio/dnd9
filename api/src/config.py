@@ -175,7 +175,6 @@ GROUP_TO_ART_DIR = {
     "Inferno": "Inferno",
     "Ruins": "Ruins",
     "ShipGraveyard": "ShipGraveyard",
-    "Swamp": "Swamp",
 }
 
 LAYOUT_DIR = GAME_ROOT / "Maps" / "Dungeon" / "Layouts"
