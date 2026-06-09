@@ -376,6 +376,8 @@ class DatabaseManager:
             size_x = (props.get("Size") or {}).get("X", 1) or 1
             size_y = (props.get("Size") or {}).get("Y", 1) or 1
             module_name = _extract_dungeon_module_name(raw_name)
+            if "_SR" in module_name:
+                continue
 
             sl_base = ""
             for variant in ["SubLevelAssetD_HR", "SubLevelAssetD", "SubLevelAssetA"]:
