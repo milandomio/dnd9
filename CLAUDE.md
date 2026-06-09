@@ -80,7 +80,7 @@ cd ../web && npm run build
 
 # 4. 预览（后台运行，端口 8080）
 # ⚠️ codewhale 中 nohup + & 会被回收，改用 setsid：
-setsid sh -c 'vite preview --port 8080 --host 0.0.0.0 > /tmp/vite-preview.log 2>&1 &'
+kill $(lsof -t -i:8080) 2>/dev/null; setsid sh -c './node_modules/.bin/vite preview --port 8080 --host 0.0.0.0 > /tmp/vite-preview.log 2>&1 &'
 ```
 
 **注意：** `python main.py` 必须在 `npm run build` 之前运行。TS 类型检查在构建中自动执行 (`npx tsc --noEmit`)。

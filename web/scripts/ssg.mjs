@@ -10,12 +10,12 @@
  * 6. Generate 404.html fallback
  *
  * Usage:
- *   node scripts/ssg.mjs          # full build (861 routes)
- *   node scripts/ssg.mjs --quick  # home + list pages only (8 routes)
+ *   node scripts/ssg.mjs          # full build (861 routes, full SSR)
+ *   node scripts/ssg.mjs --quick  # home + list SSG → detail CSR shells (861 routes)
  */
 
 import { execSync } from "child_process";
-import { readFileSync, writeFileSync, mkdirSync, cpSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from "fs";
 import { join, dirname } from "path";
 
 const QUICK = process.argv.includes("--quick");
@@ -54,17 +54,15 @@ const moduleData = readJSON(join(DATA, "dungeon_modules.json"));
 const PAGES = ["items", "monsters", "props", "lootdrops"];
 const SINGLE = ["explore", "quest_items", "quest_npc"];
 
-// Discover all routes
+// Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: "/", file: "index.html" }];
 for (const p of PAGES) routes.push({ path: `/${p}`, file: `${p}/index.html` });
 for (const p of SINGLE) routes.push({ path: `/${p}`, file: `${p}/index.html` });
 
-if (!QUICK) {
-  for (const p of PAGES) {
-    const list = readJSON(join(DATA, `${p}.json`));
-    for (const e of list) {
-      routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
-    }
+for (const p of PAGES) {
+  const list = readJSON(join(DATA, `${p}.json`));
+  for (const e of list) {
+    routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
   }
 }
 
@@ -122,31 +120,48 @@ function routeDataKey(path) {
   return `list-${path.slice(1)}`;
 }
 
+/**
+ * Compute <base href="..."> value from output file path relative to dist root.
+ */
+function baseHrefFromFile(file) {
+  const depth = (file.match(/\//g) || []).length;
+  return depth === 0 ? "./" : "../".repeat(depth);
+}
+
 for (let i = 0; i < routes.length; i++) {
   const r = routes[i];
   const outPath = join(DIST, r.file);
   const urlPath = r.path;
+  const baseHref = baseHrefFromFile(r.file);
   const dataKey = routeDataKey(urlPath);
   const routeData = ssrDataMap[dataKey];
-  const payload = routeData ? { [dataKey]: routeData } : {};
 
   let page;
-  try {
-    const result = render(urlPath, ssrDataMap);
-    // Remove the default SPA title before injecting SSR-generated head content
-    const headlessTemplate = template.replace(/<title>[^<]*<\/title>\s*/, "");
-    page = headlessTemplate
-      .replace(ROOT_MARKER, `<div id="root">${result.html}`)
-      .replace(
+  if (routeData) {
+    const payload = { [dataKey]: routeData };
+    try {
+      const result = render(urlPath, ssrDataMap);
+      // Remove the default SPA title before injecting SSR-generated head content
+      const headlessTemplate = template.replace(/<title>[^<]*<\/title>\s*/, "");
+      page = headlessTemplate
+        .replace(ROOT_MARKER, `<div id="root">${result.html}`)
+        .replace(
+          HEAD_CLOSE,
+          `<base href="${baseHref}">\n${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
+        );
+    } catch (err) {
+      console.error(`  [err]  ${urlPath}: ${err.message}`);
+      // Fallback: serve the shell SPA (client will fetch on its own)
+      page = template.replace(
         HEAD_CLOSE,
-        `${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
+        `<base href="${baseHref}">\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
       );
-  } catch (err) {
-    console.error(`  [err]  ${urlPath}: ${err.message}`);
-    // Fallback: serve the shell SPA (client will fetch on its own)
+    }
+  } else {
+    // No SSR data → CSR shell (client-side fetch on mount)
     page = template.replace(
       HEAD_CLOSE,
-      `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
+      `<base href="${baseHref}">\n<script>window.__SSR_DATA__={}</script>\n</head>`
     );
   }
 
@@ -161,6 +176,10 @@ for (let i = 0; i < routes.length; i++) {
 
 // ---- step 6: 404.html ----
 writeFileSync(join(DIST, "404.html"), readFileSync(join(DIST, "index.html"), "utf-8"), "utf-8");
+
+// ---- step 7: cleanup SSR bundle ----
+rmSync(SSR_OUT, { recursive: true, force: true });
+console.log("[ssg] SSR build cleaned up");
 
 const total = ((Date.now() - t0) / 1000).toFixed(1);
 console.log(`[ssg] done! ${routes.length} pages in ${total}s (mode=${QUICK ? "quick" : "full"})`);
