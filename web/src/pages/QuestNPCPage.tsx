@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Spin, Tag } from "antd";
 
 interface QuestReward {
@@ -31,7 +32,7 @@ export default function QuestNPCPage() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("./data/quest_npc.json")
+    fetch("./data/json/quest_npc.json")
       .then((r) => r.json())
       .then(setData)
       .catch(console.error)
@@ -42,6 +43,10 @@ export default function QuestNPCPage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <Helmet>
+        <title>任务NPC表 | DarkFindV5游戏导航</title>
+        <meta name="description" content="NPC任务详情查询——查看各NPC的任务、奖励、需求。" />
+      </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
         【任务NPC表】NPC任务详情
       </h1>

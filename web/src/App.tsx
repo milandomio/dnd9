@@ -1,4 +1,5 @@
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { ConfigProvider, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import { ThemeProvider, useTheme } from "./hooks/useTheme";
@@ -14,18 +15,20 @@ import NavBar from "./components/NavBar";
 
 function App() {
   return (
+    <HelmetProvider>
     <ConfigProvider
       locale={zhCN}
       theme={{ algorithm: theme.darkAlgorithm, token: { colorPrimary: "#1677ff" } }}
     >
       <ThemeProvider>
         <DebugProvider>
-          <HashRouter>
+          <BrowserRouter>
             <AppInner />
-          </HashRouter>
+          </BrowserRouter>
         </DebugProvider>
       </ThemeProvider>
     </ConfigProvider>
+    </HelmetProvider>
   );
 }
 

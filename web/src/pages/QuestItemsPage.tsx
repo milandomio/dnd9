@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 
 interface QuestItem {
@@ -17,7 +18,7 @@ export default function QuestItemsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("./data/quest_items.json")
+    fetch("./data/json/quest_items.json")
       .then((r) => r.json())
       .then(setData)
       .catch(console.error)
@@ -35,6 +36,10 @@ export default function QuestItemsPage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <Helmet>
+        <title>任务物品表 | DarkFindV5游戏导航</title>
+        <meta name="description" content="任务物品查询——按地图分组查看任务物品分布。" />
+      </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
         【任务物品表】任务物品汇总
       </h1>

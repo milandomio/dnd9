@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { IndexEntry } from "../types/data";
@@ -22,7 +23,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("./data/index.json")
+    fetch("./data/json/index.json")
       .then((r) => r.json())
       .then(setData)
       .catch(console.error)
@@ -33,6 +34,13 @@ export default function HomePage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <Helmet>
+        <title>DarkFindV5游戏导航 | 道具、怪物、物品、掉落位置查询</title>
+        <meta name="description" content="DarkFindV5 游戏导航——查询游戏内物品、怪物、实体、掉落物的地图位置，支持坐标偏移调试。" />
+        <meta property="og:title" content="DarkFindV5游戏导航" />
+        <meta property="og:description" content="查询游戏内物品、怪物、实体、掉落物的地图位置" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
         DarkFindV5游戏导航
       </h1>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 
 interface ExploreTarget {
@@ -15,7 +16,7 @@ export default function ExplorePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("./data/explore.json")
+    fetch("./data/json/explore.json")
       .then((r) => r.json())
       .then(setData)
       .catch(console.error)
@@ -33,6 +34,10 @@ export default function ExplorePage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <Helmet>
+        <title>探索地点表 | DarkFindV5游戏导航</title>
+        <meta name="description" content="探索目标汇总——{data.length} 个探索目标，分布在 {grouped.size} 个NPC。" />
+      </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
         【探索地点表】探索目标汇总
       </h1>

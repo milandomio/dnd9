@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 import { useDebug } from "../hooks/useDebug";
 import { getAdj, applyTransform, computePixel, ctrlBtn, ctrlInput, type AdjState } from "../components/MapDebug";
@@ -50,8 +51,8 @@ export default function LootdropDetailPage() {
   useEffect(() => {
     if (!name) return;
     Promise.all([
-      fetch(`./data/lootdrops/${decodeURIComponent(name)}.json`).then<LootdropItem>(r => r.json()),
-      fetch(`./data/dungeon_modules.json`).then<DungeonModule[]>(r => r.json()),
+      fetch(`./data/json/lootdrops/${decodeURIComponent(name)}.json`).then<LootdropItem>(r => r.json()),
+      fetch(`./data/json/dungeon_modules.json`).then<DungeonModule[]>(r => r.json()),
     ])
       .then(([item, mods]) => {
         setData(item);
@@ -143,6 +144,12 @@ export default function LootdropDetailPage() {
         {debug ? "退出调试" : "显示调试信息"}
       </button>
 
+      <Helmet>
+        <title>{data.translation || data.name} 掉落来源 | DarkFindV5游戏导航</title>
+        <meta name="description" content="{data.translation || data.name} 由 {visibleCount} 个怪物掉落，共 {totalCoords} 个位置点。" />
+        <meta property="og:title" content="{data.translation || data.name} 掉落来源 | DarkFindV5" />
+        <meta property="og:description" content="{data.translation || data.name} 由 {visibleCount} 个怪物掉落" />
+      </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 28, margin: "0 0 8px" }}>
         {data.translation} &gt;&gt; {data.monsters.filter(m => !hidden.has(m.name)).map(m => m.translation).join("、")}
         {data.monsters.length - visibleCount > 0 && <span style={{ color: "#888", fontSize: 16 }}> (+{data.monsters.length - visibleCount})</span>}
