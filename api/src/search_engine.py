@@ -185,8 +185,20 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
     terms_set = set(t for t in search_terms if t)
     auto = build_automaton(list(terms_set))
 
-    all_spawners: list[dict] = []
+    # Phase 1: collect all HR coords first, so D dedup in Phase 2 can see them
     hr_coords: dict[str, list[tuple[float, float, float]]] = {}
+    for fp in map_files:
+        if fp.stem.endswith("_HR_D"):
+            spawners = extract_spawners(fp)
+            for s in spawners:
+                base = s["map_base"]
+                coord = (s["x"], s["y"], s["z"])
+                if base not in hr_coords:
+                    hr_coords[base] = []
+                hr_coords[base].append(coord)
+
+    # Phase 2: process all spawners with dedup (hr_coords now fully populated)
+    all_spawners: list[dict] = []
     d_coords: dict[str, list[tuple[float, float, float]]] = {}
 
     for fp in map_files:
