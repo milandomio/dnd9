@@ -130,11 +130,6 @@ export default function ListPage() {
                 </span>
               </div>
             )}
-            {entity.monsters && entity.monsters.length > 0 && page !== "lootdrops" && (
-              <div style={{ color: "#aaa", fontSize: 13, marginTop: 6 }}>
-                掉落来源: {entity.monsters.length}个
-              </div>
-            )}
             </div>
         ))}
       </div>
