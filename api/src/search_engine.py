@@ -96,9 +96,12 @@ def _list_map_jsons(root: str | Path) -> list[Path]:
         for fn in filenames:
             if not fn.endswith(("_HR_D.json", "_D.json", "_A.json")):
                 continue
-            if "_SR" in fn:
+            if "_SR" in fn or "_BossTest" in fn or "_Resize" in fn or "_Test" in fn:
                 continue
             if "Arena" in fn or "ArenaStart" in dirpath:
+                continue
+            if fn in ("Ruins_Passage_Outer_11_D.json",):
+                continue
                 continue
             files.append(Path(dirpath) / fn)
     return sorted(files)

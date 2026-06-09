@@ -108,6 +108,9 @@ export default function DetailPage() {
 
   const groupOrder = Object.keys(GROUP_LABELS);
   const sortedGroups = [...groupedByType.entries()].sort(([a], [b]) => {
+    if (!a && !b) return 0;
+    if (!a) return 1;
+    if (!b) return -1;
     return groupOrder.indexOf(a) - groupOrder.indexOf(b);
   });
 

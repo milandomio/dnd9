@@ -126,7 +126,12 @@ export default function LootdropDetailPage() {
   }
 
   const groupOrder = Object.keys(GROUP_LABELS);
-  const sortedGroups = [...groupedByType.entries()].sort(([a], [b]) => groupOrder.indexOf(a) - groupOrder.indexOf(b));
+  const sortedGroups = [...groupedByType.entries()].sort(([a], [b]) => {
+    if (!a && !b) return 0;
+    if (!a) return 1;
+    if (!b) return -1;
+    return groupOrder.indexOf(a) - groupOrder.indexOf(b);
+  });
 
   const totalCoords = monsters.reduce((s, m) => s + (hidden.has(m.name) ? 0 : m.coords.length), 0);
   const visibleCount = monsters.filter(m => !hidden.has(m.name)).length;

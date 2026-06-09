@@ -474,16 +474,6 @@ def run():
     # Filter out debug/test/resize variants (they're not real playable modules)
     _DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
     modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
-    # Deduplicate by translation within each group (prefer longer name — "Inferno_XXX" over "XXX")
-    per_group: dict[str, dict[str, dict]] = {}
-    for m in modules_data:
-        g = m["group"]
-        if g not in per_group:
-            per_group[g] = {}
-        key = m["translation"]
-        if key not in per_group[g] or len(m["name"]) > len(per_group[g][key]["name"]):
-            per_group[g][key] = m
-    modules_data = [m for group in per_group.values() for m in group.values()]
     _save("dungeon_modules.json", modules_data)
 
     # ── dungeon_module_coords: per-module entity coordinates ──

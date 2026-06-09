@@ -350,7 +350,7 @@ class DatabaseManager:
                 if not fn.endswith(("_HR_D.json", "_D.json", "_A.json")):
                     continue
                 stem = fn.rsplit(".", 1)[0]
-                if "_SR" in stem or "_Arena" in stem:
+                if "_SR" in stem or "_Arena" in stem or "_BossTest" in stem or "_Resize" in stem or "_Test" in stem:
                     continue
                 base = _sl_base_name(stem)
                 if base not in path_group:
@@ -387,7 +387,7 @@ class DatabaseManager:
             size_x = (props.get("Size") or {}).get("X", 1) or 1
             size_y = (props.get("Size") or {}).get("Y", 1) or 1
             module_name = _extract_dungeon_module_name(raw_name)
-            if "_SR" in module_name:
+            if "_SR" in module_name or "_BossTest" in module_name or "_Resize" in module_name or "_Test" in module_name:
                 continue
 
             sl_base = ""
