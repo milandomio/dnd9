@@ -163,8 +163,20 @@ def run():
                 return translations[alias_key]
         if name in HARDCODED_TRANSLATIONS:
             return HARDCODED_TRANSLATIONS[name]
-        if scope == "module" and name in MODULE_NAME_OVERRIDE:
-            return MODULE_NAME_OVERRIDE[name]
+        if scope == "module":
+            if name in MODULE_NAME_OVERRIDE:
+                return MODULE_NAME_OVERRIDE[name]
+            for group_prefix in [
+                "Firedeep_", "Inferno_", "Crypt_", "Ruins_", "GoblinCave_",
+                "Goblin_", "IceCavern_", "IceCave_", "IceAbyss_",
+                "ShipGraveyard_", "Shipgraveyard_", "Swamp_", "Cave_",
+            ]:
+                if name.startswith(group_prefix):
+                    stripped = name[len(group_prefix):]
+                    if stripped:
+                        alias_key = "Text_DesignData_Dungeon_DungeonModule_" + stripped
+                        if alias_key in translations:
+                            return translations[alias_key]
         return name
 
     # ── Build merged lootdrop map with variant family merging ──

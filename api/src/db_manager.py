@@ -339,7 +339,7 @@ class DatabaseManager:
                 if not fn.endswith(("_HR_D.json", "_D.json", "_A.json")):
                     continue
                 stem = fn.rsplit(".", 1)[0]
-                if "_SR" in stem:
+                if "_SR" in stem or "_Arena" in stem:
                     continue
                 base = _sl_base_name(stem)
                 if base not in path_group:
@@ -418,10 +418,16 @@ class DatabaseManager:
         )
         # Third pass: insert modules that exist as map files but have no DungeonModule JSON
         sl_base_to_key = {r[5]: r[1] for r in rows if r[5]}
+        module_name_to_key = {r[0]: r[1] for r in rows if r[1]}
+        _VARIANT_SUFFIX_RE = re.compile(r"_(Resize|Test|BossTest|DistantView)$")
         extra_rows = []
         for base_name, group in path_group_map.items():
             if base_name not in inserted_names:
-                tk = sl_base_to_key.get(base_name, "")
+                tk = sl_base_to_key.get(base_name, "") or module_name_to_key.get(base_name, "")
+                if not tk:
+                    stripped = _VARIANT_SUFFIX_RE.sub("", base_name)
+                    if stripped != base_name:
+                        tk = sl_base_to_key.get(stripped, "") or module_name_to_key.get(stripped, "")
                 extra_rows.append((base_name, tk, group, 1, 1, "", ""))
                 inserted_names.add(base_name)
         if extra_rows:
