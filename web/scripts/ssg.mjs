@@ -53,6 +53,69 @@ const SINGLE = ["explore", "quest_items", "quest_npc"];
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
 
+// ---- step 4a: build search index ----
+console.log("[ssg] building search index…");
+const searchIndex = [];
+
+for (const p of PAGES) {
+  const list = readJSON(join(DATA, `${p}.json`));
+  for (const e of list) {
+    const url = p === "lootdrops"
+      ? `/lootdrops/${encodeURIComponent(e.name)}`
+      : `/${p}/${encodeURIComponent(e.name)}`;
+    searchIndex.push({
+      name: e.name,
+      translation: e.translation || "",
+      page: p,
+      url,
+    });
+  }
+}
+
+const exploreData = readJSON(join(DATA, "explore.json"));
+for (const e of exploreData) {
+  searchIndex.push({
+    name: e.name,
+    translation: e.npc_name_display || "",
+    page: "explore",
+    url: "/explore",
+  });
+}
+
+const questNpcData = readJSON(join(DATA, "quest_npc.json"));
+for (const e of questNpcData) {
+  searchIndex.push({
+    name: e.npc_name,
+    translation: e.npc_name_display || "",
+    page: "quest_npc",
+    url: "/quest_npc",
+  });
+}
+
+for (const g of questGroups) {
+  searchIndex.push({
+    name: g.group,
+    translation: g.group_display || "",
+    page: "quest_items",
+    url: `/quest_items/${encodeURIComponent(g.group)}`,
+  });
+}
+
+// List/index pages themselves
+const LIST_PAGES = [
+  { name: "items", translation: "物品表", page: "items", url: "/items" },
+  { name: "monsters", translation: "怪物表", page: "monsters", url: "/monsters" },
+  { name: "props", translation: "实体表", page: "props", url: "/props" },
+  { name: "lootdrops", translation: "掉落表", page: "lootdrops", url: "/lootdrops" },
+  { name: "explore", translation: "探索地点表", page: "explore", url: "/explore" },
+  { name: "quest_items", translation: "任务物品表", page: "quest_items", url: "/quest_items" },
+  { name: "quest_npc", translation: "任务NPC表", page: "quest_npc", url: "/quest_npc" },
+];
+for (const lp of LIST_PAGES) searchIndex.push(lp);
+
+writeFileSync(join(DATA, "search_index.json"), JSON.stringify(searchIndex), "utf-8");
+console.log(`[ssg] search index: ${searchIndex.length} entries`);
+
 // Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: "/", file: "index.html" }];
 for (const p of PAGES) routes.push({ path: `/${p}`, file: `${p}/index.html` });

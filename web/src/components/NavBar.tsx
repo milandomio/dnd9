@@ -32,34 +32,13 @@ interface SearchHit {
 }
 
 async function buildSearchIndex(): Promise<SearchHit[]> {
-  const pages: { page: string; file: string; nameKey: string; transKey: string; urlFn: (n: string) => string }[] = [
-    { page: "items", file: "items.json", nameKey: "name", transKey: "translation", urlFn: (n) => `/items/${encodeURIComponent(n)}` },
-    { page: "monsters", file: "monsters.json", nameKey: "name", transKey: "translation", urlFn: (n) => `/monsters/${encodeURIComponent(n)}` },
-    { page: "props", file: "props.json", nameKey: "name", transKey: "translation", urlFn: (n) => `/props/${encodeURIComponent(n)}` },
-    { page: "lootdrops", file: "lootdrops.json", nameKey: "name", transKey: "translation", urlFn: (n) => `/lootdrops/${encodeURIComponent(n)}` },
-    { page: "explore", file: "explore.json", nameKey: "name", transKey: "npc_name_display", urlFn: () => "/explore" },
-    { page: "quest_npc", file: "quest_npc.json", nameKey: "npc_name", transKey: "npc_name_display", urlFn: () => "/quest_npc" },
-    { page: "quest_items", file: "quest_items_groups.json", nameKey: "group", transKey: "group_display", urlFn: (n) => `/quest_items/${encodeURIComponent(n)}` },
-  ];
-  const entries: SearchHit[] = [];
-  for (const { page, file, nameKey, transKey, urlFn } of pages) {
-    try {
-      const resp = await fetch(`./data/json/${file}`);
-      if (!resp.ok) continue;
-      const data = await resp.json();
-      for (const item of data) {
-        entries.push({
-          name: item[nameKey],
-          translation: item[transKey] || "",
-          page,
-          url: urlFn(item[nameKey]),
-        });
-      }
-    } catch {
-      // skip failed loads
-    }
+  try {
+    const resp = await fetch("./data/json/search_index.json");
+    if (!resp.ok) return [];
+    return await resp.json();
+  } catch {
+    return [];
   }
-  return entries;
 }
 
 export default function NavBar() {

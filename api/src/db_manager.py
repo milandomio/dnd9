@@ -491,6 +491,8 @@ class DatabaseManager:
                 item_name = _ue_asset_base_name(item_asset) or ""
                 item_name = _strip_prefix(item_name, "Id_Item_", "Id_Props_")
                 for mon in monsters:
+                    if item_name == mon:
+                        continue
                     rows.append((item_name, mon, ld_name))
         seen = set()
         deduped = []
