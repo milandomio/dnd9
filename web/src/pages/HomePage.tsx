@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { IndexEntry } from "../types/data";
 import Disclaimer from "../components/Disclaimer";
@@ -21,7 +20,6 @@ const DEFAULT_THEME = { border: "#555", hoverBg: "linear-gradient(145deg, #3a3a3
 export default function HomePage() {
   const ssrData = useSSRData<IndexEntry[]>("home");
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
-  const [loading, setLoading] = useState(!ssrData);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,11 +27,8 @@ export default function HomePage() {
     fetch("./data/json/index.json")
       .then((r) => r.json())
       .then(setData)
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   }, []);
-
-  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>

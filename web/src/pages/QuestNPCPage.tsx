@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Spin, Tag } from "antd";
+import { Tag } from "antd";
 import { useSSRData } from "../context/SSRDataContext";
 
 interface QuestReward {
@@ -30,7 +30,6 @@ interface NPCEntry {
 export default function QuestNPCPage() {
   const ssrData = useSSRData<NPCEntry[]>("quest_npc");
   const [data, setData] = useState<NPCEntry[]>(ssrData || []);
-  const [loading, setLoading] = useState(!ssrData);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,11 +37,8 @@ export default function QuestNPCPage() {
     fetch("./data/json/quest_npc.json")
       .then((r) => r.json())
       .then(setData)
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   }, []);
-
-  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>

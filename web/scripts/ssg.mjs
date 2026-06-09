@@ -144,46 +144,18 @@ for (let i = 0; i < routes.length; i++) {
 
   let page;
   if (routeData) {
-    const payload = { [dataKey]: routeData };
     try {
       const result = render(urlPath, ssrDataMap);
-      // Remove the default SPA title before injecting SSR-generated head content
       const headlessTemplate = templated.replace(/<title>[^<]*<\/title>\s*/, "");
       page = headlessTemplate
         .replace(ROOT_MARKER, `<div id="root">${result.html}`)
-        .replace(
-          HEAD_CLOSE,
-          `${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
-        );
+        .replace(HEAD_CLOSE, `${result.head}\n</head>`);
     } catch (err) {
       console.error(`  [err]  ${urlPath}: ${err.message}`);
-      // Fallback: serve the shell SPA (client will fetch on its own)
-      page = templated.replace(
-        HEAD_CLOSE,
-        `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
-      );
+      page = templated.replace(HEAD_CLOSE, `\n</head>`);
     }
   } else {
-    // Quick mode: inject entity JSON so direct URL has content immediately.
-    let payload = {};
-    try {
-      const m = urlPath.match(/^\/(items|monsters|props)\/(.+)$/);
-      if (m) {
-        const p = m[1], name = decodeURIComponent(m[2]);
-        payload = { [dataKey]: { entity: readJSON(join(DATA, p, `${name}.json`)), modules: moduleData } };
-      }
-    } catch {}
-    try {
-      const m = urlPath.match(/^\/lootdrops\/(.+)$/);
-      if (m) {
-        const name = decodeURIComponent(m[1]);
-        payload = { [dataKey]: { item: readJSON(join(DATA, "lootdrops", `${name}.json`)), modules: moduleData } };
-      }
-    } catch {}
-    page = templated.replace(
-      HEAD_CLOSE,
-      `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
-    );
+    page = templated.replace(HEAD_CLOSE, `\n</head>`);
   }
 
   mkdirSync(dirname(outPath), { recursive: true });

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Spin } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSSRData } from "../context/SSRDataContext";
 interface IndexEntry {
@@ -25,7 +24,6 @@ export default function ListPage() {
   const navigate = useNavigate();
   const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
-  const [loading, setLoading] = useState(!ssrData);
   const [debug, setDebug] = useState(false);
 
   useEffect(() => {
@@ -34,11 +32,8 @@ export default function ListPage() {
     fetch(`./data/json/${page}.json`)
       .then((r) => r.json())
       .then(setData)
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   }, [page]);
-
-  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>

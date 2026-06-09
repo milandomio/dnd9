@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Spin } from "antd";
 import { useSSRData } from "../context/SSRDataContext";
 
 interface QuestItem {
@@ -17,18 +16,14 @@ interface QuestItem {
 export default function QuestItemsPage() {
   const ssrData = useSSRData<QuestItem[]>("quest_items");
   const [data, setData] = useState<QuestItem[]>(ssrData || []);
-  const [loading, setLoading] = useState(!ssrData);
 
   useEffect(() => {
     if (ssrData) return;
     fetch("./data/json/quest_items.json")
       .then((r) => r.json())
       .then(setData)
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   }, []);
-
-  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
 
   const grouped = new Map<string, QuestItem[]>();
   for (const t of data) {

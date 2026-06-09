@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Spin } from "antd";
 import { useSSRData } from "../context/SSRDataContext";
 import Disclaimer from "../components/Disclaimer";
 import type { DungeonModule } from "../types/data";
@@ -36,7 +35,6 @@ export default function ExplorePage() {
   const [modules, setModules] = useState<Map<string, DungeonModule>>(
     ssrModules ? new Map(ssrModules.flatMap(m => [[m.name, m], [m.sl_base_name, m]])) : new Map()
   );
-  const [loading, setLoading] = useState(!ssrData);
 
   useEffect(() => {
     Promise.all([
@@ -51,11 +49,8 @@ export default function ExplorePage() {
           setModules(mm);
         }
       })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   }, []);
-
-  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
 
   const grouped = new Map<string, ExploreTarget[]>();
   for (const t of data) {
