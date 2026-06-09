@@ -30,10 +30,6 @@ function readJSON(p) {
   return JSON.parse(readFileSync(p, "utf-8"));
 }
 
-// ---- step 0: copy data to public/ ----
-console.log("[ssg] copying data to public/…");
-cpSync(join(ROOT, "data"), join(WEB, "public", "data"), { recursive: true, force: true });
-
 // ---- step 1: build client ----
 console.log("[ssg] building client SPA…");
 execSync("npx vite build", { cwd: WEB, stdio: "pipe" });

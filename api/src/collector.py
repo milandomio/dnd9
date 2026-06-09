@@ -1,9 +1,17 @@
 import json
+import os
 import re
 from collections import defaultdict
 from pathlib import Path
 
-from config import DB_PATH, OUTPUT_DIR, GAME_ROOT, GROUP_TO_ART_DIR, HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE, MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP
+from config import (
+    DB_PATH, GAME_JSON, ITEM_DIR, MONSTER_DIR, PROPS_DIR,
+    DUNGEON_MODULE_DIR, LOOTDROP_DIR, LOOTDROP_GROUP_DIR,
+    SPAWNER_DIR, MAPS_DIR, LAYOUT_DIR,
+    OUTPUT_DIR, GAME_ROOT, GROUP_TO_ART_DIR,
+    HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE,
+    MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP,
+)
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
 from layout_utils import load_all_layout_rotations
@@ -14,14 +22,57 @@ _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
 _UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
 
 
+_SOURCE_PATHS = [
+    GAME_JSON, ITEM_DIR, MONSTER_DIR, PROPS_DIR,
+    DUNGEON_MODULE_DIR, LOOTDROP_DIR, LOOTDROP_GROUP_DIR,
+    SPAWNER_DIR, MAPS_DIR, LAYOUT_DIR,
+]
+
+
+def _get_newest_mtime(paths: list[Path]) -> float:
+    """Return the newest modification time across all files in given paths."""
+    newest = 0.0
+    for p in paths:
+        if not p.exists():
+            continue
+        if p.is_file():
+            try:
+                mtime = p.stat().st_mtime
+                if mtime > newest:
+                    newest = mtime
+            except OSError:
+                continue
+        elif p.is_dir():
+            for dirpath, dirnames, filenames in os.walk(p):
+                for fn in filenames:
+                    try:
+                        fp = Path(dirpath) / fn
+                        mtime = fp.stat().st_mtime
+                        if mtime > newest:
+                            newest = mtime
+                    except OSError:
+                        continue
+    return newest
+
+
+def _is_db_stale(db_path: Path) -> bool:
+    """Return True if DB is missing or older than any source file."""
+    if not db_path.exists():
+        return True
+    db_mtime = db_path.stat().st_mtime
+    latest_source = _get_newest_mtime(_SOURCE_PATHS)
+    return db_mtime < latest_source
+
+
 def run():
     print("=" * 50)
     print("  DarkFindV5 - Data Collector")
     print("=" * 50)
 
     db = DatabaseManager(DB_PATH)
+    db_stale = _is_db_stale(DB_PATH)
 
-    game_available = GAME_ROOT.exists()
+    game_available = GAME_ROOT.exists() and db_stale
 
     if game_available:
         # 1. Import translations
@@ -80,7 +131,10 @@ def run():
             )
         db.connect().commit()
     else:
-        print("\n[SKIP] Game data not found, using existing DB")
+        if not GAME_ROOT.exists():
+            print("\n[SKIP] Game data not found, using existing DB")
+        else:
+            print("\n[SKIP] DB is up to date (newest source file older than DB), using existing DB")
 
     # 后续步骤从 DB 读取（无论是否导入，DB 中都有数据）
     items = db.get_item_entities()
