@@ -125,7 +125,9 @@ for (let i = 0; i < routes.length; i++) {
   let page;
   try {
     const result = render(urlPath, ssrDataMap);
-    page = template
+    // Remove the default SPA title before injecting SSR-generated head content
+    const headlessTemplate = template.replace(/<title>[^<]*<\/title>\s*/, "");
+    page = headlessTemplate
       .replace(ROOT_MARKER, `<div id="root">${result.html}`)
       .replace(
         HEAD_CLOSE,

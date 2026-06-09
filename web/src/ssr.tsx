@@ -74,8 +74,6 @@ export function render(url: string, ssrDataMap: Record<string, any>) {
     </HelmetProvider>
   );
 
-  console.log("[ssr] url:", url);
-  console.log("[ssr] helmetContext:", JSON.stringify(helmetContext, null, 2));
   const { helmet } = helmetContext;
 
   return {

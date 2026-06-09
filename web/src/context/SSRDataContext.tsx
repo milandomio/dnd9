@@ -12,7 +12,6 @@ import { createContext, useContext } from "react";
 const SSRDataContext = createContext<Record<string, any> | null>(null);
 
 export function useSSRData<T>(key: string): T | null {
-  // SSR path: context is provided by the SSG script
   const ctx = useContext(SSRDataContext);
   if (ctx) return (ctx[key] as T) ?? null;
 

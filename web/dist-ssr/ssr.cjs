@@ -60,7 +60,13 @@ function useDebug() {
 const SSRDataContext = react.createContext(null);
 function useSSRData(key) {
   const ctx = react.useContext(SSRDataContext);
-  if (ctx) return ctx[key] ?? null;
+  if (ctx) {
+    const val = ctx[key] ?? null;
+    if (typeof window === "undefined") {
+      console.log(`[useSSRData] key="${key}" found=${val !== null} type=${val === null ? "null" : Array.isArray(val) ? "array[" + val.length + "]" : typeof val}`);
+    }
+    return val;
+  }
   if (typeof window !== "undefined") {
     const w = window;
     if (w.__SSR_DATA__ && w.__SSR_DATA__[key]) return w.__SSR_DATA__[key];
@@ -1619,6 +1625,7 @@ function render(url, ssrDataMap) {
     ) })
   );
   console.log("[ssr] url:", url);
+  console.log("[ssr] ssrDataMap keys:", Object.keys(ssrDataMap).length);
   console.log("[ssr] helmetContext:", JSON.stringify(helmetContext, null, 2));
   const { helmet } = helmetContext;
   return {
