@@ -11,6 +11,7 @@ from config import (
     OUTPUT_DIR, GAME_ROOT, GROUP_TO_ART_DIR,
     HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE,
     MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP,
+    IMG_SRC,
 )
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
@@ -437,6 +438,7 @@ def run():
             img_name = module_name or ''
         elif art_status == 'not_found' and img_name == module_name == sl and map_image in PLACEHOLDERS:
             img_name = map_image
+        has_img = (IMG_SRC / f"{img_name}.webp").exists()
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
@@ -445,6 +447,7 @@ def run():
             "size_y": sy,
             "sl_base_name": sl,
             "img_name": img_name,
+            "has_img": has_img,
             "offset_x": offset_x,
             "offset_y": offset_y,
             "rotate": rotate,
@@ -452,6 +455,7 @@ def run():
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:
+            resolved_name, _ = _resolve_img(art_root, "", override_name)
             modules_map[override_name] = {
                 "name": override_name,
                 "translation": override_translation,
@@ -459,7 +463,8 @@ def run():
                 "size_x": 1,
                 "size_y": 1,
                 "sl_base_name": override_name,
-                "img_name": _resolve_img(art_root, "", override_name),
+                "img_name": resolved_name,
+                "has_img": (IMG_SRC / f"{resolved_name}.webp").exists(),
                 "offset_x": 0,
                 "offset_y": 0,
                 "rotate": 1,

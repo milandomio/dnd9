@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { Button } from "antd";
 import type { DungeonModule } from "../types/data";
+import { useDebug } from "../hooks/useDebug";
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: "废墟2层地牢",
@@ -16,6 +18,7 @@ const GROUP_LABELS: Record<string, string> = {
 
 export default function DungeonModuleGroupPage() {
   const { group } = useParams<{ group: string }>();
+  const { debug, toggle } = useDebug();
   const [modules, setModules] = useState<DungeonModule[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +39,9 @@ export default function DungeonModuleGroupPage() {
       .finally(() => setLoading(false));
   }, [group]);
 
+  const visible = debug ? modules : modules.filter((m) => m.has_img);
+  const hiddenCount = modules.length - visible.length;
+
   if (loading) return <div style={{ textAlign: "center", color: "#aaa", marginTop: 100 }}>加载中...</div>;
   if (!modules.length) return <div style={{ textAlign: "center", color: "#ff6b6b", marginTop: 100 }}>未找到</div>;
 
@@ -47,14 +53,19 @@ export default function DungeonModuleGroupPage() {
         <title>{groupLabel} 地图模块 | DarkFindV5游戏导航</title>
         <meta name="description" content="{groupLabel} 地图模块，共 {modules.length} 个模块。" />
       </Helmet>
-      <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 28, margin: "0 0 8px" }}>
-        【{groupLabel}】地图模块
-        <span style={{ color: "#aaa", fontSize: 14, marginLeft: 12 }}>{modules.length} 个模块</span>
-      </h1>
+      <div style={{ textAlign: "center", marginBottom: 8 }}>
+        <h1 style={{ color: "#00bcd4", fontSize: 28, margin: "0 0 8px", display: "inline" }}>
+          【{groupLabel}】地图模块
+          <span style={{ color: "#aaa", fontSize: 14, marginLeft: 12 }}>{visible.length} 个模块{hiddenCount > 0 ? `（${hiddenCount} 个无图已隐藏）` : ""}</span>
+        </h1>
+        <Button onClick={toggle} size="small" style={{ marginLeft: 12, opacity: debug ? 1 : 0.5 }}>
+          {debug ? "调试模式：显示全部" : "调试模式开启"}
+        </Button>
+      </div>
       <div style={{
         display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
       }}>
-        {modules.map((mod) => {
+        {visible.map((mod) => {
           const sx = mod.size_x || 1;
           const sy = mod.size_y || 1;
           return (
