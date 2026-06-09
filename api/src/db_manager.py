@@ -339,9 +339,9 @@ class DatabaseManager:
                 if not fn.endswith(("_HR_D.json", "_D.json", "_A.json")):
                     continue
                 stem = fn.rsplit(".", 1)[0]
+                if "_SR" in stem:
+                    continue
                 base = _sl_base_name(stem)
-                if base.endswith("_SR"):
-                    base = base[:-3]
                 if base not in path_group:
                     path_group[base] = group
         return path_group
