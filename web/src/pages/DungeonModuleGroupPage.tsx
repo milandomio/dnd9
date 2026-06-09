@@ -92,7 +92,7 @@ export default function DungeonModuleGroupPage() {
                 <div style={{
                   fontSize: 12, color: "#888", textAlign: "center", marginBottom: 4,
                 }}>
-                  {sx}x{sy} | 旋转:{mod.rotate}
+                  {sx}x{sy}
                 </div>
                 <div style={{
                   aspectRatio: `${sx} / ${sy}`,

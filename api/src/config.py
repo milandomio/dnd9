@@ -39,6 +39,10 @@ IMG_SRC = SRC_DIR / "img"
 # 交付目标（前端构建时从此读取）
 DATA_DELIVERY_DIR = PROJECT_DIR / "data"
 
+SPAWNER_ALIAS_MAP = {
+    "ReinforcedDungeonDoor02": "ReinforcedDungeonDoor01",
+}
+
 TRANSLATION_ALIAS_MAP = {
     "GoldChest": "GoldenChest",
     "Corpse": "SkeletonCorpse",

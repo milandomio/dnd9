@@ -466,6 +466,19 @@ def run():
                 "range": 0,
             }
     modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
+    # Filter out debug/test/resize variants (they're not real playable modules)
+    _DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
+    modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
+    # Deduplicate by translation within each group (prefer longer name — "Inferno_XXX" over "XXX")
+    per_group: dict[str, dict[str, dict]] = {}
+    for m in modules_data:
+        g = m["group"]
+        if g not in per_group:
+            per_group[g] = {}
+        key = m["translation"]
+        if key not in per_group[g] or len(m["name"]) > len(per_group[g][key]["name"]):
+            per_group[g][key] = m
+    modules_data = [m for group in per_group.values() for m in group.values()]
     _save("dungeon_modules.json", modules_data)
 
     # ── dungeon_module_coords: per-module entity coordinates ──
@@ -829,6 +842,24 @@ def _resolve_img(art_root: Path, group: str, sl: str):
             for p in group_dir.iterdir():
                 if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail_stripped.lower():
                     return p.stem, 'found'
+    # Try stripping _Center / _Corner / _Passage suffix (keep trailing _NN)
+    sl_center_stripped = re.sub(r"_(?:Center|Corner|Passage)(?=_\d|$)", "", sl)
+    if sl_center_stripped != sl:
+        for p in group_dir.iterdir():
+            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_center_stripped.lower():
+                return p.stem, 'found'
+    # Try stripping _Resize / _Test / _BossTest / _DistantView debug suffixes
+    sl_debug_stripped = re.sub(r"_(?:Resize|Test|BossTest|DistantView)$", "", sl)
+    if sl_debug_stripped != sl:
+        for p in group_dir.iterdir():
+            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_debug_stripped.lower():
+                return p.stem, 'found'
+    # Try numeric prefix match: after stripping _\d{2,4}$, find any file starting with the stripped prefix
+    if sl_stripped != sl:
+        prefix = sl_stripped.lower()
+        for p in group_dir.iterdir():
+            if p.suffix.lower() in (".png", ".webp") and p.stem.lower().startswith(prefix):
+                return p.stem, 'found'
     return sl, 'not_found'
 
 

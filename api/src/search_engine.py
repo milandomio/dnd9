@@ -6,7 +6,7 @@ from typing import Any
 
 import ahocorasick
 
-from config import MAPS_DIR
+from config import MAPS_DIR, SPAWNER_ALIAS_MAP
 
 
 _VARIANT_RE = re.compile(r"_\d{4}$")
@@ -263,7 +263,7 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
 
     matches: dict[str, list[int]] = {}
     for idx, s in enumerate(all_spawners):
-        kw = s["keyword"]
+        kw = SPAWNER_ALIAS_MAP.get(s["keyword"], s["keyword"])
         matched = match_keyword(kw, terms_set, auto)
         for m in matched:
             if m not in matches:
