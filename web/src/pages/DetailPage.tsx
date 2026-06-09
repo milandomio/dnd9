@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Spin, Typography } from "antd";
 import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } from "../types/data";
+import { useSSRData } from "../context/SSRDataContext";
 import { useDebug } from "../hooks/useDebug";
 import { getAdj, applyTransform, computePixel, ctrlBtn, ctrlInput, type AdjState } from "../components/MapDebug";
 import Disclaimer from "../components/Disclaimer";
@@ -31,9 +32,13 @@ const GLOW = "0 0 4px #fff, 0 0 2px #000";
 
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
-  const [entity, setEntity] = useState<Entity | null>(null);
-  const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
-  const [loading, setLoading] = useState(true);
+  const dataKey = `${page}/${name ? decodeURIComponent(name) : ""}`;
+  const ssrData = useSSRData<{ entity: Entity; modules: DungeonModule[] }>(dataKey);
+  const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
+  const [modules, setModules] = useState<Map<string, DungeonModule>>(
+    ssrData ? new Map(ssrData.modules.map((m: DungeonModule) => [m.name, m])) : new Map()
+  );
+  const [loading, setLoading] = useState(!ssrData);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
@@ -60,13 +65,14 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (!page || !name) return;
+    if (ssrData) return;
     const decoded = decodeURIComponent(name!);
     Promise.all([
       fetch(`./data/json/${page}/${decoded}.json`).then<Entity>((r) => r.json()),
       fetch(`./data/json/dungeon_modules.json`).then<DungeonModule[]>((r) => r.json()),
     ])
-      .then(([entity, mods]) => {
-        setEntity(entity);
+      .then(([entityData, mods]) => {
+        setEntity(entityData);
         const mm = new Map<string, DungeonModule>();
         mods.forEach((m) => { mm.set(m.name, m); mm.set(m.sl_base_name, m); });
         setModules(mm);

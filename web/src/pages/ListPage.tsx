@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSSRData } from "../context/SSRDataContext";
 interface IndexEntry {
   name: string;
   translation: string;
@@ -22,12 +23,14 @@ const LABEL_MAP: Record<string, string> = {
 export default function ListPage() {
   const { page } = useParams<{ page: string }>();
   const navigate = useNavigate();
-  const [data, setData] = useState<IndexEntry[]>([]);
-  const [loading, setLoading] = useState(true);
+  const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
+  const [data, setData] = useState<IndexEntry[]>(ssrData || []);
+  const [loading, setLoading] = useState(!ssrData);
   const [debug, setDebug] = useState(false);
 
   useEffect(() => {
     if (!page || !["items", "monsters", "props", "lootdrops"].includes(page)) return;
+    if (ssrData) return;
     fetch(`./data/json/${page}.json`)
       .then((r) => r.json())
       .then(setData)

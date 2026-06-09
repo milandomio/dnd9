@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { IndexEntry } from "../types/data";
 import Disclaimer from "../components/Disclaimer";
+import { useSSRData } from "../context/SSRDataContext";
 
 const CARD_THEME: Record<string, { border: string; hoverBg: string; icon: string; titleColor: string }> = {
   items:    { border: "#4CAF50", hoverBg: "linear-gradient(145deg, #2a4a2a, #3a5a3a)", icon: "📦", titleColor: "#fff" },
@@ -18,11 +19,13 @@ const CARD_THEME: Record<string, { border: string; hoverBg: string; icon: string
 const DEFAULT_THEME = { border: "#555", hoverBg: "linear-gradient(145deg, #3a3a3a, #444)", icon: "📄", titleColor: "#fff" };
 
 export default function HomePage() {
-  const [data, setData] = useState<IndexEntry[]>([]);
-  const [loading, setLoading] = useState(true);
+  const ssrData = useSSRData<IndexEntry[]>("home");
+  const [data, setData] = useState<IndexEntry[]>(ssrData || []);
+  const [loading, setLoading] = useState(!ssrData);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (ssrData) return;
     fetch("./data/json/index.json")
       .then((r) => r.json())
       .then(setData)

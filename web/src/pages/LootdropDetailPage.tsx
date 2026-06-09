@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 import { useDebug } from "../hooks/useDebug";
+import { useSSRData } from "../context/SSRDataContext";
 import { getAdj, applyTransform, computePixel, ctrlBtn, ctrlInput, type AdjState } from "../components/MapDebug";
 import Disclaimer from "../components/Disclaimer";
 import DebugCoordTable from "../components/DebugCoordTable";
@@ -41,15 +42,20 @@ const GLOW = "0 0 4px #fff, 0 0 2px #000";
 
 export default function LootdropDetailPage() {
   const { name } = useParams<{ name: string }>();
-  const [data, setData] = useState<LootdropItem | null>(null);
-  const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
-  const [loading, setLoading] = useState(true);
+  const dataKey = `lootdrops/${name ? decodeURIComponent(name) : ""}`;
+  const ssrData = useSSRData<{ item: LootdropItem; modules: DungeonModule[] }>(dataKey);
+  const [data, setData] = useState<LootdropItem | null>(ssrData?.item || null);
+  const [modules, setModules] = useState<Map<string, DungeonModule>>(
+    ssrData ? new Map(ssrData.modules.map((m: DungeonModule) => [m.name, m])) : new Map()
+  );
+  const [loading, setLoading] = useState(!ssrData);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
 
   useEffect(() => {
     if (!name) return;
+    if (ssrData) return;
     Promise.all([
       fetch(`./data/json/lootdrops/${decodeURIComponent(name)}.json`).then<LootdropItem>(r => r.json()),
       fetch(`./data/json/dungeon_modules.json`).then<DungeonModule[]>(r => r.json()),

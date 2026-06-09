@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
+import { useSSRData } from "../context/SSRDataContext";
 
 interface QuestItem {
   item_name: string;
@@ -14,10 +15,12 @@ interface QuestItem {
 }
 
 export default function QuestItemsPage() {
-  const [data, setData] = useState<QuestItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const ssrData = useSSRData<QuestItem[]>("quest_items");
+  const [data, setData] = useState<QuestItem[]>(ssrData || []);
+  const [loading, setLoading] = useState(!ssrData);
 
   useEffect(() => {
+    if (ssrData) return;
     fetch("./data/json/quest_items.json")
       .then((r) => r.json())
       .then(setData)

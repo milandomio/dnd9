@@ -13,26 +13,8 @@ import QuestItemsPage from "./pages/QuestItemsPage";
 import QuestNPCPage from "./pages/QuestNPCPage";
 import NavBar from "./components/NavBar";
 
-function App() {
-  return (
-    <HelmetProvider>
-    <ConfigProvider
-      locale={zhCN}
-      theme={{ algorithm: theme.darkAlgorithm, token: { colorPrimary: "#1677ff" } }}
-    >
-      <ThemeProvider>
-        <DebugProvider>
-          <BrowserRouter>
-            <AppInner />
-          </BrowserRouter>
-        </DebugProvider>
-      </ThemeProvider>
-    </ConfigProvider>
-    </HelmetProvider>
-  );
-}
-
-function AppInner() {
+/** Shared page content (routes only, no router wrapper). */
+export function AppInner() {
   const { tokens } = useTheme();
   return (
     <div style={{ minHeight: "100vh", padding: "24px", background: tokens.bg }}>
@@ -50,4 +32,22 @@ function AppInner() {
   );
 }
 
-export default App;
+/** Client entry: wraps AppInner with BrowserRouter for SPA routing. */
+export default function App() {
+  return (
+    <HelmetProvider>
+    <ConfigProvider
+      locale={zhCN}
+      theme={{ algorithm: theme.darkAlgorithm, token: { colorPrimary: "#1677ff" } }}
+    >
+      <ThemeProvider>
+        <DebugProvider>
+          <BrowserRouter>
+            <AppInner />
+          </BrowserRouter>
+        </DebugProvider>
+      </ThemeProvider>
+    </ConfigProvider>
+    </HelmetProvider>
+  );
+}

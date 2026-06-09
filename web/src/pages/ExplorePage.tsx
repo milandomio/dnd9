@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
+import { useSSRData } from "../context/SSRDataContext";
 
 interface ExploreTarget {
   name: string;
@@ -12,10 +13,12 @@ interface ExploreTarget {
 }
 
 export default function ExplorePage() {
-  const [data, setData] = useState<ExploreTarget[]>([]);
-  const [loading, setLoading] = useState(true);
+  const ssrData = useSSRData<ExploreTarget[]>("explore");
+  const [data, setData] = useState<ExploreTarget[]>(ssrData || []);
+  const [loading, setLoading] = useState(!ssrData);
 
   useEffect(() => {
+    if (ssrData) return;
     fetch("./data/json/explore.json")
       .then((r) => r.json())
       .then(setData)
