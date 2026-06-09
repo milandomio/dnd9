@@ -35,7 +35,7 @@ globalThis.navigator = { userAgent: "node" } as any;
 globalThis.location = { href: "", pathname: "", search: "", hash: "" } as any;
 
 export function render(url: string, ssrDataMap: Record<string, any>) {
-  const helmetContext: Record<string, any> = {};
+  const helmetContext = { helmet: {} } as any;
 
   const html = renderToString(
     <HelmetProvider context={helmetContext}>
