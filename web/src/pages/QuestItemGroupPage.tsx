@@ -49,7 +49,12 @@ export default function QuestItemGroupPage() {
   const [data, setData] = useState<GroupData | null>(ssrData || null);
   const [loading, setLoading] = useState(!ssrData);
   const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
-  const [hidden, setHidden] = useState<Set<string>>(new Set());
+  const [hidden, setHidden] = useState<Set<string>>(() => {
+    if (ssrData?.entities) {
+      return new Set(ssrData.entities.map(e => e.name));
+    }
+    return new Set();
+  });
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
 
@@ -61,6 +66,7 @@ export default function QuestItemGroupPage() {
     ])
       .then(([gd, mods]) => {
         setData(gd);
+        setHidden(new Set(gd.entities.map(e => e.name)));
         const mm = new Map<string, DungeonModule>();
         mods.forEach(m => { mm.set(m.name, m); mm.set(m.sl_base_name, m); });
         setModules(mm);

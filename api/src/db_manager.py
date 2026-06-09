@@ -417,10 +417,12 @@ class DatabaseManager:
             rows,
         )
         # Third pass: insert modules that exist as map files but have no DungeonModule JSON
+        sl_base_to_key = {r[5]: r[1] for r in rows if r[5]}
         extra_rows = []
         for base_name, group in path_group_map.items():
             if base_name not in inserted_names:
-                extra_rows.append((base_name, "", group, 1, 1, "", ""))
+                tk = sl_base_to_key.get(base_name, "")
+                extra_rows.append((base_name, tk, group, 1, 1, "", ""))
                 inserted_names.add(base_name)
         if extra_rows:
             c.executemany(

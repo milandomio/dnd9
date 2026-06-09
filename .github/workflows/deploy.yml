@@ -28,7 +28,16 @@ jobs:
       - name: Install Python deps
         run: pip install pyahocorasick
 
-      - name: Run data pipeline
+      - name: Restore DB from previous artifact
+        id: restore-db
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: darkfindv5-db
+          path: api/data/
+
+      - name: Run data pipeline (skip if DB restored)
+        if: steps.restore-db.outcome == 'failure'
         run: python api/main.py
 
       - name: Upload DB as artifact
@@ -37,7 +46,7 @@ jobs:
           name: darkfindv5-db
           path: api/data/darkfindv5.db
           retention-days: 90
-          if-no-files-found: error
+          if-no-files-found: ignore
 
       - name: Install web deps
         run: npm ci
