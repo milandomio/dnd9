@@ -32,6 +32,8 @@ DarkFindV5/
 │   │   ├── dungeon_modules.json
 │   │   ├── explore.json
 │   │   ├── index.json
+│   │   ├── entity_index.json      # 实体索引（名称、类型、翻译键）
+│   │   ├── search_index.json      # 搜索索引（前端全局搜索用）
 │   │   ├── quest_items.json
 │   │   ├── quest_items_groups.json / quest_items_groups/
 │   │   └── quest_npc.json
@@ -39,9 +41,12 @@ DarkFindV5/
 ├── web/                 # React 前端（SSG）
 │   ├── src/
 │   │   ├── main.tsx, App.tsx
-│   │   ├── pages/            # 页面组件
-│   │   ├── components/       # 通用组件（MapDebug, Disclaimer, DebugCoordTable, NavBar）
-│   │   ├── hooks/            # useDebug, useTheme
+│   │   ├── ssr.tsx              # SSR 入口（renderToString + StaticRouter）
+│   │   ├── vite-env.d.ts        # Vite 环境类型声明
+│   │   ├── pages/               # 页面组件
+│   │   ├── components/          # 通用组件（MapDebug, Disclaimer, DebugCoordTable, NavBar）
+│   │   ├── hooks/               # useDebug, useTheme
+│   │   ├── context/             # React Context（SSRDataContext）
 │   │   └── types/
 │   ├── public/
 │   │   └── data/             # 构建时从 ../data/ 复制
