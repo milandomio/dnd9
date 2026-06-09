@@ -14,7 +14,7 @@ class Translator:
     """游戏翻译器"""
 
     # 默认Localization根目录 - 从 findItemV4/src/quest_extractor 向上3级到 /home/mio/fmod/
-    _PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", ".."))
+    _PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "..", ".."))
     DEFAULT_LOCALIZATION_ROOT = os.path.join(
         _PROJECT_ROOT,
         "Output",
