@@ -39,11 +39,7 @@ jobs:
         run: npx tsc --noEmit
         working-directory: web
 
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
-        working-directory: web
-
-      - name: Build & prerender
+      - name: Build (SSG)
         run: npm run build
         working-directory: web
 
