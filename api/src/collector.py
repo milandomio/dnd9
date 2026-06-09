@@ -69,8 +69,10 @@ def run():
     print("  DarkFindV5 - Data Collector")
     print("=" * 50)
 
-    db = DatabaseManager(DB_PATH)
     db_stale = _is_db_stale(DB_PATH)
+    if db_stale and DB_PATH.exists():
+        DB_PATH.unlink()
+    db = DatabaseManager(DB_PATH)
 
     game_available = GAME_ROOT.exists() and db_stale
 
