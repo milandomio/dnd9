@@ -101,6 +101,15 @@ api/output/json/ + api/src/img/
 
 **无游戏文件部署：** DB（`api/data/darkfindv5.db`）不纳入 git，从 GitHub Releases 下载后放入 `api/data/` 即可。
 
+### DB 临时提交（push 前）
+
+```bash
+git add -f api/data/darkfindv5.db && git commit -m "update DB"
+git push
+git rm --cached api/data/darkfindv5.db && git commit -m "untrack DB"
+git push
+```
+
 ## 页面布局
 
 | 级别 | 页面 | 一行列数 |
