@@ -1560,9 +1560,35 @@ function AppInner() {
   ] });
 }
 globalThis.window = globalThis;
+const styleEl = {
+  className: "",
+  setAttribute: () => {
+  },
+  removeAttribute: () => {
+  },
+  insertAdjacentElement: () => null,
+  textContent: "",
+  sheet: { cssRules: [], insertRule: () => {
+  }, removeRule: () => {
+  } },
+  parentNode: { removeChild: () => {
+  } },
+  appendChild: () => {
+  },
+  insertBefore: () => {
+  }
+};
 globalThis.document = {
-  createElement: () => ({ className: "", setAttribute: () => {
-  } }),
+  createElement: (tag) => {
+    if (tag === "style") return { ...styleEl, tagName: "STYLE" };
+    if (tag === "meta") return { ...styleEl, tagName: "META" };
+    if (tag === "link") return { ...styleEl, tagName: "LINK" };
+    return { className: "", style: {}, setAttribute: () => {
+    }, removeAttribute: () => {
+    }, appendChild: () => {
+    }, insertAdjacentElement: () => null, textContent: "", parentNode: { removeChild: () => {
+    } } };
+  },
   createTextNode: () => ({}),
   getElementsByTagName: () => [],
   getElementById: () => null,
@@ -1570,15 +1596,18 @@ globalThis.document = {
   querySelectorAll: () => [],
   documentElement: { style: {} },
   head: { appendChild: () => {
-  }, querySelectorAll: () => [] },
+  }, querySelectorAll: () => [], insertBefore: () => {
+  } },
   body: { appendChild: () => {
+  }, removeChild: () => {
   } }
 };
 globalThis.navigator = { userAgent: "node" };
 globalThis.location = { href: "", pathname: "", search: "", hash: "" };
+globalThis.getComputedStyle = () => ({});
 function render(url, ssrDataMap) {
   var _a, _b;
-  const helmetContext = {};
+  const helmetContext = { helmet: {} };
   const html = server.renderToString(
     /* @__PURE__ */ jsxRuntime.jsx(reactHelmetAsync.HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsxRuntime.jsx(
       antd.ConfigProvider,
@@ -1589,6 +1618,8 @@ function render(url, ssrDataMap) {
       }
     ) })
   );
+  console.log("[ssr] url:", url);
+  console.log("[ssr] helmetContext:", JSON.stringify(helmetContext, null, 2));
   const { helmet } = helmetContext;
   return {
     html,
