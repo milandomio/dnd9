@@ -94,16 +94,13 @@ export default function DungeonModuleGroupPage() {
               >
                 <h3 style={{
                   margin: "0 0 2px 0", fontSize: 20, color: "#00bcd4",
-                  textAlign: "center", width: "100%", lineHeight: 1.3,
+                  textAlign: "center", lineHeight: 1.3,
                   overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                 }}>
-                  {mod.translation || mod.name}
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{mod.translation || mod.name}</span>
+                  <span style={{ fontSize: 12, color: "#888", flexShrink: 0 }}>{sx}x{sy}</span>
                 </h3>
-                <div style={{
-                  fontSize: 12, color: "#888", textAlign: "center", marginBottom: 4,
-                }}>
-                  {sx}x{sy}
-                </div>
                 <div style={{
                   aspectRatio: `${sx} / ${sy}`,
                   background: "#2c2c2c",
