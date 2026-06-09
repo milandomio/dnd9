@@ -9,13 +9,16 @@
  * 5. For every route: renderToString → inject into HTML template → save
  * 6. Generate 404.html fallback
  *
- * Usage: node scripts/ssg.mjs
+ * Usage:
+ *   node scripts/ssg.mjs          # full build (861 routes)
+ *   node scripts/ssg.mjs --quick  # home + list pages only (8 routes)
  */
 
 import { execSync } from "child_process";
 import { readFileSync, writeFileSync, mkdirSync, cpSync } from "fs";
 import { join, dirname } from "path";
 
+const QUICK = process.argv.includes("--quick");
 const WEB = new URL("..", import.meta.url).pathname;
 const ROOT = new URL("../../", import.meta.url).pathname;
 const DIST = join(WEB, "dist");
@@ -56,10 +59,12 @@ const routes = [{ path: "/", file: "index.html" }];
 for (const p of PAGES) routes.push({ path: `/${p}`, file: `${p}/index.html` });
 for (const p of SINGLE) routes.push({ path: `/${p}`, file: `${p}/index.html` });
 
-for (const p of PAGES) {
-  const list = readJSON(join(DATA, `${p}.json`));
-  for (const e of list) {
-    routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
+if (!QUICK) {
+  for (const p of PAGES) {
+    const list = readJSON(join(DATA, `${p}.json`));
+    for (const e of list) {
+      routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
+    }
   }
 }
 
@@ -74,21 +79,23 @@ for (const p of PAGES) ssrDataMap[`list-${p}`] = readJSON(join(DATA, `${p}.json`
 for (const p of SINGLE) ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
 
 // Detail pages — skip entries missing individual JSON
-for (const p of PAGES) {
-  const list = readJSON(join(DATA, `${p}.json`));
-  for (const e of list) {
-    const name = e.name;
-    const filePath = p === "lootdrops"
-      ? join(DATA, "lootdrops", `${name}.json`)
-      : join(DATA, p, `${name}.json`);
-    try {
-      if (p === "lootdrops") {
-        ssrDataMap[`lootdrops/${name}`] = { item: readJSON(filePath), modules: moduleData };
-      } else {
-        ssrDataMap[`${p}/${name}`] = { entity: readJSON(filePath), modules: moduleData };
+if (!QUICK) {
+  for (const p of PAGES) {
+    const list = readJSON(join(DATA, `${p}.json`));
+    for (const e of list) {
+      const name = e.name;
+      const filePath = p === "lootdrops"
+        ? join(DATA, "lootdrops", `${name}.json`)
+        : join(DATA, p, `${name}.json`);
+      try {
+        if (p === "lootdrops") {
+          ssrDataMap[`lootdrops/${name}`] = { item: readJSON(filePath), modules: moduleData };
+        } else {
+          ssrDataMap[`${p}/${name}`] = { entity: readJSON(filePath), modules: moduleData };
+        }
+      } catch {
+        // skip — no individual data file for this entry
       }
-    } catch {
-      // skip — no individual data file for this entry
     }
   }
 }
@@ -98,6 +105,7 @@ const template = readFileSync(join(DIST, "index.html"), "utf-8");
 console.log(`[ssg] rendering ${routes.length} routes…`);
 
 const t0 = Date.now();
+console.log(`[ssg] mode=${QUICK ? "quick" : "full"} — ${routes.length} routes`);
 const ROOT_MARKER = '<div id="root">';
 const HEAD_CLOSE = "</head>";
 
@@ -155,4 +163,4 @@ for (let i = 0; i < routes.length; i++) {
 writeFileSync(join(DIST, "404.html"), readFileSync(join(DIST, "index.html"), "utf-8"), "utf-8");
 
 const total = ((Date.now() - t0) / 1000).toFixed(1);
-console.log(`[ssg] done! ${routes.length} pages in ${total}s`);
+console.log(`[ssg] done! ${routes.length} pages in ${total}s (mode=${QUICK ? "quick" : "full"})`);
