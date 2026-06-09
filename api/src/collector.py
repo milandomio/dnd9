@@ -427,14 +427,19 @@ def run():
     print("\nExtracting quest data...")
     explore_count, quest_items_count, quest_npc_count = run_quest_extraction()
 
+    # ── Quest items groups (with coordinates) ──
+    _generate_quest_items_groups(db, merged_loot, resolve_name)
+
     # ── index.json: page index ──
+    qg_path = OUTPUT_DIR / "quest_items_groups.json"
+    qg = json.loads(qg_path.read_text()) if qg_path.exists() else []
     index_data = [
         {"page": "items", "label": "物品表", "count": len(items_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
         {"page": "lootdrops", "label": "掉落表", "count": len(loot_index)},
         {"page": "explore", "label": "探索地点表", "count": explore_count},
-        {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
+        {"page": "quest_items", "label": "任务物品表", "count": len(qg)},
         {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
     ]
     _save("index.json", index_data)
@@ -444,6 +449,96 @@ def run():
         print(f"  {entry['page']}: {entry['count']}")
 
     db.close()
+
+
+def _generate_quest_items_groups(db, merged_loot, resolve_name):
+    quest_items_path = OUTPUT_DIR / "quest_items.json"
+    if not quest_items_path.exists():
+        return
+    with open(quest_items_path) as f:
+        quest_items = json.load(f)
+
+    item_names = sorted(set(qi["item_name"] for qi in quest_items))
+    quest_map = {}
+    for qi in quest_items:
+        quest_map.setdefault(qi["item_name"], []).append(qi)
+
+    _COLORS = [
+        "#E74C3C","#3498DB","#2ECC71","#E67E22","#9B59B6","#1ABC9C",
+        "#F39C12","#2980B9","#D35400","#C0392B","#7F8C8D","#27AE60",
+        "#16A085","#8E44AD","#2C3E50","#F1C40F",
+    ]
+
+    groups = {}
+    ci = 0
+    for item_name in item_names:
+        info_list = quest_map.get(item_name, [])
+        trans = info_list[0]["item_translation"] if info_list else item_name
+
+        # item coordinates
+        icoords = db.get_item_coordinates(item_name)
+        # monsters that drop this item
+        mnames = merged_loot.get(item_name, [])
+        for c in icoords:
+            mt = c.get("module_type","") or ""
+            if mt and mt != "Unknown":
+                groups.setdefault(mt, {"group":mt,"entities":{}})
+                ek = f"item::{item_name}"
+                if ek not in groups[mt]["entities"]:
+                    groups[mt]["entities"][ek] = {
+                        "name": item_name, "translation": trans, "type": "item",
+                        "color": _COLORS[ci % len(_COLORS)], "coords": [],
+                        "quest_npcs": [{"npc_name":qi["npc_name"],"npc_name_cn":qi["npc_name_cn"],"quest_number":qi["quest_number"],"count":qi["count"]} for qi in info_list],
+                    }
+                    ci += 1
+                groups[mt]["entities"][ek]["coords"].append({
+                    "x":c["x"],"y":c["y"],"z":c["z"],"map":c["map_base"],
+                    "file":c["json_filename"],"version":c["version"],
+                })
+        for mn in sorted(mnames):
+            mtrans = resolve_name(mn, None, "monster")
+            mcoords = db.get_item_coordinates(mn)
+            for c in mcoords:
+                mt = c.get("module_type","") or ""
+                if mt and mt != "Unknown":
+                    groups.setdefault(mt, {"group":mt,"entities":{}})
+                    ek = f"monster::{mn}"
+                    if ek not in groups[mt]["entities"]:
+                        groups[mt]["entities"][ek] = {
+                            "name": mn, "translation": mtrans, "type": "monster",
+                            "color": _COLORS[ci % len(_COLORS)], "coords": [],
+                            "quest_items": [item_name],
+                        }
+                        ci += 1
+                    else:
+                        if item_name not in groups[mt]["entities"][ek]["quest_items"]:
+                            groups[mt]["entities"][ek]["quest_items"].append(item_name)
+                    groups[mt]["entities"][ek]["coords"].append({
+                        "x":c["x"],"y":c["y"],"z":c["z"],"map":c["map_base"],
+                        "file":c["json_filename"],"version":c["version"],
+                    })
+
+    GROUP_LABELS = {
+        "Crypt":"废墟2层地牢","FireDeep":"哥布林洞穴2层","GoblinCave":"哥布林洞穴1层",
+        "IceAbyss":"冰图2层","IceCavern":"冰图1层","Inferno":"废墟3层炼狱",
+        "Ruins":"废墟1层","ShipGraveyard":"水图",
+    }
+    groups_index = []
+    for gname in sorted(groups):
+        g = groups[gname]
+        g["group_display"] = GROUP_LABELS.get(gname, gname)
+        entities = list(g["entities"].values())
+        pos_count = sum(len(e["coords"]) for e in entities)
+        groups_index.append({
+            "group": gname, "group_display": g["group_display"],
+            "entity_count": len(entities), "position_count": pos_count,
+        })
+        _save(f"quest_items_groups/{gname}.json", {
+            "group": gname, "group_display": g["group_display"],
+            "entities": entities,
+        })
+    _save("quest_items_groups.json", groups_index)
+    print(f"  quest items groups: {len(groups_index)}")
 
 
 def _resolve_img(art_root: Path, group: str, sl: str):

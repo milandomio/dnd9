@@ -67,8 +67,6 @@ def _list_map_jsons(root: str | Path) -> list[Path]:
                 continue
             if "Arena" in fn or "ArenaStart" in dirpath:
                 continue
-            if "_SR" in fn:
-                continue
             files.append(Path(dirpath) / fn)
     return sorted(files)
 
