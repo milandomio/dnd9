@@ -10,6 +10,25 @@ from quest_extractor.quest_extractor import QuestExtractor
 
 from config import OUTPUT_DIR
 
+_ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
+
+
+def _translate_item(translator, name_en: str) -> str:
+    """Try to translate item name using correct key format."""
+    key = f"Text_DesignData_Item_Item_{name_en}"
+    translated = translator.translate(key)
+    if translated:
+        return translated
+    for suffix in _ITEM_SUFFIXES:
+        translated = translator.translate(f"{key}{suffix}")
+        if translated:
+            return translated
+    props_key = f"Text_DesignData_Props_Props_{name_en}"
+    translated = translator.translate(props_key)
+    if translated:
+        return translated
+    return name_en
+
 
 def run_quest_extraction():
     print("\n--- Quest Extraction ---")
@@ -89,7 +108,9 @@ def _extract_fetch(translator, extractor, quests):
                 item_name = item_tag.get("TagName", "")
             if not item_name:
                 continue
-            item_name_en = item_name.removeprefix("DesignData_Item_Item_").removeprefix("DesignData_Props_Props_").removeprefix("DesignData_Monster_Monster_")
+            item_name_en = item_name
+            for pfx in ["DesignData_Item_Item_", "DesignData_Props_Props_", "DesignData_Monster_Monster_", "Id.Item.", "Id.Props.", "Id.Monster."]:
+                item_name_en = item_name_en.removeprefix(pfx)
             key = (item_name_en, npc_name, quest.get("quest_number", 0))
             if key in seen:
                 continue
@@ -98,7 +119,7 @@ def _extract_fetch(translator, extractor, quests):
             loot_state = cd.get("ItemLootState", "")
             fetch_items.append({
                 "item_name": item_name_en,
-                "item_translation": translator.translate(item_name) or item_name_en,
+                "item_translation": _translate_item(translator, item_name_en),
                 "npc_name": npc_name,
                 "npc_name_cn": quest.get("npc_name_display", npc_name),
                 "quest_number": quest.get("quest_number", 0),
