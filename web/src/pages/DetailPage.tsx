@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Spin, Typography } from "antd";
+import { Typography } from "antd";
 import type { ItemEntity, MonsterEntity, PropsEntity, Coord, DungeonModule } from "../types/data";
 import { useSSRData } from "../context/SSRDataContext";
 import { useDebug } from "../hooks/useDebug";
@@ -36,9 +36,8 @@ export default function DetailPage() {
   const ssrData = useSSRData<{ entity: Entity; modules: DungeonModule[] }>(dataKey);
   const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
   const [modules, setModules] = useState<Map<string, DungeonModule>>(
-    ssrData ? new Map(ssrData.modules.map((m: DungeonModule) => [m.name, m])) : new Map()
+    ssrData?.modules ? new Map(ssrData.modules.map((m: DungeonModule) => [m.name, m])) : new Map()
   );
-  const [loading, setLoading] = useState(!ssrData);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
@@ -65,7 +64,6 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (!page || !name) return;
-    if (ssrData) return;
     const decoded = decodeURIComponent(name!);
     Promise.all([
       fetch(`./data/json/${page}/${decoded}.json`).then<Entity>((r) => r.json()),
@@ -77,14 +75,12 @@ export default function DetailPage() {
         mods.forEach((m) => { mm.set(m.name, m); mm.set(m.sl_base_name, m); });
         setModules(mm);
       })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   }, [page, name]);
 
-  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
   if (!entity) return <Typography.Text type="danger">未找到</Typography.Text>;
 
-  const coords = entity.coords;
+  const coords = entity.coords ?? [];
   const grouped = new Map<string, Coord[]>();
   for (const c of coords) {
     if (!grouped.has(c.map)) grouped.set(c.map, []);

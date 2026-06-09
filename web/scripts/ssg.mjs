@@ -79,12 +79,12 @@ for (const p of SINGLE) ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
 // Explore page needs module data too
 ssrDataMap["explore-modules"] = moduleData;
 
-// Detail pages — skip entries missing individual JSON
-if (!QUICK) {
-  for (const p of PAGES) {
-    const list = readJSON(join(DATA, `${p}.json`));
-    for (const e of list) {
-      const name = e.name;
+// Detail pages — full SSR data (full mode) or minimal SSR data (quick mode)
+for (const p of PAGES) {
+  const list = readJSON(join(DATA, `${p}.json`));
+  for (const e of list) {
+    const name = e.name;
+    if (!QUICK) {
       const filePath = p === "lootdrops"
         ? join(DATA, "lootdrops", `${name}.json`)
         : join(DATA, p, `${name}.json`);
@@ -96,6 +96,13 @@ if (!QUICK) {
         }
       } catch {
         // skip — no individual data file for this entry
+      }
+    } else {
+      // Quick mode: inject minimal metadata for SEO (name + translation only)
+      if (p === "lootdrops") {
+        ssrDataMap[`lootdrops/${name}`] = { item: { name: e.name, translation: e.translation } };
+      } else {
+        ssrDataMap[`${p}/${name}`] = { entity: { name: e.name, translation: e.translation } };
       }
     }
   }
@@ -144,15 +151,16 @@ for (let i = 0; i < routes.length; i++) {
 
   let page;
   if (routeData) {
+    const payload = { [dataKey]: routeData };
     try {
       const result = render(urlPath, ssrDataMap);
       const headlessTemplate = templated.replace(/<title>[^<]*<\/title>\s*/, "");
       page = headlessTemplate
         .replace(ROOT_MARKER, `<div id="root">${result.html}`)
-        .replace(HEAD_CLOSE, `${result.head}\n</head>`);
+        .replace(HEAD_CLOSE, `${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`);
     } catch (err) {
       console.error(`  [err]  ${urlPath}: ${err.message}`);
-      page = templated.replace(HEAD_CLOSE, `\n</head>`);
+      page = templated.replace(HEAD_CLOSE, `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`);
     }
   } else {
     page = templated.replace(HEAD_CLOSE, `\n</head>`);

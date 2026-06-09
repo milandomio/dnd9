@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Spin } from "antd";
 import { useDebug } from "../hooks/useDebug";
 import { useSSRData } from "../context/SSRDataContext";
 import { getAdj, applyTransform, computePixel, ctrlBtn, ctrlInput, type AdjState } from "../components/MapDebug";
@@ -46,16 +45,14 @@ export default function LootdropDetailPage() {
   const ssrData = useSSRData<{ item: LootdropItem; modules: DungeonModule[] }>(dataKey);
   const [data, setData] = useState<LootdropItem | null>(ssrData?.item || null);
   const [modules, setModules] = useState<Map<string, DungeonModule>>(
-    ssrData ? new Map(ssrData.modules.map((m: DungeonModule) => [m.name, m])) : new Map()
+    ssrData?.modules ? new Map(ssrData.modules.map((m: DungeonModule) => [m.name, m])) : new Map()
   );
-  const [loading, setLoading] = useState(!ssrData);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
 
   useEffect(() => {
     if (!name) return;
-    if (ssrData) return;
     Promise.all([
       fetch(`./data/json/lootdrops/${decodeURIComponent(name)}.json`).then<LootdropItem>(r => r.json()),
       fetch(`./data/json/dungeon_modules.json`).then<DungeonModule[]>(r => r.json()),
@@ -66,11 +63,9 @@ export default function LootdropDetailPage() {
         mods.forEach(m => { mm.set(m.name, m); mm.set(m.sl_base_name, m); });
         setModules(mm);
       })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch(console.error);
   }, [name]);
 
-  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
   if (!data) return <div style={{ textAlign: "center", color: "#ff6b6b", marginTop: 100 }}>未找到</div>;
 
   function myGetAdj(mapName: string, mod: DungeonModule | undefined) {
@@ -102,9 +97,10 @@ export default function LootdropDetailPage() {
     });
   };
 
+  const monsters = data.monsters ?? [];
   // Build per-map coordinate groups
   const mapGroups = new Map<string, {mod: DungeonModule | undefined; dots: {monster: LootdropMonster; x: number; y: number; z: number; file: string}[]}>();
-  for (const m of data.monsters) {
+  for (const m of monsters) {
     if (hidden.has(m.name)) continue;
     for (const c of m.coords) {
       if (!mapGroups.has(c.map)) mapGroups.set(c.map, {mod: modules.get(c.map), dots: []});
@@ -132,8 +128,8 @@ export default function LootdropDetailPage() {
   const groupOrder = Object.keys(GROUP_LABELS);
   const sortedGroups = [...groupedByType.entries()].sort(([a], [b]) => groupOrder.indexOf(a) - groupOrder.indexOf(b));
 
-  const totalCoords = data.monsters.reduce((s, m) => s + (hidden.has(m.name) ? 0 : m.coords.length), 0);
-  const visibleCount = data.monsters.filter(m => !hidden.has(m.name)).length;
+  const totalCoords = monsters.reduce((s, m) => s + (hidden.has(m.name) ? 0 : m.coords.length), 0);
+  const visibleCount = monsters.filter(m => !hidden.has(m.name)).length;
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -157,20 +153,20 @@ export default function LootdropDetailPage() {
         <meta property="og:description" content="{data.translation || data.name} 由 {visibleCount} 个怪物掉落" />
       </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 28, margin: "0 0 8px" }}>
-        {data.translation} &gt;&gt; {data.monsters.filter(m => !hidden.has(m.name)).map(m => m.translation).join("、")}
-        {data.monsters.length - visibleCount > 0 && <span style={{ color: "#888", fontSize: 16 }}> (+{data.monsters.length - visibleCount})</span>}
-        <span style={{ color: "#aaa", fontSize: 14, marginLeft: 12 }}>{data.monsters.length}种坐标汇总</span>
+        {data.translation} &gt;&gt; {monsters.filter(m => !hidden.has(m.name)).map(m => m.translation).join("、")}
+        {monsters.length - visibleCount > 0 && <span style={{ color: "#888", fontSize: 16 }}> (+{monsters.length - visibleCount})</span>}
+        <span style={{ color: "#aaa", fontSize: 14, marginLeft: 12 }}>{monsters.length}种坐标汇总</span>
       </h1>
 
       <Disclaimer />
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", margin: "15px 0", padding: 10, background: "#3a3a3a", borderRadius: 5 }}>
         <button onClick={() => {
-          const allHidden = data.monsters.every(m => hidden.has(m.name));
-          if (allHidden || hidden.size === data.monsters.length) {
+          const allHidden = monsters.every(m => hidden.has(m.name));
+          if (allHidden || hidden.size === monsters.length) {
             setHidden(new Set());
           } else {
-            setHidden(new Set(data.monsters.map(m => m.name)));
+            setHidden(new Set(monsters.map(m => m.name)));
           }
         }} style={{
           padding: "8px 15px", border: "2px solid #888", borderRadius: 5,
@@ -179,7 +175,7 @@ export default function LootdropDetailPage() {
         }}>
           {hidden.size === 0 ? "隐藏全部" : "全部显示"}
         </button>
-        {data.monsters.map(m => (
+        {monsters.map(m => (
           <button key={m.name} onClick={() => toggle(m.name)} style={{
             padding: "8px 15px", border: `2px solid ${m.color}`, borderRadius: 5,
             cursor: "pointer", fontSize: 14, fontWeight: "bold", color: "#fff",
@@ -193,7 +189,7 @@ export default function LootdropDetailPage() {
       {debug && (
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center", margin: "10px 0", padding: 10, background: "#3a3a3a", borderRadius: 5, fontSize: 14, color: "#aaa" }}>
         <strong style={{ color: "#ccc" }}>怪物图例：</strong>
-        {data.monsters.map(m => (
+        {monsters.map(m => (
           <span key={m.name} style={{ display: "flex", alignItems: "center", gap: 5, cursor: "pointer", opacity: hidden.has(m.name) ? 0.3 : 1 }} onClick={() => toggle(m.name)}>
             <span style={{ width: 12, height: 12, borderRadius: "50%", background: m.color }}></span>
             {m.translation} <span style={{ color: "#888" }}>({m.coords.length})</span>
@@ -272,7 +268,7 @@ export default function LootdropDetailPage() {
                   </div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 10px", justifyContent: "center", marginTop: 5, fontSize: 13, color: "#ccc", alignItems: "center" }}>
                     {[...new Set(dots.map(d => d.monster.name))].map(mn => {
-                      const m = data.monsters.find(x => x.name === mn)!;
+                      const m = monsters.find(x => x.name === mn)!;
                       return (
                         <span key={mn} style={{ display: "flex", alignItems: "center", gap: 3 }}>
                           <span style={{ width: 10, height: 10, borderRadius: "50%", background: m.color, flexShrink: 0 }}></span>
@@ -290,7 +286,7 @@ export default function LootdropDetailPage() {
       </div>
 
       {debug && (() => {
-        const rows = data.monsters.filter(m => !hidden.has(m.name)).flatMap(m =>
+        const rows = monsters.filter(m => !hidden.has(m.name)).flatMap(m =>
           m.coords.map((c, j) => {
             const mod = modules.get(c.map);
             const g = mod?.group || "";
