@@ -99,7 +99,7 @@ api/output/json/ + api/src/img/
     ↓ GitHub Actions → gh-pages branch
     ↓ 浏览器 fetch("./data/json/index.json") → 注水渲染
 
-**无游戏文件部署：** DB（`api/data/darkfindv5.db`）不纳入 git，从 GitHub Actions 构建产物中下载后放入 `api/data/` 即可。
+**无游戏文件部署：** DB（`api/data/darkfindv5.db`）不纳入 git，从 GitHub Releases 下载后放入 `api/data/` 即可。
 
 ## 页面布局
 
