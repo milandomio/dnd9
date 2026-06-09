@@ -458,6 +458,16 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name):
     with open(quest_items_path) as f:
         quest_items = json.load(f)
 
+    # Build map_base -> module_group lookup
+    mods = db.get_dungeon_modules()
+    map_to_group = {}
+    for m in mods:
+        g = m.get("module_group", "") or ""
+        if g:
+            map_to_group[m["module_name"]] = g
+            if m.get("sl_base_name"):
+                map_to_group[m["sl_base_name"]] = g
+
     item_names = sorted(set(qi["item_name"] for qi in quest_items))
     quest_map = {}
     for qi in quest_items:
@@ -475,48 +485,50 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name):
         info_list = quest_map.get(item_name, [])
         trans = info_list[0]["item_translation"] if info_list else item_name
 
-        # item coordinates
         icoords = db.get_item_coordinates(item_name)
-        # monsters that drop this item
         mnames = merged_loot.get(item_name, [])
         for c in icoords:
-            mt = c.get("module_type","") or ""
-            if mt and mt != "Unknown":
-                groups.setdefault(mt, {"group":mt,"entities":{}})
-                ek = f"item::{item_name}"
-                if ek not in groups[mt]["entities"]:
-                    groups[mt]["entities"][ek] = {
-                        "name": item_name, "translation": trans, "type": "item",
-                        "color": _COLORS[ci % len(_COLORS)], "coords": [],
-                        "quest_npcs": [{"npc_name":qi["npc_name"],"npc_name_cn":qi["npc_name_cn"],"quest_number":qi["quest_number"],"count":qi["count"]} for qi in info_list],
-                    }
-                    ci += 1
-                groups[mt]["entities"][ek]["coords"].append({
-                    "x":c["x"],"y":c["y"],"z":c["z"],"map":c["map_base"],
-                    "file":c["json_filename"],"version":c["version"],
-                })
+            mb = c["map_base"]
+            mt = map_to_group.get(mb, "")
+            if not mt:
+                continue
+            groups.setdefault(mt, {"group":mt,"entities":{}})
+            ek = f"item::{item_name}"
+            if ek not in groups[mt]["entities"]:
+                groups[mt]["entities"][ek] = {
+                    "name": item_name, "translation": trans, "type": "item",
+                    "color": _COLORS[ci % len(_COLORS)], "coords": [],
+                    "quest_npcs": [{"npc_name":qi["npc_name"],"npc_name_cn":qi["npc_name_cn"],"quest_number":qi["quest_number"],"count":qi["count"]} for qi in info_list],
+                }
+                ci += 1
+            groups[mt]["entities"][ek]["coords"].append({
+                "x":c["x"],"y":c["y"],"z":c["z"],"map":mb,
+                "file":c["json_filename"],"version":c["version"],
+            })
         for mn in sorted(mnames):
             mtrans = resolve_name(mn, None, "monster")
             mcoords = db.get_item_coordinates(mn)
             for c in mcoords:
-                mt = c.get("module_type","") or ""
-                if mt and mt != "Unknown":
-                    groups.setdefault(mt, {"group":mt,"entities":{}})
-                    ek = f"monster::{mn}"
-                    if ek not in groups[mt]["entities"]:
-                        groups[mt]["entities"][ek] = {
-                            "name": mn, "translation": mtrans, "type": "monster",
-                            "color": _COLORS[ci % len(_COLORS)], "coords": [],
-                            "quest_items": [item_name],
-                        }
-                        ci += 1
-                    else:
-                        if item_name not in groups[mt]["entities"][ek]["quest_items"]:
-                            groups[mt]["entities"][ek]["quest_items"].append(item_name)
-                    groups[mt]["entities"][ek]["coords"].append({
-                        "x":c["x"],"y":c["y"],"z":c["z"],"map":c["map_base"],
-                        "file":c["json_filename"],"version":c["version"],
-                    })
+                mb = c["map_base"]
+                mt = map_to_group.get(mb, "")
+                if not mt:
+                    continue
+                groups.setdefault(mt, {"group":mt,"entities":{}})
+                ek = f"monster::{mn}"
+                if ek not in groups[mt]["entities"]:
+                    groups[mt]["entities"][ek] = {
+                        "name": mn, "translation": mtrans, "type": "monster",
+                        "color": _COLORS[ci % len(_COLORS)], "coords": [],
+                        "quest_items": [item_name],
+                    }
+                    ci += 1
+                else:
+                    if item_name not in groups[mt]["entities"][ek]["quest_items"]:
+                        groups[mt]["entities"][ek]["quest_items"].append(item_name)
+                groups[mt]["entities"][ek]["coords"].append({
+                    "x":c["x"],"y":c["y"],"z":c["z"],"map":mb,
+                    "file":c["json_filename"],"version":c["version"],
+                })
 
     GROUP_LABELS = {
         "Crypt":"废墟2层地牢","FireDeep":"哥布林洞穴2层","GoblinCave":"哥布林洞穴1层",

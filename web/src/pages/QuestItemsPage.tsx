@@ -1,36 +1,41 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { useSSRData } from "../context/SSRDataContext";
+import { Spin, Card, Row, Col } from "antd";
 
-interface QuestItem {
-  item_name: string;
-  item_translation: string;
-  npc_name: string;
-  npc_name_cn: string;
-  quest_number: number;
-  count: number;
-  rarity: string;
-  is_loot: string;
+interface GroupEntry {
+  group: string;
+  group_display: string;
+  entity_count: number;
+  position_count: number;
 }
 
+const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
+  Crypt: { border: "#E91E63", icon: "💀" },
+  FireDeep: { border: "#FF5722", icon: "🔥" },
+  GoblinCave: { border: "#4CAF50", icon: "🍄" },
+  IceAbyss: { border: "#00BCD4", icon: "❄️" },
+  IceCavern: { border: "#2196F3", icon: "🧊" },
+  Inferno: { border: "#F44336", icon: "🌋" },
+  Ruins: { border: "#9C27B0", icon: "🏛️" },
+  ShipGraveyard: { border: "#607D8B", icon: "⚓" },
+};
+
 export default function QuestItemsPage() {
-  const ssrData = useSSRData<QuestItem[]>("quest_items");
-  const [data, setData] = useState<QuestItem[]>(ssrData || []);
+  const [groups, setGroups] = useState<GroupEntry[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (ssrData) return;
-    fetch("./data/json/quest_items.json")
+    fetch("./data/json/quest_items_groups.json")
       .then((r) => r.json())
-      .then(setData)
-      .catch(console.error);
+      .then(setGroups)
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
-  const grouped = new Map<string, QuestItem[]>();
-  for (const t of data) {
-    const key = t.npc_name_cn || t.npc_name;
-    if (!grouped.has(key)) grouped.set(key, []);
-    grouped.get(key)!.push(t);
-  }
+  if (loading) return <Spin size="large" style={{ display: "block", margin: "100px auto" }} />;
+
+  const totalPos = groups.reduce((s, g) => s + g.position_count, 0);
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -38,44 +43,45 @@ export default function QuestItemsPage() {
         <title>任务物品表 | DarkFindV5游戏导航</title>
         <meta name="description" content="任务物品查询——按地图分组查看任务物品分布。" />
       </Helmet>
-      <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
+      <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 10 }}>
         【任务物品表】任务物品汇总
       </h1>
-      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginBottom: 20 }}>
-        共 {data.length} 个任务物品，分布在 {grouped.size} 个NPC
+      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginBottom: 24 }}>
+        共 {groups.length} 个地图分组 | {totalPos} 个位置点
       </div>
-      {[...grouped.entries()].map(([npcName, items]) => (
-        <div key={npcName} style={{ marginBottom: 24 }}>
-          <div style={{
-            fontSize: 22, fontWeight: "bold", color: "#FFC107",
-            padding: "5px 0", borderBottom: "2px solid #FFC107", marginBottom: 12,
-          }}>
-            {npcName} ({items.length})
-          </div>
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12,
-          }}>
-            {items.map((qi, i) => (
-              <div key={i} style={{
-                background: "#3a3a3a", border: "1px solid #555", borderRadius: 6,
-                padding: 12, fontSize: 13,
-              }}>
-                <div style={{ color: "#E91E63", fontWeight: "bold", marginBottom: 4 }}>
-                  {qi.item_translation || qi.item_name}
-                </div>
-                <div style={{ color: "#aaa" }}>
-                  任务 #{qi.quest_number} ×{qi.count}
-                  {qi.rarity && <span style={{ marginLeft: 8, color: "#FFC107" }}>{qi.rarity}</span>}
-                  {qi.is_loot && <span style={{ marginLeft: 8, color: "#4CAF50" }}>已拾取</span>}
-                </div>
-                <div style={{ color: "#888", fontSize: 11, marginTop: 2 }}>
-                  {qi.item_name}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+      <Row gutter={[16, 16]} justify="center">
+        {groups.map((g) => {
+          const theme = GROUP_THEMES[g.group] || { border: "#888", icon: "📦" };
+          return (
+            <Col key={g.group} xs={24} sm={12} md={8} lg={6}>
+              <Link to={`/quest_items/${g.group}`} style={{ textDecoration: "none" }}>
+                <Card
+                  hoverable
+                  style={{
+                    background: "linear-gradient(145deg, #3a3a3a, #444)",
+                    border: `2px solid ${theme.border}`,
+                    borderRadius: 12,
+                    textAlign: "center",
+                  }}
+                  bodyStyle={{ padding: "20px 16px" }}
+                >
+                  <div style={{ fontSize: 36, marginBottom: 8 }}>{theme.icon}</div>
+                  <div style={{ fontSize: 20, fontWeight: "bold", color: "#fff", marginBottom: 8 }}>
+                    {g.group_display}
+                  </div>
+                  <div style={{ fontSize: 13, color: "#aaa", lineHeight: 1.5 }}>
+                    {g.entity_count} 个实体<br />
+                    {g.position_count} 个位置
+                  </div>
+                </Card>
+              </Link>
+            </Col>
+          );
+        })}
+      </Row>
+      <div style={{ textAlign: "center", marginTop: 32, color: "#666", fontSize: 14 }}>
+        数据来源于NPC的Fetch任务，按地图模块分组显示任务物品位置
+      </div>
     </div>
   );
 }

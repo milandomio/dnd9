@@ -54,10 +54,16 @@ const moduleData = readJSON(join(DATA, "dungeon_modules.json"));
 const PAGES = ["items", "monsters", "props", "lootdrops"];
 const SINGLE = ["explore", "quest_items", "quest_npc"];
 
+// Quest items groups
+const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
+
 // Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: "/", file: "index.html" }];
 for (const p of PAGES) routes.push({ path: `/${p}`, file: `${p}/index.html` });
 for (const p of SINGLE) routes.push({ path: `/${p}`, file: `${p}/index.html` });
+for (const g of questGroups) {
+  routes.push({ path: `/quest_items/${g.group}`, file: `quest_items/${g.group}/index.html` });
+}
 
 for (const p of PAGES) {
   const list = readJSON(join(DATA, `${p}.json`));
@@ -75,6 +81,18 @@ ssrDataMap["home"] = index;
 // List pages
 for (const p of PAGES) ssrDataMap[`list-${p}`] = readJSON(join(DATA, `${p}.json`));
 for (const p of SINGLE) ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
+
+// Quest items group detail pages
+for (const g of questGroups) {
+  if (!QUICK) {
+    try {
+      const qg = readJSON(join(DATA, "quest_items_groups", `${g.group}.json`));
+      ssrDataMap[`quest_items_groups/${g.group}`] = qg;
+    } catch {}
+  } else {
+    ssrDataMap[`quest_items_groups/${g.group}`] = { group: g.group, group_display: g.group_display, entities: [] };
+  }
+}
 
 // Explore page needs module data too
 ssrDataMap["explore-modules"] = moduleData;
@@ -124,6 +142,7 @@ function routeDataKey(path) {
   if (path === "/") return "home";
   if (path.startsWith("/items/") || path.startsWith("/monsters/") || path.startsWith("/props/")) return path.slice(1);
   if (path.startsWith("/lootdrops/")) return path.slice(1);
+  if (path.startsWith("/quest_items/")) return `quest_items_groups/${path.split("/")[2]}`;
   if (path === "/quest_items") return "quest_items";
   if (path === "/quest_npc") return "quest_npc";
   if (path === "/explore") return "explore";

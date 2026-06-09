@@ -10,6 +10,7 @@ import DetailPage from "./pages/DetailPage";
 import LootdropDetailPage from "./pages/LootdropDetailPage";
 import ExplorePage from "./pages/ExplorePage";
 import QuestItemsPage from "./pages/QuestItemsPage";
+import QuestItemGroupPage from "./pages/QuestItemGroupPage";
 import QuestNPCPage from "./pages/QuestNPCPage";
 import NavBar from "./components/NavBar";
 
@@ -23,6 +24,7 @@ export function AppInner() {
           <Route path="/" element={<HomePage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/quest_items" element={<QuestItemsPage />} />
+          <Route path="/quest_items/:group" element={<QuestItemGroupPage />} />
           <Route path="/quest_npc" element={<QuestNPCPage />} />
           <Route path="/:page" element={<ListPage />} />
           <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
