@@ -39,9 +39,9 @@ export default function ListPage() {
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <Helmet>
         <title>【{LABEL_MAP[page!] ?? page}】实体位置汇总 | DarkFindV5游戏导航</title>
-        <meta name="description" content="{LABEL_MAP[page!] ?? page} 共 {data.length} 个实体，查询地图位置分布。" />
-        <meta property="og:title" content="【{LABEL_MAP[page!] ?? page}】实体位置汇总" />
-        <meta property="og:description" content="共 {data.length} 个实体" />
+        <meta name="description" content={`${LABEL_MAP[page!] ?? page} 共 ${data.length} 个实体，查询地图位置分布。`} />
+        <meta property="og:title" content={`【${LABEL_MAP[page!] ?? page}】实体位置汇总`} />
+        <meta property="og:description" content={`共 ${data.length} 个实体`} />
       </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, marginBottom: 20 }}>
         【{LABEL_MAP[page!] ?? page}】实体位置汇总

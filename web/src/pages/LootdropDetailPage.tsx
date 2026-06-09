@@ -148,9 +148,9 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>{data.translation || data.name} 掉落来源 | DarkFindV5游戏导航</title>
-        <meta name="description" content="{data.translation || data.name} 由 {visibleCount} 个怪物掉落，共 {totalCoords} 个位置点。" />
-        <meta property="og:title" content="{data.translation || data.name} 掉落来源 | DarkFindV5" />
-        <meta property="og:description" content="{data.translation || data.name} 由 {visibleCount} 个怪物掉落" />
+        <meta name="description" content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${totalCoords} 个位置点。`} />
+        <meta property="og:title" content={`${data.translation || data.name} 掉落来源 | DarkFindV5`} />
+        <meta property="og:description" content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落`} />
       </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 28, margin: "0 0 8px" }}>
         {data.translation} &gt;&gt; {monsters.filter(m => !hidden.has(m.name)).map(m => m.translation).join("、")}

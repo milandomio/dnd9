@@ -115,9 +115,9 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <Helmet>
         <title>{entity.translation || entity.name} 位置汇总 | DarkFindV5游戏导航</title>
-        <meta name="description" content="{entity.translation || entity.name}（{entity.name}）在游戏内的地图位置分布，共 {coords.length} 个位置点。" />
-        <meta property="og:title" content="{entity.translation || entity.name} 位置汇总 | DarkFindV5" />
-        <meta property="og:description" content="{entity.translation || entity.name} 共 {coords.length} 个位置点" />
+        <meta name="description" content={`${entity.translation || entity.name}（${entity.name}）在游戏内的地图位置分布，共 ${coords.length} 个位置点。`} />
+        <meta property="og:title" content={`${entity.translation || entity.name} 位置汇总 | DarkFindV5`} />
+        <meta property="og:description" content={`${entity.translation || entity.name} 共 ${coords.length} 个位置点`} />
       </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 36, margin: "0 0 12px" }}>
         {entity.translation || entity.name} 位置汇总

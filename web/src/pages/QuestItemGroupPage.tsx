@@ -148,7 +148,7 @@ export default function QuestItemGroupPage() {
 
       <Helmet>
         <title>{data.group_display} 任务物品 | DarkFindV5游戏导航</title>
-        <meta name="description" content="{data.group_display} 任务物品位置，{visibleCount} 个实体，{totalCoords} 个位置点。" />
+        <meta name="description" content={`${data.group_display} 任务物品位置，${visibleCount} 个实体，${totalCoords} 个位置点。`} />
       </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 28, margin: "0 0 8px" }}>
         【{data.group_display}】任务物品

@@ -51,7 +51,7 @@ export default function DungeonModuleGroupPage() {
     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
       <Helmet>
         <title>{groupLabel} 地图模块 | DarkFindV5游戏导航</title>
-        <meta name="description" content="{groupLabel} 地图模块，共 {modules.length} 个模块。" />
+        <meta name="description" content={`${groupLabel} 地图模块，共 ${modules.length} 个模块。`} />
       </Helmet>
       <div style={{ textAlign: "center", marginBottom: 8 }}>
         <h1 style={{ color: "#00bcd4", fontSize: 28, margin: "0 0 8px", display: "inline" }}>

@@ -125,7 +125,7 @@ export default function DungeonModuleDetailPage() {
 
       <Helmet>
         <title>{m.translation} 地图模块 | DarkFindV5游戏导航</title>
-        <meta name="description" content="{m.translation} 地图模块详情，{sx}x{sy}，分组 {groupLabel}，{visibleCount} 个实体，{totalCoords} 个位置。" />
+        <meta name="description" content={`${m.translation} 地图模块详情，${sx}x${sy}，分组 ${groupLabel}，${entities.length} 个实体，${totalCoords} 个位置。`} />
       </Helmet>
       <h1 style={{ textAlign: "center", color: "#00bcd4", fontSize: 28, margin: "0 0 8px" }}>
         【{m.translation}】地图模块
