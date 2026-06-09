@@ -11,9 +11,11 @@ from config import (
     ITEM_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
+    MAPS_DIR,
     MONSTER_DIR,
     PROPS_DIR,
     SPAWNER_DIR,
+    GROUP_TO_ART_DIR,
 )
 
 
@@ -317,10 +319,39 @@ class DatabaseManager:
 
     # ─── Import: Dungeon Modules ───
 
+    def _build_path_group_map(self) -> dict[str, str]:
+        """Scan MAPS_DIR to infer module group from file path directory structure.
+        Returns map_base → group mapping."""
+        import os
+        path_group: dict[str, str] = {}
+        if not MAPS_DIR.exists():
+            return path_group
+        # Map directory names under MAPS_DIR to module group names
+        dir_to_group: dict[str, str] = {}
+        for group, art_dir in GROUP_TO_ART_DIR.items():
+            dir_to_group[art_dir] = group
+        for dirpath, _, filenames in os.walk(MAPS_DIR):
+            rel = Path(dirpath).relative_to(MAPS_DIR)
+            group = dir_to_group.get(rel.parts[0], "") if rel.parts else ""
+            if not group:
+                continue
+            for fn in filenames:
+                if not fn.endswith(("_HR_D.json", "_D.json", "_A.json")):
+                    continue
+                stem = fn.rsplit(".", 1)[0]
+                base = _sl_base_name(stem)
+                if base.endswith("_SR"):
+                    base = base[:-3]
+                if base not in path_group:
+                    path_group[base] = group
+        return path_group
+
     def import_dungeon_modules(self) -> int:
         files = _load_json_dir(DUNGEON_MODULE_DIR)
         c = self.conn.cursor()
         c.execute("DELETE FROM dungeon_modules")
+        # Build path-based group map as fallback
+        path_group_map = self._build_path_group_map()
         # First pass: build module_name → (ModuleType, entry data) map
         type_map: dict[str, str] = {}
         for raw_name, data_list in files.items():
@@ -334,6 +365,7 @@ class DatabaseManager:
                 type_map[module_name] = module_type
         # Second pass: build rows with ModuleType fallback via sl_base lookup
         rows = []
+        inserted_names: set[str] = set()
         for raw_name, data_list in files.items():
             if not data_list:
                 continue
@@ -370,16 +402,36 @@ class DatabaseManager:
                     if module_name.lower().startswith(prefix.lower()):
                         module_type = group
                         break
+            # Final fallback: infer group from map file path directory structure
+            if not module_type:
+                module_type = path_group_map.get(module_name, "")
             # Extract MapImage (direct Art file reference, e.g. CaveMaze_02)
             mi_asset = (props.get("MapImage") or {}).get("AssetPathName", "")
             map_image = _ue_asset_base_name(mi_asset) or ""
             rows.append((module_name, name_key, module_type, size_x, size_y, sl_base, map_image))
+            inserted_names.add(module_name)
         c.executemany(
             "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
+        # Third pass: insert modules that exist as map files but have no DungeonModule JSON
+        extra_rows = []
+        for base_name, group in path_group_map.items():
+            if base_name not in inserted_names:
+                extra_rows.append((base_name, "", group, 1, 1, "", ""))
+                inserted_names.add(base_name)
+        if extra_rows:
+            c.executemany(
+                "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                extra_rows,
+            )
+        # Remove modules with no group (no corresponding map file found)
+        c.execute("DELETE FROM dungeon_modules WHERE module_group = '' OR module_group IS NULL")
         self.conn.commit()
-        return len(rows)
+        # Return final count
+        c.execute("SELECT COUNT(*) FROM dungeon_modules")
+        total = c.fetchone()[0]
+        return total
 
     # ─── Import: LootDrop ───
 

@@ -158,10 +158,25 @@ for (let i = 0; i < routes.length; i++) {
       );
     }
   } else {
-    // No SSR data → CSR shell (client-side fetch on mount)
+    // Quick mode: inject entity JSON so direct URL has content immediately.
+    let payload = {};
+    try {
+      const m = urlPath.match(/^\/(items|monsters|props)\/(.+)$/);
+      if (m) {
+        const p = m[1], name = decodeURIComponent(m[2]);
+        payload = { [dataKey]: { entity: readJSON(join(DATA, p, `${name}.json`)), modules: moduleData } };
+      }
+    } catch {}
+    try {
+      const m = urlPath.match(/^\/lootdrops\/(.+)$/);
+      if (m) {
+        const name = decodeURIComponent(m[1]);
+        payload = { [dataKey]: { item: readJSON(join(DATA, "lootdrops", `${name}.json`)), modules: moduleData } };
+      }
+    } catch {}
     page = template.replace(
       HEAD_CLOSE,
-      `<base href="${baseHref}">\n<script>window.__SSR_DATA__={}</script>\n</head>`
+      `<base href="${baseHref}">\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
     );
   }
 
