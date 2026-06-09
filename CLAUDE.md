@@ -8,15 +8,33 @@
 
 ```
 DarkFindV5/
-├── api/                  # Python 数据处理管道
-│   ├── main.py               # 入口
-│   ├── config.py             # 路径配置
-│   ├── db_manager.py         # SQLite 建表/导入/查询
-│   ├── collector.py          # 数据清洗 + JSON 输出
-│   ├── search_engine.py      # 地图文件遍历 + 关键词匹配
-│   ├── layout_utils.py       # 地图旋转值计算
-│   ├── data/                 # 管道输出 JSON（可重生，可清理）
-│   └── img/                  # 地图图片 .webp（不可再生，严**禁**清理）
+├── api/                  # 后端
+│   ├── main.py               # 入口脚本（运行管道 + 自动交付到 data/）
+│   ├── src/                  # 模块
+│   │   ├── collector.py          # 数据清洗 + JSON 输出
+│   │   ├── config.py             # 路径配置
+│   │   ├── db_manager.py         # SQLite 建表/导入/查询
+│   │   ├── search_engine.py      # 地图文件遍历 + 关键词匹配
+│   │   ├── layout_utils.py       # 地图旋转值计算
+│   │   ├── quest_collector.py    # 任务提取入口
+│   │   ├── quest_extractor/      # 任务提取模块
+│   │   └── img/                  # 地图图片 .webp（不可再生，严**禁**清理）
+│   ├── data/                # DB 文件（darkfindv5.db）
+│   ├── output/              # 管道输出
+│   │   └── json/                # JSON 数据文件
+│   └── pyproject.toml
+├── data/                 # 交付目录（main.py 自动维护，可重生，可清理）
+│   ├── json/              # → api/output/json/（管道后移入）
+│   │   ├── items.json / items/
+│   │   ├── monsters.json / monsters/
+│   │   ├── props.json / props/
+│   │   ├── lootdrops.json / lootdrops/
+│   │   ├── dungeon_modules.json
+│   │   ├── explore.json
+│   │   ├── index.json
+│   │   ├── quest_items.json
+│   │   └── quest_npc.json
+│   └── img/               # → api/src/img/（管道后复制）
 ├── web/                 # React 前端（SSG）
 │   ├── src/
 │   │   ├── main.tsx, App.tsx
@@ -24,6 +42,8 @@ DarkFindV5/
 │   │   ├── components/       # 通用组件（MapDebug, Disclaimer, DebugCoordTable）
 │   │   ├── hooks/            # useDebug hook
 │   │   └── types/
+│   ├── public/
+│   │   └── data/             # prebuild 从 ../data/ 复制
 │   └── package.json
 ├── .github/workflows/deploy.yml
 └── CLAUDE.md
@@ -52,16 +72,13 @@ git add <新文件路径> && git commit -am "WIP: <改动摘要>"
 # 1. 提交当前进度（改动前 checkpoint）
 git commit -am "WIP: <描述>"
 
-# 2. 运行数据管道
-cd api && rm -f darkfind.db && python main.py
+# 2. 运行数据管道（运行后自动交付 JSON + 图片到 data/）
+cd api && python main.py
 
-# 3. 复制数据到前端
-rm -rf ../web/public/data && cp -r data ../web/public/data && cp -r ../img ../web/public/data/img
-
-# 4. 构建前端
+# 3. 构建前端（prebuild 自动从 data/ 复制到 public/data/）
 cd ../web && npm run build
 
-# 5. 预览（后台运行，端口 8080）
+# 4. 预览（后台运行，端口 8080）
 # ⚠️ codewhale 中 nohup + & 会被回收，改用 setsid：
 setsid sh -c 'vite preview --port 8080 --host 0.0.0.0 > /tmp/vite-preview.log 2>&1 &'
 ```
@@ -73,10 +90,12 @@ setsid sh -c 'vite preview --port 8080 --host 0.0.0.0 > /tmp/vite-preview.log 2>
 ```
 游戏原始 JSON（/home/mio/fmod/Output/Exports/DungeonCrawler/...）
     ↓ api/main.py (清洗 + SQLite + FTS5)
-后端 JSON（api/data/ → 复制到 web/public/data/）
+api/output/json/ + api/src/img/
+    ↓ main.py 自动交付 → data/{json/, img/}
+    ↓ npm run prebuild → web/public/data/
     ↓ Vite build → dist/data/
     ↓ GitHub Actions → gh-pages branch
-    ↓ 浏览器 fetch("./data/index.json") → 注水渲染
+    ↓ 浏览器 fetch("./data/json/index.json") → 注水渲染
 ```
 
 ## 页面布局

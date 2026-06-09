@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from config import DB_PATH, OUTPUT_DIR, GROUP_TO_ART_DIR, HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE, MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP
+from config import DB_PATH, OUTPUT_DIR, GAME_ROOT, GROUP_TO_ART_DIR, HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE, MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP
 from db_manager import DatabaseManager
 from search_engine import build_all_matches
 from layout_utils import load_all_layout_rotations
@@ -21,61 +21,71 @@ def run():
 
     db = DatabaseManager(DB_PATH)
 
-    # 1. Import translations
-    print("\n[1/7] Importing translations...")
-    count = db.import_translations()
-    print(f"  -> {count} translations loaded")
+    game_available = GAME_ROOT.exists()
 
-    # 2. Import items
-    print("[2/7] Importing items...")
-    count = db.import_items()
-    print(f"  -> {count} item entities")
+    if game_available:
+        # 1. Import translations
+        print("\n[1/7] Importing translations...")
+        count = db.import_translations()
+        print(f"  -> {count} translations loaded")
 
-    # 3. Import monsters
-    print("[3/7] Importing monsters...")
-    count = db.import_monsters()
-    print(f"  -> {count} monster entities")
+        # 2. Import items
+        print("[2/7] Importing items...")
+        count = db.import_items()
+        print(f"  -> {count} item entities")
 
-    # 4. Import props
-    print("[4/7] Importing props...")
-    count = db.import_props()
-    print(f"  -> {count} props entities")
+        # 3. Import monsters
+        print("[3/7] Importing monsters...")
+        count = db.import_monsters()
+        print(f"  -> {count} monster entities")
 
-    # 5. Import dungeon modules
-    print("[5/7] Importing dungeon modules...")
-    count = db.import_dungeon_modules()
-    print(f"  -> {count} dungeon modules")
+        # 4. Import props
+        print("[4/7] Importing props...")
+        count = db.import_props()
+        print(f"  -> {count} props entities")
 
-    # 6. Import lootdrops (with raw variant names)
-    print("[6/7] Importing lootdrop relationships...")
-    count = db.import_lootdrops()
-    print(f"  -> {count} lootdrop relationships")
+        # 5. Import dungeon modules
+        print("[5/7] Importing dungeon modules...")
+        count = db.import_dungeon_modules()
+        print(f"  -> {count} dungeon modules")
 
-    # 7. Build spawner matches via search engine
-    print("[7/7] Building spawner matches...")
+        # 6. Import lootdrops (with raw variant names)
+        print("[6/7] Importing lootdrop relationships...")
+        count = db.import_lootdrops()
+        print(f"  -> {count} lootdrop relationships")
+
+        # 7. Build spawner matches via search engine
+        print("[7/7] Building spawner matches...")
+        items = db.get_item_entities()
+        monsters = db.get_monster_entities()
+        props = db.get_props_entities()
+        search_terms = [r["item_name"] for r in items] + [r["monster_name"] for r in monsters] + [r["asset_name"] for r in props]
+        matches, spawners = build_all_matches(search_terms)
+        print(f"  -> {len(spawners)} spawners, {len(matches)} matched terms")
+
+        # Store matches in DB
+        c = db.connect()
+        c.execute("DELETE FROM spawners")
+        c.execute("DELETE FROM search_term_matches")
+        for idx, s in enumerate(spawners):
+            c.execute(
+                "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, x, y, z, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (idx + 1, s["keyword"], s.get("original_keyword", ""), s["spawner_type"], s["x"], s["y"], s["z"], s["json_filename"], s.get("version", ""), s.get("map_base", "")),
+            )
+        for term, spawner_ids in matches.items():
+            rows = [(term, sid + 1) for sid in spawner_ids]
+            c.executemany(
+                "INSERT OR IGNORE INTO search_term_matches (search_term, spawner_id) VALUES (?, ?)",
+                rows,
+            )
+        db.connect().commit()
+    else:
+        print("\n[SKIP] Game data not found, using existing DB")
+
+    # 后续步骤从 DB 读取（无论是否导入，DB 中都有数据）
     items = db.get_item_entities()
     monsters = db.get_monster_entities()
     props = db.get_props_entities()
-    search_terms = [r["item_name"] for r in items] + [r["monster_name"] for r in monsters] + [r["asset_name"] for r in props]
-    matches, spawners = build_all_matches(search_terms)
-    print(f"  -> {len(spawners)} spawners, {len(matches)} matched terms")
-
-    # Store matches in DB
-    c = db.connect()
-    c.execute("DELETE FROM spawners")
-    c.execute("DELETE FROM search_term_matches")
-    for idx, s in enumerate(spawners):
-        c.execute(
-            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, x, y, z, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (idx + 1, s["keyword"], s.get("original_keyword", ""), s["spawner_type"], s["x"], s["y"], s["z"], s["json_filename"], s.get("version", ""), s.get("map_base", "")),
-        )
-    for term, spawner_ids in matches.items():
-        rows = [(term, sid + 1) for sid in spawner_ids]
-        c.executemany(
-            "INSERT OR IGNORE INTO search_term_matches (search_term, spawner_id) VALUES (?, ?)",
-            rows,
-        )
-    db.connect().commit()
 
     # ─── Export JSON ───
     print("\nExporting JSON files...")
@@ -215,7 +225,7 @@ def run():
     # ── dungeon_modules.json ──
     module_rotations = load_all_layout_rotations()
     modules = db.get_dungeon_modules()
-    art_root = Path(__file__).parent.parent.parent / "Output" / "Exports" / "DungeonCrawler" / "Content" / "DungeonCrawler" / "Data" / "Art" / "DungeonModuleMapImage"
+    art_root = Path(__file__).parent.parent.parent.parent / "Output" / "Exports" / "DungeonCrawler" / "Content" / "DungeonCrawler" / "Data" / "Art" / "DungeonModuleMapImage"
     modules_map: dict[str, dict] = {}
     for r in modules:
         override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})

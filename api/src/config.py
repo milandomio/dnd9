@@ -1,8 +1,11 @@
 from pathlib import Path
 
-BACKEND_DIR = Path(__file__).parent
-PROJECT_DIR = BACKEND_DIR.parent
-OUTPUT_DIR = BACKEND_DIR / "data"
+# api/src/
+SRC_DIR = Path(__file__).parent
+# api/
+API_DIR = SRC_DIR.parent
+# DarkFindV5/
+PROJECT_DIR = API_DIR.parent
 
 GAME_ROOT = (
     PROJECT_DIR.parent
@@ -27,7 +30,14 @@ DUNGEON_MODULE_DIR = DATA_DIR / "Dungeon" / "DungeonModule"
 SPAWNER_DIR = DATA_DIR / "Spawner" / "Spawner"
 ART_DIR = DATA_DIR / "Art"
 
-DB_PATH = BACKEND_DIR / "darkfind.db"
+# DB 文件
+DB_PATH = API_DIR / "data" / "darkfindv5.db"
+# JSON 输出（collector 写入到此）
+OUTPUT_DIR = API_DIR / "output" / "json"
+# 图片源目录
+IMG_SRC = SRC_DIR / "img"
+# 交付目标（前端构建时从此读取）
+DATA_DELIVERY_DIR = PROJECT_DIR / "data"
 
 TRANSLATION_ALIAS_MAP = {
     "GoldChest": "GoldenChest",
