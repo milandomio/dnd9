@@ -574,6 +574,8 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name):
                 "file":c["json_filename"],"version":c["version"],
             })
         for mn in sorted(mnames):
+            if mn == item_name:
+                continue
             mtrans = resolve_name(mn, None, "monster")
             mcoords = db.get_item_coordinates(mn)
             for c in mcoords:
