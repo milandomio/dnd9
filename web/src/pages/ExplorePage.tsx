@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 import { useSSRData } from "../context/SSRDataContext";
+import Disclaimer from "../components/Disclaimer";
 import type { DungeonModule } from "../types/data";
 
 interface ExploreTarget {
@@ -75,6 +76,7 @@ export default function ExplorePage() {
       <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginBottom: 20 }}>
         共 {data.length} 个探索目标，分布在 {grouped.size} 个NPC
       </div>
+      <Disclaimer />
       {[...grouped.entries()].map(([npcName, targets]) => {
         const sorted = [...targets].sort((a, b) => a.quest_number - b.quest_number);
         return (
