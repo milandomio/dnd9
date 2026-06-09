@@ -15,8 +15,8 @@ DarkFindV5/
 │   ├── collector.py          # 数据清洗 + JSON 输出
 │   ├── search_engine.py      # 地图文件遍历 + 关键词匹配
 │   ├── layout_utils.py       # 地图旋转值计算
-│   ├── data/                 # 原始 JSON 输入
-│   └── output/               # 清洗后 JSON（被前端消费）
+│   ├── data/                 # 管道输出 JSON（可重生，可清理）
+│   └── img/                  # 地图图片 .webp（不可再生，严**禁**清理）
 ├── web/                 # React 前端（SSG）
 │   ├── src/
 │   │   ├── main.tsx, App.tsx
@@ -56,7 +56,7 @@ git commit -am "WIP: <描述>"
 cd api && rm -f darkfind.db && python main.py
 
 # 3. 复制数据到前端
-rm -rf ../web/public/data && cp -r data ../web/public/data
+rm -rf ../web/public/data && cp -r data ../web/public/data && cp -r ../img ../web/public/data/img
 
 # 4. 构建前端
 cd ../web && npm run build
