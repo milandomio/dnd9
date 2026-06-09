@@ -76,6 +76,9 @@ ssrDataMap["home"] = index;
 for (const p of PAGES) ssrDataMap[`list-${p}`] = readJSON(join(DATA, `${p}.json`));
 for (const p of SINGLE) ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
 
+// Explore page needs module data too
+ssrDataMap["explore-modules"] = moduleData;
+
 // Detail pages — skip entries missing individual JSON
 if (!QUICK) {
   for (const p of PAGES) {

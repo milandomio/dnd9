@@ -30,20 +30,25 @@ function modKey(module_name: string): string {
 
 export default function ExplorePage() {
   const ssrData = useSSRData<ExploreTarget[]>("explore");
+  const ssrModules = useSSRData<DungeonModule[]>("explore-modules");
   const [data, setData] = useState<ExploreTarget[]>(ssrData || []);
-  const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
+  const [modules, setModules] = useState<Map<string, DungeonModule>>(
+    ssrModules ? new Map(ssrModules.flatMap(m => [[m.name, m], [m.sl_base_name, m]])) : new Map()
+  );
   const [loading, setLoading] = useState(!ssrData);
 
   useEffect(() => {
     Promise.all([
       ssrData ? Promise.resolve(ssrData) : fetch("./data/json/explore.json").then<ExploreTarget[]>((r) => r.json()),
-      fetch("./data/json/dungeon_modules.json").then<DungeonModule[]>((r) => r.json()),
+      ssrModules ? Promise.resolve(ssrModules) : fetch("./data/json/dungeon_modules.json").then<DungeonModule[]>((r) => r.json()),
     ])
       .then(([exp, mods]) => {
         if (!ssrData) setData(exp);
-        const mm = new Map<string, DungeonModule>();
-        mods.forEach((m) => { mm.set(m.name, m); mm.set(m.sl_base_name, m); });
-        setModules(mm);
+        if (!ssrModules) {
+          const mm = new Map<string, DungeonModule>();
+          mods.forEach((m) => { mm.set(m.name, m); mm.set(m.sl_base_name, m); });
+          setModules(mm);
+        }
       })
       .catch(console.error)
       .finally(() => setLoading(false));
