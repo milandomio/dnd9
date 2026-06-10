@@ -631,6 +631,24 @@ class DatabaseManager:
         """, (item_name,))
         return [dict(r) for r in c.fetchall()]
 
+    def get_all_coordinates(self) -> dict[str, list[dict]]:
+        """Bulk-fetch all search_term → coordinates mapping in a single query."""
+        c = self.conn.cursor()
+        c.execute("""
+            SELECT sm.search_term, s.x, s.y, s.z, s.json_filename,
+                   s.version, s.map_base, s.module_type, s.original_keyword
+            FROM search_term_matches sm
+            JOIN spawners s ON s.id = sm.spawner_id
+            ORDER BY sm.search_term, s.map_base, s.json_filename
+        """)
+        result: dict[str, list[dict]] = {}
+        for row in c.fetchall():
+            term = row["search_term"]
+            if term not in result:
+                result[term] = []
+            result[term].append(dict(row))
+        return result
+
     def get_items_with_matches(self) -> list[dict]:
         c = self.conn.cursor()
         c.execute("""

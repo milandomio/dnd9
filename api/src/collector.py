@@ -22,6 +22,7 @@ _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
 _UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
+_ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_(?:High|Med|Low|VeryLow|Random))$")
 
 # Props 目录中的 _Dummy 实体同时也是怪物
 _DUMMY_AS_MONSTER = {
@@ -191,7 +192,6 @@ def run():
         items = db.get_item_entities()
         monsters = db.get_monster_entities()
         props = db.get_props_entities()
-        _ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_(?:High|Med|Low|VeryLow|Random))$")
         _search_term_set: set[str] = set()
         for r in items:
             _search_term_set.add(r["item_name"])
@@ -240,6 +240,7 @@ def run():
     items = db.get_item_entities()
     monsters = db.get_monster_entities()
     props = db.get_props_entities()
+    all_coords = db.get_all_coordinates()
 
     # ─── Export JSON ───
     print("\nExporting JSON files...")
@@ -318,12 +319,12 @@ def run():
         name = r["item_name"]
         if name in skip_variants:
             continue
-        coords = db.get_item_coordinates(name)
+        coords = all_coords.get(name, [])
         # Try ore name cleaning: GoldOres → GoldOre
         if not coords:
             m = _ORE_ITEM_COORD_RE.match(name)
             if m:
-                coords = db.get_item_coordinates(m.group(1) + "Ore")
+                coords = all_coords.get(m.group(1) + "Ore", [])
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
@@ -352,7 +353,7 @@ def run():
     # ── monsters: index + individual files ──
     monsters_index = []
     for r in monsters:
-        coords = db.get_item_coordinates(r["monster_name"])
+        coords = all_coords.get(r["monster_name"], [])
         if not coords:
             continue
         translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
@@ -384,14 +385,14 @@ def run():
     for translation, group in props_by_translation.items():
         merged_coords = []
         for r in group:
-            coords = db.get_item_coordinates(r["asset_name"])
+            coords = all_coords.get(r["asset_name"], [])
             merged_coords.extend(coords)
         # Also try matching via cleaned ore name
         if not merged_coords:
             for r in group:
                 m = _ORE_QUALITY_RE.match(r["asset_name"])
                 if m:
-                    coords = db.get_item_coordinates(m.group(1))
+                    coords = all_coords.get(m.group(1), [])
                     merged_coords.extend(coords)
                     if merged_coords:
                         break
@@ -677,11 +678,11 @@ def run():
             if m_name == item_name:
                 continue
             if m_name not in monster_coord_cache:
-                coords_list = db.get_item_coordinates(m_name)
+                coords_list = all_coords.get(m_name, [])
                 if not coords_list:
                     alias = TRANSLATION_ALIAS_MAP.get(m_name)
                     if alias:
-                        coords_list = db.get_item_coordinates(alias)
+                        coords_list = all_coords.get(alias, [])
                 monster_coord_cache[m_name] = coords_list
             coords = monster_coord_cache[m_name]
             if not coords:
@@ -714,7 +715,7 @@ def run():
     explore_count, quest_items_count, quest_npc_count = run_quest_extraction()
 
     # ── Quest items groups (with coordinates) ──
-    _generate_quest_items_groups(db, merged_loot, resolve_name)
+    _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords)
 
     # ── index.json: page index ──
     qg_path = OUTPUT_DIR / "quest_items_groups.json"
@@ -740,7 +741,7 @@ def run():
     db.close()
 
 
-def _generate_quest_items_groups(db, merged_loot, resolve_name):
+def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords):
     quest_items_path = OUTPUT_DIR / "quest_items.json"
     if not quest_items_path.exists():
         return
@@ -774,7 +775,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name):
         info_list = quest_map.get(item_name, [])
         trans = info_list[0]["item_translation"] if info_list else item_name
 
-        icoords = db.get_item_coordinates(item_name)
+        icoords = all_coords.get(item_name, [])
         mnames = merged_loot.get(item_name, [])
         for c in icoords:
             mb = c["map_base"]
@@ -798,7 +799,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name):
             if mn == item_name:
                 continue
             mtrans = resolve_name(mn, None, "monster")
-            mcoords = db.get_item_coordinates(mn)
+            mcoords = all_coords.get(mn, [])
             for c in mcoords:
                 mb = c["map_base"]
                 mt = map_to_group.get(mb, "")
