@@ -191,7 +191,26 @@ def run():
         items = db.get_item_entities()
         monsters = db.get_monster_entities()
         props = db.get_props_entities()
-        search_terms = [r["item_name"] for r in items] + [r["monster_name"] for r in monsters] + [r["asset_name"] for r in props]
+        _ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_(?:High|Med|Low|VeryLow|Random))$")
+        _search_term_set: set[str] = set()
+        for r in items:
+            _search_term_set.add(r["item_name"])
+        for r in monsters:
+            _search_term_set.add(r["monster_name"])
+        for r in props:
+            name = r["asset_name"]
+            m = _ORE_QUALITY_RE.match(name)
+            if m:
+                _search_term_set.add(m.group(1))
+            _search_term_set.add(name)
+        search_terms = sorted(_search_term_set)
+        # Clean ore item names: GoldOres → GoldOre (add stripped form for spawner matching)
+        _ORE_ITEM_STRIP_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
+        for t in list(search_terms):
+            m = _ORE_ITEM_STRIP_RE.match(t)
+            if m:
+                _search_term_set.add(m.group(1) + "Ore")
+        search_terms = sorted(_search_term_set)
         matches, spawners = build_all_matches(search_terms)
         print(f"  -> {len(spawners)} spawners, {len(matches)} matched terms")
 
@@ -293,12 +312,18 @@ def run():
     print(f"  unique items after merge: {len(merged_loot)}")
 
     # ── items: index + individual files ──
+    _ORE_ITEM_COORD_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
     items_index = []
     for r in items:
         name = r["item_name"]
         if name in skip_variants:
             continue
         coords = db.get_item_coordinates(name)
+        # Try ore name cleaning: GoldOres → GoldOre
+        if not coords:
+            m = _ORE_ITEM_COORD_RE.match(name)
+            if m:
+                coords = db.get_item_coordinates(m.group(1) + "Ore")
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
@@ -347,9 +372,13 @@ def run():
     _save("monsters.json", monsters_index)
 
     # ── props: index + individual files (merged by translation) ──
+    _ORE_QUALITY_ORDER = {"VeryLow": 0, "Low": 1, "Med": 2, "High": 3}
+    def _ore_quality_key(r):
+        m = re.search(r"_(High|Med|Low|VeryLow)$", r["asset_name"])
+        return _ORE_QUALITY_ORDER.get(m.group(1), 99) if m else 99
     props_index = []
     props_by_translation: dict[str, list[dict]] = {}
-    for r in props:
+    for r in sorted(props, key=_ore_quality_key):
         translation = resolve_name(r["asset_name"], r["translation_key"], "props")
         props_by_translation.setdefault(translation, []).append(r)
     for translation, group in props_by_translation.items():
@@ -357,6 +386,15 @@ def run():
         for r in group:
             coords = db.get_item_coordinates(r["asset_name"])
             merged_coords.extend(coords)
+        # Also try matching via cleaned ore name
+        if not merged_coords:
+            for r in group:
+                m = _ORE_QUALITY_RE.match(r["asset_name"])
+                if m:
+                    coords = db.get_item_coordinates(m.group(1))
+                    merged_coords.extend(coords)
+                    if merged_coords:
+                        break
         if not merged_coords:
             continue
         name_key = group[0]["asset_name"]
@@ -430,6 +468,13 @@ def run():
             candidate, _ = _try_resolve(map_image)
             if candidate not in PLACEHOLDERS:
                 img_name = candidate
+
+        # Fallback: strip variant suffixes (_D, _A, _S) from module_name and check IMG_SRC for .webp
+        if art_status in ('not_found', 'no_art') and img_name not in PLACEHOLDERS:
+            if not (IMG_SRC / f"{img_name}.webp").exists() and module_name:
+                stripped = re.sub(r"_[A-Z]$", "", module_name)
+                if stripped != module_name and (IMG_SRC / f"{stripped}.webp").exists():
+                    img_name = stripped
 
         # Final fallback: if nothing matched and the only candidate was a placeholder,
         # keep the placeholder so the frontend shows RareModule_1x1.webp.
@@ -592,6 +637,9 @@ def run():
         merged_translations: list[str] = []
         seen_bases: set[str] = set()
         for mn, mt in zip(monster_names, mon_translations):
+            # Skip self-referencing
+            if mn == item_name:
+                continue
             base = _HARD_SUFFIX_RE.sub("", mn)
             base = _UNIQUE_SUFFIX_RE.sub("", base)
             if base not in seen_bases:
@@ -625,6 +673,9 @@ def run():
         # Build merged monsters: base_name → {name, translation, coords}
         merged: dict[str, dict] = {}
         for i, m_name in enumerate(entry["monsters"]):
+            # Skip self-referencing: item dropping itself (e.g. GoldOres → GoldOres)
+            if m_name == item_name:
+                continue
             if m_name not in monster_coord_cache:
                 coords_list = db.get_item_coordinates(m_name)
                 if not coords_list:

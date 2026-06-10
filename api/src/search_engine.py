@@ -87,6 +87,18 @@ def _extract_actor_name(outer_str: str) -> str:
     return outer_str
 
 
+def _strip_bp_prefix(bp_type: str) -> str:
+    """Strip BP_ prefix and _C suffix from entity type name."""
+    name = bp_type
+    if name.startswith("BP_"):
+        name = name[3:]
+    if name.endswith("_C"):
+        name = name[:-2]
+    # Strip trailing _ice, _01, _02 etc. numeric suffix for matching
+    # But keep meaningful suffixes like _Crypt, _Soulflame
+    return name
+
+
 def _list_map_jsons(root: str | Path) -> list[Path]:
     root = Path(root)
     if not root.exists():
@@ -142,7 +154,16 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                     "spawner_type": spawner_type,
                 }
 
-        elif t == "SphereComponent" and entry.get("Name") == "SceneComponent":
+        elif t.startswith("BP_") and t.endswith("_C") and t not in ("BP_GameSpawner_C",):
+            entry_name = entry.get("Name", "")
+            if entry_name:
+                spawners[entry_name] = {
+                    "keyword": _strip_bp_prefix(t),
+                    "spawner_type": "props",
+                }
+
+        if (t == "SphereComponent" and entry.get("Name") == "SceneComponent") or \
+           (t == "SceneComponent" and entry.get("Name") == "RootScene"):
             outer_raw = entry.get("Outer", "")
             if isinstance(outer_raw, dict):
                 outer_raw = (outer_raw or {}).get("ObjectName", "")

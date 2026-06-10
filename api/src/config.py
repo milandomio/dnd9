@@ -166,6 +166,11 @@ HARDCODED_TRANSLATIONS = {
     "Rat": "老鼠",
     "ArcheryTarget": "射箭靶",
     "Chess": "棋盘",
+
+    # 实体变体硬编码翻译（剥离后缀后无法自动匹配翻译前缀）
+    "LivingStatue": "石像鬼",
+    "LivingStatue_Elite": "精英石像鬼",
+    "LivingStatue_Nightmare": "噩梦石像鬼",
 }
 
 MODULE_NAME_OVERRIDE = {

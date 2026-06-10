@@ -108,6 +108,24 @@ def _sl_base_name(asset_name: str) -> str:
     return _SL_SUFFIX_RE.sub("", asset_name)
 
 
+def _has_map_file(ue_path: str) -> bool:
+    """Check if a SubLevelAssetD/HR UE path corresponds to an actual map file on disk.
+
+    Extracts the directory path from the UE asset path and checks if it exists
+    under GAME_ROOT. Returns False if the directory doesn't exist (stale reference).
+    """
+    fs = _ue_to_fs_path(ue_path)
+    if not fs:
+        return False
+    # fs example: Maps/Dungeon/Modules/ShipGraveyard/ShipGraveyard_FloatingIsland_01/ShipGraveyard_FloatingIsland_01_D
+    # Extract directory part (everything except the final filename)
+    parts = fs.rsplit("/", 1)
+    if len(parts) < 2:
+        return False
+    dir_rel = parts[0]  # e.g. Maps/Dungeon/Modules/ShipGraveyard/ShipGraveyard_FloatingIsland_01
+    return (GAME_ROOT / dir_rel).is_dir()
+
+
 class DatabaseManager:
     def __init__(self, db_path: str | Path = DB_PATH):
         self.db_path = Path(db_path)
@@ -377,6 +395,7 @@ class DatabaseManager:
         # Second pass: build rows with ModuleType fallback via sl_base lookup
         rows = []
         inserted_names: set[str] = set()
+        skipped_names: list[str] = []
         for raw_name, data_list in files.items():
             if not data_list:
                 continue
@@ -393,10 +412,17 @@ class DatabaseManager:
             sl_base = ""
             for variant in ["SubLevelAssetD_HR", "SubLevelAssetD", "SubLevelAssetA"]:
                 asset = (props.get(variant) or {}).get("AssetPathName", "")
-                if asset:
-                    base = _ue_asset_base_name(asset) or ""
-                    sl_base = _sl_base_name(base)
-                    break
+                if not asset:
+                    continue
+                # D variants (HR/D) must map to an existing map directory on disk
+                if variant in ("SubLevelAssetD_HR", "SubLevelAssetD") and not _has_map_file(asset):
+                    break  # stale reference → skip module
+                base = _ue_asset_base_name(asset) or ""
+                sl_base = _sl_base_name(base)
+                break
+            else:
+                skipped_names.append(module_name)
+                continue
             # If ModuleType is empty, try sl_base → find the module that owns this map's ModuleType
             if not module_type and sl_base:
                 module_type = type_map.get(sl_base, "")
@@ -427,6 +453,8 @@ class DatabaseManager:
             "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
+        if skipped_names:
+            print(f"  skipped {len(skipped_names)} modules with stale SubLevelAsset: {skipped_names}")
         # Third pass: insert modules that exist as map files but have no DungeonModule JSON
         sl_base_to_key = {r[5]: r[1] for r in rows if r[5]}
         module_name_to_key = {r[0]: r[1] for r in rows if r[1]}
