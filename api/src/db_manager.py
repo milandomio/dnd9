@@ -8,6 +8,7 @@ from config import (
     DB_PATH,
     DUNGEON_MODULE_DIR,
     GAME_JSON,
+    GAME_ROOT,
     ITEM_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
