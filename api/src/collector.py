@@ -23,6 +23,10 @@ _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
 _UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
 _ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_(?:High|Med|Low|VeryLow|Random))$")
+_ORE_ITEM_STRIP_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
+_ORE_ITEM_COORD_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
+_RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique)$")
+_DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
 
 # Props 目录中的 _Dummy 实体同时也是怪物
 _DUMMY_AS_MONSTER = {
@@ -133,7 +137,6 @@ def run():
             _search_term_set.add(name)
         search_terms = sorted(_search_term_set)
         # Clean ore item names: GoldOres → GoldOre (add stripped form for spawner matching)
-        _ORE_ITEM_STRIP_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
         for t in list(search_terms):
             m = _ORE_ITEM_STRIP_RE.match(t)
             if m:
@@ -178,8 +181,6 @@ def run():
     print("\nExporting JSON files...")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     translations = db.get_translations_map()
-
-    _RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique)$")
 
     def resolve_name(name: str, translation_key: str, scope: str = "item") -> str:
         if translation_key and translation_key in translations:
@@ -245,7 +246,6 @@ def run():
     print(f"  unique items after merge: {len(merged_loot)}")
 
     # ── items: index + individual files ──
-    _ORE_ITEM_COORD_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
     items_index = []
     for r in items:
         name = r["item_name"]
@@ -450,7 +450,6 @@ def run():
             }
     modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
     # Filter out debug/test/resize variants (they're not real playable modules)
-    _DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
     modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
     _save("dungeon_modules.json", modules_data)
 
@@ -603,13 +602,11 @@ def run():
 
     # ── lootdrops detail files ──
     _MONSTER_COLORS = ["#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C","#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085","#C0392B","#2C3E50","#7F8C8D","#FF6B35","#00BFFF","#FFD700","#FF69B4","#32CD32","#FF4500","#9370DB","#00FA9A","#DC143C","#00CED1"]
-    _HARD_RE = re.compile(r"_(Hard|VeryHard)$")
-    _SUFFIX_RE = re.compile(r"Unique$")
 
     def _base_monster_name(name: str) -> str:
         """Strip _Hard/_VeryHard/Unique suffix to get base name."""
-        base = _HARD_RE.sub("", name)
-        base = _SUFFIX_RE.sub("", base)
+        base = _HARD_SUFFIX_RE.sub("", name)
+        base = _UNIQUE_SUFFIX_RE.sub("", base)
         return base
 
     for entry in loot_index:
