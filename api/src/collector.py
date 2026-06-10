@@ -38,6 +38,32 @@ _ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_(?:High|Med|Low|VeryLow|Random
 _ORE_ITEM_STRIP_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
 _ORE_ITEM_COORD_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
 _RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique)$")
+# 模糊后缀：先于 HARDCODED 兜底，用这些后缀剥离后重试 Game.json 前缀匹配
+_RESOLVE_FUZZY_RE = re.compile(
+    r"(?:"
+    r"_[Rr]"  # _R（棺材变体）
+    r"|_On$|_Off$"  # 开关状态
+    r"|_Lit$|_Unlit$"  # 灯光状态
+    r"|__UnderSea$"  # 海底变体（双下划线）
+    r"|_UnderSea$"  # 海底变体
+    r"|Random$"  # 随机变体（含 BlackRoseRandom 无下划线前缀）
+    r"|_(?:Elite|Nightmare)$"  # 难度变体
+    r"|(?:_0[1-9])$"  # 编号后缀 _01~_09
+    r")"
+)
+# 第二轮模糊：On/Off + 中间段 + 尾部数字组合剥离（迭代应用）
+_RESOLVE_FUZZY_PASS2_RE = re.compile(
+    r"(?:"
+    r"_On$|_Off$"  # 尾部 On/Off
+    r"|_Lit$|_Unlit$"  # 尾部灯光
+    r"|_[A-Z](?!\w)$"  # 单字母后缀 _A _B
+    r"|_\w+_(?:On|Off|Lit|Unlit)$"  # 中间段+状态 Torch02_Purple_On
+    r"|_\d+(?:_(?:On|Off|Lit|Unlit))?$"  # 尾部数字+可选状态 _03_On
+    r"|(?:\d+(?:On|Off|ON|OFF))$"  # 无下划线数字+状态 Roaster07On, FiredeepRoaster_01ON
+    r"|(?:\d+)$"  # 尾部纯数字（剥离 On 后残留）Torch03
+    r"|_Ruins$|_Cave$|_Crypt$"  # 地图变体后缀
+    r")"
+)
 _DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
 
 # Props 目录中的 _Dummy 实体同时也是怪物
@@ -179,6 +205,7 @@ def run():
                 s["x"],
                 s["y"],
                 s["z"],
+                s.get("yaw", 0),
                 s["json_filename"],
                 s.get("version", ""),
                 s.get("map_base", ""),
@@ -186,7 +213,7 @@ def run():
             for idx, s in enumerate(spawners)
         ]
         c.executemany(
-            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, x, y, z, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, x, y, z, yaw, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             spawner_rows,
         )
         for term, spawner_ids in matches.items():
@@ -228,6 +255,38 @@ def run():
                 return translations[alias_key]
         if name in HARDCODED_TRANSLATIONS:
             return HARDCODED_TRANSLATIONS[name]
+        # 模糊后缀剥离后重试 Game.json 前缀匹配
+        fuzzy = _RESOLVE_FUZZY_RE.sub("", name)
+        if fuzzy != name:
+            fuzzy_alias = TRANSLATION_ALIAS_MAP.get(fuzzy, fuzzy)
+            for prefix in [
+                "Text_DesignData_Item_Item_",
+                "Text_DesignData_Monster_Monster_",
+                "Text_DesignData_Props_Props_",
+                "Text_DesignData_Dungeon_DungeonModule_",
+            ]:
+                fuzzy_key = prefix + fuzzy_alias
+                if fuzzy_key in translations:
+                    return translations[fuzzy_key]
+        # 第二轮模糊：On/Off+数字/中间段 组合剥离（迭代最多3次）
+        prev = name
+        fuzzy2 = name
+        for _ in range(3):
+            fuzzy2 = _RESOLVE_FUZZY_PASS2_RE.sub("", fuzzy2)
+            if fuzzy2 == prev:
+                break
+            prev = fuzzy2
+        if fuzzy2 != name and fuzzy2 != fuzzy:
+            fuzzy2_alias = TRANSLATION_ALIAS_MAP.get(fuzzy2, fuzzy2)
+            for prefix in [
+                "Text_DesignData_Item_Item_",
+                "Text_DesignData_Monster_Monster_",
+                "Text_DesignData_Props_Props_",
+                "Text_DesignData_Dungeon_DungeonModule_",
+            ]:
+                fuzzy2_key = prefix + fuzzy2_alias
+                if fuzzy2_key in translations:
+                    return translations[fuzzy2_key]
         # 剥离末尾数字/难度后缀后重试兜底翻译
         stripped = _RESOLVE_STRIP_RE.sub("", name)
         if stripped != name and stripped in HARDCODED_TRANSLATIONS:
@@ -325,6 +384,7 @@ def run():
                         "x": c["x"],
                         "y": c["y"],
                         "z": c["z"],
+                        "yaw": c.get("yaw", 0),
                         "map": c["map_base"],
                         "file": c["json_filename"],
                         "version": c["version"],
@@ -360,6 +420,7 @@ def run():
                         "x": c["x"],
                         "y": c["y"],
                         "z": c["z"],
+                        "yaw": c.get("yaw", 0),
                         "map": c["map_base"],
                         "file": c["json_filename"],
                         "version": c["version"],
@@ -372,7 +433,7 @@ def run():
     _save("monsters.json", monsters_index)
 
     # ── props: index + individual files (merged by translation) ──
-    _ORE_QUALITY_ORDER = {"VeryLow": 0, "Low": 1, "Med": 2, "High": 3}
+    _ORE_QUALITY_ORDER = {"VeryLow": 0, "Low": 1, "Med": 2, "High": 3}  # noqa: N806
 
     def _ore_quality_key(r):
         m = re.search(r"_(High|Med|Low|VeryLow)$", r["asset_name"])
@@ -417,12 +478,13 @@ def run():
                         "x": c["x"],
                         "y": c["y"],
                         "z": c["z"],
+                        "yaw": c.get("yaw", 0),
                         "map": c["map_base"],
                         "file": c["json_filename"],
                         "version": c["version"],
                         "label": c["original_keyword"],
                     }
-                    for c in merged_coords
+                    for c in coords
                 ],
             },
         )
@@ -454,12 +516,12 @@ def run():
         sl = r["sl_base_name"]
         map_image = r.get("map_image_name", "")
         module_name = r["module_name"]
-        PLACEHOLDERS = ("RareModule_1x1", "UnderConstruction_1x1")
+        PLACEHOLDERS = ("RareModule_1x1", "UnderConstruction_1x1")  # noqa: N806
 
         def _try_resolve(name: str):
             """Return (resolved_name, status). status: 'found'|'not_found'|'no_art'."""
-            resolved, status = _resolve_img(art_root, r["module_group"], name)
-            if resolved in PLACEHOLDERS:
+            resolved, status = _resolve_img(art_root, r["module_group"], name)  # noqa: B023
+            if resolved in PLACEHOLDERS:  # noqa: B023
                 return resolved, status  # placeholder — don't accept
             return resolved, status
 
@@ -495,7 +557,7 @@ def run():
                 img_name = candidate
 
         # Fallback: strip variant suffixes (_D, _A, _S) from module_name and check IMG_SRC for .webp
-        if art_status in ("not_found", "no_art") and img_name not in PLACEHOLDERS:
+        if art_status in ("not_found", "no_art") and img_name not in PLACEHOLDERS:  # noqa: SIM102
             if not (IMG_SRC / f"{img_name}.webp").exists() and module_name:
                 stripped = re.sub(r"_[A-Z]$", "", module_name)
                 if stripped != module_name and (IMG_SRC / f"{stripped}.webp").exists():
@@ -540,10 +602,22 @@ def run():
                 "rotate": 1,
                 "range": 0,
             }
-    modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
-    # Filter out debug/test/resize variants (they're not real playable modules)
-    modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
-    _save("dungeon_modules.json", modules_data)
+    # ── 模块名 ↔ 地图名 双向映射 ──
+    # map_base → module_name（正向：地图名查模块名）
+    map_to_module: dict[str, str] = {}
+    # module_name → {关联的所有 map_base}（反向：模块名查地图名）
+    module_to_maps: dict[str, set[str]] = {}
+    # 第一遍：建立直接映射 (module_name → module_name)
+    for mn in modules_map:
+        map_to_module[mn] = mn
+        module_to_maps.setdefault(mn, set()).add(mn)
+    # 第二遍：建立 sl_base 映射 (sl_base → module_name)
+    # DungeonModule JSON 定义的模块名优先于地图文件名，允许覆盖直接映射
+    for mn, mod in modules_map.items():
+        sl = mod["sl_base_name"]
+        if sl and sl != mn:
+            map_to_module[sl] = mn
+            module_to_maps.setdefault(mn, set()).add(sl)
 
     # ── dungeon_module_coords: per-module entity coordinates ──
     # Build entity classification index from DB (ground truth type)
@@ -580,7 +654,7 @@ def run():
     for r in props:
         trans_lookup[r["asset_name"]] = resolve_name(r["asset_name"], r["translation_key"], "props")
 
-    _MODULE_COLORS = [
+    _MODULE_COLORS = [  # noqa: N806
         "#E74C3C",
         "#3498DB",
         "#2ECC71",
@@ -609,7 +683,9 @@ def run():
     ]
     rows = (
         db.connect()
-        .execute("SELECT keyword, spawner_type, x, y, z, version, map_base FROM spawners ORDER BY map_base, keyword")
+        .execute(
+            "SELECT keyword, spawner_type, x, y, z, yaw, version, map_base FROM spawners ORDER BY map_base, keyword"
+        )
         .fetchall()
     )
     module_coords: dict[str, dict] = {}
@@ -644,19 +720,64 @@ def run():
                 "x": row["x"],
                 "y": row["y"],
                 "z": row["z"],
+                "yaw": row["yaw"],
                 "version": row["version"] or "",
             }
         )
+    # 按模块名合并坐标并保存（处理多个 map_base 映射到同一模块的情况）
+    merged_coords: dict[str, dict] = {}
     for mb, data in module_coords.items():
+        target = map_to_module.get(mb, mb)
+        if target not in merged_coords:
+            merged_coords[target] = {"map_base": target, "entities": {}}
+        for ek, entity in data["entities"].items():
+            if ek not in merged_coords[target]["entities"]:
+                merged_coords[target]["entities"][ek] = entity
+            else:
+                merged_coords[target]["entities"][ek]["coords"].extend(entity["coords"])
+    for target_name, data in merged_coords.items():
         entities_out = list(data["entities"].values())
         _save(
-            f"dungeon_modules_coords/{mb}.json",
+            f"dungeon_modules_coords/{target_name}.json",
             {
-                "map_base": mb,
+                "map_base": target_name,
                 "entities": entities_out,
             },
         )
-    print(f"  module coords: {len(module_coords)} modules with coordinates")
+    # 清理孤立坐标文件（旧 map_base 命名残留）
+    coord_dir = OUTPUT_DIR / "dungeon_modules_coords"
+    if coord_dir.exists():
+        expected = set(merged_coords.keys())
+        for p in coord_dir.iterdir():
+            if p.suffix == ".json" and p.stem not in expected:
+                p.unlink()
+    print(f"  module coords: {len(merged_coords)} modules with coordinates")
+
+    # ── dungeon_modules.json（在坐标构建之后保存，过滤无坐标模块）──
+    modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
+    modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
+    # 过滤无坐标模块（详情页无数据的模块从列表中剔除）
+    modules_with_coords = {mn for mn, maps in module_to_maps.items() if any(m in merged_coords for m in maps)}
+    exempt = set(MODULE_NAME_OVERRIDE.keys())
+    before_count = len(modules_data)
+    modules_data = [m for m in modules_data if m["name"] in modules_with_coords or m["name"] in exempt]
+    # 标记是否含有物品/怪物坐标（仅 props 的模块在列表页默认隐藏）
+    for m in modules_data:
+        maps = module_to_maps.get(m["name"], {m["name"]})
+        has_useful = False
+        for mk in maps:
+            if mk in merged_coords:
+                for e in merged_coords[mk]["entities"].values():
+                    if e["type"] in ("item", "monster"):
+                        has_useful = True
+                        break
+            if has_useful:
+                break
+        m["has_useful_entities"] = has_useful
+    filtered_count = before_count - len(modules_data)
+    if filtered_count:
+        print(f"  filtered {filtered_count} modules without coordinates")
+    _save("dungeon_modules.json", modules_data)
 
     # ── lootdrops.json (grouped by item for list page) ──
     items_lookup = {r["item_name"]: r for r in items}
@@ -714,7 +835,7 @@ def run():
         merged_names: list[str] = []
         merged_translations: list[str] = []
         seen_bases: set[str] = set()
-        for mn, mt in zip(monster_names, mon_translations):
+        for mn, mt in zip(monster_names, mon_translations, strict=False):
             # Skip self-referencing
             if mn == item_name:
                 continue
@@ -737,7 +858,7 @@ def run():
     _save("lootdrops.json", loot_index)
 
     # ── lootdrops detail files ──
-    _MONSTER_COLORS = [
+    _MONSTER_COLORS = [  # noqa: N806
         "#E74C3C",
         "#3498DB",
         "#2ECC71",
@@ -801,6 +922,7 @@ def run():
                         "x": c["x"],
                         "y": c["y"],
                         "z": c["z"],
+                        "yaw": c.get("yaw", 0),
                         "map": c["map_base"],
                         "file": c["json_filename"],
                         "version": c["version"],
@@ -872,7 +994,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
     for qi in quest_items:
         quest_map.setdefault(qi["item_name"], []).append(qi)
 
-    _COLORS = [
+    _COLORS = [  # noqa: N806
         "#E74C3C",
         "#3498DB",
         "#2ECC71",
@@ -929,6 +1051,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                     "x": c["x"],
                     "y": c["y"],
                     "z": c["z"],
+                    "yaw": c.get("yaw", 0),
                     "map": mb,
                     "file": c["json_filename"],
                     "version": c["version"],
@@ -968,13 +1091,14 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                             "x": c["x"],
                             "y": c["y"],
                             "z": c["z"],
+                            "yaw": c.get("yaw", 0),
                             "map": mb,
                             "file": c["json_filename"],
                             "version": c["version"],
                         }
                     )
 
-    GROUP_LABELS = {
+    GROUP_LABELS = {  # noqa: N806
         "Crypt": "废墟2层地牢",
         "FireDeep": "哥布林洞穴2层",
         "GoblinCave": "哥布林洞穴1层",

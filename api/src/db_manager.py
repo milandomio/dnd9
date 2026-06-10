@@ -193,6 +193,7 @@ class DatabaseManager:
                 x REAL NOT NULL,
                 y REAL NOT NULL,
                 z REAL NOT NULL,
+                yaw INTEGER NOT NULL DEFAULT 0,
                 json_filename TEXT NOT NULL,
                 module_type TEXT DEFAULT '',
                 version TEXT NOT NULL DEFAULT '',
@@ -488,7 +489,7 @@ class DatabaseManager:
         # Third pass: insert modules that exist as map files but have no DungeonModule JSON
         sl_base_to_key = {r[5]: r[1] for r in rows if r[5]}
         module_name_to_key = {r[0]: r[1] for r in rows if r[1]}
-        _VARIANT_SUFFIX_RE = re.compile(r"_(Resize|Test|BossTest|DistantView)$")
+        _VARIANT_SUFFIX_RE = re.compile(r"_(Resize|Test|BossTest|DistantView)$")  # noqa: N806
         extra_rows = []
         for base_name, group in path_group_map.items():
             if base_name not in inserted_names:
@@ -646,7 +647,7 @@ class DatabaseManager:
     def get_spawner_matches(self) -> list[dict]:
         c = self.conn.cursor()
         c.execute("""
-            SELECT sm.search_term, s.keyword, s.spawner_type, s.x, s.y, s.z,
+            SELECT sm.search_term, s.keyword, s.spawner_type, s.x, s.y, s.z, s.yaw,
                    s.json_filename, s.module_type, s.version, s.map_base
             FROM search_term_matches sm
             JOIN spawners s ON s.id = sm.spawner_id
@@ -663,7 +664,7 @@ class DatabaseManager:
         c = self.conn.cursor()
         c.execute(
             """
-            SELECT DISTINCT s.x, s.y, s.z, s.json_filename, s.version, s.map_base, s.module_type, s.original_keyword
+            SELECT DISTINCT s.x, s.y, s.z, s.yaw, s.json_filename, s.version, s.map_base, s.module_type, s.original_keyword
             FROM search_term_matches sm
             JOIN spawners s ON s.id = sm.spawner_id
             WHERE sm.search_term = ?
@@ -677,7 +678,7 @@ class DatabaseManager:
         """Bulk-fetch all search_term → coordinates mapping in a single query."""
         c = self.conn.cursor()
         c.execute("""
-            SELECT sm.search_term, s.x, s.y, s.z, s.json_filename,
+            SELECT sm.search_term, s.x, s.y, s.z, s.yaw, s.json_filename,
                    s.version, s.map_base, s.module_type, s.original_keyword
             FROM search_term_matches sm
             JOIN spawners s ON s.id = sm.spawner_id

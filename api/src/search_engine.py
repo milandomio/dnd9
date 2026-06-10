@@ -176,8 +176,17 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
             actor_name = _extract_actor_name(outer_raw)
             if not actor_name:
                 continue
-            loc = (entry.get("Properties", {}) or {}).get("RelativeLocation", {}) or {}
-            scene[actor_name] = {"x": loc.get("X", 0), "y": loc.get("Y", 0), "z": loc.get("Z", 0)}
+            props = entry.get("Properties", {}) or {}
+            loc = props.get("RelativeLocation", {}) or {}
+            rot = props.get("RelativeRotation", {}) or {}
+            yaw_deg = rot.get("Yaw", 0)
+            js_rotate = round((-yaw_deg / 90 + 1) % 4) % 4
+            scene[actor_name] = {
+                "x": loc.get("X", 0),
+                "y": loc.get("Y", 0),
+                "z": loc.get("Z", 0),
+                "yaw": js_rotate,
+            }
 
     results = []
     for name, info in spawners.items():
@@ -199,6 +208,7 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                 "x": coord["x"],
                 "y": coord["y"],
                 "z": coord["z"],
+                "yaw": coord.get("yaw", 0),
                 "json_filename": map_json_path.name,
                 "map_base": map_base,
                 "version": version,
