@@ -7,14 +7,7 @@ API_DIR = SRC_DIR.parent
 # DarkFindV5/
 PROJECT_DIR = API_DIR.parent
 
-GAME_ROOT = (
-    PROJECT_DIR.parent
-    / "Output"
-    / "Exports"
-    / "DungeonCrawler"
-    / "Content"
-    / "DungeonCrawler"
-)
+GAME_ROOT = PROJECT_DIR.parent / "Output" / "Exports" / "DungeonCrawler" / "Content" / "DungeonCrawler"
 DATA_DIR = GAME_ROOT / "Data" / "Generated" / "V2"
 MAPS_DIR = GAME_ROOT / "Maps" / "Dungeon" / "Modules"
 
@@ -110,7 +103,6 @@ HARDCODED_TRANSLATIONS = {
     "TidestoneOre": "潮汐石矿",
     "Wardweed": "护符草",
     "Lifeleaf": "生命之叶",
-
     # 环境实体兜底翻译（源文件无 Name 属性，系统自动剥离后缀匹配基名）
     "AquaPrison": "水牢",
     "Bladehand_Ballista": "刃手弩炮",
@@ -126,13 +118,11 @@ HARDCODED_TRANSLATIONS = {
     "IceWall": "冰墙",
     "IciclesWall": "冰柱墙",
     "OceanCurrent": "洋流",
-    "PushingBlock": "推块",
     "RandomTimerSwitch": "随机定时开关",
     "SkeletonWoodenBarrel": "骷髅木桶",
     "Updraft": "上升气流",
     "WoodenBarricateLarge": "大型木路障",
     "WoodenBarricateSmall": "小型木路障",
-
     # 直接放置实体兜底翻译（非 spawner，extract_spawners 未提取）
     "Statue01": "生命神坛",
     "Statue02": "保护神坛",
@@ -166,7 +156,6 @@ HARDCODED_TRANSLATIONS = {
     "Rat": "老鼠",
     "ArcheryTarget": "射箭靶",
     "Chess": "棋盘",
-
     # 实体变体硬编码翻译（剥离后缀后无法自动匹配翻译前缀）
     "LivingStatue": "石像鬼",
     "LivingStatue_Elite": "精英石像鬼",

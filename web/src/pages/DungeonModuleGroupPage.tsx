@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import { Button } from "antd";
-import type { DungeonModule } from "../types/data";
-import { useDebug } from "../hooks/useDebug";
+import { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { Button } from 'antd';
+import type { DungeonModule } from '../types/data';
+import { useDebug } from '../hooks/useDebug';
 
 const GROUP_LABELS: Record<string, string> = {
-  Crypt: "废墟2层地牢",
-  FireDeep: "哥布林洞穴2层",
-  GoblinCave: "哥布林洞穴1层",
-  IceAbyss: "冰图2层",
-  IceCavern: "冰图1层",
-  Inferno: "废墟3层炼狱",
-  Ruins: "废墟1层",
-  ShipGraveyard: "水图",
+  Crypt: '废墟2层地牢',
+  FireDeep: '哥布林洞穴2层',
+  GoblinCave: '哥布林洞穴1层',
+  IceAbyss: '冰图2层',
+  IceCavern: '冰图1层',
+  Inferno: '废墟3层炼狱',
+  Ruins: '废墟1层',
+  ShipGraveyard: '水图',
 };
 
 export default function DungeonModuleGroupPage() {
@@ -24,7 +24,7 @@ export default function DungeonModuleGroupPage() {
 
   useEffect(() => {
     if (!group) return;
-    fetch("./data/json/dungeon_modules.json")
+    fetch('./data/json/dungeon_modules.json')
       .then<DungeonModule[]>((r) => r.json())
       .then((mods) => {
         const filtered = mods.filter((m) => m.group === group);
@@ -42,29 +42,60 @@ export default function DungeonModuleGroupPage() {
   const visible = debug ? modules : modules.filter((m) => m.has_img);
   const hiddenCount = modules.length - visible.length;
 
-  if (loading) return <div style={{ textAlign: "center", color: "#aaa", marginTop: 100 }}>加载中...</div>;
-  if (!modules.length) return <div style={{ textAlign: "center", color: "#ff6b6b", marginTop: 100 }}>未找到</div>;
+  if (loading)
+    return (
+      <div style={{ textAlign: 'center', color: '#aaa', marginTop: 100 }}>
+        加载中...
+      </div>
+    );
+  if (!modules.length)
+    return (
+      <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
+        未找到
+      </div>
+    );
 
-  const groupLabel = GROUP_LABELS[group || ""] || group || "未分组";
+  const groupLabel = GROUP_LABELS[group || ''] || group || '未分组';
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>{groupLabel} 地图模块 | DarkFindV5游戏导航</title>
-        <meta name="description" content={`${groupLabel} 地图模块，共 ${modules.length} 个模块。`} />
+        <meta
+          name="description"
+          content={`${groupLabel} 地图模块，共 ${modules.length} 个模块。`}
+        />
       </Helmet>
-      <div style={{ textAlign: "center", marginBottom: 8 }}>
-        <h1 style={{ color: "#00bcd4", fontSize: 28, margin: "0 0 8px", display: "inline" }}>
+      <div style={{ textAlign: 'center', marginBottom: 8 }}>
+        <h1
+          style={{
+            color: '#00bcd4',
+            fontSize: 28,
+            margin: '0 0 8px',
+            display: 'inline',
+          }}
+        >
           【{groupLabel}】地图模块
-          <span style={{ color: "#aaa", fontSize: 14, marginLeft: 12 }}>{visible.length} 个模块{hiddenCount > 0 ? `（${hiddenCount} 个无图已隐藏）` : ""}</span>
+          <span style={{ color: '#aaa', fontSize: 14, marginLeft: 12 }}>
+            {visible.length} 个模块
+            {hiddenCount > 0 ? `（${hiddenCount} 个无图已隐藏）` : ''}
+          </span>
         </h1>
-        <Button onClick={toggle} size="small" style={{ marginLeft: 12, opacity: debug ? 1 : 0.5 }}>
-          {debug ? "调试模式：显示全部" : "调试模式开启"}
+        <Button
+          onClick={toggle}
+          size="small"
+          style={{ marginLeft: 12, opacity: debug ? 1 : 0.5 }}
+        >
+          {debug ? '调试模式：显示全部' : '调试模式开启'}
         </Button>
       </div>
-      <div style={{
-        display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8,
-      }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: 8,
+        }}
+      >
         {visible.map((mod) => {
           const sx = mod.size_x || 1;
           const sy = mod.size_y || 1;
@@ -72,46 +103,75 @@ export default function DungeonModuleGroupPage() {
             <Link
               key={mod.name}
               to={`/dungeon_modules/${group}/${mod.name}`}
-              style={{ textDecoration: "none", minWidth: 0, gridColumn: sx >= 2 ? `span ${sx}` : undefined, gridRow: sy >= 2 ? `span ${sy}` : undefined }}
-            >
-              <div style={{
-                background: "#3a3a3a",
-                border: "1px solid #555",
-                borderRadius: 5,
-                padding: 8,
-                cursor: "pointer",
-                transition: "transform 0.2s, box-shadow 0.2s",
-                height: "100%",
+              style={{
+                textDecoration: 'none',
+                minWidth: 0,
+                gridColumn: sx >= 2 ? `span ${sx}` : undefined,
+                gridRow: sy >= 2 ? `span ${sy}` : undefined,
               }}
+            >
+              <div
+                style={{
+                  background: '#3a3a3a',
+                  border: '1px solid #555',
+                  borderRadius: 5,
+                  padding: 8,
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  height: '100%',
+                }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-3px)";
-                  e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.4)";
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 6px 16px rgba(0,0,0,0.4)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "none";
-                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
-                <h3 style={{
-                  margin: "0 0 2px 0", fontSize: 20, color: "#00bcd4",
-                  textAlign: "center", lineHeight: 1.3,
-                  overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                }}>
-                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{mod.translation || mod.name}</span>
-                  <span style={{ fontSize: 12, color: "#888", flexShrink: 0 }}>{sx}x{sy}</span>
+                <h3
+                  style={{
+                    margin: '0 0 2px 0',
+                    fontSize: 20,
+                    color: '#00bcd4',
+                    textAlign: 'center',
+                    lineHeight: 1.3,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 6,
+                  }}
+                >
+                  <span
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {mod.translation || mod.name}
+                  </span>
+                  <span style={{ fontSize: 12, color: '#888', flexShrink: 0 }}>
+                    {sx}x{sy}
+                  </span>
                 </h3>
-                <div style={{
-                  aspectRatio: `${sx} / ${sy}`,
-                  background: "#2c2c2c",
-                  border: "1px solid #666",
-                  borderRadius: 4,
-                  position: "relative",
-                  overflow: "hidden",
-                  backgroundImage: `url(./data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }} />
+                <div
+                  style={{
+                    aspectRatio: `${sx} / ${sy}`,
+                    background: '#2c2c2c',
+                    border: '1px solid #666',
+                    borderRadius: 4,
+                    position: 'relative',
+                    overflow: 'hidden',
+                    backgroundImage: `url(./data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
               </div>
             </Link>
           );

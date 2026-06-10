@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 UI界面文本管理
 提供多语言UI字符串
@@ -101,7 +100,7 @@ class UITranslations:
             "reward_affinity": "好感度",
             "reward_random": "随机奖励",
             "reward_count": "数量",
-        }
+        },
     }
 
     @staticmethod

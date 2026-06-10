@@ -16,7 +16,7 @@ def load_all_layout_rotations() -> dict[str, int]:
                 continue
             fp = Path(dirpath) / fn
             try:
-                with open(fp, "r", encoding="utf-8") as f:
+                with open(fp, encoding="utf-8") as f:
                     data = json.load(f)
             except Exception:
                 continue

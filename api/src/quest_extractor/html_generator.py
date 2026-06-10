@@ -1,25 +1,19 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 HTML生成器（精简协调器）
 聚合PageBuilder, ContentRenderer, UITranslations，提供统一接口
 """
 
 import os
-from pathlib import Path
 
 try:
-    from .translator import Translator
-    from .ui_translations import UITranslations
-    from .html_template import HTMLTemplate
-    from .page_builder import PageBuilder
     from .content_renderer import ContentRenderer
+    from .page_builder import PageBuilder
+    from .ui_translations import UITranslations
 except ImportError:
-    from translator import Translator
-    from ui_translations import UITranslations
-    from html_template import HTMLTemplate
-    from page_builder import PageBuilder
     from content_renderer import ContentRenderer
+    from page_builder import PageBuilder
+    from ui_translations import UITranslations
 
 
 class HTMLGenerator:
@@ -44,19 +38,26 @@ class HTMLGenerator:
 
         # 初始化子组件
         self.ui_translations = UITranslations()
-        self.content_renderer = ContentRenderer(
-            quest_extractor,
-            ui_translations=self.ui_translations
-        ) if quest_extractor else None
+        self.content_renderer = (
+            ContentRenderer(quest_extractor, ui_translations=self.ui_translations) if quest_extractor else None
+        )
         self.page_builder = PageBuilder(
             output_dir=self.output_dir,
             language=language,
             ui_translations=self.ui_translations,
             content_renderer=self.content_renderer,
-            dark_mode=dark_mode
+            dark_mode=dark_mode,
         )
 
-    def generate_all_pages(self, grouped_quests, inactive_npcs=None, equipment_npcs=None, preferred_npcs=None, not_recommended_npcs=None, dark_mode=False):
+    def generate_all_pages(
+        self,
+        grouped_quests,
+        inactive_npcs=None,
+        equipment_npcs=None,
+        preferred_npcs=None,
+        not_recommended_npcs=None,
+        dark_mode=False,
+    ):
         """
         生成所有页面
 
@@ -73,8 +74,12 @@ class HTMLGenerator:
             生成的文件路径列表
         """
         generated_files = self.page_builder.build_all_pages(
-            grouped_quests, self.quest_extractor,
-            inactive_npcs=inactive_npcs, equipment_npcs=equipment_npcs, preferred_npcs=preferred_npcs, not_recommended_npcs=not_recommended_npcs,
-            dark_mode=dark_mode
+            grouped_quests,
+            self.quest_extractor,
+            inactive_npcs=inactive_npcs,
+            equipment_npcs=equipment_npcs,
+            preferred_npcs=preferred_npcs,
+            not_recommended_npcs=not_recommended_npcs,
+            dark_mode=dark_mode,
         )
         return generated_files

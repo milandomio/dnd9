@@ -1,6 +1,6 @@
-import { createContext, useContext, useState, useCallback } from "react";
-import type { ReactNode } from "react";
-import type { AdjState } from "../components/MapDebug";
+import { createContext, useContext, useState, useCallback } from 'react';
+import type { ReactNode } from 'react';
+import type { AdjState } from '../components/MapDebug';
 
 interface DebugContextType {
   debug: boolean;
@@ -26,6 +26,6 @@ export function DebugProvider({ children }: { children: ReactNode }) {
 
 export function useDebug() {
   const ctx = useContext(DebugContext);
-  if (!ctx) throw new Error("useDebug must be used within DebugProvider");
+  if (!ctx) throw new Error('useDebug must be used within DebugProvider');
   return ctx;
 }

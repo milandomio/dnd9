@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 
 /**
  * SSR data context.
@@ -16,7 +16,7 @@ export function useSSRData<T>(key: string): T | null {
   if (ctx) return (ctx[key] as T) ?? null;
 
   // Client hydration path: data was injected by SSG script into HTML
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     const w = window as any;
     if (w.__SSR_DATA__ && w.__SSR_DATA__[key]) return w.__SSR_DATA__[key] as T;
   }

@@ -1,22 +1,34 @@
 import json
 import os
 import re
-from collections import defaultdict
 from pathlib import Path
 
 from config import (
-    DB_PATH, GAME_JSON, ITEM_DIR, MONSTER_DIR, PROPS_DIR,
-    DUNGEON_MODULE_DIR, LOOTDROP_DIR, LOOTDROP_GROUP_DIR,
-    SPAWNER_DIR, MAPS_DIR, LAYOUT_DIR,
-    OUTPUT_DIR, GAME_ROOT, GROUP_TO_ART_DIR,
-    HARDCODED_TRANSLATIONS, MODULE_DISPLAY_OVERRIDE,
-    MODULE_NAME_OVERRIDE, MODULE_OFFSET_MAP, TRANSLATION_ALIAS_MAP,
+    DB_PATH,
+    DUNGEON_MODULE_DIR,
+    GAME_JSON,
+    GAME_ROOT,
+    GROUP_TO_ART_DIR,
+    HARDCODED_TRANSLATIONS,
     IMG_SRC,
+    ITEM_DIR,
+    LAYOUT_DIR,
+    LOOTDROP_DIR,
+    LOOTDROP_GROUP_DIR,
+    MAPS_DIR,
+    MODULE_DISPLAY_OVERRIDE,
+    MODULE_NAME_OVERRIDE,
+    MODULE_OFFSET_MAP,
+    MONSTER_DIR,
+    OUTPUT_DIR,
+    PROPS_DIR,
+    SPAWNER_DIR,
+    TRANSLATION_ALIAS_MAP,
 )
 from db_manager import DatabaseManager
-from search_engine import build_all_matches
 from layout_utils import load_all_layout_rotations
 from quest_collector import run_quest_extraction
+from search_engine import build_all_matches
 
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
@@ -30,17 +42,26 @@ _DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
 
 # Props 目录中的 _Dummy 实体同时也是怪物
 _DUMMY_AS_MONSTER = {
-    "LivingArmor", "LivingStatue",
-    "LivingArmor_Elite", "LivingArmor_Nightmare",
-    "LivingStatue_Elite", "LivingStatue_Nightmare",
+    "LivingArmor",
+    "LivingStatue",
+    "LivingArmor_Elite",
+    "LivingArmor_Nightmare",
+    "LivingStatue_Elite",
+    "LivingStatue_Nightmare",
 }
 
 
-
 _SOURCE_PATHS = [
-    GAME_JSON, ITEM_DIR, MONSTER_DIR, PROPS_DIR,
-    DUNGEON_MODULE_DIR, LOOTDROP_DIR, LOOTDROP_GROUP_DIR,
-    SPAWNER_DIR, MAPS_DIR, LAYOUT_DIR,
+    GAME_JSON,
+    ITEM_DIR,
+    MONSTER_DIR,
+    PROPS_DIR,
+    DUNGEON_MODULE_DIR,
+    LOOTDROP_DIR,
+    LOOTDROP_GROUP_DIR,
+    SPAWNER_DIR,
+    MAPS_DIR,
+    LAYOUT_DIR,
 ]
 
 
@@ -58,7 +79,7 @@ def _get_newest_mtime(paths: list[Path]) -> float:
             except OSError:
                 continue
         elif p.is_dir():
-            for dirpath, dirnames, filenames in os.walk(p):
+            for dirpath, _dirnames, filenames in os.walk(p):
                 for fn in filenames:
                     try:
                         fp = Path(dirpath) / fn
@@ -150,8 +171,18 @@ def run():
         c.execute("DELETE FROM spawners")
         c.execute("DELETE FROM search_term_matches")
         spawner_rows = [
-            (idx + 1, s["keyword"], s.get("original_keyword", ""), s["spawner_type"],
-             s["x"], s["y"], s["z"], s["json_filename"], s.get("version", ""), s.get("map_base", ""))
+            (
+                idx + 1,
+                s["keyword"],
+                s.get("original_keyword", ""),
+                s["spawner_type"],
+                s["x"],
+                s["y"],
+                s["z"],
+                s["json_filename"],
+                s.get("version", ""),
+                s.get("map_base", ""),
+            )
             for idx, s in enumerate(spawners)
         ]
         c.executemany(
@@ -205,12 +236,22 @@ def run():
             if name in MODULE_NAME_OVERRIDE:
                 return MODULE_NAME_OVERRIDE[name]
             for group_prefix in [
-                "Firedeep_", "Inferno_", "Crypt_", "Ruins_", "GoblinCave_",
-                "Goblin_", "IceCavern_", "IceCave_", "IceAbyss_",
-                "ShipGraveyard_", "Shipgraveyard_", "Swamp_", "Cave_",
+                "Firedeep_",
+                "Inferno_",
+                "Crypt_",
+                "Ruins_",
+                "GoblinCave_",
+                "Goblin_",
+                "IceCavern_",
+                "IceCave_",
+                "IceAbyss_",
+                "ShipGraveyard_",
+                "Shipgraveyard_",
+                "Swamp_",
+                "Cave_",
             ]:
                 if name.startswith(group_prefix):
-                    stripped = name[len(group_prefix):]
+                    stripped = name[len(group_prefix) :]
                     if stripped:
                         alias_key = "Text_DesignData_Dungeon_DungeonModule_" + stripped
                         if alias_key in translations:
@@ -261,25 +302,38 @@ def run():
             continue
         translation = resolve_name(name, r["translation_key"], "item")
         variant_count = r.get("variant_count", 1)
-        items_index.append({
-            "name": name,
-            "translation": translation,
-            "category": r["category"],
-            "variant_count": variant_count,
-            "monsters": merged_loot.get(name, []),
-            "coordCount": len(coords),
-        })
-        _save(f"items/{name}.json", {
-            "name": name,
-            "translation": translation,
-            "category": r["category"],
-            "variant_count": variant_count,
-            "monsters": merged_loot.get(name, []),
-            "coords": [
-                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"], "label": c["original_keyword"]}
-                for c in coords
-            ],
-        })
+        items_index.append(
+            {
+                "name": name,
+                "translation": translation,
+                "category": r["category"],
+                "variant_count": variant_count,
+                "monsters": merged_loot.get(name, []),
+                "coordCount": len(coords),
+            }
+        )
+        _save(
+            f"items/{name}.json",
+            {
+                "name": name,
+                "translation": translation,
+                "category": r["category"],
+                "variant_count": variant_count,
+                "monsters": merged_loot.get(name, []),
+                "coords": [
+                    {
+                        "x": c["x"],
+                        "y": c["y"],
+                        "z": c["z"],
+                        "map": c["map_base"],
+                        "file": c["json_filename"],
+                        "version": c["version"],
+                        "label": c["original_keyword"],
+                    }
+                    for c in coords
+                ],
+            },
+        )
     _save("items.json", items_index)
 
     # ── monsters: index + individual files ──
@@ -289,26 +343,41 @@ def run():
         if not coords:
             continue
         translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
-        monsters_index.append({
-            "name": r["monster_name"],
-            "translation": translation,
-            "coordCount": len(coords),
-        })
-        _save(f"monsters/{r['monster_name']}.json", {
-            "name": r["monster_name"],
-            "translation": translation,
-            "coords": [
-                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"], "label": c["original_keyword"]}
-                for c in coords
-            ],
-        })
+        monsters_index.append(
+            {
+                "name": r["monster_name"],
+                "translation": translation,
+                "coordCount": len(coords),
+            }
+        )
+        _save(
+            f"monsters/{r['monster_name']}.json",
+            {
+                "name": r["monster_name"],
+                "translation": translation,
+                "coords": [
+                    {
+                        "x": c["x"],
+                        "y": c["y"],
+                        "z": c["z"],
+                        "map": c["map_base"],
+                        "file": c["json_filename"],
+                        "version": c["version"],
+                        "label": c["original_keyword"],
+                    }
+                    for c in coords
+                ],
+            },
+        )
     _save("monsters.json", monsters_index)
 
     # ── props: index + individual files (merged by translation) ──
     _ORE_QUALITY_ORDER = {"VeryLow": 0, "Low": 1, "Med": 2, "High": 3}
+
     def _ore_quality_key(r):
         m = re.search(r"_(High|Med|Low|VeryLow)$", r["asset_name"])
         return _ORE_QUALITY_ORDER.get(m.group(1), 99) if m else 99
+
     props_index = []
     props_by_translation: dict[str, list[dict]] = {}
     for r in sorted(props, key=_ore_quality_key):
@@ -331,25 +400,48 @@ def run():
         if not merged_coords:
             continue
         name_key = group[0]["asset_name"]
-        props_index.append({
-            "name": name_key,
-            "translation": translation,
-            "coordCount": len(merged_coords),
-        })
-        _save(f"props/{name_key}.json", {
-            "name": name_key,
-            "translation": translation,
-            "coords": [
-                {"x": c["x"], "y": c["y"], "z": c["z"], "map": c["map_base"], "file": c["json_filename"], "version": c["version"], "label": c["original_keyword"]}
-                for c in merged_coords
-            ],
-        })
+        props_index.append(
+            {
+                "name": name_key,
+                "translation": translation,
+                "coordCount": len(merged_coords),
+            }
+        )
+        _save(
+            f"props/{name_key}.json",
+            {
+                "name": name_key,
+                "translation": translation,
+                "coords": [
+                    {
+                        "x": c["x"],
+                        "y": c["y"],
+                        "z": c["z"],
+                        "map": c["map_base"],
+                        "file": c["json_filename"],
+                        "version": c["version"],
+                        "label": c["original_keyword"],
+                    }
+                    for c in merged_coords
+                ],
+            },
+        )
     _save("props.json", props_index)
 
     # ── dungeon_modules.json ──
     module_rotations = load_all_layout_rotations()
     modules = db.get_dungeon_modules()
-    art_root = Path(__file__).parent.parent.parent.parent / "Output" / "Exports" / "DungeonCrawler" / "Content" / "DungeonCrawler" / "Data" / "Art" / "DungeonModuleMapImage"
+    art_root = (
+        Path(__file__).parent.parent.parent.parent
+        / "Output"
+        / "Exports"
+        / "DungeonCrawler"
+        / "Content"
+        / "DungeonCrawler"
+        / "Data"
+        / "Art"
+        / "DungeonModuleMapImage"
+    )
     modules_map: dict[str, dict] = {}
     for r in modules:
         override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
@@ -362,7 +454,7 @@ def run():
         sl = r["sl_base_name"]
         map_image = r.get("map_image_name", "")
         module_name = r["module_name"]
-        PLACEHOLDERS = ('RareModule_1x1', 'UnderConstruction_1x1')
+        PLACEHOLDERS = ("RareModule_1x1", "UnderConstruction_1x1")
 
         def _try_resolve(name: str):
             """Return (resolved_name, status). status: 'found'|'not_found'|'no_art'."""
@@ -377,20 +469,20 @@ def run():
         # 1. sl_base_name (SubLevelAsset) — always primary
         # 2. module_name — only when Art dir exists AND sl was not found
         # 3. MapImage — last resort
-        if art_status == 'no_art':
+        if art_status == "no_art":
             # No Art dir → sl is the best guess (matches webp in img/ dir)
             # BUT if MapImage is a placeholder, the module's own image might differ from sl
             if map_image in PLACEHOLDERS and module_name != sl:
                 candidate, c_status = _try_resolve(module_name)
-                if c_status in ('no_art', 'found'):
+                if c_status in ("no_art", "found"):
                     img_name = candidate
-        elif art_status == 'not_found':
+        elif art_status == "not_found":
             # Art dir exists but no match for sl → try module_name (may differ)
             if module_name != sl:
                 candidate, c_status = _try_resolve(module_name)
-                if c_status == 'found':
+                if c_status == "found":
                     img_name = candidate
-                elif c_status == 'not_found':
+                elif c_status == "not_found":
                     pass  # neither found; keep sl
         else:
             # 'found' → sl had an exact match in Art; use it
@@ -403,7 +495,7 @@ def run():
                 img_name = candidate
 
         # Fallback: strip variant suffixes (_D, _A, _S) from module_name and check IMG_SRC for .webp
-        if art_status in ('not_found', 'no_art') and img_name not in PLACEHOLDERS:
+        if art_status in ("not_found", "no_art") and img_name not in PLACEHOLDERS:
             if not (IMG_SRC / f"{img_name}.webp").exists() and module_name:
                 stripped = re.sub(r"_[A-Z]$", "", module_name)
                 if stripped != module_name and (IMG_SRC / f"{stripped}.webp").exists():
@@ -413,8 +505,8 @@ def run():
         # keep the placeholder so the frontend shows RareModule_1x1.webp.
         # Only when Art was searched (not_found) AND sl == module_name (single source) AND MapImage was a placeholder.
         if not img_name or img_name in PLACEHOLDERS:
-            img_name = module_name or ''
-        elif art_status == 'not_found' and img_name == module_name == sl and map_image in PLACEHOLDERS:
+            img_name = module_name or ""
+        elif art_status == "not_found" and img_name == module_name == sl and map_image in PLACEHOLDERS:
             img_name = map_image
         has_img = (IMG_SRC / f"{img_name}.webp").exists()
         modules_map[r["module_name"]] = {
@@ -467,11 +559,17 @@ def run():
                     entity_class[name]["translation_key"] = "Text_DesignData_Monster_Monster_" + base
         else:
             base = _QUALITY_RE.sub("", name)
-            entity_class[name] = {"types": ["props", "monster"], "translation_key": "Text_DesignData_Monster_Monster_" + base}
-    _save("entity_index.json", [
-        {"name": n, "types": v["types"], "translation_key": v["translation_key"]}
-        for n, v in sorted(entity_class.items())
-    ])
+            entity_class[name] = {
+                "types": ["props", "monster"],
+                "translation_key": "Text_DesignData_Monster_Monster_" + base,
+            }
+    _save(
+        "entity_index.json",
+        [
+            {"name": n, "types": v["types"], "translation_key": v["translation_key"]}
+            for n, v in sorted(entity_class.items())
+        ],
+    )
 
     # Build translation lookup from DB entity tables (covers all names including props variants)
     trans_lookup = {}
@@ -483,13 +581,37 @@ def run():
         trans_lookup[r["asset_name"]] = resolve_name(r["asset_name"], r["translation_key"], "props")
 
     _MODULE_COLORS = [
-        "#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C",
-        "#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085",
-        "#C0392B","#2C3E50","#7F8C8D","#FF6B35","#00BFFF","#FFD700",
-        "#FF69B4","#32CD32","#FF4500","#9370DB","#00FA9A","#DC143C",
+        "#E74C3C",
+        "#3498DB",
+        "#2ECC71",
+        "#F39C12",
+        "#9B59B6",
+        "#1ABC9C",
+        "#E67E22",
+        "#2980B9",
+        "#27AE60",
+        "#D35400",
+        "#8E44AD",
+        "#16A085",
+        "#C0392B",
+        "#2C3E50",
+        "#7F8C8D",
+        "#FF6B35",
+        "#00BFFF",
+        "#FFD700",
+        "#FF69B4",
+        "#32CD32",
+        "#FF4500",
+        "#9370DB",
+        "#00FA9A",
+        "#DC143C",
         "#00CED1",
     ]
-    rows = db.connect().execute("SELECT keyword, spawner_type, x, y, z, version, map_base FROM spawners ORDER BY map_base, keyword").fetchall()
+    rows = (
+        db.connect()
+        .execute("SELECT keyword, spawner_type, x, y, z, version, map_base FROM spawners ORDER BY map_base, keyword")
+        .fetchall()
+    )
     module_coords: dict[str, dict] = {}
     color_idx = 0
     for row in rows:
@@ -517,15 +639,23 @@ def run():
                 "coords": [],
             }
             color_idx += 1
-        module_coords[mb]["entities"][ek]["coords"].append({
-            "x": row["x"], "y": row["y"], "z": row["z"], "version": row["version"] or "",
-        })
+        module_coords[mb]["entities"][ek]["coords"].append(
+            {
+                "x": row["x"],
+                "y": row["y"],
+                "z": row["z"],
+                "version": row["version"] or "",
+            }
+        )
     for mb, data in module_coords.items():
         entities_out = list(data["entities"].values())
-        _save(f"dungeon_modules_coords/{mb}.json", {
-            "map_base": mb,
-            "entities": entities_out,
-        })
+        _save(
+            f"dungeon_modules_coords/{mb}.json",
+            {
+                "map_base": mb,
+                "entities": entities_out,
+            },
+        )
     print(f"  module coords: {len(module_coords)} modules with coordinates")
 
     # ── lootdrops.json (grouped by item for list page) ──
@@ -534,7 +664,11 @@ def run():
     loot_index = []
     for item_name, monster_names in merged_loot.items():
         item_row = items_lookup.get(item_name)
-        translation = resolve_name(item_name, item_row["translation_key"] if item_row else None, "item") if item_row else (resolve_name(item_name, None, "item") or item_name)
+        translation = (
+            resolve_name(item_name, item_row["translation_key"] if item_row else None, "item")
+            if item_row
+            else (resolve_name(item_name, None, "item") or item_name)
+        )
         mon_translations = []
         for m in sorted(monster_names):
             cls = entity_class.get(m)
@@ -590,18 +724,46 @@ def run():
                 seen_bases.add(base)
                 merged_names.append(mn)
                 merged_translations.append(mt)
-        loot_index.append({
-            "name": item_name,
-            "translation": translation,
-            "variant_count": variant_count,
-            "monsters": sorted(merged_names),
-            "monster_translations": merged_translations,
-        })
+        loot_index.append(
+            {
+                "name": item_name,
+                "translation": translation,
+                "variant_count": variant_count,
+                "monsters": sorted(merged_names),
+                "monster_translations": merged_translations,
+            }
+        )
     loot_index.sort(key=lambda x: x["translation"] or x["name"])
     _save("lootdrops.json", loot_index)
 
     # ── lootdrops detail files ──
-    _MONSTER_COLORS = ["#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C","#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085","#C0392B","#2C3E50","#7F8C8D","#FF6B35","#00BFFF","#FFD700","#FF69B4","#32CD32","#FF4500","#9370DB","#00FA9A","#DC143C","#00CED1"]
+    _MONSTER_COLORS = [
+        "#E74C3C",
+        "#3498DB",
+        "#2ECC71",
+        "#F39C12",
+        "#9B59B6",
+        "#1ABC9C",
+        "#E67E22",
+        "#2980B9",
+        "#27AE60",
+        "#D35400",
+        "#8E44AD",
+        "#16A085",
+        "#C0392B",
+        "#2C3E50",
+        "#7F8C8D",
+        "#FF6B35",
+        "#00BFFF",
+        "#FFD700",
+        "#FF69B4",
+        "#32CD32",
+        "#FF4500",
+        "#9370DB",
+        "#00FA9A",
+        "#DC143C",
+        "#00CED1",
+    ]
 
     def _base_monster_name(name: str) -> str:
         """Strip _Hard/_VeryHard/Unique suffix to get base name."""
@@ -613,7 +775,7 @@ def run():
         item_name = entry["name"]
         # Build merged monsters: base_name → {name, translation, coords}
         merged: dict[str, dict] = {}
-        for i, m_name in enumerate(entry["monsters"]):
+        for _i, m_name in enumerate(entry["monsters"]):
             # Skip self-referencing: item dropping itself (e.g. GoldOres → GoldOres)
             if m_name == item_name:
                 continue
@@ -634,18 +796,27 @@ def run():
                     "coords": [],
                 }
             for c in coords:
-                merged[base]["coords"].append({
-                    "x": c["x"], "y": c["y"], "z": c["z"],
-                    "map": c["map_base"], "file": c["json_filename"], "version": c["version"],
-                    "label": c.get("original_keyword", ""),
-                })
+                merged[base]["coords"].append(
+                    {
+                        "x": c["x"],
+                        "y": c["y"],
+                        "z": c["z"],
+                        "map": c["map_base"],
+                        "file": c["json_filename"],
+                        "version": c["version"],
+                        "label": c.get("original_keyword", ""),
+                    }
+                )
         monsters_out = list(merged.values())
         if monsters_out:
-            _save(f"lootdrops/{item_name}.json", {
-                "name": item_name,
-                "translation": entry["translation"],
-                "monsters": monsters_out,
-            })
+            _save(
+                f"lootdrops/{item_name}.json",
+                {
+                    "name": item_name,
+                    "translation": entry["translation"],
+                    "monsters": monsters_out,
+                },
+            )
 
     # ── Quest extraction ──
     print("\nExtracting quest data...")
@@ -658,7 +829,9 @@ def run():
     qg_path = OUTPUT_DIR / "quest_items_groups.json"
     qg = json.loads(qg_path.read_text()) if qg_path.exists() else []
     index_data = [
-        {"_comment": "该文件由 api/src/collector.py 自动生成，请勿手动编辑。如需修改，请编辑 collector.py 中的 index_data 列表。"},
+        {
+            "_comment": "该文件由 api/src/collector.py 自动生成，请勿手动编辑。如需修改，请编辑 collector.py 中的 index_data 列表。"
+        },
         {"page": "items", "label": "物品表", "count": len(items_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
@@ -700,9 +873,22 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
         quest_map.setdefault(qi["item_name"], []).append(qi)
 
     _COLORS = [
-        "#E74C3C","#3498DB","#2ECC71","#E67E22","#9B59B6","#1ABC9C",
-        "#F39C12","#2980B9","#D35400","#C0392B","#7F8C8D","#27AE60",
-        "#16A085","#8E44AD","#2C3E50","#F1C40F",
+        "#E74C3C",
+        "#3498DB",
+        "#2ECC71",
+        "#E67E22",
+        "#9B59B6",
+        "#1ABC9C",
+        "#F39C12",
+        "#2980B9",
+        "#D35400",
+        "#C0392B",
+        "#7F8C8D",
+        "#27AE60",
+        "#16A085",
+        "#8E44AD",
+        "#2C3E50",
+        "#F1C40F",
     ]
 
     groups = {}
@@ -718,19 +904,36 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
             mt = map_to_group.get(mb, "")
             if not mt:
                 continue
-            groups.setdefault(mt, {"group":mt,"entities":{}})
+            groups.setdefault(mt, {"group": mt, "entities": {}})
             ek = f"item::{item_name}"
             if ek not in groups[mt]["entities"]:
                 groups[mt]["entities"][ek] = {
-                    "name": item_name, "translation": trans, "type": "item",
-                    "color": _COLORS[ci % len(_COLORS)], "coords": [],
-                    "quest_npcs": [{"npc_name":qi["npc_name"],"npc_name_cn":qi["npc_name_cn"],"quest_number":qi["quest_number"],"count":qi["count"]} for qi in info_list],
+                    "name": item_name,
+                    "translation": trans,
+                    "type": "item",
+                    "color": _COLORS[ci % len(_COLORS)],
+                    "coords": [],
+                    "quest_npcs": [
+                        {
+                            "npc_name": qi["npc_name"],
+                            "npc_name_cn": qi["npc_name_cn"],
+                            "quest_number": qi["quest_number"],
+                            "count": qi["count"],
+                        }
+                        for qi in info_list
+                    ],
                 }
                 ci += 1
-            groups[mt]["entities"][ek]["coords"].append({
-                "x":c["x"],"y":c["y"],"z":c["z"],"map":mb,
-                "file":c["json_filename"],"version":c["version"],
-            })
+            groups[mt]["entities"][ek]["coords"].append(
+                {
+                    "x": c["x"],
+                    "y": c["y"],
+                    "z": c["z"],
+                    "map": mb,
+                    "file": c["json_filename"],
+                    "version": c["version"],
+                }
+            )
         for mn in sorted(mnames):
             if mn == item_name:
                 continue
@@ -741,12 +944,15 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                 mt = map_to_group.get(mb, "")
                 if not mt:
                     continue
-                groups.setdefault(mt, {"group":mt,"entities":{}})
+                groups.setdefault(mt, {"group": mt, "entities": {}})
                 ek = f"monster::{mn}"
                 if ek not in groups[mt]["entities"]:
                     groups[mt]["entities"][ek] = {
-                        "name": mn, "translation": mtrans, "type": "monster",
-                        "color": _COLORS[ci % len(_COLORS)], "coords": [],
+                        "name": mn,
+                        "translation": mtrans,
+                        "type": "monster",
+                        "color": _COLORS[ci % len(_COLORS)],
+                        "coords": [],
                         "quest_items": [item_name],
                         "_seen_coords": set(),
                     }
@@ -757,15 +963,26 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                 coord_key = (c["x"], c["y"], c["z"], mb, c["json_filename"])
                 if coord_key not in groups[mt]["entities"][ek]["_seen_coords"]:
                     groups[mt]["entities"][ek]["_seen_coords"].add(coord_key)
-                    groups[mt]["entities"][ek]["coords"].append({
-                        "x":c["x"],"y":c["y"],"z":c["z"],"map":mb,
-                        "file":c["json_filename"],"version":c["version"],
-                    })
+                    groups[mt]["entities"][ek]["coords"].append(
+                        {
+                            "x": c["x"],
+                            "y": c["y"],
+                            "z": c["z"],
+                            "map": mb,
+                            "file": c["json_filename"],
+                            "version": c["version"],
+                        }
+                    )
 
     GROUP_LABELS = {
-        "Crypt":"废墟2层地牢","FireDeep":"哥布林洞穴2层","GoblinCave":"哥布林洞穴1层",
-        "IceAbyss":"冰图2层","IceCavern":"冰图1层","Inferno":"废墟3层炼狱",
-        "Ruins":"废墟1层","ShipGraveyard":"水图",
+        "Crypt": "废墟2层地牢",
+        "FireDeep": "哥布林洞穴2层",
+        "GoblinCave": "哥布林洞穴1层",
+        "IceAbyss": "冰图2层",
+        "IceCavern": "冰图1层",
+        "Inferno": "废墟3层炼狱",
+        "Ruins": "废墟1层",
+        "ShipGraveyard": "水图",
     }
     groups_index = []
     for gname in sorted(groups):
@@ -775,14 +992,22 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
         for e in entities:
             e.pop("_seen_coords", None)
         pos_count = sum(len(e["coords"]) for e in entities)
-        groups_index.append({
-            "group": gname, "group_display": g["group_display"],
-            "entity_count": len(entities), "position_count": pos_count,
-        })
-        _save(f"quest_items_groups/{gname}.json", {
-            "group": gname, "group_display": g["group_display"],
-            "entities": entities,
-        })
+        groups_index.append(
+            {
+                "group": gname,
+                "group_display": g["group_display"],
+                "entity_count": len(entities),
+                "position_count": pos_count,
+            }
+        )
+        _save(
+            f"quest_items_groups/{gname}.json",
+            {
+                "group": gname,
+                "group_display": g["group_display"],
+                "entities": entities,
+            },
+        )
     _save("quest_items_groups.json", groups_index)
     print(f"  quest items groups: {len(groups_index)}")
 
@@ -793,57 +1018,58 @@ def _resolve_img(art_root: Path, group: str, sl: str):
             'no_art' (Art dir doesn't exist for this group).
     """
     if not art_root.exists() or not group:
-        return sl, 'no_art'
+        return sl, "no_art"
     art_dir_name = GROUP_TO_ART_DIR.get(group, group)
     group_dir = art_root / art_dir_name
     if not group_dir.exists():
-        return sl, 'no_art'
+        return sl, "no_art"
     # Try exact match (case-insensitive)
     png = group_dir / f"{sl}.png"
     if png.exists():
-        return sl, 'found'
+        return sl, "found"
     for p in group_dir.iterdir():
         if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl.lower():
-            return p.stem, 'found'
+            return p.stem, "found"
     # Try tail match (part after first underscore)
     tail = sl.split("_", 1)[-1] if "_" in sl else sl
     png = group_dir / f"{tail}.png"
     if png.exists():
-        return tail, 'found'
+        return tail, "found"
     for p in group_dir.iterdir():
         if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail.lower():
-            return p.stem, 'found'
+            return p.stem, "found"
     # Try stripping numeric suffix (_01, _02 etc.)
     import re
+
     sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
     if sl_stripped != sl:
         for p in group_dir.iterdir():
             if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_stripped.lower():
-                return p.stem, 'found'
+                return p.stem, "found"
         tail_stripped = re.sub(r"_\d{2,4}$", "", tail)
         if tail_stripped != tail:
             for p in group_dir.iterdir():
                 if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail_stripped.lower():
-                    return p.stem, 'found'
+                    return p.stem, "found"
     # Try stripping _Center / _Corner / _Passage suffix (keep trailing _NN)
     sl_center_stripped = re.sub(r"_(?:Center|Corner|Passage)(?=_\d|$)", "", sl)
     if sl_center_stripped != sl:
         for p in group_dir.iterdir():
             if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_center_stripped.lower():
-                return p.stem, 'found'
+                return p.stem, "found"
     # Try stripping _Resize / _Test / _BossTest / _DistantView debug suffixes
     sl_debug_stripped = re.sub(r"_(?:Resize|Test|BossTest|DistantView)$", "", sl)
     if sl_debug_stripped != sl:
         for p in group_dir.iterdir():
             if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_debug_stripped.lower():
-                return p.stem, 'found'
+                return p.stem, "found"
     # Try numeric prefix match: after stripping _\d{2,4}$, find any file starting with the stripped prefix
     if sl_stripped != sl:
         prefix = sl_stripped.lower()
         for p in group_dir.iterdir():
             if p.suffix.lower() in (".png", ".webp") and p.stem.lower().startswith(prefix):
-                return p.stem, 'found'
-    return sl, 'not_found'
+                return p.stem, "found"
+    return sl, "not_found"
 
 
 def _save(filename: str, data: list | dict):

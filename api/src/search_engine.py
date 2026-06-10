@@ -1,13 +1,11 @@
+import json
 import os
 import re
-import json
 from pathlib import Path
-from typing import Any
 
 import ahocorasick
 
 from config import MAPS_DIR, SPAWNER_ALIAS_MAP
-
 
 _VARIANT_RE = re.compile(r"_\d{4}$")
 
@@ -37,7 +35,12 @@ _PREFIXES = [
 ]
 
 _SUFFIXES = [
-    "_Elite", "_Random", "_2type", "_3type", "_4type", "_5type",
+    "_Elite",
+    "_Random",
+    "_2type",
+    "_3type",
+    "_4type",
+    "_5type",
 ]
 
 
@@ -48,7 +51,7 @@ def strip_id_prefix(name: str) -> str:
         changed = False
         for prefix in _PREFIXES:
             if result.startswith(prefix):
-                result = result[len(prefix):].rstrip("'\"")
+                result = result[len(prefix) :].rstrip("'\"")
                 changed = True
                 break
         if not changed and result.startswith("Id_"):
@@ -56,7 +59,7 @@ def strip_id_prefix(name: str) -> str:
             changed = True
     for suffix in _SUFFIXES:
         if result.endswith(suffix):
-            result = result[:-len(suffix)]
+            result = result[: -len(suffix)]
     return result
 
 
@@ -121,7 +124,7 @@ def _list_map_jsons(root: str | Path) -> list[Path]:
 
 def extract_spawners(map_json_path: Path) -> list[dict]:
     try:
-        with open(map_json_path, "r", encoding="utf-8") as f:
+        with open(map_json_path, encoding="utf-8") as f:
             data = json.load(f)
     except Exception:
         return []
@@ -162,8 +165,9 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                     "spawner_type": "props",
                 }
 
-        if (t == "SphereComponent" and entry.get("Name") == "SceneComponent") or \
-           (t == "SceneComponent" and entry.get("Name") == "RootScene"):
+        if (t == "SphereComponent" and entry.get("Name") == "SceneComponent") or (
+            t == "SceneComponent" and entry.get("Name") == "RootScene"
+        ):
             outer_raw = entry.get("Outer", "")
             if isinstance(outer_raw, dict):
                 outer_raw = (outer_raw or {}).get("ObjectName", "")
@@ -187,17 +191,19 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
         elif stem.endswith("_A"):
             version = "(A)"
         map_base = _sl_base_name(stem)
-        results.append({
-            "keyword": info["keyword"],
-            "original_keyword": info["keyword"],
-            "spawner_type": info["spawner_type"],
-            "x": coord["x"],
-            "y": coord["y"],
-            "z": coord["z"],
-            "json_filename": map_json_path.name,
-            "map_base": map_base,
-            "version": version,
-        })
+        results.append(
+            {
+                "keyword": info["keyword"],
+                "original_keyword": info["keyword"],
+                "spawner_type": info["spawner_type"],
+                "x": coord["x"],
+                "y": coord["y"],
+                "z": coord["z"],
+                "json_filename": map_json_path.name,
+                "map_base": map_base,
+                "version": version,
+            }
+        )
     return results
 
 
@@ -214,15 +220,13 @@ def build_automaton(terms: list[str]) -> ahocorasick.Automaton:
 def match_keyword(keyword: str, terms: set[str], auto: ahocorasick.Automaton) -> list[str]:
     kw_lower = keyword.lower()
     matched = set()
-    for end_index, original_term in auto.iter(kw_lower):
+    for _end_index, original_term in auto.iter(kw_lower):
         matched.add(original_term)
     for t in terms:
         t_lower = t.lower()
         if len(t_lower) >= 5:
             continue
-        if t_lower == kw_lower:
-            matched.add(t)
-        elif f"_{t_lower}" in kw_lower:
+        if t_lower == kw_lower or f"_{t_lower}" in kw_lower:
             matched.add(t)
         elif kw_lower.startswith(t_lower) and len(kw_lower) > len(t_lower):
             next_char = kw_lower[len(t_lower)]

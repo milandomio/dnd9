@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 任务内容文件加载器
 负责加载和缓存任务内容JSON文件
 """
 
-import os
 import json
+import os
 
 
 class ContentLoader:
@@ -42,7 +41,7 @@ class ContentLoader:
             return None
 
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
 
             if isinstance(raw_data, list) and len(raw_data) > 0:
@@ -122,7 +121,7 @@ class RewardLoader:
             return None
 
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
 
             if isinstance(raw_data, list) and len(raw_data) > 0:

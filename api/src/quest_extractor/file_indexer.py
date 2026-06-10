@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 文件索引管理
 负责扫描并索引任务JSON文件和任务内容文件
@@ -23,7 +22,7 @@ class FileIndexer:
         "QuestContentUseItem",
         "QuestContentDamage",
         "QuestContentEscape",
-        "QuestContentHold"
+        "QuestContentHold",
     ]
 
     def __init__(self, quest_directory, content_directory):
@@ -36,8 +35,8 @@ class FileIndexer:
         """
         self.quest_directory = quest_directory
         self.content_directory = content_directory
-        self.quest_file_map = {}   # 文件名 -> 完整路径
-        self.content_file_map = {} # 内容文件名 -> 完整路径
+        self.quest_file_map = {}  # 文件名 -> 完整路径
+        self.content_file_map = {}  # 内容文件名 -> 完整路径
         self._build_maps()
 
     def _build_maps(self):
@@ -54,7 +53,7 @@ class FileIndexer:
         count = 0
         for root, _, files in os.walk(self.quest_directory):
             for file in files:
-                if file.endswith('.json') and file.startswith(self.QUEST_FILE_PREFIX):
+                if file.endswith(".json") and file.startswith(self.QUEST_FILE_PREFIX):
                     self.quest_file_map[file] = os.path.join(root, file)
                     count += 1
         print(f"已索引 {count} 个任务文件")
@@ -70,7 +69,7 @@ class FileIndexer:
             content_dir = os.path.join(self.content_directory, content_type)
             if os.path.exists(content_dir):
                 for file in os.listdir(content_dir):
-                    if file.endswith('.json'):
+                    if file.endswith(".json"):
                         self.content_file_map[file] = os.path.join(content_dir, file)
                         count += 1
         print(f"已索引 {count} 个任务内容文件")

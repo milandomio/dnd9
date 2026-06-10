@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 翻译模块
 用于加载和查询游戏翻译数据
 支持多语言
 """
 
-import os
 import json
+import os
 
 
 class Translator:
@@ -16,13 +15,7 @@ class Translator:
     # 默认Localization根目录 - 从 findItemV4/src/quest_extractor 向上3级到 /home/mio/fmod/
     _PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "..", ".."))
     DEFAULT_LOCALIZATION_ROOT = os.path.join(
-        _PROJECT_ROOT,
-        "Output",
-        "Exports",
-        "DungeonCrawler",
-        "Content",
-        "Localization",
-        "Game"
+        _PROJECT_ROOT, "Output", "Exports", "DungeonCrawler", "Content", "Localization", "Game"
     )
 
     # 默认语言
@@ -44,11 +37,7 @@ class Translator:
 
     def _get_translation_file_path(self):
         """获取翻译文件路径"""
-        return os.path.join(
-            self.localization_root,
-            self.language,
-            "Game.json"
-        )
+        return os.path.join(self.localization_root, self.language, "Game.json")
 
     def _load_translations(self):
         """加载翻译文件"""
@@ -57,7 +46,7 @@ class Translator:
             return
 
         try:
-            with open(self.translation_file, 'r', encoding='utf-8') as f:
+            with open(self.translation_file, encoding="utf-8") as f:
                 data = json.load(f)
                 # 翻译数据在 "DC" 键下
                 if "DC" in data:
@@ -106,7 +95,7 @@ class Translator:
         for key, value in self.translations.items():
             if key.startswith(prefix) and not key.startswith(prefix + "Merchant"):
                 # 排除 MerchantGreeting, MerchantAffinity 等
-                suffix = key[len(prefix):]
+                suffix = key[len(prefix) :]
                 if "_" not in suffix:
                     npc_translations[suffix] = value
         return npc_translations

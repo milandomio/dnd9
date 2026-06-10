@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Fetch任务收集清单CSV生成器
 """
@@ -17,7 +16,9 @@ class FetchChecklist:
         self.extractor = quest_extractor
         self.translator = quest_extractor.translator
 
-    def generate_csv(self, output_path=None, exclude_npcs=None, equipment_npcs=None, preferred_npcs=None, not_recommended_npcs=None):
+    def generate_csv(
+        self, output_path=None, exclude_npcs=None, equipment_npcs=None, preferred_npcs=None, not_recommended_npcs=None
+    ):
         if not self.extractor.quests_data:
             self.extractor.load_all_quests()
 
@@ -75,16 +76,25 @@ class FetchChecklist:
         rows.sort(key=lambda r: (_category_order(r[1]), r[0], r[2]))
 
         if output_path is None:
-            output_path = os.path.join(
-                os.path.dirname(os.path.dirname(__file__)),
-                "output", "fetch_checklist.csv"
-            )
+            output_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "output", "fetch_checklist.csv")
 
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-        with open(output_path, 'w', newline='', encoding='utf-8-sig') as f:
+        with open(output_path, "w", newline="", encoding="utf-8-sig") as f:
             writer = csv.writer(f)
-            writer.writerow(["NPC名字", "NPC英文名", "第几个任务", "收集物品名", "物品数量", "稀有度", "是否战利品", "建议完成任务", "分类"])
+            writer.writerow(
+                [
+                    "NPC名字",
+                    "NPC英文名",
+                    "第几个任务",
+                    "收集物品名",
+                    "物品数量",
+                    "稀有度",
+                    "是否战利品",
+                    "建议完成任务",
+                    "分类",
+                ]
+            )
             writer.writerows(rows)
 
         print(f"CSV清单已生成: {output_path}")
@@ -98,9 +108,7 @@ class FetchChecklist:
             npc_en = quest.get("npc_name", "")
             quest_num = quest.get("quest_number", 0)
             rewards = quest.get("rewards") or []
-            has_affinity = any(
-                r.get("RewardType") == "EDCRewardType::Affinity" for r in rewards
-            )
+            has_affinity = any(r.get("RewardType") == "EDCRewardType::Affinity" for r in rewards)
             if has_affinity:
                 if npc_en not in result or quest_num > result[npc_en]:
                     result[npc_en] = quest_num

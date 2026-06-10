@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 页面构建器
 负责构建各类HTML页面（汇总页、NPC页）
@@ -41,7 +40,7 @@ class PageBuilder:
 
     def _build_search_script(self):
         """生成搜索JavaScript代码"""
-        return '''
+        return """
     <script>
         function filterQuests() {
             const input = document.getElementById('searchInput');
@@ -72,7 +71,7 @@ class PageBuilder:
 
         window.addEventListener('DOMContentLoaded', loadNpcConfirm);
     </script>
-'''
+"""
 
     def _build_npc_card(self, npc_name, npc_en, quest_count):
         """
@@ -86,12 +85,12 @@ class PageBuilder:
         Returns:
             HTML字符串
         """
-        safe_filename = re.sub(r'[<>:"/\\\\|?*]', '_', npc_en)
+        safe_filename = re.sub(r'[<>:"/\\\\|?*]', "_", npc_en)
         search_data = f"{npc_name.lower()} {npc_en.lower()}"
 
-        npc_en_display = f'<div class="npc-en">{npc_en}</div>' if npc_name != npc_en and self.language == "en" else ''
+        npc_en_display = f'<div class="npc-en">{npc_en}</div>' if npc_name != npc_en and self.language == "en" else ""
 
-        return f'''            <div class="npc-card-wrapper" data-npc="{search_data}">
+        return f"""            <div class="npc-card-wrapper" data-npc="{search_data}">
                 <input type="checkbox" class="npc-confirm-checkbox" data-npc="{npc_en}" onchange="saveNpcConfirm(this)" onclick="event.stopPropagation()" title="确认已检查">
                 <a href="{safe_filename}.html" class="npc-card">
                     <div class="npc-name">{npc_name}</div>
@@ -99,7 +98,7 @@ class PageBuilder:
                     {npc_en_display}
                 </a>
             </div>
-'''
+"""
 
     def _build_quest_card(self, quest):
         """
@@ -121,17 +120,17 @@ class PageBuilder:
         search_data = f"{quest['id'].lower()} {quest.get('title', '').lower()} {display_name.lower()}"
 
         # 构建卡片头部
-        html = f'''            <div class="quest-card" data-quest="{search_data}" id="{quest['id']}">
+        html = f"""            <div class="quest-card" data-quest="{search_data}" id="{quest['id']}">
                 <div class="quest-id debug-section">{quest['id']}</div>
                 <div class="quest-title-main">{display_name}</div>
-'''
+"""
         # 副标题
         if subtitle and subtitle != display_name:
-            html += f'''                <div class="quest-title-sub">{subtitle}</div>
-'''
+            html += f"""                <div class="quest-title-sub">{subtitle}</div>
+"""
         else:
-            html += f'''                <div class="quest-title-sub" style="border-bottom: 2px solid #4CAF50; margin-bottom: 12px; padding-bottom: 10px;"></div>
-'''
+            html += """                <div class="quest-title-sub" style="border-bottom: 2px solid #4CAF50; margin-bottom: 12px; padding-bottom: 10px;"></div>
+"""
 
         # 任务目标表格（如果QuestExtractor可用）
         quest_content_info = self.content_renderer.render_quest_content_table(quest)
@@ -143,24 +142,26 @@ class PageBuilder:
 
         # 任务描述
         if greeting_display:
-            html += f'''                <div class="quest-section debug-section">
+            html += f"""                <div class="quest-section debug-section">
                     <div class="quest-label">{self._get_ui_text("quest_description")}</div>
                     <div class="quest-text">{greeting_display}</div>
                 </div>
-'''
+"""
         if complete_display:
-            html += f'''                <div class="quest-section debug-section">
+            html += f"""                <div class="quest-section debug-section">
                     <div class="quest-label">{self._get_ui_text("complete_description")}</div>
                     <div class="quest-text">{complete_display}</div>
                 </div>
-'''
+"""
 
         # 前置任务将在HTMLGenerator中处理（需要quest_extractor）
-        html += '''            </div>
-'''
+        html += """            </div>
+"""
         return html, search_data
 
-    def build_index_page(self, grouped_quests, inactive_npcs=None, equipment_npcs=None, preferred_npcs=None, not_recommended_npcs=None):
+    def build_index_page(
+        self, grouped_quests, inactive_npcs=None, equipment_npcs=None, preferred_npcs=None, not_recommended_npcs=None
+    ):
         """
         构建汇总索引页
 
@@ -181,14 +182,22 @@ class PageBuilder:
         not_recommended_npcs = not_recommended_npcs or set()
         filepath = os.path.join(self.output_dir, "index.html")
 
-        html_content = HTMLTemplate.generate_header(self._get_ui_text("page_title"), include_back_link=True, language=self.language, ui_translations=self.ui_text, dark_mode=self.dark_mode, parent_url="../index.html", parent_label="返回首页")
+        html_content = HTMLTemplate.generate_header(
+            self._get_ui_text("page_title"),
+            include_back_link=True,
+            language=self.language,
+            ui_translations=self.ui_text,
+            dark_mode=self.dark_mode,
+            parent_url="../index.html",
+            parent_label="返回首页",
+        )
 
         # 搜索框
-        html_content += f'''
+        html_content += f"""
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="{self._get_ui_text("search_npc")}" onkeyup="filterQuests()">
         </div>
-'''
+"""
 
         # 分离五组NPC
         active_items = []
@@ -216,59 +225,59 @@ class PageBuilder:
 
         # 渲染装备NPC
         if equipment_items:
-            html_content += f'''
+            html_content += f"""
         <h2>{self._get_ui_text("equipment_npcs")}</h2>
         <div class="npc-grid" id="npcGridEquipment">
-'''
+"""
             for npc_name, npc_en, quests in equipment_items:
                 html_content += self._build_npc_card(npc_name, npc_en, len(quests))
-            html_content += '        </div>\n'
+            html_content += "        </div>\n"
 
         # 渲染优选NPC
         if preferred_items:
-            html_content += f'''
+            html_content += f"""
         <h2>{self._get_ui_text("preferred_npcs")}</h2>
         <div class="npc-grid" id="npcGridPreferred">
-'''
+"""
             for npc_name, npc_en, quests in preferred_items:
                 html_content += self._build_npc_card(npc_name, npc_en, len(quests))
-            html_content += '        </div>\n'
+            html_content += "        </div>\n"
 
         # 渲染活跃NPC
-        html_content += f'''
+        html_content += f"""
         <h2>{self._get_ui_text("active_npcs")}</h2>
         <div class="npc-grid" id="npcGridActive">
-'''
+"""
         for npc_name, npc_en, quests in active_items:
             html_content += self._build_npc_card(npc_name, npc_en, len(quests))
-        html_content += '        </div>\n'
+        html_content += "        </div>\n"
 
         # 渲染不推荐NPC
         if not_recommended_items:
-            html_content += f'''
+            html_content += f"""
         <h2>{self._get_ui_text("not_recommended_npcs")}</h2>
         <div class="npc-grid" id="npcGridNotRecommended">
-'''
+"""
             for npc_name, npc_en, quests in not_recommended_items:
                 html_content += self._build_npc_card(npc_name, npc_en, len(quests))
-            html_content += '        </div>\n'
+            html_content += "        </div>\n"
 
         # 渲染失效NPC
         if inactive_items:
-            html_content += f'''
+            html_content += f"""
         <h2 class="inactive-section">{self._get_ui_text("inactive_npcs")}</h2>
         <div class="npc-grid inactive-grid" id="npcGridInactive">
-'''
+"""
             for npc_name, npc_en, quests in inactive_items:
                 html_content += self._build_npc_card(npc_name, npc_en, len(quests))
-            html_content += '        </div>\n'
+            html_content += "        </div>\n"
 
         # 添加搜索脚本
         html_content += self._build_search_script()
 
         html_content += HTMLTemplate.generate_footer()
 
-        with open(filepath, 'w', encoding='utf-8') as f:
+        with open(filepath, "w", encoding="utf-8") as f:
             f.write(html_content)
 
         print(f"[{self.language}] 已生成汇总页: {filepath}")
@@ -287,7 +296,7 @@ class PageBuilder:
         Returns:
             生成的文件路径
         """
-        safe_filename = re.sub(r'[<>:"/\\\\|?*]', '_', npc_name_en)
+        safe_filename = re.sub(r'[<>:"/\\\\|?*]', "_", npc_name_en)
         filepath = os.path.join(self.output_dir, f"{safe_filename}.html")
 
         # 页面标题
@@ -302,10 +311,10 @@ class PageBuilder:
             ui_translations=self.ui_text,
             dark_mode=self.dark_mode,
             parent_url="../index.html",
-            parent_label="返回首页"
+            parent_label="返回首页",
         )
 
-        html_content += f'''
+        html_content += f"""
         <p style="text-align: center; color: #666;">{len(quests)} {self._get_ui_text("quests")}</p>
 
         <div class="search-box">
@@ -313,7 +322,7 @@ class PageBuilder:
         </div>
 
         <div class="quest-grid" id="questGrid">
-'''
+"""
 
         for quest in quests:
             quest_card_html, search_data = self._build_quest_card(quest)
@@ -325,40 +334,49 @@ class PageBuilder:
 
             # 插入前置任务信息
             if required_quest_display:
-                insert_pos = quest_card_html.rfind('            </div>')
+                insert_pos = quest_card_html.rfind("            </div>")
                 before_end = quest_card_html[:insert_pos]
                 after_end = quest_card_html[insert_pos:]
-                quest_card_html = before_end + f'''                <div class="quest-section">
+                quest_card_html = before_end + f"""                <div class="quest-section">
                     <div class="quest-label">{self._get_ui_text("required_quest")}</div>
                     <div class="quest-text required-quest">{required_quest_display}</div>
                 </div>
-''' + after_end
+""" + after_end
             elif quest.get("required_quest"):
-                insert_pos = quest_card_html.rfind('            </div>')
+                insert_pos = quest_card_html.rfind("            </div>")
                 before_end = quest_card_html[:insert_pos]
                 after_end = quest_card_html[insert_pos:]
-                quest_card_html = before_end + f'''                <div class="quest-section">
+                quest_card_html = before_end + f"""                <div class="quest-section">
                     <div class="quest-label">{self._get_ui_text("required_quest")}</div>
                     <div class="quest-text">{quest['required_quest']}</div>
                 </div>
-''' + after_end
+""" + after_end
 
             html_content += quest_card_html
 
-        html_content += '''        </div>'''
+        html_content += """        </div>"""
 
         # 搜索脚本
         html_content += self._build_search_script()
 
         html_content += HTMLTemplate.generate_footer()
 
-        with open(filepath, 'w', encoding='utf-8') as f:
+        with open(filepath, "w", encoding="utf-8") as f:
             f.write(html_content)
 
         print(f"[{self.language}] 已生成NPC页面: {filepath}")
         return filepath
 
-    def build_all_pages(self, grouped_quests, quest_extractor=None, inactive_npcs=None, equipment_npcs=None, preferred_npcs=None, not_recommended_npcs=None, dark_mode=False):
+    def build_all_pages(
+        self,
+        grouped_quests,
+        quest_extractor=None,
+        inactive_npcs=None,
+        equipment_npcs=None,
+        preferred_npcs=None,
+        not_recommended_npcs=None,
+        dark_mode=False,
+    ):
         """
         构建所有页面
 
@@ -377,7 +395,13 @@ class PageBuilder:
         generated_files = []
 
         # 生成汇总页
-        index_path = self.build_index_page(grouped_quests, inactive_npcs=inactive_npcs, equipment_npcs=equipment_npcs, preferred_npcs=preferred_npcs, not_recommended_npcs=not_recommended_npcs)
+        index_path = self.build_index_page(
+            grouped_quests,
+            inactive_npcs=inactive_npcs,
+            equipment_npcs=equipment_npcs,
+            preferred_npcs=preferred_npcs,
+            not_recommended_npcs=not_recommended_npcs,
+        )
         generated_files.append(index_path)
 
         # 生成各NPC页面

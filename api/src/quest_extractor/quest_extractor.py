@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 任务数据提取器（精简协调器）
 聚合FileIndexer, QuestParser, ContentLoader，提供统一接口
@@ -10,15 +9,15 @@ import os
 from collections import defaultdict
 
 try:
-    from .translator import Translator
+    from .content_loader import ContentLoader, RewardLoader
     from .file_indexer import FileIndexer
     from .quest_parser import QuestParser
-    from .content_loader import ContentLoader, RewardLoader
+    from .translator import Translator
 except ImportError:
-    from translator import Translator
+    from content_loader import ContentLoader, RewardLoader
     from file_indexer import FileIndexer
     from quest_parser import QuestParser
-    from content_loader import ContentLoader, RewardLoader
+    from translator import Translator
 
 
 class QuestExtractor:
@@ -27,25 +26,12 @@ class QuestExtractor:
     # 默认路径常量 - 从 findItemV4/src/quest_extractor 向上3级到 /home/mio/fmod/
     _PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "..", ".."))
     BASE_DATA_PATH = os.path.join(
-        _PROJECT_ROOT,
-        "Output",
-        "Exports",
-        "DungeonCrawler",
-        "Content",
-        "DungeonCrawler",
-        "Data",
-        "Generated",
-        "V2"
+        _PROJECT_ROOT, "Output", "Exports", "DungeonCrawler", "Content", "DungeonCrawler", "Data", "Generated", "V2"
     )
     DEFAULT_QUEST_PATH = os.path.join(BASE_DATA_PATH, "Quest", "Quest")
     DEFAULT_CONTENT_PATH = os.path.join(BASE_DATA_PATH, "Quest")
     DEFAULT_EXPORT_ROOT = os.path.join(
-        _PROJECT_ROOT,
-        "Output",
-        "Exports",
-        "DungeonCrawler",
-        "Content",
-        "DungeonCrawler"
+        _PROJECT_ROOT, "Output", "Exports", "DungeonCrawler", "Content", "DungeonCrawler"
     )
     DEFAULT_PROPS_PATH = os.path.join(BASE_DATA_PATH, "Props", "Props")
     DEFAULT_REWARD_PATH = os.path.join(BASE_DATA_PATH, "Quest", "QuestReward")
@@ -108,16 +94,14 @@ class QuestExtractor:
             npc_quests[npc].append(quest)
 
         # 为每个NPC的任务排序并生成显示名称
-        for npc, quests in npc_quests.items():
+        for _npc, quests in npc_quests.items():
             quests.sort(key=lambda q: self.quest_parser._extract_quest_number(q["id"]))
 
             for quest in quests:
                 _, num = self.quest_parser._extract_quest_number(quest["id"])
                 quest["quest_number"] = num
                 quest["npc_name_display"] = quest.get("npc_name_cn", quest["npc_name"])
-                quest["display_name"] = self.quest_parser._generate_quest_display_name(
-                    quest, self.translator.language
-                )
+                quest["display_name"] = self.quest_parser._generate_quest_display_name(quest, self.translator.language)
 
     def group_quests_by_npc(self, use_translated_names=True):
         """
@@ -187,7 +171,7 @@ class QuestExtractor:
             return None
 
         # 从文件名提取任务ID（去掉.json后缀）
-        if required_quest_file.endswith('.json'):
+        if required_quest_file.endswith(".json"):
             quest_id = required_quest_file[:-5]
         else:
             quest_id = required_quest_file
@@ -210,9 +194,11 @@ class QuestExtractor:
         keyword = keyword.lower()
         results = []
         for quest in self.quests_data:
-            if (keyword in quest["id"].lower() or
-                    keyword in quest.get("title_display", "").lower() or
-                    keyword in quest.get("title", "").lower()):
+            if (
+                keyword in quest["id"].lower()
+                or keyword in quest.get("title_display", "").lower()
+                or keyword in quest.get("title", "").lower()
+            ):
                 results.append(quest)
         return results
 
@@ -225,10 +211,10 @@ class QuestExtractor:
         if not asset_path.startswith("/Game/"):
             return None
         relative_path = asset_path[6:]
-        if '.' in relative_path:
-            relative_path = relative_path.rsplit('.', 1)[0]
+        if "." in relative_path:
+            relative_path = relative_path.rsplit(".", 1)[0]
         if relative_path.startswith("DungeonCrawler/"):
-            relative_path = relative_path[len("DungeonCrawler/"):]
+            relative_path = relative_path[len("DungeonCrawler/") :]
         json_path = f"{QuestExtractor.DEFAULT_EXPORT_ROOT}/{relative_path}.json"
         return json_path
 
@@ -239,10 +225,10 @@ class QuestExtractor:
         if not asset_path:
             return asset_path
 
-        filename_part = asset_path.split('/')[-1]
-        if '.' in filename_part:
-            parts = filename_part.split('.')
-            base_name = '.'.join(parts[:-1]) if len(parts) > 1 else parts[0]
+        filename_part = asset_path.split("/")[-1]
+        if "." in filename_part:
+            parts = filename_part.split(".")
+            base_name = ".".join(parts[:-1]) if len(parts) > 1 else parts[0]
         else:
             base_name = filename_part
 
@@ -261,7 +247,7 @@ class QuestExtractor:
     def _read_module_id_from_file(self, file_path, original_asset_path):
         """从JSON文件读取ModuleId的AssetPathName"""
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
             if isinstance(raw_data, list) and len(raw_data) > 0:
                 data = raw_data[0]
@@ -284,7 +270,7 @@ class QuestExtractor:
         if not json_path or not os.path.exists(json_path):
             return None
         try:
-            with open(json_path, 'r', encoding='utf-8') as f:
+            with open(json_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
             if isinstance(raw_data, list) and len(raw_data) > 0:
                 data = raw_data[0]
@@ -303,11 +289,15 @@ class QuestExtractor:
             for field_name in ["Name", "DisplayName", "Title", "Description", "DescriptionText"]:
                 field_value = properties.get(field_name, {})
                 if isinstance(field_value, dict):
-                    value = field_value.get("SourceString", "") or field_value.get("LocalizedString", "") or field_value.get("Key", "")
+                    value = (
+                        field_value.get("SourceString", "")
+                        or field_value.get("LocalizedString", "")
+                        or field_value.get("Key", "")
+                    )
                     if value:
                         return value
 
-            filename = asset_path.split('/')[-1].split('.')[0]
+            filename = asset_path.split("/")[-1].split(".")[0]
             return filename
         except Exception as e:
             print(f"读取SourceString失败 {json_path}: {e}")
@@ -403,10 +393,16 @@ class QuestExtractor:
                 # 从 Id_RandomReward_Quest_{Category}_{Rarity}_{Num} 构建键
                 # 映射: Text_Reward_Quest_Random_{CategoryPlural}_{Rarity}
                 parts = reward_id.split("_")
-                category_map = {"Armor": "Armors", "Weapon": "Weapons", "Accessory": "Accessories", "Gem": "Gems", "Gems": "Gems"}
+                category_map = {
+                    "Armor": "Armors",
+                    "Weapon": "Weapons",
+                    "Accessory": "Accessories",
+                    "Gem": "Gems",
+                    "Gems": "Gems",
+                }
                 if len(parts) >= 5:
                     category_raw = parts[3]  # Armor
-                    rarity_raw = parts[4]    # Uncommon
+                    rarity_raw = parts[4]  # Uncommon
                     category_plural = category_map.get(category_raw, category_raw + "s")
                     key = f"Text_Reward_Quest_Random_{category_plural}_{rarity_raw}"
                     name = self.translator.translate(key) or reward_id
@@ -460,16 +456,16 @@ class QuestExtractor:
             return gold_bag_npcs
 
         for filename in os.listdir(self.reward_directory):
-            if not filename.endswith('.json'):
+            if not filename.endswith(".json"):
                 continue
-            parts = filename.replace('.json', '').split('_')
-            if len(parts) < 4 or parts[0] != 'Id' or parts[1] != 'Reward' or parts[2] != 'Quest':
+            parts = filename.replace(".json", "").split("_")
+            if len(parts) < 4 or parts[0] != "Id" or parts[1] != "Reward" or parts[2] != "Quest":
                 continue
             npc_name = parts[3]
 
             filepath = os.path.join(self.reward_directory, filename)
             try:
-                with open(filepath, 'r', encoding='utf-8') as f:
+                with open(filepath, encoding="utf-8") as f:
                     data = json.load(f)
                 if isinstance(data, list):
                     data = data[0] if data else {}
@@ -506,12 +502,12 @@ class QuestExtractor:
             return None
 
         for filename in os.listdir(props_path):
-            if not filename.endswith('.json'):
+            if not filename.endswith(".json"):
                 continue
 
             filepath = os.path.join(props_path, filename)
             try:
-                with open(filepath, 'r', encoding='utf-8') as f:
+                with open(filepath, encoding="utf-8") as f:
                     data_list = json.load(f)
 
                 # 处理单个对象或数组
@@ -541,6 +537,7 @@ class QuestExtractor:
 def main():
     """测试函数"""
     from translator import Translator
+
     languages = Translator.get_available_languages()
     print(f"可用语言: {languages}")
     for lang in languages:
@@ -548,7 +545,7 @@ def main():
         translator = Translator(language=lang)
         extractor = QuestExtractor(translator=translator)
         quests = extractor.load_all_quests()
-        print(f"\n前3个任务:")
+        print("\n前3个任务:")
         for i, quest in enumerate(quests[:3]):
             print(f"{i+1}. {quest['display_name']} - {quest['title_display']}")
 

@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 任务文件解析器
 负责解析任务JSON文件，提取结构化数据
 """
 
-import os
 import json
+import os
 from collections import defaultdict
 
 
@@ -27,12 +26,12 @@ class QuestParser:
         """从AssetPathName提取文件名"""
         if not asset_path:
             return None
-        parts = asset_path.split('/')
+        parts = asset_path.split("/")
         if not parts:
             return None
         filename_part = parts[-1]
-        if '.' in filename_part:
-            base_name = filename_part.split('.')[0]
+        if "." in filename_part:
+            base_name = filename_part.split(".")[0]
         else:
             base_name = filename_part
         return f"{base_name}.json"
@@ -48,7 +47,7 @@ class QuestParser:
         Returns:
             NPC名称，如 "Alchemist"
         """
-        parts = quest_id.split('_')
+        parts = quest_id.split("_")
         if len(parts) >= 3 and parts[0] == "Id" and parts[1] == "Quest":
             return parts[2]
         return "Unknown"
@@ -66,7 +65,7 @@ class QuestParser:
             普通任务 (Id_Quest_NPC_01) -> (0, 1)
             子类别任务 (Id_Quest_NPC_Extra_01) -> 按类别分配不同优先级
         """
-        parts = quest_id.split('_')
+        parts = quest_id.split("_")
         if len(parts) >= 4:
             # 检查NPC名字后第一个段（index 3）
             after_npc = parts[3]
@@ -81,11 +80,11 @@ class QuestParser:
             if last_part.isdigit():
                 num = int(last_part)
                 priority_map = {
-                    "Tuto": -1,     # 教程优先
-                    "Extra": 1,     # 额外任务在普通任务之后
-                    "Final": 2,     # 最终任务
-                    "Daily": 3,     # 每日任务
-                    "Weekly": 4,    # 每周任务
+                    "Tuto": -1,  # 教程优先
+                    "Extra": 1,  # 额外任务在普通任务之后
+                    "Final": 2,  # 最终任务
+                    "Daily": 3,  # 每日任务
+                    "Weekly": 4,  # 每周任务
                     "Seasonal": 5,  # 季节任务
                 }
                 priority = priority_map.get(after_npc, 10)
@@ -133,7 +132,7 @@ class QuestParser:
             npc_quests[npc].append(quest)
 
         # 为每个NPC的任务排序并生成显示名称
-        for npc, quest_list in npc_quests.items():
+        for _npc, quest_list in npc_quests.items():
             # 按任务ID中的序号排序
             quest_list.sort(key=lambda q: self._extract_quest_number(q["id"]))
 
@@ -156,7 +155,7 @@ class QuestParser:
             解析后的任务数据字典，失败返回None
         """
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
 
             if isinstance(raw_data, list) and len(raw_data) > 0:
@@ -214,7 +213,7 @@ class QuestParser:
                 "quest_reward": self._get_filename_from_asset_path(
                     properties.get("QuestReward", {}).get("AssetPathName", "")
                 ),
-                "contents": []
+                "contents": [],
             }
 
             # 提取任务内容
@@ -226,16 +225,14 @@ class QuestParser:
                     "asset_path": asset_path,
                     "content_type": self._get_content_type(asset_path),
                     "content_filename": content_filename,
-                    "content_data": None  # 延迟加载，使用content_loader
+                    "content_data": None,  # 延迟加载，使用content_loader
                 }
                 quest_info["contents"].append(content_info)
 
             # 如果有content_loader，立即加载内容
             if content_loader:
                 for content_info in quest_info["contents"]:
-                    content_info["content_data"] = content_loader.load_content(
-                        content_info["content_filename"]
-                    )
+                    content_info["content_data"] = content_loader.load_content(content_info["content_filename"])
 
             return quest_info
 

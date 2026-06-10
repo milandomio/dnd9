@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 任务内容渲染器
 负责渲染各类任务目标的HTML表格
@@ -47,17 +46,24 @@ class ContentRenderer:
 
         html_parts = []
         html_parts.append("                " + OPEN_BRACE + 'div class="quest-content-section"' + CLOSE_BRACE)
-        html_parts.append("                    " + OPEN_BRACE + 'div class="quest-content-label"' + CLOSE_BRACE + "任务目标" + OPEN_BRACE + SLASH + "div" + CLOSE_BRACE)
+        html_parts.append(
+            "                    "
+            + OPEN_BRACE
+            + 'div class="quest-content-label"'
+            + CLOSE_BRACE
+            + "任务目标"
+            + OPEN_BRACE
+            + SLASH
+            + "div"
+            + CLOSE_BRACE
+        )
         html_parts.append("                    " + OPEN_BRACE + 'table class="quest-content-table"' + CLOSE_BRACE)
 
         # 检查列需求
-        has_fetch = any(c.get("content_type") == "Fetch" for c in contents)
         has_loot_state = any(c.get("content_data", {}).get("ItemLootState") for c in contents)
         has_rarity = any(c.get("content_data", {}).get("RarityType") for c in contents)
         has_useitem_dungeon = any(
-            c.get("content_type") == "UseItem" and
-            c.get("content_data", {}).get("DungeonIdTags")
-            for c in contents
+            c.get("content_type") == "UseItem" and c.get("content_data", {}).get("DungeonIdTags") for c in contents
         )
 
         # 表头
@@ -69,15 +75,75 @@ class ContentRenderer:
         dungeon_type_header = "地牢类型" if has_useitem_dungeon else ""
 
         html_parts.append("                        " + OPEN_BRACE + "tr" + CLOSE_BRACE)
-        html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + type_header + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
-        html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + target_header + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
+        html_parts.append(
+            "                            "
+            + OPEN_BRACE
+            + "th"
+            + CLOSE_BRACE
+            + type_header
+            + OPEN_BRACE
+            + SLASH
+            + "th"
+            + CLOSE_BRACE
+        )
+        html_parts.append(
+            "                            "
+            + OPEN_BRACE
+            + "th"
+            + CLOSE_BRACE
+            + target_header
+            + OPEN_BRACE
+            + SLASH
+            + "th"
+            + CLOSE_BRACE
+        )
         if has_loot_state:
-            html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + loot_state_header + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "th"
+                + CLOSE_BRACE
+                + loot_state_header
+                + OPEN_BRACE
+                + SLASH
+                + "th"
+                + CLOSE_BRACE
+            )
         if has_rarity:
-            html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + rarity_header + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "th"
+                + CLOSE_BRACE
+                + rarity_header
+                + OPEN_BRACE
+                + SLASH
+                + "th"
+                + CLOSE_BRACE
+            )
         if has_useitem_dungeon:
-            html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + dungeon_type_header + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
-        html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + count_header + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "th"
+                + CLOSE_BRACE
+                + dungeon_type_header
+                + OPEN_BRACE
+                + SLASH
+                + "th"
+                + CLOSE_BRACE
+            )
+        html_parts.append(
+            "                            "
+            + OPEN_BRACE
+            + "th"
+            + CLOSE_BRACE
+            + count_header
+            + OPEN_BRACE
+            + SLASH
+            + "th"
+            + CLOSE_BRACE
+        )
         html_parts.append("                        " + OPEN_BRACE + SLASH + "tr" + CLOSE_BRACE)
 
         # 渲染每一行
@@ -100,19 +166,79 @@ class ContentRenderer:
 
             # 处理稀有度情况下去掉后缀
             if has_rarity and target_name != "-":
-                target_name = re.sub(r'（裂开）', '', target_name)
+                target_name = re.sub(r"（裂开）", "", target_name)
 
             # 输出行
             html_parts.append("                        " + OPEN_BRACE + "tr" + CLOSE_BRACE)
-            html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + type_name + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
-            html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + target_name + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "td"
+                + CLOSE_BRACE
+                + type_name
+                + OPEN_BRACE
+                + SLASH
+                + "td"
+                + CLOSE_BRACE
+            )
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "td"
+                + CLOSE_BRACE
+                + target_name
+                + OPEN_BRACE
+                + SLASH
+                + "td"
+                + CLOSE_BRACE
+            )
             if has_loot_state:
-                html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + loot_state + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
+                html_parts.append(
+                    "                            "
+                    + OPEN_BRACE
+                    + "td"
+                    + CLOSE_BRACE
+                    + loot_state
+                    + OPEN_BRACE
+                    + SLASH
+                    + "td"
+                    + CLOSE_BRACE
+                )
             if has_rarity:
-                html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + rarity + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
+                html_parts.append(
+                    "                            "
+                    + OPEN_BRACE
+                    + "td"
+                    + CLOSE_BRACE
+                    + rarity
+                    + OPEN_BRACE
+                    + SLASH
+                    + "td"
+                    + CLOSE_BRACE
+                )
             if has_useitem_dungeon:
-                html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + dungeon_type + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
-            html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + str(content_count) + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
+                html_parts.append(
+                    "                            "
+                    + OPEN_BRACE
+                    + "td"
+                    + CLOSE_BRACE
+                    + dungeon_type
+                    + OPEN_BRACE
+                    + SLASH
+                    + "td"
+                    + CLOSE_BRACE
+                )
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "td"
+                + CLOSE_BRACE
+                + str(content_count)
+                + OPEN_BRACE
+                + SLASH
+                + "td"
+                + CLOSE_BRACE
+            )
             html_parts.append("                        " + OPEN_BRACE + SLASH + "tr" + CLOSE_BRACE)
 
         html_parts.append("                    " + OPEN_BRACE + SLASH + "table" + CLOSE_BRACE)
@@ -150,7 +276,7 @@ class ContentRenderer:
             翻译后的物品名称，失败返回原始键名
         """
         if not self.translator:
-            return item_key.split('_')[-1]
+            return item_key.split("_")[-1]
 
         translated = self.translator.translate(item_key)
         if translated:
@@ -163,7 +289,7 @@ class ContentRenderer:
             if translated:
                 return translated
 
-        return item_key.split('_')[-1]
+        return item_key.split("_")[-1]
 
     def _translate_monster_name(self, monster_key):
         """
@@ -218,14 +344,14 @@ class ContentRenderer:
                     target_name = translated
                 else:
                     # Fallback: derive dungeon module name from asset_path filename and try direct translation
-                    filename = asset_path.split('/')[-1].split('.')[0]
+                    filename = asset_path.split("/")[-1].split(".")[0]
                     prefix = "Id_QuestContent_Explore_"
                     if filename.startswith(prefix):
-                        module_name = filename[len(prefix):]
+                        module_name = filename[len(prefix) :]
                         # Remove trailing numeric suffix (e.g., _01, _02)
-                        parts = module_name.split('_')
+                        parts = module_name.split("_")
                         if parts and parts[-1].isdigit():
-                            module_name = '_'.join(parts[:-1])
+                            module_name = "_".join(parts[:-1])
                         if self.translator:
                             key1 = f"Text_DesignData_Dungeon_DungeonModule_{module_name}"
                             translated1 = self.translator.translate(key1)
@@ -237,9 +363,9 @@ class ContentRenderer:
                                 if translated2:
                                     target_name = translated2
                                 else:
-                                    target_name = module_name.replace('_', ' ')
+                                    target_name = module_name.replace("_", " ")
                         else:
-                            target_name = module_name.replace('_', ' ')
+                            target_name = module_name.replace("_", " ")
                     else:
                         target_name = filename
             else:
@@ -252,14 +378,14 @@ class ContentRenderer:
                     target_name = translated
                 else:
                     # Fallback: derive dungeon module name from asset_path filename and try direct translation
-                    filename = asset_path.split('/')[-1].split('.')[0]
+                    filename = asset_path.split("/")[-1].split(".")[0]
                     prefix = "Id_QuestContent_Hold_"
                     if filename.startswith(prefix):
-                        module_name = filename[len(prefix):]
+                        module_name = filename[len(prefix) :]
                         # Remove trailing numeric suffix (e.g., _01, _02)
-                        parts = module_name.split('_')
+                        parts = module_name.split("_")
                         if parts and parts[-1].isdigit():
-                            module_name = '_'.join(parts[:-1])
+                            module_name = "_".join(parts[:-1])
                         if self.translator:
                             key1 = f"Text_DesignData_Dungeon_DungeonModule_{module_name}"
                             translated1 = self.translator.translate(key1)
@@ -271,9 +397,9 @@ class ContentRenderer:
                                 if translated2:
                                     target_name = translated2
                                 else:
-                                    target_name = module_name.replace('_', ' ')
+                                    target_name = module_name.replace("_", " ")
                         else:
-                            target_name = module_name.replace('_', ' ')
+                            target_name = module_name.replace("_", " ")
                     else:
                         target_name = filename
             else:
@@ -478,19 +604,58 @@ class ContentRenderer:
 
         html_parts = []
         html_parts.append("                " + OPEN_BRACE + 'div class="quest-reward-section"' + CLOSE_BRACE)
-        html_parts.append("                    " + OPEN_BRACE + 'div class="quest-content-label"' + CLOSE_BRACE + self._get_ui_text("quest_reward") + OPEN_BRACE + SLASH + "div" + CLOSE_BRACE)
+        html_parts.append(
+            "                    "
+            + OPEN_BRACE
+            + 'div class="quest-content-label"'
+            + CLOSE_BRACE
+            + self._get_ui_text("quest_reward")
+            + OPEN_BRACE
+            + SLASH
+            + "div"
+            + CLOSE_BRACE
+        )
         html_parts.append("                    " + OPEN_BRACE + 'table class="quest-content-table"' + CLOSE_BRACE)
 
         # 表头
         html_parts.append("                        " + OPEN_BRACE + "tr" + CLOSE_BRACE)
-        html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + type_label + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
-        html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + name_label + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
-        html_parts.append("                            " + OPEN_BRACE + "th" + CLOSE_BRACE + count_label + OPEN_BRACE + SLASH + "th" + CLOSE_BRACE)
+        html_parts.append(
+            "                            "
+            + OPEN_BRACE
+            + "th"
+            + CLOSE_BRACE
+            + type_label
+            + OPEN_BRACE
+            + SLASH
+            + "th"
+            + CLOSE_BRACE
+        )
+        html_parts.append(
+            "                            "
+            + OPEN_BRACE
+            + "th"
+            + CLOSE_BRACE
+            + name_label
+            + OPEN_BRACE
+            + SLASH
+            + "th"
+            + CLOSE_BRACE
+        )
+        html_parts.append(
+            "                            "
+            + OPEN_BRACE
+            + "th"
+            + CLOSE_BRACE
+            + count_label
+            + OPEN_BRACE
+            + SLASH
+            + "th"
+            + CLOSE_BRACE
+        )
         html_parts.append("                        " + OPEN_BRACE + SLASH + "tr" + CLOSE_BRACE)
 
         # 渲染每一行
         for reward in rewards:
-            reward_type = reward.get("RewardType", "")
             reward_id = reward.get("RewardId", "")
             reward_count = reward.get("RewardCount", 1)
 
@@ -506,9 +671,39 @@ class ContentRenderer:
             # 好感度奖励行使用淡红色背景
             row_class = ' style="background-color: #ffcccc;"' if type_key == "affinity" else ""
             html_parts.append("                        " + OPEN_BRACE + "tr" + row_class + CLOSE_BRACE)
-            html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + type_display + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
-            html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + (name or "") + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
-            html_parts.append("                            " + OPEN_BRACE + "td" + CLOSE_BRACE + str(reward_count) + OPEN_BRACE + SLASH + "td" + CLOSE_BRACE)
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "td"
+                + CLOSE_BRACE
+                + type_display
+                + OPEN_BRACE
+                + SLASH
+                + "td"
+                + CLOSE_BRACE
+            )
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "td"
+                + CLOSE_BRACE
+                + (name or "")
+                + OPEN_BRACE
+                + SLASH
+                + "td"
+                + CLOSE_BRACE
+            )
+            html_parts.append(
+                "                            "
+                + OPEN_BRACE
+                + "td"
+                + CLOSE_BRACE
+                + str(reward_count)
+                + OPEN_BRACE
+                + SLASH
+                + "td"
+                + CLOSE_BRACE
+            )
             html_parts.append("                        " + OPEN_BRACE + SLASH + "tr" + CLOSE_BRACE)
 
         html_parts.append("                    " + OPEN_BRACE + SLASH + "table" + CLOSE_BRACE)

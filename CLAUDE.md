@@ -248,3 +248,120 @@ Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run
 
 `db_manager.py` 的 `get_item_coordinates()` 已被 `get_all_coordinates()` 取代，不再被 `collector.py` 调用。
 保留为死代码，待后续清理。
+
+## 地图模块表 V2
+
+### 数据来源
+
+Layout JSON 文件位于：`/home/mio/fmod/Output/Exports/DungeonCrawler/Content/DungeonCrawler/Maps/Dungeon/Layouts/`
+
+### Layout 文件命名规则
+
+```
+{区域名}_{尺寸}_{序号}_{版本}_{后缀}.json
+```
+
+| 字段 | 说明 | 示例 |
+|------|------|------|
+| 区域名 | 地图区域 | ShipGraveyard, Crypt, Firedeep, IceAbyss 等 |
+| 尺寸 | 网格大小 | 3x3, 4x4, 5x5, 7x7 |
+| 序号 | 同区域同尺寸的变体 | 01, 02（可选） |
+| 版本 | 普通版/豪客版 | `_N_` = 普通版, `_HR_` = 豪客版 |
+| 后缀 | 固定为 P | `_P` |
+
+**示例：**
+- `ShipGraveyard_7x7_02_N_P.json` → 普通版
+- `ShipGraveyard_7x7_01_HR_P.json` → 豪客版
+- `Crypt_5x5_R_P.json` → 普通版（省略 N）
+- `Crypt_4x4_HR_R_P.json` → 豪客版
+
+**地图分组获取：** 文件名前缀即为地图分组，如 `Crypt_5x5_R_P.json` → 分组 `Crypt`（去掉末尾下划线）。
+
+### Layout 文件内容结构
+
+每个 Layout JSON 包含：
+
+1. **DCWorldSettings** — 地图世界设置，包含 `OverrideDungeonData`（DungeonDataAsset 引用）
+2. **LevelStreamingAlwaysLoaded** — 子模块地图的流式加载引用（包含 `WorldAsset` 路径）
+3. **BlockingVolume** — 碰撞体积
+4. **AkSpatialAudioVolume** — 空间音频体积
+5. **其他组件** — 植被、特效、蓝图实例等
+
+### 子模块变体
+
+每个子模块（如 ShipGraveyard_CircleIsland）拆分为多个变体层级：
+
+| 变体 | 含义 | 典型内容 |
+|------|------|---------|
+| `_A` | 区域逻辑层 (Area/Active) | `BP_DungeonModule_C`（模块逻辑蓝图）、`BoxComponent`（触发区域） |
+| `_D` | 装饰细节层 (Decoration/Detail) | StaticMesh、Foliage（植被）、Decal（贴花） |
+| `_S` | 空间音频层 (Sound/Spatial) | `DCAkSpatialAudioVolume`、`AkLateReverbComponent`、`AkSurfaceReflectorSetComponent` |
+| `_HR_D` | 豪客版装饰层 (High Roller) | 豪客版专属的装饰美术资源（复用普通版逻辑和音频层） |
+
+**设计目的：** 将逻辑、装饰、声音拆分到独立子地图，便于独立编辑和流式加载。
+
+### 子模块字段结构
+
+Layout JSON 中通过 `LevelStreamingAlwaysLoaded` 条目引用子模块，每个条目包含以下字段：
+
+```json
+{
+  "Type": "LevelStreamingAlwaysLoaded",
+  "Name": "LevelStreamingAlwaysLoaded_0",
+  "Properties": {
+    "WorldAsset": {
+      "AssetPathName": "/Game/DungeonCrawler/Maps/Dungeon/Modules/{区域名}/{模块名}/{变体名}.{变体名}",
+      "SubPathString": ""
+    },
+    "LevelTransform": {
+      "Translation": { "X": 3200.0, "Y": 9600.0, "Z": 0.0 },
+      "Rotation": { "X": 0.0, "Y": 0.0, "Z": 0.707, "W": 0.707 }  // 可选
+    },
+    "LevelColor": {
+      "R": 0.0, "G": 0.039, "B": 1.0, "A": 1.0,
+      "Hex": "0037FF"
+    }
+  }
+}
+```
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `WorldAsset.AssetPathName` | string | 子模块地图路径，格式 `/Game/.../Modules/{区域}/{模块}/{变体}.{变体}` |
+| `WorldAsset.SubPathString` | string | 子路径（通常为空） |
+| `LevelTransform.Translation` | {X,Y,Z} | 子模块在主地图中的位置偏移 |
+| `LevelTransform.Rotation` | {X,Y,Z,W} | 四元数旋转（可选，默认无旋转） |
+| `LevelColor.Hex` | string | 编辑器中该层级的可视化颜色（见下表） |
+
+### LevelColor 颜色编码
+
+| 变体 | Hex 颜色 | RGB 含义 |
+|------|----------|----------|
+| `_A` | `0037FF` | 蓝色 (R=0, G≈0.04, B=1) |
+| `_D` | `00FF5D` | 绿色 (R=0, G=1, B≈0.11) |
+| `_S` | `00FFFD` | 青色 (R=0, G=1, B≈0.98) |
+| `_HR_D` | `FF0069` | 粉红色 (R=1, G=0, B≈0.14) |
+
+**区分 `_D` 和 `_HR_D`：** 主要通过 `WorldAsset.AssetPathName` 中的变体名后缀判断，`LevelColor.Hex` 仅作编辑器可视化辅助。
+
+### 当前 Layout 文件清单
+
+| 区域 | 尺寸 | 版本 | 文件名 |
+|------|------|------|--------|
+| ShipGraveyard | 7x7 | 普通 | ShipGraveyard_7x7_02_N_P.json |
+| ShipGraveyard | 7x7 | 豪客 | ShipGraveyard_7x7_01_HR_P.json |
+| Crypt | 5x5 | 普通 | Crypt_5x5_R_P.json |
+| Crypt | 4x4 | 豪客 | Crypt_4x4_HR_R_P.json |
+| Firedeep | 3x3 | 普通 | Firedeep_3x3_01_N_P.json |
+| Firedeep | 3x3 | 豪客 | Firedeep_3x3_HR_R_P.json |
+| Firedeep | 3x3 | 普通 | Firedeep_3x3_R_P.json |
+| GoblinCave | 5x5 | 普通 | GoblinCave_5x5_R_P.json |
+| GoblinCave | 5x5 | 豪客 | GoblinCave_5x5_HR_R_P.json |
+| IceAbyss | 5x5 | 普通 | IceAbyss_5x5_R_P.json |
+| IceAbyss | 5x5 | 豪客 | IceAbyss_5x5_HR_R_P.json |
+| IceCavern | 5x5 | 普通 | IceCavern_5x5_R_P.json |
+| IceCavern | 5x5 | 豪客 | IceCavern_5x5_HR_R_P.json |
+| Inferno | 3x3 | 豪客 | Inferno_3x3_HR_R_P.json |
+| Inferno | 5x5 | 普通 | Inferno_5x5_R_P.json |
+| Ruins | 5x5 | 豪客 | Ruins_5x5_HR_R_P.json |
+| Ruins | 7x7 | 普通 | Ruins_7x7_R_P.json |

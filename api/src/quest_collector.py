@@ -5,10 +5,10 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
 from pathlib import Path
-from quest_extractor.translator import Translator
-from quest_extractor.quest_extractor import QuestExtractor
 
 from config import OUTPUT_DIR
+from quest_extractor.quest_extractor import QuestExtractor
+from quest_extractor.translator import Translator
 
 _ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
 
@@ -69,20 +69,30 @@ def _extract_explore(translator, extractor, quests):
             module_name = extractor.match_asset_path_to_module(asset_path) or ""
             if not translation and not module_name:
                 continue
-            clean_module = module_name.rsplit(".", 1)[-1].removesuffix("_A").removesuffix("_D").removesuffix("_S").removesuffix("_HR_D") if module_name else ""
+            clean_module = (
+                module_name.rsplit(".", 1)[-1]
+                .removesuffix("_A")
+                .removesuffix("_D")
+                .removesuffix("_S")
+                .removesuffix("_HR_D")
+                if module_name
+                else ""
+            )
             key = clean_module or translation
             if key in seen:
                 continue
             seen.add(key)
-            explore_targets.append({
-                "name": translation,
-                "module_name": clean_module,
-                "quest_id": quest.get("id", ""),
-                "quest_title": quest.get("title_display", ""),
-                "quest_number": quest.get("quest_number", 0),
-                "npc_name": npc_name,
-                "npc_name_display": quest.get("npc_name_display", npc_name),
-            })
+            explore_targets.append(
+                {
+                    "name": translation,
+                    "module_name": clean_module,
+                    "quest_id": quest.get("id", ""),
+                    "quest_title": quest.get("title_display", ""),
+                    "quest_number": quest.get("quest_number", 0),
+                    "npc_name": npc_name,
+                    "npc_name_display": quest.get("npc_name_display", npc_name),
+                }
+            )
     explore_targets.sort(key=lambda x: (x["quest_number"], x["npc_name"]))
     return explore_targets
 
@@ -109,7 +119,14 @@ def _extract_fetch(translator, extractor, quests):
             if not item_name:
                 continue
             item_name_en = item_name
-            for pfx in ["DesignData_Item_Item_", "DesignData_Props_Props_", "DesignData_Monster_Monster_", "Id.Item.", "Id.Props.", "Id.Monster."]:
+            for pfx in [
+                "DesignData_Item_Item_",
+                "DesignData_Props_Props_",
+                "DesignData_Monster_Monster_",
+                "Id.Item.",
+                "Id.Props.",
+                "Id.Monster.",
+            ]:
                 item_name_en = item_name_en.removeprefix(pfx)
             key = (item_name_en, npc_name, quest.get("quest_number", 0))
             if key in seen:
@@ -117,16 +134,18 @@ def _extract_fetch(translator, extractor, quests):
             seen.add(key)
             rarity_tag = cd.get("RarityType", {}) or {}
             loot_state = cd.get("ItemLootState", "")
-            fetch_items.append({
-                "item_name": item_name_en,
-                "item_translation": _translate_item(translator, item_name_en),
-                "npc_name": npc_name,
-                "npc_name_cn": quest.get("npc_name_display", npc_name),
-                "quest_number": quest.get("quest_number", 0),
-                "count": cd.get("ContentCount", 1),
-                "rarity": rarity_tag.get("TagName", "").removeprefix("Engine.RarityType.") if rarity_tag else "",
-                "is_loot": "是" if loot_state == "Looted" else "",
-            })
+            fetch_items.append(
+                {
+                    "item_name": item_name_en,
+                    "item_translation": _translate_item(translator, item_name_en),
+                    "npc_name": npc_name,
+                    "npc_name_cn": quest.get("npc_name_display", npc_name),
+                    "quest_number": quest.get("quest_number", 0),
+                    "count": cd.get("ContentCount", 1),
+                    "rarity": rarity_tag.get("TagName", "").removeprefix("Engine.RarityType.") if rarity_tag else "",
+                    "is_loot": "是" if loot_state == "Looted" else "",
+                }
+            )
     fetch_items.sort(key=lambda x: (x["npc_name"], x["quest_number"]))
     return fetch_items
 
@@ -143,6 +162,7 @@ def _get_npc_category(npc_en):
         return ""
     return "可用NPC"
 
+
 def _extract_npc_list(translator, extractor, quests):
     grouped_en = extractor.group_quests_by_npc(use_translated_names=False)
     result = []
@@ -157,35 +177,49 @@ def _extract_npc_list(translator, extractor, quests):
                 rtype = ri.get("RewardType", "")
                 rid = ri.get("RewardId", {}) or {}
                 rname = rid.get("AssetPathName", "") if isinstance(rid, dict) else str(rid)
-                rewards.append({
-                    "type": rtype,
-                    "id": rname.split("/")[-1].split(".")[0] if rname else rtype,
-                    "count": ri.get("RewardCount", 0),
-                })
-            quests_out.append({
-                "id": q.get("id", ""),
-                "title": q.get("title_display", ""),
-                "quest_number": q.get("quest_number", 0),
-                "greeting": q.get("greeting_display", ""),
-                "complete": q.get("complete_display", ""),
-                "rewards": rewards,
-                "required": q.get("required_quest", ""),
-            })
-        result.append({
-            "npc_name": npc_en,
-            "npc_name_display": npc_display,
-            "quest_count": len(quests_out),
-            "category": _get_npc_category(npc_en),
-            "quests": quests_out,
-        })
+                rewards.append(
+                    {
+                        "type": rtype,
+                        "id": rname.split("/")[-1].split(".")[0] if rname else rtype,
+                        "count": ri.get("RewardCount", 0),
+                    }
+                )
+            quests_out.append(
+                {
+                    "id": q.get("id", ""),
+                    "title": q.get("title_display", ""),
+                    "quest_number": q.get("quest_number", 0),
+                    "greeting": q.get("greeting_display", ""),
+                    "complete": q.get("complete_display", ""),
+                    "rewards": rewards,
+                    "required": q.get("required_quest", ""),
+                }
+            )
+        result.append(
+            {
+                "npc_name": npc_en,
+                "npc_name_display": npc_display,
+                "quest_count": len(quests_out),
+                "category": _get_npc_category(npc_en),
+                "quests": quests_out,
+            }
+        )
     return result
 
 
 def _is_npc_active(npc_name):
     inactive = {
-        "FortuneTeller", "JackOLantern", "Krampus", "Miner",
-        "Navigator", "Nicholas", "NightmareMummy", "SkeletonFootman",
-        "Surgeon", "Treasurer", "Valentine",
+        "FortuneTeller",
+        "JackOLantern",
+        "Krampus",
+        "Miner",
+        "Navigator",
+        "Nicholas",
+        "NightmareMummy",
+        "SkeletonFootman",
+        "Surgeon",
+        "Treasurer",
+        "Valentine",
     }
     return npc_name not in inactive
 

@@ -9,6 +9,7 @@ from config import (
     DUNGEON_MODULE_DIR,
     GAME_JSON,
     GAME_ROOT,
+    GROUP_TO_ART_DIR,
     ITEM_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
@@ -16,7 +17,6 @@ from config import (
     MONSTER_DIR,
     PROPS_DIR,
     SPAWNER_DIR,
-    GROUP_TO_ART_DIR,
 )
 
 
@@ -26,7 +26,7 @@ def _load_json_dir(directory: Path) -> dict[str, Any]:
         return result
     for fp in sorted(directory.glob("*.json")):
         try:
-            with open(fp, "r", encoding="utf-8") as f:
+            with open(fp, encoding="utf-8") as f:
                 result[fp.stem] = json.load(f)
         except Exception:
             pass
@@ -37,7 +37,7 @@ def _load_game_json() -> dict[str, str]:
     if not GAME_JSON.exists():
         return {}
     try:
-        with open(GAME_JSON, "r", encoding="utf-8") as f:
+        with open(GAME_JSON, encoding="utf-8") as f:
             raw = json.load(f)
         if isinstance(raw, dict):
             for v in raw.values():
@@ -54,7 +54,18 @@ _MONSTER_SUBTYPE_RE = re.compile(r"_(BoneWall|BonePrison)$", re.IGNORECASE)
 
 
 def _strip_ids_prefix(name: str, prefix: str) -> str:
-    return name.removeprefix(prefix).removeprefix("Id_Item_").removeprefix("Id_Monster_").removeprefix("Id_Props_").removeprefix("Id_DungeonModule_").removeprefix("ID_Lootdrop_").removeprefix("ID_LootDropGroup_").removeprefix("Id_Spawner_New_Monster_").removeprefix("Id_Spawner_New_Props_").removeprefix("Id_Spawner_New_LootDrop_")
+    return (
+        name.removeprefix(prefix)
+        .removeprefix("Id_Item_")
+        .removeprefix("Id_Monster_")
+        .removeprefix("Id_Props_")
+        .removeprefix("Id_DungeonModule_")
+        .removeprefix("ID_Lootdrop_")
+        .removeprefix("ID_LootDropGroup_")
+        .removeprefix("Id_Spawner_New_Monster_")
+        .removeprefix("Id_Spawner_New_Props_")
+        .removeprefix("Id_Spawner_New_LootDrop_")
+    )
 
 
 def _extract_translation_key(name: str, prefix: str) -> str:
@@ -225,7 +236,6 @@ class DatabaseManager:
         data = _load_game_json()
         if not data:
             return 0
-        count = 0
         c = self.conn.cursor()
         c.execute("DELETE FROM translations")
         rows = [(k, v) for k, v in data.items() if k and v]
@@ -247,6 +257,7 @@ class DatabaseManager:
         c.execute("DELETE FROM item_entities")
         # Count variants per item_name from raw filenames
         from collections import Counter
+
         variant_counts: Counter = Counter()
         rows = []
         for raw_name, data_list in files.items():
@@ -300,7 +311,10 @@ class DatabaseManager:
             else:
                 idx = seen_lower[key]
                 existing = deduped[idx]
-                if r[2] and (not existing[2] or (r[2].startswith("Text_DesignData_") and not existing[2].startswith("Text_DesignData_"))):
+                if r[2] and (
+                    not existing[2]
+                    or (r[2].startswith("Text_DesignData_") and not existing[2].startswith("Text_DesignData_"))
+                ):
                     # 保留首遇的名称大小写，只替换翻译键
                     deduped[idx] = (existing[0], existing[1], r[2])
 
@@ -353,6 +367,7 @@ class DatabaseManager:
         """Scan MAPS_DIR to infer module group from file path directory structure.
         Returns map_base → group mapping."""
         import os
+
         path_group: dict[str, str] = {}
         if not MAPS_DIR.exists():
             return path_group
@@ -431,16 +446,28 @@ class DatabaseManager:
                 module_type = type_map.get(sl_base, "")
             # Fallback: infer from module name prefix
             if not module_type:
-                for prefix, group in [("ShipGraveyard", "ShipGraveyard"), ("Shipgraveyard", "ShipGraveyard"),
-                                       ("GoblinCave", "GoblinCave"), ("GoblinJail", "GoblinCave"),
-                                       ("GoblinMine", "GoblinCave"), ("Goblin", "GoblinCave"),
-                                       ("Firedeep", "FireDeep"), ("FireDeep", "FireDeep"),
-                                       ("IceCavern", "IceCavern"), ("IceAbyss", "IceAbyss"),
-                                       ("IceCave", "IceCavern"), ("Crypt", "Crypt"),
-                                       ("Inferno", "Inferno"), ("Ruins", "Ruins"),
-                                        ("Swamp", "Crypt"), ("Cave_", "GoblinCave"),
-                                       ("CorridorCrypt", "Crypt"), ("Cemetery", "Crypt"),
-                                       ("SpiderCave", "GoblinCave"), ("Prison", "Ruins")]:
+                for prefix, group in [
+                    ("ShipGraveyard", "ShipGraveyard"),
+                    ("Shipgraveyard", "ShipGraveyard"),
+                    ("GoblinCave", "GoblinCave"),
+                    ("GoblinJail", "GoblinCave"),
+                    ("GoblinMine", "GoblinCave"),
+                    ("Goblin", "GoblinCave"),
+                    ("Firedeep", "FireDeep"),
+                    ("FireDeep", "FireDeep"),
+                    ("IceCavern", "IceCavern"),
+                    ("IceAbyss", "IceAbyss"),
+                    ("IceCave", "IceCavern"),
+                    ("Crypt", "Crypt"),
+                    ("Inferno", "Inferno"),
+                    ("Ruins", "Ruins"),
+                    ("Swamp", "Crypt"),
+                    ("Cave_", "GoblinCave"),
+                    ("CorridorCrypt", "Crypt"),
+                    ("Cemetery", "Crypt"),
+                    ("SpiderCave", "GoblinCave"),
+                    ("Prison", "Ruins"),
+                ]:
                     if module_name.lower().startswith(prefix.lower()):
                         module_type = group
                         break
@@ -497,7 +524,7 @@ class DatabaseManager:
         def _strip_prefix(name: str, *prefixes: str) -> str:
             for p in sorted(prefixes, key=len, reverse=True):
                 if name.lower().startswith(p.lower()):
-                    return name[len(p):]
+                    return name[len(p) :]
             return name
 
         ld_group = {}
@@ -576,7 +603,9 @@ class DatabaseManager:
 
     def get_dungeon_modules(self) -> list[dict]:
         c = self.conn.cursor()
-        c.execute("SELECT module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name FROM dungeon_modules ORDER BY module_name")
+        c.execute(
+            "SELECT module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name FROM dungeon_modules ORDER BY module_name"
+        )
         return [dict(r) for r in c.fetchall()]
 
     def get_lootdrop_relationships(self) -> list[dict]:
@@ -600,7 +629,9 @@ class DatabaseManager:
                 if type_label not in existing["types"]:
                     existing["types"].append(type_label)
                 existing_tk = existing["translation_key"]
-                if (not existing_tk or not existing_tk.startswith("Text_DesignData_")) and tk.startswith("Text_DesignData_"):
+                if (not existing_tk or not existing_tk.startswith("Text_DesignData_")) and tk.startswith(
+                    "Text_DesignData_"
+                ):
                     existing["translation_key"] = tk
 
         for r in self.get_item_entities():
@@ -630,13 +661,16 @@ class DatabaseManager:
 
     def get_item_coordinates(self, item_name: str) -> list[dict]:
         c = self.conn.cursor()
-        c.execute("""
+        c.execute(
+            """
             SELECT DISTINCT s.x, s.y, s.z, s.json_filename, s.version, s.map_base, s.module_type, s.original_keyword
             FROM search_term_matches sm
             JOIN spawners s ON s.id = sm.spawner_id
             WHERE sm.search_term = ?
             ORDER BY s.map_base, s.json_filename
-        """, (item_name,))
+        """,
+            (item_name,),
+        )
         return [dict(r) for r in c.fetchall()]
 
     def get_all_coordinates(self) -> dict[str, list[dict]]:

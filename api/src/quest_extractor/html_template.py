@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 HTML模板引擎
 负责生成HTML页面的头部、尾部及CSS样式
@@ -10,7 +9,7 @@ class HTMLTemplate:
     """HTML模板生成器"""
 
     # CSS样式常量
-    CSS_STYLES = '''
+    CSS_STYLES = """
         body {
             font-family: "Microsoft YaHei", Arial, sans-serif;
             margin: 0;
@@ -267,9 +266,9 @@ class HTMLTemplate:
         .inactive-grid { display: none; }
         .debug-active .inactive-section { display: block; }
         .debug-active .inactive-grid { display: grid; }
-    '''
+    """
 
-    CSS_STYLES_DARK = '''
+    CSS_STYLES_DARK = """
         body {
             font-family: "Microsoft YaHei", Arial, sans-serif;
             margin: 0;
@@ -540,10 +539,18 @@ class HTMLTemplate:
         .top-navbar a:hover { background-color: #00bcd4; color: #2c2c2c; }
         .debug-toggle-btn { display: block; margin: 0 auto 15px; padding: 8px 20px; background-color: #FFC107; color: #000; border: 2px solid #FF9800; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; transition: all 0.2s; }
         .debug-toggle-btn:hover { background-color: #FF9800; color: #fff; }
-    '''
+    """
 
     @staticmethod
-    def generate_header(title, include_back_link=False, language="zh-Hans", ui_translations=None, dark_mode=False, parent_url=None, parent_label=None):
+    def generate_header(
+        title,
+        include_back_link=False,
+        language="zh-Hans",
+        ui_translations=None,
+        dark_mode=False,
+        parent_url=None,
+        parent_label=None,
+    ):
         """
         生成HTML头部
 
@@ -570,33 +577,33 @@ class HTMLTemplate:
             parent_btn = ""
             if parent_url:
                 parent_btn = f'<a href="{parent_url}">{parent_label or "返回上一级"}</a>'
-                back_link = f'''<div class="top-navbar">
+                back_link = f"""<div class="top-navbar">
     {parent_btn}
-</div>'''
+</div>"""
             else:
-                back_link = f'''<div class="top-navbar">
+                back_link = f"""<div class="top-navbar">
     <a href="index.html">{back_to_index}</a>
-</div>'''
+</div>"""
 
-            debug_button = f'''<button class="debug-toggle-btn" onclick="toggleDebug()" data-debug-text="{debug}" data-hide-text="{hide_debug}">{debug}</button>'''
+            debug_button = f"""<button class="debug-toggle-btn" onclick="toggleDebug()" data-debug-text="{debug}" data-hide-text="{hide_debug}">{debug}</button>"""
 
-            debug_script = f'''<script>
-    function toggleDebug() {{
+            debug_script = """<script>
+    function toggleDebug() {
         const sections = document.querySelectorAll('.debug-section');
         const button = document.querySelector('.debug-toggle-btn');
-        sections.forEach(section => {{
+        sections.forEach(section => {
             section.classList.toggle('active');
-        }});
+        });
         document.body.classList.toggle('debug-active');
         const debugText = button.getAttribute('data-debug-text');
         const hideText = button.getAttribute('data-hide-text');
         button.textContent = sections[0].classList.contains('active') ? hideText : debugText;
-    }}
+    }
 </script>
-'''
+"""
 
         css = HTMLTemplate.CSS_STYLES_DARK if dark_mode else HTMLTemplate.CSS_STYLES
-        return f'''<!DOCTYPE html>
+        return f"""<!DOCTYPE html>
 <html lang="{language}">
 <head>
     <meta charset="UTF-8">
@@ -612,11 +619,11 @@ class HTMLTemplate:
     <div class="container">
         <h1>{title}</h1>
         {debug_button}
-'''
+"""
 
     @staticmethod
     def generate_footer():
         """生成HTML尾部"""
-        return '''    </div>
+        return """    </div>
 </body>
-</html>'''
+</html>"""
