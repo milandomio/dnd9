@@ -428,12 +428,6 @@ class DatabaseManager:
 
             sl_base = ""
             found_valid = False
-            hr_asset = (props.get("SubLevelAssetD_HR") or {}).get("AssetPathName", "")
-            d_asset = (props.get("SubLevelAssetD") or {}).get("AssetPathName", "")
-            # SubLevelAssetD_HR 和 SubLevelAssetD 指向同一文件 → 无独立高精度地图，跳过
-            if hr_asset and d_asset and hr_asset == d_asset:
-                skipped_names.append(module_name)
-                continue
             for variant in ["SubLevelAssetD_HR", "SubLevelAssetD", "SubLevelAssetA"]:
                 asset = (props.get(variant) or {}).get("AssetPathName", "")
                 if not asset:
@@ -443,6 +437,16 @@ class DatabaseManager:
                     break  # stale reference → skip module
                 base = _ue_asset_base_name(asset) or ""
                 sl_base = _sl_base_name(base)
+                # SubLevelAssetD_HR/D 指向其他模块的地图目录 → 无效数据，跳过
+                # 判断依据：从 UE 路径提取目录名，若与模块名互不包含则判定为借用
+                if variant in ("SubLevelAssetD_HR", "SubLevelAssetD") and sl_base:
+                    fs_path = _ue_to_fs_path(asset)
+                    if fs_path:
+                        dir_name = fs_path.rsplit("/", 1)[0].rsplit("/", 1)[-1] if "/" in fs_path else ""
+                        if dir_name and module_name.lower() not in dir_name.lower() and dir_name.lower() not in module_name.lower():
+                            skipped_names.append(module_name)
+                            sl_base = ""
+                            break
                 found_valid = True
                 break
             if not found_valid:
