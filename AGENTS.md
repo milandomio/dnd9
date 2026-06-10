@@ -7,8 +7,6 @@
 - "后端" — 指 api 目录
 - "db" — 指 api/data/darkfindv5.db
 - "坐标" — 指录入到db的spawners表中的道具/怪物实体实际在地图位置的数据，包含x、y、z三个REAL字段
-- "rotate" — 指模块(dungeon_module)在地图中的旋转角度，单位为度(0-359.9)，来自Layout JSON的LevelTransform.Rotation四元数
-- "yaw" — 指单个spawner实体在模块内的自身旋转角度，单位为度(0-359.9)，来自模块地图JSON的RelativeRotation.Yaw
 - "部署" — 删除db → 运行后端管道 → 构建前端 → 启动web服务到localhost:8080
 
 ## MCP Tools
