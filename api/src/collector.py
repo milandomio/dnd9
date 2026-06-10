@@ -603,7 +603,6 @@ def run():
 
     # ── lootdrops detail files ──
     _MONSTER_COLORS = ["#E74C3C","#3498DB","#2ECC71","#F39C12","#9B59B6","#1ABC9C","#E67E22","#2980B9","#27AE60","#D35400","#8E44AD","#16A085","#C0392B","#2C3E50","#7F8C8D","#FF6B35","#00BFFF","#FFD700","#FF69B4","#32CD32","#FF4500","#9370DB","#00FA9A","#DC143C","#00CED1"]
-    monster_coord_cache: dict[str, list] = {}
     _HARD_RE = re.compile(r"_(Hard|VeryHard)$")
     _SUFFIX_RE = re.compile(r"Unique$")
 
@@ -621,14 +620,11 @@ def run():
             # Skip self-referencing: item dropping itself (e.g. GoldOres → GoldOres)
             if m_name == item_name:
                 continue
-            if m_name not in monster_coord_cache:
-                coords_list = all_coords.get(m_name, [])
-                if not coords_list:
-                    alias = TRANSLATION_ALIAS_MAP.get(m_name)
-                    if alias:
-                        coords_list = all_coords.get(alias, [])
-                monster_coord_cache[m_name] = coords_list
-            coords = monster_coord_cache[m_name]
+            coords = all_coords.get(m_name, [])
+            if not coords:
+                alias = TRANSLATION_ALIAS_MAP.get(m_name)
+                if alias:
+                    coords = all_coords.get(alias, [])
             if not coords:
                 continue
             m_trans = entry["monster_translations"][entry["monsters"].index(m_name)]
