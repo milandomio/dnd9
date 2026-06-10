@@ -189,15 +189,12 @@ def run():
 
         # 7. Build spawner matches via search engine
         print("[7/7] Building spawner matches...")
-        items = db.get_item_entities()
-        monsters = db.get_monster_entities()
-        props = db.get_props_entities()
         _search_term_set: set[str] = set()
-        for r in items:
+        for r in db.get_item_entities():
             _search_term_set.add(r["item_name"])
-        for r in monsters:
+        for r in db.get_monster_entities():
             _search_term_set.add(r["monster_name"])
-        for r in props:
+        for r in db.get_props_entities():
             name = r["asset_name"]
             m = _ORE_QUALITY_RE.match(name)
             if m:
@@ -719,7 +716,7 @@ def run():
     explore_count, quest_items_count, quest_npc_count = run_quest_extraction()
 
     # ── Quest items groups (with coordinates) ──
-    _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords)
+    _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules)
 
     # ── index.json: page index ──
     qg_path = OUTPUT_DIR / "quest_items_groups.json"
@@ -745,7 +742,7 @@ def run():
     db.close()
 
 
-def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords):
+def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules):
     quest_items_path = OUTPUT_DIR / "quest_items.json"
     if not quest_items_path.exists():
         return
@@ -753,9 +750,8 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords):
         quest_items = json.load(f)
 
     # Build map_base -> module_group lookup
-    mods = db.get_dungeon_modules()
     map_to_group = {}
-    for m in mods:
+    for m in modules:
         g = m.get("module_group", "") or ""
         if g:
             map_to_group[m["module_name"]] = g
