@@ -550,28 +550,6 @@ class DatabaseManager:
         self.conn.commit()
         return len(deduped)
 
-    # ─── Import: Spawners & Matches ───
-
-    def import_spawners_and_matches(self):
-        from search_engine import build_all_matches
-        matches, spawners = build_all_matches()
-        c = self.conn.cursor()
-        c.execute("DELETE FROM spawners")
-        c.execute("DELETE FROM search_term_matches")
-        for s in spawners:
-            c.execute(
-                "INSERT INTO spawners (keyword, original_keyword, spawner_type, x, y, z, json_filename, module_type, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (s["keyword"], s.get("original_keyword", ""), s["spawner_type"], s["x"], s["y"], s["z"], s["json_filename"], s.get("module_type", ""), s.get("version", ""), s.get("map_base", "")),
-            )
-        for term, spawner_ids in matches.items():
-            rows = [(term, sid) for sid in spawner_ids]
-            c.executemany(
-                "INSERT OR IGNORE INTO search_term_matches (search_term, spawner_id) VALUES (?, ?)",
-                rows,
-            )
-        self.conn.commit()
-        return len(spawners), len(matches)
-
     # ─── FTS Rebuild ───
 
     def _rebuild_fts(self, fts_table: str, content_table: str):
