@@ -32,75 +32,6 @@ _DUMMY_AS_MONSTER = {
 }
 
 
-def _build_entity_classification(translations: dict[str, str] | None = None) -> dict[str, dict]:
-    """Scan source dirs and return { normalized_name: { types: [str], translation_key: str } }.
-    Provides ground truth classification, supporting entities that exist in multiple categories.
-    """
-    from db_manager import _extract_item_name, _extract_monster_name, _extract_props_name
-    classification: dict[str, dict] = {}
-    seen_lower: dict[str, str] = {}
-
-    def _key_valid(tk: str) -> bool:
-        """key 非空且能在翻译表中解析才视为有效"""
-        if not tk:
-            return False
-        if translations is not None:
-            return tk in translations
-        return tk.startswith("Text_DesignData_")
-
-    def _scan_dir(directory, prefix_strip_fn, type_label):
-        from pathlib import Path
-        if not Path(directory).exists():
-            return
-        for fp in sorted(Path(directory).glob("*.json")):
-            raw_name = fp.stem
-            name = prefix_strip_fn(raw_name)
-            if not name:
-                continue
-            try:
-                with open(fp) as f:
-                    data = json.load(f)
-            except Exception:
-                continue
-            if not data:
-                continue
-            entry = data[0]
-            props = (entry.get("Properties") or {}) or {}
-            tk = (props.get("Name") or {}).get("Key", "") or ""
-            key = name.lower()
-            if key not in seen_lower:
-                seen_lower[key] = name
-                classification[name] = {"types": [type_label], "translation_key": tk}
-            else:
-                existing_name = seen_lower[key]
-                existing = classification[existing_name]
-                if type_label not in existing["types"]:
-                    existing["types"].append(type_label)
-                existing_tk = existing["translation_key"]
-                if not _key_valid(existing_tk) and _key_valid(tk):
-                    existing["translation_key"] = tk
-
-    _scan_dir(ITEM_DIR, lambda r: _extract_item_name(r), "item")
-    _scan_dir(MONSTER_DIR, lambda r: _extract_monster_name(r), "monster")
-    _scan_dir(PROPS_DIR, lambda r: _extract_props_name(r), "props")
-
-    # _Dummy 实体同时也是怪物，补全 monster 翻译键
-    for name in _DUMMY_AS_MONSTER:
-        if name in classification:
-            if "monster" not in classification[name]["types"]:
-                classification[name]["types"].append("monster")
-            if not classification[name]["translation_key"]:
-                base = _QUALITY_RE.sub("", name)
-                if base != name:
-                    monster_key = "Text_DesignData_Monster_Monster_" + base
-                    classification[name]["translation_key"] = monster_key
-        else:
-            base = _QUALITY_RE.sub("", name)
-            monster_key = "Text_DesignData_Monster_Monster_" + base
-            classification[name] = {"types": ["props", "monster"], "translation_key": monster_key}
-
-    return classification
-
 
 _SOURCE_PATHS = [
     GAME_JSON, ITEM_DIR, MONSTER_DIR, PROPS_DIR,
@@ -524,8 +455,20 @@ def run():
     _save("dungeon_modules.json", modules_data)
 
     # ── dungeon_module_coords: per-module entity coordinates ──
-    # Build entity classification index from source directories (ground truth type)
-    entity_class = _build_entity_classification(translations)
+    # Build entity classification index from DB (ground truth type)
+    entity_class = db.get_entity_classification()
+    # _Dummy 实体同时也是怪物，补全 monster 翻译键
+    for name in _DUMMY_AS_MONSTER:
+        if name in entity_class:
+            if "monster" not in entity_class[name]["types"]:
+                entity_class[name]["types"].append("monster")
+            if not entity_class[name]["translation_key"]:
+                base = _QUALITY_RE.sub("", name)
+                if base != name:
+                    entity_class[name]["translation_key"] = "Text_DesignData_Monster_Monster_" + base
+        else:
+            base = _QUALITY_RE.sub("", name)
+            entity_class[name] = {"types": ["props", "monster"], "translation_key": "Text_DesignData_Monster_Monster_" + base}
     _save("entity_index.json", [
         {"name": n, "types": v["types"], "translation_key": v["translation_key"]}
         for n, v in sorted(entity_class.items())

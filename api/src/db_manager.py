@@ -411,6 +411,7 @@ class DatabaseManager:
                 continue
 
             sl_base = ""
+            found_valid = False
             for variant in ["SubLevelAssetD_HR", "SubLevelAssetD", "SubLevelAssetA"]:
                 asset = (props.get(variant) or {}).get("AssetPathName", "")
                 if not asset:
@@ -420,8 +421,9 @@ class DatabaseManager:
                     break  # stale reference → skip module
                 base = _ue_asset_base_name(asset) or ""
                 sl_base = _sl_base_name(base)
+                found_valid = True
                 break
-            else:
+            if not found_valid:
                 skipped_names.append(module_name)
                 continue
             # If ModuleType is empty, try sl_base → find the module that owns this map's ModuleType
@@ -603,6 +605,34 @@ class DatabaseManager:
         c = self.conn.cursor()
         c.execute("SELECT item_name, monster_name FROM lootdrop_items ORDER BY item_name, monster_name")
         return [dict(r) for r in c.fetchall()]
+
+    def get_entity_classification(self) -> dict[str, dict]:
+        """Build entity classification from DB data (avoids re-scanning JSON files)."""
+        classification: dict[str, dict] = {}
+        seen_lower: dict[str, str] = {}
+
+        def _add(name: str, type_label: str, tk: str):
+            key = name.lower()
+            if key not in seen_lower:
+                seen_lower[key] = name
+                classification[name] = {"types": [type_label], "translation_key": tk}
+            else:
+                existing_name = seen_lower[key]
+                existing = classification[existing_name]
+                if type_label not in existing["types"]:
+                    existing["types"].append(type_label)
+                existing_tk = existing["translation_key"]
+                if (not existing_tk or not existing_tk.startswith("Text_DesignData_")) and tk.startswith("Text_DesignData_"):
+                    existing["translation_key"] = tk
+
+        for r in self.get_item_entities():
+            _add(r["item_name"], "item", r["translation_key"])
+        for r in self.get_monster_entities():
+            _add(r["monster_name"], "monster", r["translation_key"])
+        for r in self.get_props_entities():
+            _add(r["asset_name"], "props", r["translation_key"])
+
+        return classification
 
     def get_spawner_matches(self) -> list[dict]:
         c = self.conn.cursor()
