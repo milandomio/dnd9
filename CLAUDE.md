@@ -36,7 +36,8 @@ DarkFindV5/
 │   │   ├── search_index.json      # 搜索索引（前端全局搜索用）
 │   │   ├── quest_items.json
 │   │   ├── quest_items_groups.json / quest_items_groups/
-│   │   └── quest_npc.json
+│   │   ├── quest_npc.json
+│   │   └── dungeon_modules_coords/   # 各模块内实体坐标（按模块名分文件）
 │   └── img/               # → api/src/img/（管道后复制）
 ├── web/                 # React 前端（SSG）
 │   ├── src/
@@ -174,6 +175,24 @@ rm /tmp/darkfindv5.db
 
 **修复前** 39034 个 spawner，**修复后** 38444 个（减少 590 条）。
 
+### 坐标批量获取
+
+`collector.py` 的 `run()` 在导出阶段通过 `db.get_all_coordinates()` 一次性获取所有实体坐标，
+返回 `dict[str, list[dict]]`（search_term → 坐标列表）。后续所有导出段（items、monsters、props、
+dungeon_modules_coords、lootdrops）通过 `all_coords.get(name, [])` 查询，消除了逐实体 N+1 查询。
+
+### 实体分类
+
+`collector.py` 的 `run()` 通过 `db.get_entity_classification()` 从 DB 实体表直接构建分类映射，
+返回 `dict[str, dict]`（entity_name → {types, translation_key}）。替代了旧版 `_build_entity_classification()`
+逐文件扫描 ~3,249 个 JSON 的方式。
+
+### Spawner 导入架构
+
+Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run()` 中内联执行，
+使用 `executemany` 批量插入（~32,000+ spawner 行 + ~483 matched term 行）。
+通过 `db.connect()` 获取原始 sqlite3.Connection 操作，而非通过 `db_manager.py` 的封装方法。
+
 ## 数据库
 
 ### 地图 ModuleType 缺失
@@ -224,3 +243,8 @@ rm /tmp/darkfindv5.db
 ### 旋转值
 
 从 Layout JSON 文件计算，优先级：`module_name` → `sl_base_name`，默认 1（90°）。
+
+### 废弃方法
+
+`db_manager.py` 的 `get_item_coordinates()` 已被 `get_all_coordinates()` 取代，不再被 `collector.py` 调用。
+保留为死代码，待后续清理。
