@@ -30,10 +30,7 @@ class QuestParser:
         if not parts:
             return None
         filename_part = parts[-1]
-        if "." in filename_part:
-            base_name = filename_part.split(".")[0]
-        else:
-            base_name = filename_part
+        base_name = filename_part.split(".")[0] if "." in filename_part else filename_part
         return f"{base_name}.json"
 
     @staticmethod
@@ -158,10 +155,7 @@ class QuestParser:
             with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
 
-            if isinstance(raw_data, list) and len(raw_data) > 0:
-                data = raw_data[0]
-            else:
-                data = raw_data
+            data = raw_data[0] if isinstance(raw_data, list) and len(raw_data) > 0 else raw_data
 
             properties = data.get("Properties", {})
             quest_id = data.get("Name", "")

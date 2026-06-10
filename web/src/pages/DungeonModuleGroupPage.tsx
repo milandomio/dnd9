@@ -39,7 +39,9 @@ export default function DungeonModuleGroupPage() {
       .finally(() => setLoading(false));
   }, [group]);
 
-  const visible = debug ? modules : modules.filter((m) => m.has_img);
+  const visible = debug
+    ? modules
+    : modules.filter((m) => m.has_img && m.has_useful_entities);
   const hiddenCount = modules.length - visible.length;
 
   if (loading)
@@ -51,7 +53,7 @@ export default function DungeonModuleGroupPage() {
   if (!modules.length)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        未找到
+        数据加载中...
       </div>
     );
 
@@ -78,7 +80,7 @@ export default function DungeonModuleGroupPage() {
           【{groupLabel}】地图模块
           <span style={{ color: '#aaa', fontSize: 14, marginLeft: 12 }}>
             {visible.length} 个模块
-            {hiddenCount > 0 ? `（${hiddenCount} 个无图已隐藏）` : ''}
+            {hiddenCount > 0 ? `（${hiddenCount} 个已隐藏）` : ''}
           </span>
         </h1>
         <Button

@@ -59,7 +59,8 @@ _RESOLVE_FUZZY_PASS2_RE = re.compile(
     r"|_[A-Z](?!\w)$"  # 单字母后缀 _A _B
     r"|_\w+_(?:On|Off|Lit|Unlit)$"  # 中间段+状态 Torch02_Purple_On
     r"|_\d+(?:_(?:On|Off|Lit|Unlit))?$"  # 尾部数字+可选状态 _03_On
-    r"|(?:\d+(?:On|Off|ON|OFF))$"  # 无下划线数字+状态 Roaster07On, FiredeepRoaster_01ON
+    r"|_\d+(?:On|Off|ON|OFF)$"  # 尾部数字+状态（无间隔）_01ON
+    r"|(?:\d+(?:On|Off|ON|OFF))$"  # 无下划线数字+状态 Roaster07On
     r"|(?:\d+)$"  # 尾部纯数字（剥离 On 后残留）Torch03
     r"|_Ruins$|_Cave$|_Crypt$"  # 地图变体后缀
     r")"
@@ -512,7 +513,7 @@ def run():
         custom_range = override.get("range", 0)
         offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
         rot1 = module_rotations.get(r["module_name"])
-        rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 1)
+        rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 90)
         sl = r["sl_base_name"]
         map_image = r.get("map_image_name", "")
         module_name = r["module_name"]
@@ -599,7 +600,7 @@ def run():
                 "has_img": (IMG_SRC / f"{resolved_name}.webp").exists(),
                 "offset_x": 0,
                 "offset_y": 0,
-                "rotate": 1,
+                "rotate": 90,
                 "range": 0,
             }
     # ── 模块名 ↔ 地图名 双向映射 ──
@@ -613,10 +614,12 @@ def run():
         module_to_maps.setdefault(mn, set()).add(mn)
     # 第二遍：建立 sl_base 映射 (sl_base → module_name)
     # DungeonModule JSON 定义的模块名优先于地图文件名，允许覆盖直接映射
+    # 但如果 sl 已经自映射（自身就是该 sublevel 的主模块），则保留自映射不被覆盖
     for mn, mod in modules_map.items():
         sl = mod["sl_base_name"]
         if sl and sl != mn:
-            map_to_module[sl] = mn
+            if map_to_module.get(sl) != sl:
+                map_to_module[sl] = mn
             module_to_maps.setdefault(mn, set()).add(sl)
 
     # ── dungeon_module_coords: per-module entity coordinates ──

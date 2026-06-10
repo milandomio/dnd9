@@ -43,6 +43,7 @@ export interface DungeonModule {
   sl_base_name: string;
   img_name: string;
   has_img: boolean;
+  has_useful_entities: boolean;
   offset_x: number;
   offset_y: number;
   rotate: number;

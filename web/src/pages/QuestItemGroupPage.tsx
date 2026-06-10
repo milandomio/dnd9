@@ -126,7 +126,7 @@ export default function QuestItemGroupPage() {
   if (!data)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        未找到
+        数据加载中...
       </div>
     );
 
@@ -578,7 +578,7 @@ export default function QuestItemGroupPage() {
                       >
                         <button
                           onClick={() =>
-                            setAdj(mapName, 'rotate', (adj.rotate + 1) % 4)
+                            setAdj(mapName, 'rotate', (adj.rotate + 90) % 360)
                           }
                           style={ctrlBtn}
                         >

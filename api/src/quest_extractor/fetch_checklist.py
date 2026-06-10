@@ -109,9 +109,8 @@ class FetchChecklist:
             quest_num = quest.get("quest_number", 0)
             rewards = quest.get("rewards") or []
             has_affinity = any(r.get("RewardType") == "EDCRewardType::Affinity" for r in rewards)
-            if has_affinity:
-                if npc_en not in result or quest_num > result[npc_en]:
-                    result[npc_en] = quest_num
+            if has_affinity and (npc_en not in result or quest_num > result[npc_en]):
+                result[npc_en] = quest_num
         return result
 
     def _resolve_item_name(self, content_data):

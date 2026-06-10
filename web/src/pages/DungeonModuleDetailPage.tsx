@@ -89,7 +89,7 @@ export default function DungeonModuleDetailPage() {
   if (!mod)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        未找到
+        数据加载中...
       </div>
     );
 
@@ -452,7 +452,7 @@ export default function DungeonModuleDetailPage() {
             </div>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
               <button
-                onClick={() => setAdjField('rotate', (adj.rotate + 1) % 4)}
+                onClick={() => setAdjField('rotate', (adj.rotate + 90) % 360)}
                 style={ctrlBtn}
               >
                 ↻ 旋转

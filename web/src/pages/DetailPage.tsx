@@ -109,7 +109,8 @@ export default function DetailPage() {
       .catch(console.error);
   }, [page, name]);
 
-  if (!entity) return <Typography.Text type="danger">未找到</Typography.Text>;
+  if (!entity)
+    return <Typography.Text type="danger">数据加载中...</Typography.Text>;
 
   const coords = entity.coords ?? [];
   const grouped = new Map<string, Coord[]>();
@@ -486,7 +487,7 @@ export default function DetailPage() {
                       >
                         <button
                           onClick={() =>
-                            setAdj(mapName, 'rotate', (adj.rotate + 1) % 4)
+                            setAdj(mapName, 'rotate', (adj.rotate + 90) % 360)
                           }
                           style={ctrlBtn}
                         >

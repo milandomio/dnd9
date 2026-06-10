@@ -193,7 +193,7 @@ class DatabaseManager:
                 x REAL NOT NULL,
                 y REAL NOT NULL,
                 z REAL NOT NULL,
-                yaw INTEGER NOT NULL DEFAULT 0,
+                yaw REAL NOT NULL DEFAULT 0.0,
                 json_filename TEXT NOT NULL,
                 module_type TEXT DEFAULT '',
                 version TEXT NOT NULL DEFAULT '',
@@ -428,6 +428,12 @@ class DatabaseManager:
 
             sl_base = ""
             found_valid = False
+            hr_asset = (props.get("SubLevelAssetD_HR") or {}).get("AssetPathName", "")
+            d_asset = (props.get("SubLevelAssetD") or {}).get("AssetPathName", "")
+            # SubLevelAssetD_HR 和 SubLevelAssetD 指向同一文件 → 无独立高精度地图，跳过
+            if hr_asset and d_asset and hr_asset == d_asset:
+                skipped_names.append(module_name)
+                continue
             for variant in ["SubLevelAssetD_HR", "SubLevelAssetD", "SubLevelAssetA"]:
                 asset = (props.get(variant) or {}).get("AssetPathName", "")
                 if not asset:

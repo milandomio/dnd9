@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test script for pak parser."""
+"""Test script for pak parser with AES decryption."""
 
 import sys
 import os
@@ -10,54 +10,56 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pak_parser import open_pak
 
 PAK_DIR = "/mnt/e/soft/Steam/steamapps/common/Dark and Darker/DungeonCrawler/Content/Paks"
+AES_KEY_FILE = "/mnt/e/Game/fmod/aes.txt"
+
+def load_aes_key() -> bytes:
+    """Load AES key from file."""
+    key_hex = Path(AES_KEY_FILE).read_text().strip()
+    if key_hex.startswith("0x"):
+        key_hex = key_hex[2:]
+    return bytes.fromhex(key_hex)
 
 def test_pak_parser():
     """Test pak parser functionality."""
+    aes_key = load_aes_key()
+    print(f"AES key loaded: {aes_key.hex()[:32]}...")
+    
     pak_path = Path(PAK_DIR)
     
-    # Find the first pak file
-    pak_files = list(pak_path.glob("pakchunk0-Windows.pak"))
+    # Find a smaller pak file first
+    pak_files = sorted(pak_path.glob("pakchunk304-Windows.pak"))
     if not pak_files:
-        print("No pakchunk0-Windows.pak found")
+        print("No pakchunk304-Windows.pak found")
         return
     
     pak_file = pak_files[0]
-    print(f"Testing with: {pak_file.name}")
+    print(f"\nTesting with: {pak_file.name}")
     print("=" * 60)
     
     try:
-        with open_pak(pak_file) as pak:
-            # Get version
+        with open_pak(pak_file, aes_key) as pak:
             print(f"Version: {pak.get_version()}")
-            
-            # Get mount point
             print(f"Mount point: {pak.get_mount_point()}")
+            print(f"Encrypted: {pak.encrypted}")
             
-            # List files (first 20)
             files = pak.list_files()
             print(f"\nTotal files: {len(files)}")
-            print("First 20 files:")
+            print("Files:")
             for f in files[:20]:
-                print(f"  {f}")
+                info = pak.get_file_info(f)
+                print(f"  {f} ({info['size']} bytes)")
             
-            # Search for JSON files
-            json_files = pak.search_files("*.json")
-            print(f"\nJSON files: {len(json_files)}")
-            if json_files:
-                print("First 10 JSON files:")
-                for f in json_files[:10]:
-                    print(f"  {f}")
-            
-            # Get stats
-            stats = pak.get_stats()
-            print(f"\nStats:")
-            print(f"  Total size: {stats['total_size'] / (1024*1024):.1f} MB")
-            print(f"  Encrypted: {stats['encrypted']}")
-            
-            # Show top extensions
-            print("\nTop file types:")
-            for ext, count in sorted(stats["extensions"].items(), key=lambda x: -x[1])[:10]:
-                print(f"  {ext or '(no ext)'}: {count}")
+            # Try to extract a file
+            if files:
+                print(f"\nExtracting first file: {files[0]}")
+                data = pak.extract_file(files[0])
+                if data:
+                    print(f"Extracted {len(data)} bytes")
+                    try:
+                        text = data.decode("utf-8", errors="ignore")
+                        print(f"Content preview: {text[:200]}")
+                    except:
+                        print("Binary data")
     
     except Exception as e:
         print(f"Error: {e}")

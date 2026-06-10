@@ -118,10 +118,7 @@ class QuestExtractor:
 
         grouped = defaultdict(list)
         for quest in self.quests_data:
-            if use_translated_names:
-                npc = quest.get("npc_name_cn", quest["npc_name"])
-            else:
-                npc = quest["npc_name"]
+            npc = quest.get("npc_name_cn", quest["npc_name"]) if use_translated_names else quest["npc_name"]
             grouped[npc].append(quest)
 
         return dict(grouped)
@@ -171,10 +168,7 @@ class QuestExtractor:
             return None
 
         # 从文件名提取任务ID（去掉.json后缀）
-        if required_quest_file.endswith(".json"):
-            quest_id = required_quest_file[:-5]
-        else:
-            quest_id = required_quest_file
+        quest_id = required_quest_file[:-5] if required_quest_file.endswith(".json") else required_quest_file
 
         return self.get_quest_display_name(quest_id)
 
@@ -204,7 +198,7 @@ class QuestExtractor:
 
     # 路径转换方法（保持不变）
     @staticmethod
-    def AssetPathName_to_json(asset_path):
+    def AssetPathName_to_json(asset_path):  # noqa: N802
         """将AssetPathName转换为JSON文件路径"""
         if not asset_path:
             return None
@@ -249,10 +243,7 @@ class QuestExtractor:
         try:
             with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
-            if isinstance(raw_data, list) and len(raw_data) > 0:
-                data = raw_data[0]
-            else:
-                data = raw_data
+            data = raw_data[0] if isinstance(raw_data, list) and len(raw_data) > 0 else raw_data
             properties = data.get("Properties", {})
             module_id = properties.get("ModuleId", {})
             if isinstance(module_id, dict):
@@ -272,10 +263,7 @@ class QuestExtractor:
         try:
             with open(json_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
-            if isinstance(raw_data, list) and len(raw_data) > 0:
-                data = raw_data[0]
-            else:
-                data = raw_data
+            data = raw_data[0] if isinstance(raw_data, list) and len(raw_data) > 0 else raw_data
             properties = data.get("Properties", {})
 
             # 查找SourceString或Key

@@ -40,9 +40,9 @@ class ContentRenderer:
         if not contents:
             return ""
 
-        OPEN_BRACE = chr(60)
-        CLOSE_BRACE = chr(62)
-        SLASH = chr(47)
+        OPEN_BRACE = chr(60)  # noqa: N806
+        CLOSE_BRACE = chr(62)  # noqa: N806
+        SLASH = chr(47)  # noqa: N806
 
         html_parts = []
         html_parts.append("                " + OPEN_BRACE + 'div class="quest-content-section"' + CLOSE_BRACE)
@@ -360,10 +360,7 @@ class ContentRenderer:
                             else:
                                 key2 = f"Text_DesignData_Dungeon_DungeonType_{module_name}"
                                 translated2 = self.translator.translate(key2)
-                                if translated2:
-                                    target_name = translated2
-                                else:
-                                    target_name = module_name.replace("_", " ")
+                                target_name = translated2 or module_name.replace("_", " ")
                         else:
                             target_name = module_name.replace("_", " ")
                     else:
@@ -394,10 +391,7 @@ class ContentRenderer:
                             else:
                                 key2 = f"Text_DesignData_Dungeon_DungeonType_{module_name}"
                                 translated2 = self.translator.translate(key2)
-                                if translated2:
-                                    target_name = translated2
-                                else:
-                                    target_name = module_name.replace("_", " ")
+                                target_name = translated2 or module_name.replace("_", " ")
                         else:
                             target_name = module_name.replace("_", " ")
                     else:
@@ -594,9 +588,9 @@ class ContentRenderer:
         if not rewards:
             return ""
 
-        OPEN_BRACE = chr(60)
-        CLOSE_BRACE = chr(62)
-        SLASH = chr(47)
+        OPEN_BRACE = chr(60)  # noqa: N806
+        CLOSE_BRACE = chr(62)  # noqa: N806
+        SLASH = chr(47)  # noqa: N806
 
         type_label = self._get_ui_text("reward_type")
         name_label = self._get_ui_text("reward_item")

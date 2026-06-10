@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from collector import run
-from config import IMG_SRC, OUTPUT_DIR, DATA_DELIVERY_DIR
+from config import DATA_DELIVERY_DIR, IMG_SRC, OUTPUT_DIR
 
 
 def _deliver():
@@ -20,7 +20,9 @@ def _deliver():
         for item in OUTPUT_DIR.iterdir():
             dest = json_dst / item.name
             if item.is_dir():
-                shutil.copytree(item, dest, dirs_exist_ok=True)
+                if dest.exists():
+                    shutil.rmtree(dest)
+                shutil.copytree(item, dest)
                 shutil.rmtree(item)
             else:
                 shutil.move(str(item), str(dest))
@@ -34,7 +36,7 @@ def _deliver():
 
     img_count = len(list(IMG_SRC.iterdir())) if IMG_SRC.exists() else 0
     print(f"\n[DELIVER] data delivered to {dst}")
-    print(f"  json/ → moved")
+    print("  json/ → moved")
     print(f"  img/  → copied ({img_count} files)")
 
 

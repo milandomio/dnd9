@@ -42,7 +42,7 @@ export function getAdj(
     x: a?.x ?? 0,
     y: a?.y ?? 0,
     range: a?.range ?? 0,
-    rotate: a?.rotate ?? modRotate ?? 1,
+    rotate: a?.rotate ?? modRotate ?? 90,
     mirrorX: a?.mirrorX ?? false,
     mirrorY: a?.mirrorY ?? false,
   };
@@ -57,18 +57,12 @@ export function applyTransform(
 ): [number, number] {
   let x = ox;
   let y = oy;
-  const r = adj.rotate;
-  if (r === 1) {
-    const nx = y;
-    const ny = -x;
-    x = nx;
-    y = ny;
-  } else if (r === 2) {
-    x = -x;
-    y = -y;
-  } else if (r === 3) {
-    const nx = -y;
-    const ny = x;
+  const r = (((adj.rotate || 0) % 360) * Math.PI) / 180;
+  if (r !== 0) {
+    const cos = Math.cos(r);
+    const sin = Math.sin(r);
+    const nx = x * cos - y * sin;
+    const ny = x * sin + y * cos;
     x = nx;
     y = ny;
   }

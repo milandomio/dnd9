@@ -180,12 +180,12 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
             loc = props.get("RelativeLocation", {}) or {}
             rot = props.get("RelativeRotation", {}) or {}
             yaw_deg = rot.get("Yaw", 0)
-            js_rotate = round((-yaw_deg / 90 + 1) % 4) % 4
+            yaw = round(yaw_deg % 360, 1)
             scene[actor_name] = {
                 "x": loc.get("X", 0),
                 "y": loc.get("Y", 0),
                 "z": loc.get("Z", 0),
-                "yaw": js_rotate,
+                "yaw": yaw,
             }
 
     results = []

@@ -44,10 +44,7 @@ class ContentLoader:
             with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
 
-            if isinstance(raw_data, list) and len(raw_data) > 0:
-                data = raw_data[0]
-            else:
-                data = raw_data
+            data = raw_data[0] if isinstance(raw_data, list) and len(raw_data) > 0 else raw_data
 
             properties = data.get("Properties", {})
             self._cache[content_filename] = properties
@@ -124,10 +121,7 @@ class RewardLoader:
             with open(file_path, encoding="utf-8") as f:
                 raw_data = json.load(f)
 
-            if isinstance(raw_data, list) and len(raw_data) > 0:
-                data = raw_data[0]
-            else:
-                data = raw_data
+            data = raw_data[0] if isinstance(raw_data, list) and len(raw_data) > 0 else raw_data
 
             reward_array = data.get("Properties", {}).get("RewardItemArray", [])
             self._cache[reward_filename] = reward_array
