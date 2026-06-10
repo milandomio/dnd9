@@ -15,7 +15,7 @@
  */
 
 import { execSync } from "child_process";
-import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, cpSync, rmSync, statSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 
 const QUICK = process.argv.includes("--quick");
@@ -131,6 +131,22 @@ for (const lp of LIST_PAGES) searchIndex.push(lp);
 
 writeFileSync(join(DATA, "search_index.json"), JSON.stringify(searchIndex), "utf-8");
 console.log(`[ssg] search index: ${searchIndex.length} entries`);
+
+// ---- step 4b: generate meta.json with latest data date ----
+let latestMtime = 0;
+function scanDir(dir) {
+  for (const f of readdirSync(dir)) {
+    const fp = join(dir, f);
+    const st = statSync(fp);
+    if (st.isDirectory()) scanDir(fp);
+    else if (f.endsWith(".json")) latestMtime = Math.max(latestMtime, st.mtimeMs);
+  }
+}
+scanDir(DATA);
+const dataDate = new Date(latestMtime).toISOString().slice(0, 10);
+writeFileSync(join(DATA, "meta.json"), JSON.stringify({ dataDate }));
+cpSync(join(DATA, "meta.json"), join(DIST, "data", "json", "meta.json"));
+console.log(`[ssg] data date: ${dataDate}`);
 
 // Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: "/", file: "index.html" }];

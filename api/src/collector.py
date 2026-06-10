@@ -951,18 +951,16 @@ def run():
     _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules)
 
     # ── index.json: page index ──
-    qg_path = OUTPUT_DIR / "quest_items_groups.json"
-    qg = json.loads(qg_path.read_text()) if qg_path.exists() else []
     index_data = [
         {
             "_comment": "该文件由 api/src/collector.py 自动生成，请勿手动编辑。如需修改，请编辑 collector.py 中的 index_data 列表。"
         },
         {"page": "items", "label": "物品表", "count": len(items_index)},
-        {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
+        {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "lootdrops", "label": "掉落表", "count": len(loot_index)},
         {"page": "explore", "label": "探索地点表", "count": explore_count},
-        {"page": "quest_items", "label": "任务物品表", "count": len(qg)},
+        {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
         {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
         {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
     ]

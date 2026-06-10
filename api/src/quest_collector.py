@@ -53,9 +53,10 @@ def run_quest_extraction():
 
     npcs = _extract_npc_list(translator, extractor, quests)
     _save_json("quest_npc.json", npcs)
-    print(f"  active NPCs: {len(npcs)}")
+    total_quests = sum(npc.get("quest_count", 0) for npc in npcs)
+    print(f"  active NPCs: {len(npcs)}, total quests: {total_quests}")
 
-    return len(explore), len(fetch_items), len(npcs)
+    return len(explore), len(fetch_items), total_quests
 
 
 def _extract_explore(translator, extractor, quests):
@@ -192,7 +193,10 @@ def _parse_fetch_content(translator, cd):
     if isinstance(rarity_tag, dict):
         rn = rarity_tag.get("TagName", "")
         if rn and "Type.Item.Rarity." in rn:
-            rarity_name = rn.split("Type.Item.Rarity.")[-1]
+            rarity_raw = rn.split("Type.Item.Rarity.")[-1]
+            rarity_key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{rarity_raw}"
+            translated = translator.translate(rarity_key) if translator else ""
+            rarity_name = translated or rarity_raw
     result = {"target": item_name, "count": cd.get("ContentCount", 1)}
     if loot_state:
         result["loot_state"] = loot_state
@@ -254,7 +258,7 @@ def _extract_npc_list(translator, extractor, quests):
                 elif ct == "UseItem":
                     item.update(_parse_fetch_content(translator, cd))
                 elif ct in ("Escape", "Hold"):
-                    item["target"] = extractor.get_explore_target_translation(ap) or ct
+                    item["target"] = extractor.get_escape_target_translation(cd) or ct
                     item["count"] = cd.get("ContentCount", 1)
                 else:
                     item["target"] = ct

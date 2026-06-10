@@ -443,7 +443,11 @@ class DatabaseManager:
                     fs_path = _ue_to_fs_path(asset)
                     if fs_path:
                         dir_name = fs_path.rsplit("/", 1)[0].rsplit("/", 1)[-1] if "/" in fs_path else ""
-                        if dir_name and module_name.lower() not in dir_name.lower() and dir_name.lower() not in module_name.lower():
+                        if (
+                            dir_name
+                            and module_name.lower() not in dir_name.lower()
+                            and dir_name.lower() not in module_name.lower()
+                        ):
                             skipped_names.append(module_name)
                             sl_base = ""
                             break

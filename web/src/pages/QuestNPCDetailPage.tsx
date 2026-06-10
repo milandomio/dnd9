@@ -158,15 +158,6 @@ export default function QuestNPCDetailPage() {
         />
       </Helmet>
 
-      <div style={{ marginBottom: 16 }}>
-        <Link
-          to="/quest_npc"
-          style={{ color: tokens.accent, textDecoration: 'none', fontSize: 14 }}
-        >
-          ← 返回NPC列表
-        </Link>
-      </div>
-
       <h1
         style={{
           textAlign: 'center',
@@ -174,15 +165,12 @@ export default function QuestNPCDetailPage() {
           borderBottom: `3px solid ${tokens.accent}`,
           paddingBottom: 15,
           marginBottom: 30,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 12,
         }}
       >
-        {npc.npc_name_display} - 任务列表
-        <span style={{ color: tokens.muted, fontSize: 16, marginLeft: 12 }}>
-          {quests.length} 个任务
-        </span>
-      </h1>
-
-      <div style={{ textAlign: 'center', marginBottom: 24 }}>
         <input
           type="checkbox"
           checked={npcDone}
@@ -191,9 +179,12 @@ export default function QuestNPCDetailPage() {
             refresh();
           }}
           style={{ ...checkboxStyle, width: 22, height: 22 }}
-        />{' '}
-        标记NPC为已完成
-      </div>
+        />
+        {npc.npc_name_display} - 任务列表
+        <span style={{ color: tokens.muted, fontSize: 16 }}>
+          {quests.length} 个任务
+        </span>
+      </h1>
 
       <div style={{ textAlign: 'center', marginBottom: 20 }}>
         <input
@@ -558,10 +549,16 @@ export default function QuestNPCDetailPage() {
               {q.required &&
                 (() => {
                   const req = formatRequired(allNpcs, q.required);
-                  return req ? (
+                  if (!req) return null;
+                  const isPrevSameNpc =
+                    req.npcName === npc.npc_name &&
+                    req.questNum === q.quest_number - 1;
+                  return (
                     <div style={{ color: '#ccc', fontSize: 13, marginTop: 6 }}>
                       <span style={{ fontWeight: 'bold' }}>前置任务: </span>
-                      {req.npcName ? (
+                      {isPrevSameNpc ? (
+                        <span>【上一个】</span>
+                      ) : req.npcName ? (
                         <Link
                           to={`/quest_npc/${req.npcName}`}
                           style={{
@@ -575,7 +572,7 @@ export default function QuestNPCDetailPage() {
                         <span>【{req.text}】</span>
                       )}
                     </div>
-                  ) : null;
+                  );
                 })()}
             </div>
           );

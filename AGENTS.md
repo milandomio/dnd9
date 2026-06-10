@@ -7,8 +7,17 @@
 - "后端" — 指 api 目录
 - "db" — 指 api/data/darkfindv5.db
 - "坐标" — 指录入到db的spawners表中的道具/怪物实体实际在地图位置的数据，包含x、y、z三个REAL字段
-- "部署" — 删除db → 运行后端管道 → 构建前端 → 启动web服务到localhost:8080
-- "硬编码翻译" — 指 api/src/config.py 中 HARDCODED_TRANSLATIONS 字典里的翻译条目
+- "启动web" — `cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
+- "部署" — 运行后端管道 → 构建前端 → 启动web
+
+## 本地开发命令
+
+```bash
+# 完整部署（重建数据+前端）
+cd api && python main.py
+cd web && npm run build
+cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
+```
 
 ## V4 参考目录
 

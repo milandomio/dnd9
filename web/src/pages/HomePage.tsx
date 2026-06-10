@@ -164,8 +164,9 @@ export default function HomePage() {
                   【{entry.label}】
                 </div>
                 <div style={{ color: t.titleColor, fontSize: 14 }}>
-                  {entry.label}
-                  {entry.count}个
+                  {entry.page === 'quest_items' || entry.page === 'quest_npc'
+                    ? `任务${entry.count}个`
+                    : `${entry.label}${entry.count}个`}
                 </div>
                 <div
                   style={{ color: tokens.muted, fontSize: 14, marginTop: 4 }}

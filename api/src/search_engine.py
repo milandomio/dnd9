@@ -73,6 +73,28 @@ def _preview_type(asset_path: str) -> str:
     return "unknown"
 
 
+def _preview_entity_name(asset_path: str) -> str:
+    """Extract entity name from PreviewData.AssetPathName.
+    e.g., /Game/.../Id_Props_StatueDwarven.Id_Props_StatueDwarven -> StatueDwarven
+    """
+    if not asset_path:
+        return ""
+    # Extract filename from path
+    parts = asset_path.rstrip("/").split("/")
+    if not parts:
+        return ""
+    filename = parts[-1]
+    # Remove duplicate suffix (e.g., Id_Props_StatueDwarven.Id_Props_StatueDwarven -> Id_Props_StatueDwarven)
+    if "." in filename:
+        filename = filename.split(".")[0]
+    # Strip Id_Props_, Id_Monster_, Id_Spawner_ prefixes
+    for prefix in ["Id_Props_", "Id_Monster_", "Id_Spawner_New_", "Id_Spawner_"]:
+        if filename.startswith(prefix):
+            filename = filename[len(prefix) :]
+            break
+    return filename
+
+
 def _sl_base_name(name: str) -> str:
     for suffix in ["_HR_D", "_D", "_A"]:
         if name.endswith(suffix):
@@ -150,11 +172,13 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
             pd = props.get("PreviewData", {}) or {}
             asset_path = pd.get("AssetPathName", "")
             spawner_type = _preview_type(asset_path)
+            preview_name = _preview_entity_name(asset_path)
             spawner_name = entry.get("Name", "")
             if spawner_name:
                 spawners[spawner_name] = {
                     "keyword": keyword,
                     "spawner_type": spawner_type,
+                    "preview_name": preview_name,
                 }
 
         elif t.startswith("BP_") and t.endswith("_C") and t not in ("BP_GameSpawner_C",):
@@ -303,6 +327,10 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
     for idx, s in enumerate(all_spawners):
         kw = SPAWNER_ALIAS_MAP.get(s["keyword"], s["keyword"])
         matched = match_keyword(kw, terms_set, auto)
+        # Also try matching via preview_name (e.g., StatueDwarven from PreviewData)
+        preview_name = s.get("preview_name", "")
+        if preview_name and not matched:
+            matched = match_keyword(preview_name, terms_set, auto)
         for m in matched:
             if m not in matches:
                 matches[m] = []

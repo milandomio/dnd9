@@ -15,6 +15,17 @@ const LABEL_MAP: Record<string, string> = {
   dungeon_modules: '地图模块表',
 };
 
+const GROUP_LABEL_MAP: Record<string, string> = {
+  GoblinCave: '哥布林洞穴',
+  Crypt: '废墟2层地牢',
+  Ruins: '废墟1层',
+  ShipGraveyard: '水图',
+  FireDeep: '哥布林洞穴2层',
+  IceAbyss: '冰图2层',
+  IceCavern: '冰图1层',
+  Inferno: '废墟3层炼狱',
+};
+
 const PAGE_TAG: Record<string, string> = {
   items: '物品',
   monsters: '怪物',
@@ -135,9 +146,20 @@ export default function NavBar() {
     transition: 'all 0.2s',
   };
 
-  const listPart = parts[0]
-    ? { label: LABEL_MAP[parts[0]] || parts[0], path: '/' + parts[0] }
-    : null;
+  const breadcrumbs: { label: string; path: string }[] = [];
+  if (parts.length >= 2) {
+    for (let i = 0; i < parts.length - 1; i++) {
+      const key = parts[i];
+      let label = LABEL_MAP[key] || key;
+      let path = '/' + parts.slice(0, i + 1).join('/');
+
+      if (i === 1 && parts[0] === 'dungeon_modules') {
+        label = GROUP_LABEL_MAP[parts[1]] || parts[1];
+      }
+
+      breadcrumbs.push({ label, path });
+    }
+  }
 
   return (
     <div
@@ -249,9 +271,10 @@ export default function NavBar() {
           />
           <Switch checked={!dark} onChange={toggle} size="small" />
         </div>
-        {listPart && parts.length >= 2 && (
+        {breadcrumbs.map((crumb) => (
           <a
-            onClick={() => navigate(listPart.path)}
+            key={crumb.path}
+            onClick={() => navigate(crumb.path)}
             style={linkStyle}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = tokens.accent;
@@ -262,9 +285,9 @@ export default function NavBar() {
               e.currentTarget.style.color = tokens.accent;
             }}
           >
-            {listPart.label}
+            {crumb.label}
           </a>
-        )}
+        ))}
         <a
           onClick={() => navigate('/')}
           style={linkStyle}

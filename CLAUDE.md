@@ -4,6 +4,8 @@
 
 > **参考项目**：文中所提「原项目」「v4」「findItemV4」均指 `/home/mio/fmod/findItemV4/`。
 
+> **术语约定**：见 `AGENTS.md`（启动web、部署等）
+
 ## 项目结构
 
 ```
@@ -94,11 +96,10 @@ git commit -am "WIP: <描述>"
 cd api && python main.py
 
 # 3. 构建前端（SSG 脚本自动从 data/ 复制到 public/data/）
-cd ../web && npm run build
+cd web && npm run build
 
-# 4. 预览（后台运行，端口 8080）
-# ⚠️ codewhale 中 nohup + & 会被回收，改用 setsid：
-kill $(lsof -t -i:8080) 2>/dev/null; setsid sh -c './node_modules/.bin/vite preview --port 8080 --host 0.0.0.0 > /tmp/vite-preview.log 2>&1 &'
+# 4. 启动web
+cd web && pkill -f "vite preview" 2>/dev/null; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
 ```
 
 **注意：** `python main.py` 必须在 `npm run build` 之前运行。TS 类型检查在构建中自动执行 (`npx tsc --noEmit`)。
