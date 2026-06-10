@@ -6,11 +6,17 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pathlib import Path
 
-from config import OUTPUT_DIR
+from config import HARDCODED_TRANSLATIONS, OUTPUT_DIR
 from quest_extractor.quest_extractor import QuestExtractor
 from quest_extractor.translator import Translator
 
 _ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
+
+# explore.json module_name -> dungeon_modules.json name 的映射
+_EXPLORE_MODULE_ALIAS = {
+    "Id_DungeonModule_Caveltar": "Id_DungeonModule_Cave_Altar_02",
+    "Id_DungeonModule_CaveAltar_02": "Id_DungeonModule_Cave_Altar_02",
+}
 
 
 def _translate_item(translator, name_en: str) -> str:
@@ -78,6 +84,7 @@ def _extract_explore(translator, extractor, quests):
                 if module_name
                 else ""
             )
+            clean_module = _EXPLORE_MODULE_ALIAS.get(clean_module, clean_module)
             key = clean_module or translation
             if key in seen:
                 continue
@@ -159,8 +166,39 @@ def _get_npc_category(npc_en):
     if npc_en in preferred:
         return "优选NPC"
     if npc_en in not_recommended:
-        return ""
+        return "不推荐NPC"
     return "可用NPC"
+
+
+def _parse_fetch_content(translator, cd):
+    """Parse Fetch/UseItem content data to extract target name and count."""
+    item_name = ""
+    type_tag = cd.get("TypeTag", {}) or {}
+    tag_name = type_tag.get("TagName", "")
+    if tag_name and "Type.Item." in tag_name:
+        item_type = tag_name.split("Type.Item.")[-1]
+        type_key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_{item_type}"
+        translated = translator.translate(type_key) if translator else ""
+        item_name = translated or item_type
+    if not item_name:
+        item_tag = cd.get("ItemIdTag", {}) or {}
+        tag_name = item_tag.get("TagName", "")
+        if tag_name:
+            en = tag_name.split(".")[-1] if "." in tag_name else tag_name
+            item_name = _translate_item(translator, en) if translator else en
+    loot_state = "是" if cd.get("ItemLootState") == "EDCItemLootState::Looted" else ""
+    rarity_tag = cd.get("RarityType", {}) or {}
+    rarity_name = ""
+    if isinstance(rarity_tag, dict):
+        rn = rarity_tag.get("TagName", "")
+        if rn and "Type.Item.Rarity." in rn:
+            rarity_name = rn.split("Type.Item.Rarity.")[-1]
+    result = {"target": item_name, "count": cd.get("ContentCount", 1)}
+    if loot_state:
+        result["loot_state"] = loot_state
+    if rarity_name:
+        result["rarity"] = rarity_name
+    return result
 
 
 def _extract_npc_list(translator, extractor, quests):
@@ -174,27 +212,65 @@ def _extract_npc_list(translator, extractor, quests):
         for q in quest_list:
             rewards = []
             for ri in q.get("rewards", []) or []:
-                rtype = ri.get("RewardType", "")
-                rid = ri.get("RewardId", {}) or {}
-                rname = rid.get("AssetPathName", "") if isinstance(rid, dict) else str(rid)
+                rname, rtype_key = extractor.get_reward_item_info(ri)
                 rewards.append(
                     {
-                        "type": rtype,
-                        "id": rname.split("/")[-1].split(".")[0] if rname else rtype,
+                        "type": ri.get("RewardType", ""),
+                        "name": rname,
+                        "type_key": rtype_key,
                         "count": ri.get("RewardCount", 0),
                     }
                 )
+            contents = []
+            for c in q.get("contents", []) or []:
+                ct = c.get("content_type", "")
+                cd = c.get("content_data", {}) or {}
+                ap = c.get("asset_path", "")
+                item = {"type": ct}
+                if ct == "Kill":
+                    kill_tag = cd.get("KillTag", {})
+                    tag_name = kill_tag.get("TagName", "") if isinstance(kill_tag, dict) else ""
+                    monster = ""
+                    if tag_name:
+                        if tag_name.startswith("Id.Monster.") or tag_name.startswith("Type.Character."):
+                            monster = tag_name.split(".")[-1]
+                        else:
+                            monster = tag_name.split(".")[-1] if "." in tag_name else tag_name
+                    translated = translator.translate(f"Text_DesignData_Monster_Monster_{monster}") if monster else ""
+                    if not translated and monster in HARDCODED_TRANSLATIONS:
+                        translated = HARDCODED_TRANSLATIONS[monster]
+                    item["target"] = translated or monster
+                    item["count"] = cd.get("ContentCount", 1)
+                elif ct == "Fetch":
+                    item.update(_parse_fetch_content(translator, cd))
+                elif ct == "Explore":
+                    item["target"] = extractor.get_explore_target_translation(ap) or ""
+                    item["count"] = cd.get("ContentCount", 1)
+                elif ct == "Props":
+                    props_tag = cd.get("PropsIdTag", {})
+                    tag_name = props_tag.get("TagName", "") if isinstance(props_tag, dict) else ""
+                    item["target"] = extractor.get_props_target_translation(tag_name) if tag_name else ""
+                    item["count"] = cd.get("ContentCount", 1)
+                elif ct == "UseItem":
+                    item.update(_parse_fetch_content(translator, cd))
+                elif ct in ("Escape", "Hold"):
+                    item["target"] = extractor.get_explore_target_translation(ap) or ct
+                    item["count"] = cd.get("ContentCount", 1)
+                else:
+                    item["target"] = ct
+                    item["count"] = cd.get("ContentCount", 1)
+                contents.append(item)
             quests_out.append(
                 {
                     "id": q.get("id", ""),
                     "title": q.get("title_display", ""),
                     "quest_number": q.get("quest_number", 0),
-                    "greeting": q.get("greeting_display", ""),
-                    "complete": q.get("complete_display", ""),
+                    "contents": contents,
                     "rewards": rewards,
                     "required": q.get("required_quest", ""),
                 }
             )
+        quests_out.sort(key=lambda q: q["quest_number"])
         result.append(
             {
                 "npc_name": npc_en,

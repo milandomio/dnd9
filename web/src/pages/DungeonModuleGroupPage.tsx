@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Button } from 'antd';
 import type { DungeonModule } from '../types/data';
 import { useDebug } from '../hooks/useDebug';
+import { useTheme } from '../hooks/useTheme';
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: '废墟2层地牢',
@@ -21,6 +22,7 @@ export default function DungeonModuleGroupPage() {
   const { debug, toggle } = useDebug();
   const [modules, setModules] = useState<DungeonModule[]>([]);
   const [loading, setLoading] = useState(true);
+  const { tokens } = useTheme();
 
   useEffect(() => {
     if (!group) return;
@@ -46,7 +48,7 @@ export default function DungeonModuleGroupPage() {
 
   if (loading)
     return (
-      <div style={{ textAlign: 'center', color: '#aaa', marginTop: 100 }}>
+      <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
         加载中...
       </div>
     );
@@ -78,7 +80,7 @@ export default function DungeonModuleGroupPage() {
           }}
         >
           【{groupLabel}】地图模块
-          <span style={{ color: '#aaa', fontSize: 14, marginLeft: 12 }}>
+          <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
             {visible.length} 个模块
             {hiddenCount > 0 ? `（${hiddenCount} 个已隐藏）` : ''}
           </span>
@@ -114,8 +116,8 @@ export default function DungeonModuleGroupPage() {
             >
               <div
                 style={{
-                  background: '#3a3a3a',
-                  border: '1px solid #555',
+                  background: tokens.surface,
+                  border: `1px solid ${tokens.border}`,
                   borderRadius: 5,
                   padding: 8,
                   cursor: 'pointer',
@@ -157,15 +159,17 @@ export default function DungeonModuleGroupPage() {
                   >
                     {mod.translation || mod.name}
                   </span>
-                  <span style={{ fontSize: 12, color: '#888', flexShrink: 0 }}>
+                  <span
+                    style={{ fontSize: 12, color: tokens.muted, flexShrink: 0 }}
+                  >
                     {sx}x{sy}
                   </span>
                 </h3>
                 <div
                   style={{
                     aspectRatio: `${sx} / ${sy}`,
-                    background: '#2c2c2c',
-                    border: '1px solid #666',
+                    backgroundColor: tokens.bg,
+                    border: `1px solid ${tokens.border}`,
                     borderRadius: 4,
                     position: 'relative',
                     overflow: 'hidden',

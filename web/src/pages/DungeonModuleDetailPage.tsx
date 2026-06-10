@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDebug } from '../hooks/useDebug';
+import { useTheme } from '../hooks/useTheme';
 import {
   getAdj,
   applyTransform,
   computePixel,
-  ctrlBtn,
-  ctrlInput,
+  useCtrlBtn,
+  useCtrlInput,
   type AdjState,
 } from '../components/MapDebug';
 import DebugCoordTable from '../components/DebugCoordTable';
@@ -53,6 +54,9 @@ export default function DungeonModuleDetailPage() {
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
+  const { tokens } = useTheme();
+  const ctrlBtn = useCtrlBtn();
+  const ctrlInput = useCtrlInput();
 
   useEffect(() => {
     if (!group || !name) return;
@@ -82,7 +86,7 @@ export default function DungeonModuleDetailPage() {
 
   if (loading)
     return (
-      <div style={{ textAlign: 'center', color: '#aaa', marginTop: 100 }}>
+      <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
         加载中...
       </div>
     );
@@ -179,7 +183,7 @@ export default function DungeonModuleDetailPage() {
         }}
       >
         【{m.translation}】地图模块
-        <span style={{ color: '#aaa', fontSize: 14, marginLeft: 12 }}>
+        <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
           {groupLabel} | {sx}x{sy}
         </span>
       </h1>
@@ -195,8 +199,8 @@ export default function DungeonModuleDetailPage() {
           key={m.name}
           style={{
             gridColumn: 'span 5',
-            background: '#3a3a3a',
-            border: '1px solid #555',
+            background: tokens.surface,
+            border: `1px solid ${tokens.border}`,
             borderRadius: 5,
             padding: 8,
           }}
@@ -204,8 +208,8 @@ export default function DungeonModuleDetailPage() {
           <div
             style={{
               aspectRatio: `${sx} / ${sy}`,
-              background: '#2c2c2c',
-              border: '1px solid #666',
+              backgroundColor: tokens.bg,
+              border: `1px solid ${tokens.border}`,
               borderRadius: 4,
               position: 'relative',
               overflow: 'hidden',
@@ -269,8 +273,8 @@ export default function DungeonModuleDetailPage() {
           <div
             style={{
               gridColumn: 'span 3',
-              background: '#3a3a3a',
-              border: '1px solid #555',
+              background: tokens.surface,
+              border: `1px solid ${tokens.border}`,
               borderRadius: 5,
               padding: 8,
               display: 'flex',
@@ -288,12 +292,12 @@ export default function DungeonModuleDetailPage() {
               }}
               style={{
                 padding: '8px 0',
-                border: '2px solid #888',
+                border: `2px solid ${tokens.border}`,
                 borderRadius: 5,
                 cursor: 'pointer',
                 fontSize: 22,
                 fontWeight: 'bold',
-                color: '#ccc',
+                color: tokens.text,
                 background: 'transparent',
                 transition: 'all 0.2s',
                 width: '100%',
@@ -335,7 +339,7 @@ export default function DungeonModuleDetailPage() {
                           cursor: 'pointer',
                           fontSize: 19,
                           fontWeight: 'bold',
-                          color: '#fff',
+                          color: tokens.text,
                           background: hidden.has(e.name)
                             ? 'transparent'
                             : e.color,
@@ -364,18 +368,18 @@ export default function DungeonModuleDetailPage() {
             style={{
               gridColumn: '1 / -1',
               fontSize: 11,
-              color: '#aaa',
+              color: tokens.muted,
               marginBottom: 4,
               display: 'flex',
               flexDirection: 'column',
               gap: 3,
-              background: '#3a3a3a',
+              background: tokens.surface,
               borderRadius: 5,
               padding: 8,
             }}
           >
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <span style={{ color: '#888' }}>范围:</span>
+              <span style={{ color: tokens.muted }}>范围:</span>
               <button
                 onClick={() =>
                   setAdjField('range', Math.round(range / 2) - baseRange)
@@ -399,12 +403,14 @@ export default function DungeonModuleDetailPage() {
               >
                 x2
               </button>
-              <span style={{ color: '#aaa', fontSize: 12, marginLeft: 4 }}>
+              <span
+                style={{ color: tokens.muted, fontSize: 12, marginLeft: 4 }}
+              >
                 ↻{adj.rotate}
               </span>
             </div>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <span style={{ color: '#888' }}>偏移:</span>
+              <span style={{ color: tokens.muted }}>偏移:</span>
               <button
                 onClick={() => setAdjField('y', adj.y - 50)}
                 style={ctrlBtn}
@@ -429,7 +435,7 @@ export default function DungeonModuleDetailPage() {
               >
                 →
               </button>
-              <span style={{ color: '#888', marginLeft: 8 }}>X:</span>
+              <span style={{ color: tokens.muted, marginLeft: 8 }}>X:</span>
               <input
                 type="number"
                 value={offX}
@@ -439,7 +445,7 @@ export default function DungeonModuleDetailPage() {
                 style={ctrlInput}
                 step={10}
               />
-              <span style={{ color: '#888' }}>Y:</span>
+              <span style={{ color: tokens.muted }}>Y:</span>
               <input
                 type="number"
                 value={offY}
@@ -452,7 +458,9 @@ export default function DungeonModuleDetailPage() {
             </div>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
               <button
-                onClick={() => setAdjField('rotate', (adj.rotate + 90) % 360)}
+                onClick={() =>
+                  setAdjField('rotate', ((adj.rotate ?? 0) + 90) % 360)
+                }
                 style={ctrlBtn}
               >
                 ↻ 旋转
@@ -558,11 +566,11 @@ export default function DungeonModuleDetailPage() {
         style={{
           marginTop: 10,
           padding: 10,
-          background: '#3a3a3a',
+          background: tokens.surface,
           borderRadius: 5,
           fontSize: 15,
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
         }}
       >
         <strong>位置统计：共 {totalCoords} 个位置点</strong>

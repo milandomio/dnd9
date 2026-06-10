@@ -97,9 +97,8 @@ class QuestExtractor:
         for _npc, quests in npc_quests.items():
             quests.sort(key=lambda q: self.quest_parser._extract_quest_number(q["id"]))
 
-            for quest in quests:
-                _, num = self.quest_parser._extract_quest_number(quest["id"])
-                quest["quest_number"] = num
+            for i, quest in enumerate(quests, 1):
+                quest["quest_number"] = i
                 quest["npc_name_display"] = quest.get("npc_name_cn", quest["npc_name"])
                 quest["display_name"] = self.quest_parser._generate_quest_display_name(quest, self.translator.language)
 

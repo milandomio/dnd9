@@ -157,6 +157,11 @@ for (const p of PAGES) {
   }
 }
 
+// Quest NPC detail pages
+for (const npc of questNpcData) {
+  routes.push({ path: `/quest_npc/${encodeURIComponent(npc.npc_name)}`, file: `quest_npc/${npc.npc_name}/index.html` });
+}
+
 // Build per-route data lookup
 const ssrDataMap = {};
 
@@ -237,6 +242,7 @@ function routeDataKey(path) {
   if (path.startsWith("/quest_items/")) return `quest_items_groups/${path.split("/")[2]}`;
   if (path === "/quest_items") return "quest_items";
   if (path === "/quest_npc") return "quest_npc";
+  if (path.startsWith("/quest_npc/")) return "quest_npc";
   if (path === "/dungeon_modules") return "dungeon_modules";
   if (path.startsWith("/dungeon_modules/")) {
     const parts = path.split("/");
@@ -250,9 +256,8 @@ function routeDataKey(path) {
 /**
  * Compute <base href="..."> value from output file path relative to dist root.
  */
-function baseHrefFromFile(file) {
-  const depth = (file.match(/\//g) || []).length;
-  return depth === 0 ? "./" : "../".repeat(depth);
+function baseHrefFromFile(_file) {
+  return "/";
 }
 
 for (let i = 0; i < routes.length; i++) {

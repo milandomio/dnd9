@@ -1,4 +1,32 @@
 import type { CSSProperties } from 'react';
+import { useTheme } from '../hooks/useTheme';
+
+export function useCtrlBtn(): CSSProperties {
+  const { tokens } = useTheme();
+  return {
+    background: tokens.border,
+    color: tokens.text,
+    border: `1px solid ${tokens.border}`,
+    borderRadius: 3,
+    padding: '1px 6px',
+    cursor: 'pointer',
+    fontSize: 11,
+  };
+}
+
+export function useCtrlInput(): CSSProperties {
+  const { tokens } = useTheme();
+  return {
+    width: 55,
+    background: tokens.bg,
+    color: tokens.text,
+    border: `1px solid ${tokens.border}`,
+    borderRadius: 3,
+    padding: '1px 4px',
+    fontSize: 11,
+    textAlign: 'center',
+  };
+}
 
 export const ctrlBtn: CSSProperties = {
   background: '#555',
@@ -42,7 +70,7 @@ export function getAdj(
     x: a?.x ?? 0,
     y: a?.y ?? 0,
     range: a?.range ?? 0,
-    rotate: a?.rotate ?? modRotate ?? 90,
+    rotate: a?.rotate ?? modRotate,
     mirrorX: a?.mirrorX ?? false,
     mirrorY: a?.mirrorY ?? false,
   };

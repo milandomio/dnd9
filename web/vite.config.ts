@@ -1,19 +1,18 @@
-import path from "path";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { existsSync, statSync } from "fs";
+import path from 'path';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { existsSync, statSync } from 'fs';
 
 export default defineConfig(({ mode }) => {
-  if (mode === "ssr") {
+  if (mode === 'ssr') {
     // SSR build: bundle src/ssr.tsx for Node.js
     return {
       plugins: [react()],
-      base: "./",
       build: {
-        ssr: "src/ssr.tsx",
-        outDir: "dist-ssr",
+        ssr: 'src/ssr.tsx',
+        outDir: 'dist-ssr',
         rollupOptions: {
-          output: { format: "cjs" },
+          output: { format: 'cjs' },
         },
       },
     };
@@ -24,25 +23,33 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       {
-        name: "remove-crossorigin",
+        name: 'remove-crossorigin',
         transformIndexHtml(html) {
-          return html.replaceAll(' crossorigin', "");
+          return html.replaceAll(' crossorigin', '');
         },
       },
       {
-        name: "preview-directory-index",
+        name: 'preview-directory-index',
         configurePreviewServer(server) {
-          const dist = path.resolve(__dirname, "dist");
+          const dist = path.resolve(__dirname, 'dist');
           server.middlewares.use((req, res, next) => {
             const url = new URL(req.url, `http://${req.headers.host}`);
             // Skip if already has trailing slash, extension, or is root
-            if (url.pathname === "/" || url.pathname.includes(".") || url.pathname.endsWith("/")) {
+            if (
+              url.pathname === '/' ||
+              url.pathname.includes('.') ||
+              url.pathname.endsWith('/')
+            ) {
               return next();
             }
             const dir = path.join(dist, url.pathname);
-            const idx = path.join(dir, "index.html");
-            if (existsSync(dir) && statSync(dir).isDirectory() && existsSync(idx)) {
-              res.writeHead(302, { Location: url.pathname + "/" + url.search });
+            const idx = path.join(dir, 'index.html');
+            if (
+              existsSync(dir) &&
+              statSync(dir).isDirectory() &&
+              existsSync(idx)
+            ) {
+              res.writeHead(302, { Location: url.pathname + '/' + url.search });
               return res.end();
             }
             next();
@@ -50,22 +57,28 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
-    base: "./",
+    base: '/',
     server: {
       fs: {
-        allow: [".", "../data"],
+        allow: ['.', '../data'],
       },
     },
     preview: {
-      host: "0.0.0.0",
+      host: '0.0.0.0',
     },
     build: {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes("node_modules")) {
-              if (id.includes("antd") || id.includes("@ant-design")) return "antd";
-              if (id.includes("react") || id.includes("scheduler") || id.includes("react-dom")) return "react";
+            if (id.includes('node_modules')) {
+              if (id.includes('antd') || id.includes('@ant-design'))
+                return 'antd';
+              if (
+                id.includes('react') ||
+                id.includes('scheduler') ||
+                id.includes('react-dom')
+              )
+                return 'react';
             }
           },
         },

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import Disclaimer from '../components/Disclaimer';
+import { useTheme } from '../hooks/useTheme';
 import type { DungeonModule } from '../types/data';
 
 interface ExploreTarget {
@@ -42,6 +43,7 @@ export default function ExplorePage() {
         )
       : new Map()
   );
+  const { tokens } = useTheme();
 
   useEffect(() => {
     Promise.all([
@@ -99,7 +101,7 @@ export default function ExplorePage() {
       <div
         style={{
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
           fontSize: 14,
           marginBottom: 20,
         }}
@@ -145,8 +147,8 @@ export default function ExplorePage() {
                       minWidth: 0,
                       gridColumn: sx >= 2 ? `span ${sx}` : undefined,
                       gridRow: sy >= 2 ? `span ${sy}` : undefined,
-                      background: '#3a3a3a',
-                      border: '1px solid #555',
+                      background: tokens.surface,
+                      border: `1px solid ${tokens.border}`,
                       borderRadius: 5,
                       padding: 8,
                     }}
@@ -180,7 +182,7 @@ export default function ExplorePage() {
                     <div
                       style={{
                         fontSize: 13,
-                        color: '#aaa',
+                        color: tokens.muted,
                         marginBottom: 5,
                         textAlign: 'center',
                       }}
@@ -190,8 +192,8 @@ export default function ExplorePage() {
                     <div
                       style={{
                         aspectRatio: `${sx} / ${sy}`,
-                        background: '#2c2c2c',
-                        border: '1px solid #666',
+                        backgroundColor: tokens.bg,
+                        border: `1px solid ${tokens.border}`,
                         borderRadius: 4,
                         position: 'relative',
                         overflow: 'hidden',

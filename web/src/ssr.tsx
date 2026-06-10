@@ -7,7 +7,7 @@
  * NOTE: Ant Design v5 accesses browser globals (document, window)
  * during rendering. We stub them here so renderToString works in Node.
  */
-import React from 'react';
+import {} from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
@@ -19,7 +19,8 @@ import SSRDataContext from './context/SSRDataContext';
 import { AppInner } from './App';
 
 // Ant Design v5+ requires browser-global stubs for SSR
-globalThis.window = globalThis;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(globalThis as any).window = globalThis;
 const styleEl = {
   className: '',
   setAttribute: () => {},
@@ -33,7 +34,7 @@ const styleEl = {
 };
 
 globalThis.document = {
-  createElement: (tag) => {
+  createElement: (tag: string) => {
     if (tag === 'style') return { ...styleEl, tagName: 'STYLE' };
     if (tag === 'meta') return { ...styleEl, tagName: 'META' };
     if (tag === 'link') return { ...styleEl, tagName: 'LINK' };
@@ -63,21 +64,21 @@ globalThis.document = {
 } as any;
 globalThis.navigator = { userAgent: 'node' } as any;
 globalThis.location = { href: '', pathname: '', search: '', hash: '' } as any;
-globalThis.getComputedStyle = () => ({});
+globalThis.getComputedStyle = () => ({}) as CSSStyleDeclaration;
 
 export function render(url: string, ssrDataMap: Record<string, any>) {
   const helmetContext = { helmet: {} } as any;
 
   const html = renderToString(
     <HelmetProvider context={helmetContext}>
-      <ConfigProvider
-        locale={zhCN}
-        theme={{
-          algorithm: theme.darkAlgorithm,
-          token: { colorPrimary: '#1677ff' },
-        }}
-      >
-        <ThemeProvider>
+      <ThemeProvider>
+        <ConfigProvider
+          locale={zhCN}
+          theme={{
+            algorithm: theme.darkAlgorithm,
+            token: { colorPrimary: '#1677ff' },
+          }}
+        >
           <DebugProvider>
             <SSRDataContext.Provider value={ssrDataMap}>
               <StaticRouter location={url}>
@@ -85,8 +86,8 @@ export function render(url: string, ssrDataMap: Record<string, any>) {
               </StaticRouter>
             </SSRDataContext.Provider>
           </DebugProvider>
-        </ThemeProvider>
-      </ConfigProvider>
+        </ConfigProvider>
+      </ThemeProvider>
     </HelmetProvider>
   );
 

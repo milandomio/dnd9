@@ -485,7 +485,7 @@ def run():
                         "version": c["version"],
                         "label": c["original_keyword"],
                     }
-                    for c in coords
+                    for c in merged_coords
                 ],
             },
         )
@@ -513,7 +513,7 @@ def run():
         custom_range = override.get("range", 0)
         offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
         rot1 = module_rotations.get(r["module_name"])
-        rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 90)
+        rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 270)
         sl = r["sl_base_name"]
         map_image = r.get("map_image_name", "")
         module_name = r["module_name"]
@@ -600,7 +600,7 @@ def run():
                 "has_img": (IMG_SRC / f"{resolved_name}.webp").exists(),
                 "offset_x": 0,
                 "offset_y": 0,
-                "rotate": 90,
+                "rotate": 270,
                 "range": 0,
             }
     # ── 模块名 ↔ 地图名 双向映射 ──

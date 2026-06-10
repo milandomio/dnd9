@@ -1,4 +1,5 @@
 import { type CSSProperties } from 'react';
+import { useTheme } from '../hooks/useTheme';
 
 export interface CoordRow {
   /** Unique row key (e.g. "monsterName-0") */
@@ -30,20 +31,7 @@ export interface CoordRow {
   hidden: boolean;
 }
 
-const th: CSSProperties = {
-  padding: '4px 6px',
-  borderBottom: '1px solid #555',
-  textAlign: 'center',
-  verticalAlign: 'middle',
-};
-const td: CSSProperties = {
-  padding: '3px 6px',
-  borderBottom: '1px solid #555',
-  textAlign: 'center',
-  alignContent: 'center',
-};
-const checkTd: CSSProperties = {
-  ...td,
+const checkTdBase: CSSProperties = {
   width: 24,
   textAlign: 'center',
   verticalAlign: 'middle',
@@ -105,6 +93,24 @@ export default function DebugCoordTable({
   onToggleLabel,
   showMonster,
 }: Props) {
+  const { tokens } = useTheme();
+
+  const th: CSSProperties = {
+    padding: '4px 6px',
+    borderBottom: `1px solid ${tokens.border}`,
+    textAlign: 'center',
+    verticalAlign: 'middle',
+  };
+  const td: CSSProperties = {
+    padding: '3px 6px',
+    borderBottom: `1px solid ${tokens.border}`,
+    textAlign: 'center',
+    alignContent: 'center',
+  };
+  const checkTd: CSSProperties = {
+    ...td,
+    ...checkTdBase,
+  };
   // Helper: whether ALL matched rows are visible (none hidden)
   const allVisible = (pred: (r: CoordRow) => boolean) => {
     const matched = rows.filter(pred);
@@ -145,7 +151,7 @@ export default function DebugCoordTable({
     <div
       style={{
         marginTop: 12,
-        background: '#3a3a3a',
+        background: tokens.surface,
         borderRadius: 5,
         padding: 10,
         overflowX: 'auto',
@@ -166,11 +172,11 @@ export default function DebugCoordTable({
           width: '100%',
           borderCollapse: 'collapse',
           fontSize: 13,
-          color: '#aaa',
+          color: tokens.muted,
         }}
       >
         <thead>
-          <tr style={{ background: '#555', fontWeight: 'bold' }}>
+          <tr style={{ background: tokens.border, fontWeight: 'bold' }}>
             <th style={checkTd}>
               <input
                 type="checkbox"
@@ -249,10 +255,10 @@ export default function DebugCoordTable({
                 key={row.key}
                 style={{
                   background: isHidden
-                    ? '#2a2a2a'
+                    ? tokens.bg
                     : idx % 2 === 0
-                      ? '#333'
-                      : '#3a3a3a',
+                      ? tokens.surface
+                      : tokens.card,
                   opacity: isHidden ? 0.35 : 1,
                   textDecoration: isHidden ? 'line-through' : 'none',
                 }}

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
 import { useSSRData } from '../context/SSRDataContext';
+import { useTheme } from '../hooks/useTheme';
 
 const CARD_THEME: Record<
   string,
@@ -70,6 +71,7 @@ export default function HomePage() {
   const ssrData = useSSRData<IndexEntry[]>('home');
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const navigate = useNavigate();
+  const { tokens } = useTheme();
 
   useEffect(() => {
     if (ssrData) return;
@@ -121,27 +123,25 @@ export default function HomePage() {
                 key={entry.page}
                 onClick={() => navigate(`/${entry.page}`)}
                 style={{
-                  background: 'linear-gradient(145deg, #3a3a3a, #444444)',
+                  background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
                   border: `2px solid ${t.border}`,
                   borderRadius: 16,
                   padding: '30px 20px',
                   textAlign: 'center',
                   cursor: 'pointer',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+                  boxShadow: `0 4px 6px ${tokens.darkShadow}`,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = t.hoverBg;
                   e.currentTarget.style.transform =
                     'translateY(-8px) scale(1.02)';
-                  e.currentTarget.style.boxShadow =
-                    '0 12px 24px rgba(0,0,0,0.5)';
+                  e.currentTarget.style.boxShadow = `0 12px 24px ${tokens.deepShadow}`;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background =
-                    'linear-gradient(145deg, #3a3a3a, #444444)';
+                  e.currentTarget.style.background = `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`;
                   e.currentTarget.style.transform = 'none';
-                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.3)';
+                  e.currentTarget.style.boxShadow = `0 4px 6px ${tokens.darkShadow}`;
                 }}
               >
                 <div
@@ -155,7 +155,7 @@ export default function HomePage() {
                 </div>
                 <div
                   style={{
-                    color: '#fff',
+                    color: tokens.text,
                     fontSize: 24,
                     fontWeight: 'bold',
                     marginBottom: 4,
@@ -167,7 +167,9 @@ export default function HomePage() {
                   {entry.label}
                   {entry.count}个
                 </div>
-                <div style={{ color: '#888', fontSize: 14, marginTop: 4 }}>
+                <div
+                  style={{ color: tokens.muted, fontSize: 14, marginTop: 4 }}
+                >
                   {entry.page === 'items' && '查看物品位置'}
                   {entry.page === 'monsters' && '查看怪物位置'}
                   {entry.page === 'props' && '查看实体位置'}

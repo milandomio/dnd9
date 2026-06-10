@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSSRData } from '../context/SSRDataContext';
+import { useTheme } from '../hooks/useTheme';
 interface IndexEntry {
   name: string;
   translation: string;
@@ -25,6 +26,7 @@ export default function ListPage() {
   const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const [debug, setDebug] = useState(false);
+  const { tokens } = useTheme();
 
   useEffect(() => {
     if (!page || !['items', 'monsters', 'props', 'lootdrops'].includes(page))
@@ -65,7 +67,7 @@ export default function ListPage() {
       <div
         style={{
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
           fontSize: 14,
           marginBottom: 20,
         }}
@@ -136,8 +138,8 @@ export default function ListPage() {
               }
             }}
             style={{
-              background: '#3a3a3a',
-              border: '1px solid #555',
+              background: tokens.surface,
+              border: `1px solid ${tokens.border}`,
               borderRadius: 8,
               padding: 20,
               textAlign: 'center',
@@ -153,11 +155,13 @@ export default function ListPage() {
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
-            <div style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>
+            <div
+              style={{ color: tokens.text, fontSize: 18, fontWeight: 'bold' }}
+            >
               {entity.translation || entity.name}
             </div>
             {debug && (
-              <div style={{ color: '#888', fontSize: 12, marginTop: 4 }}>
+              <div style={{ color: tokens.muted, fontSize: 12, marginTop: 4 }}>
                 {entity.translation}【{entity.name}】
               </div>
             )}
@@ -166,7 +170,7 @@ export default function ListPage() {
               page === 'lootdrops' && (
                 <div
                   style={{
-                    color: '#ccc',
+                    color: tokens.text,
                     fontSize: 13,
                     marginTop: 6,
                     lineHeight: 1.5,
@@ -177,7 +181,7 @@ export default function ListPage() {
                   ) : (
                     <> -目标- </>
                   )}
-                  <span style={{ color: '#aaa' }}>
+                  <span style={{ color: tokens.muted }}>
                     {entity.monster_translations &&
                     entity.monster_translations.length <= 6
                       ? entity.monster_translations.join('、')

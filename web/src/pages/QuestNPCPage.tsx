@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Tag } from 'antd';
 import { useSSRData } from '../context/SSRDataContext';
-
-interface QuestReward {
-  type: string;
-  id: string;
-  count: number;
-}
+import { useTheme } from '../hooks/useTheme';
 
 interface NPCQuest {
   id: string;
@@ -15,7 +10,7 @@ interface NPCQuest {
   quest_number: number;
   greeting: string;
   complete: string;
-  rewards: QuestReward[];
+  rewards: { type: string; id: string; count: number }[];
   required: string;
 }
 
@@ -27,18 +22,64 @@ interface NPCEntry {
   quests: NPCQuest[];
 }
 
+function lsGet(key: string): boolean {
+  try {
+    return localStorage.getItem(key) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function lsSet(key: string, val: boolean) {
+  try {
+    localStorage.setItem(key, val ? '1' : '0');
+  } catch {
+    /* empty */
+  }
+}
+
+const CATEGORY_ORDER = ['装备NPC', '优选NPC', '可用NPC', '不推荐NPC'];
+
+const checkboxStyle: React.CSSProperties = {
+  accentColor: '#4CAF50',
+  cursor: 'pointer',
+  margin: 0,
+  flexShrink: 0,
+};
+
 export default function QuestNPCPage() {
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [data, setData] = useState<NPCEntry[]>(ssrData || []);
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const { tokens } = useTheme();
 
   useEffect(() => {
     if (ssrData) return;
     fetch('./data/json/quest_npc.json')
-      .then((r) => r.json())
+      .then<NPCEntry[]>((r) => r.json())
       .then(setData)
       .catch(console.error);
-  }, []);
+  }, [ssrData]);
+
+  const grouped = new Map<string, NPCEntry[]>();
+  for (const npc of data) {
+    const cat = npc.category || '可用NPC';
+    if (!grouped.has(cat)) grouped.set(cat, []);
+    grouped.get(cat)!.push(npc);
+  }
+
+  const sortedGroups = [...grouped.entries()]
+    .sort(([a], [b]) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b))
+    .map(
+      ([cat, npcs]) =>
+        [
+          cat,
+          npcs.sort((a, b) =>
+            a.npc_name_display.localeCompare(b.npc_name_display, 'zh-CN')
+          ),
+        ] as const
+    );
+
+  const refresh = () => setData((prev) => [...prev]);
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -52,7 +93,7 @@ export default function QuestNPCPage() {
       <h1
         style={{
           textAlign: 'center',
-          color: '#00bcd4',
+          color: tokens.accent,
           fontSize: 36,
           marginBottom: 20,
         }}
@@ -62,25 +103,14 @@ export default function QuestNPCPage() {
       <div
         style={{
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
           fontSize: 14,
           marginBottom: 20,
         }}
       >
         共 {data.length} 个活跃NPC
       </div>
-      {(() => {
-        const grouped = new Map<string, NPCEntry[]>();
-        for (const npc of data) {
-          const cat = npc.category || '其他';
-          if (!grouped.has(cat)) grouped.set(cat, []);
-          grouped.get(cat)!.push(npc);
-        }
-        const order = ['装备NPC', '优选NPC', '可用NPC', ''];
-        return [...grouped.entries()].sort(
-          ([a], [b]) => order.indexOf(a) - order.indexOf(b)
-        );
-      })().map(([category, npcs]) => (
+      {sortedGroups.map(([category, npcs]) => (
         <div key={category}>
           <div
             style={{
@@ -93,109 +123,91 @@ export default function QuestNPCPage() {
               marginTop: 24,
             }}
           >
-            {category || '其他'} ({npcs.length})
+            {category} ({npcs.length})
           </div>
-          {npcs.map((npc) => (
-            <div
-              key={npc.npc_name}
-              style={{
-                background: '#3a3a3a',
-                border: '1px solid #555',
-                borderRadius: 8,
-                padding: 16,
-                marginBottom: 16,
-                cursor: 'pointer',
-              }}
-              onClick={() =>
-                setExpanded(expanded === npc.npc_name ? null : npc.npc_name)
-              }
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 12,
+              marginBottom: 8,
+            }}
+          >
+            {npcs.map((npc) => {
+              const npcDone = lsGet(`quest_npc_npc_${npc.npc_name}`);
+              return (
                 <div
-                  style={{ color: '#00bcd4', fontSize: 20, fontWeight: 'bold' }}
+                  key={npc.npc_name}
+                  style={{
+                    background: tokens.card,
+                    border: npcDone
+                      ? '1px solid #388E3C'
+                      : `1px solid ${tokens.border}`,
+                    borderRadius: 8,
+                    opacity: npcDone ? 0.5 : 1,
+                    transition: 'opacity 0.2s',
+                  }}
                 >
-                  {npc.npc_name_display}
-                </div>
-                <div style={{ color: '#aaa', fontSize: 13 }}>
-                  {npc.quest_count} 个任务
-                </div>
-              </div>
-              {expanded === npc.npc_name && (
-                <div style={{ marginTop: 12 }}>
-                  {npc.quests.map((q) => (
-                    <div
-                      key={q.id}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: 20,
+                      gap: 10,
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={npcDone}
+                      onChange={() => {
+                        lsSet(`quest_npc_npc_${npc.npc_name}`, !npcDone);
+                        refresh();
+                      }}
                       style={{
-                        background: '#2c2c2c',
-                        border: '1px solid #444',
-                        borderRadius: 6,
-                        padding: 12,
-                        marginBottom: 8,
+                        ...checkboxStyle,
+                        width: 22,
+                        height: 22,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <Link
+                      to={`/quest_npc/${npc.npc_name}`}
+                      style={{
+                        flex: 1,
+                        minWidth: 0,
+                        textDecoration: 'none',
+                        color: tokens.text,
                       }}
                     >
                       <div
                         style={{
-                          color: '#FFC107',
+                          fontSize: 18,
                           fontWeight: 'bold',
-                          marginBottom: 4,
+                          color: tokens.accent,
+                          textDecoration: npcDone ? 'line-through' : 'none',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
                         }}
                       >
-                        #{q.quest_number} {q.title}
+                        {npc.npc_name_display}
+                        <span
+                          style={{
+                            fontSize: 13,
+                            color: tokens.muted,
+                            fontWeight: 'normal',
+                            marginLeft: 8,
+                          }}
+                        >
+                          {npc.quest_count} 个任务
+                        </span>
                       </div>
-                      {q.greeting && (
-                        <div
-                          style={{
-                            color: '#aaa',
-                            fontSize: 12,
-                            marginBottom: 4,
-                          }}
-                        >
-                          接取: {q.greeting}
-                        </div>
-                      )}
-                      {q.complete && (
-                        <div
-                          style={{
-                            color: '#aaa',
-                            fontSize: 12,
-                            marginBottom: 4,
-                          }}
-                        >
-                          完成: {q.complete}
-                        </div>
-                      )}
-                      {q.rewards.length > 0 && (
-                        <div style={{ marginTop: 4 }}>
-                          {q.rewards.map((r, ri) => (
-                            <Tag
-                              key={ri}
-                              color="green"
-                              style={{ fontSize: 11 }}
-                            >
-                              {r.id} ×{r.count}
-                            </Tag>
-                          ))}
-                        </div>
-                      )}
-                      {q.required && (
-                        <div
-                          style={{ color: '#888', fontSize: 11, marginTop: 4 }}
-                        >
-                          前置: {q.required}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    </Link>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       ))}
     </div>

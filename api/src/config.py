@@ -173,6 +173,14 @@ HARDCODED_TRANSLATIONS = {
     "TideWalkerSpearer": "踏潮者矛兵",
     "ifrit": "火元素",
     "LivingStatue_Elite_Dummy": "精英石像鬼（假）",
+    # Type.Character 杀怪目标
+    "Undead": "亡灵",
+    "Skeleton": "骷髅",
+    "Goblin": "哥布林",
+    "Mimic": "宝箱怪",
+    "Kobold": "狗头人",
+    "Demon": "恶魔",
+    "Giant": "巨人",
     # 宝箱容器（无 Game.json 前缀匹配）
     "ChestLarge": "大宝箱",
     "ChestLarge_UnderSea": "海底大宝箱",
@@ -277,6 +285,7 @@ HARDCODED_TRANSLATIONS = {
     "StaticMeshItemHolder": "物品持有器",
     "DungeonModule": "地牢模块",
     "DungeonInfiniteExitBase": "无限出口",
+    "Ruins_DualBossTreasureRoom": "双boss宝藏室",
 }
 
 MODULE_NAME_OVERRIDE = {
@@ -287,6 +296,7 @@ MODULE_NAME_OVERRIDE = {
 }
 
 MODULE_DISPLAY_OVERRIDE = {
+    "ShipGraveyard_BladehandRefuge": {"size_x": 2, "size_y": 2, "range": 3200},
     "ShipGraveyard_Hole": {"size_x": 2, "size_y": 2, "range": 4800},
     "ShipGraveyard_HangingShip": {"size_x": 2, "size_y": 1},
 }

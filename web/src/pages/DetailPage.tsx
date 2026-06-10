@@ -11,12 +11,13 @@ import type {
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDebug } from '../hooks/useDebug';
+import { useTheme } from '../hooks/useTheme';
 import {
   getAdj,
   applyTransform,
   computePixel,
-  ctrlBtn,
-  ctrlInput,
+  useCtrlBtn,
+  useCtrlInput,
   type AdjState,
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
@@ -58,6 +59,9 @@ export default function DetailPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
+  const { tokens } = useTheme();
+  const ctrlBtn = useCtrlBtn();
+  const ctrlInput = useCtrlInput();
 
   const toggleRow = (key: string) => {
     setHiddenRows((prev) => {
@@ -242,8 +246,8 @@ export default function DetailPage() {
                     minWidth: 0,
                     gridColumn: sx >= 2 ? `span ${sx}` : undefined,
                     gridRow: sy >= 2 ? `span ${sy}` : undefined,
-                    background: '#3a3a3a',
-                    border: '1px solid #555',
+                    background: tokens.surface,
+                    border: `1px solid ${tokens.border}`,
                     borderRadius: 5,
                     padding: 8,
                   }}
@@ -263,7 +267,7 @@ export default function DetailPage() {
                   >
                     {mod?.translation || mapName}
                     {debug && (
-                      <span style={{ color: '#888', fontSize: 11 }}>
+                      <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
                         ({mapName})
                       </span>
@@ -273,7 +277,7 @@ export default function DetailPage() {
                     <div
                       style={{
                         fontSize: 10,
-                        color: '#888',
+                        color: tokens.muted,
                         textAlign: 'center',
                         marginBottom: 4,
                       }}
@@ -286,7 +290,7 @@ export default function DetailPage() {
                     <div
                       style={{
                         fontSize: 10,
-                        color: '#888',
+                        color: tokens.muted,
                         textAlign: 'center',
                         marginBottom: 4,
                         lineHeight: 1.4,
@@ -302,8 +306,8 @@ export default function DetailPage() {
                   <div
                     style={{
                       aspectRatio: `${sx} / ${sy}`,
-                      background: '#2c2c2c',
-                      border: '1px solid #666',
+                      backgroundColor: tokens.bg,
+                      border: `1px solid ${tokens.border}`,
                       borderRadius: 4,
                       position: 'relative',
                       overflow: 'hidden',
@@ -363,7 +367,7 @@ export default function DetailPage() {
                     <div
                       style={{
                         fontSize: 11,
-                        color: '#aaa',
+                        color: tokens.muted,
                         marginTop: 4,
                         display: 'flex',
                         flexDirection: 'column',
@@ -377,7 +381,7 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: '#888' }}>范围:</span>
+                        <span style={{ color: tokens.muted }}>范围:</span>
                         <button
                           onClick={() =>
                             setAdj(
@@ -412,7 +416,11 @@ export default function DetailPage() {
                           x2
                         </button>
                         <span
-                          style={{ color: '#aaa', fontSize: 12, marginLeft: 4 }}
+                          style={{
+                            color: tokens.muted,
+                            fontSize: 12,
+                            marginLeft: 4,
+                          }}
                         >
                           ↻{adj.rotate}
                         </span>
@@ -424,7 +432,7 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: '#888' }}>偏移:</span>
+                        <span style={{ color: tokens.muted }}>偏移:</span>
                         <button
                           onClick={() => setAdj(mapName, 'y', adj.y - 50)}
                           style={ctrlBtn}
@@ -449,7 +457,9 @@ export default function DetailPage() {
                         >
                           →
                         </button>
-                        <span style={{ color: '#888', marginLeft: 8 }}>X:</span>
+                        <span style={{ color: tokens.muted, marginLeft: 8 }}>
+                          X:
+                        </span>
                         <input
                           type="number"
                           value={offX}
@@ -463,7 +473,7 @@ export default function DetailPage() {
                           style={ctrlInput}
                           step={10}
                         />
-                        <span style={{ color: '#888' }}>Y:</span>
+                        <span style={{ color: tokens.muted }}>Y:</span>
                         <input
                           type="number"
                           value={offY}
@@ -487,7 +497,11 @@ export default function DetailPage() {
                       >
                         <button
                           onClick={() =>
-                            setAdj(mapName, 'rotate', (adj.rotate + 90) % 360)
+                            setAdj(
+                              mapName,
+                              'rotate',
+                              ((adj.rotate ?? 0) + 90) % 360
+                            )
                           }
                           style={ctrlBtn}
                         >
@@ -541,11 +555,11 @@ export default function DetailPage() {
         style={{
           marginTop: 10,
           padding: 10,
-          background: '#3a3a3a',
+          background: tokens.surface,
           borderRadius: 5,
           fontSize: 15,
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
         }}
       >
         <strong>颜色说明：</strong>

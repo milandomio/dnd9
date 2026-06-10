@@ -14,6 +14,8 @@ export interface ThemeTokens {
   muted: string;
   border: string;
   accent: string;
+  darkShadow: string;
+  deepShadow: string;
 }
 
 const LIGHT: ThemeTokens = {
@@ -24,6 +26,8 @@ const LIGHT: ThemeTokens = {
   muted: '#666',
   border: '#bbb',
   accent: '#0097a7',
+  darkShadow: 'rgba(0,0,0,0.1)',
+  deepShadow: 'rgba(0,0,0,0.15)',
 };
 
 const DARK: ThemeTokens = {
@@ -34,6 +38,8 @@ const DARK: ThemeTokens = {
   muted: '#aaa',
   border: '#555',
   accent: '#00bcd4',
+  darkShadow: 'rgba(0,0,0,0.3)',
+  deepShadow: 'rgba(0,0,0,0.5)',
 };
 
 const ThemeCtx = createContext<{

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Spin, Card, Row, Col } from 'antd';
+import { useTheme } from '../hooks/useTheme';
 import type { DungeonModule } from '../types/data';
 
 interface GroupSummary {
@@ -46,6 +47,7 @@ const GROUP_ORDER = [
 export default function DungeonModulesPage() {
   const [groups, setGroups] = useState<GroupSummary[]>([]);
   const [loading, setLoading] = useState(true);
+  const { tokens } = useTheme();
 
   useEffect(() => {
     fetch('./data/json/dungeon_modules.json')
@@ -98,7 +100,7 @@ export default function DungeonModulesPage() {
       <div
         style={{
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
           fontSize: 14,
           marginBottom: 24,
         }}
@@ -117,7 +119,7 @@ export default function DungeonModulesPage() {
                 <Card
                   hoverable
                   style={{
-                    background: 'linear-gradient(145deg, #3a3a3a, #444)',
+                    background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
                     border: `2px solid ${theme.border}`,
                     borderRadius: 12,
                     textAlign: 'center',
@@ -131,13 +133,19 @@ export default function DungeonModulesPage() {
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
-                      color: '#fff',
+                      color: tokens.text,
                       marginBottom: 8,
                     }}
                   >
                     {g.group_display}
                   </div>
-                  <div style={{ fontSize: 13, color: '#aaa', lineHeight: 1.5 }}>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      color: tokens.muted,
+                      lineHeight: 1.5,
+                    }}
+                  >
                     {g.module_count} 个模块
                   </div>
                 </Card>

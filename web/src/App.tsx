@@ -12,6 +12,7 @@ import ExplorePage from './pages/ExplorePage';
 import QuestItemsPage from './pages/QuestItemsPage';
 import QuestItemGroupPage from './pages/QuestItemGroupPage';
 import QuestNPCPage from './pages/QuestNPCPage';
+import QuestNPCDetailPage from './pages/QuestNPCDetailPage';
 import DungeonModulesPage from './pages/DungeonModulesPage';
 import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
@@ -29,6 +30,7 @@ export function AppInner() {
         <Route path="/quest_items" element={<QuestItemsPage />} />
         <Route path="/quest_items/:group" element={<QuestItemGroupPage />} />
         <Route path="/quest_npc" element={<QuestNPCPage />} />
+        <Route path="/quest_npc/:npc_name" element={<QuestNPCDetailPage />} />
         <Route path="/dungeon_modules" element={<DungeonModulesPage />} />
         <Route
           path="/dungeon_modules/:group"
@@ -46,25 +48,34 @@ export function AppInner() {
   );
 }
 
+function AntdConfigProvider({ children }: { children: React.ReactNode }) {
+  const { dark } = useTheme();
+  return (
+    <ConfigProvider
+      locale={zhCN}
+      theme={{
+        algorithm: dark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        token: { colorPrimary: '#1677ff' },
+      }}
+    >
+      {children}
+    </ConfigProvider>
+  );
+}
+
 /** Client entry: wraps AppInner with BrowserRouter for SPA routing. */
 export default function App() {
   return (
     <HelmetProvider>
-      <ConfigProvider
-        locale={zhCN}
-        theme={{
-          algorithm: theme.darkAlgorithm,
-          token: { colorPrimary: '#1677ff' },
-        }}
-      >
-        <ThemeProvider>
+      <ThemeProvider>
+        <AntdConfigProvider>
           <DebugProvider>
             <BrowserRouter>
               <AppInner />
             </BrowserRouter>
           </DebugProvider>
-        </ThemeProvider>
-      </ConfigProvider>
+        </AntdConfigProvider>
+      </ThemeProvider>
     </HelmetProvider>
   );
 }

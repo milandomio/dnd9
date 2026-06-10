@@ -36,7 +36,7 @@ def load_all_layout_rotations() -> dict[str, int]:
                 w = rot.get("W", 1)
                 yaw_rad = 2 * math.atan2(z, w)
                 yaw_deg = math.degrees(yaw_rad)
-                js_rotate = round(yaw_deg % 360, 1)
+                js_rotate = round((yaw_deg - 90) % 360, 1)
                 base = _extract_module_base(asset)
                 if base:
                     rotations[base] = js_rotate

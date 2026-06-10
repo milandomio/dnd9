@@ -8,6 +8,20 @@
 - "db" — 指 api/data/darkfindv5.db
 - "坐标" — 指录入到db的spawners表中的道具/怪物实体实际在地图位置的数据，包含x、y、z三个REAL字段
 - "部署" — 删除db → 运行后端管道 → 构建前端 → 启动web服务到localhost:8080
+- "硬编码翻译" — 指 api/src/config.py 中 HARDCODED_TRANSLATIONS 字典里的翻译条目
+
+## V4 参考目录
+
+V4 项目通过符号链接提供只读参考：`v4_reference/`
+
+| 文件 | 说明 |
+|------|------|
+| `v4_reference/group_config.json` | 分组翻译配置（Cave→哥布林洞穴1层 等） |
+| `v4_reference/src/config.py` | MODULE_OFFSET_MAP、MODULE_DISPLAY_OVERRIDE、HARDCODED_TRANSLATIONS |
+| `v4_reference/path_config.json` | V4 的路径配置 |
+| `v4_reference/output/` | V4 生成的 HTML 页面 |
+
+移植时参考这些文件，但不要修改 V4 原文件。
 
 ## MCP Tools
 

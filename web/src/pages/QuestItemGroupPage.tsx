@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDebug } from '../hooks/useDebug';
+import { useTheme } from '../hooks/useTheme';
 import { useSSRData } from '../context/SSRDataContext';
 import {
   getAdj,
   applyTransform,
   computePixel,
-  ctrlBtn,
-  ctrlInput,
+  useCtrlBtn,
+  useCtrlInput,
   type AdjState,
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
@@ -92,6 +93,9 @@ export default function QuestItemGroupPage() {
   });
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
+  const { tokens } = useTheme();
+  const ctrlBtn = useCtrlBtn();
+  const ctrlInput = useCtrlInput();
 
   useEffect(() => {
     if (!group) return;
@@ -119,7 +123,7 @@ export default function QuestItemGroupPage() {
 
   if (loading)
     return (
-      <div style={{ textAlign: 'center', color: '#aaa', marginTop: 100 }}>
+      <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
         加载中...
       </div>
     );
@@ -247,7 +251,7 @@ export default function QuestItemGroupPage() {
         }}
       >
         【{data.group_display}】任务物品
-        <span style={{ color: '#aaa', fontSize: 14, marginLeft: 12 }}>
+        <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
           {entities.length}种实体 {totalCoords}个位置
         </span>
       </h1>
@@ -262,7 +266,7 @@ export default function QuestItemGroupPage() {
           justifyContent: 'center',
           margin: '15px 0',
           padding: 10,
-          background: '#3a3a3a',
+          background: tokens.surface,
           borderRadius: 5,
         }}
       >
@@ -276,12 +280,12 @@ export default function QuestItemGroupPage() {
           }}
           style={{
             padding: '8px 15px',
-            border: '2px solid #888',
+            border: `2px solid ${tokens.border}`,
             borderRadius: 5,
             cursor: 'pointer',
             fontSize: 14,
             fontWeight: 'bold',
-            color: '#ccc',
+            color: tokens.text,
             background: 'transparent',
             transition: 'all 0.2s',
           }}
@@ -299,7 +303,7 @@ export default function QuestItemGroupPage() {
               cursor: 'pointer',
               fontSize: 14,
               fontWeight: 'bold',
-              color: '#fff',
+              color: tokens.text,
               background: hidden.has(e.name) ? 'transparent' : e.color,
               opacity: hidden.has(e.name) ? 0.3 : 1,
               transition: 'all 0.2s',
@@ -320,13 +324,13 @@ export default function QuestItemGroupPage() {
             justifyContent: 'center',
             margin: '10px 0',
             padding: 10,
-            background: '#3a3a3a',
+            background: tokens.surface,
             borderRadius: 5,
             fontSize: 14,
-            color: '#aaa',
+            color: tokens.muted,
           }}
         >
-          <strong style={{ color: '#ccc' }}>实体图例：</strong>
+          <strong style={{ color: tokens.text }}>实体图例：</strong>
           {entities.map((e) => (
             <span
               key={e.name}
@@ -348,7 +352,7 @@ export default function QuestItemGroupPage() {
                 }}
               ></span>
               {e.translation}{' '}
-              <span style={{ color: '#888' }}>({e.coords.length})</span>
+              <span style={{ color: tokens.muted }}>({e.coords.length})</span>
             </span>
           ))}
         </div>
@@ -394,8 +398,8 @@ export default function QuestItemGroupPage() {
                     minWidth: 0,
                     gridColumn: sx >= 2 ? `span ${sx}` : undefined,
                     gridRow: sy >= 2 ? `span ${sy}` : undefined,
-                    background: '#3a3a3a',
-                    border: '1px solid #555',
+                    background: tokens.surface,
+                    border: `1px solid ${tokens.border}`,
                     borderRadius: 5,
                     padding: 8,
                   }}
@@ -415,7 +419,7 @@ export default function QuestItemGroupPage() {
                   >
                     {mod?.translation || mapName}
                     {debug && (
-                      <span style={{ color: '#888', fontSize: 11 }}>
+                      <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
                         ({mapName})
                       </span>
@@ -425,7 +429,7 @@ export default function QuestItemGroupPage() {
                     <div
                       style={{
                         fontSize: 10,
-                        color: '#888',
+                        color: tokens.muted,
                         textAlign: 'center',
                         marginBottom: 4,
                       }}
@@ -438,7 +442,7 @@ export default function QuestItemGroupPage() {
                     <div
                       style={{
                         fontSize: 10,
-                        color: '#888',
+                        color: tokens.muted,
                         textAlign: 'center',
                         marginBottom: 4,
                         lineHeight: 1.4,
@@ -454,7 +458,7 @@ export default function QuestItemGroupPage() {
                     <div
                       style={{
                         fontSize: 11,
-                        color: '#aaa',
+                        color: tokens.muted,
                         marginBottom: 4,
                         display: 'flex',
                         flexDirection: 'column',
@@ -468,7 +472,7 @@ export default function QuestItemGroupPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: '#888' }}>范围:</span>
+                        <span style={{ color: tokens.muted }}>范围:</span>
                         <button
                           onClick={() =>
                             setAdj(
@@ -503,7 +507,11 @@ export default function QuestItemGroupPage() {
                           x2
                         </button>
                         <span
-                          style={{ color: '#aaa', fontSize: 12, marginLeft: 4 }}
+                          style={{
+                            color: tokens.muted,
+                            fontSize: 12,
+                            marginLeft: 4,
+                          }}
                         >
                           ↻{adj.rotate}
                         </span>
@@ -515,7 +523,7 @@ export default function QuestItemGroupPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: '#888' }}>偏移:</span>
+                        <span style={{ color: tokens.muted }}>偏移:</span>
                         <button
                           onClick={() => setAdj(mapName, 'y', adj.y - 50)}
                           style={ctrlBtn}
@@ -540,7 +548,9 @@ export default function QuestItemGroupPage() {
                         >
                           →
                         </button>
-                        <span style={{ color: '#888', marginLeft: 8 }}>X:</span>
+                        <span style={{ color: tokens.muted, marginLeft: 8 }}>
+                          X:
+                        </span>
                         <input
                           type="number"
                           value={offX}
@@ -554,7 +564,7 @@ export default function QuestItemGroupPage() {
                           style={ctrlInput}
                           step={10}
                         />
-                        <span style={{ color: '#888' }}>Y:</span>
+                        <span style={{ color: tokens.muted }}>Y:</span>
                         <input
                           type="number"
                           value={offY}
@@ -578,7 +588,11 @@ export default function QuestItemGroupPage() {
                       >
                         <button
                           onClick={() =>
-                            setAdj(mapName, 'rotate', (adj.rotate + 90) % 360)
+                            setAdj(
+                              mapName,
+                              'rotate',
+                              ((adj.rotate ?? 0) + 90) % 360
+                            )
                           }
                           style={ctrlBtn}
                         >
@@ -624,8 +638,8 @@ export default function QuestItemGroupPage() {
                   <div
                     style={{
                       aspectRatio: `${sx} / ${sy}`,
-                      background: '#2c2c2c',
-                      border: '1px solid #666',
+                      backgroundColor: tokens.bg,
+                      border: `1px solid ${tokens.border}`,
                       borderRadius: 4,
                       position: 'relative',
                       overflow: 'hidden',
@@ -691,7 +705,7 @@ export default function QuestItemGroupPage() {
                       justifyContent: 'center',
                       marginTop: 5,
                       fontSize: 13,
-                      color: '#ccc',
+                      color: tokens.text,
                       alignItems: 'center',
                     }}
                   >
@@ -721,7 +735,7 @@ export default function QuestItemGroupPage() {
                           >
                             {e.translation}
                           </span>
-                          <span style={{ color: '#888' }}>
+                          <span style={{ color: tokens.muted }}>
                             ({dots.filter((d) => d.entity.name === en).length}
                             点)
                           </span>
@@ -804,11 +818,11 @@ export default function QuestItemGroupPage() {
         style={{
           marginTop: 10,
           padding: 10,
-          background: '#3a3a3a',
+          background: tokens.surface,
           borderRadius: 5,
           fontSize: 15,
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
         }}
       >
         <strong>位置统计：共 {totalCoords} 个位置点</strong>

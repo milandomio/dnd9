@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Spin, Card, Row, Col } from 'antd';
+import { useTheme } from '../hooks/useTheme';
 
 interface GroupEntry {
   group: string;
@@ -24,6 +25,7 @@ const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
 export default function QuestItemsPage() {
   const [groups, setGroups] = useState<GroupEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const { tokens } = useTheme();
 
   useEffect(() => {
     fetch('./data/json/quest_items_groups.json')
@@ -62,7 +64,7 @@ export default function QuestItemsPage() {
       <div
         style={{
           textAlign: 'center',
-          color: '#aaa',
+          color: tokens.muted,
           fontSize: 14,
           marginBottom: 24,
         }}
@@ -81,7 +83,7 @@ export default function QuestItemsPage() {
                 <Card
                   hoverable
                   style={{
-                    background: 'linear-gradient(145deg, #3a3a3a, #444)',
+                    background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
                     border: `2px solid ${theme.border}`,
                     borderRadius: 12,
                     textAlign: 'center',
@@ -95,13 +97,19 @@ export default function QuestItemsPage() {
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
-                      color: '#fff',
+                      color: tokens.text,
                       marginBottom: 8,
                     }}
                   >
                     {g.group_display}
                   </div>
-                  <div style={{ fontSize: 13, color: '#aaa', lineHeight: 1.5 }}>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      color: tokens.muted,
+                      lineHeight: 1.5,
+                    }}
+                  >
                     {g.entity_count} 个实体
                     <br />
                     {g.position_count} 个位置
@@ -116,7 +124,7 @@ export default function QuestItemsPage() {
         style={{
           textAlign: 'center',
           marginTop: 32,
-          color: '#666',
+          color: tokens.muted,
           fontSize: 14,
         }}
       >
