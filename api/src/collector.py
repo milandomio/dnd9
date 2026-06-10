@@ -218,11 +218,15 @@ def run():
         c = db.connect()
         c.execute("DELETE FROM spawners")
         c.execute("DELETE FROM search_term_matches")
-        for idx, s in enumerate(spawners):
-            c.execute(
-                "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, x, y, z, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (idx + 1, s["keyword"], s.get("original_keyword", ""), s["spawner_type"], s["x"], s["y"], s["z"], s["json_filename"], s.get("version", ""), s.get("map_base", "")),
-            )
+        spawner_rows = [
+            (idx + 1, s["keyword"], s.get("original_keyword", ""), s["spawner_type"],
+             s["x"], s["y"], s["z"], s["json_filename"], s.get("version", ""), s.get("map_base", ""))
+            for idx, s in enumerate(spawners)
+        ]
+        c.executemany(
+            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, x, y, z, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            spawner_rows,
+        )
         for term, spawner_ids in matches.items():
             rows = [(term, sid + 1) for sid in spawner_ids]
             c.executemany(
