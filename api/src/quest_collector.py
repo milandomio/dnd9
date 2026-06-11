@@ -33,6 +33,10 @@ def _translate_item(translator, name_en: str) -> str:
     translated = translator.translate(props_key)
     if translated:
         return translated
+    skin_key = f"Text_DesignData_ItemSkin_ItemSkin_{name_en}"
+    translated = translator.translate(skin_key)
+    if translated:
+        return translated
     return name_en
 
 

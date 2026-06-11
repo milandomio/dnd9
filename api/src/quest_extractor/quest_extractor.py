@@ -421,6 +421,12 @@ class QuestExtractor:
                     name = self.translator.translate(key)
                     if not name:
                         name = props_name
+                elif "Id_ItemSkin_" in reward_id:
+                    skin_name = reward_id.split("Id_ItemSkin_")[-1]
+                    key = f"Text_DesignData_ItemSkin_ItemSkin_{skin_name}"
+                    name = self.translator.translate(key)
+                    if not name:
+                        name = skin_name
                 else:
                     name = reward_id
             else:
