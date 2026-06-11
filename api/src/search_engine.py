@@ -5,9 +5,60 @@ from pathlib import Path
 
 import ahocorasick
 
-from config import MAPS_DIR, SPAWNER_ALIAS_MAP
+from config import MAPS_DIR, SPAWNER_ALIAS_MAP, SPAWNER_DIR
 
 _VARIANT_RE = re.compile(r"_\d{4}$")
+
+# Cache for spawner data asset info (keyword → has_lootdrop)
+_spawner_data_cache: dict[str, bool] = {}
+
+
+def _load_spawner_data_assets() -> dict[str, bool]:
+    """Load all DCSpawnerDataAsset files and build mapping of keyword → has_lootdrop."""
+    global _spawner_data_cache
+    if _spawner_data_cache:
+        return _spawner_data_cache
+
+    if not SPAWNER_DIR.exists():
+        return _spawner_data_cache
+
+    for json_file in SPAWNER_DIR.glob("*.json"):
+        try:
+            with open(json_file, encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            continue
+
+        if not isinstance(data, list) or not data:
+            continue
+
+        entry = data[0]
+        if entry.get("Type") != "DCSpawnerDataAsset":
+            continue
+
+        name = entry.get("Name", "")
+        if not name:
+            continue
+
+        # Extract keyword from name (e.g., "Id_Spawner_Props_FiredeepTorch01On" → "FiredeepTorch01On")
+        keyword = strip_id_prefix(name)
+        if not keyword:
+            continue
+
+        # Check if LootDropGroupId is non-empty
+        props = entry.get("Properties", {}) or {}
+        items = props.get("SpawnerItemArray", []) or []
+        has_lootdrop = False
+        for item in items:
+            ldg = item.get("LootDropGroupId", {}) or {}
+            asset_path = ldg.get("AssetPathName", "")
+            if asset_path:
+                has_lootdrop = True
+                break
+
+        _spawner_data_cache[keyword] = has_lootdrop
+
+    return _spawner_data_cache
 
 
 _PREFIXES = [
@@ -87,8 +138,8 @@ def _preview_entity_name(asset_path: str) -> str:
     # Remove duplicate suffix (e.g., Id_Props_StatueDwarven.Id_Props_StatueDwarven -> Id_Props_StatueDwarven)
     if "." in filename:
         filename = filename.split(".")[0]
-    # Strip Id_Props_, Id_Monster_, Id_Spawner_ prefixes
-    for prefix in ["Id_Props_", "Id_Monster_", "Id_Spawner_New_", "Id_Spawner_"]:
+    # Strip Id_Props_, Id_Monster_, Id_LootDrop_ prefixes
+    for prefix in ["Id_Props_", "Id_Monster_", "Id_LootDrop_", "Id_Spawner_New_", "Id_Spawner_"]:
         if filename.startswith(prefix):
             filename = filename[len(prefix) :]
             break
@@ -157,6 +208,9 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
     spawners: dict[str, dict] = {}
     scene: dict[str, dict] = {}
 
+    # Load spawner data assets for lootdrop info
+    spawner_data_map = _load_spawner_data_assets()
+
     for entry in data:
         if not isinstance(entry, dict):
             continue
@@ -174,11 +228,14 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
             spawner_type = _preview_type(asset_path)
             preview_name = _preview_entity_name(asset_path)
             spawner_name = entry.get("Name", "")
+            # Check if this spawner has lootdrop from spawner data asset
+            has_lootdrop = spawner_data_map.get(keyword, False)
             if spawner_name:
                 spawners[spawner_name] = {
                     "keyword": keyword,
                     "spawner_type": spawner_type,
                     "preview_name": preview_name,
+                    "has_lootdrop": has_lootdrop,
                 }
 
         elif t.startswith("BP_") and t.endswith("_C") and t not in ("BP_GameSpawner_C",):
@@ -187,6 +244,7 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                 spawners[entry_name] = {
                     "keyword": _strip_bp_prefix(t),
                     "spawner_type": "props",
+                    "has_lootdrop": False,
                 }
 
         if (t == "SphereComponent" and entry.get("Name") == "SceneComponent") or (
@@ -229,6 +287,8 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                 "keyword": info["keyword"],
                 "original_keyword": info["keyword"],
                 "spawner_type": info["spawner_type"],
+                "preview_name": info.get("preview_name", ""),
+                "has_lootdrop": info.get("has_lootdrop", False),
                 "x": coord["x"],
                 "y": coord["y"],
                 "z": coord["z"],
@@ -325,12 +385,14 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
 
     matches: dict[str, list[int]] = {}
     for idx, s in enumerate(all_spawners):
-        kw = SPAWNER_ALIAS_MAP.get(s["keyword"], s["keyword"])
-        matched = match_keyword(kw, terms_set, auto)
-        # Also try matching via preview_name (e.g., StatueDwarven from PreviewData)
+        # preview_name is the actual entity name (e.g., StatueDwarven from Props)
+        # keyword is the spawner name (e.g., Statue_Dwarven), used as fallback
         preview_name = s.get("preview_name", "")
-        if preview_name and not matched:
+        if preview_name:
             matched = match_keyword(preview_name, terms_set, auto)
+        else:
+            kw = SPAWNER_ALIAS_MAP.get(s["keyword"], s["keyword"])
+            matched = match_keyword(kw, terms_set, auto)
         for m in matched:
             if m not in matches:
                 matches[m] = []

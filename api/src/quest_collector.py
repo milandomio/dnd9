@@ -257,7 +257,9 @@ def _extract_npc_list(translator, extractor, quests):
                     item["count"] = cd.get("ContentCount", 1)
                 elif ct == "UseItem":
                     item.update(_parse_fetch_content(translator, cd))
-                elif ct in ("Escape", "Hold"):
+                elif ct == "Hold":
+                    item["target"] = extractor.get_hold_target_translation(cd) or ct
+                elif ct == "Escape":
                     item["target"] = extractor.get_escape_target_translation(cd) or ct
                     item["count"] = cd.get("ContentCount", 1)
                 else:

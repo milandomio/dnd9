@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDungeonModules } from '../hooks/useDungeonModules';
+import type { DungeonModule } from '../types/data';
 import {
   getAdj,
   applyTransform,
@@ -22,6 +24,7 @@ interface Coord {
   map: string;
   file: string;
   version: string;
+  label: string;
 }
 
 interface Entity {
@@ -43,20 +46,6 @@ interface GroupData {
   group: string;
   group_display: string;
   entities: Entity[];
-}
-
-interface DungeonModule {
-  name: string;
-  translation: string;
-  group: string;
-  size_x: number;
-  size_y: number;
-  sl_base_name: string;
-  img_name: string;
-  offset_x: number;
-  offset_y: number;
-  rotate: number;
-  range: number;
 }
 
 const GROUP_LABELS: Record<string, string> = {
@@ -84,7 +73,7 @@ export default function QuestItemGroupPage() {
   const ssrData = useSSRData<GroupData>(dataKey);
   const [data, setData] = useState<GroupData | null>(ssrData || null);
   const [loading, setLoading] = useState(!ssrData);
-  const [modules, setModules] = useState<Map<string, DungeonModule>>(new Map());
+  const { modules } = useDungeonModules();
   const [hidden, setHidden] = useState<Set<string>>(() => {
     if (ssrData?.entities) {
       return new Set(ssrData.entities.map((e) => e.name));
@@ -99,27 +88,19 @@ export default function QuestItemGroupPage() {
 
   useEffect(() => {
     if (!group) return;
-    Promise.all([
-      fetch(
-        `./data/json/quest_items_groups/${encodeURIComponent(group)}.json`
-      ).then<GroupData>((r) => r.json()),
-      fetch(`./data/json/dungeon_modules.json`).then<DungeonModule[]>((r) =>
-        r.json()
-      ),
-    ])
-      .then(([gd, mods]) => {
+    if (ssrData?.entities) {
+      setLoading(false);
+      return;
+    }
+    fetch(`./data/json/quest_items_groups/${encodeURIComponent(group)}.json`)
+      .then<GroupData>((r) => r.json())
+      .then((gd) => {
         setData(gd);
         setHidden(new Set(gd.entities.map((e) => e.name)));
-        const mm = new Map<string, DungeonModule>();
-        mods.forEach((m) => {
-          mm.set(m.name, m);
-          mm.set(m.sl_base_name, m);
-        });
-        setModules(mm);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [group]);
+  }, [group, ssrData]);
 
   if (loading)
     return (
@@ -186,13 +167,6 @@ export default function QuestItemGroupPage() {
     mod,
     dots,
   }));
-  items.sort((a, b) => {
-    const sy_a = a.mod?.size_y ?? 1;
-    const sy_b = b.mod?.size_y ?? 1;
-    const sx_a = a.mod?.size_x ?? 1;
-    const sx_b = b.mod?.size_x ?? 1;
-    return sy_a - sy_b || sx_a - sx_b;
-  });
 
   const groupedByType = new Map<string, typeof items>();
   for (const item of items) {
@@ -201,9 +175,26 @@ export default function QuestItemGroupPage() {
     groupedByType.get(g)!.push(item);
   }
 
+  for (const group of groupedByType.values()) {
+    group.sort((a, b) => {
+      const sy_a = a.mod?.size_y ?? 1;
+      const sy_b = b.mod?.size_y ?? 1;
+      const sx_a = a.mod?.size_x ?? 1;
+      const sx_b = b.mod?.size_x ?? 1;
+      if (sy_a !== sy_b) return sy_a - sy_b;
+      if (sx_a !== sx_b) return sx_a - sx_b;
+      return b.dots.length - a.dots.length;
+    });
+  }
+
   const groupOrder = Object.keys(GROUP_LABELS);
   const sortedGroups = [...groupedByType.entries()].sort(
-    ([a], [b]) => groupOrder.indexOf(a) - groupOrder.indexOf(b)
+    ([a, aItems], [b, bItems]) => {
+      const totalA = aItems.reduce((s, item) => s + item.dots.length, 0);
+      const totalB = bItems.reduce((s, item) => s + item.dots.length, 0);
+      if (totalA !== totalB) return totalB - totalA;
+      return groupOrder.indexOf(a) - groupOrder.indexOf(b);
+    }
   );
 
   const totalCoords = entities.reduce(
@@ -771,7 +762,7 @@ export default function QuestItemGroupPage() {
                   file: c.file,
                   mapName: c.map,
                   mapLabel: mod?.translation || c.map,
-                  label: c.version || '',
+                  label: c.label || '',
                   x: c.x,
                   y: c.y,
                   z: c.z,
@@ -789,6 +780,46 @@ export default function QuestItemGroupPage() {
                   else next.add(key);
                   return next;
                 });
+              }}
+              onToggleLabel={(label) => {
+                const labelRows = rows.filter((r) => r.label === label);
+                const allHidden = labelRows.every((r) => r.hidden);
+                for (const r of labelRows) {
+                  if (allHidden) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.delete(r.key);
+                      return n;
+                    });
+                  } else if (!hiddenRows.has(r.key)) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.add(r.key);
+                      return n;
+                    });
+                  }
+                }
+              }}
+              onToggleMarkName={(name) => {
+                const monsterRows = rows.filter(
+                  (r) => r.monster?.name === name
+                );
+                const allHidden = monsterRows.every((r) => r.hidden);
+                for (const r of monsterRows) {
+                  if (allHidden) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.delete(r.key);
+                      return n;
+                    });
+                  } else if (!hiddenRows.has(r.key)) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.add(r.key);
+                      return n;
+                    });
+                  }
+                }
               }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from 'antd';
-import type { DungeonModule } from '../types/data';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: '废墟2层地牢',
@@ -20,26 +20,23 @@ const GROUP_LABELS: Record<string, string> = {
 export default function DungeonModuleGroupPage() {
   const { group } = useParams<{ group: string }>();
   const { debug, toggle } = useDebug();
-  const [modules, setModules] = useState<DungeonModule[]>([]);
+  const { modules: allModules } = useDungeonModules();
   const [loading, setLoading] = useState(true);
   const { tokens } = useTheme();
 
+  const modules = useMemo(() => {
+    const filtered = [...allModules.values()].filter((m) => m.group === group);
+    filtered.sort((a, b) => {
+      const sy = (a.size_y || 1) - (b.size_y || 1);
+      if (sy !== 0) return sy;
+      return (a.size_x || 1) - (b.size_x || 1);
+    });
+    return filtered;
+  }, [allModules, group]);
+
   useEffect(() => {
-    if (!group) return;
-    fetch('./data/json/dungeon_modules.json')
-      .then<DungeonModule[]>((r) => r.json())
-      .then((mods) => {
-        const filtered = mods.filter((m) => m.group === group);
-        filtered.sort((a, b) => {
-          const sy = (a.size_y || 1) - (b.size_y || 1);
-          if (sy !== 0) return sy;
-          return (a.size_x || 1) - (b.size_x || 1);
-        });
-        setModules(filtered);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, [group]);
+    if (allModules.size > 0) setLoading(false);
+  }, [allModules]);
 
   const visible = debug
     ? modules

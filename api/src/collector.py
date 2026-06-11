@@ -28,7 +28,7 @@ from config import (
 from db_manager import DatabaseManager
 from layout_utils import load_all_layout_rotations
 from quest_collector import run_quest_extraction
-from search_engine import build_all_matches
+from search_engine import _load_spawner_data_assets, build_all_matches
 
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
@@ -127,6 +127,75 @@ def _is_db_stale(db_path: Path) -> bool:
     return db_mtime < latest_source
 
 
+def _ue_asset_base_name(asset_path: str) -> str:
+    """Extract base name from UE asset path like '/Game/.../Id_Foo.Id_Foo' → 'Id_Foo'."""
+    if not asset_path:
+        return ""
+    part = asset_path.rsplit("/", 1)[-1]
+    if "." in part:
+        part = part.split(".")[0]
+    return part
+
+
+def _load_spawner_lootdrop_monster_map(
+    monster_name_map: dict[str, str],
+) -> dict[str, list[str]]:
+    """Build mapping: lootdrop_group_name → [canonical monster_names].
+
+    Reads DCSpawnerDataAsset files, extracts MonsterId→LootDropGroupId links
+    from SpawnerItemArray, then resolves each MonsterId to the canonical
+    monster_name via monster_name_map.
+    """
+    if not SPAWNER_DIR.exists():
+        return {}
+
+    ldg_to_monsters: dict[str, set[str]] = {}
+    for json_file in SPAWNER_DIR.glob("*.json"):
+        try:
+            with open(json_file, encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            continue
+        if not isinstance(data, list) or not data:
+            continue
+        entry = data[0]
+        if entry.get("Type") != "DCSpawnerDataAsset":
+            continue
+        props = entry.get("Properties", {}) or {}
+        items = props.get("SpawnerItemArray", []) or []
+        for item in items:
+            ldg = item.get("LootDropGroupId") or {}
+            ldg_asset = ldg.get("AssetPathName", "")
+            if not ldg_asset:
+                continue
+            ldg_name = _ue_asset_base_name(ldg_asset)
+            if not ldg_name:
+                continue
+            # Strip lootdrop group prefix
+            for pfx in ("ID_LootDropGroup_", "Id_LootDropGroup_"):
+                if ldg_name.startswith(pfx):
+                    ldg_name = ldg_name[len(pfx) :]
+                    break
+            mid = item.get("MonsterId") or {}
+            mid_asset = mid.get("AssetPathName", "")
+            if not mid_asset:
+                continue
+            mid_name = _ue_asset_base_name(mid_asset)
+            if not mid_name:
+                continue
+            # Strip monster prefix, then strip quality suffix to get base name
+            for pfx in ("Id_Monster_",):
+                if mid_name.startswith(pfx):
+                    mid_name = mid_name[len(pfx) :]
+                    break
+            mid_name = _QUALITY_RE.sub("", mid_name)
+            # Resolve to canonical monster_name via entity map
+            canonical = monster_name_map.get(mid_name.lower(), mid_name)
+            ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
+
+    return {k: sorted(v) for k, v in ldg_to_monsters.items()}
+
+
 def run():
     print("=" * 50)
     print("  DarkFindV5 - Data Collector")
@@ -167,7 +236,9 @@ def run():
 
         # 6. Import lootdrops (with raw variant names)
         print("[6/7] Importing lootdrop relationships...")
-        count = db.import_lootdrops()
+        monster_name_map = db.get_monster_name_map()
+        spawner_monster_map = _load_spawner_lootdrop_monster_map(monster_name_map)
+        count = db.import_lootdrops(spawner_monster_map)
         print(f"  -> {count} lootdrop relationships")
 
         # 7. Build spawner matches via search engine
@@ -203,6 +274,7 @@ def run():
                 s["keyword"],
                 s.get("original_keyword", ""),
                 s["spawner_type"],
+                1 if s.get("has_lootdrop", False) else 0,
                 s["x"],
                 s["y"],
                 s["z"],
@@ -214,7 +286,7 @@ def run():
             for idx, s in enumerate(spawners)
         ]
         c.executemany(
-            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, x, y, z, yaw, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             spawner_rows,
         )
         for term, spawner_ids in matches.items():
@@ -687,10 +759,12 @@ def run():
     rows = (
         db.connect()
         .execute(
-            "SELECT keyword, spawner_type, x, y, z, yaw, version, map_base FROM spawners ORDER BY map_base, keyword"
+            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base FROM spawners ORDER BY map_base, keyword"
         )
         .fetchall()
     )
+    # Load spawner data asset info for decoration classification
+    spawner_data_map = _load_spawner_data_assets()
     module_coords: dict[str, dict] = {}
     color_idx = 0
     for row in rows:
@@ -703,10 +777,22 @@ def run():
         if ek not in module_coords[mb]["entities"]:
             cls = entity_class.get(ek, {})
             st = row["spawner_type"]
-            mapped_st = "item" if st == "lootdrop" else st
+            has_ld = row["has_lootdrop"]
+            # Determine entity type: decoration (no lootdrop), item (lootdrop type), or props/monster
+            if st == "lootdrop":
+                mapped_st = "item"
+            elif st == "props" and has_ld == 0 and ek in spawner_data_map and not spawner_data_map[ek]:
+                # Only mark as decoration if we found the spawner data and it has no lootdrop
+                mapped_st = "decoration"
+            else:
+                mapped_st = st
             if cls:
                 types = cls.get("types", [])
-                entity_type = mapped_st if mapped_st in types else types[0]
+                # If mapped_st is decoration, always use it (overrides props classification)
+                if mapped_st == "decoration":
+                    entity_type = "decoration"
+                else:
+                    entity_type = mapped_st if mapped_st in types else types[0]
             else:
                 entity_type = mapped_st
             translation = trans_lookup.get(ek) or resolve_name(ek, None, entity_type)
@@ -725,6 +811,7 @@ def run():
                 "z": row["z"],
                 "yaw": row["yaw"],
                 "version": row["version"] or "",
+                "label": row["original_keyword"],
             }
         )
     # 按模块名合并坐标并保存（处理多个 map_base 映射到同一模块的情况）
@@ -760,7 +847,8 @@ def run():
     modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
     modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
     # 过滤无坐标模块（详情页无数据的模块从列表中剔除）
-    modules_with_coords = {mn for mn, maps in module_to_maps.items() if any(m in merged_coords for m in maps)}
+    # 仅当模块自身名字在 merged_coords 中才算有坐标（排除 sl_base 指向其他模块的别名）
+    modules_with_coords = {mn for mn in modules_map if mn in merged_coords}
     exempt = set(MODULE_NAME_OVERRIDE.keys())
     before_count = len(modules_data)
     modules_data = [m for m in modules_data if m["name"] in modules_with_coords or m["name"] in exempt]
@@ -1056,6 +1144,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                     "map": mb,
                     "file": c["json_filename"],
                     "version": c["version"],
+                    "label": c["original_keyword"],
                 }
             )
         for mn in sorted(mnames):
@@ -1096,6 +1185,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                             "map": mb,
                             "file": c["json_filename"],
                             "version": c["version"],
+                            "label": c["original_keyword"],
                         }
                     )
 

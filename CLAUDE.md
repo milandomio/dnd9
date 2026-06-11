@@ -24,6 +24,7 @@ DarkFindV5/
 │   ├── data/                # DB 文件（darkfindv5.db）
 │   ├── output/              # 管道输出
 │   │   └── json/                # JSON 数据文件
+│   ├── lint.sh / lint-fix.sh   # Lint 辅助脚本
 │   └── pyproject.toml
 ├── data/                 # 交付目录（main.py 自动维护，可重生，可清理）
 │   ├── json/              # → api/output/json/（管道后移入）
@@ -39,7 +40,8 @@ DarkFindV5/
 │   │   ├── quest_items.json
 │   │   ├── quest_items_groups.json / quest_items_groups/
 │   │   ├── quest_npc.json
-│   │   └── dungeon_modules_coords/   # 各模块内实体坐标（按模块名分文件）
+│   │   ├── dungeon_modules_coords/   # 各模块内实体坐标（按模块名分文件）
+│   │   └── meta.json                 # 数据日期元信息（{"dataDate":"YYYY-MM-DD"}）
 │   └── img/               # → api/src/img/（管道后复制）
 ├── web/                 # React 前端（SSG）
 │   ├── src/
@@ -48,12 +50,15 @@ DarkFindV5/
 │   │   ├── vite-env.d.ts        # Vite 环境类型声明
 │   │   ├── pages/               # 页面组件
 │   │   ├── components/          # 通用组件（MapDebug, Disclaimer, DebugCoordTable, NavBar）
-│   │   ├── hooks/               # useDebug, useTheme
+│   │   ├── hooks/               # useDebug, useTheme, useDungeonModules
 │   │   ├── context/             # React Context（SSRDataContext）
 │   │   └── types/
+│   ├── scripts/ssg.mjs        # SSG 构建脚本
+│   ├── .husky/                # Git hooks (pre-commit)
 │   ├── public/
 │   │   └── data/             # 构建时从 ../data/ 复制
 │   └── package.json
+├── deploy.sh                 # 一键部署脚本（提交+管道+构建+部署）
 ├── .github/workflows/deploy.yml
 ├── LICENSE
 └── CLAUDE.md
@@ -99,10 +104,18 @@ cd api && python main.py
 cd web && npm run build
 
 # 4. 启动web
-cd web && pkill -f "vite preview" 2>/dev/null; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
+cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
 ```
 
 **注意：** `python main.py` 必须在 `npm run build` 之前运行。TS 类型检查在构建中自动执行 (`npx tsc --noEmit`)。
+
+### 一键部署
+
+```bash
+./deploy.sh
+```
+
+自动执行：提交 → 管道 → 构建 → 交付，无需手动逐步操作。
 
 ## 数据流
 
@@ -115,6 +128,7 @@ api/output/json/ + api/src/img/
     ↓ Vite build → dist/data/
     ↓ GitHub Actions → gh-pages branch
     ↓ 浏览器 fetch("./data/json/index.json") → 注水渲染
+    ↓ meta.json 提供数据日期（{"dataDate":"YYYY-MM-DD"}），前端可读取显示
 
 **无游戏文件部署：** DB（`api/data/darkfindv5.db`）不纳入 git，从 GitHub Releases 下载后放入 `api/data/` 即可。
 
@@ -140,12 +154,16 @@ rm /tmp/darkfindv5.db
 
 ## 页面布局
 
-| 级别 | 页面 | 一行列数 |
-|------|------|---------|
-| 主页 | `index` | 4 |
-| 列表页 | `items`, `monsters`, `props`, `lootdrops`, `explore`, `quest_items`, `quest_npc` | 3 |
-| 详情页 | 实体详情 | 4 (CSS Grid, 支持 1x1/2x1/1x2/2x2) |
-| 地图模块表 | `dungeon_modules` | 4 (分组列表) → 4 (模块网格) → 全宽 (详情+坐标) |
+| 级别 | 页面 | 路由 | 一行列数 |
+|------|------|------|---------|
+| 主页 | `index` | `/` | 4 |
+| 列表页 | `items`, `monsters`, `props`, `lootdrops`, `explore`, `quest_items`, `quest_npc` | 对应路径 | 3 |
+| 详情页 | 实体详情 | `/items/:name` 等 | 4 (CSS Grid, 支持 1x1/2x1/1x2/2x2) |
+| 任务物品分组 | `QuestItemGroupPage` | `/quest_items/:group` | 3 |
+| 任务 NPC 详情 | `QuestNPCDetailPage` | `/quest_npc/:npc_name` | 4 |
+| 地图模块表 | `DungeonModulesPage` | `/dungeon_modules` | 4 (分组列表) |
+| 地图模块分组 | `DungeonModuleGroupPage` | `/dungeon_modules/:group` | 4 (模块网格) |
+| 地图模块详情 | `DungeonModuleDetailPage` | `/dungeon_modules/:group/:name` | 全宽 (详情+坐标) |
 
 详情页地图卡片：按 `size_y` → `size_x` 升序排列，坐标范围 `Math.max(size_x, size_y) * 1600`。
 
@@ -159,6 +177,7 @@ rm /tmp/darkfindv5.db
 | `components/NavBar.tsx` | 导航栏 | 全局 |
 | `hooks/useDebug.tsx` | 调试开关、偏移量状态 | DetailPage, LootdropDetailPage |
 | `hooks/useTheme.tsx` | 主题切换 | 全局 |
+| `hooks/useDungeonModules.ts` | 地图模块数据获取与缓存 | DungeonModulesPage, DungeonModuleGroupPage, DungeonModuleDetailPage |
 
 ## 数据管道
 

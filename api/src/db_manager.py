@@ -190,6 +190,7 @@ class DatabaseManager:
                 keyword TEXT NOT NULL,
                 original_keyword TEXT NOT NULL DEFAULT '',
                 spawner_type TEXT NOT NULL DEFAULT 'unknown',
+                has_lootdrop INTEGER NOT NULL DEFAULT 0,
                 x REAL NOT NULL,
                 y REAL NOT NULL,
                 z REAL NOT NULL,
@@ -226,7 +227,16 @@ class DatabaseManager:
                 value TEXT NOT NULL DEFAULT ''
             );
         """)
+        self._migrate_spawners_table()
         self.conn.commit()
+
+    def _migrate_spawners_table(self):
+        """Add has_lootdrop column to spawners table if missing."""
+        c = self.conn.cursor()
+        c.execute("PRAGMA table_info(spawners)")
+        columns = [row[1] for row in c.fetchall()]
+        if "has_lootdrop" not in columns:
+            c.execute("ALTER TABLE spawners ADD COLUMN has_lootdrop INTEGER NOT NULL DEFAULT 0")
 
     def connect(self):
         return self.conn
@@ -300,6 +310,7 @@ class DatabaseManager:
             entry = data_list[0]
             props = entry.get("Properties", {}) or {}
             name_key = (props.get("Name") or {}).get("Key", "")
+            name_key = _MONSTER_SUBTYPE_RE.sub("", name_key)
             monster_name = _extract_monster_name(raw_name)
             rows.append((monster_name, raw_name, name_key))
         seen_lower: dict[str, int] = {}
@@ -330,6 +341,7 @@ class DatabaseManager:
                 entry = data_list[0]
                 props = entry.get("Properties", {}) or {}
                 name_key = (props.get("Name") or {}).get("Key", "")
+                name_key = _MONSTER_SUBTYPE_RE.sub("", name_key)
                 deduped.append((raw, raw_name, name_key))
 
         c.executemany(
@@ -529,7 +541,7 @@ class DatabaseManager:
 
     # ─── Import: LootDrop ───
 
-    def import_lootdrops(self) -> int:
+    def import_lootdrops(self, spawner_monster_map: dict[str, list[str]] | None = None) -> int:
         groups = _load_json_dir(LOOTDROP_GROUP_DIR)
         drops = _load_json_dir(LOOTDROP_DIR)
 
@@ -547,7 +559,7 @@ class DatabaseManager:
             if not data_list:
                 continue
             entry = data_list[0]
-            monster_name = _strip_prefix(raw_name, "Id_LootDropGroup_", "ID_LootDropGroup_")
+            ldg_name = _strip_prefix(raw_name, "Id_LootDropGroup_", "ID_LootDropGroup_")
             items = entry.get("Properties", {}).get("LootDropGroupItemArray", []) or []
             for item in items:
                 asset = (item.get("LootDropId") or {}).get("AssetPathName", "")
@@ -557,7 +569,18 @@ class DatabaseManager:
                 ld_name = _strip_prefix(ld_name, "Id_Lootdrop_", "ID_Lootdrop_")
                 if ld_name not in ld_group:
                     ld_group[ld_name] = []
-                ld_group[ld_name].append(monster_name)
+                ld_group[ld_name].append(ldg_name)
+
+        # Override with spawner-derived canonical monster names when available
+        if spawner_monster_map:
+            for ld_name, ldg_names in ld_group.items():
+                canonical = set()
+                for ldg in ldg_names:
+                    mapped = spawner_monster_map.get(ldg)
+                    if mapped:
+                        canonical.update(mapped)
+                if canonical:
+                    ld_group[ld_name] = sorted(canonical)
 
         rows = []
         for raw_name, data_list in drops.items():
@@ -610,6 +633,16 @@ class DatabaseManager:
         c = self.conn.cursor()
         c.execute("SELECT monster_name, translation_key FROM monster_entities ORDER BY monster_name")
         return [dict(r) for r in c.fetchall()]
+
+    def get_monster_name_map(self) -> dict[str, str]:
+        """Return mapping of lowercase monster_name → canonical monster_name."""
+        c = self.conn.cursor()
+        c.execute("SELECT monster_name FROM monster_entities")
+        result = {}
+        for row in c.fetchall():
+            name = row["monster_name"]
+            result[name.lower()] = name
+        return result
 
     def get_props_entities(self) -> list[dict]:
         c = self.conn.cursor()

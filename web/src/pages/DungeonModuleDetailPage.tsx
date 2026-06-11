@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 import {
   getAdj,
   applyTransform,
@@ -12,7 +13,6 @@ import {
   type AdjState,
 } from '../components/MapDebug';
 import DebugCoordTable from '../components/DebugCoordTable';
-import type { DungeonModule } from '../types/data';
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: '废墟2层地牢',
@@ -30,7 +30,7 @@ interface CoordEntity {
   translation?: string;
   type: string;
   color: string;
-  coords: { x: number; y: number; z: number; version: string }[];
+  coords: { x: number; y: number; z: number; version: string; label: string }[];
 }
 
 interface ModuleCoordsData {
@@ -48,7 +48,7 @@ const GLOW = '0 0 4px #fff, 0 0 2px #000';
 
 export default function DungeonModuleDetailPage() {
   const { group, name } = useParams<{ group: string; name: string }>();
-  const [mod, setMod] = useState<DungeonModule | null>(null);
+  const { modules } = useDungeonModules();
   const [coordsData, setCoordsData] = useState<ModuleCoordsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
@@ -58,29 +58,19 @@ export default function DungeonModuleDetailPage() {
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
+  const mod = (name && modules.get(name)) || null;
+
   useEffect(() => {
     if (!group || !name) return;
-    Promise.all([
-      fetch('./data/json/dungeon_modules.json')
-        .then<DungeonModule[]>((r) => r.json())
-        .then(
-          (mods) =>
-            mods.find((m) => m.name === name && m.group === group) || null
-        ),
-      fetch(
-        `./data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
-      )
-        .then<ModuleCoordsData>((r) => r.json())
-        .catch(() => null),
-    ])
-      .then(([foundMod, coords]) => {
-        setMod(foundMod);
+    fetch(`./data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`)
+      .then<ModuleCoordsData>((r) => r.json())
+      .then((coords) => {
         setCoordsData(coords);
         if (coords) {
           setHidden(new Set(coords.entities.map((e) => e.name)));
         }
       })
-      .catch(console.error)
+      .catch(() => null)
       .finally(() => setLoading(false));
   }, [group, name]);
 
@@ -305,61 +295,65 @@ export default function DungeonModuleDetailPage() {
             >
               {hidden.size === 0 ? '隐藏全部' : '全部显示'}
             </button>
-            {(['monster', 'item', 'props'] as const).map((type) => {
-              const group = entities.filter((e) => e.type === type);
-              if (!group.length) return null;
-              const labels: Record<string, { icon: string; label: string }> = {
-                monster: { icon: '👹', label: '怪物' },
-                item: { icon: '📦', label: '物品' },
-                props: { icon: '🏛️', label: '实体' },
-              };
-              const { icon, label } = labels[type];
-              return (
-                <div key={type}>
-                  <div
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      color: '#FFC107',
-                      marginBottom: 4,
-                      paddingLeft: 2,
-                    }}
-                  >
-                    {icon} {label}
+            {(['monster', 'item', 'props', 'decoration'] as const).map(
+              (type) => {
+                const group = entities.filter((e) => e.type === type);
+                if (!group.length) return null;
+                const labels: Record<string, { icon: string; label: string }> =
+                  {
+                    monster: { icon: '👹', label: '怪物' },
+                    item: { icon: '📦', label: '物品' },
+                    decoration: { icon: '🔥', label: '装饰' },
+                    props: { icon: '🏛️', label: '实体' },
+                  };
+                const { icon, label } = labels[type];
+                return (
+                  <div key={type}>
+                    <div
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        color: '#FFC107',
+                        marginBottom: 4,
+                        paddingLeft: 2,
+                      }}
+                    >
+                      {icon} {label}
+                    </div>
+                    <div>
+                      {group.map((e) => (
+                        <button
+                          key={e.name}
+                          onClick={() => toggle(e.name)}
+                          style={{
+                            padding: '4px 8px',
+                            border: `2px solid ${e.color}`,
+                            borderRadius: 5,
+                            cursor: 'pointer',
+                            fontSize: 19,
+                            fontWeight: 'bold',
+                            color: tokens.text,
+                            background: hidden.has(e.name)
+                              ? 'transparent'
+                              : e.color,
+                            opacity: hidden.has(e.name) ? 0.3 : 1,
+                            transition: 'all 0.2s',
+                            margin: 2,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {e.translation || e.name}
+                          <span style={{ fontSize: 14, marginLeft: 4 }}>
+                            ({e.coords.length})
+                          </span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    {group.map((e) => (
-                      <button
-                        key={e.name}
-                        onClick={() => toggle(e.name)}
-                        style={{
-                          padding: '4px 8px',
-                          border: `2px solid ${e.color}`,
-                          borderRadius: 5,
-                          cursor: 'pointer',
-                          fontSize: 19,
-                          fontWeight: 'bold',
-                          color: tokens.text,
-                          background: hidden.has(e.name)
-                            ? 'transparent'
-                            : e.color,
-                          opacity: hidden.has(e.name) ? 0.3 : 1,
-                          transition: 'all 0.2s',
-                          margin: 2,
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        {e.translation || e.name}
-                        <span style={{ fontSize: 14, marginLeft: 4 }}>
-                          ({e.coords.length})
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         )}
 
@@ -502,31 +496,29 @@ export default function DungeonModuleDetailPage() {
 
       {debug &&
         (() => {
-          const rows = entities
-            .filter((e) => !hidden.has(e.name))
-            .flatMap((e) =>
-              e.coords.map((c, j) => {
-                const rowKey = `${e.name}-${j}`;
-                return {
-                  key: rowKey,
-                  group: groupLabel,
-                  monster: {
-                    name: e.name,
-                    translation: e.name,
-                    color: e.color,
-                    onToggle: () => toggle(e.name),
-                  },
-                  file: '',
-                  mapName: m.name,
-                  mapLabel: m.translation || m.name,
-                  label: c.version || '',
-                  x: c.x,
-                  y: c.y,
-                  z: c.z,
-                  hidden: hiddenRows.has(rowKey),
-                };
-              })
-            );
+          const rows = entities.flatMap((e) =>
+            e.coords.map((c, j) => {
+              const rowKey = `${e.name}-${j}`;
+              return {
+                key: rowKey,
+                group: groupLabel,
+                monster: {
+                  name: e.name,
+                  translation: e.name,
+                  color: e.color,
+                  onToggle: () => toggle(e.name),
+                },
+                file: '',
+                mapName: m.name,
+                mapLabel: m.translation || m.name,
+                label: c.label || '',
+                x: c.x,
+                y: c.y,
+                z: c.z,
+                hidden: hidden.has(e.name) || hiddenRows.has(rowKey),
+              };
+            })
+          );
           return (
             <DebugCoordTable
               rows={rows}
@@ -537,6 +529,46 @@ export default function DungeonModuleDetailPage() {
                   else next.add(key);
                   return next;
                 });
+              }}
+              onToggleLabel={(label) => {
+                const labelRows = rows.filter((r) => r.label === label);
+                const allHidden = labelRows.every((r) => r.hidden);
+                for (const r of labelRows) {
+                  if (allHidden) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.delete(r.key);
+                      return n;
+                    });
+                  } else if (!hiddenRows.has(r.key)) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.add(r.key);
+                      return n;
+                    });
+                  }
+                }
+              }}
+              onToggleMarkName={(name) => {
+                const monsterRows = rows.filter(
+                  (r) => r.monster?.name === name
+                );
+                const allHidden = monsterRows.every((r) => r.hidden);
+                for (const r of monsterRows) {
+                  if (allHidden) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.delete(r.key);
+                      return n;
+                    });
+                  } else if (!hiddenRows.has(r.key)) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.add(r.key);
+                      return n;
+                    });
+                  }
+                }
               }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);

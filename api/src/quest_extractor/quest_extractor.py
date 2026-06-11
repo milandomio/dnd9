@@ -466,9 +466,39 @@ class QuestExtractor:
 
         return gold_bag_npcs
 
-    def get_hold_target_translation(self, hold_asset_path):
-        """获取坚守任务的翻译目标"""
-        return self.get_explore_target_translation(hold_asset_path)
+    def get_hold_target_translation(self, content_data):
+        """获取坚守任务的翻译目标 - 使用ModuleId获取模块级翻译"""
+        if not content_data:
+            return None
+        module_id = content_data.get("ModuleId", {})
+        if not isinstance(module_id, dict):
+            return None
+        asset_path = module_id.get("AssetPathName", "")
+        if not asset_path:
+            return None
+        # 从AssetPathName提取模块名: /Game/.../Id_DungeonModule_IceCave_Maze.Id_DungeonModule_IceCave_Maze
+        # -> Id_DungeonModule_IceCave_Maze -> IceCave_Maze
+        parts = asset_path.rsplit("/", 1)[-1].split(".")[0]
+        if not parts.startswith("Id_DungeonModule_"):
+            return None
+        module_name = parts[len("Id_DungeonModule_") :]
+        # 翻译模块名
+        key = f"Text_DesignData_Dungeon_DungeonModule_{module_name}"
+        if self.translator:
+            translated = self.translator.translate(key)
+            if translated:
+                return translated
+        # 尝试去掉后缀（_A, _B, _C等）再翻译
+        for suffix in ["_A", "_B", "_C", "_D", "_S", "_HR", "_HR_D", "_AHR"]:
+            if module_name.endswith(suffix):
+                base = module_name[: -len(suffix)]
+                key_base = f"Text_DesignData_Dungeon_DungeonModule_{base}"
+                if self.translator:
+                    translated = self.translator.translate(key_base)
+                    if translated:
+                        return translated
+                break
+        return module_name
 
     def get_props_target_translation(self, props_id_tag):
         """

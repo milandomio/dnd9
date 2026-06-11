@@ -11,6 +11,7 @@ import type {
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDebug } from '../hooks/useDebug';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useTheme } from '../hooks/useTheme';
 import {
   getAdj,
@@ -51,11 +52,7 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
-  const [modules, setModules] = useState<Map<string, DungeonModule>>(
-    ssrData?.modules
-      ? new Map(ssrData.modules.map((m: DungeonModule) => [m.name, m]))
-      : new Map()
-  );
+  const { modules } = useDungeonModules();
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
@@ -92,26 +89,15 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (!page || !name) return;
+    if (ssrData?.entity?.coords) return;
     const decoded = decodeURIComponent(name!);
-    Promise.all([
-      fetch(`./data/json/${page}/${decoded}.json`).then<Entity>((r) =>
-        r.json()
-      ),
-      fetch(`./data/json/dungeon_modules.json`).then<DungeonModule[]>((r) =>
-        r.json()
-      ),
-    ])
-      .then(([entityData, mods]) => {
+    fetch(`./data/json/${page}/${decoded}.json`)
+      .then<Entity>((r) => r.json())
+      .then((entityData) => {
         setEntity(entityData);
-        const mm = new Map<string, DungeonModule>();
-        mods.forEach((m) => {
-          mm.set(m.name, m);
-          mm.set(m.sl_base_name, m);
-        });
-        setModules(mm);
       })
       .catch(console.error);
-  }, [page, name]);
+  }, [page, name, ssrData]);
 
   if (!entity)
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;
@@ -134,24 +120,31 @@ export default function DetailPage() {
     groupedByType.get(g)!.push({ mapName, mod, coords: mapCoords });
   }
 
-  // Sort items within each group by size_x, size_y
+  // Sort items within each group: size first, then coord count
   for (const [, items] of groupedByType) {
     items.sort((a, b) => {
       const sy_a = a.mod?.size_y ?? 1;
       const sy_b = b.mod?.size_y ?? 1;
       const sx_a = a.mod?.size_x ?? 1;
       const sx_b = b.mod?.size_x ?? 1;
-      return sy_a - sy_b || sx_a - sx_b;
+      if (sy_a !== sy_b) return sy_a - sy_b;
+      if (sx_a !== sx_b) return sx_a - sx_b;
+      return b.coords.length - a.coords.length;
     });
   }
 
   const groupOrder = Object.keys(GROUP_LABELS);
-  const sortedGroups = [...groupedByType.entries()].sort(([a], [b]) => {
-    if (!a && !b) return 0;
-    if (!a) return 1;
-    if (!b) return -1;
-    return groupOrder.indexOf(a) - groupOrder.indexOf(b);
-  });
+  const sortedGroups = [...groupedByType.entries()].sort(
+    ([a, aItems], [b, bItems]) => {
+      const totalA = aItems.reduce((s, item) => s + item.coords.length, 0);
+      const totalB = bItems.reduce((s, item) => s + item.coords.length, 0);
+      if (totalA !== totalB) return totalB - totalA;
+      if (!a && !b) return 0;
+      if (!a) return 1;
+      if (!b) return -1;
+      return groupOrder.indexOf(a) - groupOrder.indexOf(b);
+    }
+  );
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -615,6 +608,11 @@ export default function DetailPage() {
               key: rowKey,
               group: GROUP_LABELS[g] || g,
               groupKey: g,
+              monster: {
+                name: name || '',
+                translation: name || '',
+                color: '#00bcd4',
+              },
               file: c.file,
               mapName: c.map,
               mapLabel: mod?.translation || c.map,
@@ -639,9 +637,13 @@ export default function DetailPage() {
               rows={rows}
               onToggleRow={toggleRow}
               onToggleGroup={(gk) => batchToggle((r) => r.groupKey === gk)}
+              onToggleMarkName={(name) =>
+                batchToggle((r) => r.monster?.name === name)
+              }
               onToggleFile={(f) => batchToggle((r) => r.file === f)}
               onToggleMap={(mn) => batchToggle((r) => r.mapName === mn)}
               onToggleLabel={(l) => batchToggle((r) => r.label === l)}
+              showMonster
             />
           );
         })()}

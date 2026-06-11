@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import Disclaimer from '../components/Disclaimer';
 import { useTheme } from '../hooks/useTheme';
-import type { DungeonModule } from '../types/data';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 
 interface ExploreTarget {
   name: string;
@@ -31,46 +31,17 @@ function modKey(module_name: string): string {
 
 export default function ExplorePage() {
   const ssrData = useSSRData<ExploreTarget[]>('explore');
-  const ssrModules = useSSRData<DungeonModule[]>('explore-modules');
   const [data, setData] = useState<ExploreTarget[]>(ssrData || []);
-  const [modules, setModules] = useState<Map<string, DungeonModule>>(
-    ssrModules
-      ? new Map(
-          ssrModules.flatMap((m) => [
-            [m.name, m],
-            [m.sl_base_name, m],
-          ])
-        )
-      : new Map()
-  );
+  const { modules } = useDungeonModules();
   const { tokens } = useTheme();
 
   useEffect(() => {
-    Promise.all([
-      ssrData
-        ? Promise.resolve(ssrData)
-        : fetch('./data/json/explore.json').then<ExploreTarget[]>((r) =>
-            r.json()
-          ),
-      ssrModules
-        ? Promise.resolve(ssrModules)
-        : fetch('./data/json/dungeon_modules.json').then<DungeonModule[]>((r) =>
-            r.json()
-          ),
-    ])
-      .then(([exp, mods]) => {
-        if (!ssrData) setData(exp);
-        if (!ssrModules) {
-          const mm = new Map<string, DungeonModule>();
-          mods.forEach((m) => {
-            mm.set(m.name, m);
-            mm.set(m.sl_base_name, m);
-          });
-          setModules(mm);
-        }
-      })
+    if (ssrData) return;
+    fetch('./data/json/explore.json')
+      .then<ExploreTarget[]>((r) => r.json())
+      .then(setData)
       .catch(console.error);
-  }, []);
+  }, [ssrData]);
 
   const grouped = new Map<string, ExploreTarget[]>();
   for (const t of data) {

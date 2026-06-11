@@ -50,6 +50,10 @@ const labelStyle: CSSProperties = {
   userSelect: 'none',
 };
 
+function cleanLabel(raw: string): string {
+  return raw.replace(/^GameSpawner_/, '').replace(/^GameItemSpawner_/, '');
+}
+
 /** Small checkbox in a header cell */
 function HdrChk({
   checked,
@@ -77,6 +81,7 @@ interface Props {
   rows: CoordRow[];
   onToggleRow: (key: string) => void;
   onToggleGroup?: (groupKey: string) => void;
+  onToggleMarkName?: (monsterName: string) => void;
   onToggleFile?: (file: string) => void;
   onToggleMap?: (mapName: string) => void;
   onToggleLabel?: (label: string) => void;
@@ -88,6 +93,7 @@ export default function DebugCoordTable({
   rows,
   onToggleRow,
   onToggleGroup,
+  onToggleMarkName,
   onToggleFile,
   onToggleMap,
   onToggleLabel,
@@ -202,10 +208,10 @@ export default function DebugCoordTable({
                   <HdrChk
                     checked={allVisible(() => true)}
                     onChange={() => colToggle(() => true)}
-                    label="怪物"
+                    label="坐标名称"
                   />
                 ) : (
-                  '怪物'
+                  '坐标名称'
                 )}
               </th>
             )}
@@ -259,8 +265,7 @@ export default function DebugCoordTable({
                     : idx % 2 === 0
                       ? tokens.surface
                       : tokens.card,
-                  opacity: isHidden ? 0.35 : 1,
-                  textDecoration: isHidden ? 'line-through' : 'none',
+                  opacity: isHidden ? 0.3 : 1,
                 }}
               >
                 <td style={checkTd}>
@@ -272,13 +277,13 @@ export default function DebugCoordTable({
                   />
                 </td>
                 {/* 分组 */}
-                <td
-                  style={{ ...td, cursor: 'pointer' }}
-                  onClick={() => onToggleGroup?.(row.groupKey ?? row.group)}
-                >
-                  <label
-                    style={labelStyle}
-                    onClick={(e) => e.stopPropagation()}
+                <td style={td}>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
                   >
                     <CellChk
                       visible={allVisible(
@@ -291,23 +296,25 @@ export default function DebugCoordTable({
                       }
                     />
                     {row.group}
-                  </label>
+                  </span>
                 </td>
                 {/* 怪物 */}
                 {showMonster && row.monster && (
-                  <td
-                    style={{ ...td, cursor: 'pointer' }}
-                    onClick={() => row.monster?.onToggle?.()}
-                  >
-                    <label
-                      style={labelStyle}
-                      onClick={(e) => e.stopPropagation()}
+                  <td style={td}>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 4,
+                      }}
                     >
                       <CellChk
                         visible={allVisible(
                           (r) => r.monster?.name === row.monster?.name
                         )}
-                        onToggle={() => row.monster?.onToggle?.()}
+                        onToggle={() =>
+                          onToggleMarkName?.(row.monster?.name || '')
+                        }
                       />
                       <span
                         style={{
@@ -320,56 +327,56 @@ export default function DebugCoordTable({
                         }}
                       ></span>
                       {row.monster.translation}
-                    </label>
+                    </span>
                   </td>
                 )}
                 {/* 地图文件 */}
-                <td
-                  style={{ ...td, cursor: 'pointer' }}
-                  onClick={() => onToggleFile?.(row.file)}
-                >
-                  <label
-                    style={labelStyle}
-                    onClick={(e) => e.stopPropagation()}
+                <td style={td}>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
                   >
                     <CellChk
                       visible={allVisible((r) => r.file === row.file)}
                       onToggle={() => onToggleFile?.(row.file)}
                     />
                     {row.file}
-                  </label>
+                  </span>
                 </td>
                 {/* 地图 */}
-                <td
-                  style={{ ...td, cursor: 'pointer' }}
-                  onClick={() => onToggleMap?.(row.mapName)}
-                >
-                  <label
-                    style={labelStyle}
-                    onClick={(e) => e.stopPropagation()}
+                <td style={td}>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
                   >
                     <CellChk
                       visible={allVisible((r) => r.mapName === row.mapName)}
                       onToggle={() => onToggleMap?.(row.mapName)}
                     />
                     {row.mapLabel}
-                  </label>
+                  </span>
                 </td>
                 {/* 标签 */}
-                <td
-                  style={{ ...td, cursor: 'pointer', fontSize: 11 }}
-                  onClick={() => onToggleLabel?.(row.label)}
-                >
-                  <label
-                    style={labelStyle}
-                    onClick={(e) => e.stopPropagation()}
+                <td style={{ ...td, fontSize: 11 }}>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
                   >
                     <CellChk
                       visible={allVisible((r) => r.label === row.label)}
                       onToggle={() => onToggleLabel?.(row.label)}
                     />
-                    {row.label}
-                  </label>
+                    {cleanLabel(row.label)}
+                  </span>
                 </td>
                 <td style={td}>{row.x.toFixed(2)}</td>
                 <td style={td}>{row.y.toFixed(2)}</td>

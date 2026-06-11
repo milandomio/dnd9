@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Spin, Card, Row, Col } from 'antd';
 import { useTheme } from '../hooks/useTheme';
-import type { DungeonModule } from '../types/data';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 
 interface GroupSummary {
   group: string;
@@ -48,28 +48,25 @@ export default function DungeonModulesPage() {
   const [groups, setGroups] = useState<GroupSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const { tokens } = useTheme();
+  const { modules } = useDungeonModules();
 
   useEffect(() => {
-    fetch('./data/json/dungeon_modules.json')
-      .then<DungeonModule[]>((r) => r.json())
-      .then((mods) => {
-        const map = new Map<string, number>();
-        for (const m of mods) {
-          const g = m.group || '';
-          map.set(g, (map.get(g) || 0) + 1);
-        }
-        const sorted = [...map.entries()]
-          .sort(([a], [b]) => GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b))
-          .map(([group, count]) => ({
-            group,
-            group_display: GROUP_LABELS[group] || group || '未分组',
-            module_count: count,
-          }));
-        setGroups(sorted);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
+    if (modules.size === 0) return;
+    const map = new Map<string, number>();
+    for (const m of modules.values()) {
+      const g = m.group || '';
+      map.set(g, (map.get(g) || 0) + 1);
+    }
+    const sorted = [...map.entries()]
+      .sort(([a], [b]) => GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b))
+      .map(([group, count]) => ({
+        group,
+        group_display: GROUP_LABELS[group] || group || '未分组',
+        module_count: count,
+      }));
+    setGroups(sorted);
+    setLoading(false);
+  }, [modules]);
 
   if (loading)
     return (

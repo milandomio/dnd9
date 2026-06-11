@@ -9,11 +9,15 @@
 - "坐标" — 指录入到db的spawners表中的道具/怪物实体实际在地图位置的数据，包含x、y、z三个REAL字段
 - "启动web" — `cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
 - "部署" — 运行后端管道 → 构建前端 → 启动web
+- "deploy脚本" — 项目根目录下的 `deploy.sh`，一键部署并自动提交
 
 ## 本地开发命令
 
 ```bash
-# 完整部署（重建数据+前端）
+# 一键部署（自动提交）
+./deploy.sh
+
+# 手动部署（不提交）
 cd api && python main.py
 cd web && npm run build
 cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
