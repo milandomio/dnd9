@@ -629,7 +629,7 @@ def run():
 
         def _try_resolve(name: str):
             """Return (resolved_name, status). status: 'found'|'not_found'|'no_art'."""
-            resolved, status = _resolve_img(art_root, r["module_group"], name)  # noqa: B023
+            resolved, status = _resolve_img(art_root, r["module_group"], name, IMG_SRC)  # noqa: B023
             if resolved in PLACEHOLDERS:  # noqa: B023
                 return resolved, status  # placeholder — don't accept
             return resolved, status
@@ -703,7 +703,7 @@ def run():
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:
-            resolved_name, _ = _resolve_img(art_root, "", override_name)
+            resolved_name, _ = _resolve_img(art_root, "", override_name, IMG_SRC)
             modules_map[override_name] = {
                 "name": override_name,
                 "translation": override_translation,
@@ -1317,11 +1317,58 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
     print(f"  quest items groups: {len(groups_index)}")
 
 
-def _resolve_img(art_root: Path, group: str, sl: str):
+def _match_in_dir(directory: Path, sl: str):
+    """Match sl against webp/png files in a flat directory using the same logic as _resolve_img."""
+    import re
+
+    files = [p for p in directory.iterdir() if p.suffix.lower() in (".png", ".webp")]
+    stems_lower = {p.stem.lower(): p.stem for p in files}
+    sl_lower = sl.lower()
+    # exact
+    if sl_lower in stems_lower:
+        return stems_lower[sl_lower], "found"
+    # tail
+    tail = sl.split("_", 1)[-1] if "_" in sl else sl
+    if tail.lower() in stems_lower:
+        return stems_lower[tail.lower()], "found"
+    # strip numeric suffix
+    sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
+    if sl_stripped != sl and sl_stripped.lower() in stems_lower:
+        return stems_lower[sl_stripped.lower()], "found"
+    tail_stripped = re.sub(r"_\d{2,4}$", "", tail)
+    if tail_stripped != tail and tail_stripped.lower() in stems_lower:
+        return stems_lower[tail_stripped.lower()], "found"
+    # strip _Center/_Corner/_Passage
+    sl_center = re.sub(r"_(?:Center|Corner|Passage)(?=_\d|$)", "", sl)
+    if sl_center != sl and sl_center.lower() in stems_lower:
+        return stems_lower[sl_center.lower()], "found"
+    # strip debug suffixes
+    sl_debug = re.sub(r"_(?:Resize|Test|BossTest|DistantView)$", "", sl)
+    if sl_debug != sl and sl_debug.lower() in stems_lower:
+        return stems_lower[sl_debug.lower()], "found"
+    # numeric prefix
+    if sl_stripped != sl:
+        prefix = sl_stripped.lower()
+        for s, orig in stems_lower.items():
+            if s.startswith(prefix):
+                return orig, "found"
+    return sl, "not_found"
+
+
+def _resolve_img(art_root: Path, group: str, sl: str, webp_cache: Path | None = None):
     """Return (resolved_name, status).
-    status: 'found' (exact match in Art), 'not_found' (Art dir searched, no match),
-            'no_art' (Art dir doesn't exist for this group).
+    Priority: webp cache first (already processed), then Art directory (raw PNG).
+    status: 'found', 'not_found' (searched, no match), 'no_art' (no source available).
     """
+    import re
+
+    # 1. Always check webp cache first — if a cached webp exists, use it directly
+    if webp_cache and webp_cache.exists():
+        cached, cache_status = _match_in_dir(webp_cache, sl)
+        if cache_status == "found":
+            return cached, "found"
+
+    # 2. Fall back to Art directory (raw PNG files)
     if not art_root.exists() or not group:
         return sl, "no_art"
     art_dir_name = GROUP_TO_ART_DIR.get(group, group)
@@ -1344,8 +1391,6 @@ def _resolve_img(art_root: Path, group: str, sl: str):
         if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail.lower():
             return p.stem, "found"
     # Try stripping numeric suffix (_01, _02 etc.)
-    import re
-
     sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
     if sl_stripped != sl:
         for p in group_dir.iterdir():
