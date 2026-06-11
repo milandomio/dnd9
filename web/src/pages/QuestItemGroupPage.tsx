@@ -152,18 +152,25 @@ export default function QuestItemGroupPage() {
     string,
     {
       mod: DungeonModule | undefined;
-      dots: { entity: Entity; x: number; y: number; z: number; file: string }[];
+      dots: {
+        entity: Entity;
+        x: number;
+        y: number;
+        z: number;
+        file: string;
+        idx: number;
+      }[];
     }
   >();
   for (const e of entities) {
     if (hidden.has(e.name)) continue;
-    for (const c of e.coords) {
+    e.coords.forEach((c, j) => {
       if (!mapGroups.has(c.map))
         mapGroups.set(c.map, { mod: modules.get(c.map), dots: [] });
       mapGroups
         .get(c.map)!
-        .dots.push({ entity: e, x: c.x, y: c.y, z: c.z, file: c.file });
-    }
+        .dots.push({ entity: e, x: c.x, y: c.y, z: c.z, file: c.file, idx: j });
+    });
   }
 
   const items = [...mapGroups.entries()].map(([mapName, { mod, dots }]) => ({
@@ -644,6 +651,8 @@ export default function QuestItemGroupPage() {
                     }}
                   >
                     {dots.map((d, i) => {
+                      if (hiddenRows.has(`${d.entity.name}-${d.idx}`))
+                        return null;
                       const [x, y] = applyTransform(d.x, d.y, offX, offY, adj);
                       const [px, py] = computePixel(x, y, range, sx, sy);
                       const col = d.entity.color;

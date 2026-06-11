@@ -179,12 +179,16 @@ def _load_spawner_lootdrop_monster_map(
             mid = item.get("MonsterId") or {}
             mid_asset = mid.get("AssetPathName", "")
             if not mid_asset:
-                continue
+                # Fall back to PropsId for container spawners
+                pid = item.get("PropsId") or {}
+                mid_asset = pid.get("AssetPathName", "")
+                if not mid_asset:
+                    continue
             mid_name = _ue_asset_base_name(mid_asset)
             if not mid_name:
                 continue
-            # Strip monster prefix, then strip quality suffix to get base name
-            for pfx in ("Id_Monster_",):
+            # Strip monster/props prefix, then strip quality suffix to get base name
+            for pfx in ("Id_Monster_", "Id_Props_"):
                 if mid_name.startswith(pfx):
                     mid_name = mid_name[len(pfx) :]
                     break

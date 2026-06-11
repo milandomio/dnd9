@@ -83,6 +83,18 @@ export default function NavBar() {
     }
   }, [searchIndex, loading]);
 
+  // Auto-trigger search from location state (e.g. quest objective magnifier)
+  useEffect(() => {
+    const state = location.state as { searchQuery?: string } | null;
+    if (state?.searchQuery) {
+      setQuery(state.searchQuery);
+      ensureIndex();
+      // Clear the state so back button doesn't re-trigger
+      navigate(location.pathname, { replace: true, state: {} });
+      requestAnimationFrame(() => inputRef.current?.focus());
+    }
+  }, [location.state]);
+
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);

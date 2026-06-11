@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
@@ -428,6 +429,31 @@ export default function QuestNPCDetailPage() {
                                     }}
                                   />
                                   {c.target}
+                                  <SearchOutlined
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      navigate(location.pathname, {
+                                        state: { searchQuery: c.target },
+                                      });
+                                    }}
+                                    title={`搜索"${c.target}"`}
+                                    style={{
+                                      marginLeft: 6,
+                                      cursor: 'pointer',
+                                      fontSize: 13,
+                                      color: tokens.muted,
+                                      transition: 'color 0.2s',
+                                      verticalAlign: 'middle',
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.color =
+                                        tokens.accent;
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.color =
+                                        tokens.muted;
+                                    }}
+                                  />
                                 </td>
                                 {hasLoot && (
                                   <td
@@ -530,16 +556,15 @@ export default function QuestNPCDetailPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {q.rewards.map((r, ri) => {
-                        const isAffinity = r.type_key === 'affinity';
-                        return (
+                      {/* 好感度 → 固定第一行 */}
+                      {q.rewards
+                        .filter((r) => r.type_key === 'affinity')
+                        .map((r, ri) => (
                           <tr
-                            key={ri}
+                            key={`aff-${ri}`}
                             style={{
                               borderBottom: '1px solid rgba(255,255,255,0.06)',
-                              background: isAffinity
-                                ? 'rgba(255,100,100,0.1)'
-                                : undefined,
+                              background: 'rgba(255,100,100,0.1)',
                             }}
                           >
                             <td style={{ padding: '3px 8px', color: '#ccc' }}>
@@ -552,10 +577,89 @@ export default function QuestNPCDetailPage() {
                               {r.count}
                             </td>
                           </tr>
-                        );
-                      })}
+                        ))}
+                      {/* 普通奖励（排除好感度、经验值、金币） */}
+                      {q.rewards
+                        .filter(
+                          (r) =>
+                            r.type_key !== 'affinity' &&
+                            r.type_key !== 'exp' &&
+                            !(r.type_key === 'item' && r.name === '金币')
+                        )
+                        .map((r, ri) => (
+                          <tr
+                            key={`item-${ri}`}
+                            style={{
+                              borderBottom: '1px solid rgba(255,255,255,0.06)',
+                            }}
+                          >
+                            <td style={{ padding: '3px 8px', color: '#ccc' }}>
+                              {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
+                            </td>
+                            <td style={{ padding: '3px 8px', color: '#fff' }}>
+                              {r.name}
+                            </td>
+                            <td style={{ padding: '3px 8px', color: '#ccc' }}>
+                              {r.count}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
+                  {/* 金币 + 经验值 → 固定最后一行，4列 */}
+                  {(() => {
+                    const expReward = q.rewards.find(
+                      (r) => r.type_key === 'exp'
+                    );
+                    const goldReward = q.rewards.find(
+                      (r) => r.type_key === 'item' && r.name === '金币'
+                    );
+                    if (!expReward && !goldReward) return null;
+                    return (
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(4, 1fr)',
+                          borderTop: `1px solid ${tokens.border}`,
+                          marginTop: 4,
+                          fontSize: 14,
+                        }}
+                      >
+                        <div
+                          style={{
+                            padding: '3px 8px',
+                            color: '#FFD54F',
+                          }}
+                        >
+                          金币
+                        </div>
+                        <div
+                          style={{
+                            padding: '3px 8px',
+                            color: '#FFD54F',
+                          }}
+                        >
+                          {goldReward?.count ?? ''}
+                        </div>
+                        <div
+                          style={{
+                            padding: '3px 8px',
+                            color: '#4fc3f7',
+                          }}
+                        >
+                          经验值
+                        </div>
+                        <div
+                          style={{
+                            padding: '3px 8px',
+                            color: '#4fc3f7',
+                          }}
+                        >
+                          {expReward?.count ?? ''}
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
 

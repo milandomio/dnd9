@@ -168,18 +168,24 @@ export default function LootdropDetailPage() {
         y: number;
         z: number;
         file: string;
+        idx: number;
       }[];
     }
   >();
   for (const m of monsters) {
     if (hidden.has(m.name)) continue;
-    for (const c of m.coords) {
+    m.coords.forEach((c, j) => {
       if (!mapGroups.has(c.map))
         mapGroups.set(c.map, { mod: modules.get(c.map), dots: [] });
-      mapGroups
-        .get(c.map)!
-        .dots.push({ monster: m, x: c.x, y: c.y, z: c.z, file: c.file });
-    }
+      mapGroups.get(c.map)!.dots.push({
+        monster: m,
+        x: c.x,
+        y: c.y,
+        z: c.z,
+        file: c.file,
+        idx: j,
+      });
+    });
   }
 
   // Group by module group
@@ -685,6 +691,8 @@ export default function LootdropDetailPage() {
                       }}
                     >
                       {dots.map((d, i) => {
+                        if (hiddenRows.has(`${d.monster.name}-${d.idx}`))
+                          return null;
                         const [x, y] = applyTransform(
                           d.x,
                           d.y,

@@ -42,39 +42,8 @@ const checkboxStyle: CSSProperties = {
   cursor: 'pointer',
   margin: 0,
 };
-const labelStyle: CSSProperties = {
-  cursor: 'pointer',
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: 4,
-  userSelect: 'none',
-};
-
 function cleanLabel(raw: string): string {
   return raw.replace(/^GameSpawner_/, '').replace(/^GameItemSpawner_/, '');
-}
-
-/** Small checkbox in a header cell */
-function HdrChk({
-  checked,
-  onChange,
-  label,
-}: {
-  checked: boolean;
-  onChange: () => void;
-  label: string;
-}) {
-  return (
-    <label style={labelStyle}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        style={checkboxStyle}
-      />
-      {label}
-    </label>
-  );
 }
 
 interface Props {
@@ -191,63 +160,11 @@ export default function DebugCoordTable({
                 style={checkboxStyle}
               />
             </th>
-            <th style={th}>
-              {onToggleGroup ? (
-                <HdrChk
-                  checked={allVisible(() => true)}
-                  onChange={() => colToggle(() => true)}
-                  label="分组"
-                />
-              ) : (
-                '分组'
-              )}
-            </th>
-            {showMonster && (
-              <th style={th}>
-                {onToggleLabel ? (
-                  <HdrChk
-                    checked={allVisible(() => true)}
-                    onChange={() => colToggle(() => true)}
-                    label="坐标名称"
-                  />
-                ) : (
-                  '坐标名称'
-                )}
-              </th>
-            )}
-            <th style={th}>
-              {onToggleFile ? (
-                <HdrChk
-                  checked={allVisible(() => true)}
-                  onChange={() => colToggle(() => true)}
-                  label="地图文件"
-                />
-              ) : (
-                '地图文件'
-              )}
-            </th>
-            <th style={th}>
-              {onToggleMap ? (
-                <HdrChk
-                  checked={allVisible(() => true)}
-                  onChange={() => colToggle(() => true)}
-                  label="地图"
-                />
-              ) : (
-                '地图'
-              )}
-            </th>
-            <th style={th}>
-              {onToggleLabel ? (
-                <HdrChk
-                  checked={allVisible(() => true)}
-                  onChange={() => colToggle(() => true)}
-                  label="标签"
-                />
-              ) : (
-                '标签'
-              )}
-            </th>
+            <th style={th}>分组</th>
+            {showMonster && <th style={th}>坐标名称</th>}
+            <th style={th}>地图文件</th>
+            <th style={th}>地图</th>
+            <th style={th}>标签</th>
             <th style={th}>X</th>
             <th style={th}>Y</th>
             <th style={th}>Z</th>
@@ -291,9 +208,11 @@ export default function DebugCoordTable({
                           (r.groupKey ?? r.group) ===
                           (row.groupKey ?? row.group)
                       )}
-                      onToggle={() =>
-                        onToggleGroup?.(row.groupKey ?? row.group)
-                      }
+                      onToggle={() => {
+                        const gk = row.groupKey ?? row.group;
+                        if (onToggleGroup) onToggleGroup(gk);
+                        else colToggle((r) => (r.groupKey ?? r.group) === gk);
+                      }}
                     />
                     {row.group}
                   </span>
@@ -312,9 +231,11 @@ export default function DebugCoordTable({
                         visible={allVisible(
                           (r) => r.monster?.name === row.monster?.name
                         )}
-                        onToggle={() =>
-                          onToggleMarkName?.(row.monster?.name || '')
-                        }
+                        onToggle={() => {
+                          const name = row.monster?.name || '';
+                          if (onToggleMarkName) onToggleMarkName(name);
+                          else colToggle((r) => r.monster?.name === name);
+                        }}
                       />
                       <span
                         style={{
@@ -341,7 +262,10 @@ export default function DebugCoordTable({
                   >
                     <CellChk
                       visible={allVisible((r) => r.file === row.file)}
-                      onToggle={() => onToggleFile?.(row.file)}
+                      onToggle={() => {
+                        if (onToggleFile) onToggleFile(row.file);
+                        else colToggle((r) => r.file === row.file);
+                      }}
                     />
                     {row.file}
                   </span>
@@ -357,7 +281,10 @@ export default function DebugCoordTable({
                   >
                     <CellChk
                       visible={allVisible((r) => r.mapName === row.mapName)}
-                      onToggle={() => onToggleMap?.(row.mapName)}
+                      onToggle={() => {
+                        if (onToggleMap) onToggleMap(row.mapName);
+                        else colToggle((r) => r.mapName === row.mapName);
+                      }}
                     />
                     {row.mapLabel}
                   </span>
@@ -373,7 +300,10 @@ export default function DebugCoordTable({
                   >
                     <CellChk
                       visible={allVisible((r) => r.label === row.label)}
-                      onToggle={() => onToggleLabel?.(row.label)}
+                      onToggle={() => {
+                        if (onToggleLabel) onToggleLabel(row.label);
+                        else colToggle((r) => r.label === row.label);
+                      }}
                     />
                     {cleanLabel(row.label)}
                   </span>

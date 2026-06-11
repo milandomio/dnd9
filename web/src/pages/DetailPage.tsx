@@ -312,6 +312,8 @@ export default function DetailPage() {
                     }}
                   >
                     {mapCoords.map((c, i) => {
+                      if (hiddenRows.has(`${c.file}-${coords.indexOf(c)}`))
+                        return null;
                       const [x, y] = applyTransform(c.x, c.y, offX, offY, adj);
                       const [px, py] = computePixel(x, y, range, sx, sy);
                       const col = zColor(c.z);

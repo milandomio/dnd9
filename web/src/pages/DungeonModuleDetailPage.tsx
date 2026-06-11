@@ -131,12 +131,18 @@ export default function DungeonModuleDetailPage() {
     });
   };
 
-  const dots: { entity: CoordEntity; x: number; y: number; z: number }[] = [];
+  const dots: {
+    entity: CoordEntity;
+    x: number;
+    y: number;
+    z: number;
+    idx: number;
+  }[] = [];
   for (const e of entities) {
     if (hidden.has(e.name)) continue;
-    for (const c of e.coords) {
-      dots.push({ entity: e, x: c.x, y: c.y, z: c.z });
-    }
+    e.coords.forEach((c, j) => {
+      dots.push({ entity: e, x: c.x, y: c.y, z: c.z, idx: j });
+    });
   }
 
   return (
@@ -214,6 +220,7 @@ export default function DungeonModuleDetailPage() {
             }}
           >
             {dots.map((d, i) => {
+              if (hiddenRows.has(`${d.entity.name}-${d.idx}`)) return null;
               const [x, y] = applyTransform(d.x, d.y, offX, offY, adj);
               const [px, py] = computePixel(x, y, range, sx, sy);
               const col = d.entity.color;
