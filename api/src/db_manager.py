@@ -227,6 +227,37 @@ class DatabaseManager:
                 key TEXT PRIMARY KEY,
                 value TEXT NOT NULL DEFAULT ''
             );
+
+            CREATE TABLE IF NOT EXISTS quest_items (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                item_name TEXT NOT NULL,
+                item_translation TEXT NOT NULL DEFAULT '',
+                npc_name TEXT NOT NULL,
+                npc_name_cn TEXT NOT NULL DEFAULT '',
+                quest_number INTEGER NOT NULL DEFAULT 0,
+                count INTEGER NOT NULL DEFAULT 1,
+                rarity TEXT NOT NULL DEFAULT '',
+                is_loot TEXT NOT NULL DEFAULT ''
+            );
+
+            CREATE TABLE IF NOT EXISTS quest_npcs (
+                npc_name TEXT PRIMARY KEY,
+                npc_name_display TEXT NOT NULL DEFAULT '',
+                quest_count INTEGER NOT NULL DEFAULT 0,
+                category TEXT NOT NULL DEFAULT '',
+                quests_json TEXT NOT NULL DEFAULT '[]'
+            );
+
+            CREATE TABLE IF NOT EXISTS explore_targets (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL DEFAULT '',
+                module_name TEXT NOT NULL DEFAULT '',
+                quest_id TEXT NOT NULL DEFAULT '',
+                quest_title TEXT NOT NULL DEFAULT '',
+                quest_number INTEGER NOT NULL DEFAULT 0,
+                npc_name TEXT NOT NULL DEFAULT '',
+                npc_name_display TEXT NOT NULL DEFAULT ''
+            );
         """)
         self._migrate_spawners_table()
         self.conn.commit()
@@ -772,6 +803,103 @@ class DatabaseManager:
             d["monster_names"] = d["monster_names"].split(",") if d["monster_names"] else []
             results.append(d)
         return results
+
+    # ─── Import: Quest Data ───
+
+    def import_quest_items(self, items: list[dict]) -> int:
+        c = self.conn.cursor()
+        c.execute("DELETE FROM quest_items")
+        rows = [
+            (
+                qi.get("item_name", ""),
+                qi.get("item_translation", ""),
+                qi.get("npc_name", ""),
+                qi.get("npc_name_cn", ""),
+                qi.get("quest_number", 0),
+                qi.get("count", 1),
+                qi.get("rarity", ""),
+                qi.get("is_loot", ""),
+            )
+            for qi in items
+        ]
+        c.executemany(
+            "INSERT INTO quest_items (item_name, item_translation, npc_name, npc_name_cn, quest_number, count, rarity, is_loot) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
+
+    def get_quest_items(self) -> list[dict]:
+        c = self.conn.cursor()
+        c.execute(
+            "SELECT item_name, item_translation, npc_name, npc_name_cn, quest_number, count, rarity, is_loot FROM quest_items ORDER BY npc_name, quest_number"
+        )
+        return [dict(r) for r in c.fetchall()]
+
+    def import_quest_npcs(self, npcs: list[dict]) -> int:
+        import json as _json
+
+        c = self.conn.cursor()
+        c.execute("DELETE FROM quest_npcs")
+        rows = [
+            (
+                npc.get("npc_name", ""),
+                npc.get("npc_name_display", ""),
+                npc.get("quest_count", 0),
+                npc.get("category", ""),
+                _json.dumps(npc.get("quests", []), ensure_ascii=False),
+            )
+            for npc in npcs
+        ]
+        c.executemany(
+            "INSERT OR REPLACE INTO quest_npcs (npc_name, npc_name_display, quest_count, category, quests_json) VALUES (?, ?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
+
+    def get_quest_npcs(self) -> list[dict]:
+        import json as _json
+
+        c = self.conn.cursor()
+        c.execute(
+            "SELECT npc_name, npc_name_display, quest_count, category, quests_json FROM quest_npcs ORDER BY npc_name"
+        )
+        results = []
+        for r in c.fetchall():
+            d = dict(r)
+            d["quests"] = _json.loads(d.pop("quests_json", "[]") or "[]")
+            results.append(d)
+        return results
+
+    def import_explore_targets(self, targets: list[dict]) -> int:
+        c = self.conn.cursor()
+        c.execute("DELETE FROM explore_targets")
+        rows = [
+            (
+                t.get("name", ""),
+                t.get("module_name", ""),
+                t.get("quest_id", ""),
+                t.get("quest_title", ""),
+                t.get("quest_number", 0),
+                t.get("npc_name", ""),
+                t.get("npc_name_display", ""),
+            )
+            for t in targets
+        ]
+        c.executemany(
+            "INSERT INTO explore_targets (name, module_name, quest_id, quest_title, quest_number, npc_name, npc_name_display) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
+
+    def get_explore_targets(self) -> list[dict]:
+        c = self.conn.cursor()
+        c.execute(
+            "SELECT name, module_name, quest_id, quest_title, quest_number, npc_name, npc_name_display FROM explore_targets ORDER BY quest_number, npc_name"
+        )
+        return [dict(r) for r in c.fetchall()]
 
     def close(self):
         self.conn.close()

@@ -15,11 +15,18 @@ _ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
 _ENTITY_KEY_MAP: dict[str, str] | None = None
 
 
-def _get_entity_key_map() -> dict[str, str]:
-    """Load entity_index.json → {name: translation_key} mapping (cached)."""
+def _get_entity_key_map(entity_classification: dict | None = None) -> dict[str, str]:
+    """Build {name: translation_key} mapping from entity_classification or entity_index.json."""
     global _ENTITY_KEY_MAP
-    if _ENTITY_KEY_MAP is None:
-        _ENTITY_KEY_MAP = {}
+    if _ENTITY_KEY_MAP is not None:
+        return _ENTITY_KEY_MAP
+    _ENTITY_KEY_MAP = {}
+    if entity_classification:
+        for name, info in entity_classification.items():
+            tk = info.get("translation_key", "") if isinstance(info, dict) else ""
+            if tk:
+                _ENTITY_KEY_MAP[name] = tk
+    else:
         path = OUTPUT_DIR / "entity_index.json"
         if path.exists():
             with open(path, encoding="utf-8") as f:
@@ -57,27 +64,29 @@ def _translate_item(translator, name_en: str) -> str:
     return name_en
 
 
-def run_quest_extraction():
+def run_quest_extraction(entity_classification=None):
     print("\n--- Quest Extraction ---")
+    global _ENTITY_KEY_MAP
+    _ENTITY_KEY_MAP = None  # reset cache
+    if entity_classification:
+        _get_entity_key_map(entity_classification)
+
     translator = Translator(language="zh-Hans")
     extractor = QuestExtractor(translator=translator)
     quests = extractor.load_all_quests()
     print(f"  loaded {len(quests)} quests")
 
     explore = _extract_explore(translator, extractor, quests)
-    _save_json("explore.json", explore)
     print(f"  explore targets: {len(explore)}")
 
     fetch_items = _extract_fetch(translator, extractor, quests)
-    _save_json("quest_items.json", fetch_items)
     print(f"  quest items: {len(fetch_items)}")
 
     npcs = _extract_npc_list(translator, extractor, quests)
-    _save_json("quest_npc.json", npcs)
     total_quests = sum(npc.get("quest_count", 0) for npc in npcs)
     print(f"  active NPCs: {len(npcs)}, total quests: {total_quests}")
 
-    return len(explore), len(fetch_items), total_quests
+    return explore, fetch_items, npcs
 
 
 def _extract_explore(translator, extractor, quests):

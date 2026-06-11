@@ -300,6 +300,15 @@ def run():
                 rows,
             )
         db.connect().commit()
+
+        # 8. Quest extraction
+        print("[8/8] Extracting quest data...")
+        entity_class = db.get_entity_classification()
+        explore_data, quest_items_data, quest_npcs_data = run_quest_extraction(entity_classification=entity_class)
+        db.import_explore_targets(explore_data)
+        db.import_quest_items(quest_items_data)
+        db.import_quest_npcs(quest_npcs_data)
+        print(f"  -> {len(explore_data)} explore, {len(quest_items_data)} quest items, {len(quest_npcs_data)} NPCs")
     else:
         if not GAME_ROOT.exists():
             print("\n[SKIP] Game data not found, using existing DB")
@@ -1103,9 +1112,18 @@ def run():
                 },
             )
 
-    # ── Quest extraction ──
-    print("\nExtracting quest data...")
-    explore_count, quest_items_count, quest_npc_count = run_quest_extraction()
+    # ── Quest data (from DB) ──
+    print("\nExporting quest data from DB...")
+    explore_data = db.get_explore_targets()
+    quest_items_data = db.get_quest_items()
+    quest_npcs_data = db.get_quest_npcs()
+    explore_count = len(explore_data)
+    quest_items_count = len(quest_items_data)
+    quest_npc_count = sum(n.get("quest_count", 0) for n in quest_npcs_data)
+    _save("explore.json", explore_data)
+    _save("quest_items.json", quest_items_data)
+    _save("quest_npc.json", quest_npcs_data)
+    print(f"  explore: {explore_count}, quest items: {quest_items_count}, quest NPCs: {quest_npc_count}")
 
     # ── Quest items groups (with coordinates) ──
     _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules)
