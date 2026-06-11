@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 
 interface NPCQuest {
@@ -50,11 +51,12 @@ const checkboxStyle: React.CSSProperties = {
 export default function QuestNPCPage() {
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [data, setData] = useState<NPCEntry[]>(ssrData || []);
+  const dataVersion = useDataVersion();
   const { tokens } = useTheme();
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('./data/json/quest_npc.json')
+    fetch(`./data/json/quest_npc.json?v=${dataVersion}`)
       .then<NPCEntry[]>((r) => r.json())
       .then(setData)
       .catch(console.error);

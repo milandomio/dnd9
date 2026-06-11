@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
@@ -58,11 +59,15 @@ export default function DungeonModuleDetailPage() {
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
+  const dataVersion = useDataVersion();
+
   const mod = (name && modules.get(name)) || null;
 
   useEffect(() => {
     if (!group || !name) return;
-    fetch(`./data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`)
+    fetch(
+      `./data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json?v=${dataVersion}`
+    )
       .then<ModuleCoordsData>((r) => r.json())
       .then((coords) => {
         setCoordsData(coords);

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Input, Switch } from 'antd';
 import { BulbOutlined, SearchOutlined } from '@ant-design/icons';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 
 const LABEL_MAP: Record<string, string> = {
@@ -45,9 +46,9 @@ interface SearchHit {
   tag?: string;
 }
 
-async function buildSearchIndex(): Promise<SearchHit[]> {
+async function buildSearchIndex(version: string): Promise<SearchHit[]> {
   try {
-    const resp = await fetch('./data/json/search_index.json');
+    const resp = await fetch(`./data/json/search_index.json?v=${version}`);
     if (!resp.ok) return [];
     return await resp.json();
   } catch {
@@ -59,6 +60,7 @@ export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { dark, tokens, toggle } = useTheme();
+  const dataVersion = useDataVersion();
   const parts = location.pathname.split('/').filter(Boolean);
 
   const [query, setQuery] = useState('');
@@ -74,7 +76,7 @@ export default function NavBar() {
     if (searchIndex !== null || loading) return;
     setLoading(true);
     try {
-      const index = await buildSearchIndex();
+      const index = await buildSearchIndex(dataVersion);
       setSearchIndex(index);
     } finally {
       setLoading(false);

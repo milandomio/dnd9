@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import Disclaimer from '../components/Disclaimer';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 
@@ -33,11 +34,12 @@ export default function ExplorePage() {
   const ssrData = useSSRData<ExploreTarget[]>('explore');
   const [data, setData] = useState<ExploreTarget[]>(ssrData || []);
   const { modules } = useDungeonModules();
+  const dataVersion = useDataVersion();
   const { tokens } = useTheme();
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('./data/json/explore.json')
+    fetch(`./data/json/explore.json?v=${dataVersion}`)
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)
       .catch(console.error);

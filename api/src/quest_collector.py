@@ -12,21 +12,6 @@ from quest_extractor.translator import Translator
 
 _ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
 
-# explore.json module_name -> dungeon_modules.json name 的映射
-_EXPLORE_MODULE_ALIAS = {
-    "Id_DungeonModule_Caveltar": "Id_DungeonModule_Cave_Altar_02",
-    "Id_DungeonModule_CaveAltar_02": "Id_DungeonModule_Cave_Altar_02",
-    "Id_DungeonModule_Batroost": "Id_DungeonModule_Inferno_Batroost",
-    "Id_DungeonModule_Cave_Tomb": "Id_DungeonModule_Cave_Tomb_Center",
-    "Id_DungeonModule_HideoutCave": "Id_DungeonModule_HideoutCave_Center",
-    "Id_DungeonModule_StoneGrave": "Id_DungeonModule_StoneGrave_Center",
-    "Id_DungeonModule_Cave_BanditCamp": "Id_DungeonModule_Cave_BanditCamp_Center",
-    "Id_DungeonModule_Bloodyfalls": "Id_DungeonModule_Inferno_Bloodyfalls",
-    "Id_DungeonModule_Hellcrossbridge": "Id_DungeonModule_Inferno_Hellcrossbridge",
-    "Id_DungeonModule_Doomcage": "Id_DungeonModule_Inferno_Doomcage",
-    "Id_DungeonModule_Drain": "Id_DungeonModule_Inferno_Drain",
-}
-
 
 def _translate_item(translator, name_en: str) -> str:
     """Try to translate item name using correct key format."""
@@ -98,7 +83,6 @@ def _extract_explore(translator, extractor, quests):
                 if module_name
                 else ""
             )
-            clean_module = _EXPLORE_MODULE_ALIAS.get(clean_module, clean_module)
             key = clean_module or translation
             if key in seen:
                 continue

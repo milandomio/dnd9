@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 
 interface QuestContent {
@@ -106,10 +107,11 @@ export default function QuestNPCDetailPage() {
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
   const [search, setSearch] = useState('');
+  const dataVersion = useDataVersion();
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('./data/json/quest_npc.json')
+    fetch(`./data/json/quest_npc.json?v=${dataVersion}`)
       .then<NPCEntry[]>((r) => r.json())
       .then(setAllNpcs)
       .catch(console.error);

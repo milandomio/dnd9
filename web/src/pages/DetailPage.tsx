@@ -10,6 +10,7 @@ import type {
   DungeonModule,
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useTheme } from '../hooks/useTheme';
@@ -53,6 +54,7 @@ export default function DetailPage() {
   );
   const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
   const { modules } = useDungeonModules();
+  const dataVersion = useDataVersion();
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
@@ -91,7 +93,7 @@ export default function DetailPage() {
     if (!page || !name) return;
     if (ssrData?.entity?.coords) return;
     const decoded = decodeURIComponent(name!);
-    fetch(`./data/json/${page}/${decoded}.json`)
+    fetch(`./data/json/${page}/${decoded}.json?v=${dataVersion}`)
       .then<Entity>((r) => r.json())
       .then((entityData) => {
         setEntity(entityData);

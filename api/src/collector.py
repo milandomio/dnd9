@@ -644,6 +644,7 @@ def run():
         elif art_status == "not_found" and img_name == module_name == sl and map_image in PLACEHOLDERS:
             img_name = map_image
         has_img = (IMG_SRC / f"{img_name}.webp").exists()
+        aliases = r.get("aliases", []) or []
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation_key": r["translation_key"],
@@ -658,6 +659,7 @@ def run():
             "offset_y": offset_y,
             "rotate": rotate,
             "range": custom_range,
+            "aliases": aliases,
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:
@@ -862,13 +864,19 @@ def run():
         if len(group) == 1:
             # 单个模块，直接使用
             mod = group[0].copy()
-            mod["names"] = [mod["name"]]
+            # 收集所有名称：主名称 + 别名
+            all_names = [mod["name"]] + mod.get("aliases", [])
+            mod["names"] = list(dict.fromkeys(all_names))  # 去重保序
             merged_modules.append(mod)
         else:
             # 多个模块共享同一翻译，合并
             primary = group[0].copy()
-            all_names = [m["name"] for m in group]
-            primary["names"] = all_names
+            # 收集所有名称：所有模块主名称 + 所有别名
+            all_names = []
+            for m in group:
+                all_names.append(m["name"])
+                all_names.extend(m.get("aliases", []))
+            primary["names"] = list(dict.fromkeys(all_names))  # 去重保序
             # 合并 sl_base_name 列表
             all_sl_bases = list(dict.fromkeys(m["sl_base_name"] for m in group if m["sl_base_name"]))
             primary["all_sl_base_names"] = all_sl_bases

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Spin, Card, Row, Col } from 'antd';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 
 interface GroupEntry {
@@ -25,10 +26,11 @@ const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
 export default function QuestItemsPage() {
   const [groups, setGroups] = useState<GroupEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const dataVersion = useDataVersion();
   const { tokens } = useTheme();
 
   useEffect(() => {
-    fetch('./data/json/quest_items_groups.json')
+    fetch(`./data/json/quest_items_groups.json?v=${dataVersion}`)
       .then((r) => r.json())
       .then(setGroups)
       .catch(console.error)

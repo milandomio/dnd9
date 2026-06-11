@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 interface IndexEntry {
   name: string;
@@ -26,13 +27,14 @@ export default function ListPage() {
   const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const [debug, setDebug] = useState(false);
+  const dataVersion = useDataVersion();
   const { tokens } = useTheme();
 
   useEffect(() => {
     if (!page || !['items', 'monsters', 'props', 'lootdrops'].includes(page))
       return;
     if (ssrData) return;
-    fetch(`./data/json/${page}.json`)
+    fetch(`./data/json/${page}.json?v=${dataVersion}`)
       .then((r) => r.json())
       .then(setData)
       .catch(console.error);

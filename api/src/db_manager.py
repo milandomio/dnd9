@@ -175,7 +175,8 @@ class DatabaseManager:
                 size_x INTEGER DEFAULT 1,
                 size_y INTEGER DEFAULT 1,
                 sl_base_name TEXT NOT NULL DEFAULT '',
-                map_image_name TEXT NOT NULL DEFAULT ''
+                map_image_name TEXT NOT NULL DEFAULT '',
+                aliases TEXT NOT NULL DEFAULT '[]'
             );
 
             CREATE TABLE IF NOT EXISTS lootdrop_items (
@@ -466,7 +467,10 @@ class DatabaseManager:
                 found_valid = True
                 break
             # Use sl_base as module name if it differs (sl_base matches actual map directory)
+            # Store original module_name as alias
+            aliases = []
             if sl_base and sl_base != module_name:
+                aliases.append(module_name)
                 module_name = sl_base
             if not found_valid:
                 skipped_names.append(module_name)
@@ -507,10 +511,13 @@ class DatabaseManager:
             # Extract MapImage (direct Art file reference, e.g. CaveMaze_02)
             mi_asset = (props.get("MapImage") or {}).get("AssetPathName", "")
             map_image = _ue_asset_base_name(mi_asset) or ""
-            rows.append((module_name, name_key, module_type, size_x, size_y, sl_base, map_image))
+            import json as _json
+
+            aliases_json = _json.dumps(aliases) if aliases else "[]"
+            rows.append((module_name, name_key, module_type, size_x, size_y, sl_base, map_image, aliases_json))
             inserted_names.add(module_name)
         c.executemany(
-            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
         if skipped_names:
@@ -527,11 +534,11 @@ class DatabaseManager:
                     stripped = _VARIANT_SUFFIX_RE.sub("", base_name)
                     if stripped != base_name:
                         tk = sl_base_to_key.get(stripped, "") or module_name_to_key.get(stripped, "")
-                extra_rows.append((base_name, tk, group, 1, 1, "", ""))
+                extra_rows.append((base_name, tk, group, 1, 1, "", "", "[]"))
                 inserted_names.add(base_name)
         if extra_rows:
             c.executemany(
-                "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 extra_rows,
             )
         # Remove modules with no group (no corresponding map file found)
@@ -655,9 +662,16 @@ class DatabaseManager:
     def get_dungeon_modules(self) -> list[dict]:
         c = self.conn.cursor()
         c.execute(
-            "SELECT module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name FROM dungeon_modules ORDER BY module_name"
+            "SELECT module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases FROM dungeon_modules ORDER BY module_name"
         )
-        return [dict(r) for r in c.fetchall()]
+        results = []
+        for r in c.fetchall():
+            d = dict(r)
+            import json as _json
+
+            d["aliases"] = _json.loads(d.get("aliases", "[]") or "[]")
+            results.append(d)
+        return results
 
     def get_lootdrop_relationships(self) -> list[dict]:
         c = self.conn.cursor()

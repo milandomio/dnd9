@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { useSSRData } from '../context/SSRDataContext';
@@ -66,6 +67,7 @@ export default function LootdropDetailPage() {
     dataKey
   );
   const [data, setData] = useState<LootdropItem | null>(ssrData?.item || null);
+  const dataVersion = useDataVersion();
   const { modules } = useDungeonModules();
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
@@ -77,7 +79,9 @@ export default function LootdropDetailPage() {
   useEffect(() => {
     if (!name) return;
     if (ssrData?.item?.monsters) return;
-    fetch(`./data/json/lootdrops/${decodeURIComponent(name)}.json`)
+    fetch(
+      `./data/json/lootdrops/${decodeURIComponent(name)}.json?v=${dataVersion}`
+    )
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
         setData(item);

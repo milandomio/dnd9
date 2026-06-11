@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import type { DungeonModule } from '../types/data';
+import { useDataVersion } from './useDataVersion';
 
 let cachedModules: Map<string, DungeonModule> | null = null;
 let cachedPromise: Promise<Map<string, DungeonModule>> | null = null;
 
-function fetchModules(): Promise<Map<string, DungeonModule>> {
+function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
   if (cachedModules) return Promise.resolve(cachedModules);
   if (cachedPromise) return cachedPromise;
 
-  cachedPromise = fetch('./data/json/dungeon_modules.json')
+  cachedPromise = fetch(`./data/json/dungeon_modules.json?v=${version}`)
     .then<DungeonModule[]>((r) => r.json())
     .then((mods) => {
       const mm = new Map<string, DungeonModule>();
@@ -31,6 +32,7 @@ function fetchModules(): Promise<Map<string, DungeonModule>> {
 }
 
 export function useDungeonModules() {
+  const dataVersion = useDataVersion();
   const [modules, setModules] = useState<Map<string, DungeonModule>>(
     () => cachedModules ?? new Map()
   );
@@ -42,7 +44,7 @@ export function useDungeonModules() {
       setLoading(false);
       return;
     }
-    fetchModules().then((mm) => {
+    fetchModules(dataVersion).then((mm) => {
       setModules(mm);
       setLoading(false);
     });

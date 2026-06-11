@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 
 const CARD_THEME: Record<
@@ -71,11 +72,12 @@ export default function HomePage() {
   const ssrData = useSSRData<IndexEntry[]>('home');
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const navigate = useNavigate();
+  const dataVersion = useDataVersion();
   const { tokens } = useTheme();
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('./data/json/index.json')
+    fetch(`./data/json/index.json?v=${dataVersion}`)
       .then((r) => r.json())
       .then(setData)
       .catch(console.error);
