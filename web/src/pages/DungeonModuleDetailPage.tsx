@@ -562,25 +562,7 @@ export default function DungeonModuleDetailPage() {
                 }
               }}
               onToggleMarkName={(name) => {
-                const monsterRows = rows.filter(
-                  (r) => r.monster?.name === name
-                );
-                const allHidden = monsterRows.every((r) => r.hidden);
-                for (const r of monsterRows) {
-                  if (allHidden) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.delete(r.key);
-                      return n;
-                    });
-                  } else if (!hiddenRows.has(r.key)) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.add(r.key);
-                      return n;
-                    });
-                  }
-                }
+                toggle(name);
               }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);

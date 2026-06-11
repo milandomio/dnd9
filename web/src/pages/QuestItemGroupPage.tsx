@@ -756,33 +756,31 @@ export default function QuestItemGroupPage() {
 
       {debug &&
         (() => {
-          const rows = entities
-            .filter((e) => !hidden.has(e.name))
-            .flatMap((e) =>
-              e.coords.map((c, j) => {
-                const mod = modules.get(c.map);
-                const g = mod?.group || '';
-                const rowKey = `${e.name}-${j}`;
-                return {
-                  key: rowKey,
-                  group: GROUP_LABELS[g] || g,
-                  monster: {
-                    name: e.name,
-                    translation: e.translation,
-                    color: e.color,
-                    onToggle: () => toggle(e.name),
-                  },
-                  file: c.file,
-                  mapName: c.map,
-                  mapLabel: mod?.translation || c.map,
-                  label: c.label || '',
-                  x: c.x,
-                  y: c.y,
-                  z: c.z,
-                  hidden: hiddenRows.has(rowKey),
-                };
-              })
-            );
+          const rows = entities.flatMap((e) =>
+            e.coords.map((c, j) => {
+              const mod = modules.get(c.map);
+              const g = mod?.group || '';
+              const rowKey = `${e.name}-${j}`;
+              return {
+                key: rowKey,
+                group: GROUP_LABELS[g] || g,
+                monster: {
+                  name: e.name,
+                  translation: e.translation,
+                  color: e.color,
+                  onToggle: () => toggle(e.name),
+                },
+                file: c.file,
+                mapName: c.map,
+                mapLabel: mod?.translation || c.map,
+                label: c.label || '',
+                x: c.x,
+                y: c.y,
+                z: c.z,
+                hidden: hidden.has(e.name) || hiddenRows.has(rowKey),
+              };
+            })
+          );
           return (
             <DebugCoordTable
               rows={rows}
@@ -814,25 +812,7 @@ export default function QuestItemGroupPage() {
                 }
               }}
               onToggleMarkName={(name) => {
-                const monsterRows = rows.filter(
-                  (r) => r.monster?.name === name
-                );
-                const allHidden = monsterRows.every((r) => r.hidden);
-                for (const r of monsterRows) {
-                  if (allHidden) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.delete(r.key);
-                      return n;
-                    });
-                  } else if (!hiddenRows.has(r.key)) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.add(r.key);
-                      return n;
-                    });
-                  }
-                }
+                toggle(name);
               }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);
