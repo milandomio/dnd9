@@ -156,6 +156,16 @@ export default function LootdropDetailPage() {
     });
   };
 
+  // Check if all coords of a monster are hidden (either via hidden or hiddenRows)
+  const isMonsterFullyHidden = (monsterName: string) => {
+    const monster = monsters.find((m) => m.name === monsterName);
+    if (!monster) return true;
+    if (hidden.has(monsterName)) return true;
+    return monster.coords.every((_, j) =>
+      hiddenRows.has(`${monsterName}-${j}`)
+    );
+  };
+
   const monsters = data.monsters ?? [];
   // Build per-map coordinate groups
   const mapGroups = new Map<
@@ -173,8 +183,8 @@ export default function LootdropDetailPage() {
     }
   >();
   for (const m of monsters) {
-    if (hidden.has(m.name)) continue;
     m.coords.forEach((c, j) => {
+      if (hidden.has(m.name) || hiddenRows.has(`${m.name}-${j}`)) return;
       if (!mapGroups.has(c.map))
         mapGroups.set(c.map, { mod: modules.get(c.map), dots: [] });
       mapGroups.get(c.map)!.dots.push({
@@ -840,7 +850,37 @@ export default function LootdropDetailPage() {
           return (
             <DebugCoordTable
               rows={rows}
-              onToggleRow={toggleRow}
+              onToggleRow={(key) => {
+                // Extract monster name from key (format: "monsterName-index")
+                const monsterName = key.substring(0, key.lastIndexOf('-'));
+                const monster = monsters.find((m) => m.name === monsterName);
+
+                if (monster) {
+                  // Check if all coords of this monster are currently hidden
+                  const allHidden = isMonsterFullyHidden(monsterName);
+
+                  if (allHidden) {
+                    // If all hidden, show all coords of this monster
+                    setHidden((prev) => {
+                      const next = new Set(prev);
+                      next.delete(monsterName);
+                      return next;
+                    });
+                    setHiddenRows((prev) => {
+                      const next = new Set(prev);
+                      monster.coords.forEach((_, j) => {
+                        next.delete(`${monsterName}-${j}`);
+                      });
+                      return next;
+                    });
+                  } else {
+                    // If not all hidden, hide this specific row
+                    toggleRow(key);
+                  }
+                } else {
+                  toggleRow(key);
+                }
+              }}
               onToggleLabel={(label) => {
                 const labelRows = rows.filter((r) => r.label === label);
                 const allHidden = labelRows.every((r) => r.hidden);
@@ -867,9 +907,19 @@ export default function LootdropDetailPage() {
                 const mapRows = rows.filter((r) => r.mapName === mapName);
                 const allHidden = mapRows.every((r) => r.hidden);
                 for (const r of mapRows) {
-                  if (allHidden) toggleRow(r.key);
-                  else if (!hiddenRows.has(r.key)) toggleRow(r.key);
-                  else toggleRow(r.key);
+                  if (allHidden) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.delete(r.key);
+                      return n;
+                    });
+                  } else if (!hiddenRows.has(r.key)) {
+                    setHiddenRows((prev) => {
+                      const n = new Set(prev);
+                      n.add(r.key);
+                      return n;
+                    });
+                  }
                 }
               }}
               showMonster
