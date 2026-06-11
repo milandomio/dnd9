@@ -105,6 +105,13 @@ export default function DetailPage() {
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;
 
   const coords = entity.coords ?? [];
+  // Pre-build hidden coord keys for O(1) lookup in map rendering
+  const hiddenCoordKeys = new Set<string>();
+  for (let i = 0; i < coords.length; i++) {
+    const c = coords[i];
+    if (hiddenRows.has(`${c.file}-${i}`))
+      hiddenCoordKeys.add(`${c.file}-${i}`);
+  }
   const grouped = new Map<string, Coord[]>();
   for (const c of coords) {
     if (!grouped.has(c.map)) grouped.set(c.map, []);

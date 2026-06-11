@@ -24,7 +24,7 @@ except ImportError:
 class QuestExtractor:
     """任务数据提取器（协调器）"""
 
-    # 默认路径常量 - 从 findItemV4/src/quest_extractor 向上3级到 /home/mio/fmod/
+    # 默认路径常量 - 从 api/src/quest_extractor 向上3级到项目根
     _PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "..", ".."))
     BASE_DATA_PATH = os.path.join(
         _PROJECT_ROOT, "Output", "Exports", "DungeonCrawler", "Content", "DungeonCrawler", "Data", "Generated", "V2"
