@@ -16,6 +16,15 @@ _ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
 _EXPLORE_MODULE_ALIAS = {
     "Id_DungeonModule_Caveltar": "Id_DungeonModule_Cave_Altar_02",
     "Id_DungeonModule_CaveAltar_02": "Id_DungeonModule_Cave_Altar_02",
+    "Id_DungeonModule_Batroost": "Id_DungeonModule_Inferno_Batroost",
+    "Id_DungeonModule_Cave_Tomb": "Id_DungeonModule_Cave_Tomb_Center",
+    "Id_DungeonModule_HideoutCave": "Id_DungeonModule_HideoutCave_Center",
+    "Id_DungeonModule_StoneGrave": "Id_DungeonModule_StoneGrave_Center",
+    "Id_DungeonModule_Cave_BanditCamp": "Id_DungeonModule_Cave_BanditCamp_Center",
+    "Id_DungeonModule_Bloodyfalls": "Id_DungeonModule_Inferno_Bloodyfalls",
+    "Id_DungeonModule_Hellcrossbridge": "Id_DungeonModule_Inferno_Hellcrossbridge",
+    "Id_DungeonModule_Doomcage": "Id_DungeonModule_Inferno_Doomcage",
+    "Id_DungeonModule_Drain": "Id_DungeonModule_Inferno_Drain",
 }
 
 
