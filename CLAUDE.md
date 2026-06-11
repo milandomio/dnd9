@@ -136,8 +136,8 @@ api/output/json/ + api/src/img/
 
 - **GitHub**: `https://github.com/milandomio/dnd9.git`（origin）
 - **Token**: `.github_token`（已在 `.gitignore` 中，勿提交）
-- **部署**: GitHub Actions 自动构建 → `actions/deploy-pages` 部署到 GitHub Pages
-- **Pages 设置**: Settings → Pages → Source 选择 **GitHub Actions**
+- **部署**: GitHub Actions 自动构建 → 推送到 `gh-pages` 分支部署到 GitHub Pages
+- **Pages 设置**: Settings → Pages → Source 选择 **Deploy from a branch**，分支选 `gh-pages`，目录选 `/ (root)`
 
 ### 推送到 dnd9（含 DB）
 
