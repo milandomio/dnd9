@@ -146,10 +146,10 @@ function scanDir(dir) {
   }
 }
 scanDir(DATA);
-const dataDate = new Date(latestMtime).toISOString().slice(0, 10);
+const dataDate = String(Math.floor(latestMtime / 1000));
 writeFileSync(join(DATA, "meta.json"), JSON.stringify({ dataDate }));
 cpSync(join(DATA, "meta.json"), join(DIST, "data", "json", "meta.json"));
-console.log(`[ssg] data date: ${dataDate}`);
+console.log(`[ssg] data version: ${dataDate}`);
 
 // Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: "/", file: "index.html" }];
