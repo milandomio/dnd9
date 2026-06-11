@@ -121,36 +121,46 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --po
 
 ```
 游戏原始 JSON（/home/mio/fmod/Output/Exports/DungeonCrawler/...）
-    ↓ api/main.py (清洗 + SQLite + FTS5)
+    ↓ api/main.py (清洗 + SQLite + FTS5，含 quest 数据)
 api/output/json/ + api/src/img/
     ↓ main.py 自动交付 → data/{json/, img/}
     ↓ npm run build → web/public/data/（SSG 脚本内复制）
     ↓ Vite build → dist/data/
-    ↓ GitHub Actions → gh-pages branch
+    ↓ GitHub Actions (actions/deploy-pages) → GitHub Pages
     ↓ 浏览器 fetch("./data/json/index.json") → 注水渲染
     ↓ meta.json 提供数据日期（{"dataDate":"YYYY-MM-DD"}），前端可读取显示
 
-**无游戏文件部署：** DB（`api/data/darkfindv5.db`）不纳入 git，从 GitHub Releases 下载后放入 `api/data/` 即可。
+**无游戏文件部署：** DB（`api/data/darkfindv5.db`）包含全部数据（含 quest），放入 `api/data/` 后 `python main.py` 可直接生成所有 JSON。
 
-### DB 临时提交（push 前）
+### 远端仓库
+
+- **GitHub**: `https://github.com/milandomio/dnd9.git`（origin）
+- **Token**: `.github_token`（已在 `.gitignore` 中，勿提交）
+- **部署**: GitHub Actions 自动构建 → `actions/deploy-pages` 部署到 GitHub Pages
+- **Pages 设置**: Settings → Pages → Source 选择 **GitHub Actions**
+
+### 推送到 dnd9（含 DB）
+
+DB 是二进制文件，不纳入常规 git 追踪。推送时需要临时提交：
 
 ```bash
-# 1. 备份
+# 1. 提交代码改动
+git add -A && git commit -m "feat: <描述>"
+
+# 2. 临时添加 DB + 推送
 cp api/data/darkfindv5.db /tmp/darkfindv5.db
+git add -f api/data/darkfindv5.db && git commit -m "chore: update DB"
+GIT_SSL_NO_VERIFY=1 git push origin main
 
-# 2. 提交 + rebase + push
-git add -f api/data/darkfindv5.db && git commit -m "update DB"
-git pull --rebase
-git push
-
-# 3. 回退本地跟踪
+# 3. 回退本地 DB 追踪
 git reset HEAD~1
-
-# 4. 删临时备份
 rm /tmp/darkfindv5.db
 ```
 
-**注意：** 下次 push 前必须 `git pull --rebase`，可能因二进制冲突导致失败。推荐直接正常跟踪 DB 避免此问题。
+**注意：**
+- `.github/workflows/deploy.yml` 因 token 缺少 `workflow` 权限，需通过 `--force` 推送或在 GitHub 网页手动创建
+- `v4_reference/`、`WORKFLOW_PLAN.md`、`.deepseek/`、`mcp-servers/` 已在 `.gitignore` 中，不会推送到远端
+- CI 环境无原始游戏文件，管道从 DB 读取全部数据（含 quest）
 
 ## 页面布局
 
