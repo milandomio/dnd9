@@ -130,6 +130,9 @@ const LIST_PAGES = [
 for (const lp of LIST_PAGES) searchIndex.push(lp);
 
 writeFileSync(join(DATA, "search_index.json"), JSON.stringify(searchIndex), "utf-8");
+// Also copy to dist so the deployed site has the latest search index
+mkdirSync(join(DIST, "data", "json"), { recursive: true });
+cpSync(join(DATA, "search_index.json"), join(DIST, "data", "json", "search_index.json"));
 console.log(`[ssg] search index: ${searchIndex.length} entries`);
 
 // ---- step 4b: generate meta.json with latest data date ----
