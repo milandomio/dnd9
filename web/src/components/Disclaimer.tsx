@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 
 export default function Disclaimer() {
   const { tokens } = useTheme();
-  const [date, setDate] = useState('');
+  const date = useDataVersion();
   const box: CSSProperties = {
     textAlign: 'center',
     color: '#ff6b6b',
@@ -17,13 +17,6 @@ export default function Disclaimer() {
     marginLeft: 'auto',
     marginRight: 'auto',
   };
-
-  useEffect(() => {
-    fetch('./data/json/meta.json')
-      .then((r) => r.json())
-      .then((d) => setDate(d.dataDate || ''))
-      .catch(() => {});
-  }, []);
 
   return (
     <div style={box}>

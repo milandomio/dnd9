@@ -644,6 +644,10 @@ def run():
         elif art_status == "not_found" and img_name == module_name == sl and map_image in PLACEHOLDERS:
             img_name = map_image
         has_img = (IMG_SRC / f"{img_name}.webp").exists()
+        # Final fallback: no image found → use placeholder so frontend shows a fallback
+        if not has_img:
+            img_name = "RareModule_1x1"
+            has_img = True
         aliases = r.get("aliases", []) or []
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
