@@ -1,27 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
-
-interface NPCQuest {
-  id: string;
-  title: string;
-  quest_number: number;
-  greeting: string;
-  complete: string;
-  rewards: { type: string; id: string; count: number }[];
-  required: string;
-}
-
-interface NPCEntry {
-  npc_name: string;
-  npc_name_display: string;
-  quest_count: number;
-  category: string;
-  quests: NPCQuest[];
-}
+import QuestSearchBar from '../components/QuestSearchBar';
+import type { QuestSearchResult } from '../components/QuestSearchBar';
+import type { NPCEntry } from '../types/quest';
 
 function lsGet(key: string): boolean {
   try {
@@ -53,6 +38,7 @@ export default function QuestNPCPage() {
   const [data, setData] = useState<NPCEntry[]>(ssrData || []);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (ssrData) return;
@@ -112,6 +98,14 @@ export default function QuestNPCPage() {
       >
         共 {data.length} 个活跃NPC
       </div>
+      <QuestSearchBar
+        allNpcs={data}
+        onSelect={(r: QuestSearchResult) =>
+          navigate(`/quest_npc/${r.npc.npc_name}`, {
+            state: { questNumber: r.quest.quest_number },
+          })
+        }
+      />
       {sortedGroups.map(([category, npcs]) => (
         <div key={category}>
           <div

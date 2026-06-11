@@ -1,41 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
-
-interface QuestContent {
-  type: string;
-  target: string;
-  count: number;
-  loot_state?: string;
-  rarity?: string;
-}
-
-interface QuestReward {
-  type: string;
-  name: string;
-  type_key: string;
-  count: number;
-}
-
-interface NPCQuest {
-  id: string;
-  title: string;
-  quest_number: number;
-  contents: QuestContent[];
-  rewards: QuestReward[];
-  required: string;
-}
-
-interface NPCEntry {
-  npc_name: string;
-  npc_name_display: string;
-  quest_count: number;
-  category: string;
-  quests: NPCQuest[];
-}
+import QuestSearchBar from '../components/QuestSearchBar';
+import type { QuestSearchResult } from '../components/QuestSearchBar';
+import type { NPCEntry } from '../types/quest';
 
 function lsGet(key: string): boolean {
   try {
@@ -103,11 +74,17 @@ function formatRequired(
 export default function QuestNPCDetailPage() {
   const { npc_name } = useParams<{ npc_name: string }>();
   const { tokens } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const scrollToRef = useRef<HTMLDivElement>(null);
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
   const [search, setSearch] = useState('');
   const dataVersion = useDataVersion();
+
+  const highlightQuestNum = (location.state as { questNumber?: number })
+    ?.questNumber;
 
   useEffect(() => {
     if (ssrData) return;
@@ -120,6 +97,16 @@ export default function QuestNPCDetailPage() {
   const npc = allNpcs.find((n) => n.npc_name === npc_name);
 
   const refresh = () => setAllNpcs((prev) => [...prev]);
+
+  // Scroll to highlighted quest after data loads
+  useEffect(() => {
+    if (highlightQuestNum && scrollToRef.current) {
+      scrollToRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [highlightQuestNum, allNpcs]);
 
   if (!npc) {
     return (
@@ -188,27 +175,25 @@ export default function QuestNPCDetailPage() {
         </span>
       </h1>
 
-      <div style={{ textAlign: 'center', marginBottom: 20 }}>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="搜索任务..."
-          style={{
-            width: 300,
-            maxWidth: '80%',
-            padding: '10px 15px',
-            fontSize: 14,
-            border: `2px solid ${tokens.border}`,
-            borderRadius: 4,
-            background: tokens.surface,
-            color: tokens.text,
-            outline: 'none',
-          }}
-          onFocus={(e) => (e.target.style.borderColor = tokens.accent)}
-          onBlur={(e) => (e.target.style.borderColor = tokens.border)}
-        />
-      </div>
+      <QuestSearchBar
+        allNpcs={allNpcs}
+        onSelect={(r: QuestSearchResult) => {
+          if (r.npc.npc_name === npc_name) {
+            setSearch(r.quest.title);
+            // Scroll to matched quest after filter re-renders
+            requestAnimationFrame(() => {
+              const el = document.querySelector(
+                `[data-quest-num="${r.quest.quest_number}"]`
+              );
+              el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+          } else {
+            navigate(`/quest_npc/${r.npc.npc_name}`, {
+              state: { questNumber: r.quest.quest_number },
+            });
+          }
+        }}
+      />
 
       <div
         style={{
@@ -226,6 +211,10 @@ export default function QuestNPCDetailPage() {
           return (
             <div
               key={q.id}
+              ref={
+                q.quest_number === highlightQuestNum ? scrollToRef : undefined
+              }
+              data-quest-num={q.quest_number}
               style={{
                 background: tokens.card,
                 border: questDone

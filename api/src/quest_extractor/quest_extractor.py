@@ -427,6 +427,18 @@ class QuestExtractor:
                     name = self.translator.translate(key)
                     if not name:
                         name = skin_name
+                elif "Id_Emote_" in reward_id:
+                    emote_name = reward_id.split("Id_Emote_")[-1]
+                    key = f"Text_DesignData_Emote_Emote_{emote_name}"
+                    name = self.translator.translate(key)
+                    if not name:
+                        name = emote_name
+                elif "Id_ActionSkin_" in reward_id:
+                    action_name = reward_id.split("Id_ActionSkin_")[-1]
+                    key = f"Text_DesignData_ActionSkin_{action_name}"
+                    name = self.translator.translate(key)
+                    if not name:
+                        name = action_name
                 else:
                     name = reward_id
             else:

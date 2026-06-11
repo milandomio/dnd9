@@ -31,6 +31,14 @@ def _translate_item(translator, name_en: str) -> str:
     translated = translator.translate(skin_key)
     if translated:
         return translated
+    emote_key = f"Text_DesignData_Emote_Emote_{name_en}"
+    translated = translator.translate(emote_key)
+    if translated:
+        return translated
+    action_key = f"Text_DesignData_ActionSkin_{name_en}"
+    translated = translator.translate(action_key)
+    if translated:
+        return translated
     return name_en
 
 

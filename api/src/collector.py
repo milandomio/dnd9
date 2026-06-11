@@ -322,6 +322,8 @@ def run():
             "Text_DesignData_Monster_Monster_",
             "Text_DesignData_Props_Props_",
             "Text_DesignData_Dungeon_DungeonModule_",
+            "Text_DesignData_Emote_Emote_",
+            "Text_DesignData_ActionSkin_",
         ]:
             alias_key = prefix + alias_name
             if alias_key in translations:
@@ -337,6 +339,8 @@ def run():
                 "Text_DesignData_Monster_Monster_",
                 "Text_DesignData_Props_Props_",
                 "Text_DesignData_Dungeon_DungeonModule_",
+                "Text_DesignData_Emote_Emote_",
+                "Text_DesignData_ActionSkin_",
             ]:
                 fuzzy_key = prefix + fuzzy_alias
                 if fuzzy_key in translations:
@@ -356,6 +360,8 @@ def run():
                 "Text_DesignData_Monster_Monster_",
                 "Text_DesignData_Props_Props_",
                 "Text_DesignData_Dungeon_DungeonModule_",
+                "Text_DesignData_Emote_Emote_",
+                "Text_DesignData_ActionSkin_",
             ]:
                 fuzzy2_key = prefix + fuzzy2_alias
                 if fuzzy2_key in translations:
