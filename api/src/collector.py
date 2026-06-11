@@ -646,6 +646,7 @@ def run():
         has_img = (IMG_SRC / f"{img_name}.webp").exists()
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
+            "translation_key": r["translation_key"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
             "group": r["module_group"],
             "size_x": sx,
@@ -844,7 +845,36 @@ def run():
     print(f"  module coords: {len(merged_coords)} modules with coordinates")
 
     # ── dungeon_modules.json（在坐标构建之后保存，过滤无坐标模块）──
-    modules_data = sorted(modules_map.values(), key=lambda x: x["name"])
+    # 合并使用相同翻译键（相同地图）的模块
+    from collections import defaultdict
+
+    translation_groups: dict[str, list[dict]] = defaultdict(list)
+    for mod in modules_map.values():
+        tk = mod.get("translation_key", "")
+        if tk:
+            translation_groups[tk].append(mod)
+        else:
+            # 无翻译键的模块单独处理
+            translation_groups[mod["name"]].append(mod)
+
+    merged_modules: list[dict] = []
+    for _tk, group in translation_groups.items():
+        if len(group) == 1:
+            # 单个模块，直接使用
+            mod = group[0].copy()
+            mod["names"] = [mod["name"]]
+            merged_modules.append(mod)
+        else:
+            # 多个模块共享同一翻译，合并
+            primary = group[0].copy()
+            all_names = [m["name"] for m in group]
+            primary["names"] = all_names
+            # 合并 sl_base_name 列表
+            all_sl_bases = list(dict.fromkeys(m["sl_base_name"] for m in group if m["sl_base_name"]))
+            primary["all_sl_base_names"] = all_sl_bases
+            merged_modules.append(primary)
+
+    modules_data = sorted(merged_modules, key=lambda x: x["name"])
     modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
     # 过滤无坐标模块（详情页无数据的模块从列表中剔除）
     # 仅当模块自身名字在 merged_coords 中才算有坐标（排除 sl_base 指向其他模块的别名）
@@ -854,7 +884,10 @@ def run():
     modules_data = [m for m in modules_data if m["name"] in modules_with_coords or m["name"] in exempt]
     # 标记是否含有物品/怪物坐标（仅 props 的模块在列表页默认隐藏）
     for m in modules_data:
-        maps = module_to_maps.get(m["name"], {m["name"]})
+        # 合并后的模块检查所有相关地图
+        maps = set()
+        for name in m.get("names", [m["name"]]):
+            maps.update(module_to_maps.get(name, {name}))
         has_useful = False
         for mk in maps:
             if mk in merged_coords:

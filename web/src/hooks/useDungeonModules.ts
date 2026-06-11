@@ -13,8 +13,15 @@ function fetchModules(): Promise<Map<string, DungeonModule>> {
     .then((mods) => {
       const mm = new Map<string, DungeonModule>();
       mods.forEach((m) => {
-        mm.set(m.name, m);
+        // 注册所有名称（合并后的模块有多个名称）
+        const names = m.names || [m.name];
+        names.forEach((n) => mm.set(n, m));
+        // 注册 sl_base_name
         mm.set(m.sl_base_name, m);
+        // 注册所有 sl_base_names（合并后的模块）
+        if (m.all_sl_base_names) {
+          m.all_sl_base_names.forEach((sl) => mm.set(sl, m));
+        }
       });
       cachedModules = mm;
       return mm;
