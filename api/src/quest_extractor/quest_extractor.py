@@ -6,6 +6,7 @@
 
 import json
 import os
+import re
 from collections import defaultdict
 
 try:
@@ -413,12 +414,25 @@ class QuestExtractor:
                             name = self.translator.translate(f"{key}{suffix}")
                             if name:
                                 break
+                    # 剥离 _NNNN 变体后缀重试（如 LuckPotion_3001 → LuckPotion）
+                    if not name and (m := re.match(r"^(.+)_(\d{4})$", item_name)):
+                        base_name = m.group(1)
+                        base_key = f"Text_DesignData_Item_Item_{base_name}"
+                        name = self.translator.translate(base_key)
+                        if not name:
+                            for suffix in suffixes:
+                                name = self.translator.translate(f"{base_key}{suffix}")
+                                if name:
+                                    break
                     if not name:
                         name = item_name
                 elif "Id_Props_" in reward_id:
                     props_name = reward_id.split("Id_Props_")[-1]
                     key = f"Text_DesignData_Props_Props_{props_name}"
                     name = self.translator.translate(key)
+                    if not name and (m := re.match(r"^(.+)_(\d{4})$", props_name)):
+                        base_key = f"Text_DesignData_Props_Props_{m.group(1)}"
+                        name = self.translator.translate(base_key)
                     if not name:
                         name = props_name
                 elif "Id_ItemSkin_" in reward_id:

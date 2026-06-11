@@ -8,6 +8,20 @@ import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
 
+const RARITY_COLORS: Record<string, string> = {
+  粗糙: '#9e9e9e',
+  普通: '#ffffff',
+  优秀: '#4caf50',
+  罕见: '#42a5f5',
+  史诗: '#CE93D8',
+  传奇: '#ff9800',
+  独特: '#fff9c4',
+};
+
+function getRarityColor(rarity: string): string {
+  return RARITY_COLORS[rarity] || '#CE93D8';
+}
+
 function lsGet(key: string): boolean {
   try {
     return localStorage.getItem(key) === '1';
@@ -147,53 +161,61 @@ export default function QuestNPCDetailPage() {
         />
       </Helmet>
 
-      <h1
+      <div
         style={{
-          textAlign: 'center',
-          color: tokens.accent,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
           borderBottom: `3px solid ${tokens.accent}`,
           paddingBottom: 15,
           marginBottom: 30,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 12,
         }}
       >
-        <input
-          type="checkbox"
-          checked={npcDone}
-          onChange={() => {
-            lsSet(`quest_npc_npc_${npc.npc_name}`, !npcDone);
-            refresh();
+        <QuestSearchBar
+          allNpcs={allNpcs}
+          onSelect={(r: QuestSearchResult) => {
+            if (r.npc.npc_name === npc_name) {
+              setSearch(r.quest.title);
+              requestAnimationFrame(() => {
+                const el = document.querySelector(
+                  `[data-quest-num="${r.quest.quest_number}"]`
+                );
+                el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              });
+            } else {
+              navigate(`/quest_npc/${r.npc.npc_name}`, {
+                state: { questNumber: r.quest.quest_number },
+              });
+            }
           }}
-          style={{ ...checkboxStyle, width: 22, height: 22 }}
         />
-        {npc.npc_name_display} - 任务列表
-        <span style={{ color: tokens.muted, fontSize: 16 }}>
-          {quests.length} 个任务
-        </span>
-      </h1>
-
-      <QuestSearchBar
-        allNpcs={allNpcs}
-        onSelect={(r: QuestSearchResult) => {
-          if (r.npc.npc_name === npc_name) {
-            setSearch(r.quest.title);
-            // Scroll to matched quest after filter re-renders
-            requestAnimationFrame(() => {
-              const el = document.querySelector(
-                `[data-quest-num="${r.quest.quest_number}"]`
-              );
-              el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            });
-          } else {
-            navigate(`/quest_npc/${r.npc.npc_name}`, {
-              state: { questNumber: r.quest.quest_number },
-            });
-          }
-        }}
-      />
+        <h1
+          style={{
+            flex: 1,
+            textAlign: 'center',
+            color: tokens.accent,
+            margin: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 12,
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={npcDone}
+            onChange={() => {
+              lsSet(`quest_npc_npc_${npc.npc_name}`, !npcDone);
+              refresh();
+            }}
+            style={{ ...checkboxStyle, width: 22, height: 22 }}
+          />
+          {npc.npc_name_display} - 任务列表
+          <span style={{ color: tokens.muted, fontSize: 16 }}>
+            {quests.length} 个任务
+          </span>
+        </h1>
+      </div>
 
       <div
         style={{
@@ -422,7 +444,7 @@ export default function QuestNPCDetailPage() {
                                   <td
                                     style={{
                                       padding: '3px 8px',
-                                      color: '#CE93D8',
+                                      color: getRarityColor(c.rarity || ''),
                                       fontSize: 12,
                                     }}
                                   >

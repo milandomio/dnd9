@@ -12,6 +12,21 @@ from quest_extractor.translator import Translator
 
 _ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
 
+_ENTITY_KEY_MAP: dict[str, str] | None = None
+
+
+def _get_entity_key_map() -> dict[str, str]:
+    """Load entity_index.json → {name: translation_key} mapping (cached)."""
+    global _ENTITY_KEY_MAP
+    if _ENTITY_KEY_MAP is None:
+        _ENTITY_KEY_MAP = {}
+        path = OUTPUT_DIR / "entity_index.json"
+        if path.exists():
+            with open(path, encoding="utf-8") as f:
+                for entry in json.load(f):
+                    _ENTITY_KEY_MAP[entry["name"]] = entry.get("translation_key", "")
+    return _ENTITY_KEY_MAP
+
 
 def _translate_item(translator, name_en: str) -> str:
     """Try to translate item name using correct key format."""
@@ -248,6 +263,11 @@ def _extract_npc_list(translator, extractor, quests):
                     translated = translator.translate(f"Text_DesignData_Monster_Monster_{monster}") if monster else ""
                     if not translated and monster in HARDCODED_TRANSLATIONS:
                         translated = HARDCODED_TRANSLATIONS[monster]
+                    # entity_index 兜底（如 SmallJellyfish → GiantJellyfish 翻译键）
+                    if not translated and monster:
+                        entity_key = _get_entity_key_map().get(monster, "")
+                        if entity_key and entity_key != f"Text_DesignData_Monster_Monster_{monster}":
+                            translated = translator.translate(entity_key) or ""
                     item["target"] = translated or monster
                     item["count"] = cd.get("ContentCount", 1)
                 elif ct == "Fetch":

@@ -78,34 +78,43 @@ export default function QuestNPCPage() {
           content="NPC任务详情查询——查看各NPC的任务、奖励、需求。"
         />
       </Helmet>
-      <h1
-        style={{
-          textAlign: 'center',
-          color: tokens.accent,
-          fontSize: 36,
-          marginBottom: 20,
-        }}
-      >
-        【任务NPC表】NPC任务详情
-      </h1>
       <div
         style={{
-          textAlign: 'center',
-          color: tokens.muted,
-          fontSize: 14,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
           marginBottom: 20,
         }}
       >
-        共 {data.length} 个活跃NPC
+        <QuestSearchBar
+          allNpcs={data}
+          onSelect={(r: QuestSearchResult) =>
+            navigate(`/quest_npc/${r.npc.npc_name}`, {
+              state: { questNumber: r.quest.quest_number },
+            })
+          }
+        />
+        <div style={{ flex: 1, textAlign: 'center' }}>
+          <h1
+            style={{
+              color: tokens.accent,
+              fontSize: 36,
+              margin: 0,
+            }}
+          >
+            【任务NPC表】NPC任务详情
+          </h1>
+          <div
+            style={{
+              color: tokens.muted,
+              fontSize: 14,
+              marginTop: 4,
+            }}
+          >
+            共 {data.length} 个活跃NPC
+          </div>
+        </div>
       </div>
-      <QuestSearchBar
-        allNpcs={data}
-        onSelect={(r: QuestSearchResult) =>
-          navigate(`/quest_npc/${r.npc.npc_name}`, {
-            state: { questNumber: r.quest.quest_number },
-          })
-        }
-      />
       {sortedGroups.map(([category, npcs]) => (
         <div key={category}>
           <div

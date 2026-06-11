@@ -125,7 +125,7 @@ export default function QuestSearchBar({
   return (
     <div
       ref={containerRef}
-      style={{ position: 'relative', maxWidth: 400, margin: '0 auto 20px' }}
+      style={{ position: 'relative', width: 320, flexShrink: 0 }}
     >
       <input
         ref={inputRef}

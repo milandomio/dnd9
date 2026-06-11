@@ -522,24 +522,41 @@ def run():
     props_by_translation: dict[str, list[dict]] = {}
     for r in sorted(props, key=_ore_quality_key):
         translation = resolve_name(r["asset_name"], r["translation_key"], "props")
+        # Ore quality variants without translation: normalize to base ore name
+        if translation == r["asset_name"]:
+            m = _ORE_QUALITY_RE.match(r["asset_name"])
+            if m:
+                translation = m.group(1) if m.group(1).startswith("Ore_") else "Ore_" + m.group(1)
         props_by_translation.setdefault(translation, []).append(r)
     for translation, group in props_by_translation.items():
         merged_coords = []
+        seen_coords: set[tuple] = set()
         for r in group:
             coords = all_coords.get(r["asset_name"], [])
-            merged_coords.extend(coords)
+            for c in coords:
+                key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
+                if key not in seen_coords:
+                    seen_coords.add(key)
+                    merged_coords.append(c)
         # Also try matching via cleaned ore name
         if not merged_coords:
             for r in group:
                 m = _ORE_QUALITY_RE.match(r["asset_name"])
                 if m:
                     coords = all_coords.get(m.group(1), [])
-                    merged_coords.extend(coords)
+                    for c in coords:
+                        key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
+                        if key not in seen_coords:
+                            seen_coords.add(key)
+                            merged_coords.append(c)
                     if merged_coords:
                         break
         if not merged_coords:
             continue
+        # For merged ore quality variants, use base ore name as key
         name_key = group[0]["asset_name"]
+        if len(group) > 1 and _ORE_QUALITY_RE.match(name_key):
+            name_key = translation
         props_index.append(
             {
                 "name": name_key,
