@@ -147,23 +147,17 @@ export default function LootdropDetailPage() {
     });
   };
 
-  const toggleRow = (key: string) => {
+  const toggleRow = (key: string, forceShow?: boolean) => {
     setHiddenRows((prev) => {
       const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
+      const currentlyHidden = next.has(key);
+      if (forceShow === true || (forceShow === undefined && currentlyHidden)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
       return next;
     });
-  };
-
-  // Check if all coords of a monster are hidden (either via hidden or hiddenRows)
-  const isMonsterFullyHidden = (monsterName: string) => {
-    const monster = monsters.find((m) => m.name === monsterName);
-    if (!monster) return true;
-    if (hidden.has(monsterName)) return true;
-    return monster.coords.every((_, j) =>
-      hiddenRows.has(`${monsterName}-${j}`)
-    );
   };
 
   const monsters = data.monsters ?? [];
@@ -850,77 +844,21 @@ export default function LootdropDetailPage() {
           return (
             <DebugCoordTable
               rows={rows}
-              onToggleRow={(key) => {
-                // Extract monster name from key (format: "monsterName-index")
-                const monsterName = key.substring(0, key.lastIndexOf('-'));
-                const monster = monsters.find((m) => m.name === monsterName);
-
-                if (monster) {
-                  // Check if all coords of this monster are currently hidden
-                  const allHidden = isMonsterFullyHidden(monsterName);
-
-                  if (allHidden) {
-                    // If all hidden, show all coords of this monster
-                    setHidden((prev) => {
-                      const next = new Set(prev);
-                      next.delete(monsterName);
-                      return next;
-                    });
-                    setHiddenRows((prev) => {
-                      const next = new Set(prev);
-                      monster.coords.forEach((_, j) => {
-                        next.delete(`${monsterName}-${j}`);
-                      });
-                      return next;
-                    });
-                  } else {
-                    // If not all hidden, hide this specific row
-                    toggleRow(key);
-                  }
-                } else {
-                  toggleRow(key);
-                }
-              }}
+              onToggleRow={toggleRow}
               onToggleLabel={(label) => {
                 const labelRows = rows.filter((r) => r.label === label);
                 const allHidden = labelRows.every((r) => r.hidden);
-                for (const r of labelRows) {
-                  if (allHidden) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.delete(r.key);
-                      return n;
-                    });
-                  } else if (!hiddenRows.has(r.key)) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.add(r.key);
-                      return n;
-                    });
-                  }
-                }
+                for (const r of labelRows) toggleRow(r.key, !allHidden);
               }}
               onToggleMarkName={(name) => {
-                toggle(name);
+                const mRows = rows.filter((r) => r.monster?.name === name);
+                const allHidden = mRows.every((r) => r.hidden);
+                for (const r of mRows) toggleRow(r.key, !allHidden);
               }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);
                 const allHidden = mapRows.every((r) => r.hidden);
-                for (const r of mapRows) {
-                  if (allHidden) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.delete(r.key);
-                      return n;
-                    });
-                  } else if (!hiddenRows.has(r.key)) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.add(r.key);
-                      return n;
-                    });
-                  }
-                }
+                for (const r of mapRows) toggleRow(r.key, !allHidden);
               }}
               showMonster
             />

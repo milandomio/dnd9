@@ -9,15 +9,24 @@ from config import DATA_DELIVERY_DIR, IMG_SRC, OUTPUT_DIR
 
 
 def _deliver():
-    """Move JSON + DB, copy images to DATA_DELIVERY_DIR for frontend."""
+    """Move JSON outputs and copy images to DATA_DELIVERY_DIR for frontend.
+
+    DB is a backend-only file and must NOT be delivered to the frontend area.
+    """
     dst = DATA_DELIVERY_DIR
     dst.mkdir(parents=True, exist_ok=True)
+
+    # Remove any stale .db files from delivery dir (backend-only)
+    for stale_db in dst.glob("*.db"):
+        stale_db.unlink()
 
     # Move JSON outputs → data/json/
     json_dst = dst / "json"
     json_dst.mkdir(parents=True, exist_ok=True)
     if OUTPUT_DIR.exists():
         for item in OUTPUT_DIR.iterdir():
+            if item.suffix == ".db":
+                continue  # skip DB files
             dest = json_dst / item.name
             if item.is_dir():
                 if dest.exists():

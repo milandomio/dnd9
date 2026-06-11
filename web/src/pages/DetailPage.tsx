@@ -62,11 +62,15 @@ export default function DetailPage() {
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
-  const toggleRow = (key: string) => {
+  const toggleRow = (key: string, forceShow?: boolean) => {
     setHiddenRows((prev) => {
       const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
+      const currentlyHidden = next.has(key);
+      if (forceShow === true || (forceShow === undefined && currentlyHidden)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
       return next;
     });
   };
@@ -642,10 +646,7 @@ export default function DetailPage() {
             const matched = rows.filter(pred);
             if (matched.length === 0) return;
             const allHidden = matched.every((r) => r.hidden);
-            for (const r of matched) {
-              if (allHidden && r.hidden) toggleRow(r.key);
-              else if (!allHidden && !r.hidden) toggleRow(r.key);
-            }
+            for (const r of matched) toggleRow(r.key, !allHidden);
           }
           return (
             <DebugCoordTable

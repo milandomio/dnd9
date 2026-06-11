@@ -72,8 +72,11 @@ export default function QuestItemGroupPage() {
   const { group } = useParams<{ group: string }>();
   const dataKey = `quest_items_groups/${group || ''}`;
   const ssrData = useSSRData<GroupData>(dataKey);
-  const [data, setData] = useState<GroupData | null>(ssrData || null);
-  const [loading, setLoading] = useState(!ssrData);
+  const hasFullData = !!ssrData?.entities?.length;
+  const [data, setData] = useState<GroupData | null>(
+    hasFullData ? ssrData : null
+  );
+  const [loading, setLoading] = useState(!hasFullData);
   const { modules } = useDungeonModules();
   const dataVersion = useDataVersion();
   const [hidden, setHidden] = useState<Set<string>>(() => {
@@ -90,7 +93,7 @@ export default function QuestItemGroupPage() {
 
   useEffect(() => {
     if (!group) return;
-    if (ssrData?.entities) {
+    if (ssrData?.entities?.length) {
       setLoading(false);
       return;
     }
@@ -146,6 +149,19 @@ export default function QuestItemGroupPage() {
     });
   };
 
+  const toggleRow = (key: string, forceShow?: boolean) => {
+    setHiddenRows((prev) => {
+      const next = new Set(prev);
+      const currentlyHidden = next.has(key);
+      if (forceShow === true || (forceShow === undefined && currentlyHidden)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
+      return next;
+    });
+  };
+
   const entities = data.entities ?? [];
 
   const mapGroups = new Map<
@@ -163,8 +179,8 @@ export default function QuestItemGroupPage() {
     }
   >();
   for (const e of entities) {
-    if (hidden.has(e.name)) continue;
     e.coords.forEach((c, j) => {
+      if (hidden.has(e.name) || hiddenRows.has(`${e.name}-${j}`)) return;
       if (!mapGroups.has(c.map))
         mapGroups.set(c.map, { mod: modules.get(c.map), dots: [] });
       mapGroups
@@ -784,54 +800,21 @@ export default function QuestItemGroupPage() {
           return (
             <DebugCoordTable
               rows={rows}
-              onToggleRow={(key) => {
-                setHiddenRows((prev) => {
-                  const next = new Set(prev);
-                  if (next.has(key)) next.delete(key);
-                  else next.add(key);
-                  return next;
-                });
-              }}
+              onToggleRow={toggleRow}
               onToggleLabel={(label) => {
                 const labelRows = rows.filter((r) => r.label === label);
                 const allHidden = labelRows.every((r) => r.hidden);
-                for (const r of labelRows) {
-                  if (allHidden) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.delete(r.key);
-                      return n;
-                    });
-                  } else if (!hiddenRows.has(r.key)) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.add(r.key);
-                      return n;
-                    });
-                  }
-                }
+                for (const r of labelRows) toggleRow(r.key, !allHidden);
               }}
               onToggleMarkName={(name) => {
-                toggle(name);
+                const mRows = rows.filter((r) => r.monster?.name === name);
+                const allHidden = mRows.every((r) => r.hidden);
+                for (const r of mRows) toggleRow(r.key, !allHidden);
               }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);
                 const allHidden = mapRows.every((r) => r.hidden);
-                for (const r of mapRows) {
-                  if (allHidden) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.delete(r.key);
-                      return n;
-                    });
-                  } else if (!hiddenRows.has(r.key)) {
-                    setHiddenRows((prev) => {
-                      const n = new Set(prev);
-                      n.add(r.key);
-                      return n;
-                    });
-                  }
-                }
+                for (const r of mapRows) toggleRow(r.key, !allHidden);
               }}
               showMonster
             />
