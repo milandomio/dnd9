@@ -16,14 +16,13 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useTheme } from '../hooks/useTheme';
 import {
   getAdj,
-  applyTransform,
-  computePixel,
   useCtrlBtn,
   useCtrlInput,
   type AdjState,
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
+import MapPanel from '../components/MapPanel';
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: '废墟2层地牢',
@@ -37,14 +36,6 @@ const GROUP_LABELS: Record<string, string> = {
 };
 
 type Entity = ItemEntity | MonsterEntity | PropsEntity;
-
-function zColor(z: number): string {
-  if (z > 299) return '#00ffff';
-  if (z >= -299) return '#ffff00';
-  return '#ff3333';
-}
-
-const GLOW = '0 0 4px #fff, 0 0 2px #000';
 
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
@@ -243,6 +234,17 @@ export default function DetailPage() {
               const range = baseRange + adj.range || 1600;
               const offX = (mod?.offset_x ?? 0) + adj.x;
               const offY = (mod?.offset_y ?? 0) + adj.y;
+              const filteredDots = mapCoords
+                .filter((c) => {
+                  const idx = coordKeyToIndex.get(
+                    `${c.file}|${c.x}|${c.y}|${c.z}`
+                  );
+                  return !(
+                    idx !== undefined && hiddenRows.has(`${c.file}-${idx}`)
+                  );
+                })
+                .map((c) => ({ x: c.x, y: c.y, z: c.z, color: '' }));
+              if (filteredDots.length === 0) return null;
               return (
                 <div
                   key={mapName}
@@ -307,74 +309,19 @@ export default function DetailPage() {
                     </div>
                   )}
 
-                  <div
-                    style={{
-                      aspectRatio: `${sx} / ${sy}`,
-                      backgroundColor: tokens.bg,
-                      border: `1px solid ${tokens.border}`,
-                      borderRadius: 4,
-                      position: 'relative',
-                      overflow: 'hidden',
-                      backgroundImage: `url(./data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp)`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  >
-                    {mapCoords.map((c, i) => {
-                      const idx = coordKeyToIndex.get(
-                        `${c.file}|${c.x}|${c.y}|${c.z}`
-                      );
-                      if (
-                        idx !== undefined &&
-                        hiddenRows.has(`${c.file}-${idx}`)
-                      )
-                        return null;
-                      const [x, y] = applyTransform(c.x, c.y, offX, offY, adj);
-                      const [px, py] = computePixel(x, y, range, sx, sy);
-                      const col = zColor(c.z);
-                      const textCol = col === '#ff3333' ? '#ffffff' : col;
-                      const textShadow =
-                        col === '#ff3333'
-                          ? '0.5px 0.5px 0 #ff3333,-0.5px -0.5px 0 #ff3333,0 0 4px #fff,0 0 2px #000'
-                          : GLOW;
-                      return (
-                        <div
-                          key={i}
-                          style={{
-                            position: 'absolute',
-                            left: `${px}%`,
-                            top: `${py}%`,
-                            width: 9,
-                            height: 9,
-                            borderRadius: '50%',
-                            background: col,
-                            boxShadow: `0 0 6px ${col}`,
-                            border: '1px solid #fff',
-                            transform: 'translate(-50%, -50%)',
-                            zIndex: 10,
-                          }}
-                        >
-                          <span
-                            style={{
-                              position: 'absolute',
-                              left: '50%',
-                              top: '100%',
-                              transform: 'translateX(-50%)',
-                              fontSize: 11,
-                              fontFamily: 'Arial, sans-serif',
-                              color: textCol,
-                              whiteSpace: 'nowrap',
-                              textShadow: textShadow,
-                              lineHeight: 1,
-                              marginTop: 1,
-                            }}
-                          >
-                            {Math.round(c.z)}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <MapPanel
+                    imgName={
+                      mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
+                    }
+                    sx={sx}
+                    sy={sy}
+                    dots={filteredDots}
+                    offX={offX}
+                    offY={offY}
+                    adj={adj}
+                    range={range}
+                    singleCategory
+                  />
                   {debug && (
                     <div
                       style={{

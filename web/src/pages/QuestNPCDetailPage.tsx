@@ -248,6 +248,8 @@ export default function QuestNPCDetailPage() {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
                 transition: 'box-shadow 0.3s, transform 0.3s, opacity 0.2s',
                 opacity: questDone ? 0.5 : 1,
+                overflow: 'hidden',
+                minWidth: 0,
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
@@ -324,6 +326,8 @@ export default function QuestNPCDetailPage() {
                           width: '100%',
                           borderCollapse: 'collapse',
                           fontSize: 14,
+                          tableLayout: 'fixed',
+                          wordBreak: 'break-word',
                         }}
                       >
                         <thead>
@@ -517,6 +521,8 @@ export default function QuestNPCDetailPage() {
                       width: '100%',
                       borderCollapse: 'collapse',
                       fontSize: 14,
+                      tableLayout: 'fixed',
+                      wordBreak: 'break-word',
                     }}
                   >
                     <thead>

@@ -9,14 +9,13 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import type { DungeonModule } from '../types/data';
 import {
   getAdj,
-  applyTransform,
-  computePixel,
   useCtrlBtn,
   useCtrlInput,
   type AdjState,
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
+import MapPanel from '../components/MapPanel';
 
 interface LootdropCoord {
   x: number;
@@ -51,14 +50,6 @@ const GROUP_LABELS: Record<string, string> = {
   Ruins: '废墟1层',
   ShipGraveyard: '水图',
 };
-
-function zColor(z: number): string {
-  if (z > 299) return '#00ffff';
-  if (z >= -299) return '#ffff00';
-  return '#ff3333';
-}
-
-const GLOW = '0 0 4px #fff, 0 0 2px #000';
 
 export default function LootdropDetailPage() {
   const { name } = useParams<{ name: string }>();
@@ -428,6 +419,7 @@ export default function LootdropDetailPage() {
               </div>
             )}
             {groupItems.map(({ mapName, mod, dots }) => {
+              if (dots.length === 0) return null;
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600 || 1600;
@@ -681,76 +673,24 @@ export default function LootdropDetailPage() {
                     </div>
                   )}
                   {visibleMaps.has(mapName) ? (
-                    <div
-                      style={{
-                        aspectRatio: `${sx} / ${sy}`,
-                        backgroundColor: tokens.bg,
-                        border: `1px solid ${tokens.border}`,
-                        borderRadius: 4,
-                        position: 'relative',
-                        overflow: 'hidden',
-                        backgroundImage: `url(./data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp)`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                      }}
-                    >
-                      {dots.map((d, i) => {
-                        if (hiddenRows.has(`${d.monster.name}-${d.idx}`))
-                          return null;
-                        const [x, y] = applyTransform(
-                          d.x,
-                          d.y,
-                          offX,
-                          offY,
-                          adj
-                        );
-                        const [px, py] = computePixel(x, y, range, sx, sy);
-                        const col = d.monster.color;
-                        const zcol = zColor(d.z);
-                        const textCol = zcol === '#ff3333' ? '#ffffff' : zcol;
-                        const textShadow =
-                          zcol === '#ff3333'
-                            ? '0.5px 0.5px 0 #ff3333,-0.5px -0.5px 0 #ff3333,0 0 4px #fff,0 0 2px #000'
-                            : GLOW;
-                        return (
-                          <div
-                            key={i}
-                            title={d.monster.translation}
-                            style={{
-                              position: 'absolute',
-                              left: `${px}%`,
-                              top: `${py}%`,
-                              width: 9,
-                              height: 9,
-                              borderRadius: '50%',
-                              background: col,
-                              boxShadow: `0 0 6px ${col}`,
-                              border: '1px solid #fff',
-                              transform: 'translate(-50%, -50%)',
-                              zIndex: 10,
-                            }}
-                          >
-                            <span
-                              style={{
-                                position: 'absolute',
-                                left: '50%',
-                                top: '100%',
-                                transform: 'translateX(-50%)',
-                                fontSize: 11,
-                                fontFamily: 'Arial, sans-serif',
-                                color: textCol,
-                                whiteSpace: 'nowrap',
-                                textShadow,
-                                lineHeight: 1,
-                                marginTop: 1,
-                              }}
-                            >
-                              {Math.round(d.z)}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    <MapPanel
+                      imgName={
+                        mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
+                      }
+                      sx={sx}
+                      sy={sy}
+                      dots={dots.map((d) => ({
+                        x: d.x,
+                        y: d.y,
+                        z: d.z,
+                        color: d.monster.color,
+                        title: d.monster.translation,
+                      }))}
+                      offX={offX}
+                      offY={offY}
+                      adj={adj}
+                      range={range}
+                    />
                   ) : (
                     <div
                       style={{
@@ -845,20 +785,30 @@ export default function LootdropDetailPage() {
             <DebugCoordTable
               rows={rows}
               onToggleRow={toggleRow}
-              onToggleLabel={(label) => {
-                const labelRows = rows.filter((r) => r.label === label);
-                const allHidden = labelRows.every((r) => r.hidden);
-                for (const r of labelRows) toggleRow(r.key, !allHidden);
+              onToggleGroup={(gk) => {
+                const gRows = rows.filter((r) => r.group === gk);
+                const allHidden = gRows.every((r) => r.hidden);
+                for (const r of gRows) toggleRow(r.key, !allHidden);
               }}
               onToggleMarkName={(name) => {
                 const mRows = rows.filter((r) => r.monster?.name === name);
                 const allHidden = mRows.every((r) => r.hidden);
                 for (const r of mRows) toggleRow(r.key, !allHidden);
               }}
+              onToggleFile={(f) => {
+                const fRows = rows.filter((r) => r.file === f);
+                const allHidden = fRows.every((r) => r.hidden);
+                for (const r of fRows) toggleRow(r.key, !allHidden);
+              }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);
                 const allHidden = mapRows.every((r) => r.hidden);
                 for (const r of mapRows) toggleRow(r.key, !allHidden);
+              }}
+              onToggleLabel={(label) => {
+                const labelRows = rows.filter((r) => r.label === label);
+                const allHidden = labelRows.every((r) => r.hidden);
+                for (const r of labelRows) toggleRow(r.key, !allHidden);
               }}
               showMonster
             />

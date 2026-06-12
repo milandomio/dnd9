@@ -506,10 +506,14 @@ class DatabaseManager:
             if not found_valid:
                 skipped_names.append(module_name)
                 continue
-            # If ModuleType is empty, try sl_base → find the module that owns this map's ModuleType
+            # Priority 1: infer group from map file path directory structure
+            path_group = path_group_map.get(module_name, "")
+            if path_group:
+                module_type = path_group
+            # Priority 2: ModuleType from JSON / sl_base type_map lookup
             if not module_type and sl_base:
                 module_type = type_map.get(sl_base, "")
-            # Fallback: infer from module name prefix
+            # Priority 3: infer from module name prefix
             if not module_type:
                 for prefix, group in [
                     ("ShipGraveyard", "ShipGraveyard"),
@@ -536,9 +540,6 @@ class DatabaseManager:
                     if module_name.lower().startswith(prefix.lower()):
                         module_type = group
                         break
-            # Final fallback: infer group from map file path directory structure
-            if not module_type:
-                module_type = path_group_map.get(module_name, "")
             # Extract MapImage (direct Art file reference, e.g. CaveMaze_02)
             mi_asset = (props.get("MapImage") or {}).get("AssetPathName", "")
             map_image = _ue_asset_base_name(mi_asset) or ""

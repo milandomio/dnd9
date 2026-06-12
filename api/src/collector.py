@@ -34,10 +34,10 @@ _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
 _UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
-_ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_(?:High|Med|Low|VeryLow|Random))$")
+_ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_)?(?:High|Med|Low|VeryLow|Random)$")
 _ORE_ITEM_STRIP_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
 _ORE_ITEM_COORD_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
-_RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique)$")
+_RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique|VeryLow|Low|Med|High|Random)$")
 # 模糊后缀：先于 HARDCODED 兜底，用这些后缀剥离后重试 Game.json 前缀匹配
 _RESOLVE_FUZZY_RE = re.compile(
     r"(?:"
@@ -321,6 +321,19 @@ def run():
     props = db.get_props_entities()
     all_coords = db.get_all_coordinates()
 
+    # Entity name sets for coord type filtering (prevents cross-type contamination)
+    _item_names = {r["item_name"] for r in items}
+    _monster_names = {r["monster_name"] for r in monsters}
+    _prop_names = {r["asset_name"] for r in props}
+
+    def _filter_coords(coords: list[dict], entity_names: set[str], is_prop: bool = False) -> list[dict]:
+        """Keep only coords whose original_keyword belongs to the target entity type."""
+
+        def _match(kw):
+            return bool(kw in entity_names or (is_prop and kw.startswith("Ore_")))
+
+        return [c for c in coords if _match(c["original_keyword"])]
+
     # ─── Export JSON ───
     print("\nExporting JSON files...")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -379,10 +392,23 @@ def run():
                 fuzzy2_key = prefix + fuzzy2_alias
                 if fuzzy2_key in translations:
                     return translations[fuzzy2_key]
-        # 剥离末尾数字/难度后缀后重试兜底翻译
+        # 剥离末尾数字/难度/矿石品质后缀后重试翻译
         stripped = _RESOLVE_STRIP_RE.sub("", name)
-        if stripped != name and stripped in HARDCODED_TRANSLATIONS:
-            return HARDCODED_TRANSLATIONS[stripped]
+        if stripped != name:
+            if stripped in HARDCODED_TRANSLATIONS:
+                return HARDCODED_TRANSLATIONS[stripped]
+            stripped_alias = TRANSLATION_ALIAS_MAP.get(stripped, stripped)
+            for prefix in [
+                "Text_DesignData_Item_Item_",
+                "Text_DesignData_Monster_Monster_",
+                "Text_DesignData_Props_Props_",
+                "Text_DesignData_Dungeon_DungeonModule_",
+                "Text_DesignData_Emote_Emote_",
+                "Text_DesignData_ActionSkin_",
+            ]:
+                stripped_key = prefix + stripped_alias
+                if stripped_key in translations:
+                    return translations[stripped_key]
         if scope == "module":
             if name in MODULE_NAME_OVERRIDE:
                 return MODULE_NAME_OVERRIDE[name]
@@ -443,12 +469,12 @@ def run():
         name = r["item_name"]
         if name in skip_variants:
             continue
-        coords = all_coords.get(name, [])
+        coords = _filter_coords(all_coords.get(name, []), _item_names)
         # Try ore name cleaning: GoldOres → GoldOre
         if not coords:
             m = _ORE_ITEM_COORD_RE.match(name)
             if m:
-                coords = all_coords.get(m.group(1) + "Ore", [])
+                coords = _filter_coords(all_coords.get(m.group(1) + "Ore", []), _item_names)
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
@@ -491,7 +517,7 @@ def run():
     # ── monsters: index + individual files ──
     monsters_index = []
     for r in monsters:
-        coords = all_coords.get(r["monster_name"], [])
+        coords = _filter_coords(all_coords.get(r["monster_name"], []), _monster_names)
         if not coords:
             continue
         translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
@@ -545,7 +571,7 @@ def run():
         merged_coords = []
         seen_coords: set[tuple] = set()
         for r in group:
-            coords = all_coords.get(r["asset_name"], [])
+            coords = _filter_coords(all_coords.get(r["asset_name"], []), _prop_names, is_prop=True)
             for c in coords:
                 key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
                 if key not in seen_coords:
@@ -556,7 +582,7 @@ def run():
             for r in group:
                 m = _ORE_QUALITY_RE.match(r["asset_name"])
                 if m:
-                    coords = all_coords.get(m.group(1), [])
+                    coords = _filter_coords(all_coords.get(m.group(1), []), _prop_names, is_prop=True)
                     for c in coords:
                         key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
                         if key not in seen_coords:
@@ -566,10 +592,12 @@ def run():
                         break
         if not merged_coords:
             continue
-        # For merged ore quality variants, use base ore name as key
+        # For merged ore quality variants, use English base ore name as key
         name_key = group[0]["asset_name"]
-        if len(group) > 1 and _ORE_QUALITY_RE.match(name_key):
-            name_key = translation
+        if len(group) > 1:
+            m = _ORE_QUALITY_RE.match(name_key)
+            if m:
+                name_key = m.group(1)
         props_index.append(
             {
                 "name": name_key,

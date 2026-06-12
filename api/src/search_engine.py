@@ -385,14 +385,13 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
 
     matches: dict[str, list[int]] = {}
     for idx, s in enumerate(all_spawners):
-        # preview_name is the actual entity name (e.g., StatueDwarven from Props)
-        # keyword is the spawner name (e.g., Statue_Dwarven), used as fallback
+        # Always match against the spawner keyword itself
+        kw = SPAWNER_ALIAS_MAP.get(s["keyword"], s["keyword"])
+        matched = set(match_keyword(kw, terms_set, auto))
+        # Also match against preview_name if present
         preview_name = s.get("preview_name", "")
         if preview_name:
-            matched = match_keyword(preview_name, terms_set, auto)
-        else:
-            kw = SPAWNER_ALIAS_MAP.get(s["keyword"], s["keyword"])
-            matched = match_keyword(kw, terms_set, auto)
+            matched.update(match_keyword(preview_name, terms_set, auto))
         for m in matched:
             if m not in matches:
                 matches[m] = []

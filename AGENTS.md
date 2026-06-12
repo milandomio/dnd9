@@ -2,70 +2,23 @@
 
 ## 术语约定
 
-- "我看到" — 指在部署项目的 http://localhost:8080/ 中的某个页面上看到的内容
-- "前端" — 指 web 目录
-- "后端" — 指 api 目录
-- "db" — 指 api/data/darkfindv5.db
-- "坐标" — 指录入到db的spawners表中的道具/怪物实体实际在地图位置的数据，包含x、y、z三个REAL字段
+- "我看到" — 部署后 http://localhost:8080/ 上的内容
+- "前端" — `web/`，"后端" — `api/`，"db" — `api/data/darkfindv5.db`
+- "坐标" — spawners 表中 x/y/z 三个 REAL 字段
 - "启动web" — `cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
-- "部署" — 运行后端管道 → 构建前端 → 启动web
-- "deploy脚本" — 项目根目录下的 `deploy.sh`，一键部署并自动提交
 
-## 本地开发命令
+## V4 参考
 
-```bash
-# 一键部署（自动提交）
-./deploy.sh
-
-# 手动部署（不提交）
-cd api && python main.py
-cd web && npm run build
-cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
-```
-
-## V4 参考目录
-
-V4 项目通过符号链接提供只读参考：`v4_reference/`
-
-| 文件 | 说明 |
-|------|------|
-| `v4_reference/group_config.json` | 分组翻译配置（Cave→哥布林洞穴1层 等） |
-| `v4_reference/src/config.py` | MODULE_OFFSET_MAP、MODULE_DISPLAY_OVERRIDE、HARDCODED_TRANSLATIONS |
-| `v4_reference/path_config.json` | V4 的路径配置 |
-| `v4_reference/output/` | V4 生成的 HTML 页面 |
-
-移植时参考这些文件，但不要修改 V4 原文件。
+符号链接 `v4_reference/` 提供只读参考（不要修改）：
+- `group_config.json` — 分组翻译配置
+- `src/config.py` — MODULE_OFFSET_MAP、HARDCODED_TRANSLATIONS
 
 ## MCP Tools
 
-本项目配置了以下 MCP 服务器：
+### fmodel-query
+查询游戏解包数据（`/home/mio/fmod/Output/Exports/DungeonCrawler/...`）。
+工具：`list_directory`、`search_files`、`read_file`、`get_file_info`、`search_json_keys`
 
-### 1. fmodel-query
-
-用于查询 FModel 导出的游戏数据。
-
-数据路径：`/home/mio/fmod/Output/Exports/DungeonCrawler/Content/DungeonCrawler/`
-
-可用工具：
-- `list_directory` — 浏览目录结构
-- `search_files` — 按模式搜索文件（如 *.json, *.uasset）
-- `read_file` — 读取文件内容
-- `get_file_info` — 获取文件详细信息
-- `search_json_keys` — 搜索包含特定 key 的 JSON 文件
-
-使用场景：需要查看游戏解包数据时，优先使用 fmodel-query 工具。
-
-### 2. sqlite-debug
-
-用于调试时直接读写项目的 SQLite 数据库。
-
-数据库路径：`/home/mio/fmod/DarkFindV5/api/data/darkfindv5.db`
-
-可用工具：
-- `query` — 执行 SQL SELECT 查询
-- `execute` — 执行 SQL INSERT/UPDATE/DELETE
-- `list_tables` — 列出所有表
-- `describe_table` — 查看表结构
-- `export_table` — 导出表数据为 JSON
-
-使用场景：调试数据管道时，直接查询数据库验证数据。
+### sqlite-debug
+直接读写 `api/data/darkfindv5.db`。
+工具：`query`、`execute`、`list_tables`、`describe_table`、`export_table`

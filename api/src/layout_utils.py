@@ -14,6 +14,8 @@ def load_all_layout_rotations() -> dict[str, int]:
         for fn in filenames:
             if not fn.endswith(".json"):
                 continue
+            if not fn.startswith("ShipGraveyard_"):
+                continue
             fp = Path(dirpath) / fn
             try:
                 with open(fp, encoding="utf-8") as f:

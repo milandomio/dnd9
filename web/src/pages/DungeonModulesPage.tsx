@@ -53,7 +53,7 @@ export default function DungeonModulesPage() {
   useEffect(() => {
     if (modules.size === 0) return;
     const map = new Map<string, number>();
-    for (const m of modules.values()) {
+    for (const m of new Set(modules.values())) {
       const g = m.group || '';
       map.set(g, (map.get(g) || 0) + 1);
     }

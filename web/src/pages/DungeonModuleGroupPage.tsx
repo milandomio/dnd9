@@ -25,7 +25,9 @@ export default function DungeonModuleGroupPage() {
   const { tokens } = useTheme();
 
   const modules = useMemo(() => {
-    const filtered = [...allModules.values()].filter((m) => m.group === group);
+    const filtered = [...new Set(allModules.values())].filter(
+      (m) => m.group === group
+    );
     filtered.sort((a, b) => {
       const sy = (a.size_y || 1) - (b.size_y || 1);
       if (sy !== 0) return sy;

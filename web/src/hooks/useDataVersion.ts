@@ -18,7 +18,7 @@ export function useDataVersion(): string {
     if (fetchStarted) return;
     fetchStarted = true;
 
-    fetch('./data/json/meta.json')
+    fetch('/data/json/meta.json')
       .then((r) => r.json())
       .then((d: { dataDate?: string }) => {
         const remote = d.dataDate || '';
