@@ -244,12 +244,13 @@ export default function QuestNPCDetailPage() {
                   ? '1px solid #388E3C'
                   : `1px solid ${tokens.border}`,
                 borderRadius: 8,
-                padding: 14,
+                padding: questDone ? '4px 14px' : 14,
                 boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
                 transition: 'box-shadow 0.3s, transform 0.3s, opacity 0.2s',
                 opacity: questDone ? 0.5 : 1,
                 overflow: 'hidden',
                 minWidth: 0,
+                height: questDone ? 32 : 'auto',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
@@ -296,16 +297,234 @@ export default function QuestNPCDetailPage() {
                 </span>
               </div>
 
-              {q.contents.length > 0 &&
-                (() => {
-                  const hasLoot = q.contents.some((c) => c.loot_state);
-                  const hasRarity = q.contents.some((c) => c.rarity);
-                  return (
+              {!questDone && (
+                <>
+                  {q.contents.length > 0 &&
+                    (() => {
+                      const hasLoot = q.contents.some((c) => c.loot_state);
+                      const hasRarity = q.contents.some((c) => c.rarity);
+                      return (
+                        <div
+                          style={{
+                            background:
+                              'linear-gradient(135deg, rgba(33,150,243,0.08), rgba(33,150,243,0.04))',
+                            border: '1px solid rgba(33,150,243,0.2)',
+                            padding: 8,
+                            borderRadius: 6,
+                            marginBottom: 8,
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontSize: 12,
+                              color: tokens.accent,
+                              fontWeight: 'bold',
+                              marginBottom: 4,
+                            }}
+                          >
+                            任务目标
+                          </div>
+                          <table
+                            style={{
+                              width: '100%',
+                              borderCollapse: 'collapse',
+                              fontSize: 14,
+                              tableLayout: 'fixed',
+                              wordBreak: 'break-word',
+                            }}
+                          >
+                            <thead>
+                              <tr
+                                style={{
+                                  borderBottom: `1px solid ${tokens.border}`,
+                                }}
+                              >
+                                <th
+                                  style={{
+                                    textAlign: 'left',
+                                    padding: '4px 8px',
+                                    color: '#aaa',
+                                    fontSize: 13,
+                                    whiteSpace: 'nowrap',
+                                    width: '2em',
+                                  }}
+                                >
+                                  类型
+                                </th>
+                                <th
+                                  style={{
+                                    textAlign: 'left',
+                                    padding: '4px 8px',
+                                    color: '#aaa',
+                                    fontSize: 13,
+                                  }}
+                                >
+                                  目标
+                                </th>
+                                {hasLoot && (
+                                  <th
+                                    style={{
+                                      textAlign: 'left',
+                                      padding: '4px 8px',
+                                      color: '#aaa',
+                                      fontSize: 13,
+                                      whiteSpace: 'nowrap',
+                                      width: '3em',
+                                    }}
+                                  >
+                                    战利品
+                                  </th>
+                                )}
+                                {hasRarity && (
+                                  <th
+                                    style={{
+                                      textAlign: 'left',
+                                      padding: '4px 8px',
+                                      color: '#aaa',
+                                      fontSize: 13,
+                                      whiteSpace: 'nowrap',
+                                      width: '3em',
+                                    }}
+                                  >
+                                    稀有度
+                                  </th>
+                                )}
+                                <th
+                                  style={{
+                                    textAlign: 'left',
+                                    padding: '4px 8px',
+                                    color: '#aaa',
+                                    fontSize: 13,
+                                    whiteSpace: 'nowrap',
+                                    width: '2em',
+                                  }}
+                                >
+                                  数量
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {q.contents.map((c, i) => {
+                                const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
+                                const contentDone = lsGet(contentKey);
+                                return (
+                                  <tr
+                                    key={i}
+                                    style={{
+                                      borderBottom:
+                                        '1px solid rgba(255,255,255,0.06)',
+                                      opacity: contentDone ? 0.4 : 1,
+                                      textDecoration: contentDone
+                                        ? 'line-through'
+                                        : 'none',
+                                    }}
+                                  >
+                                    <td
+                                      style={{
+                                        padding: '3px 8px',
+                                        color: '#ccc',
+                                        whiteSpace: 'nowrap',
+                                      }}
+                                    >
+                                      {CONTENT_TYPE_LABEL[c.type] || c.type}
+                                    </td>
+                                    <td
+                                      style={{
+                                        padding: '3px 8px',
+                                        color: '#fff',
+                                      }}
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={contentDone}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          lsSet(contentKey, !contentDone);
+                                          refresh();
+                                        }}
+                                        onChange={() => {}}
+                                        style={{
+                                          ...checkboxStyle,
+                                          width: 16,
+                                          height: 16,
+                                          marginRight: 4,
+                                        }}
+                                      />
+                                      {c.target}
+                                      <SearchOutlined
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          navigate(location.pathname, {
+                                            state: { searchQuery: c.target },
+                                          });
+                                        }}
+                                        title={`搜索"${c.target}"`}
+                                        style={{
+                                          marginLeft: 6,
+                                          cursor: 'pointer',
+                                          fontSize: 13,
+                                          color: tokens.muted,
+                                          transition: 'color 0.2s',
+                                          verticalAlign: 'middle',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.color =
+                                            tokens.accent;
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.color =
+                                            tokens.muted;
+                                        }}
+                                      />
+                                    </td>
+                                    {hasLoot && (
+                                      <td
+                                        style={{
+                                          padding: '3px 8px',
+                                          color: '#FFB74D',
+                                          fontSize: 12,
+                                          whiteSpace: 'nowrap',
+                                        }}
+                                      >
+                                        {c.loot_state || ''}
+                                      </td>
+                                    )}
+                                    {hasRarity && (
+                                      <td
+                                        style={{
+                                          padding: '3px 8px',
+                                          color: getRarityColor(c.rarity || ''),
+                                          fontSize: 12,
+                                          whiteSpace: 'nowrap',
+                                        }}
+                                      >
+                                        {c.rarity || ''}
+                                      </td>
+                                    )}
+                                    <td
+                                      style={{
+                                        padding: '3px 8px',
+                                        color: '#ccc',
+                                        whiteSpace: 'nowrap',
+                                      }}
+                                    >
+                                      {c.count}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      );
+                    })()}
+
+                  {q.rewards.length > 0 && (
                     <div
                       style={{
                         background:
-                          'linear-gradient(135deg, rgba(33,150,243,0.08), rgba(33,150,243,0.04))',
-                        border: '1px solid rgba(33,150,243,0.2)',
+                          'linear-gradient(135deg, rgba(76,175,80,0.08), rgba(76,175,80,0.04))',
+                        border: '1px solid rgba(76,175,80,0.2)',
                         padding: 8,
                         borderRadius: 6,
                         marginBottom: 8,
@@ -319,7 +538,7 @@ export default function QuestNPCDetailPage() {
                           marginBottom: 4,
                         }}
                       >
-                        任务目标
+                        任务奖励
                       </div>
                       <table
                         style={{
@@ -342,6 +561,8 @@ export default function QuestNPCDetailPage() {
                                 padding: '4px 8px',
                                 color: '#aaa',
                                 fontSize: 13,
+                                whiteSpace: 'nowrap',
+                                width: '4em',
                               }}
                             >
                               类型
@@ -354,38 +575,16 @@ export default function QuestNPCDetailPage() {
                                 fontSize: 13,
                               }}
                             >
-                              目标
+                              物品
                             </th>
-                            {hasLoot && (
-                              <th
-                                style={{
-                                  textAlign: 'left',
-                                  padding: '4px 8px',
-                                  color: '#aaa',
-                                  fontSize: 13,
-                                }}
-                              >
-                                战利品
-                              </th>
-                            )}
-                            {hasRarity && (
-                              <th
-                                style={{
-                                  textAlign: 'left',
-                                  padding: '4px 8px',
-                                  color: '#aaa',
-                                  fontSize: 13,
-                                }}
-                              >
-                                稀有度
-                              </th>
-                            )}
                             <th
                               style={{
                                 textAlign: 'left',
                                 padding: '4px 8px',
                                 color: '#aaa',
                                 fontSize: 13,
+                                whiteSpace: 'nowrap',
+                                width: '2em',
                               }}
                             >
                               数量
@@ -393,310 +592,175 @@ export default function QuestNPCDetailPage() {
                           </tr>
                         </thead>
                         <tbody>
-                          {q.contents.map((c, i) => {
-                            const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
-                            const contentDone = lsGet(contentKey);
-                            return (
+                          {/* 好感度 → 固定第一行 */}
+                          {q.rewards
+                            .filter((r) => r.type_key === 'affinity')
+                            .map((r, ri) => (
                               <tr
-                                key={i}
+                                key={`aff-${ri}`}
                                 style={{
                                   borderBottom:
                                     '1px solid rgba(255,255,255,0.06)',
-                                  opacity: contentDone ? 0.4 : 1,
-                                  textDecoration: contentDone
-                                    ? 'line-through'
-                                    : 'none',
+                                  background: 'rgba(255,100,100,0.1)',
                                 }}
                               >
                                 <td
-                                  style={{ padding: '3px 8px', color: '#ccc' }}
+                                  style={{
+                                    padding: '3px 8px',
+                                    color: '#ccc',
+                                    whiteSpace: 'nowrap',
+                                  }}
                                 >
-                                  {CONTENT_TYPE_LABEL[c.type] || c.type}
+                                  {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
                                 </td>
                                 <td
                                   style={{ padding: '3px 8px', color: '#fff' }}
                                 >
-                                  <input
-                                    type="checkbox"
-                                    checked={contentDone}
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      lsSet(contentKey, !contentDone);
-                                      refresh();
-                                    }}
-                                    onChange={() => {}}
-                                    style={{
-                                      ...checkboxStyle,
-                                      width: 16,
-                                      height: 16,
-                                      marginRight: 4,
-                                    }}
-                                  />
-                                  {c.target}
-                                  <SearchOutlined
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      navigate(location.pathname, {
-                                        state: { searchQuery: c.target },
-                                      });
-                                    }}
-                                    title={`搜索"${c.target}"`}
-                                    style={{
-                                      marginLeft: 6,
-                                      cursor: 'pointer',
-                                      fontSize: 13,
-                                      color: tokens.muted,
-                                      transition: 'color 0.2s',
-                                      verticalAlign: 'middle',
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.color =
-                                        tokens.accent;
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.color =
-                                        tokens.muted;
-                                    }}
-                                  />
+                                  {r.name}
                                 </td>
-                                {hasLoot && (
-                                  <td
-                                    style={{
-                                      padding: '3px 8px',
-                                      color: '#FFB74D',
-                                      fontSize: 12,
-                                    }}
-                                  >
-                                    {c.loot_state || ''}
-                                  </td>
-                                )}
-                                {hasRarity && (
-                                  <td
-                                    style={{
-                                      padding: '3px 8px',
-                                      color: getRarityColor(c.rarity || ''),
-                                      fontSize: 12,
-                                    }}
-                                  >
-                                    {c.rarity || ''}
-                                  </td>
-                                )}
                                 <td
-                                  style={{ padding: '3px 8px', color: '#ccc' }}
+                                  style={{
+                                    padding: '3px 8px',
+                                    color: '#ccc',
+                                    whiteSpace: 'nowrap',
+                                  }}
                                 >
-                                  {c.count}
+                                  {r.count}
                                 </td>
                               </tr>
-                            );
-                          })}
+                            ))}
+                          {/* 普通奖励（排除好感度、经验值、金币） */}
+                          {q.rewards
+                            .filter(
+                              (r) =>
+                                r.type_key !== 'affinity' &&
+                                r.type_key !== 'exp' &&
+                                !(r.type_key === 'item' && r.name === '金币')
+                            )
+                            .map((r, ri) => (
+                              <tr
+                                key={`item-${ri}`}
+                                style={{
+                                  borderBottom:
+                                    '1px solid rgba(255,255,255,0.06)',
+                                }}
+                              >
+                                <td
+                                  style={{
+                                    padding: '3px 8px',
+                                    color: '#ccc',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
+                                  {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
+                                </td>
+                                <td
+                                  style={{ padding: '3px 8px', color: '#fff' }}
+                                >
+                                  {r.name}
+                                </td>
+                                <td
+                                  style={{
+                                    padding: '3px 8px',
+                                    color: '#ccc',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
+                                  {r.count}
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
+                      {/* 金币 + 经验值 → 固定最后一行，4列 */}
+                      {(() => {
+                        const expReward = q.rewards.find(
+                          (r) => r.type_key === 'exp'
+                        );
+                        const goldReward = q.rewards.find(
+                          (r) => r.type_key === 'item' && r.name === '金币'
+                        );
+                        if (!expReward && !goldReward) return null;
+                        return (
+                          <div
+                            style={{
+                              display: 'grid',
+                              gridTemplateColumns: 'repeat(4, 1fr)',
+                              borderTop: `1px solid ${tokens.border}`,
+                              marginTop: 4,
+                              fontSize: 14,
+                            }}
+                          >
+                            <div
+                              style={{
+                                padding: '3px 8px',
+                                color: '#FFD54F',
+                              }}
+                            >
+                              金币
+                            </div>
+                            <div
+                              style={{
+                                padding: '3px 8px',
+                                color: '#FFD54F',
+                              }}
+                            >
+                              {goldReward?.count ?? ''}
+                            </div>
+                            <div
+                              style={{
+                                padding: '3px 8px',
+                                color: '#4fc3f7',
+                              }}
+                            >
+                              经验值
+                            </div>
+                            <div
+                              style={{
+                                padding: '3px 8px',
+                                color: '#4fc3f7',
+                              }}
+                            >
+                              {expReward?.count ?? ''}
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
-                  );
-                })()}
+                  )}
 
-              {q.rewards.length > 0 && (
-                <div
-                  style={{
-                    background:
-                      'linear-gradient(135deg, rgba(76,175,80,0.08), rgba(76,175,80,0.04))',
-                    border: '1px solid rgba(76,175,80,0.2)',
-                    padding: 8,
-                    borderRadius: 6,
-                    marginBottom: 8,
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 12,
-                      color: tokens.accent,
-                      fontWeight: 'bold',
-                      marginBottom: 4,
-                    }}
-                  >
-                    任务奖励
-                  </div>
-                  <table
-                    style={{
-                      width: '100%',
-                      borderCollapse: 'collapse',
-                      fontSize: 14,
-                      tableLayout: 'fixed',
-                      wordBreak: 'break-word',
-                    }}
-                  >
-                    <thead>
-                      <tr
-                        style={{ borderBottom: `1px solid ${tokens.border}` }}
-                      >
-                        <th
-                          style={{
-                            textAlign: 'left',
-                            padding: '4px 8px',
-                            color: '#aaa',
-                            fontSize: 13,
-                          }}
-                        >
-                          类型
-                        </th>
-                        <th
-                          style={{
-                            textAlign: 'left',
-                            padding: '4px 8px',
-                            color: '#aaa',
-                            fontSize: 13,
-                          }}
-                        >
-                          物品
-                        </th>
-                        <th
-                          style={{
-                            textAlign: 'left',
-                            padding: '4px 8px',
-                            color: '#aaa',
-                            fontSize: 13,
-                          }}
-                        >
-                          数量
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* 好感度 → 固定第一行 */}
-                      {q.rewards
-                        .filter((r) => r.type_key === 'affinity')
-                        .map((r, ri) => (
-                          <tr
-                            key={`aff-${ri}`}
-                            style={{
-                              borderBottom: '1px solid rgba(255,255,255,0.06)',
-                              background: 'rgba(255,100,100,0.1)',
-                            }}
-                          >
-                            <td style={{ padding: '3px 8px', color: '#ccc' }}>
-                              {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
-                            </td>
-                            <td style={{ padding: '3px 8px', color: '#fff' }}>
-                              {r.name}
-                            </td>
-                            <td style={{ padding: '3px 8px', color: '#ccc' }}>
-                              {r.count}
-                            </td>
-                          </tr>
-                        ))}
-                      {/* 普通奖励（排除好感度、经验值、金币） */}
-                      {q.rewards
-                        .filter(
-                          (r) =>
-                            r.type_key !== 'affinity' &&
-                            r.type_key !== 'exp' &&
-                            !(r.type_key === 'item' && r.name === '金币')
-                        )
-                        .map((r, ri) => (
-                          <tr
-                            key={`item-${ri}`}
-                            style={{
-                              borderBottom: '1px solid rgba(255,255,255,0.06)',
-                            }}
-                          >
-                            <td style={{ padding: '3px 8px', color: '#ccc' }}>
-                              {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
-                            </td>
-                            <td style={{ padding: '3px 8px', color: '#fff' }}>
-                              {r.name}
-                            </td>
-                            <td style={{ padding: '3px 8px', color: '#ccc' }}>
-                              {r.count}
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                  {/* 金币 + 经验值 → 固定最后一行，4列 */}
-                  {(() => {
-                    const expReward = q.rewards.find(
-                      (r) => r.type_key === 'exp'
-                    );
-                    const goldReward = q.rewards.find(
-                      (r) => r.type_key === 'item' && r.name === '金币'
-                    );
-                    if (!expReward && !goldReward) return null;
-                    return (
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(4, 1fr)',
-                          borderTop: `1px solid ${tokens.border}`,
-                          marginTop: 4,
-                          fontSize: 14,
-                        }}
-                      >
+                  {q.required &&
+                    (() => {
+                      const req = formatRequired(allNpcs, q.required);
+                      if (!req) return null;
+                      const isPrevSameNpc =
+                        req.npcName === npc.npc_name &&
+                        req.questNum === q.quest_number - 1;
+                      return (
                         <div
-                          style={{
-                            padding: '3px 8px',
-                            color: '#FFD54F',
-                          }}
+                          style={{ color: '#ccc', fontSize: 13, marginTop: 6 }}
                         >
-                          金币
+                          <span style={{ fontWeight: 'bold' }}>前置任务: </span>
+                          {isPrevSameNpc ? (
+                            <span>【上一个】</span>
+                          ) : req.npcName ? (
+                            <Link
+                              to={`/quest_npc/${req.npcName}`}
+                              style={{
+                                color: tokens.accent,
+                                textDecoration: 'none',
+                              }}
+                            >
+                              【{req.text}】
+                            </Link>
+                          ) : (
+                            <span>【{req.text}】</span>
+                          )}
                         </div>
-                        <div
-                          style={{
-                            padding: '3px 8px',
-                            color: '#FFD54F',
-                          }}
-                        >
-                          {goldReward?.count ?? ''}
-                        </div>
-                        <div
-                          style={{
-                            padding: '3px 8px',
-                            color: '#4fc3f7',
-                          }}
-                        >
-                          经验值
-                        </div>
-                        <div
-                          style={{
-                            padding: '3px 8px',
-                            color: '#4fc3f7',
-                          }}
-                        >
-                          {expReward?.count ?? ''}
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </div>
+                      );
+                    })()}
+                </>
               )}
-
-              {q.required &&
-                (() => {
-                  const req = formatRequired(allNpcs, q.required);
-                  if (!req) return null;
-                  const isPrevSameNpc =
-                    req.npcName === npc.npc_name &&
-                    req.questNum === q.quest_number - 1;
-                  return (
-                    <div style={{ color: '#ccc', fontSize: 13, marginTop: 6 }}>
-                      <span style={{ fontWeight: 'bold' }}>前置任务: </span>
-                      {isPrevSameNpc ? (
-                        <span>【上一个】</span>
-                      ) : req.npcName ? (
-                        <Link
-                          to={`/quest_npc/${req.npcName}`}
-                          style={{
-                            color: tokens.accent,
-                            textDecoration: 'none',
-                          }}
-                        >
-                          【{req.text}】
-                        </Link>
-                      ) : (
-                        <span>【{req.text}】</span>
-                      )}
-                    </div>
-                  );
-                })()}
             </div>
           );
         })}
