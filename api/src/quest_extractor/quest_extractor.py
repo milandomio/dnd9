@@ -530,7 +530,31 @@ class QuestExtractor:
                     if translated:
                         return translated
                 break
-        return module_name
+        # 回退：从模块JSON读取Name.Key作为翻译键
+        module_name_key, module_name_display = self._get_module_name_key(asset_path)
+        if module_name_key and self.translator:
+            translated = self.translator.translate(module_name_key)
+            if translated:
+                return translated
+        return module_name_display or module_name
+
+    def _get_module_name_key(self, asset_path):
+        """从DungeonModule JSON读取Name字段的翻译键和显示名"""
+        if not asset_path:
+            return None, None
+        json_path = self.AssetPathName_to_json(asset_path)
+        if not json_path or not os.path.exists(json_path):
+            return None, None
+        try:
+            with open(json_path, encoding="utf-8") as f:
+                raw_data = json.load(f)
+            data = raw_data[0] if isinstance(raw_data, list) and len(raw_data) > 0 else raw_data
+            name = data.get("Properties", {}).get("Name", {})
+            if isinstance(name, dict):
+                return name.get("Key", ""), name.get("LocalizedString", "")
+        except Exception:
+            pass
+        return None, None
 
     def get_props_target_translation(self, props_id_tag):
         """
