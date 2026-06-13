@@ -743,35 +743,33 @@ export default function QuestItemGroupPage() {
               };
             })
           );
+          function batchToggle(pred: (r: (typeof rows)[number]) => boolean) {
+            const matched = rows.filter(pred);
+            if (matched.length === 0) return;
+            const allHidden = matched.every((r) => r.hidden);
+            for (const r of matched) {
+              const eName = r.monster?.name;
+              if (allHidden) {
+                if (eName && hidden.has(eName)) {
+                  toggle(eName);
+                }
+                toggleRow(r.key, true);
+              } else {
+                toggleRow(r.key, false);
+              }
+            }
+          }
           return (
             <DebugCoordTable
               rows={rows}
               onToggleRow={toggleRow}
-              onToggleGroup={(gk) => {
-                const gRows = rows.filter((r) => r.group === gk);
-                const allHidden = gRows.every((r) => r.hidden);
-                for (const r of gRows) toggleRow(r.key, allHidden);
-              }}
-              onToggleMarkName={(name) => {
-                const mRows = rows.filter((r) => r.monster?.name === name);
-                const allHidden = mRows.every((r) => r.hidden);
-                for (const r of mRows) toggleRow(r.key, allHidden);
-              }}
-              onToggleFile={(f) => {
-                const fRows = rows.filter((r) => r.file === f);
-                const allHidden = fRows.every((r) => r.hidden);
-                for (const r of fRows) toggleRow(r.key, allHidden);
-              }}
-              onToggleMap={(mapName) => {
-                const mapRows = rows.filter((r) => r.mapName === mapName);
-                const allHidden = mapRows.every((r) => r.hidden);
-                for (const r of mapRows) toggleRow(r.key, allHidden);
-              }}
-              onToggleLabel={(label) => {
-                const labelRows = rows.filter((r) => r.label === label);
-                const allHidden = labelRows.every((r) => r.hidden);
-                for (const r of labelRows) toggleRow(r.key, allHidden);
-              }}
+              onToggleGroup={(gk) => batchToggle((r) => r.group === gk)}
+              onToggleMarkName={(name) =>
+                batchToggle((r) => r.monster?.name === name)
+              }
+              onToggleFile={(f) => batchToggle((r) => r.file === f)}
+              onToggleMap={(mn) => batchToggle((r) => r.mapName === mn)}
+              onToggleLabel={(l) => batchToggle((r) => r.label === l)}
               showMonster
             />
           );
