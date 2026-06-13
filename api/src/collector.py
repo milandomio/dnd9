@@ -329,10 +329,12 @@ def run():
     def _filter_coords(coords: list[dict], entity_names: set[str], is_prop: bool = False) -> list[dict]:
         """Keep only coords whose original_keyword belongs to the target entity type."""
 
-        def _match(kw):
-            return bool(kw in entity_names or (is_prop and kw.startswith("Ore_")))
+        def _match(c):
+            kw = c["original_keyword"]
+            st = c.get("spawner_type", "")
+            return bool(kw in entity_names or (is_prop and kw.startswith("Ore_")) or (is_prop and st == "props"))
 
-        return [c for c in coords if _match(c["original_keyword"])]
+        return [c for c in coords if _match(c)]
 
     # ─── Export JSON ───
     print("\nExporting JSON files...")

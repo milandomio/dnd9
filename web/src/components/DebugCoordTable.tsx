@@ -258,6 +258,11 @@ export default function DebugCoordTable({
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: 4,
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      if (onToggleFile) onToggleFile(row.file);
+                      else colToggle((r) => r.file === row.file);
                     }}
                   >
                     <CellChk
@@ -277,6 +282,11 @@ export default function DebugCoordTable({
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: 4,
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      if (onToggleMap) onToggleMap(row.mapName);
+                      else colToggle((r) => r.mapName === row.mapName);
                     }}
                   >
                     <CellChk
@@ -296,6 +306,11 @@ export default function DebugCoordTable({
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: 4,
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      if (onToggleLabel) onToggleLabel(row.label);
+                      else colToggle((r) => r.label === row.label);
                     }}
                   >
                     <CellChk

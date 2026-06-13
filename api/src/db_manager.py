@@ -775,7 +775,7 @@ class DatabaseManager:
         c = self.conn.cursor()
         c.execute("""
             SELECT sm.search_term, s.x, s.y, s.z, s.yaw, s.json_filename,
-                   s.version, s.map_base, s.module_type, s.original_keyword
+                   s.version, s.map_base, s.module_type, s.original_keyword, s.spawner_type
             FROM search_term_matches sm
             JOIN spawners s ON s.id = sm.spawner_id
             ORDER BY sm.search_term, s.map_base, s.json_filename
