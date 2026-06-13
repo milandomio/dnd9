@@ -593,7 +593,7 @@ export default function DetailPage() {
             const matched = rows.filter(pred);
             if (matched.length === 0) return;
             const allHidden = matched.every((r) => r.hidden);
-            for (const r of matched) toggleRow(r.key, !allHidden);
+            for (const r of matched) toggleRow(r.key, allHidden);
           }
           return (
             <DebugCoordTable

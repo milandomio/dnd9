@@ -117,6 +117,7 @@ export default function DebugCoordTable({
         type="checkbox"
         checked={visible}
         onChange={onToggle}
+        onClick={(e) => e.stopPropagation()}
         style={checkboxStyle}
       />
     );

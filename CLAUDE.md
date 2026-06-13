@@ -104,6 +104,16 @@ cd web && npm run build          # 3. 前端构建
 cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
 ```
 
+### 仅前端改动
+
+只改 `web/` 代码时，不需要跑数据管道，直接构建 + 启动预览：
+
+```bash
+cd web && npm run build          # 1. 前端构建（含 TS 类型检查 + SSG）
+# 2. 启动web
+cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
+```
+
 ### 一键部署
 
 ```bash
@@ -170,6 +180,7 @@ git reset HEAD~1 && rm /tmp/darkfindv5.db
 - `_is_db_stale()` 必须在 `DatabaseManager()` 构造**之前**调用
 - `search_engine.py` 排除地图变体：`_SR`、`_BossTest`、`_Resize`、`_Test`、含 `Arena` 的文件名、`ArenaStart` 目录
 - 坐标通过 `db.get_all_coordinates()` 批量获取，避免 N+1
+- Spawner 坐标必须递归解析 `AttachParent` 链累加世界坐标（约 16.5% spawner 有父级变换）
 - 实体分类通过 `db.get_entity_classification()` 从 DB 直接构建
 - Spawner 使用 `executemany` 批量插入
 - `_Hard`/`_VeryHard`/`_Unique` 后缀在 lootdrop 解析阶段合入基础怪物名，避免重复掉落条目

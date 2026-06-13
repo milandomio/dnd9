@@ -25,6 +25,20 @@
 返回 `dict[str, list[dict]]`（search_term → 坐标列表）。后续所有导出段（items、monsters、props、
 dungeon_modules_coords、lootdrops）通过 `all_coords.get(name, [])` 查询，消除了逐实体 N+1 查询。
 
+### Spawner 坐标提取与 AttachParent 链
+
+`search_engine.py` 的 `extract_spawners()` 从地图 JSON 提取 spawner 坐标。地图中每个 `BP_GameSpawner_C`
+通过其 `RootComponent`（`SphereComponent`/`SceneComponent`）的 `RelativeLocation` 获取位置。
+
+**关键规则：** 部分 SceneComponent 有 `AttachParent` 字段指向父级组件，此时 `RelativeLocation` 是相对于
+父级的偏移量，**不是世界坐标**。必须沿 `AttachParent` 链递归累加所有祖先的 `RelativeLocation` 才能得到世界坐标。
+
+`AttachParent` 通过 `ObjectPath`（如 `xxx/MapName.390`）引用父级，后缀数字为 JSON 数组索引。
+无 `AttachParent` 的组件直接使用 `RelativeLocation` 作为世界坐标。
+
+**影响范围：** 约 16.5% 的 spawner（~1980 个）有父级变换，分布在 ~144 个地图文件中。
+典型场景：`GameObjectLinker`、`SingleGameSpawnerGroup` 等分组容器下的 spawner。
+
 ### 实体分类
 
 `collector.py` 的 `run()` 通过 `db.get_entity_classification()` 从 DB 实体表直接构建分类映射，

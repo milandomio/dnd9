@@ -750,27 +750,27 @@ export default function QuestItemGroupPage() {
               onToggleGroup={(gk) => {
                 const gRows = rows.filter((r) => r.group === gk);
                 const allHidden = gRows.every((r) => r.hidden);
-                for (const r of gRows) toggleRow(r.key, !allHidden);
+                for (const r of gRows) toggleRow(r.key, allHidden);
               }}
               onToggleMarkName={(name) => {
                 const mRows = rows.filter((r) => r.monster?.name === name);
                 const allHidden = mRows.every((r) => r.hidden);
-                for (const r of mRows) toggleRow(r.key, !allHidden);
+                for (const r of mRows) toggleRow(r.key, allHidden);
               }}
               onToggleFile={(f) => {
                 const fRows = rows.filter((r) => r.file === f);
                 const allHidden = fRows.every((r) => r.hidden);
-                for (const r of fRows) toggleRow(r.key, !allHidden);
+                for (const r of fRows) toggleRow(r.key, allHidden);
               }}
               onToggleMap={(mapName) => {
                 const mapRows = rows.filter((r) => r.mapName === mapName);
                 const allHidden = mapRows.every((r) => r.hidden);
-                for (const r of mapRows) toggleRow(r.key, !allHidden);
+                for (const r of mapRows) toggleRow(r.key, allHidden);
               }}
               onToggleLabel={(label) => {
                 const labelRows = rows.filter((r) => r.label === label);
                 const allHidden = labelRows.every((r) => r.hidden);
-                for (const r of labelRows) toggleRow(r.key, !allHidden);
+                for (const r of labelRows) toggleRow(r.key, allHidden);
               }}
               showMonster
             />

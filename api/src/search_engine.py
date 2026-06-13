@@ -211,7 +211,11 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
     # Load spawner data assets for lootdrop info
     spawner_data_map = _load_spawner_data_assets()
 
-    for entry in data:
+    # Collect all scene-component-like entries for parent-chain resolution
+    _sc_entries: list[tuple[int, dict]] = []  # (array_index, entry)
+    _scene_comp_types = {"SphereComponent", "SceneComponent"}
+
+    for idx, entry in enumerate(data):
         if not isinstance(entry, dict):
             continue
         t = entry.get("Type", "")
@@ -247,18 +251,62 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                     "has_lootdrop": False,
                 }
 
-        if (t == "SphereComponent" and entry.get("Name") == "SceneComponent") or (
-            t == "SceneComponent" and entry.get("Name") == "RootScene"
+        if t in _scene_comp_types and entry.get("Name") in (
+            "SceneComponent",
+            "RootScene",
+            "DefaultSceneRoot",
         ):
-            outer_raw = entry.get("Outer", "")
-            if isinstance(outer_raw, dict):
-                outer_raw = (outer_raw or {}).get("ObjectName", "")
-            if not outer_raw or not isinstance(outer_raw, str):
-                continue
-            actor_name = _extract_actor_name(outer_raw)
-            if not actor_name:
-                continue
+            _sc_entries.append((idx, entry))
+
+    # Build scene coords with AttachParent chain resolution
+    _ap_suffix_re = re.compile(r"\.(\d+)'?$")
+
+    def _resolve_world_loc(start_idx: int) -> tuple[float, float, float, float]:
+        """Walk up AttachParent chain to compute world-space x, y, z, yaw."""
+        x = y = z = 0.0
+        yaw_total = 0.0
+        visited: set[int] = set()
+        cur = start_idx
+        while cur >= 0 and cur not in visited:
+            visited.add(cur)
+            if cur >= len(data):
+                break
+            entry = data[cur]
             props = entry.get("Properties", {}) or {}
+            loc = props.get("RelativeLocation", {}) or {}
+            rot = props.get("RelativeRotation", {}) or {}
+            x += loc.get("X", 0)
+            y += loc.get("Y", 0)
+            z += loc.get("Z", 0)
+            yaw_total += rot.get("Yaw", 0)
+            ap = props.get("AttachParent", {}) or {}
+            ap_path = ap.get("ObjectPath", "")
+            m = _ap_suffix_re.search(ap_path)
+            cur = int(m.group(1)) if m else -1
+        return x, y, z, yaw_total
+
+    for idx, entry in _sc_entries:
+        outer_raw = entry.get("Outer", "")
+        if isinstance(outer_raw, dict):
+            outer_raw = (outer_raw or {}).get("ObjectName", "")
+        if not outer_raw or not isinstance(outer_raw, str):
+            continue
+        actor_name = _extract_actor_name(outer_raw)
+        if not actor_name:
+            continue
+        props = entry.get("Properties", {}) or {}
+        ap = props.get("AttachParent", {}) or {}
+        if ap and ap.get("ObjectPath"):
+            # Has parent: resolve world coords by walking up the chain
+            wx, wy, wz, wyaw = _resolve_world_loc(idx)
+            scene[actor_name] = {
+                "x": wx,
+                "y": wy,
+                "z": wz,
+                "yaw": round(wyaw % 360, 1),
+            }
+        else:
+            # No parent: use RelativeLocation directly
             loc = props.get("RelativeLocation", {}) or {}
             rot = props.get("RelativeRotation", {}) or {}
             yaw_deg = rot.get("Yaw", 0)
