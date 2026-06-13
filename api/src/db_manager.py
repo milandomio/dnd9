@@ -406,6 +406,76 @@ class DatabaseManager:
         self.conn.commit()
         return len(rows)
 
+    def import_spawner_fallback_entities(self) -> dict[str, int]:
+        """Add spawner keywords not yet in items/props/monsters tables as fallback entries."""
+        c = self.conn.cursor()
+
+        # Get existing entity names
+        c.execute("SELECT item_name FROM item_entities")
+        existing_items = {r["item_name"] for r in c.fetchall()}
+
+        c.execute("SELECT monster_name FROM monster_entities")
+        existing_monsters = {r["monster_name"] for r in c.fetchall()}
+
+        c.execute("SELECT asset_name FROM props_entities")
+        existing_props = {r["asset_name"] for r in c.fetchall()}
+
+        # Get distinct spawner keywords by type
+        c.execute(
+            "SELECT DISTINCT keyword, spawner_type FROM spawners WHERE spawner_type IN ('item', 'monster', 'props')"
+        )
+        spawner_keywords = c.fetchall()
+
+        added = {"item": 0, "monster": 0, "props": 0}
+        item_rows = []
+        monster_rows = []
+        props_rows = []
+
+        for row in spawner_keywords:
+            keyword = row["keyword"]
+            stype = row["spawner_type"]
+
+            if stype == "item" and keyword not in existing_items:
+                item_rows.append((keyword, keyword, ""))
+                existing_items.add(keyword)
+            elif stype == "monster" and keyword not in existing_monsters:
+                monster_rows.append((keyword, keyword, ""))
+                existing_monsters.add(keyword)
+            elif stype == "props" and keyword not in existing_props:
+                props_rows.append((keyword, keyword, ""))
+                existing_props.add(keyword)
+
+        if item_rows:
+            c.executemany(
+                "INSERT OR IGNORE INTO item_entities (item_name, raw_name, translation_key) VALUES (?, ?, ?)",
+                item_rows,
+            )
+            added["item"] = len(item_rows)
+
+        if monster_rows:
+            c.executemany(
+                "INSERT OR IGNORE INTO monster_entities (monster_name, raw_name, translation_key) VALUES (?, ?, ?)",
+                monster_rows,
+            )
+            added["monster"] = len(monster_rows)
+
+        if props_rows:
+            c.executemany(
+                "INSERT OR IGNORE INTO props_entities (asset_name, raw_name, translation_key) VALUES (?, ?, ?)",
+                props_rows,
+            )
+            added["props"] = len(props_rows)
+
+        self.conn.commit()
+
+        # Rebuild FTS tables if entities were added
+        if added["item"] > 0:
+            self._rebuild_fts("items_fts", "item_entities")
+        if added["monster"] > 0:
+            self._rebuild_fts("monsters_fts", "monster_entities")
+
+        return added
+
     # ─── Import: Dungeon Modules ───
 
     def _build_path_group_map(self) -> dict[str, str]:

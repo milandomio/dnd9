@@ -268,7 +268,7 @@ def run():
         matches, spawners = build_all_matches(search_terms)
         print(f"  -> {len(spawners)} spawners, {len(matches)} matched terms")
 
-        # Store matches in DB
+        # Store spawners in DB
         c = db.connect()
         c.execute("DELETE FROM spawners")
         c.execute("DELETE FROM search_term_matches")
@@ -293,13 +293,57 @@ def run():
             "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             spawner_rows,
         )
-        for term, spawner_ids in matches.items():
-            rows = [(term, sid + 1) for sid in spawner_ids]
-            c.executemany(
-                "INSERT OR IGNORE INTO search_term_matches (search_term, spawner_id) VALUES (?, ?)",
-                rows,
-            )
         db.connect().commit()
+
+        # 7.5. Add spawner fallback entities and rebuild matches
+        print("[7.5/8] Adding spawner fallback entities...")
+        added = db.import_spawner_fallback_entities()
+        print(f"  -> added: {added['item']} items, {added['monster']} monsters, {added['props']} props")
+
+        # Rebuild search terms including fallback entities
+        _search_term_set = set()
+        for r in db.get_item_entities():
+            _search_term_set.add(r["item_name"])
+        for r in db.get_monster_entities():
+            _search_term_set.add(r["monster_name"])
+        for r in db.get_props_entities():
+            name = r["asset_name"]
+            m = _ORE_QUALITY_RE.match(name)
+            if m:
+                _search_term_set.add(m.group(1))
+            _search_term_set.add(name)
+        # Add all spawner keywords as search terms
+        cur = db.connect().cursor()
+        cur.execute("SELECT DISTINCT keyword FROM spawners")
+        for row in cur.fetchall():
+            _search_term_set.add(row["keyword"])
+        search_terms = sorted(_search_term_set)
+        for t in list(search_terms):
+            m = _ORE_ITEM_STRIP_RE.match(t)
+            if m:
+                _search_term_set.add(m.group(1) + "Ore")
+        search_terms = sorted(_search_term_set)
+
+        # Re-match search terms to spawners
+        from config import SPAWNER_ALIAS_MAP
+        from search_engine import build_automaton, match_keyword
+
+        auto = build_automaton(search_terms)
+        cur.execute("SELECT id, keyword FROM spawners")
+        all_spawners_db = cur.fetchall()
+        match_rows = []
+        for row in all_spawners_db:
+            sid = row["id"]
+            kw = SPAWNER_ALIAS_MAP.get(row["keyword"], row["keyword"])
+            matched_terms = match_keyword(kw, set(search_terms), auto)
+            for term in matched_terms:
+                match_rows.append((term, sid))
+        cur.executemany(
+            "INSERT OR IGNORE INTO search_term_matches (search_term, spawner_id) VALUES (?, ?)",
+            match_rows,
+        )
+        db.connect().commit()
+        print(f"  -> {len(match_rows)} search term matches")
 
         # 8. Quest extraction
         print("[8/8] Extracting quest data...")
@@ -341,7 +385,13 @@ def run():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     translations = db.get_translations_map()
 
+    cracked_re = re.compile(r"（裂开）")
+
     def resolve_name(name: str, translation_key: str, scope: str = "item") -> str:
+        result = _resolve_name_inner(name, translation_key, scope)
+        return cracked_re.sub("", result)
+
+    def _resolve_name_inner(name: str, translation_key: str, scope: str) -> str:
         if translation_key and translation_key in translations:
             return translations[translation_key]
         alias_name = TRANSLATION_ALIAS_MAP.get(name, name)
@@ -898,13 +948,40 @@ def run():
                 merged_coords[target]["entities"][ek] = entity
             else:
                 merged_coords[target]["entities"][ek]["coords"].extend(entity["coords"])
+    # 按 (translation, type) 合并同翻译实体（如 GlowingCoralRoaster01_On/02/03 → 灯架子）
     for target_name, data in merged_coords.items():
-        entities_out = list(data["entities"].values())
+        merge_groups: dict[tuple, list[dict]] = {}
+        for entity in data["entities"].values():
+            key = (entity["translation"], entity["type"])
+            merge_groups.setdefault(key, []).append(entity)
+        merged_entities = []
+        for (_trans, _type), group in merge_groups.items():
+            if len(group) == 1:
+                merged_entities.append(group[0])
+                continue
+            canonical = min(group, key=lambda e: len(e["name"]))
+            seen: set[tuple] = set()
+            deduped = []
+            for e in group:
+                for c in e["coords"]:
+                    ck = (c["x"], c["y"], c["z"], c.get("label", ""))
+                    if ck not in seen:
+                        seen.add(ck)
+                        deduped.append(c)
+            merged_entities.append(
+                {
+                    "name": canonical["name"],
+                    "translation": _trans,
+                    "type": _type,
+                    "color": canonical["color"],
+                    "coords": deduped,
+                }
+            )
         _save(
             f"dungeon_modules_coords/{target_name}.json",
             {
                 "map_base": target_name,
-                "entities": entities_out,
+                "entities": merged_entities,
             },
         )
     # 清理孤立坐标文件（旧 map_base 命名残留）
