@@ -302,23 +302,18 @@ MODULE_DISPLAY_OVERRIDE = {
 }
 
 MODULE_OFFSET_MAP = {
-    "ShipGraveyard_PiratePrison": (-3200, 3200),
-    "ShipGraveyard_BladehandRefuge": (-1600, -1600),
-    "ShipGraveyard_HangingShip": (1600, 0),
-    "Inferno_Hellcrossbridge": (-600, 300),
-    "Inferno_Judgementroad": (-1000, -1000),
-    "Inferno_Painfulsteps": (-800, 0),
-    "IceAbyss_WyvernLair": (1600, -2400),
+    # 2x2 modules
     "CenterTower": (-1600, -1600),
-    "IceCave_Watchtower": (-150, 900),
-    "IceCave_Hive_03": (-1600, -1600),
-    "IceAbyss_IceMaze": (-1150, 0),
-    "Firedeep_BlazeTunnel": (0, -500),
-    "Ruins_TowerBridge_Destroyed": (-1600, -1600),
+    "IceAbyss_WyvernLair": (1600, -1600),
+    "ShipGraveyard_PiratePrison": (-3200, 3200),
     "ShipGraveyard_SkullIsland": (1600, 1600),
+    # 1x2 modules
+    "IceCave_Hive_03": (-1600, -1600),
+    "Ruins_TowerBridge_Destroyed": (-1600, -1600),
     "ShipGraveyard_AbandonedShip_01": (-1600, -1600),
     "ShipGraveyard_ElephantIsland": (-1600, 1600),
     "ShipGraveyard_FloatingVillage": (-1600, 1600),
+    "ShipGraveyard_HangingShip": (1600, 0),
 }
 
 GROUP_TO_ART_DIR = {

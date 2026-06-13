@@ -18,6 +18,7 @@ from config import (
     MAPS_DIR,
     MODULE_DISPLAY_OVERRIDE,
     MODULE_NAME_OVERRIDE,
+    MODULE_OFFSET_MAP,
     MONSTER_DIR,
     OUTPUT_DIR,
     PROPS_DIR,
@@ -648,7 +649,7 @@ def run():
         sx = override.get("size_x", r["size_x"])
         sy = override.get("size_y", r["size_y"])
         custom_range = override.get("range", 0)
-        offset_x, offset_y = (0, 0)  # MODULE_OFFSET_MAP disabled pending AttachParent validation
+        offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
         rot1 = module_rotations.get(r["module_name"])
         rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 270)
         sl = r["sl_base_name"]
