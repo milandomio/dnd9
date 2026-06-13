@@ -219,7 +219,7 @@ export default function DungeonModuleDetailPage() {
               y: d.y,
               z: d.z,
               color: d.entity.color,
-              title: d.entity.name,
+              title: d.entity.translation || d.entity.name,
             }))}
             offX={offX}
             offY={offY}
