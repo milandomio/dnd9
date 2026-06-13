@@ -305,6 +305,8 @@ MODULE_OFFSET_MAP = {
     # 2x2 modules
     "CenterTower": (-1600, -1600),
     "IceAbyss_WyvernLair": (1600, -1600),
+    "ShipGraveyard_BladehandRefuge": (-1600, -1600),
+    "ShipGraveyard_Hole": (0, 0),  # TODO: verify offset
     "ShipGraveyard_PiratePrison": (-3200, 3200),
     "ShipGraveyard_SkullIsland": (1600, 1600),
     # 1x2 modules
