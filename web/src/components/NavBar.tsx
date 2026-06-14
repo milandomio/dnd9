@@ -76,6 +76,15 @@ export default function NavBar() {
           e.name.toLowerCase().includes(q) ||
           e.translation.toLowerCase().includes(q)
       )
+      .sort((a, b) => {
+        const an = a.name.toLowerCase();
+        const at = a.translation.toLowerCase();
+        const bn = b.name.toLowerCase();
+        const bt = b.translation.toLowerCase();
+        const score = (n: string, t: string) =>
+          n === q || t === q ? 0 : n.startsWith(q) || t.startsWith(q) ? 1 : 2;
+        return score(an, at) - score(bn, bt);
+      })
       .slice(0, 50);
     setResults(filtered);
     setShowDropdown(filtered.length > 0);
