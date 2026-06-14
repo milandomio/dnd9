@@ -63,12 +63,13 @@ for (const p of PAGES) {
     const url = p === "lootdrops"
       ? `/lootdrops/${encodeURIComponent(e.name)}`
       : `/${p}/${encodeURIComponent(e.name)}`;
-    searchIndex.push({
-      name: e.name,
-      translation: e.translation || "",
-      page: p,
-      url,
-    });
+    const entry = { name: e.name, translation: e.translation || "", page: p, url };
+    if (p === "lootdrops") {
+      entry.variant_count = e.variant_count;
+      entry.monsters = e.monsters;
+      entry.monster_translations = e.monster_translations;
+    }
+    searchIndex.push(entry);
   }
 }
 
@@ -189,7 +190,11 @@ ssrDataMap["home"] = index;
 
 // List pages
 for (const p of PAGES) ssrDataMap[`list-${p}`] = readJSON(join(DATA, `${p}.json`));
-for (const p of SINGLE) ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
+for (const p of SINGLE) {
+  // quest_items.json is pipeline-internal; page uses quest_items_groups.json instead
+  if (p === "quest_items") continue;
+  ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
+}
 
 // Quest items group detail pages
 for (const g of questGroups) {
