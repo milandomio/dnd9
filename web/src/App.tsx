@@ -14,13 +14,15 @@ import ExplorePage from './pages/ExplorePage';
 import QuestItemsPage from './pages/QuestItemsPage';
 import QuestNPCPage from './pages/QuestNPCPage';
 import DungeonModulesPage from './pages/DungeonModulesPage';
-import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 
 // Heavy detail pages — lazy-loaded (code splitting)
 const DetailPage = lazy(() => import('./pages/DetailPage'));
 const LootdropDetailPage = lazy(() => import('./pages/LootdropDetailPage'));
 const QuestItemGroupPage = lazy(() => import('./pages/QuestItemGroupPage'));
 const QuestNPCDetailPage = lazy(() => import('./pages/QuestNPCDetailPage'));
+const DungeonModuleGroupPage = lazy(
+  () => import('./pages/DungeonModuleGroupPage')
+);
 const DungeonModuleDetailPage = lazy(
   () => import('./pages/DungeonModuleDetailPage')
 );

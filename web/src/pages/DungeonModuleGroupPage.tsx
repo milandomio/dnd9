@@ -5,6 +5,8 @@ import { Button } from 'antd';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { useSSRData } from '../context/SSRDataContext';
+import type { DungeonModule } from '../types/data';
 
 const GROUP_LABELS: Record<string, string> = {
   Crypt: '废墟2层地牢',
@@ -20,11 +22,23 @@ const GROUP_LABELS: Record<string, string> = {
 export default function DungeonModuleGroupPage() {
   const { group } = useParams<{ group: string }>();
   const { debug, toggle } = useDebug();
+  const ssrModules = useSSRData<DungeonModule[]>(`dungeon_modules/${group}`);
   const { modules: allModules } = useDungeonModules();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!ssrModules);
   const { tokens } = useTheme();
 
   const modules = useMemo(() => {
+    // Prefer SSR data (pre-filtered for this group)
+    if (ssrModules) {
+      const sorted = [...ssrModules];
+      sorted.sort((a, b) => {
+        const sy = (a.size_y || 1) - (b.size_y || 1);
+        if (sy !== 0) return sy;
+        return (a.size_x || 1) - (b.size_x || 1);
+      });
+      return sorted;
+    }
+    // Fallback: filter from full dataset
     const filtered = [...new Set(allModules.values())].filter(
       (m) => m.group === group
     );
@@ -34,11 +48,11 @@ export default function DungeonModuleGroupPage() {
       return (a.size_x || 1) - (b.size_x || 1);
     });
     return filtered;
-  }, [allModules, group]);
+  }, [ssrModules, allModules, group]);
 
   useEffect(() => {
-    if (allModules.size > 0) setLoading(false);
-  }, [allModules]);
+    if (ssrModules || allModules.size > 0) setLoading(false);
+  }, [ssrModules, allModules]);
 
   const visible = debug
     ? modules
