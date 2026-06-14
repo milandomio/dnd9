@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Spin, Card, Row, Col } from 'antd';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useSSRData } from '../context/SSRDataContext';
 
 interface GroupEntry {
   group: string;
@@ -24,12 +25,14 @@ const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
 };
 
 export default function QuestItemsPage() {
-  const [groups, setGroups] = useState<GroupEntry[]>([]);
-  const [loading, setLoading] = useState(true);
+  const ssrData = useSSRData<GroupEntry[]>('quest_items');
+  const [groups, setGroups] = useState<GroupEntry[]>(ssrData || []);
+  const [loading, setLoading] = useState(!ssrData);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
 
   useEffect(() => {
+    if (ssrData) return;
     fetch(`./data/json/quest_items_groups.json?v=${dataVersion}`)
       .then((r) => r.json())
       .then(setGroups)
