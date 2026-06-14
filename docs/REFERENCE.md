@@ -275,7 +275,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 | 任务物品 `/quest_items` | 无 | `quest_items_groups.json` | 始终客户端 fetch |
 | 任务物品分组 `/quest_items/:group` | `"quest_items_groups/{group}"` | `quest_items_groups/{group}.json` | SSR 有 entities 时跳过 |
 | 任务NPC `/quest_npc` | `"quest_npc"` | `quest_npc.json` | SSR 存在即跳过 |
-| 地图模块 `/dungeon_modules` | 无（未消费） | `useDungeonModules()` hook | 始终客户端 fetch |
+| 地图模块 `/dungeon_modules` | 无 | `useDungeonModules()` hook | 始终客户端 fetch |
 | 地图模块分组 `/dungeon_modules/:group` | `"dungeon_modules/{group}"` | `useDungeonModules()` hook（filter） | 优先 SSR，否则回退 hook |
 
 ### 详情页
