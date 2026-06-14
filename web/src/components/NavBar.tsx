@@ -36,6 +36,7 @@ const PAGE_TAG: Record<string, string> = {
   quest_npc: 'NPC',
   quest_items: '任务',
   dungeon_modules: '模块',
+  _nav: '导航',
 };
 
 export default function NavBar() {

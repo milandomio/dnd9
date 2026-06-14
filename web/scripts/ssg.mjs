@@ -104,15 +104,15 @@ for (const m of moduleData) {
   });
 }
 
-// List/index pages themselves
+// List/index pages themselves (page="_nav" so they don't appear in list page data)
 const LIST_PAGES = [
-  { name: "items", translation: "物品表", page: "items", url: "/items" },
-  { name: "monsters", translation: "怪物表", page: "monsters", url: "/monsters" },
-  { name: "props", translation: "实体表", page: "props", url: "/props" },
-  { name: "lootdrops", translation: "掉落表", page: "lootdrops", url: "/lootdrops" },
-  { name: "explore", translation: "任务探索表", page: "explore", url: "/explore" },
-  { name: "quest_npc", translation: "任务NPC表", page: "quest_npc", url: "/quest_npc" },
-  { name: "dungeon_modules", translation: "地图模块表", page: "dungeon_modules", url: "/dungeon_modules" },
+  { name: "items", translation: "物品表", page: "_nav", url: "/items" },
+  { name: "monsters", translation: "怪物表", page: "_nav", url: "/monsters" },
+  { name: "props", translation: "实体表", page: "_nav", url: "/props" },
+  { name: "lootdrops", translation: "掉落表", page: "_nav", url: "/lootdrops" },
+  { name: "explore", translation: "任务探索表", page: "_nav", url: "/explore" },
+  { name: "quest_npc", translation: "任务NPC表", page: "_nav", url: "/quest_npc" },
+  { name: "dungeon_modules", translation: "地图模块表", page: "_nav", url: "/dungeon_modules" },
 ];
 for (const lp of LIST_PAGES) searchIndex.push(lp);
 
