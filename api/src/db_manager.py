@@ -275,13 +275,15 @@ class DatabaseManager:
 
     # ─── Import: Translations ───
 
+    _CRACKED_RE = re.compile(r"（裂开）")
+
     def import_translations(self):
         data = _load_game_json()
         if not data:
             return 0
         c = self.conn.cursor()
         c.execute("DELETE FROM translations")
-        rows = [(k, v) for k, v in data.items() if k and v]
+        rows = [(k, self._CRACKED_RE.sub("", v)) for k, v in data.items() if k and v]
         c.executemany("INSERT OR REPLACE INTO translations (key, value) VALUES (?, ?)", rows)
         self.conn.commit()
         return len(rows)
