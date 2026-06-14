@@ -82,6 +82,7 @@ export default function LootdropDetailPage() {
 
   const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadedMapsRef = useRef<Set<string>>(new Set());
 
   const mapRef = useCallback((mapName: string, el: HTMLDivElement | null) => {
     if (!el) return;
@@ -92,12 +93,16 @@ export default function LootdropDetailPage() {
             const next = new Set(prev);
             for (const e of entries) {
               const mn = (e.target as HTMLElement).dataset.mapName!;
-              if (e.isIntersecting) next.add(mn);
+              if (e.isIntersecting) {
+                next.add(mn);
+              } else if (!loadedMapsRef.current.has(mn)) {
+                next.delete(mn);
+              }
             }
             return next;
           });
         },
-        { rootMargin: '200px' }
+        { rootMargin: '600px' }
       );
     }
     (el as any).dataset.mapName = mapName;
@@ -674,6 +679,7 @@ export default function LootdropDetailPage() {
                   )}
                   {visibleMaps.has(mapName) ? (
                     <MapPanel
+                      onLoad={() => loadedMapsRef.current.add(mapName)}
                       imgName={
                         mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
                       }
