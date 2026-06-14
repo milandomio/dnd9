@@ -191,8 +191,9 @@ ssrDataMap["home"] = index;
 // List pages
 for (const p of PAGES) ssrDataMap[`list-${p}`] = readJSON(join(DATA, `${p}.json`));
 for (const p of SINGLE) {
-  // quest_items.json is pipeline-internal; page uses quest_items_groups.json instead
-  if (p === "quest_items") continue;
+  // quest_items: pipeline-internal, page uses quest_items_groups.json
+  // dungeon_modules: page uses useDungeonModules() hook, SSR data not consumed
+  if (p === "quest_items" || p === "dungeon_modules") continue;
   ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
 }
 
