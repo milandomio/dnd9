@@ -139,11 +139,20 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --po
 
 ### 推送到 dnd9（含 DB）
 
+DB 在 `.gitignore` 中，默认不跟踪。推送时临时加入，推送后立即取消本地跟踪，确保远程有 DB（供 Actions 部署）而本地不跟踪。
+
 ```bash
+# 1. 提交普通变更（工作区干净时跳过此步）
 git add -A && git commit -m "feat: <描述>"
+
+# 2. 备份 DB → 强制追踪 → 提交
 cp api/data/darkfindv5.db /tmp/darkfindv5.db
 git add -f api/data/darkfindv5.db && git commit -m "chore: update DB"
+
+# 3. 推送（含 DB 提交）
 GIT_SSL_NO_VERIFY=1 git push origin main
+
+# 4. 撤销本地 DB 提交（远程保留，本地取消跟踪）
 git reset HEAD~1 && rm /tmp/darkfindv5.db
 ```
 
