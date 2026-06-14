@@ -7,6 +7,7 @@
 
 import json
 import os
+import re
 
 
 class Translator:
@@ -53,6 +54,11 @@ class Translator:
                     self.translations = data["DC"]
                 else:
                     self.translations = data
+                # 清洗：去掉翻译值中的（裂开）后缀
+                cracked_re = re.compile(r"（裂开）")
+                self.translations = {
+                    k: cracked_re.sub("", v) for k, v in self.translations.items() if isinstance(v, str)
+                }
             print(f"[{self.language}] 已加载 {len(self.translations)} 条翻译")
         except Exception as e:
             print(f"[{self.language}] 加载翻译文件失败: {e}")
