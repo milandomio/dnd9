@@ -21,7 +21,8 @@ interface MapPanelProps {
   /** true = 单分类，用 zColor 着色圆点；false = 多分类，用 dot.color */
   singleCategory?: boolean;
   children?: React.ReactNode;
-  onLoad?: () => void;
+  /** blob URL from externally managed fetch (supports AbortController cancellation) */
+  imageSrc?: string;
 }
 
 function zColor(z: number): string {
@@ -43,7 +44,7 @@ export default function MapPanel({
   range,
   singleCategory,
   children,
-  onLoad,
+  imageSrc,
 }: MapPanelProps) {
   const { tokens } = useTheme();
 
@@ -56,18 +57,11 @@ export default function MapPanel({
         borderRadius: 4,
         position: 'relative',
         overflow: 'hidden',
-        backgroundImage: `url(./data/img/${imgName}.webp)`,
+        backgroundImage: `url(${imageSrc || `./data/img/${imgName}.webp`})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <img
-        src={`./data/img/${imgName}.webp`}
-        onLoad={onLoad}
-        alt=""
-        style={{ position: 'absolute', width: 0, height: 0, opacity: 0 }}
-        aria-hidden="true"
-      />
       {dots.map((d, i) => {
         const [x, y] = applyTransform(d.x, d.y, offX, offY, adj);
         const [px, py] = computePixel(x, y, range, sx, sy);
