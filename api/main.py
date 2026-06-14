@@ -21,12 +21,16 @@ def _deliver():
         stale_db.unlink()
 
     # Move JSON outputs → data/json/
+    # Exclude files only used internally by the pipeline (not fetched by frontend)
+    skip_deliver = {"entity_index.json", "quest_items.json"}
     json_dst = dst / "json"
     json_dst.mkdir(parents=True, exist_ok=True)
     if OUTPUT_DIR.exists():
         for item in OUTPUT_DIR.iterdir():
             if item.suffix == ".db":
                 continue  # skip DB files
+            if item.name in skip_deliver:
+                continue  # skip pipeline-internal files
             dest = json_dst / item.name
             if item.is_dir():
                 if dest.exists():

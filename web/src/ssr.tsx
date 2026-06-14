@@ -16,7 +16,7 @@ import zhCN from 'antd/locale/zh_CN';
 import { ThemeProvider } from './hooks/useTheme';
 import { DebugProvider } from './hooks/useDebug';
 import SSRDataContext from './context/SSRDataContext';
-import { AppInner } from './App';
+import { AppInner } from './AppInner';
 
 // Ant Design v5+ requires browser-global stubs for SSR
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
