@@ -1,16 +1,16 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Input, Switch } from 'antd';
 import { BulbOutlined, SearchOutlined } from '@ant-design/icons';
-import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useSearchIndex, type SearchEntry } from '../hooks/useSearchIndex';
 
 const LABEL_MAP: Record<string, string> = {
   items: '物品表',
   monsters: '怪物表',
   props: '实体表',
   lootdrops: '掉落表',
-  explore: '探索地点表',
+  explore: '任务探索表',
   quest_items: '任务物品表',
   quest_npc: '任务NPC表',
   dungeon_modules: '地图模块表',
@@ -38,58 +38,25 @@ const PAGE_TAG: Record<string, string> = {
   dungeon_modules: '模块',
 };
 
-interface SearchHit {
-  name: string;
-  translation: string;
-  page: string;
-  url: string;
-  tag?: string;
-}
-
-async function buildSearchIndex(version: string): Promise<SearchHit[]> {
-  try {
-    const resp = await fetch(`./data/json/search_index.json?v=${version}`);
-    if (!resp.ok) return [];
-    return await resp.json();
-  } catch {
-    return [];
-  }
-}
-
 export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { dark, tokens, toggle } = useTheme();
-  const dataVersion = useDataVersion();
+  const { index: searchIndex } = useSearchIndex();
   const parts = location.pathname.split('/').filter(Boolean);
 
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchHit[]>([]);
+  const [results, setResults] = useState<SearchEntry[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [searchIndex, setSearchIndex] = useState<SearchHit[] | null>(null);
-  const [loading, setLoading] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<any>(null);
-
-  const ensureIndex = useCallback(async () => {
-    if (searchIndex !== null || loading) return;
-    setLoading(true);
-    try {
-      const index = await buildSearchIndex(dataVersion);
-      setSearchIndex(index);
-    } finally {
-      setLoading(false);
-    }
-  }, [searchIndex, loading]);
 
   // Auto-trigger search from location state (e.g. quest objective magnifier)
   useEffect(() => {
     const state = location.state as { searchQuery?: string } | null;
     if (state?.searchQuery) {
       setQuery(state.searchQuery);
-      ensureIndex();
-      // Clear the state so back button doesn't re-trigger
       navigate(location.pathname, { replace: true, state: {} });
       requestAnimationFrame(() => inputRef.current?.focus());
     }
@@ -125,7 +92,7 @@ export default function NavBar() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const handleSelect = (hit: SearchHit) => {
+  const handleSelect = (hit: SearchEntry) => {
     setQuery('');
     setShowDropdown(false);
     navigate(hit.url);
@@ -197,7 +164,6 @@ export default function NavBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => {
-            ensureIndex();
             if (results.length > 0) setShowDropdown(true);
           }}
           onKeyDown={handleKeyDown}

@@ -96,6 +96,8 @@ export default function QuestNPCDetailPage() {
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
   const [search, setSearch] = useState('');
+  const [onlyFetch, setOnlyFetch] = useState(false);
+  const [onlySuggested, setOnlySuggested] = useState(false);
   const dataVersion = useDataVersion();
 
   const highlightQuestNum = (location.state as { questNumber?: number })
@@ -139,8 +141,19 @@ export default function QuestNPCDetailPage() {
     );
   }
 
+  const lastAffinityQuest = npc.quests
+    .filter((q) => q.rewards.some((r) => r.type_key === 'affinity'))
+    .slice(-1)[0];
+
   const quests = npc.quests.filter((q) => {
     if (HIDDEN_QUESTS.has(q.id)) return false;
+    if (onlyFetch && !q.contents.some((c) => c.type === 'Fetch')) return false;
+    if (
+      onlySuggested &&
+      lastAffinityQuest &&
+      q.quest_number > lastAffinityQuest.quest_number
+    )
+      return false;
     if (!search) return true;
     const s = search.toLowerCase();
     return (
@@ -190,32 +203,74 @@ export default function QuestNPCDetailPage() {
             }
           }}
         />
-        <h1
+        <div style={{ flex: 1, textAlign: 'center' }}>
+          <h1 style={{ color: tokens.accent, margin: 0 }}>
+            <input
+              type="checkbox"
+              checked={npcDone}
+              onChange={() => {
+                lsSet(`quest_npc_npc_${npc.npc_name}`, !npcDone);
+                refresh();
+              }}
+              style={{
+                ...checkboxStyle,
+                width: 22,
+                height: 22,
+                marginRight: 8,
+              }}
+            />
+            {npc.npc_name_display} - 任务列表
+            <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 8 }}>
+              {quests.length}个任务
+            </span>
+          </h1>
+        </div>
+        <div
           style={{
-            flex: 1,
-            textAlign: 'center',
-            color: tokens.accent,
-            margin: 0,
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 12,
+            flexDirection: 'column',
+            gap: 4,
+            fontSize: 13,
+            color: tokens.muted,
           }}
         >
-          <input
-            type="checkbox"
-            checked={npcDone}
-            onChange={() => {
-              lsSet(`quest_npc_npc_${npc.npc_name}`, !npcDone);
-              refresh();
+          <label
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
             }}
-            style={{ ...checkboxStyle, width: 22, height: 22 }}
-          />
-          {npc.npc_name_display} - 任务列表
-          <span style={{ color: tokens.muted, fontSize: 16 }}>
-            {quests.length} 个任务
-          </span>
-        </h1>
+          >
+            <input
+              type="checkbox"
+              checked={onlyFetch}
+              onChange={(e) => setOnlyFetch(e.target.checked)}
+              style={{ ...checkboxStyle, width: 16, height: 16 }}
+            />
+            仅显示收集任务
+          </label>
+          {lastAffinityQuest && (
+            <label
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={onlySuggested}
+                onChange={(e) => setOnlySuggested(e.target.checked)}
+                style={{ ...checkboxStyle, width: 16, height: 16 }}
+              />
+              建议完成至#{lastAffinityQuest.quest_number}
+            </label>
+          )}
+        </div>
       </div>
 
       <div

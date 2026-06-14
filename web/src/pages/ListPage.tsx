@@ -4,15 +4,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
-interface IndexEntry {
-  name: string;
-  translation: string;
+import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
+
+type IndexEntry = SearchEntry & {
   category?: string;
+  coordCount?: number;
+  // lootdrops SSR data fields
   variant_count?: number;
   monsters?: string[];
   monster_translations?: string[];
-  coordCount: number;
-}
+};
 
 const LABEL_MAP: Record<string, string> = {
   items: '物品表',
@@ -34,10 +35,17 @@ export default function ListPage() {
     if (!page || !['items', 'monsters', 'props', 'lootdrops'].includes(page))
       return;
     if (ssrData) return;
-    fetch(`./data/json/${page}.json?v=${dataVersion}`)
-      .then((r) => r.json())
-      .then(setData)
-      .catch(console.error);
+    getPageEntries(dataVersion, page).then((entries) => {
+      if (entries.length > 0) {
+        setData(entries as IndexEntry[]);
+      } else {
+        // fallback: search_index has no data for this page
+        fetch(`./data/json/${page}.json?v=${dataVersion}`)
+          .then((r) => r.json())
+          .then(setData)
+          .catch(console.error);
+      }
+    });
   }, [page]);
 
   return (

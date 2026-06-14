@@ -271,7 +271,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 |------|---------|-------------|-------------|
 | 主页 `/` | `"home"` | `index.json` | SSR 存在即跳过 |
 | 物品/怪物/实体/掉落 `/:page` | `"list-{page}"` | `{page}.json` | SSR 存在即跳过 |
-| 探索地点 `/explore` | `"explore"` | `explore.json` | SSR 存在即跳过 |
+| 任务探索 `/explore` | `"explore"` | `explore.json` | SSR 存在即跳过 |
 | 任务物品 `/quest_items` | `"quest_items"` | `quest_items_groups.json` | SSR 存在即跳过 |
 | 任务物品分组 `/quest_items/:group` | `"quest_items_groups/{group}"` | `quest_items_groups/{group}.json` | SSR 有 entities 时跳过 |
 | 任务NPC `/quest_npc` | `"quest_npc"` | `quest_npc.json` | SSR 存在即跳过 |

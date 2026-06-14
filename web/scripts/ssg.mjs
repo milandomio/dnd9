@@ -64,24 +64,10 @@ for (const p of PAGES) {
       ? `/lootdrops/${encodeURIComponent(e.name)}`
       : `/${p}/${encodeURIComponent(e.name)}`;
     const entry = { name: e.name, translation: e.translation || "", page: p, url };
-    if (p === "lootdrops") {
-      entry.variant_count = e.variant_count;
-      entry.monsters = e.monsters;
-      entry.monster_translations = e.monster_translations;
-    }
     searchIndex.push(entry);
   }
 }
 
-const exploreData = readJSON(join(DATA, "explore.json"));
-for (const e of exploreData) {
-  searchIndex.push({
-    name: e.name,
-    translation: e.npc_name_display || "",
-    page: "explore",
-    url: "/explore",
-  });
-}
 
 const questNpcData = readJSON(join(DATA, "quest_npc.json"));
 for (const e of questNpcData) {
@@ -124,7 +110,7 @@ const LIST_PAGES = [
   { name: "monsters", translation: "怪物表", page: "monsters", url: "/monsters" },
   { name: "props", translation: "实体表", page: "props", url: "/props" },
   { name: "lootdrops", translation: "掉落表", page: "lootdrops", url: "/lootdrops" },
-  { name: "explore", translation: "探索地点表", page: "explore", url: "/explore" },
+  { name: "explore", translation: "任务探索表", page: "explore", url: "/explore" },
   { name: "quest_npc", translation: "任务NPC表", page: "quest_npc", url: "/quest_npc" },
   { name: "dungeon_modules", translation: "地图模块表", page: "dungeon_modules", url: "/dungeon_modules" },
 ];
