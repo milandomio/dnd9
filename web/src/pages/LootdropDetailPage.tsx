@@ -82,31 +82,91 @@ export default function LootdropDetailPage() {
 
   const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const loadedMapsRef = useRef<Set<string>>(new Set());
+  const imageUrlsRef = useRef(new Map<string, string>());
+  const [, setImageUrlsTick] = useState(0);
+  const controllersRef = useRef(new Map<string, AbortController>());
+  const timersRef = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
-  const mapRef = useCallback((mapName: string, el: HTMLDivElement | null) => {
-    if (!el) return;
-    if (!observerRef.current) {
-      observerRef.current = new IntersectionObserver(
-        (entries) => {
-          setVisibleMaps((prev) => {
-            const next = new Set(prev);
-            for (const e of entries) {
-              const mn = (e.target as HTMLElement).dataset.mapName!;
-              if (e.isIntersecting) {
-                next.add(mn);
-              } else if (!loadedMapsRef.current.has(mn)) {
-                next.delete(mn);
-              }
-            }
-            return next;
+  /** Schedule a delayed fetch; cancel if map leaves viewport before timeout */
+  const scheduleFetch = useCallback(
+    (mn: string) => {
+      if (
+        imageUrlsRef.current.has(mn) ||
+        controllersRef.current.has(mn) ||
+        timersRef.current.has(mn)
+      )
+        return;
+      const timer = setTimeout(() => {
+        timersRef.current.delete(mn);
+        const mod = modules.get(mn);
+        const imgName = mod?.img_name || mod?.sl_base_name || 'RareModule_1x1';
+        const ctrl = new AbortController();
+        controllersRef.current.set(mn, ctrl);
+        fetch(`./data/img/${imgName}.webp`, { signal: ctrl.signal })
+          .then((r) => r.blob())
+          .then((blob) => {
+            const url = URL.createObjectURL(blob);
+            imageUrlsRef.current.set(mn, url);
+            controllersRef.current.delete(mn);
+            setImageUrlsTick((v) => v + 1);
+          })
+          .catch(() => {
+            controllersRef.current.delete(mn);
           });
-        },
-        { rootMargin: '600px' }
-      );
-    }
-    (el as any).dataset.mapName = mapName;
-    observerRef.current.observe(el);
+      }, 500);
+      timersRef.current.set(mn, timer);
+    },
+    [modules]
+  );
+
+  const mapRef = useCallback(
+    (mapName: string, el: HTMLDivElement | null) => {
+      if (!el) return;
+      if (!observerRef.current) {
+        observerRef.current = new IntersectionObserver(
+          (entries) => {
+            setVisibleMaps((prev) => {
+              const next = new Set(prev);
+              for (const e of entries) {
+                const mn = (e.target as HTMLElement).dataset.mapName!;
+                if (e.isIntersecting) {
+                  next.add(mn);
+                  scheduleFetch(mn);
+                } else if (!imageUrlsRef.current.has(mn)) {
+                  next.delete(mn);
+                  // Cancel pending timer (never started download)
+                  const tm = timersRef.current.get(mn);
+                  if (tm) {
+                    clearTimeout(tm);
+                    timersRef.current.delete(mn);
+                  }
+                  // Abort in-flight fetch (download already started)
+                  const ctrl = controllersRef.current.get(mn);
+                  if (ctrl) {
+                    ctrl.abort();
+                    controllersRef.current.delete(mn);
+                  }
+                }
+              }
+              return next;
+            });
+          },
+          { rootMargin: '600px' }
+        );
+      }
+      (el as any).dataset.mapName = mapName;
+      observerRef.current.observe(el);
+    },
+    [scheduleFetch]
+  );
+
+  // Cleanup: revoke blob URLs, abort fetches, clear timers on unmount
+  useEffect(() => {
+    return () => {
+      for (const t of timersRef.current.values()) clearTimeout(t);
+      for (const ctrl of controllersRef.current.values()) ctrl.abort();
+      for (const url of imageUrlsRef.current.values()) URL.revokeObjectURL(url);
+    };
   }, []);
 
   if (!data)
@@ -679,7 +739,7 @@ export default function LootdropDetailPage() {
                   )}
                   {visibleMaps.has(mapName) ? (
                     <MapPanel
-                      onLoad={() => loadedMapsRef.current.add(mapName)}
+                      imageSrc={imageUrlsRef.current.get(mapName)}
                       imgName={
                         mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
                       }
