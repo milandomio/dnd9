@@ -5,12 +5,19 @@
 > **参考项目**：「v4」「findItemV4」均指 `/home/mio/fmod/findItemV4/`
 > **技术参考**：数据管道、数据库、地图模块详细规范见 `docs/REFERENCE.md`
 
+## 强制停止规则
+
+1. **重复循环检测**：如果你发现自己在重复相同的代码修改或相同的思考，立刻停止输出！
+2. **失败熔断**：连续 2 次修改代码未能通过测试，必须停下来向用户报告，禁止继续盲目重试。
+3. **无话可说时**：只输出 `DONE`，绝对不要用废话填充。没有明确指令、或收到空白/无意义输入时同样直接 `DONE` 结束。
+
 ## 术语约定
 
 - "我看到" — 部署后 http://localhost:8080/ 上的内容
 - "前端" — `web/`，"后端" — `api/`，"db" — `api/data/darkfindv5.db`
 - "坐标" — spawners 表中 x/y/z 三个 REAL 字段
 - "启动web" — `cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
+- **最后总结必须用中文** — 完成任务后的总结、变更说明一律用中文输出
 
 ## 项目结构
 

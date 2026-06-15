@@ -9,7 +9,17 @@ import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
 
-const RARITY_COLORS: Record<string, string> = {
+const RARITY_COLORS_LIGHT: Record<string, string> = {
+  粗糙: '#757575',
+  普通: '#1a1a1a',
+  优秀: '#2e7d32',
+  罕见: '#1565c0',
+  史诗: '#7B1FA2',
+  传奇: '#E65100',
+  独特: '#F9A825',
+};
+
+const RARITY_COLORS_DARK: Record<string, string> = {
   粗糙: '#9e9e9e',
   普通: '#ffffff',
   优秀: '#4caf50',
@@ -19,8 +29,9 @@ const RARITY_COLORS: Record<string, string> = {
   独特: '#fff9c4',
 };
 
-function getRarityColor(rarity: string): string {
-  return RARITY_COLORS[rarity] || '#CE93D8';
+function getRarityColor(rarity: string, dark: boolean): string {
+  const map = dark ? RARITY_COLORS_DARK : RARITY_COLORS_LIGHT;
+  return map[rarity] || (dark ? '#CE93D8' : '#7B1FA2');
 }
 
 function lsGet(key: string): boolean {
@@ -88,7 +99,7 @@ function formatRequired(
 
 export default function QuestNPCDetailPage() {
   const { npc_name } = useParams<{ npc_name: string }>();
-  const { tokens } = useTheme();
+  const { tokens, dark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const scrollToRef = useRef<HTMLDivElement>(null);
@@ -398,7 +409,7 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     textAlign: 'left',
                                     padding: '4px 8px',
-                                    color: '#aaa',
+                                    color: tokens.muted,
                                     fontSize: 13,
                                     whiteSpace: 'nowrap',
                                     width: '2em',
@@ -410,7 +421,7 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     textAlign: 'left',
                                     padding: '4px 8px',
-                                    color: '#aaa',
+                                    color: tokens.muted,
                                     fontSize: 13,
                                   }}
                                 >
@@ -421,7 +432,7 @@ export default function QuestNPCDetailPage() {
                                     style={{
                                       textAlign: 'left',
                                       padding: '4px 8px',
-                                      color: '#aaa',
+                                      color: tokens.muted,
                                       fontSize: 13,
                                       whiteSpace: 'nowrap',
                                       width: '3em',
@@ -435,7 +446,7 @@ export default function QuestNPCDetailPage() {
                                     style={{
                                       textAlign: 'left',
                                       padding: '4px 8px',
-                                      color: '#aaa',
+                                      color: tokens.muted,
                                       fontSize: 13,
                                       whiteSpace: 'nowrap',
                                       width: '3em',
@@ -448,7 +459,7 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     textAlign: 'left',
                                     padding: '4px 8px',
-                                    color: '#aaa',
+                                    color: tokens.muted,
                                     fontSize: 13,
                                     whiteSpace: 'nowrap',
                                     width: '2em',
@@ -466,8 +477,9 @@ export default function QuestNPCDetailPage() {
                                   <tr
                                     key={i}
                                     style={{
-                                      borderBottom:
-                                        '1px solid rgba(255,255,255,0.06)',
+                                      borderBottom: dark
+                                        ? '1px solid rgba(255,255,255,0.06)'
+                                        : '1px solid rgba(0,0,0,0.08)',
                                       opacity: contentDone ? 0.4 : 1,
                                       textDecoration: contentDone
                                         ? 'line-through'
@@ -477,7 +489,7 @@ export default function QuestNPCDetailPage() {
                                     <td
                                       style={{
                                         padding: '3px 8px',
-                                        color: '#ccc',
+                                        color: dark ? '#ccc' : '#555',
                                         whiteSpace: 'nowrap',
                                       }}
                                     >
@@ -486,7 +498,7 @@ export default function QuestNPCDetailPage() {
                                     <td
                                       style={{
                                         padding: '3px 8px',
-                                        color: '#fff',
+                                        color: tokens.text,
                                       }}
                                     >
                                       <input
@@ -536,7 +548,7 @@ export default function QuestNPCDetailPage() {
                                       <td
                                         style={{
                                           padding: '3px 8px',
-                                          color: '#FFB74D',
+                                          color: dark ? '#FFB74D' : '#E65100',
                                           fontSize: 12,
                                           whiteSpace: 'nowrap',
                                         }}
@@ -548,7 +560,10 @@ export default function QuestNPCDetailPage() {
                                       <td
                                         style={{
                                           padding: '3px 8px',
-                                          color: getRarityColor(c.rarity || ''),
+                                          color: getRarityColor(
+                                            c.rarity || '',
+                                            dark
+                                          ),
                                           fontSize: 12,
                                           whiteSpace: 'nowrap',
                                         }}
@@ -559,7 +574,7 @@ export default function QuestNPCDetailPage() {
                                     <td
                                       style={{
                                         padding: '3px 8px',
-                                        color: '#ccc',
+                                        color: dark ? '#ccc' : '#555',
                                         whiteSpace: 'nowrap',
                                       }}
                                     >
@@ -614,7 +629,7 @@ export default function QuestNPCDetailPage() {
                               style={{
                                 textAlign: 'left',
                                 padding: '4px 8px',
-                                color: '#aaa',
+                                color: tokens.muted,
                                 fontSize: 13,
                                 whiteSpace: 'nowrap',
                                 width: '4em',
@@ -626,7 +641,7 @@ export default function QuestNPCDetailPage() {
                               style={{
                                 textAlign: 'left',
                                 padding: '4px 8px',
-                                color: '#aaa',
+                                color: tokens.muted,
                                 fontSize: 13,
                               }}
                             >
@@ -636,7 +651,7 @@ export default function QuestNPCDetailPage() {
                               style={{
                                 textAlign: 'left',
                                 padding: '4px 8px',
-                                color: '#aaa',
+                                color: tokens.muted,
                                 fontSize: 13,
                                 whiteSpace: 'nowrap',
                                 width: '2em',
@@ -654,29 +669,33 @@ export default function QuestNPCDetailPage() {
                               <tr
                                 key={`aff-${ri}`}
                                 style={{
-                                  borderBottom:
-                                    '1px solid rgba(255,255,255,0.06)',
+                                  borderBottom: dark
+                                    ? '1px solid rgba(255,255,255,0.06)'
+                                    : '1px solid rgba(0,0,0,0.08)',
                                   background: 'rgba(255,100,100,0.1)',
                                 }}
                               >
                                 <td
                                   style={{
                                     padding: '3px 8px',
-                                    color: '#ccc',
+                                    color: dark ? '#ccc' : '#555',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
                                   {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
                                 </td>
                                 <td
-                                  style={{ padding: '3px 8px', color: '#fff' }}
+                                  style={{
+                                    padding: '3px 8px',
+                                    color: tokens.text,
+                                  }}
                                 >
                                   {r.name}
                                 </td>
                                 <td
                                   style={{
                                     padding: '3px 8px',
-                                    color: '#ccc',
+                                    color: dark ? '#ccc' : '#555',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
@@ -696,28 +715,32 @@ export default function QuestNPCDetailPage() {
                               <tr
                                 key={`item-${ri}`}
                                 style={{
-                                  borderBottom:
-                                    '1px solid rgba(255,255,255,0.06)',
+                                  borderBottom: dark
+                                    ? '1px solid rgba(255,255,255,0.06)'
+                                    : '1px solid rgba(0,0,0,0.08)',
                                 }}
                               >
                                 <td
                                   style={{
                                     padding: '3px 8px',
-                                    color: '#ccc',
+                                    color: dark ? '#ccc' : '#555',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
                                   {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
                                 </td>
                                 <td
-                                  style={{ padding: '3px 8px', color: '#fff' }}
+                                  style={{
+                                    padding: '3px 8px',
+                                    color: tokens.text,
+                                  }}
                                 >
                                   {r.name}
                                 </td>
                                 <td
                                   style={{
                                     padding: '3px 8px',
-                                    color: '#ccc',
+                                    color: dark ? '#ccc' : '#555',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
@@ -749,7 +772,7 @@ export default function QuestNPCDetailPage() {
                             <div
                               style={{
                                 padding: '3px 8px',
-                                color: '#FFD54F',
+                                color: dark ? '#FFD54F' : '#F57F17',
                               }}
                             >
                               金币
@@ -757,7 +780,7 @@ export default function QuestNPCDetailPage() {
                             <div
                               style={{
                                 padding: '3px 8px',
-                                color: '#FFD54F',
+                                color: dark ? '#FFD54F' : '#F57F17',
                               }}
                             >
                               {goldReward?.count ?? ''}
@@ -765,7 +788,7 @@ export default function QuestNPCDetailPage() {
                             <div
                               style={{
                                 padding: '3px 8px',
-                                color: '#4fc3f7',
+                                color: dark ? '#4fc3f7' : '#0277BD',
                               }}
                             >
                               经验值
@@ -773,7 +796,7 @@ export default function QuestNPCDetailPage() {
                             <div
                               style={{
                                 padding: '3px 8px',
-                                color: '#4fc3f7',
+                                color: dark ? '#4fc3f7' : '#0277BD',
                               }}
                             >
                               {expReward?.count ?? ''}
@@ -793,7 +816,11 @@ export default function QuestNPCDetailPage() {
                         req.questNum === q.quest_number - 1;
                       return (
                         <div
-                          style={{ color: '#ccc', fontSize: 13, marginTop: 6 }}
+                          style={{
+                            color: dark ? '#ccc' : '#555',
+                            fontSize: 13,
+                            marginTop: 6,
+                          }}
                         >
                           <span style={{ fontWeight: 'bold' }}>前置任务: </span>
                           {isPrevSameNpc ? (

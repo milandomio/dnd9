@@ -35,7 +35,7 @@ export default function ExplorePage() {
   const [data, setData] = useState<ExploreTarget[]>(ssrData || []);
   const { modules } = useDungeonModules();
   const dataVersion = useDataVersion();
-  const { tokens } = useTheme();
+  const { tokens, dark } = useTheme();
 
   useEffect(() => {
     if (ssrData) return;
@@ -64,7 +64,7 @@ export default function ExplorePage() {
       <h1
         style={{
           textAlign: 'center',
-          color: '#00bcd4',
+          color: tokens.accent,
           fontSize: 36,
           marginBottom: 20,
         }}
@@ -92,9 +92,9 @@ export default function ExplorePage() {
               style={{
                 fontSize: 22,
                 fontWeight: 'bold',
-                color: '#FFC107',
+                color: dark ? '#FFC107' : '#F57F17',
                 padding: '5px 0',
-                borderBottom: '2px solid #FFC107',
+                borderBottom: dark ? '2px solid #FFC107' : '2px solid #F57F17',
                 marginBottom: 12,
               }}
             >
@@ -130,7 +130,7 @@ export default function ExplorePage() {
                       style={{
                         margin: '0 0 2px 0',
                         fontSize: 22,
-                        color: '#00bcd4',
+                        color: tokens.accent,
                         textAlign: 'center',
                         width: '100%',
                         lineHeight: 1.3,
@@ -142,7 +142,7 @@ export default function ExplorePage() {
                       {groupLabel && (
                         <span
                           style={{
-                            color: '#FFC107',
+                            color: dark ? '#FFC107' : '#F57F17',
                             fontSize: 13,
                             fontWeight: 'normal',
                           }}

@@ -37,7 +37,7 @@ export default function QuestNPCPage() {
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [data, setData] = useState<NPCEntry[]>(ssrData || []);
   const dataVersion = useDataVersion();
-  const { tokens } = useTheme();
+  const { tokens, dark } = useTheme();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -121,9 +121,9 @@ export default function QuestNPCPage() {
             style={{
               fontSize: 22,
               fontWeight: 'bold',
-              color: '#FFC107',
+              color: dark ? '#FFC107' : '#F57F17',
               padding: '5px 0',
-              borderBottom: '2px solid #FFC107',
+              borderBottom: dark ? '2px solid #FFC107' : '2px solid #F57F17',
               marginBottom: 12,
               marginTop: 24,
             }}

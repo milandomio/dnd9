@@ -38,7 +38,7 @@ const checkTdBase: CSSProperties = {
 };
 
 const checkboxStyle: CSSProperties = {
-  accentColor: '#00bcd4',
+  accentColor: '#0097a7',
   cursor: 'pointer',
   margin: 0,
 };
@@ -136,7 +136,7 @@ export default function DebugCoordTable({
       <h3
         style={{
           textAlign: 'center',
-          color: '#00bcd4',
+          color: tokens.accent,
           fontSize: 18,
           margin: '0 0 10px',
         }}
