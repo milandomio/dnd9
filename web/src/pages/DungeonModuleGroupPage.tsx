@@ -86,7 +86,7 @@ export default function DungeonModuleGroupPage() {
       <div style={{ textAlign: 'center', marginBottom: 8 }}>
         <h1
           style={{
-            color: '#00bcd4',
+            color: tokens.accent,
             fontSize: 28,
             margin: '0 0 8px',
             display: 'inline',
@@ -151,7 +151,7 @@ export default function DungeonModuleGroupPage() {
                   style={{
                     margin: '0 0 2px 0',
                     fontSize: 20,
-                    color: '#00bcd4',
+                    color: tokens.accent,
                     textAlign: 'center',
                     lineHeight: 1.3,
                     overflow: 'hidden',

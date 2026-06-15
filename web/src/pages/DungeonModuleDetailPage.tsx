@@ -46,7 +46,7 @@ export default function DungeonModuleDetailPage() {
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
-  const { tokens } = useTheme();
+  const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -182,7 +182,7 @@ export default function DungeonModuleDetailPage() {
       <h1
         style={{
           textAlign: 'center',
-          color: '#00bcd4',
+          color: tokens.accent,
           fontSize: 28,
           margin: '0 0 8px',
         }}
@@ -282,7 +282,7 @@ export default function DungeonModuleDetailPage() {
                       style={{
                         fontSize: 20,
                         fontWeight: 'bold',
-                        color: '#FFC107',
+                        color: dark ? '#FFC107' : '#F57F17',
                         marginBottom: 4,
                         paddingLeft: 2,
                       }}

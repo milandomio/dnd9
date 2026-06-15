@@ -63,7 +63,7 @@ export default function LootdropDetailPage() {
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
-  const { tokens } = useTheme();
+  const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -335,7 +335,7 @@ export default function LootdropDetailPage() {
       <h1
         style={{
           textAlign: 'center',
-          color: '#00bcd4',
+          color: tokens.accent,
           fontSize: 28,
           margin: '0 0 8px',
         }}
@@ -474,10 +474,12 @@ export default function LootdropDetailPage() {
                   gridColumn: '1 / -1',
                   fontSize: 22,
                   fontWeight: 'bold',
-                  color: '#FFC107',
+                  color: dark ? '#FFC107' : '#F57F17',
                   padding: '5px 0',
                   marginTop: 10,
-                  borderBottom: '2px solid #FFC107',
+                  borderBottom: dark
+                    ? '2px solid #FFC107'
+                    : '2px solid #F57F17',
                 }}
               >
                 {GROUP_LABELS[groupName] || groupName}
@@ -510,7 +512,7 @@ export default function LootdropDetailPage() {
                     style={{
                       margin: '0 0 6px 0',
                       fontSize: 22,
-                      color: '#00bcd4',
+                      color: tokens.accent,
                       textAlign: 'center',
                       width: '100%',
                       lineHeight: 1.3,

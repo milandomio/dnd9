@@ -36,10 +36,10 @@ const CARD_THEME: Record<
     titleColor: '#fff',
   },
   explore: {
-    border: '#00bcd4',
+    border: '#0097a7',
     hoverBg: 'linear-gradient(145deg, #2a4a4a, #3a5a5a)',
     icon: '🗺️',
-    titleColor: '#00bcd4',
+    titleColor: '#0097a7',
   },
   quest_items: {
     border: '#E91E63',
@@ -101,7 +101,7 @@ export default function HomePage() {
       <h1
         style={{
           textAlign: 'center',
-          color: '#00bcd4',
+          color: tokens.accent,
           fontSize: 36,
           marginBottom: 20,
         }}

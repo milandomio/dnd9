@@ -67,7 +67,7 @@ export default function ListPage() {
       <h1
         style={{
           textAlign: 'center',
-          color: '#00bcd4',
+          color: tokens.accent,
           fontSize: 36,
           marginBottom: 20,
         }}
