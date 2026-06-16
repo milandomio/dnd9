@@ -29,7 +29,6 @@ from config import (
 )
 from db_manager import DatabaseManager
 from layout_utils import load_all_layout_rotations
-from lootdrop_rates import get_spawn_rate_for_keyword
 from pipeline_timer import PipelineTimer
 from quest_collector import run_quest_extraction
 from search_engine import build_all_matches
@@ -1292,10 +1291,6 @@ def run():
         base = _UNIQUE_SUFFIX_RE.sub("", base)
         return base
 
-    def _get_spawn_rate(keyword: str, _map_base: str) -> int:
-        """计算某 keyword 的生成概率（百分比）。"""
-        return get_spawn_rate_for_keyword(db, keyword)
-
     # def _get_drop_rates(item_name: str, monster_name: str, coords: list[dict]) -> dict[str, float]:
     #     mapped_coords = [{"map": c.get("map_base", c.get("map", ""))} for c in coords]
     #     result = get_drop_rates_for_item_with_coords(
@@ -1310,6 +1305,13 @@ def run():
     #                 map_base_to_group, MODULE_GROUP_FLOOR_SUFFIXES, DUNGEON_MODE_NAMES,
     #             )
     #     return result
+
+    # 预加载 spawn_rate 缓存，避免逐坐标 N+1 查询
+    _spawn_rate_cache: dict[str, int] = {}
+    for _row in db.get_all_spawner_entries():
+        for _key in (_row["spawner_keyword"], _row["entity_name"]):
+            if _key and _row["spawn_rate"] > _spawn_rate_cache.get(_key, 0):
+                _spawn_rate_cache[_key] = _row["spawn_rate"]
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
@@ -1347,7 +1349,7 @@ def run():
                     "version": c["version"],
                     "label": c.get("original_keyword", ""),
                 }
-                spawn_rate = _get_spawn_rate(m_name, c["map_base"])
+                spawn_rate = _spawn_rate_cache.get(m_name, 100)
                 if spawn_rate != 100:
                     coord_out["spawn_rate"] = spawn_rate
                 merged[base]["coords"].append(coord_out)
