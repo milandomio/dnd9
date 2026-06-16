@@ -391,8 +391,9 @@ def run():
 
         # 7.6. Build mutually_exclusive_groups table
         _log("[7.6/9] building mutually_exclusive_groups...")
-        c.execute("DELETE FROM mutually_exclusive_groups")
-        c.execute("""
+        cur2 = db.connect().cursor()
+        cur2.execute("DELETE FROM mutually_exclusive_groups")
+        cur2.execute("""
             SELECT s.group_parent, s.map_base, s.json_filename, s.keyword,
                    COUNT(*) as cnt
             FROM spawners s
@@ -401,7 +402,7 @@ def run():
             HAVING cnt > 1
         """)
         group_rows = []
-        for row in c.fetchall():
+        for row in cur2.fetchall():
             group_rows.append(
                 (
                     row["map_base"],
@@ -411,7 +412,7 @@ def run():
                     row["cnt"],
                 )
             )
-        c.executemany(
+        cur2.executemany(
             "INSERT INTO mutually_exclusive_groups (map_base, json_filename, group_name, search_term, spawner_count) VALUES (?, ?, ?, ?, ?)",
             group_rows,
         )
@@ -1058,7 +1059,10 @@ def run():
                 "coords": [],
             }
             color_idx += 1
-        gp = row.get("group_parent", "") or ""
+        try:
+            gp = row["group_parent"] or ""
+        except KeyError:
+            gp = ""
         module_coords[mb]["entities"][ek]["coords"].append(
             {
                 "x": row["x"],
@@ -1093,9 +1097,8 @@ def run():
                 entity = group[0]
                 coords = entity["coords"]
                 gps = {c.get("group_parent", "") for c in coords}
-                if len(gps) == 1 and "" not in gps:
+                if len(gps) == 1 and "" not in gps and len(coords) > 1:
                     entity["mutually_exclusive"] = True
-                    entity["group_size"] = len(coords)
                 else:
                     entity["mutually_exclusive"] = False
                 merged_entities.append(entity)
@@ -1110,7 +1113,7 @@ def run():
                         seen.add(ck)
                         deduped.append(c)
             all_group_parents = {c.get("group_parent", "") for e in group for c in e["coords"]}
-            is_mutex = len(all_group_parents) == 1 and "" not in all_group_parents
+            is_mutex = len(all_group_parents) == 1 and "" not in all_group_parents and len(deduped) > 1
             merged_entities.append(
                 {
                     "name": canonical["name"],
@@ -1119,7 +1122,7 @@ def run():
                     "color": canonical["color"],
                     "coords": deduped,
                     "mutually_exclusive": is_mutex,
-                    "group_size": len(deduped) if is_mutex else 0,
+                    "group_size": len(deduped) if is_mutex else None,
                 }
             )
         _save(
