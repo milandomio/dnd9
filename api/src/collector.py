@@ -5,6 +5,7 @@ from pathlib import Path
 
 from config import (
     DB_PATH,
+    DUNGEON_MODE_NAMES,
     DUNGEON_MODULE_DIR,
     GAME_JSON,
     GAME_ROOT,
@@ -19,6 +20,7 @@ from config import (
     LOOTDROP_RATE_DIR,
     MAPS_DIR,
     MODULE_DISPLAY_OVERRIDE,
+    MODULE_GROUP_FLOOR_SUFFIXES,
     MODULE_NAME_OVERRIDE,
     MODULE_OFFSET_MAP,
     MONSTER_DIR,
@@ -1318,42 +1320,104 @@ def run():
         "#00CED1",
     ]
 
-    # ── 构建爆率查找表 ──
-    # _log("[JSON] building drop rate lookups START")
-    # map_base_to_group: dict[str, str] = {}
-    # for m in modules_data:
-    #     g = m.get("group", "") or ""
-    #     if not g:
-    #         continue
-    #     map_base_to_group[m["name"]] = g
-    #     sl = m.get("sl_base_name", "")
-    #     if sl:
-    #         map_base_to_group[sl] = g
-    #     for alias in (m.get("aliases") or []):
-    #         map_base_to_group[alias] = g
-
     def _base_monster_name(name: str) -> str:
         """Strip _Hard/_VeryHard/Unique suffix to get base name."""
         base = _HARD_SUFFIX_RE.sub("", name)
         base = _UNIQUE_SUFFIX_RE.sub("", base)
         return base
 
-    # def _get_drop_rates(item_name: str, monster_name: str, coords: list[dict]) -> dict[str, float]:
-    #     mapped_coords = [{"map": c.get("map_base", c.get("map", ""))} for c in coords]
-    #     result = get_drop_rates_for_item_with_coords(
-    #         db, item_name, monster_name, mapped_coords,
-    #         map_base_to_group, MODULE_GROUP_FLOOR_SUFFIXES, DUNGEON_MODE_NAMES,
-    #     )
-    #     if not result:
-    #         alias = TRANSLATION_ALIAS_MAP.get(monster_name)
-    #         if alias:
-    #             result = get_drop_rates_for_item_with_coords(
-    #                 db, item_name, alias, mapped_coords,
-    #                 map_base_to_group, MODULE_GROUP_FLOOR_SUFFIXES, DUNGEON_MODE_NAMES,
-    #             )
-    #     return result
+    # ── 预加载爆率数据 ──
+    _log("[JSON] preloading drop rate data...")
+    _c = db.connect().cursor()
 
-    # 预加载 spawn_rate 缓存，避免逐坐标 N+1 查询
+    # 构建 map_base → group 映射
+    _map_base_to_group: dict[str, str] = {}
+    for _m in modules_data:
+        _g = _m.get("group", "") or ""
+        if not _g:
+            continue
+        _map_base_to_group[_m["name"]] = _g
+        _sl = _m.get("sl_base_name", "")
+        if _sl:
+            _map_base_to_group[_sl] = _g
+        for _alias in _m.get("aliases") or []:
+            _map_base_to_group[_alias] = _g
+
+    # spawner_keyword → lootdrop_group_id
+    _spawner_ldg: dict[str, str] = {}
+    for _row in _c.execute(
+        "SELECT DISTINCT spawner_keyword, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
+    ):
+        _spawner_ldg[_row["spawner_keyword"]] = _row["lootdrop_group_id"]
+
+    # lootdrop_groups: {group_id: {dungeon_grade: [(lootdrop_id, lootdrop_rate_id, drop_count)]}}
+    _ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
+    for _row in _c.execute(
+        "SELECT group_id, dungeon_grade, lootdrop_id, lootdrop_rate_id, drop_count FROM lootdrop_groups"
+    ):
+        _ld_groups.setdefault(_row["group_id"], {}).setdefault(_row["dungeon_grade"], []).append(
+            (_row["lootdrop_id"], _row["lootdrop_rate_id"], _row["drop_count"])
+        )
+
+    # lootdrop_rate_items: {lootdrop_id: {item_name: (luck_grade, drop_count)}}
+    _ld_rate_items: dict[str, dict[str, tuple[int, int]]] = {}
+    for _row in _c.execute("SELECT lootdrop_id, item_name, luck_grade, drop_count FROM lootdrop_rate_items"):
+        _ld_rate_items.setdefault(_row["lootdrop_id"], {})[_row["item_name"]] = (_row["luck_grade"], _row["drop_count"])
+
+    # lootdrop_rate_weights: {rate_id: {luck_grade: total_weight}}
+    _ld_rate_weights: dict[str, dict[int, int]] = {}
+    for _row in _c.execute(
+        "SELECT rate_id, luck_grade, SUM(weight) as total FROM lootdrop_rate_weights GROUP BY rate_id, luck_grade"
+    ):
+        _ld_rate_weights.setdefault(_row["rate_id"], {})[_row["luck_grade"]] = _row["total"]
+
+    _log(
+        f"[JSON] preloaded: {len(_ld_groups)} groups, {len(_ld_rate_items)} rate items, {len(_ld_rate_weights)} rate weights"
+    )
+
+    def _compute_drop_rate(ldg_id: str, item_name: str, full_grade: int) -> float:
+        """纯内存计算某物品在指定组+等级下的爆率（0~1）。"""
+        for grade in (full_grade, 0):
+            grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
+            if not grade_data:
+                continue
+            total_weight = 0.0
+            found = False
+            for ld_id, lr_id, group_count in grade_data:
+                item_info = _ld_rate_items.get(ld_id, {}).get(item_name)
+                if item_info is None:
+                    continue
+                found = True
+                luck_grade, item_count = item_info
+                weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+                total_weight += weight * group_count * item_count
+            if found:
+                return total_weight / 10000.0
+        return 0.0
+
+    def _get_group_drop_rates(item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
+        """计算某物品在某怪物在某地图分组下的各模式爆率。"""
+        ldg_id = _spawner_ldg.get(monster_name, "")
+        if not ldg_id:
+            return {}
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        if not suffixes:
+            return {}
+        mode_rates: dict[str, float] = {}
+        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+            if mode_id == 4:
+                continue
+            best_rate = 0.0
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                rate = _compute_drop_rate(ldg_id, item_name, full_grade)
+                if rate > best_rate:
+                    best_rate = rate
+            if best_rate > 0:
+                mode_rates[mode_name] = round(best_rate * 100, 1)
+        return mode_rates
+
+    # 预加载 spawn_rate 缓存
     _spawn_rate_cache: dict[str, int] = {}
     for _row in db.get_all_spawner_entries():
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
@@ -1400,6 +1464,25 @@ def run():
                 if spawn_rate != 100:
                     coord_out["spawn_rate"] = spawn_rate
                 merged[base]["coords"].append(coord_out)
+        # 计算 per-group 爆率
+        _group_drop_info: dict[str, list[dict]] = {}
+        for _base, _m_data in merged.items():
+            _seen_groups: set[str] = set()
+            for _c in _m_data["coords"]:
+                _g = _map_base_to_group.get(_c["map"], "")
+                if _g:
+                    _seen_groups.add(_g)
+            for _g in _seen_groups:
+                _dr = _get_group_drop_rates(item_name, _base, _g)
+                if not _dr:
+                    continue
+                _group_drop_info.setdefault(_g, []).append(
+                    {
+                        "translation": _m_data["translation"],
+                        "spawn_rate": _spawn_rate_cache.get(_base, 100),
+                        "drop_rates": _dr,
+                    }
+                )
         monsters_out = list(merged.values())
         if monsters_out:
             _save(
@@ -1408,12 +1491,37 @@ def run():
                     "name": item_name,
                     "translation": entry["translation"],
                     "monsters": monsters_out,
+                    "group_drop_info": _group_drop_info,
                 },
             )
         _loot_detail_count += 1
         if _loot_detail_count % 100 == 0:
             _log(f"[JSON] lootdrops detail: {_loot_detail_count}/{_loot_detail_total}")
     _log(f"[JSON] lootdrops detail files DONE -> {_loot_detail_count} items")
+
+    # ── 更新物品实体 JSON，添加 group_drop_info ──
+    _log("[JSON] updating item entities with group drop info...")
+    _update_count = 0
+    for _entry in loot_index:
+        _iname = _entry["name"]
+        _loot_path = OUTPUT_DIR / f"lootdrops/{_iname}.json"
+        if not _loot_path.exists():
+            continue
+        with open(_loot_path) as _f:
+            _loot_data = json.load(_f)
+        _gdi = _loot_data.get("group_drop_info", {})
+        if not _gdi:
+            continue
+        _entity_path = OUTPUT_DIR / f"items/{_iname}.json"
+        if not _entity_path.exists():
+            continue
+        with open(_entity_path) as _f:
+            _entity_data = json.load(_f)
+        _entity_data["group_drop_info"] = _gdi
+        with open(_entity_path, "w") as _f:
+            json.dump(_entity_data, _f, ensure_ascii=False, indent=2)
+        _update_count += 1
+    _log(f"[JSON] updated {_update_count} item entities with group drop info")
 
     # ── Quest data (from DB) ──
     timer.start_step("[JSON] quest data")

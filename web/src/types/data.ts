@@ -14,12 +14,19 @@ export interface Coord {
   label: string;
 }
 
+export interface GroupDropInfo {
+  translation: string;
+  spawn_rate: number;
+  drop_rates: Record<string, number>;
+}
+
 export interface ItemEntity {
   name: string;
   translation: string;
   category: string;
   monsters: string[];
   coords: Coord[];
+  group_drop_info?: Record<string, GroupDropInfo[]>;
 }
 
 export interface MonsterEntity {
