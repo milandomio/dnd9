@@ -9,6 +9,7 @@ import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
 type IndexEntry = SearchEntry & {
   category?: string;
   coordCount?: number;
+  type?: string;
   // lootdrops SSR data fields
   variant_count?: number;
   monsters?: string[];
@@ -136,72 +137,168 @@ export default function ListPage() {
           gap: 20,
         }}
       >
-        {data.map((entity) => (
-          <div
-            key={entity.name}
-            onClick={() => {
-              if (page === 'lootdrops') {
-                // Lootdrops items navigate to items detail page
-                navigate(`/lootdrops/${entity.name}`);
-              } else {
-                navigate(`/${page}/${entity.name}`);
-              }
-            }}
-            style={{
-              background: tokens.surface,
-              border: `1px solid ${tokens.border}`,
-              borderRadius: 8,
-              padding: 20,
-              textAlign: 'center',
-              cursor: 'pointer',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.5)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'none';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <div
-              style={{ color: tokens.text, fontSize: 18, fontWeight: 'bold' }}
-            >
-              {entity.translation || entity.name}
-            </div>
-            {debug && (
-              <div style={{ color: tokens.muted, fontSize: 12, marginTop: 4 }}>
-                {entity.translation}【{entity.name}】
-              </div>
-            )}
-            {entity.monsters &&
-              entity.monsters.length > 0 &&
-              page === 'lootdrops' && (
+        {page === 'props'
+          ? // Group props by type (decoration vs props)
+            (() => {
+              const decorations = data.filter((e) => e.type === 'decoration');
+              const propsEntities = data.filter((e) => e.type !== 'decoration');
+              const groups: {
+                label: string;
+                icon: string;
+                items: IndexEntry[];
+              }[] = [];
+              if (propsEntities.length > 0)
+                groups.push({
+                  label: '实体',
+                  icon: '🏛️',
+                  items: propsEntities,
+                });
+              if (decorations.length > 0)
+                groups.push({ label: '装饰', icon: '🔥', items: decorations });
+
+              return groups.map((group) => (
+                <div key={group.label} style={{ gridColumn: '1 / -1' }}>
+                  <div
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 'bold',
+                      color: tokens.accent,
+                      marginBottom: 12,
+                      paddingLeft: 4,
+                    }}
+                  >
+                    {group.icon} {group.label}（{group.items.length}）
+                  </div>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(3, 1fr)',
+                      gap: 20,
+                    }}
+                  >
+                    {group.items.map((entity) => (
+                      <div
+                        key={entity.name}
+                        onClick={() => navigate(`/props/${entity.name}`)}
+                        style={{
+                          background: tokens.surface,
+                          border: `1px solid ${tokens.border}`,
+                          borderRadius: 8,
+                          padding: 20,
+                          textAlign: 'center',
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s, box-shadow 0.2s',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-5px)';
+                          e.currentTarget.style.boxShadow =
+                            '0 5px 15px rgba(0,0,0,0.5)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'none';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                      >
+                        <div
+                          style={{
+                            color: tokens.text,
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {entity.translation || entity.name}
+                        </div>
+                        {debug && (
+                          <div
+                            style={{
+                              color: tokens.muted,
+                              fontSize: 12,
+                              marginTop: 4,
+                            }}
+                          >
+                            {entity.translation}【{entity.name}】
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ));
+            })()
+          : // Default rendering for non-props pages
+            data.map((entity) => (
+              <div
+                key={entity.name}
+                onClick={() => {
+                  if (page === 'lootdrops') {
+                    navigate(`/lootdrops/${entity.name}`);
+                  } else {
+                    navigate(`/${page}/${entity.name}`);
+                  }
+                }}
+                style={{
+                  background: tokens.surface,
+                  border: `1px solid ${tokens.border}`,
+                  borderRadius: 8,
+                  padding: 20,
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 5px 15px rgba(0,0,0,0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
                 <div
                   style={{
                     color: tokens.text,
-                    fontSize: 13,
-                    marginTop: 6,
-                    lineHeight: 1.5,
+                    fontSize: 18,
+                    fontWeight: 'bold',
                   }}
                 >
-                  {entity.variant_count && entity.variant_count > 1 ? (
-                    <> [{entity.variant_count}变体] -目标- </>
-                  ) : (
-                    <> -目标- </>
-                  )}
-                  <span style={{ color: tokens.muted }}>
-                    {entity.monster_translations &&
-                    entity.monster_translations.length <= 6
-                      ? entity.monster_translations.join('、')
-                      : entity.monster_translations?.slice(0, 5).join('、') +
-                        '...'}
-                  </span>
+                  {entity.translation || entity.name}
                 </div>
-              )}
-          </div>
-        ))}
+                {debug && (
+                  <div
+                    style={{ color: tokens.muted, fontSize: 12, marginTop: 4 }}
+                  >
+                    {entity.translation}【{entity.name}】
+                  </div>
+                )}
+                {entity.monsters &&
+                  entity.monsters.length > 0 &&
+                  page === 'lootdrops' && (
+                    <div
+                      style={{
+                        color: tokens.text,
+                        fontSize: 13,
+                        marginTop: 6,
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {entity.variant_count && entity.variant_count > 1 ? (
+                        <> [{entity.variant_count}变体] -目标- </>
+                      ) : (
+                        <> -目标- </>
+                      )}
+                      <span style={{ color: tokens.muted }}>
+                        {entity.monster_translations &&
+                        entity.monster_translations.length <= 6
+                          ? entity.monster_translations.join('、')
+                          : entity.monster_translations
+                              ?.slice(0, 5)
+                              .join('、') + '...'}
+                      </span>
+                    </div>
+                  )}
+              </div>
+            ))}
       </div>
     </div>
   );
