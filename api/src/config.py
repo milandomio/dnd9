@@ -358,13 +358,18 @@ DUNGEON_GROUP_GRADES = {
 # module_group → 楼层后缀列表（用于爆率查询）
 # 后缀 = base_code + floor - 1，如 IceAbyss 的 base=11, floor=2 → 后缀=12
 MODULE_GROUP_FLOOR_SUFFIXES: dict[str, list[int]] = {
-    "GoblinCave": [1, 2],
-    "FireDeep": [1, 2],
-    "IceCavern": [11, 12],
-    "IceAbyss": [11, 12],
-    "Ruins": [21, 22, 23],
-    "Crypt": [21, 22, 23],
-    "Inferno": [21, 22, 23],
+    # suffix = base_code + floor - 1
+    # 哥布林洞穴 base=00 → 1层=1, 2层=2
+    "GoblinCave": [1],
+    "FireDeep": [2],
+    # 冰图 base=01 → 1层=11, 2层=12
+    "IceCavern": [11],
+    "IceAbyss": [12],
+    # 废墟 base=02 → 1层=21, 2层=22, 3层=23
+    "Ruins": [21],
+    "Crypt": [22],
+    "Inferno": [23],
+    # 水图 base=03 → 1层=31, 2层=32
     "ShipGraveyard": [31, 32],
 }
 
