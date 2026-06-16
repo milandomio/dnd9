@@ -13,8 +13,10 @@ from config import (
     IMG_SRC,
     ITEM_DIR,
     LAYOUT_DIR,
+    LOG_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
+    LOOTDROP_RATE_DIR,
     MAPS_DIR,
     MODULE_DISPLAY_OVERRIDE,
     MODULE_NAME_OVERRIDE,
@@ -27,8 +29,24 @@ from config import (
 )
 from db_manager import DatabaseManager
 from layout_utils import load_all_layout_rotations
+from lootdrop_rates import get_spawn_rate_for_keyword
+from pipeline_timer import PipelineTimer
 from quest_collector import run_quest_extraction
 from search_engine import build_all_matches
+
+_log_file = None
+
+
+def _log(msg: str):
+    from datetime import datetime
+
+    ts = datetime.now().strftime("%H:%M:%S")
+    line = f"[{ts}] {msg}"
+    print(line, flush=True)
+    if _log_file:
+        _log_file.write(line + "\n")
+        _log_file.flush()
+
 
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
@@ -86,6 +104,7 @@ _SOURCE_PATHS = [
     DUNGEON_MODULE_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
+    LOOTDROP_RATE_DIR,
     SPAWNER_DIR,
     MAPS_DIR,
     LAYOUT_DIR,
@@ -201,52 +220,77 @@ def _load_spawner_lootdrop_monster_map(
 
 
 def run():
+    global _log_file
     print("=" * 50)
     print("  DarkFindV5 - Data Collector")
     print("=" * 50)
 
+    timer = PipelineTimer(log_dir=LOG_DIR)
+
+    # Open real-time log file
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    from datetime import datetime
+
+    _log_file = open(  # noqa: SIM115
+        LOG_DIR / f"pipeline_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log", "w", encoding="utf-8"
+    )
+
+    _log("checking DB staleness...")
     db_stale = _is_db_stale(DB_PATH)
     if db_stale and DB_PATH.exists():
         DB_PATH.unlink()
+    _log(f"DB stale={db_stale}, creating DatabaseManager...")
     db = DatabaseManager(DB_PATH)
+    _log("DatabaseManager ready")
 
     game_available = GAME_ROOT.exists() and db_stale
 
     if game_available:
         # 1. Import translations
-        print("\n[1/7] Importing translations...")
+        timer.start_step("[DB] translations")
+        _log("[1/9] import_translations START")
         count = db.import_translations()
-        print(f"  -> {count} translations loaded")
+        _log(f"[1/9] import_translations DONE -> {count}")
 
         # 2. Import items
-        print("[2/7] Importing items...")
+        timer.start_step("[DB] items")
+        _log("[2/9] import_items START")
         count = db.import_items()
-        print(f"  -> {count} item entities")
+        _log(f"[2/9] import_items DONE -> {count}")
 
         # 3. Import monsters
-        print("[3/7] Importing monsters...")
+        timer.start_step("[DB] monsters")
+        _log("[3/9] import_monsters START")
         count = db.import_monsters()
-        print(f"  -> {count} monster entities")
+        _log(f"[3/9] import_monsters DONE -> {count}")
 
         # 4. Import props
-        print("[4/7] Importing props...")
+        timer.start_step("[DB] props")
+        _log("[4/9] import_props START")
         count = db.import_props()
-        print(f"  -> {count} props entities")
+        _log(f"[4/9] import_props DONE -> {count}")
 
         # 5. Import dungeon modules
-        print("[5/7] Importing dungeon modules...")
+        timer.start_step("[DB] dungeon modules")
+        _log("[5/9] import_dungeon_modules START")
         count = db.import_dungeon_modules()
-        print(f"  -> {count} dungeon modules")
+        _log(f"[5/9] import_dungeon_modules DONE -> {count}")
 
         # 6. Import lootdrops (with raw variant names)
-        print("[6/7] Importing lootdrop relationships...")
+        timer.start_step("[DB] lootdrop relationships")
+        _log("[6/9] get_monster_name_map START")
         monster_name_map = db.get_monster_name_map()
+        _log(f"[6/9] get_monster_name_map DONE -> {len(monster_name_map)}")
+        _log("[6/9] _load_spawner_lootdrop_monster_map START")
         spawner_monster_map = _load_spawner_lootdrop_monster_map(monster_name_map)
+        _log(f"[6/9] _load_spawner_lootdrop_monster_map DONE -> {len(spawner_monster_map)}")
+        _log("[6/9] import_lootdrops START")
         count = db.import_lootdrops(spawner_monster_map)
-        print(f"  -> {count} lootdrop relationships")
+        _log(f"[6/9] import_lootdrops DONE -> {count}")
 
         # 7. Build spawner matches via search engine
-        print("[7/7] Building spawner matches...")
+        timer.start_step("[DB] spawner matches")
+        _log("[7/9] build_all_matches START")
         _search_term_set: set[str] = set()
         for r in db.get_item_entities():
             _search_term_set.add(r["item_name"])
@@ -259,16 +303,17 @@ def run():
                 _search_term_set.add(m.group(1))
             _search_term_set.add(name)
         search_terms = sorted(_search_term_set)
-        # Clean ore item names: GoldOres → GoldOre (add stripped form for spawner matching)
         for t in list(search_terms):
             m = _ORE_ITEM_STRIP_RE.match(t)
             if m:
                 _search_term_set.add(m.group(1) + "Ore")
         search_terms = sorted(_search_term_set)
+        _log(f"[7/9] search_terms built: {len(search_terms)}")
         matches, spawners = build_all_matches(search_terms)
-        print(f"  -> {len(spawners)} spawners, {len(matches)} matched terms")
+        _log(f"[7/9] build_all_matches DONE -> {len(spawners)} spawners, {len(matches)} matched")
 
         # Store spawners in DB
+        _log("[7/9] storing spawners in DB...")
         c = db.connect()
         c.execute("DELETE FROM spawners")
         c.execute("DELETE FROM search_term_matches")
@@ -294,13 +339,14 @@ def run():
             spawner_rows,
         )
         db.connect().commit()
+        _log("[7/9] spawners stored in DB")
 
         # 7.5. Add spawner fallback entities and rebuild matches
-        print("[7.5/8] Adding spawner fallback entities...")
+        _log("[7.5/9] import_spawner_fallback_entities START")
         added = db.import_spawner_fallback_entities()
-        print(f"  -> added: {added['item']} items, {added['monster']} monsters, {added['props']} props")
+        _log(f"[7.5/9] import_spawner_fallback_entities DONE -> {added}")
 
-        # Rebuild search terms including fallback entities
+        _log("[7.5/9] rebuilding search terms + re-matching...")
         _search_term_set = set()
         for r in db.get_item_entities():
             _search_term_set.add(r["item_name"])
@@ -312,7 +358,6 @@ def run():
             if m:
                 _search_term_set.add(m.group(1))
             _search_term_set.add(name)
-        # Add all spawner keywords as search terms
         cur = db.connect().cursor()
         cur.execute("SELECT DISTINCT keyword FROM spawners")
         for row in cur.fetchall():
@@ -324,7 +369,6 @@ def run():
                 _search_term_set.add(m.group(1) + "Ore")
         search_terms = sorted(_search_term_set)
 
-        # Re-match search terms to spawners
         from config import SPAWNER_ALIAS_MAP
         from search_engine import build_automaton, match_keyword
 
@@ -343,16 +387,38 @@ def run():
             match_rows,
         )
         db.connect().commit()
-        print(f"  -> {len(match_rows)} search term matches")
+        _log(f"[7.5/9] re-match DONE -> {len(match_rows)} matches")
 
         # 8. Quest extraction
-        print("[8/8] Extracting quest data...")
+        timer.start_step("[DB] quest extraction")
+        _log("[8/9] get_entity_classification START")
         entity_class = db.get_entity_classification()
+        _log(f"[8/9] get_entity_classification DONE -> {len(entity_class)}")
+        _log("[8/9] run_quest_extraction START")
         explore_data, quest_items_data, quest_npcs_data = run_quest_extraction(entity_classification=entity_class)
+        _log(
+            f"[8/9] run_quest_extraction DONE -> explore={len(explore_data)}, items={len(quest_items_data)}, npcs={len(quest_npcs_data)}"
+        )
+        _log("[8/9] importing quest data to DB...")
         db.import_explore_targets(explore_data)
         db.import_quest_items(quest_items_data)
         db.import_quest_npcs(quest_npcs_data)
-        print(f"  -> {len(explore_data)} explore, {len(quest_items_data)} quest items, {len(quest_npcs_data)} NPCs")
+        _log("[8/9] quest data imported to DB")
+
+        # 9. Import lootdrop rate data (爆率)
+        timer.start_step("[DB] lootdrop rate data")
+        _log("[9/9] import_spawner_entries START")
+        count = db.import_spawner_entries()
+        _log(f"[9/9] import_spawner_entries DONE -> {count}")
+        _log("[9/9] import_lootdrop_groups START")
+        count = db.import_lootdrop_groups()
+        _log(f"[9/9] import_lootdrop_groups DONE -> {count}")
+        _log("[9/9] import_lootdrop_rate_items START")
+        count = db.import_lootdrop_rate_items()
+        _log(f"[9/9] import_lootdrop_rate_items DONE -> {count}")
+        _log("[9/9] import_lootdrop_rate_weights START")
+        count = db.import_lootdrop_rate_weights()
+        _log(f"[9/9] import_lootdrop_rate_weights DONE -> {count}")
     else:
         if not GAME_ROOT.exists():
             print("\n[SKIP] Game data not found, using existing DB")
@@ -360,10 +426,14 @@ def run():
             print("\n[SKIP] DB is up to date (newest source file older than DB), using existing DB")
 
     # 后续步骤从 DB 读取（无论是否导入，DB 中都有数据）
+    _log("[JSON] loading entities from DB...")
     items = db.get_item_entities()
     monsters = db.get_monster_entities()
     props = db.get_props_entities()
+    _log(f"[JSON] entities loaded: items={len(items)}, monsters={len(monsters)}, props={len(props)}")
+    _log("[JSON] get_all_coordinates START")
     all_coords = db.get_all_coordinates()
+    _log(f"[JSON] get_all_coordinates DONE -> {len(all_coords)} entity keys")
 
     # Query spawner info for props (spawner_type, has_lootdrop) to determine entity type
     _props_spawner_info: dict[str, dict] = {}
@@ -500,6 +570,7 @@ def run():
         return name
 
     # ── Build merged lootdrop map with variant family merging ──
+    _log("[JSON] building merged lootdrop map...")
     loot_raw = db.get_lootdrop_relationships()
     loot_map: dict[str, set[str]] = {}
     for r in loot_raw:
@@ -528,6 +599,8 @@ def run():
     print(f"  unique items after merge: {len(merged_loot)}")
 
     # ── items: index + individual files ──
+    timer.start_step("[JSON] items")
+    _log("[JSON] items export START")
     items_index = []
     for r in items:
         name = r["item_name"]
@@ -577,8 +650,11 @@ def run():
             },
         )
     _save("items.json", items_index)
+    _log(f"[JSON] items export DONE -> {len(items_index)} items")
 
     # ── monsters: index + individual files ──
+    timer.start_step("[JSON] monsters")
+    _log("[JSON] monsters export START")
     monsters_index = []
     for r in monsters:
         coords = _filter_coords(all_coords.get(r["monster_name"], []), _monster_names)
@@ -613,8 +689,11 @@ def run():
             },
         )
     _save("monsters.json", monsters_index)
+    _log(f"[JSON] monsters export DONE -> {len(monsters_index)} monsters")
 
     # ── props: index + individual files (merged by translation) ──
+    timer.start_step("[JSON] props")
+    _log("[JSON] props export START")
     _ORE_QUALITY_ORDER = {"VeryLow": 0, "Low": 1, "Med": 2, "High": 3}  # noqa: N806
 
     def _ore_quality_key(r):
@@ -701,8 +780,11 @@ def run():
             },
         )
     _save("props.json", props_index)
+    _log(f"[JSON] props export DONE -> {len(props_index)} props")
 
     # ── dungeon_modules.json ──
+    timer.start_step("[JSON] dungeon modules")
+    _log("[JSON] dungeon_modules export START")
     module_rotations = load_all_layout_rotations()
     modules = db.get_dungeon_modules()
     art_root = (
@@ -1077,8 +1159,11 @@ def run():
     if filtered_count:
         print(f"  filtered {filtered_count} modules without coordinates")
     _save("dungeon_modules.json", modules_data)
+    _log(f"[JSON] dungeon_modules export DONE -> {len(modules_data)} modules")
 
     # ── lootdrops.json (grouped by item for list page) ──
+    timer.start_step("[JSON] lootdrops")
+    _log("[JSON] lootdrops export START")
     items_lookup = {r["item_name"]: r for r in items}
     monsters_lookup = {r["monster_name"]: r for r in monsters}
     loot_index = []
@@ -1155,8 +1240,10 @@ def run():
         )
     loot_index.sort(key=lambda x: x["translation"] or x["name"])
     _save("lootdrops.json", loot_index)
+    _log(f"[JSON] lootdrops index DONE -> {len(loot_index)} items")
 
     # ── lootdrops detail files ──
+    _log("[JSON] lootdrops detail files START")
     _MONSTER_COLORS = [  # noqa: N806
         "#E74C3C",
         "#3498DB",
@@ -1185,18 +1272,52 @@ def run():
         "#00CED1",
     ]
 
+    # ── 构建爆率查找表 ──
+    # _log("[JSON] building drop rate lookups START")
+    # map_base_to_group: dict[str, str] = {}
+    # for m in modules_data:
+    #     g = m.get("group", "") or ""
+    #     if not g:
+    #         continue
+    #     map_base_to_group[m["name"]] = g
+    #     sl = m.get("sl_base_name", "")
+    #     if sl:
+    #         map_base_to_group[sl] = g
+    #     for alias in (m.get("aliases") or []):
+    #         map_base_to_group[alias] = g
+
     def _base_monster_name(name: str) -> str:
         """Strip _Hard/_VeryHard/Unique suffix to get base name."""
         base = _HARD_SUFFIX_RE.sub("", name)
         base = _UNIQUE_SUFFIX_RE.sub("", base)
         return base
 
+    def _get_spawn_rate(keyword: str, _map_base: str) -> int:
+        """计算某 keyword 的生成概率（百分比）。"""
+        return get_spawn_rate_for_keyword(db, keyword)
+
+    # def _get_drop_rates(item_name: str, monster_name: str, coords: list[dict]) -> dict[str, float]:
+    #     mapped_coords = [{"map": c.get("map_base", c.get("map", ""))} for c in coords]
+    #     result = get_drop_rates_for_item_with_coords(
+    #         db, item_name, monster_name, mapped_coords,
+    #         map_base_to_group, MODULE_GROUP_FLOOR_SUFFIXES, DUNGEON_MODE_NAMES,
+    #     )
+    #     if not result:
+    #         alias = TRANSLATION_ALIAS_MAP.get(monster_name)
+    #         if alias:
+    #             result = get_drop_rates_for_item_with_coords(
+    #                 db, item_name, alias, mapped_coords,
+    #                 map_base_to_group, MODULE_GROUP_FLOOR_SUFFIXES, DUNGEON_MODE_NAMES,
+    #             )
+    #     return result
+
+    _loot_detail_count = 0
+    _loot_detail_total = len(loot_index)
+    _log(f"[JSON] lootdrop detail loop starting: {_loot_detail_total} items")
     for entry in loot_index:
         item_name = entry["name"]
-        # Build merged monsters: base_name → {name, translation, coords}
         merged: dict[str, dict] = {}
         for _i, m_name in enumerate(entry["monsters"]):
-            # Skip self-referencing: item dropping itself (e.g. GoldOres → GoldOres)
             if m_name == item_name:
                 continue
             coords = all_coords.get(m_name, [])
@@ -1216,18 +1337,20 @@ def run():
                     "coords": [],
                 }
             for c in coords:
-                merged[base]["coords"].append(
-                    {
-                        "x": c["x"],
-                        "y": c["y"],
-                        "z": c["z"],
-                        "yaw": c.get("yaw", 0),
-                        "map": c["map_base"],
-                        "file": c["json_filename"],
-                        "version": c["version"],
-                        "label": c.get("original_keyword", ""),
-                    }
-                )
+                coord_out = {
+                    "x": c["x"],
+                    "y": c["y"],
+                    "z": c["z"],
+                    "yaw": c.get("yaw", 0),
+                    "map": c["map_base"],
+                    "file": c["json_filename"],
+                    "version": c["version"],
+                    "label": c.get("original_keyword", ""),
+                }
+                spawn_rate = _get_spawn_rate(m_name, c["map_base"])
+                if spawn_rate != 100:
+                    coord_out["spawn_rate"] = spawn_rate
+                merged[base]["coords"].append(coord_out)
         monsters_out = list(merged.values())
         if monsters_out:
             _save(
@@ -1238,8 +1361,14 @@ def run():
                     "monsters": monsters_out,
                 },
             )
+        _loot_detail_count += 1
+        if _loot_detail_count % 100 == 0:
+            _log(f"[JSON] lootdrops detail: {_loot_detail_count}/{_loot_detail_total}")
+    _log(f"[JSON] lootdrops detail files DONE -> {_loot_detail_count} items")
 
     # ── Quest data (from DB) ──
+    timer.start_step("[JSON] quest data")
+    _log("[JSON] quest data export START")
     print("\nExporting quest data from DB...")
     explore_data = db.get_explore_targets()
     quest_items_data = db.get_quest_items()
@@ -1253,7 +1382,10 @@ def run():
     print(f"  explore: {explore_count}, quest items: {quest_items_count}, quest NPCs: {quest_npc_count}")
 
     # ── Quest items groups (with coordinates) ──
+    timer.start_step("[JSON] quest items groups")
+    _log("[JSON] quest_items_groups START")
     _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules)
+    _log("[JSON] quest_items_groups DONE")
 
     # ── index.json: page index ──
     index_data = [
@@ -1276,7 +1408,12 @@ def run():
         if "page" in entry:
             print(f"  {entry['page']}: {entry['count']}")
 
+    _log("pipeline complete, closing DB")
     db.close()
+    if _log_file:
+        _log_file.close()
+        _log_file = None
+    return timer
 
 
 def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules):
@@ -1289,9 +1426,9 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
     # Build map_base -> module_group lookup
     map_to_group = {}
     for m in modules:
-        g = m.get("module_group", "") or ""
+        g = m.get("group", "") or ""
         if g:
-            map_to_group[m["module_name"]] = g
+            map_to_group[m["name"]] = g
             if m.get("sl_base_name"):
                 map_to_group[m["sl_base_name"]] = g
 

@@ -25,6 +25,7 @@ interface LootdropCoord {
   file: string;
   version: string;
   label?: string;
+  spawn_rate?: number;
 }
 
 interface LootdropMonster {
@@ -32,6 +33,7 @@ interface LootdropMonster {
   translation: string;
   color: string;
   coords: LootdropCoord[];
+  drop_rates?: Record<string, number>;
 }
 
 interface LootdropItem {
@@ -229,6 +231,7 @@ export default function LootdropDetailPage() {
         z: number;
         file: string;
         idx: number;
+        spawn_rate?: number;
       }[];
     }
   >();
@@ -244,6 +247,7 @@ export default function LootdropDetailPage() {
         z: c.z,
         file: c.file,
         idx: j,
+        spawn_rate: c.spawn_rate,
       });
     });
   }
@@ -783,6 +787,13 @@ export default function LootdropDetailPage() {
                   >
                     {[...new Set(dots.map((d) => d.monster.name))].map((mn) => {
                       const m = monsters.find((x) => x.name === mn)!;
+                      const mDots = dots.filter((d) => d.monster.name === mn);
+                      // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
+                      const sr = mDots.find(
+                        (d) => d.spawn_rate != null
+                      )?.spawn_rate;
+                      const dr = m.drop_rates;
+                      const hasRates = dr && Object.keys(dr).length > 0;
                       return (
                         <span
                           key={mn}
@@ -807,9 +818,24 @@ export default function LootdropDetailPage() {
                           >
                             {m.translation}
                           </span>
+                          {sr != null && sr !== 100 && (
+                            <span
+                              style={{ color: tokens.accent, fontSize: 12 }}
+                            >
+                              {sr}%
+                            </span>
+                          )}
+                          {hasRates && (
+                            <span style={{ color: tokens.muted, fontSize: 12 }}>
+                              (
+                              {Object.entries(dr!)
+                                .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                                .join('')}
+                              )
+                            </span>
+                          )}
                           <span style={{ color: tokens.muted }}>
-                            ({dots.filter((d) => d.monster.name === mn).length}
-                            点)
+                            ({mDots.length}点)
                           </span>
                         </span>
                       );

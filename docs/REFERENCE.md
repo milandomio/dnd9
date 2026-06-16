@@ -142,15 +142,17 @@ info = parse_grade(3001)
 #### 生成概率（SpawnRate）
 
 坐标点数据中关联的 `SpawnerDataAsset`（如 `Id_Spawner_New_Props_GoldChest`）对应
-`Spawner/Spawner/Id_Spawner_New_Props_GoldChest.json`，其中 `SpawnRate` 字段为生成概率：
+`Spawner/Spawner/Id_Spawner_New_Props_GoldChest.json`，其中 `SpawnRate` 字段为原始生成权重。
 
-```
-SpawnRate: 10000 = 100%
-```
+**DB 存储格式：** `spawner_entries.spawn_rate` 存储为百分比（0~100），按同 `SpawnerItemArray` 内的比例计算：
+`round(entry_rate / sum(all_rates_in_array) * 100)`
 
-- `10000` 表示该实体必定生成（如黄金宝箱）
-- 低于 `10000` 表示概率生成（如铜矿等资源点，同一坐标可能有多个 Spawner 字典竞争）
-- `SpawnerItemArray` 中可含多个条目，各条目的 `SpawnRate` 独立计算
+- 单条目 spawner：`SpawnRate=10000` → 100%
+- 多条目 spawner（如 ChestLarge 含 9 个实体）：各条目按权重占比计算百分比
+- 原始 `SpawnRate` 以 `10000` 为基准，`2500` = 25%（单条目时），`0` = 不生成
+
+**实现位置：** `db_manager.py` 的 `import_spawner_entries()` 在导入时计算百分比，
+`lootdrop_rates.py` 的 `get_spawn_rate_for_keyword()` 直接从 DB 读取百分比。
 
 #### 物品爆率（DropRate）查询链
 
@@ -194,6 +196,59 @@ ID_Droprate_Key_Low_3012.json
 - `LuckGrade` 范围 0~8，等级越高物品越稀有
 - `LootDropCount` 表示该掉落组每次触发时的抽取次数
 - 同一 `LootDropGroup` 中可有多条 `DungeonGrade: 3012` 的条目，每条对应不同物品类型（如钥匙、宝石、饰品等），各自有独立的 `LootDropRateId`
+
+### 爆率显示实现 [进行中]
+
+> **状态：** 生成概率（spawn_rate）已完成并验证。物品爆率（drop_rates）代码已编写，因循环内逐坐标 DB 查询导致管道耗时过长（~70s），暂时注释掉，待优化后重新启用。
+
+Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:25%][普通25%][豪客赛25%])`。
+
+**DB 表结构（4 张表，已在 `db_manager.py` 中实现）：**
+
+| 表名 | 用途 | 关键字段 |
+|------|------|---------|
+| `spawner_entries` | Spawner 条目（生成概率 + LootDropGroupId） | `spawner_keyword`, `entity_name`, `spawn_rate`, `lootdrop_group_id` |
+| `lootdrop_groups` | LootDropGroup → LootDrop + Rate 映射 | `group_id`, `dungeon_grade`, `lootdrop_id`, `lootdrop_rate_id` |
+| `lootdrop_rate_items` | LootDrop 中的物品列表 | `lootdrop_id`, `item_name`, `luck_grade`, `drop_count` |
+| `lootdrop_rate_weights` | 各 LuckGrade 的权重 | `rate_id`, `luck_grade`, `weight` |
+
+**计算逻辑（`lootdrop_rates.py`）：**
+
+1. `get_spawn_rate_for_keyword(db, keyword)` — 从 `spawner_entries` 取 max(spawn_rate)，已是百分比（0~100）
+2. `get_drop_rates_for_item_with_coords(db, item, monster, coords, ...)` — **暂时未使用**（见下方注释清单）
+
+**暂时注释的代码（爆率计算）：**
+
+| 文件 | 位置 | 注释内容 |
+|------|------|---------|
+| `api/src/collector.py` | `_get_drop_rates()` 函数定义（约 L1298~L1313） | 整个函数体注释掉 |
+| `api/src/collector.py` | lootdrop detail 循环内（约 L1335~L1345） | `_get_drop_rates()` 调用和 `merged[base]["drop_rates"]` 赋值注释掉 |
+| `api/src/collector.py` | 爆率查找表构建（约 L1272~L1288） | `map_base_to_group` 字典构建注释掉 |
+
+**注释原因：** `get_drop_rates_for_item_with_coords()` 对每个 (item, monster) 组合执行多次 DB 查询（遍历 mode × group × floor_suffix），452 个物品 × 多怪物 × 多坐标 = 数万次查询，导致 lootdrops 详情导出耗时 ~70s（占管道总时间 97%）。
+
+**待优化方向：**
+- 预加载所有爆率数据到内存，避免逐次 DB 查询
+- 或在 DB 层面批量查询后 Python 侧分组
+
+**前端显示（`LootdropDetailPage.tsx`）：**
+- `spawn_rate` 字段从 coord 级别取（仅 ≠100 时显示）— **已生效**
+- `drop_rates` 字段从 monster 级别取（`Record<string, number>`，key 为模式名）— **暂时无数据**
+
+**已修改文件清单：**
+- `api/src/config.py` — 新增 `LOOTDROP_RATE_DIR`、扩展 `DUNGEON_GROUP_GRADES`（8组）、添加 `MODULE_GROUP_FLOOR_SUFFIXES`
+- `api/src/db_manager.py` — 新增 4 张表 + `import_spawner_entries()` / `import_lootdrop_groups()` / `import_lootdrop_rate_items()` / `import_lootdrop_rate_weights()` + `get_spawner_entries_for_keyword()` / `get_item_drop_rate()`
+- `api/src/lootdrop_rates.py` — 新建，爆率计算模块（从 DB 查询）
+- `api/src/collector.py` — 管道步骤 9 导入爆率数据，lootdrop 详情段计算 `spawn_rate`（`drop_rates` 暂时注释）
+- `web/src/pages/LootdropDetailPage.tsx` — 接口扩展 + 图例显示格式
+- `docs/REFERENCE.md` — 本章节
+
+**待完成步骤：**
+1. 优化爆率查询性能（预加载或批量查询）
+2. 取消 `collector.py` 中 `drop_rates` 相关注释
+3. 运行 `python main.py` 验证 JSON 输出（检查 `drop_rates` 字段）
+4. 运行 `npm run build` 验证前端构建
+5. 启动 web 预览，访问 `/lootdrops/FrozenIronKey` 验证图例显示
 
 ### 旋转值
 
