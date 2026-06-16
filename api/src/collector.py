@@ -1376,7 +1376,7 @@ def run():
                     coords = all_coords.get(alias, [])
             if not coords:
                 continue
-            m_trans = entry["monster_translations"][entry["monsters"].index(m_name)]
+            m_trans = entry["monster_translations"][_i]
             base = _base_monster_name(m_name)
             if base not in merged:
                 merged[base] = {
