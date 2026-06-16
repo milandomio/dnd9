@@ -28,7 +28,7 @@ from config import (
 from db_manager import DatabaseManager
 from layout_utils import load_all_layout_rotations
 from quest_collector import run_quest_extraction
-from search_engine import _load_spawner_data_assets, build_all_matches
+from search_engine import build_all_matches
 
 _VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
@@ -365,6 +365,18 @@ def run():
     props = db.get_props_entities()
     all_coords = db.get_all_coordinates()
 
+    # Query spawner info for props (spawner_type, has_lootdrop) to determine entity type
+    _props_spawner_info: dict[str, dict] = {}
+    for row in (
+        db.connect()
+        .execute("SELECT DISTINCT keyword, spawner_type, has_lootdrop FROM spawners WHERE spawner_type = 'props'")
+        .fetchall()
+    ):
+        _props_spawner_info[row["keyword"]] = {
+            "spawner_type": row["spawner_type"],
+            "has_lootdrop": row["has_lootdrop"],
+        }
+
     # Entity name sets for coord type filtering (prevents cross-type contamination)
     _item_names = {r["item_name"] for r in items}
     _monster_names = {r["monster_name"] for r in monsters}
@@ -650,11 +662,22 @@ def run():
             m = _ORE_QUALITY_RE.match(name_key)
             if m:
                 name_key = m.group(1)
+
+        # Determine entity type: decoration (no lootdrop in spawner_data) or props
+        entity_type = "props"
+        for r in group:
+            asset = r["asset_name"]
+            info = _props_spawner_info.get(asset)
+            if info and info["has_lootdrop"] == 0:
+                entity_type = "decoration"
+                break
+
         props_index.append(
             {
                 "name": name_key,
                 "translation": translation,
                 "coordCount": len(merged_coords),
+                "type": entity_type,
             }
         )
         _save(
@@ -886,8 +909,6 @@ def run():
         )
         .fetchall()
     )
-    # Load spawner data asset info for decoration classification
-    spawner_data_map = _load_spawner_data_assets()
     module_coords: dict[str, dict] = {}
     color_idx = 0
     for row in rows:
@@ -904,8 +925,7 @@ def run():
             # Determine entity type: decoration (no lootdrop), item (lootdrop type), or props/monster
             if st == "lootdrop":
                 mapped_st = "item"
-            elif st == "props" and has_ld == 0 and ek in spawner_data_map and not spawner_data_map[ek]:
-                # Only mark as decoration if we found the spawner data and it has no lootdrop
+            elif st == "props" and has_ld == 0:
                 mapped_st = "decoration"
             else:
                 mapped_st = st

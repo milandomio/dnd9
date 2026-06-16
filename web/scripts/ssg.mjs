@@ -64,6 +64,10 @@ for (const p of PAGES) {
       ? `/lootdrops/${encodeURIComponent(e.name)}`
       : `/${p}/${encodeURIComponent(e.name)}`;
     const entry = { name: e.name, translation: e.translation || "", page: p, url };
+    // Include type field for props (decoration vs props)
+    if (p === "props" && e.type) {
+      entry.type = e.type;
+    }
     searchIndex.push(entry);
   }
 }
