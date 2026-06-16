@@ -98,6 +98,103 @@ Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run
 
 `_Hard`/`_VeryHard`/`_Unique` 后缀变体在 lootdrop 解析阶段合入基础怪物名，避免重复掉落条目。
 
+### DungeonGrade 地图分组代码识别
+
+`Id_LootDropGroup_*.json` 中 `LootDropGroupItemArray` 的每项包含 `DungeonGrade` 字段（整数），
+可直接识别该掉落所属的**地图分组**和**游戏模式**。
+
+**编码规则**（4 位数字）：
+
+| 位 | 含义 | 取值 |
+|----|------|------|
+| 第 1 位 | 游戏模式 | `1`=PVE, `2`=普通, `3`=豪客赛, `4`=逆袭赛 |
+| 第 2 位 | 地图编号 | `0`=哥布林洞穴, `1`=冰图, `2`=废墟, `3`=水图 |
+| 第 3-4 位 | 楼层 | `01`=1层, `02`=2层, `03`=3层 |
+
+**示例**：`3001` → 模式 `3`(豪客赛) + 地图 `0`(哥布林) + 层 `01`(1层) → "豪客哥布林1层"
+
+**完整代码表**（config.py `DUNGEON_GROUP_GRADES`）：
+
+| base_code | group key | 中文名 | 楼层范围 |
+|-----------|-----------|--------|---------|
+| 001~002 | GoblinCave | 哥布林洞穴 | 1~2层 |
+| 011~012 | IceCavern | 冰图 | 1~2层 |
+| 021~023 | Crypt | 废墟 | 1~3层 |
+| 031~032 | ShipGraveyard | 水图 | 1~2层 |
+
+**用法**（`api/src/dungeon_mode.py`）：
+
+```python
+from dungeon_mode import parse_grade
+info = parse_grade(3001)
+# → {"grade": 3001, "mode": 3, "mode_name": "豪客赛",
+#    "group": "GoblinCave", "group_label": "哥布林洞穴",
+#    "floor": 1, "display": "豪客哥布林1层"}
+```
+
+**参考数据来源**：`Output/Exports/DungeonCrawler/Content/DungeonCrawler/Data/Generated/V2/LootDrop/LootDropRate.py`
+中的 `DUNGEON_GRADE_MAP` 和 `CSV_GRADE_BOSS_MAP`。
+
+### 生成概率与物品爆率
+
+物品掉落涉及两层概率：**生成概率**（Spawner 是否出现）和**物品爆率**（出现后掉落什么）。
+
+#### 生成概率（SpawnRate）
+
+坐标点数据中关联的 `SpawnerDataAsset`（如 `Id_Spawner_New_Props_GoldChest`）对应
+`Spawner/Spawner/Id_Spawner_New_Props_GoldChest.json`，其中 `SpawnRate` 字段为生成概率：
+
+```
+SpawnRate: 10000 = 100%
+```
+
+- `10000` 表示该实体必定生成（如黄金宝箱）
+- 低于 `10000` 表示概率生成（如铜矿等资源点，同一坐标可能有多个 Spawner 字典竞争）
+- `SpawnerItemArray` 中可含多个条目，各条目的 `SpawnRate` 独立计算
+
+#### 物品爆率（DropRate）查询链
+
+以 **FrozenIronKey（冰铁钥匙）** 在 **豪客冰图2层（3012）** 的爆率为例，完整查询链如下：
+
+```
+Id_Spawner_New_Props_GoldChest.json
+│  Properties.SpawnerItemArray[0].LootDropGroupId
+│  → "Id_LootDropGroup_GoldChest"
+▼
+Id_LootDropGroup_GoldChest.json
+│  Properties.LootDropGroupItemArray（按 DungeonGrade 筛选）
+│  → DungeonGrade: 3012 的条目
+│    ├── LootDropId    → "ID_Lootdrop_Drop_FrozenIronKey"
+│    ├── LootDropRateId → "ID_Droprate_Key_Low_3012"
+│    └── LootDropCount → 1
+▼
+ID_Lootdrop_Drop_FrozenIronKey.json
+│  Properties.LootDropItemArray[0]
+│    ├── ItemId.AssetPathName → "Id_Item_FrozenIronKey"  ← 倒查物品的关键
+│    ├── LuckGrade → 5                                   ← 物品等级
+│    └── ItemCount → 1                                   ← 每次掉落数量
+▼
+ID_Droprate_Key_Low_3012.json
+   Properties.LootDropRateItemArray（按 LuckGrade 筛选）
+   → LuckGrade: 5 的条目
+     └── DropRate → 2500  ← 即 25% 爆率（10000 = 100%）
+```
+
+**各层说明：**
+
+| 层级 | 文件 | 关键字段 | 作用 |
+|------|------|---------|------|
+| Spawner | `Id_Spawner_New_Props_GoldChest.json` | `SpawnRate`, `LootDropGroupId` | 生成概率 + 指向掉落组 |
+| LootDropGroup | `Id_LootDropGroup_GoldChest.json` | `DungeonGrade`, `LootDropId`, `LootDropRateId` | 按地图模式筛选掉落项 |
+| LootDrop | `ID_Lootdrop_Drop_FrozenIronKey.json` | `ItemId`, `LuckGrade`, `ItemCount` | 确定物品、等级、数量 |
+| LootDropRate | `ID_Droprate_Key_Low_3012.json` | `LuckGrade`, `DropRate` | 按等级查爆率 |
+
+**数值规则：**
+- `SpawnRate` / `DropRate` 均以 `10000` 为 100%，`2500` = 25%，`0` = 不掉落
+- `LuckGrade` 范围 0~8，等级越高物品越稀有
+- `LootDropCount` 表示该掉落组每次触发时的抽取次数
+- 同一 `LootDropGroup` 中可有多条 `DungeonGrade: 3012` 的条目，每条对应不同物品类型（如钥匙、宝石、饰品等），各自有独立的 `LootDropRateId`
+
 ### 旋转值
 
 从 Layout JSON 文件计算，优先级：`module_name` → `sl_base_name`，默认 1（90°）。
