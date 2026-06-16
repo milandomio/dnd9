@@ -225,28 +225,7 @@ export default function DetailPage() {
                     : '2px solid #F57F17',
                 }}
               >
-                <span>{GROUP_LABELS[groupName] || groupName}</span>
-                {'group_drop_info' in entity &&
-                  entity.group_drop_info?.[groupName] && (
-                    <span
-                      style={{
-                        fontSize: 14.5,
-                        fontWeight: 'normal',
-                        marginLeft: 10,
-                      }}
-                    >
-                      {entity.group_drop_info![groupName]!.map((info, gi) => (
-                        <span key={gi} style={{ marginRight: 8 }}>
-                          【参考爆率：{info.translation}
-                          {info.spawn_rate}%
-                          {Object.entries(info.drop_rates)
-                            .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                            .join('')}
-                          】
-                        </span>
-                      ))}
-                    </span>
-                  )}
+                {GROUP_LABELS[groupName] || groupName}
               </div>
             )}
             {items.map(({ mapName, mod, coords: mapCoords }) => {
