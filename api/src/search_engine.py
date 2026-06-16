@@ -61,6 +61,95 @@ def _load_spawner_data_assets() -> dict[str, bool]:
     return _spawner_data_cache
 
 
+def _ue_asset_base_name(asset_path: str) -> str:
+    """Extract base name from UE asset path like '/Game/.../Id_Foo.Id_Foo' → 'Id_Foo'."""
+    if not asset_path:
+        return ""
+    part = asset_path.rsplit("/", 1)[-1]
+    if "." in part:
+        part = part.split(".")[0]
+    return part
+
+
+def _load_multi_entity_spawners() -> dict[str, list[dict]]:
+    """Build mapping of multi-entity random spawner keywords → entity details.
+
+    Returns: {keyword: [{"entity_name": str, "spawn_rate": int, "spawner_type": str,
+                         "lootdrop_group_id": str}, ...]}
+    Only spawners with ≥2 distinct entity names are included (random generators).
+    """
+    result: dict[str, list[dict]] = {}
+    if not SPAWNER_DIR.exists():
+        return result
+
+    for json_file in SPAWNER_DIR.glob("*.json"):
+        try:
+            with open(json_file, encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            continue
+        if not isinstance(data, list) or not data:
+            continue
+        entry = data[0]
+        if entry.get("Type") != "DCSpawnerDataAsset":
+            continue
+        name = entry.get("Name", "")
+        if not name:
+            continue
+        keyword = strip_id_prefix(name)
+        if not keyword:
+            continue
+
+        props = entry.get("Properties", {}) or {}
+        items = props.get("SpawnerItemArray", []) or []
+
+        entities: set[str] = set()
+        for item in items:
+            entity_name = ""
+            for id_key in ("MonsterId", "PropsId"):
+                id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                if id_path:
+                    raw = _ue_asset_base_name(id_path) or ""
+                    entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                    break
+            if entity_name:
+                entities.add(entity_name)
+
+        if len(entities) >= 2:
+            entries: list[dict] = []
+            for item in items:
+                entity_name = ""
+                spawner_type = ""
+                for id_key in ("MonsterId", "PropsId"):
+                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                    if id_path:
+                        raw = _ue_asset_base_name(id_path) or ""
+                        entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                        if "/V2/Monster/" in id_path:
+                            spawner_type = "monster"
+                        elif "/V2/Props/" in id_path:
+                            spawner_type = "props"
+                        break
+                if not entity_name:
+                    continue
+                spawn_rate = item.get("SpawnRate", 0)
+                ldg = item.get("LootDropGroupId", {}) or {}
+                ldg_path = ldg.get("AssetPathName", "")
+                ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
+                entries.append(
+                    {
+                        "entity_name": entity_name,
+                        "spawn_rate": spawn_rate,
+                        "spawner_type": spawner_type,
+                        "lootdrop_group_id": ldg_id,
+                    }
+                )
+            if entries:
+                result[keyword] = entries
+
+    return result
+
+
 _PREFIXES = [
     "DCSpawnerDataAsset'Id_Spawner_New_Monster_",
     "DCSpawnerDataAsset'Id_Spawner_New_Props_",
@@ -195,7 +284,10 @@ def _list_map_jsons(root: str | Path) -> list[Path]:
     return sorted(files)
 
 
-def extract_spawners(map_json_path: Path) -> list[dict]:
+def extract_spawners(
+    map_json_path: Path,
+    multi_entity_spawners: dict[str, list[dict]] | None = None,
+) -> list[dict]:
     try:
         with open(map_json_path, encoding="utf-8") as f:
             data = json.load(f)
@@ -207,6 +299,9 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
 
     spawners: dict[str, dict] = {}
     scene: dict[str, dict] = {}
+
+    if multi_entity_spawners is None:
+        multi_entity_spawners = {}
 
     # Load spawner data assets for lootdrop info
     spawner_data_map = _load_spawner_data_assets()
@@ -347,23 +442,46 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
         elif stem.endswith("_A"):
             version = "(A)"
         map_base = _sl_base_name(stem)
-        results.append(
-            {
-                "keyword": info["keyword"],
-                "original_keyword": info["keyword"],
-                "spawner_type": info["spawner_type"],
-                "preview_name": info.get("preview_name", ""),
-                "has_lootdrop": info.get("has_lootdrop", False),
-                "x": coord["x"],
-                "y": coord["y"],
-                "z": coord["z"],
-                "yaw": coord.get("yaw", 0),
-                "json_filename": map_json_path.name,
-                "map_base": map_base,
-                "version": version,
-                "group_parent": coord.get("group_parent", ""),
-            }
-        )
+        keyword = info["keyword"]
+        # Check if this spawner keyword is a multi-entity random generator
+        if multi_entity_spawners and keyword in multi_entity_spawners:
+            # Expand: one spawner entry per possible entity type
+            for entity_info in multi_entity_spawners[keyword]:
+                results.append(
+                    {
+                        "keyword": entity_info["entity_name"],
+                        "original_keyword": keyword,
+                        "spawner_type": entity_info["spawner_type"],
+                        "preview_name": entity_info["entity_name"],
+                        "has_lootdrop": True,
+                        "x": coord["x"],
+                        "y": coord["y"],
+                        "z": coord["z"],
+                        "yaw": coord.get("yaw", 0),
+                        "json_filename": map_json_path.name,
+                        "map_base": map_base,
+                        "version": version,
+                        "group_parent": coord.get("group_parent", ""),
+                    }
+                )
+        else:
+            results.append(
+                {
+                    "keyword": info["keyword"],
+                    "original_keyword": info["keyword"],
+                    "spawner_type": info["spawner_type"],
+                    "preview_name": info.get("preview_name", ""),
+                    "has_lootdrop": info.get("has_lootdrop", False),
+                    "x": coord["x"],
+                    "y": coord["y"],
+                    "z": coord["z"],
+                    "yaw": coord.get("yaw", 0),
+                    "json_filename": map_json_path.name,
+                    "map_base": map_base,
+                    "version": version,
+                    "group_parent": coord.get("group_parent", ""),
+                }
+            )
     return results
 
 
@@ -411,8 +529,10 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
     d_coords: dict[str, list[tuple[float, float, float]]] = {}
     all_spawners: list[dict] = []
 
+    multi_entity_spawners = _load_multi_entity_spawners()
+
     for fp in map_files:
-        spawners = extract_spawners(fp)
+        spawners = extract_spawners(fp, multi_entity_spawners=multi_entity_spawners)
         stem = fp.stem
         is_hr = stem.endswith("_HR_D")
         is_d = stem.endswith("_D") and not is_hr

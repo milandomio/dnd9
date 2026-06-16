@@ -485,10 +485,10 @@ def run():
     _prop_names = {r["asset_name"] for r in props}
 
     def _filter_coords(coords: list[dict], entity_names: set[str], is_prop: bool = False) -> list[dict]:
-        """Keep only coords whose original_keyword belongs to the target entity type."""
+        """Keep only coords whose search_term belongs to the target entity type."""
 
         def _match(c):
-            kw = c["original_keyword"]
+            kw = c["search_term"]
             st = c.get("spawner_type", "")
             return bool(kw in entity_names or (is_prop and kw.startswith("Ore_")) or (is_prop and st == "props"))
 
@@ -1421,10 +1421,18 @@ def run():
 
     # 预加载 spawn_rate 缓存
     _spawn_rate_cache: dict[str, int] = {}
+    _spawn_rate_detail: dict[tuple[str, str], int] = {}
     for _row in db.get_all_spawner_entries():
-        for _key in (_row["spawner_keyword"], _row["entity_name"]):
-            if _key and _row["spawn_rate"] > _spawn_rate_cache.get(_key, 0):
-                _spawn_rate_cache[_key] = _row["spawn_rate"]
+        sk = _row["spawner_keyword"]
+        en = _row["entity_name"]
+        sr = _row["spawn_rate"]
+        for _key in (sk, en):
+            if _key and sr > _spawn_rate_cache.get(_key, 0):
+                _spawn_rate_cache[_key] = sr
+        if sk and en:
+            _pair = (sk, en)
+            if sr > _spawn_rate_detail.get(_pair, 0):
+                _spawn_rate_detail[_pair] = sr
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
@@ -1462,7 +1470,13 @@ def run():
                     "version": c["version"],
                     "label": c.get("original_keyword", ""),
                 }
-                coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
+                if c.get("keyword") != c.get("original_keyword", ""):
+                    _pair = (c["original_keyword"], c["keyword"])
+                    coord_out["spawn_rate"] = (
+                        _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
+                    )
+                else:
+                    coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
                 merged[base]["coords"].append(coord_out)
         # 计算 per-group 爆率
         _group_drop_info: dict[str, list[dict]] = {}
