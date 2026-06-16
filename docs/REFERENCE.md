@@ -465,6 +465,30 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 - 在 `search_engine.py` 的匹配逻辑中增加 spawner 类型过滤，确保物品类 spawner 不被匹配到怪物/容器搜索词
 - 或建立 spawner 类型白名单（仅怪物/容器/掉落物参与 lootdrops 关联）
 
+### ChestSpecial → 具体宝箱类型概率丢失
+
+`Id_Spawner_New_Props_ChestSpecial`（如 `Firedeep_MiningPassage` 中的 2 个 spawner）是一个**概率生成器**，
+其 `SpawnerItemArray` 中包含多种宝箱类型及各自权重：
+
+| 产出宝箱 | spawn_rate |
+|---------|-----------|
+| OrnateChestLarge | 25% |
+| OrnateChestLarge_Locked | 25% |
+| SimpleChestLarge | 27% |
+| WoodChestLarge | 10% |
+| FlatChestLarge | 10% |
+| Mimic_* | ~3% |
+
+**当前问题：** 
+1. `search_engine.py` 将 `ChestSpecial` 匹配为搜索词 `"ChestSpecial"`，而非 `"OrnateChestLarge"`，导致其坐标不被归入 OrnateChestLarge 的 lootdrops 来源
+2. 即使关联上，当前 spawn_rate 缓存以 `m_name` 查 `OrnateChestLarge`，`OrnateChestLarge` 作为 spawner_keyword 的 rate=100 会覆盖 ChestSpecial 中的 25%
+
+**影响：** 概率宝箱坐标存在但不在掉落来源列表中显示，玩家看不到游戏内实际概率。
+
+**待修复方向：**
+- 对随机 spawner（如 ChestSpecial、ChestLarge、OrnateChestLargeRandom），应将其子实体的概率分摊到各自对应的 lootdrop 条目上
+- spawn_rate 缓存键需要区分 label（实际 spawner）和 entity_name（产出实体），而非用 m_name 统一查 max
+
 ### 生成概率查询优化
 
 `get_spawn_rate_for_keyword()` 在 lootdrops 详情导出阶段被逐坐标调用，导致：
