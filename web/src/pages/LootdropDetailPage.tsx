@@ -36,10 +36,17 @@ interface LootdropMonster {
   drop_rates?: Record<string, number>;
 }
 
+interface GroupDropInfo {
+  translation: string;
+  spawn_rate: number;
+  drop_rates: Record<string, number>;
+}
+
 interface LootdropItem {
   name: string;
   translation: string;
   monsters: LootdropMonster[];
+  group_drop_info?: Record<string, GroupDropInfo[]>;
 }
 
 const GROUP_LABELS: Record<string, string> = {
@@ -487,6 +494,27 @@ export default function LootdropDetailPage() {
                 }}
               >
                 {GROUP_LABELS[groupName] || groupName}
+                {data?.group_drop_info?.[groupName] && (
+                  <span
+                    style={{
+                      fontSize: 14.5,
+                      fontWeight: 'normal',
+                      marginLeft: 10,
+                      color: tokens.muted,
+                    }}
+                  >
+                    {data.group_drop_info[groupName]!.map((info, gi) => (
+                      <span key={gi}>
+                        {gi > 0 && '、'}
+                        {info.translation}
+                        {info.spawn_rate}%
+                        {Object.entries(info.drop_rates)
+                          .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                          .join('')}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </div>
             )}
             {groupItems.map(({ mapName, mod, dots }) => {
