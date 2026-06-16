@@ -39,6 +39,25 @@ dungeon_modules_coords、lootdrops）通过 `all_coords.get(name, [])` 查询，
 **影响范围：** 约 16.5% 的 spawner（~1980 个）有父级变换，分布在 ~144 个地图文件中。
 典型场景：`GameObjectLinker`、`SingleGameSpawnerGroup` 等分组容器下的 spawner。
 
+### 互斥刷新组（BP_GameSpawnerGroup_C）
+
+游戏内部分 spawner 配置为**多选一**随机刷新（4 个黄金宝箱中仅 1 个实际生成）。该关系通过 `BP_GameSpawnerGroup_C` 类型 actor 表达：所有属于同一组的 `BP_GameSpawner_C` 的 `SphereComponent` 都 attach 到该组 actor 的 `DefaultSceneRoot`。
+
+**检测时机：** `search_engine.py:extract_spawners()` 解析地图 JSON 时实时检测。
+
+**检测流程：**
+1. 第一遍遍历收集所有 `BP_GameSpawnerGroup_C` 的 `RootComponent.ObjectPath` → 组名映射
+2. `_resolve_world_loc()` 沿 AttachParent 链向上遍历时，检查当前节点是否在组映射中
+3. 命中则设置 spawner 的 `group_parent` 字段（如 `BP_GameSpawnerGroup_C_2`）
+4. 该字段随 spawner 存入 DB `spawners.group_parent` 列
+
+**数据产出：**
+- `mutually_exclusive_groups` DB 表：`(map_base, json_filename, group_name, search_term, spawner_count)`
+- `dungeon_modules_coords/*.json`：实体级 `mutually_exclusive: true` 标志，前端图例显示 `(N选1)`
+- 单个 spawner 不做互斥标记（至少 2 个同 keyword spawner 共享同一组时才启用）
+
+**覆盖范围：** 约 800 个互斥组，覆盖黄金宝箱、怪物、陷阱、神坛等。
+
 ### 实体分类
 
 `collector.py` 的 `run()` 通过 `db.get_entity_classification()` 从 DB 实体表直接构建分类映射，
