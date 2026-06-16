@@ -214,6 +214,18 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
     # Collect all scene-component-like entries for parent-chain resolution
     _sc_entries: list[tuple[int, dict]] = []  # (array_index, entry)
     _scene_comp_types = {"SphereComponent", "SceneComponent"}
+    _ap_suffix_re = re.compile(r"\.(\d+)'?$")
+
+    # Build map from DefaultSceneRoot entry index → BP_GameSpawnerGroup_C name
+    group_root_to_name: dict[int, str] = {}
+    for _idx, entry in enumerate(data):
+        if entry.get("Type") == "BP_GameSpawnerGroup_C":
+            props = entry.get("Properties", {}) or {}
+            root = props.get("RootComponent", {}) or {}
+            op = root.get("ObjectPath", "")
+            m = _ap_suffix_re.search(op) if op else None
+            if m:
+                group_root_to_name[int(m.group(1))] = entry.get("Name", "")
 
     for idx, entry in enumerate(data):
         if not isinstance(entry, dict):
@@ -261,16 +273,19 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
     # Build scene coords with AttachParent chain resolution
     _ap_suffix_re = re.compile(r"\.(\d+)'?$")
 
-    def _resolve_world_loc(start_idx: int) -> tuple[float, float, float, float]:
-        """Walk up AttachParent chain to compute world-space x, y, z, yaw."""
+    def _resolve_world_loc(start_idx: int) -> tuple[float, float, float, float, str]:
+        """Walk up AttachParent chain to compute world-space x, y, z, yaw and group name."""
         x = y = z = 0.0
         yaw_total = 0.0
+        group_name = ""
         visited: set[int] = set()
         cur = start_idx
         while cur >= 0 and cur not in visited:
             visited.add(cur)
             if cur >= len(data):
                 break
+            if cur in group_root_to_name:
+                group_name = group_root_to_name[cur]
             entry = data[cur]
             props = entry.get("Properties", {}) or {}
             loc = props.get("RelativeLocation", {}) or {}
@@ -283,7 +298,7 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
             ap_path = ap.get("ObjectPath", "")
             m = _ap_suffix_re.search(ap_path)
             cur = int(m.group(1)) if m else -1
-        return x, y, z, yaw_total
+        return x, y, z, yaw_total, group_name
 
     for idx, entry in _sc_entries:
         outer_raw = entry.get("Outer", "")
@@ -298,12 +313,13 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
         ap = props.get("AttachParent", {}) or {}
         if ap and ap.get("ObjectPath"):
             # Has parent: resolve world coords by walking up the chain
-            wx, wy, wz, wyaw = _resolve_world_loc(idx)
+            wx, wy, wz, wyaw, group_name = _resolve_world_loc(idx)
             scene[actor_name] = {
                 "x": wx,
                 "y": wy,
                 "z": wz,
                 "yaw": round(wyaw % 360, 1),
+                "group_parent": group_name,
             }
         else:
             # No parent: use RelativeLocation directly
@@ -316,11 +332,12 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                 "y": loc.get("Y", 0),
                 "z": loc.get("Z", 0),
                 "yaw": yaw,
+                "group_parent": "",
             }
 
     results = []
     for name, info in spawners.items():
-        coord = scene.get(name, {"x": 0, "y": 0, "z": 0})
+        coord = scene.get(name, {"x": 0, "y": 0, "z": 0, "group_parent": ""})
         stem = map_json_path.stem
         version = ""
         if stem.endswith("_HR_D"):
@@ -344,6 +361,7 @@ def extract_spawners(map_json_path: Path) -> list[dict]:
                 "json_filename": map_json_path.name,
                 "map_base": map_base,
                 "version": version,
+                "group_parent": coord.get("group_parent", ""),
             }
         )
     return results

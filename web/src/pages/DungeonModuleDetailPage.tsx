@@ -30,6 +30,8 @@ interface CoordEntity {
   translation?: string;
   type: string;
   color: string;
+  mutually_exclusive?: boolean;
+  group_size?: number;
   coords: { x: number; y: number; z: number; version: string; label: string }[];
 }
 
@@ -314,7 +316,8 @@ export default function DungeonModuleDetailPage() {
                         >
                           {e.translation || e.name}
                           <span style={{ fontSize: 14, marginLeft: 4 }}>
-                            ({e.coords.length})
+                            ({e.coords.length}
+                            {e.mutually_exclusive ? '选1' : '点'})
                           </span>
                         </button>
                       ))}

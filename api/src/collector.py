@@ -330,11 +330,12 @@ def run():
                 s["json_filename"],
                 s.get("version", ""),
                 s.get("map_base", ""),
+                s.get("group_parent", ""),
             )
             for idx, s in enumerate(spawners)
         ]
         c.executemany(
-            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base, group_parent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             spawner_rows,
         )
         db.connect().commit()
@@ -387,6 +388,35 @@ def run():
         )
         db.connect().commit()
         _log(f"[7.5/9] re-match DONE -> {len(match_rows)} matches")
+
+        # 7.6. Build mutually_exclusive_groups table
+        _log("[7.6/9] building mutually_exclusive_groups...")
+        c.execute("DELETE FROM mutually_exclusive_groups")
+        c.execute("""
+            SELECT s.group_parent, s.map_base, s.json_filename, s.keyword,
+                   COUNT(*) as cnt
+            FROM spawners s
+            WHERE s.group_parent != ''
+            GROUP BY s.group_parent, s.map_base, s.json_filename, s.keyword
+            HAVING cnt > 1
+        """)
+        group_rows = []
+        for row in c.fetchall():
+            group_rows.append(
+                (
+                    row["map_base"],
+                    row["json_filename"],
+                    row["group_parent"],
+                    row["keyword"],
+                    row["cnt"],
+                )
+            )
+        c.executemany(
+            "INSERT INTO mutually_exclusive_groups (map_base, json_filename, group_name, search_term, spawner_count) VALUES (?, ?, ?, ?, ?)",
+            group_rows,
+        )
+        db.connect().commit()
+        _log(f"[7.6/9] mutually_exclusive_groups DONE -> {len(group_rows)} groups")
 
         # 8. Quest extraction
         timer.start_step("[DB] quest extraction")
@@ -986,7 +1016,7 @@ def run():
     rows = (
         db.connect()
         .execute(
-            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base FROM spawners ORDER BY map_base, keyword"
+            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base, group_parent FROM spawners ORDER BY map_base, keyword"
         )
         .fetchall()
     )
@@ -1028,6 +1058,7 @@ def run():
                 "coords": [],
             }
             color_idx += 1
+        gp = row.get("group_parent", "") or ""
         module_coords[mb]["entities"][ek]["coords"].append(
             {
                 "x": row["x"],
@@ -1036,6 +1067,7 @@ def run():
                 "yaw": row["yaw"],
                 "version": row["version"] or "",
                 "label": row["original_keyword"],
+                "group_parent": gp,
             }
         )
     # 按模块名合并坐标并保存（处理多个 map_base 映射到同一模块的情况）
@@ -1058,7 +1090,15 @@ def run():
         merged_entities = []
         for (_trans, _type), group in merge_groups.items():
             if len(group) == 1:
-                merged_entities.append(group[0])
+                entity = group[0]
+                coords = entity["coords"]
+                gps = {c.get("group_parent", "") for c in coords}
+                if len(gps) == 1 and "" not in gps:
+                    entity["mutually_exclusive"] = True
+                    entity["group_size"] = len(coords)
+                else:
+                    entity["mutually_exclusive"] = False
+                merged_entities.append(entity)
                 continue
             canonical = min(group, key=lambda e: len(e["name"]))
             seen: set[tuple] = set()
@@ -1069,6 +1109,8 @@ def run():
                     if ck not in seen:
                         seen.add(ck)
                         deduped.append(c)
+            all_group_parents = {c.get("group_parent", "") for e in group for c in e["coords"]}
+            is_mutex = len(all_group_parents) == 1 and "" not in all_group_parents
             merged_entities.append(
                 {
                     "name": canonical["name"],
@@ -1076,6 +1118,8 @@ def run():
                     "type": _type,
                     "color": canonical["color"],
                     "coords": deduped,
+                    "mutually_exclusive": is_mutex,
+                    "group_size": len(deduped) if is_mutex else 0,
                 }
             )
         _save(
