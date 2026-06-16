@@ -483,9 +483,6 @@ export default function LootdropDetailPage() {
                 key={`h-${groupName}`}
                 style={{
                   gridColumn: '1 / -1',
-                  fontSize: 22,
-                  fontWeight: 'bold',
-                  color: dark ? '#FFC107' : '#F57F17',
                   padding: '5px 0',
                   marginTop: 10,
                   borderBottom: dark
@@ -493,28 +490,50 @@ export default function LootdropDetailPage() {
                     : '2px solid #F57F17',
                 }}
               >
-                {GROUP_LABELS[groupName] || groupName}
-                {data?.group_drop_info?.[groupName] && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: 10,
+                    color: dark ? '#FFC107' : '#F57F17',
+                  }}
+                >
                   <span
                     style={{
-                      fontSize: 14.5,
-                      fontWeight: 'normal',
-                      marginLeft: 10,
-                      color: tokens.muted,
+                      fontSize: 22,
+                      fontWeight: 'bold',
+                      whiteSpace: 'nowrap',
                     }}
                   >
-                    {data.group_drop_info[groupName]!.map((info, gi) => (
-                      <span key={gi}>
-                        {gi > 0 && '、'}
-                        {info.translation}
-                        {info.spawn_rate}%
-                        {Object.entries(info.drop_rates)
-                          .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                          .join('')}
-                      </span>
-                    ))}
+                    {GROUP_LABELS[groupName] || groupName}
                   </span>
-                )}
+                  {data?.group_drop_info?.[groupName] && (
+                    <span
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 'normal',
+                        color: tokens.muted,
+                      }}
+                    >
+                      参考爆率：
+                      {data.group_drop_info[groupName]!.map((info, gi) => (
+                        <span
+                          key={gi}
+                          style={{
+                            display: 'inline-block',
+                          }}
+                        >
+                          {gi > 0 && '、'}
+                          {info.translation}
+                          {info.spawn_rate}%
+                          {Object.entries(info.drop_rates)
+                            .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                            .join('')}
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
             {groupItems.map(({ mapName, mod, dots }) => {
