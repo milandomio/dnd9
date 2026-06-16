@@ -404,49 +404,54 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
     terms_set = set(t for t in search_terms if t)
     auto = build_automaton(list(terms_set))
 
-    # Phase 1: collect all HR coords first, so D dedup in Phase 2 can see them
-    hr_coords: dict[str, list[tuple[float, float, float]]] = {}
+    # Group files by type — each file parsed exactly once
+    hr_files: list[Path] = []
+    d_files: list[Path] = []
+    a_files: list[Path] = []
     for fp in map_files:
-        if fp.stem.endswith("_HR_D"):
-            spawners = extract_spawners(fp)
-            for s in spawners:
-                base = s["map_base"]
-                coord = (s["x"], s["y"], s["z"])
-                if base not in hr_coords:
-                    hr_coords[base] = []
-                hr_coords[base].append(coord)
-
-    # Phase 2: process all spawners with dedup (hr_coords now fully populated)
-    all_spawners: list[dict] = []
-    d_coords: dict[str, list[tuple[float, float, float]]] = {}
-
-    for fp in map_files:
-        spawners = extract_spawners(fp)
         stem = fp.stem
-        is_hr = stem.endswith("_HR_D")
-        is_d = stem.endswith("_D") and not is_hr
-        is_a = stem.endswith("_A") and not is_d and not is_hr
+        if stem.endswith("_HR_D"):
+            hr_files.append(fp)
+        elif stem.endswith("_D"):
+            d_files.append(fp)
+        elif stem.endswith("_A"):
+            a_files.append(fp)
 
+    hr_coords: dict[str, list[tuple[float, float, float]]] = {}
+    d_coords: dict[str, list[tuple[float, float, float]]] = {}
+    all_spawners: list[dict] = []
+
+    # Step 1: HR files — collect coords + spawners (no dedup needed)
+    for fp in hr_files:
+        spawners = extract_spawners(fp)
         for s in spawners:
-            kw = s["keyword"]
-            coord = (s["x"], s["y"], s["z"])
             base = s["map_base"]
-            if is_a:
-                hr_list = hr_coords.get(base, [])
-                d_list = d_coords.get(base, [])
-                if any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_list + d_list):
-                    continue
-            elif is_d:
-                hr_list = hr_coords.get(base, [])
-                if any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_list):
-                    continue
-                if base not in d_coords:
-                    d_coords[base] = []
-                d_coords[base].append(coord)
-            elif is_hr:
-                if base not in hr_coords:
-                    hr_coords[base] = []
-                hr_coords[base].append(coord)
+            coord = (s["x"], s["y"], s["z"])
+            hr_coords.setdefault(base, []).append(coord)
+            all_spawners.append(s)
+
+    # Step 2: D files — dedup against HR coords
+    for fp in d_files:
+        spawners = extract_spawners(fp)
+        for s in spawners:
+            base = s["map_base"]
+            coord = (s["x"], s["y"], s["z"])
+            hr_list = hr_coords.get(base, [])
+            if any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_list):
+                continue
+            d_coords.setdefault(base, []).append(coord)
+            all_spawners.append(s)
+
+    # Step 3: A files — dedup against HR + D coords
+    for fp in a_files:
+        spawners = extract_spawners(fp)
+        for s in spawners:
+            base = s["map_base"]
+            coord = (s["x"], s["y"], s["z"])
+            hr_list = hr_coords.get(base, [])
+            d_list = d_coords.get(base, [])
+            if any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_list + d_list):
+                continue
             all_spawners.append(s)
 
     matches: dict[str, list[int]] = {}
