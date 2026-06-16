@@ -19,6 +19,7 @@ MONSTER_DIR = DATA_DIR / "Monster" / "Monster"
 PROPS_DIR = DATA_DIR / "Props" / "Props"
 LOOTDROP_DIR = DATA_DIR / "LootDrop" / "LootDrop"
 LOOTDROP_GROUP_DIR = DATA_DIR / "LootDrop" / "LootDropGroup"
+LOOTDROP_RATE_DIR = DATA_DIR / "LootDrop" / "LootDropRate"
 DUNGEON_MODULE_DIR = DATA_DIR / "Dungeon" / "DungeonModule"
 SPAWNER_DIR = DATA_DIR / "Spawner" / "Spawner"
 ART_DIR = DATA_DIR / "Art"
@@ -27,6 +28,8 @@ ART_DIR = DATA_DIR / "Art"
 DB_PATH = API_DIR / "data" / "darkfindv5.db"
 # JSON 输出（collector 写入到此）
 OUTPUT_DIR = API_DIR / "output" / "json"
+# 日志目录
+LOG_DIR = API_DIR / "logs"
 # 图片源目录
 IMG_SRC = SRC_DIR / "img"
 # 交付目标（前端构建时从此读取）
@@ -343,9 +346,26 @@ GROUP_TO_ART_DIR = {
 DUNGEON_GROUP_GRADES = {
     # group_key        base_code  floors  中文名
     "GoblinCave": {"base": 1, "floors": 2, "label": "哥布林洞穴"},
+    "FireDeep": {"base": 1, "floors": 2, "label": "哥布林洞穴2层"},
     "IceCavern": {"base": 11, "floors": 2, "label": "冰图"},
-    "Crypt": {"base": 21, "floors": 3, "label": "废墟"},
+    "IceAbyss": {"base": 11, "floors": 2, "label": "冰图2层"},
+    "Ruins": {"base": 21, "floors": 3, "label": "废墟"},
+    "Crypt": {"base": 21, "floors": 3, "label": "废墟2层"},
+    "Inferno": {"base": 21, "floors": 3, "label": "废墟3层"},
     "ShipGraveyard": {"base": 31, "floors": 2, "label": "水图"},
+}
+
+# module_group → 楼层后缀列表（用于爆率查询）
+# 后缀 = base_code + floor - 1，如 IceAbyss 的 base=11, floor=2 → 后缀=12
+MODULE_GROUP_FLOOR_SUFFIXES: dict[str, list[int]] = {
+    "GoblinCave": [1, 2],
+    "FireDeep": [1, 2],
+    "IceCavern": [11, 12],
+    "IceAbyss": [11, 12],
+    "Ruins": [21, 22, 23],
+    "Crypt": [21, 22, 23],
+    "Inferno": [21, 22, 23],
+    "ShipGraveyard": [31, 32],
 }
 
 # 模式常量

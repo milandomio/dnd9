@@ -13,6 +13,7 @@ from config import (
     ITEM_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
+    LOOTDROP_RATE_DIR,
     MAPS_DIR,
     MONSTER_DIR,
     PROPS_DIR,
@@ -258,6 +259,39 @@ class DatabaseManager:
                 npc_name TEXT NOT NULL DEFAULT '',
                 npc_name_display TEXT NOT NULL DEFAULT ''
             );
+
+            CREATE TABLE IF NOT EXISTS spawner_entries (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                spawner_keyword TEXT NOT NULL,
+                entity_name TEXT NOT NULL DEFAULT '',
+                spawn_rate INTEGER NOT NULL DEFAULT 10000,
+                dungeon_grades TEXT NOT NULL DEFAULT '[]',
+                lootdrop_group_id TEXT NOT NULL DEFAULT ''
+            );
+
+            CREATE TABLE IF NOT EXISTS lootdrop_groups (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                group_id TEXT NOT NULL,
+                dungeon_grade INTEGER NOT NULL DEFAULT 0,
+                lootdrop_id TEXT NOT NULL DEFAULT '',
+                lootdrop_rate_id TEXT NOT NULL DEFAULT '',
+                drop_count INTEGER NOT NULL DEFAULT 1
+            );
+
+            CREATE TABLE IF NOT EXISTS lootdrop_rate_items (
+                lootdrop_id TEXT NOT NULL,
+                item_name TEXT NOT NULL,
+                luck_grade INTEGER NOT NULL DEFAULT 0,
+                drop_count INTEGER NOT NULL DEFAULT 1
+            );
+
+            CREATE TABLE IF NOT EXISTS lootdrop_rate_weights (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                rate_id TEXT NOT NULL,
+                luck_grade INTEGER NOT NULL DEFAULT 0,
+                weight INTEGER NOT NULL DEFAULT 0
+            );
+            CREATE INDEX IF NOT EXISTS idx_lrw_rate_grade ON lootdrop_rate_weights (rate_id, luck_grade);
         """)
         self._migrate_spawners_table()
         self.conn.commit()
@@ -973,6 +1007,236 @@ class DatabaseManager:
             "SELECT name, module_name, quest_id, quest_title, quest_number, npc_name, npc_name_display FROM explore_targets ORDER BY quest_number, npc_name"
         )
         return [dict(r) for r in c.fetchall()]
+
+    # ─── Import: Spawner Entries (爆率) ───
+
+    _SPAWNER_PREFIXES = [
+        "Id_Spawner_New_Monster_",
+        "Id_Spawner_New_Props_",
+        "Id_Spawner_New_LootDrop_",
+        "Id_Spawner_New_Lootdrop_",
+        "Id_Spawner_Monster_",
+        "Id_Spawner_Props_",
+        "Id_Spawner_LootDrop_",
+        "Id_Spawner_Lootdrop_",
+        "Id_Spawner_New_NPC_",
+        "Id_Spawner_NPC_",
+        "Id_Spawner_New_",
+        "Id_Spawner_",
+    ]
+
+    def import_spawner_entries(self) -> int:
+        """从 SpawnerDataAsset JSON 导入 spawner_entries 表。
+
+        SpawnRate 存储为百分比（0~100），按同 SpawnerItemArray 内的比例计算。
+        """
+        c = self.conn.cursor()
+        c.execute("DELETE FROM spawner_entries")
+        rows = []
+        if not SPAWNER_DIR.exists():
+            return 0
+        for fp in sorted(SPAWNER_DIR.glob("*.json")):
+            try:
+                with open(fp, encoding="utf-8") as f:
+                    data = json.load(f)
+            except Exception:
+                continue
+            if not isinstance(data, list) or not data:
+                continue
+            entry = data[0]
+            if entry.get("Type") != "DCSpawnerDataAsset":
+                continue
+            name = entry.get("Name", "")
+            if not name:
+                continue
+            keyword = name
+            for prefix in self._SPAWNER_PREFIXES:
+                if keyword.startswith(prefix):
+                    keyword = keyword[len(prefix) :]
+                    break
+            props = entry.get("Properties", {}) or {}
+            items = props.get("SpawnerItemArray", []) or []
+            # 计算本 SpawnerItemArray 的 SpawnRate 总和（仅含 LootDropGroupId 的条目）
+            total_rate = sum(
+                it.get("SpawnRate", 10000) for it in items if (it.get("LootDropGroupId") or {}).get("AssetPathName")
+            )
+            if total_rate <= 0:
+                total_rate = 1
+            for item in items:
+                ldg = item.get("LootDropGroupId", {}) or {}
+                ldg_path = ldg.get("AssetPathName", "")
+                if not ldg_path:
+                    continue
+                raw_rate = item.get("SpawnRate", 10000)
+                spawn_rate = round(raw_rate / total_rate * 100)
+                dungeon_grades = item.get("DungeonGrades", []) or []
+                ldg_id = _ue_asset_base_name(ldg_path) or ""
+                entity_name = ""
+                for id_key in ("MonsterId", "PropsId"):
+                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                    if id_path:
+                        raw = _ue_asset_base_name(id_path) or ""
+                        entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                        break
+                rows.append((keyword, entity_name, spawn_rate, json.dumps(dungeon_grades), ldg_id))
+        c.executemany(
+            "INSERT INTO spawner_entries (spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id) VALUES (?, ?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
+
+    # ─── Import: LootDrop Groups ───
+
+    def import_lootdrop_groups(self) -> int:
+        """从 LootDropGroup JSON 导入 lootdrop_groups 表。"""
+        c = self.conn.cursor()
+        c.execute("DELETE FROM lootdrop_groups")
+        rows = []
+        files = _load_json_dir(LOOTDROP_GROUP_DIR)
+        for stem, data_list in files.items():
+            if not data_list:
+                continue
+            props = data_list[0].get("Properties", {}) or {}
+            group_items = props.get("LootDropGroupItemArray", []) or []
+            for gi in group_items:
+                ld_path = (gi.get("LootDropId", {}) or {}).get("AssetPathName", "")
+                lr_path = (gi.get("LootDropRateId", {}) or {}).get("AssetPathName", "")
+                if not ld_path:
+                    continue
+                ld_id = _ue_asset_base_name(ld_path) or ""
+                lr_id = _ue_asset_base_name(lr_path) if lr_path else ""
+                grade = gi.get("DungeonGrade", 0)
+                count = gi.get("LootDropCount", 1)
+                rows.append((stem, grade, ld_id, lr_id, count))
+        c.executemany(
+            "INSERT INTO lootdrop_groups (group_id, dungeon_grade, lootdrop_id, lootdrop_rate_id, drop_count) VALUES (?, ?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
+
+    # ─── Import: LootDrop Rate Items ───
+
+    def import_lootdrop_rate_items(self) -> int:
+        """从 LootDrop JSON 导入 lootdrop_rate_items 表（物品→LuckGrade 映射）。"""
+        c = self.conn.cursor()
+        c.execute("DELETE FROM lootdrop_rate_items")
+        rows = []
+        files = _load_json_dir(LOOTDROP_DIR)
+        _variant_re = re.compile(r"_\d{4}$")
+        for stem, data_list in files.items():
+            if not data_list:
+                continue
+            props = data_list[0].get("Properties", {}) or {}
+            ld_items = props.get("LootDropItemArray", []) or []
+            for li in ld_items:
+                item_path = (li.get("ItemId", {}) or {}).get("AssetPathName", "")
+                if not item_path:
+                    continue
+                raw_name = _ue_asset_base_name(item_path) or ""
+                item_name = raw_name.removeprefix("Id_Item_")
+                item_name = _variant_re.sub("", item_name)
+                luck_grade = li.get("LuckGrade", 0)
+                count = li.get("ItemCount", 1)
+                rows.append((stem, item_name, luck_grade, count))
+        c.executemany(
+            "INSERT INTO lootdrop_rate_items (lootdrop_id, item_name, luck_grade, drop_count) VALUES (?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
+
+    # ─── Import: LootDrop Rate Weights ───
+
+    def import_lootdrop_rate_weights(self) -> int:
+        """从 LootDropRate JSON 导入 lootdrop_rate_weights 表。"""
+        c = self.conn.cursor()
+        c.execute("DELETE FROM lootdrop_rate_weights")
+        rows = []
+        files = _load_json_dir(LOOTDROP_RATE_DIR)
+        for stem, data_list in files.items():
+            if not data_list:
+                continue
+            props = data_list[0].get("Properties", {}) or {}
+            rate_items = props.get("LootDropRateItemArray", []) or []
+            for ri in rate_items:
+                grade = ri.get("LuckGrade", 0)
+                weight = ri.get("DropRate", 0)
+                rows.append((stem, grade, weight))
+        c.executemany(
+            "INSERT INTO lootdrop_rate_weights (rate_id, luck_grade, weight) VALUES (?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
+
+    # ─── Query: 爆率相关 ───
+
+    def get_spawner_entries_for_keyword(self, keyword: str) -> list[dict]:
+        """获取某 keyword 的全部 spawner 条目（按 spawner_keyword 或 entity_name 匹配）。"""
+        c = self.conn.cursor()
+        c.execute(
+            "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id "
+            "FROM spawner_entries WHERE spawner_keyword = ? OR entity_name = ?",
+            (keyword, keyword),
+        )
+        results = []
+        for r in c.fetchall():
+            results.append(
+                {
+                    "spawner_keyword": r["spawner_keyword"],
+                    "entity_name": r["entity_name"],
+                    "spawn_rate": r["spawn_rate"],
+                    "dungeon_grades": json.loads(r["dungeon_grades"]),
+                    "lootdrop_group_id": r["lootdrop_group_id"],
+                }
+            )
+        return results
+
+    def get_item_drop_rate(self, lootdrop_group_id: str, item_name: str, full_grade: int) -> float:
+        """查询某物品在指定 LootDropGroup + DungeonGrade 下的爆率（0~1）。"""
+        c = self.conn.cursor()
+        # 先查 grade-specific，再查 fallback(grade=0)
+        for grade in (full_grade, 0):
+            c.execute(
+                "SELECT lg.lootdrop_id, lg.lootdrop_rate_id, lg.drop_count "
+                "FROM lootdrop_groups lg "
+                "WHERE lg.group_id = ? AND lg.dungeon_grade = ?",
+                (lootdrop_group_id, grade),
+            )
+            rows = c.fetchall()
+            if not rows:
+                continue
+            total_weight = 0.0
+            found_any = False
+            for r in rows:
+                ld_id = r["lootdrop_id"]
+                lr_id = r["lootdrop_rate_id"]
+                group_count = r["drop_count"]
+                # 查该 lootdrop 中目标物品的 luck_grade 和 drop_count
+                c.execute(
+                    "SELECT luck_grade, drop_count FROM lootdrop_rate_items WHERE lootdrop_id = ? AND item_name = ?",
+                    (ld_id, item_name),
+                )
+                items = c.fetchall()
+                if not items:
+                    continue
+                found_any = True
+                for item_row in items:
+                    lg = item_row["luck_grade"]
+                    item_count = item_row["drop_count"]
+                    # 查该 luck_grade 的权重
+                    c.execute(
+                        "SELECT COALESCE(SUM(weight), 0) as total FROM lootdrop_rate_weights WHERE rate_id = ? AND luck_grade = ?",
+                        (lr_id, lg),
+                    )
+                    w_row = c.fetchone()
+                    if w_row:
+                        total_weight += w_row["total"] * group_count * item_count
+            if found_any:
+                return total_weight / 10000
+        return 0.0
 
     def close(self):
         self.conn.close()
