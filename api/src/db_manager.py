@@ -1194,6 +1194,12 @@ class DatabaseManager:
             )
         return results
 
+    def get_all_spawner_entries(self) -> list[dict]:
+        """获取所有 spawner_entries（批量预加载用）。"""
+        c = self.conn.cursor()
+        c.execute("SELECT spawner_keyword, entity_name, spawn_rate FROM spawner_entries")
+        return [dict(r) for r in c.fetchall()]
+
     def get_item_drop_rate(self, lootdrop_group_id: str, item_name: str, full_grade: int) -> float:
         """查询某物品在指定 LootDropGroup + DungeonGrade 下的爆率（0~1）。"""
         c = self.conn.cursor()
