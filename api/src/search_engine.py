@@ -426,11 +426,6 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
                 if any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_coords.get(base, [])):
                     continue
                 d_coords.setdefault(base, []).append(coord)
-            else:
-                if any(
-                    coord_distance(coord[:2], c[:2]) < 120 for c in hr_coords.get(base, []) + d_coords.get(base, [])
-                ):
-                    continue
             all_spawners.append(s)
 
     matches: dict[str, list[int]] = {}
