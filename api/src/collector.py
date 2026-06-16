@@ -1343,12 +1343,14 @@ def run():
         for _alias in _m.get("aliases") or []:
             _map_base_to_group[_alias] = _g
 
-    # spawner_keyword → lootdrop_group_id
+    # spawner_keyword / entity_name → lootdrop_group_id
     _spawner_ldg: dict[str, str] = {}
     for _row in _c.execute(
-        "SELECT DISTINCT spawner_keyword, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
+        "SELECT DISTINCT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
     ):
-        _spawner_ldg[_row["spawner_keyword"]] = _row["lootdrop_group_id"]
+        for _key in (_row["spawner_keyword"], _row["entity_name"]):
+            if _key and _key not in _spawner_ldg:
+                _spawner_ldg[_key] = _row["lootdrop_group_id"]
 
     # lootdrop_groups: {group_id: {dungeon_grade: [(lootdrop_id, lootdrop_rate_id, drop_count)]}}
     _ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
@@ -1460,9 +1462,7 @@ def run():
                     "version": c["version"],
                     "label": c.get("original_keyword", ""),
                 }
-                spawn_rate = _spawn_rate_cache.get(m_name, 100)
-                if spawn_rate != 100:
-                    coord_out["spawn_rate"] = spawn_rate
+                coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
                 merged[base]["coords"].append(coord_out)
         # 计算 per-group 爆率
         _group_drop_info: dict[str, list[dict]] = {}
@@ -1483,6 +1483,17 @@ def run():
                         "drop_rates": _dr,
                     }
                 )
+        # 按豪客赛爆率降序排列
+        for _g_list in _group_drop_info.values():
+            _g_list.sort(key=lambda x: x["drop_rates"].get("豪客赛", 0), reverse=True)
+
+        # 过滤掉无爆率的分组坐标点
+        _groups_with_rates = set(_group_drop_info.keys())
+        for _base_data in merged.values():
+            _base_data["coords"] = [
+                c for c in _base_data["coords"] if _map_base_to_group.get(c["map"], "") in _groups_with_rates
+            ]
+        merged = {k: v for k, v in merged.items() if v["coords"]}
         monsters_out = list(merged.values())
         if monsters_out:
             _save(
