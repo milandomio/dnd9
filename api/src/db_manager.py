@@ -292,17 +292,28 @@ class DatabaseManager:
                 weight INTEGER NOT NULL DEFAULT 0
             );
             CREATE INDEX IF NOT EXISTS idx_lrw_rate_grade ON lootdrop_rate_weights (rate_id, luck_grade);
+
+            CREATE TABLE IF NOT EXISTS mutually_exclusive_groups (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                map_base TEXT NOT NULL,
+                json_filename TEXT NOT NULL,
+                group_name TEXT NOT NULL,
+                search_term TEXT NOT NULL DEFAULT '',
+                spawner_count INTEGER NOT NULL DEFAULT 0
+            );
         """)
         self._migrate_spawners_table()
         self.conn.commit()
 
     def _migrate_spawners_table(self):
-        """Add has_lootdrop column to spawners table if missing."""
+        """Add missing columns to spawners table."""
         c = self.conn.cursor()
         c.execute("PRAGMA table_info(spawners)")
         columns = [row[1] for row in c.fetchall()]
         if "has_lootdrop" not in columns:
             c.execute("ALTER TABLE spawners ADD COLUMN has_lootdrop INTEGER NOT NULL DEFAULT 0")
+        if "group_parent" not in columns:
+            c.execute("ALTER TABLE spawners ADD COLUMN group_parent TEXT NOT NULL DEFAULT ''")
 
     def connect(self):
         return self.conn
@@ -881,7 +892,8 @@ class DatabaseManager:
         c = self.conn.cursor()
         c.execute("""
             SELECT sm.search_term, s.x, s.y, s.z, s.yaw, s.json_filename,
-                   s.version, s.map_base, s.module_type, s.original_keyword, s.spawner_type
+                   s.version, s.map_base, s.module_type, s.original_keyword, s.spawner_type,
+                   s.group_parent
             FROM search_term_matches sm
             JOIN spawners s ON s.id = sm.spawner_id
             ORDER BY sm.search_term, s.map_base, s.json_filename
