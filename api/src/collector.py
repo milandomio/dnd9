@@ -85,6 +85,7 @@ _RESOLVE_FUZZY_PASS2_RE = re.compile(
     r")"
 )
 _DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
+_LOCKED_RE = re.compile(r"_Locked$")
 
 # Props 目录中的 _Dummy 实体同时也是怪物
 _DUMMY_AS_MONSTER = {
@@ -1477,13 +1478,21 @@ def run():
                 continue
             m_trans = entry["monster_translations"][_i]
             base = _base_monster_name(m_name)
+            # Merge _Locked variants into the base (unlocked) entry
+            locked_m = _LOCKED_RE.search(m_name)
+            is_locked = bool(locked_m)
+            if is_locked:
+                base = _base_monster_name(m_name[: locked_m.start()])
             if base not in merged:
                 merged[base] = {
                     "name": base,
                     "translation": m_trans,
                     "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
                     "coords": [],
+                    "_has_locked": False,
                 }
+            if is_locked:
+                merged[base]["_has_locked"] = True
             for c in coords:
                 coord_out = {
                     "x": c["x"],
@@ -1503,9 +1512,10 @@ def run():
                 else:
                     coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
                 merged[base]["coords"].append(coord_out)
-        # 计算 per-group 爆率
+        # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）
         _group_drop_info: dict[str, list[dict]] = {}
         for _base, _m_data in merged.items():
+            _has_locked = _m_data.get("_has_locked", False)
             _seen_groups: set[str] = set()
             for _c in _m_data["coords"]:
                 _g = _map_base_to_group.get(_c["map"], "")
@@ -1515,13 +1525,31 @@ def run():
                 _dr = _get_group_drop_rates(item_name, _base, _g)
                 if not _dr:
                     continue
+                # For locked-merged entries, sum spawn_rates from both variants
+                if _has_locked:
+                    _locked_name = _base + "_Locked"
+                    _sr = _spawn_rate_cache.get(_base, 100) + _spawn_rate_cache.get(_locked_name, 0)
+                else:
+                    _sr = _spawn_rate_cache.get(_base, 100)
                 _group_drop_info.setdefault(_g, []).append(
                     {
                         "translation": _m_data["translation"],
-                        "spawn_rate": _spawn_rate_cache.get(_base, 100),
+                        "spawn_rate": _sr,
                         "drop_rates": _dr,
                     }
                 )
+        # Deduplicate coords and update translation for locked-merged entries
+        for _base_data in merged.values():
+            if _base_data.pop("_has_locked", False):
+                _base_data["translation"] += "(可能上锁)"
+                seen: set[tuple] = set()
+                deduped = []
+                for _c in _base_data["coords"]:
+                    _k = (_c["x"], _c["y"], _c["z"], _c["file"])
+                    if _k not in seen:
+                        seen.add(_k)
+                        deduped.append(_c)
+                _base_data["coords"] = deduped
         # 按豪客赛爆率降序排列
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["drop_rates"].get("豪客赛", 0), reverse=True)
