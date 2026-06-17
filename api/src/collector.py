@@ -710,26 +710,43 @@ def run():
     _save("items.json", items_index)
     _log(f"[JSON] items export DONE -> {len(items_index)} items")
 
-    # ── monsters: index + individual files ──
+    # ── monsters: index + individual files (merge quality variants) ──
     timer.start_step("[JSON] monsters")
     _log("[JSON] monsters export START")
-    monsters_index = []
+
+    # Merge quality suffix variants (_Common/_Elite/_Nightmare/_Unique) into base entry
+    _monster_quality_re = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
+    monster_base_map: dict[str, list[dict]] = {}
     for r in monsters:
-        coords = _filter_coords(all_coords.get(r["monster_name"], []), _monster_names)
-        if not coords:
+        base = _monster_quality_re.sub("", r["monster_name"])
+        monster_base_map.setdefault(base, []).append(r)
+
+    monsters_index = []
+    for base_name, group in monster_base_map.items():
+        primary = next((r for r in group if r["monster_name"] == base_name), group[0])
+        seen_coords: set[tuple] = set()
+        merged_coords_list = []
+        for r in group:
+            coords = _filter_coords(all_coords.get(r["monster_name"], []), _monster_names)
+            for c in coords:
+                key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
+                if key not in seen_coords:
+                    seen_coords.add(key)
+                    merged_coords_list.append(c)
+        if not merged_coords_list:
             continue
-        translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
+        translation = resolve_name(primary["monster_name"], primary["translation_key"], "monster")
         monsters_index.append(
             {
-                "name": r["monster_name"],
+                "name": base_name,
                 "translation": translation,
-                "coordCount": len(coords),
+                "coordCount": len(merged_coords_list),
             }
         )
         _save(
-            f"monsters/{r['monster_name']}.json",
+            f"monsters/{base_name}.json",
             {
-                "name": r["monster_name"],
+                "name": base_name,
                 "translation": translation,
                 "coords": [
                     {
@@ -742,7 +759,7 @@ def run():
                         "version": c["version"],
                         "label": c["original_keyword"],
                     }
-                    for c in coords
+                    for c in merged_coords_list
                 ],
             },
         )
