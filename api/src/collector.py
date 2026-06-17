@@ -1467,8 +1467,6 @@ def run():
     # 预加载 spawn_rate 缓存
     _spawn_rate_cache: dict[str, int] = {}
     _spawn_rate_detail: dict[tuple[str, str], int] = {}
-    # 生成器总权重：spawner_keyword → 所有实体 spawn_rate 之和
-    _spawner_total_rate: dict[str, int] = {}
     # 实体所属生成器：entity_name → {spawner_keyword, ...}
     _entity_spawners: dict[str, set[str]] = {}
     for _row in db.get_all_spawner_entries():
@@ -1482,8 +1480,6 @@ def run():
             _pair = (sk, en)
             if sr > _spawn_rate_detail.get(_pair, 0):
                 _spawn_rate_detail[_pair] = sr
-        if sk:
-            _spawner_total_rate[sk] = _spawner_total_rate.get(sk, 0) + sr
         if en and sk:
             _entity_spawners.setdefault(en, set()).add(sk)
 
@@ -1553,7 +1549,7 @@ def run():
                 _dr = _get_group_drop_rates(item_name, _base, _g)
                 if not _dr:
                     continue
-                # For locked-merged entries: (locked + unlocked) / 生成器总权重 × 100
+                # For locked-merged entries: 取共同生成器中上锁+未上锁 spawn_rate 之和
                 if _has_locked:
                     _locked_name = (
                         _base.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _base else _base + "_Locked"
@@ -1563,8 +1559,7 @@ def run():
                     for _sk in _common_sks:
                         _ul_sr = _spawn_rate_detail.get((_sk, _base), 0)
                         _l_sr = _spawn_rate_detail.get((_sk, _locked_name), 0)
-                        _total = _spawner_total_rate.get(_sk, 1)
-                        _rate = round((_ul_sr + _l_sr) / _total * 100)
+                        _rate = _ul_sr + _l_sr
                         if _rate > _best_rate:
                             _best_rate = _rate
                     _sr = _best_rate if _best_rate > 0 else _spawn_rate_cache.get(_base, 100)
@@ -1588,8 +1583,7 @@ def run():
                 for _sk in _common:
                     _ul = _spawn_rate_detail.get((_sk, _bn), 0)
                     _ll = _spawn_rate_detail.get((_sk, _ln), 0)
-                    _tot = _spawner_total_rate.get(_sk, 1)
-                    _r = round((_ul + _ll) / _tot * 100)
+                    _r = _ul + _ll
                     if _r > _combined_rate:
                         _combined_rate = _r
                 seen: set[tuple] = set()
