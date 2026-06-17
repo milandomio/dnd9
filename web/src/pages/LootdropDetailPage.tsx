@@ -265,6 +265,31 @@ export default function LootdropDetailPage() {
   };
 
   const monsters = data.monsters ?? [];
+  const monsterSortScores = useMemo(() => {
+    const scores = new Map<string, number>();
+    if (!data?.group_drop_info) return scores;
+    for (const entries of Object.values(data.group_drop_info)) {
+      for (const e of entries) {
+        const baseRate = e.drop_rates?.['豪客赛'] ?? 0;
+        const score = e.spawn_rate * baseRate;
+        const m = monsters.find((x) => x.translation === e.translation);
+        if (m) {
+          const cur = scores.get(m.name) ?? -1;
+          if (score > cur) scores.set(m.name, score);
+        }
+      }
+    }
+    return scores;
+  }, [data, monsters]);
+  const sortedMonsters = useMemo(
+    () =>
+      [...monsters].sort(
+        (a, b) =>
+          (monsterSortScores.get(b.name) ?? -1) -
+          (monsterSortScores.get(a.name) ?? -1)
+      ),
+    [monsters, monsterSortScores]
+  );
   // Build per-map coordinate groups
   const mapGroups = new Map<
     string,
@@ -443,7 +468,7 @@ export default function LootdropDetailPage() {
         >
           {hidden.size === 0 ? '隐藏全部' : '全部显示'}
         </button>
-        {monsters.map((m) => (
+        {sortedMonsters.map((m) => (
           <button
             key={m.name}
             onClick={() => toggle(m.name)}
@@ -481,7 +506,7 @@ export default function LootdropDetailPage() {
           }}
         >
           <strong style={{ color: tokens.text }}>怪物图例：</strong>
-          {monsters.map((m) => (
+          {sortedMonsters.map((m) => (
             <span
               key={m.name}
               style={{

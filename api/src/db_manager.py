@@ -1144,12 +1144,25 @@ class DatabaseManager:
     # ─── Import: LootDrop Rate Items ───
 
     def import_lootdrop_rate_items(self) -> int:
-        """从 LootDrop JSON 导入 lootdrop_rate_items 表（物品→LuckGrade 映射）。"""
+        r"""从 LootDrop JSON 导入 lootdrop_rate_items 表（物品→LuckGrade 映射）。
+
+        有以 _\d{4} 为后缀的变体的物品（如 Mitre_5001）：
+          保留变体后缀，按 (lootdrop_id, base_name) 去重，优先级 _5001 > _4001 > _3001 > 其他。
+          详见 docs/REFERENCE.md 中的变体锁定说明。
+        """
         c = self.conn.cursor()
         c.execute("DELETE FROM lootdrop_rate_items")
         rows = []
         files = _load_json_dir(LOOTDROP_DIR)
         _variant_re = re.compile(r"_\d{4}$")
+        _variant_priority = {"_5001": 0, "_4001": 1, "_3001": 2}
+
+        def _variant_rank(name: str) -> int:
+            m = _variant_re.search(name)
+            if m:
+                return _variant_priority.get(m.group(0), 99)
+            return 100  # 无变体后缀（基础名）— 最低优先级
+
         for stem, data_list in files.items():
             if not data_list:
                 continue
@@ -1161,16 +1174,33 @@ class DatabaseManager:
                     continue
                 raw_name = _ue_asset_base_name(item_path) or ""
                 item_name = raw_name.removeprefix("Id_Item_")
-                item_name = _variant_re.sub("", item_name)
                 luck_grade = li.get("LuckGrade", 0)
                 count = li.get("ItemCount", 1)
                 rows.append((stem, item_name, luck_grade, count))
+        # 去重：有变体后缀时每 (lootdrop_id, base_name) 按优先级保留；无后缀时保留末条（兼容多 LuckGrade 物品）
+        seen: dict[tuple[str, str], int] = {}
+        filtered = []
+        for _i, (stem, item_name, luck_grade, count) in enumerate(rows):
+            base = _variant_re.sub("", item_name)
+            key = (stem, base)
+            if base == item_name:
+                # 无变体后缀：保留最后一条
+                seen[key] = len(filtered)
+                filtered.append((stem, item_name, luck_grade, count))
+            elif key in seen:
+                existing_idx = seen[key]
+                existing_name = filtered[existing_idx][1]
+                if _variant_rank(item_name) < _variant_rank(existing_name):
+                    filtered[existing_idx] = (stem, item_name, luck_grade, count)
+            else:
+                seen[key] = len(filtered)
+                filtered.append((stem, item_name, luck_grade, count))
         c.executemany(
             "INSERT INTO lootdrop_rate_items (lootdrop_id, item_name, luck_grade, drop_count) VALUES (?, ?, ?, ?)",
-            rows,
+            filtered,
         )
         self.conn.commit()
-        return len(rows)
+        return len(filtered)
 
     # ─── Import: LootDrop Rate Weights ───
 
