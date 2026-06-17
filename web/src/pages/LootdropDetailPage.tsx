@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
@@ -68,7 +68,22 @@ export default function LootdropDetailPage() {
   );
   const [data, setData] = useState<LootdropItem | null>(ssrData?.item || null);
   const dataVersion = useDataVersion();
-  const { modules } = useDungeonModules();
+  // Prefer SSR-provided modules to avoid untranslated names during SSR/hydration
+  const ssrModulesMap = useMemo(() => {
+    if (!ssrData?.modules) return null;
+    const mm = new Map<string, DungeonModule>();
+    for (const m of ssrData.modules) {
+      const names = m.names || [m.name];
+      names.forEach((n) => mm.set(n, m));
+      mm.set(m.sl_base_name, m);
+      if (m.all_sl_base_names) {
+        m.all_sl_base_names.forEach((sl) => mm.set(sl, m));
+      }
+    }
+    return mm;
+  }, [ssrData]);
+  const { modules: fetchedModules } = useDungeonModules();
+  const modules = ssrModulesMap ?? fetchedModules;
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
