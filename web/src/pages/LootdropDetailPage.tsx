@@ -71,7 +71,8 @@ export default function LootdropDetailPage() {
 
   function defaultHidden(
     monsters: LootdropMonster[],
-    groupDropInfo: Record<string, GroupDropInfo[]>
+    groupDropInfo: Record<string, GroupDropInfo[]>,
+    threshold: number
   ): Set<string> {
     const init = new Set<string>();
     const transToName = new Map<string, string>();
@@ -80,7 +81,7 @@ export default function LootdropDetailPage() {
       for (const entry of entries) {
         const baseRate = entry.drop_rates?.['普通'];
         if (baseRate == null || baseRate <= 0) continue;
-        if ((entry.spawn_rate * baseRate) / 100 >= 1.2) continue;
+        if ((entry.spawn_rate * baseRate) / 100 >= threshold) continue;
         const mn = transToName.get(entry.translation);
         if (mn) init.add(mn);
       }
@@ -105,10 +106,11 @@ export default function LootdropDetailPage() {
   const modules = ssrModulesMap ?? fetchedModules;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     ssrData?.item?.monsters && ssrData.item.group_drop_info
-      ? defaultHidden(ssrData.item.monsters, ssrData.item.group_drop_info)
+      ? defaultHidden(ssrData.item.monsters, ssrData.item.group_drop_info, 1.2)
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
+  const [threshold, setThreshold] = useState(1.2);
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
@@ -123,10 +125,18 @@ export default function LootdropDetailPage() {
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
         setData(item);
-        setHidden(defaultHidden(item.monsters, item.group_drop_info ?? {}));
+        setHidden(
+          defaultHidden(item.monsters, item.group_drop_info ?? {}, 1.2)
+        );
       })
       .catch(console.error);
   }, [name, ssrData]);
+
+  // 在调试模式下实时响应阈值变化
+  useEffect(() => {
+    if (!data?.monsters || !data?.group_drop_info) return;
+    setHidden(defaultHidden(data.monsters, data.group_drop_info, threshold));
+  }, [threshold]);
 
   const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -281,15 +291,29 @@ export default function LootdropDetailPage() {
     }
     return scores;
   }, [data, monsters]);
-  const sortedMonsters = useMemo(
-    () =>
-      [...monsters].sort(
+  const orderedMonsters = useMemo(() => {
+    const ordered: LootdropMonster[] = [];
+    const seen = new Set<string>();
+    if (data?.group_drop_info) {
+      for (const entries of Object.values(data.group_drop_info)) {
+        for (const e of entries) {
+          const m = monsters.find((x) => x.translation === e.translation);
+          if (m && !seen.has(m.name)) {
+            seen.add(m.name);
+            ordered.push(m);
+          }
+        }
+      }
+    }
+    const remaining = [...monsters]
+      .filter((m) => !seen.has(m.name))
+      .sort(
         (a, b) =>
           (monsterSortScores.get(b.name) ?? -1) -
           (monsterSortScores.get(a.name) ?? -1)
-      ),
-    [monsters, monsterSortScores]
-  );
+      );
+    return [...ordered, ...remaining];
+  }, [data, monsters, monsterSortScores]);
   // Build per-map coordinate groups
   const mapGroups = new Map<
     string,
@@ -468,7 +492,7 @@ export default function LootdropDetailPage() {
         >
           {hidden.size === 0 ? '隐藏全部' : '全部显示'}
         </button>
-        {sortedMonsters.map((m) => (
+        {orderedMonsters.map((m) => (
           <button
             key={m.name}
             onClick={() => toggle(m.name)}
@@ -505,31 +529,53 @@ export default function LootdropDetailPage() {
             color: tokens.muted,
           }}
         >
-          <strong style={{ color: tokens.text }}>怪物图例：</strong>
-          {sortedMonsters.map((m) => (
-            <span
-              key={m.name}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 5,
-                cursor: 'pointer',
-                opacity: hidden.has(m.name) ? 0.3 : 1,
-              }}
-              onClick={() => toggle(m.name)}
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 8,
+              marginTop: 6,
+              paddingTop: 8,
+              borderTop: `1px solid ${tokens.border}`,
+            }}
+          >
+            <label
+              style={{ color: tokens.text, fontSize: 13, whiteSpace: 'nowrap' }}
             >
-              <span
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  background: m.color,
-                }}
-              ></span>
-              {m.translation}{' '}
-              <span style={{ color: tokens.muted }}>({m.coords.length})</span>
+              默认显示阈值（乘积%）：{threshold}%
+            </label>
+            <input
+              type="range"
+              min={0}
+              max={10}
+              step={0.1}
+              value={threshold}
+              onChange={(e) => setThreshold(Number(e.target.value))}
+              style={{ width: 200, cursor: 'pointer' }}
+            />
+            <input
+              type="number"
+              min={0}
+              max={10}
+              step={0.1}
+              value={threshold}
+              onChange={(e) => setThreshold(Number(e.target.value))}
+              style={{
+                width: 60,
+                padding: '2px 4px',
+                fontSize: 13,
+                background: tokens.bg,
+                color: tokens.text,
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 3,
+              }}
+            />
+            <span style={{ color: tokens.muted, fontSize: 11 }}>
+              spawn_rate × 普通爆率 ≥ {threshold}% 则默认显示
             </span>
-          ))}
+          </div>
         </div>
       )}
 
