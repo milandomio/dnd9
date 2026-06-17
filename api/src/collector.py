@@ -1479,10 +1479,11 @@ def run():
             m_trans = entry["monster_translations"][_i]
             base = _base_monster_name(m_name)
             # Merge _Locked variants into the base (unlocked) entry
-            locked_m = _LOCKED_RE.search(m_name)
-            is_locked = bool(locked_m)
+            # Handles both "OrnateChestLarge_Locked" and "OrnateChestLarge_Locked_UnderSea"
+            locked_base = m_name.replace("_Locked", "")
+            is_locked = locked_base != m_name
             if is_locked:
-                base = _base_monster_name(m_name[: locked_m.start()])
+                base = _base_monster_name(locked_base)
             if base not in merged:
                 merged[base] = {
                     "name": base,
