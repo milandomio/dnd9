@@ -33,7 +33,7 @@ from db_manager import DatabaseManager
 from layout_utils import load_all_layout_rotations
 from pipeline_timer import PipelineTimer
 from quest_collector import run_quest_extraction
-from search_engine import build_all_matches
+from search_engine import build_all_matches, load_all_spawner_data
 
 _log_file = None
 
@@ -158,69 +158,6 @@ def _ue_asset_base_name(asset_path: str) -> str:
     return part
 
 
-def _load_spawner_lootdrop_monster_map(
-    monster_name_map: dict[str, str],
-) -> dict[str, list[str]]:
-    """Build mapping: lootdrop_group_name → [canonical monster_names].
-
-    Reads DCSpawnerDataAsset files, extracts MonsterId→LootDropGroupId links
-    from SpawnerItemArray, then resolves each MonsterId to the canonical
-    monster_name via monster_name_map.
-    """
-    if not SPAWNER_DIR.exists():
-        return {}
-
-    ldg_to_monsters: dict[str, set[str]] = {}
-    for json_file in SPAWNER_DIR.glob("*.json"):
-        try:
-            with open(json_file, encoding="utf-8") as f:
-                data = json.load(f)
-        except Exception:
-            continue
-        if not isinstance(data, list) or not data:
-            continue
-        entry = data[0]
-        if entry.get("Type") != "DCSpawnerDataAsset":
-            continue
-        props = entry.get("Properties", {}) or {}
-        items = props.get("SpawnerItemArray", []) or []
-        for item in items:
-            ldg = item.get("LootDropGroupId") or {}
-            ldg_asset = ldg.get("AssetPathName", "")
-            if not ldg_asset:
-                continue
-            ldg_name = _ue_asset_base_name(ldg_asset)
-            if not ldg_name:
-                continue
-            # Strip lootdrop group prefix
-            for pfx in ("ID_LootDropGroup_", "Id_LootDropGroup_"):
-                if ldg_name.startswith(pfx):
-                    ldg_name = ldg_name[len(pfx) :]
-                    break
-            mid = item.get("MonsterId") or {}
-            mid_asset = mid.get("AssetPathName", "")
-            if not mid_asset:
-                # Fall back to PropsId for container spawners
-                pid = item.get("PropsId") or {}
-                mid_asset = pid.get("AssetPathName", "")
-                if not mid_asset:
-                    continue
-            mid_name = _ue_asset_base_name(mid_asset)
-            if not mid_name:
-                continue
-            # Strip monster/props prefix, then strip quality suffix to get base name
-            for pfx in ("Id_Monster_", "Id_Props_"):
-                if mid_name.startswith(pfx):
-                    mid_name = mid_name[len(pfx) :]
-                    break
-            mid_name = _QUALITY_RE.sub("", mid_name)
-            # Resolve to canonical monster_name via entity map
-            canonical = monster_name_map.get(mid_name.lower(), mid_name)
-            ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
-
-    return {k: sorted(v) for k, v in ldg_to_monsters.items()}
-
-
 def run():
     global _log_file
     print("=" * 50)
@@ -283,9 +220,11 @@ def run():
         _log("[6/9] get_monster_name_map START")
         monster_name_map = db.get_monster_name_map()
         _log(f"[6/9] get_monster_name_map DONE -> {len(monster_name_map)}")
-        _log("[6/9] _load_spawner_lootdrop_monster_map START")
-        spawner_monster_map = _load_spawner_lootdrop_monster_map(monster_name_map)
-        _log(f"[6/9] _load_spawner_lootdrop_monster_map DONE -> {len(spawner_monster_map)}")
+        _log("[6/9] load_all_spawner_data START")
+        spawner_has_lootdrop, spawner_multi_entity, spawner_monster_map = load_all_spawner_data(monster_name_map)
+        _log(
+            f"[6/9] load_all_spawner_data DONE -> has_lootdrop={len(spawner_has_lootdrop)}, multi_entity={len(spawner_multi_entity)}, monster_map={len(spawner_monster_map)}"
+        )
         _log("[6/9] import_lootdrops START")
         count = db.import_lootdrops(spawner_monster_map)
         _log(f"[6/9] import_lootdrops DONE -> {count}")
@@ -311,7 +250,9 @@ def run():
                 _search_term_set.add(m.group(1) + "Ore")
         search_terms = sorted(_search_term_set)
         _log(f"[7/9] search_terms built: {len(search_terms)}")
-        matches, spawners = build_all_matches(search_terms)
+        matches, spawners = build_all_matches(
+            search_terms, has_lootdrop_map=spawner_has_lootdrop, multi_entity_spawners=spawner_multi_entity
+        )
         _log(f"[7/9] build_all_matches DONE -> {len(spawners)} spawners, {len(matches)} matched")
 
         # Store spawners in DB
@@ -721,6 +662,19 @@ def run():
     monsters_by_translation: dict[str, list[dict]] = {}
     for r in monsters:
         translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
+        # 翻译失败（返回原始名）且有质量后缀时，改用基础怪物的翻译作为分组键
+        if translation == r["monster_name"] and _QUALITY_RE.search(r["monster_name"]):
+            base = _QUALITY_RE.sub("", r["monster_name"])
+            if base != r["monster_name"]:
+                for br in monsters:
+                    if br["monster_name"] == base:
+                        if br["translation_key"]:
+                            bt = resolve_name(br["monster_name"], br["translation_key"], "monster")
+                            if bt != br["monster_name"]:
+                                translation = bt
+                        else:
+                            translation = base
+                        break
         monsters_by_translation.setdefault(translation, []).append(r)
 
     monsters_index = []
