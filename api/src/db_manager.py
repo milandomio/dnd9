@@ -415,14 +415,13 @@ class DatabaseManager:
             if not data_list:
                 continue
             raw = raw_name.removeprefix("Id_Spawner_Monster_")
-            raw_base = _QUALITY_RE.sub("", raw)
-            if raw_base.lower() not in seen_lower:
-                seen_lower[raw_base.lower()] = len(deduped)
+            if raw.lower() not in seen_lower:
+                seen_lower[raw.lower()] = len(deduped)
                 entry = data_list[0]
                 props = entry.get("Properties", {}) or {}
                 name_key = (props.get("Name") or {}).get("Key", "")
                 name_key = _MONSTER_SUBTYPE_RE.sub("", name_key)
-                deduped.append((raw_base, raw_name, name_key))
+                deduped.append((raw, raw_name, name_key))
 
         c.executemany(
             "INSERT OR REPLACE INTO monster_entities (monster_name, raw_name, translation_key) VALUES (?, ?, ?)",
@@ -486,11 +485,9 @@ class DatabaseManager:
             if stype == "item" and keyword not in existing_items:
                 item_rows.append((keyword, keyword, ""))
                 existing_items.add(keyword)
-            elif stype == "monster":
-                monster_base = _QUALITY_RE.sub("", keyword)
-                if monster_base not in existing_monsters:
-                    monster_rows.append((monster_base, keyword, ""))
-                    existing_monsters.add(monster_base)
+            elif stype == "monster" and keyword not in existing_monsters:
+                monster_rows.append((keyword, keyword, ""))
+                existing_monsters.add(keyword)
             elif stype == "props" and keyword not in existing_props:
                 props_rows.append((keyword, keyword, ""))
                 existing_props.add(keyword)

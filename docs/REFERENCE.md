@@ -133,6 +133,20 @@ Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run
 
 `_Hard`/`_VeryHard`/`_Unique` 后缀变体在 lootdrop 解析阶段合入基础怪物名，避免重复掉落条目。
 
+### 怪物变体翻译键合并
+
+怪物列表中 `Abomination_Common` / `Abomination_Elite` / `Abomination_Nightmare` 等质量后缀变体通过**翻译键**合并，而非硬编码后缀剥离。
+
+**合并机制（`collector.py` 怪物导出段）：**
+1. 对每个怪物实体调用 `resolve_name(monster_name, translation_key, "monster")` 解析翻译
+2. 按解析后的翻译文本分组（质量变体的 translation_key 为空，但 `resolve_name()` 通过 `_RESOLVE_STRIP_RE` 剥离后缀后命中基础怪物的翻译键，最终解析为同一中文名）
+3. 每组中优先使用 `translation_key` 非空的条目作为规范名（基础怪物）
+4. 合并组内所有变体的坐标，去重后输出
+
+**覆盖范围：** `_Common`、`_Elite`、`_Nightmare`、`_Unique` 后缀变体，以及任何共享翻译键的怪物（如 `DeathSkull_Summoned` 等特殊实体独立保留，因为其翻译键不同）。
+
+**排除说明：** `entity_index.json` 未被前端使用（管道内部中间产物，被 `skip_deliver` 排除），无需合并。items 表无质量后缀变体（0 条记录），无需处理。
+
 ### DungeonGrade 地图分组代码识别
 
 `Id_LootDropGroup_*.json` 中 `LootDropGroupItemArray` 的每项包含 `DungeonGrade` 字段（整数），
@@ -494,8 +508,8 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 
 **修复方案：** 在 `collector.py` 的 re-match 步中，构建 `search_term → entity_type` 映射。
 当 spawner 同时匹配到短词（如 `Banshee`）和长词（如 `Banshee_Soulflame`）时，仅当短词和长词
-属于**不同类型实体**（monster vs props）时才丢弃短词。同类型的前缀匹配（如 `Banshee_Common` → 
-`Banshee`，均为 monster）保留不变。
+都属于**已知实体类型且类型不同**时才丢弃短词。如果长词不在类型映射中（如 `Abomination_Common`
+已被合并到 `Abomination`，无独立类型），保留短词不动，确保质量变体坐标能正确归入基础怪物。
 
 **修复效果：** `Banshee_Soulflame` 坐标不再出现在 `Banshee` 怪物页面，
 `FrostWyvernEgg` 坐标不再出现在 `FrostWyvern` 怪物页面。
