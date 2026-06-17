@@ -903,7 +903,20 @@ class DatabaseManager:
             term = row["search_term"]
             if term not in result:
                 result[term] = []
-            result[term].append(dict(row))
+            coord = dict(row)
+            # Deduplicate: same (x, y, z, json_filename) can appear when a
+            # spawner keyword is a prefix of another and both expand from the
+            # same multi-entity spawner (e.g. OrnateChestLarge_Locked also
+            # matches "OrnateChestLarge" via prefix, adding the same position twice).
+            dup_key = (coord["x"], coord["y"], coord["z"], coord["json_filename"])
+            coord["_dup_key"] = dup_key
+            existing_keys = {c["_dup_key"] for c in result[term]}
+            if dup_key not in existing_keys:
+                result[term].append(coord)
+        # Strip internal dedup key before returning
+        for term in result:
+            for c in result[term]:
+                c.pop("_dup_key", None)
         return result
 
     def get_items_with_matches(self) -> list[dict]:
