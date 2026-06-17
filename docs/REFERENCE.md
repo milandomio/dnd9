@@ -139,9 +139,13 @@ Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run
 
 **合并机制（`collector.py` 怪物导出段）：**
 1. 对每个怪物实体调用 `resolve_name(monster_name, translation_key, "monster")` 解析翻译
-2. 按解析后的翻译文本分组（质量变体的 translation_key 为空，但 `resolve_name()` 通过 `_RESOLVE_STRIP_RE` 剥离后缀后命中基础怪物的翻译键，最终解析为同一中文名）
+2. 按解析后的翻译文本分组。若翻译失败（返回原始名）且怪物名含质量后缀（`_Common`/`_Elite`/`_Nightmare`/`_Unique`），则剥离后缀后取基础条目的翻译作为分组键
 3. 每组中优先使用 `translation_key` 非空的条目作为规范名（基础怪物）
 4. 合并组内所有变体的坐标，去重后输出
+
+**兜底原因：** `resolve_name()` 内部的后缀剥离链（`_RESOLVE_FUZZY_RE` → `_RESOLVE_FUZZY_PASS2_RE` → `_RESOLVE_STRIP_RE`）不覆盖 `_Common` 后缀，且部分变体（如 `FromFakeDeath` 系列）的翻译键不含后缀名，导致翻译查找失败。兜底逻辑确保这些变体也能正确归入基础怪物的分组。
+
+**例外：** `_Unique` 后缀的独立命名怪（如 "幽暗愚者" ≠ "冰霜鬼童"、"狂牙" ≠ "冰霜狼"）有各自的中文翻译键，翻译成功，不触发兜底，独立保留。
 
 **覆盖范围：** `_Common`、`_Elite`、`_Nightmare`、`_Unique` 后缀变体，以及任何共享翻译键的怪物（如 `DeathSkull_Summoned` 等特殊实体独立保留，因为其翻译键不同）。
 
