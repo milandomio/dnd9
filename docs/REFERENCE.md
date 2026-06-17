@@ -265,6 +265,12 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 | `lootdrop_rate_items` | LootDrop 中的物品列表 | `lootdrop_id`, `item_name`, `luck_grade`, `drop_count` |
 | `lootdrop_rate_weights` | 各 LuckGrade 的权重 | `rate_id`, `luck_grade`, `weight` |
 
+> **变体锁定说明：** 物品有 `_\d{4}` 变体后缀时（如 `Mitre_1001`–`Mitre_7001`），`item_name`
+> 保留变体后缀，按 (lootdrop_id, base_name) 去重，优先级 `_5001 > _4001 > _3001`。
+> 无以上变体时保留后缀最靠前的条目。`_compute_drop_rate()` 先用基础名查找，
+> 未命中则依次尝试 `_5001` / `_4001` / `_3001` 后缀。后续将在对应变体详情页
+> 提供其他变体的跳转。
+
 **计算逻辑（`lootdrop_rates.py`）：**
 
 1. `get_spawn_rate_for_keyword(db, keyword)` — 从 `spawner_entries` 取 max(spawn_rate)，已是百分比（0~100）

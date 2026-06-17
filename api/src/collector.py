@@ -1376,8 +1376,14 @@ def run():
         f"[JSON] preloaded: {len(_ld_groups)} groups, {len(_ld_rate_items)} rate items, {len(_ld_rate_weights)} rate weights"
     )
 
+    _variant_suffixes = ["_5001", "_4001", "_3001"]
+
     def _compute_drop_rate(ldg_id: str, item_name: str, full_grade: int) -> float:
-        """纯内存计算某物品在指定组+等级下的爆率（0~1）。"""
+        """纯内存计算某物品在指定组+等级下的爆率（0~1）。
+
+        优先查基础名，未命中则尝试 _5001 → _4001 → _3001 变体后缀。
+        详见 docs/REFERENCE.md 中的变体锁定说明。
+        """
         for grade in (full_grade, 0):
             grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
             if not grade_data:
@@ -1385,7 +1391,13 @@ def run():
             total_weight = 0.0
             found = False
             for ld_id, lr_id, group_count in grade_data:
-                item_info = _ld_rate_items.get(ld_id, {}).get(item_name)
+                rate_items = _ld_rate_items.get(ld_id, {})
+                item_info = rate_items.get(item_name)
+                if item_info is None:
+                    for _suffix in _variant_suffixes:
+                        item_info = rate_items.get(item_name + _suffix)
+                        if item_info is not None:
+                            break
                 if item_info is None:
                     continue
                 found = True
@@ -1555,9 +1567,9 @@ def run():
                             _c["spawn_rate"] = _combined_rate
                         deduped.append(_c)
                 _base_data["coords"] = deduped
-        # 按生成概率×普通爆率降序排列（乘积越大越优先显示）
+        # 按生成概率×豪客赛爆率降序排列（乘积越大越优先显示）
         for _g_list in _group_drop_info.values():
-            _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("普通", 0), reverse=True)
+            _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
 
         # 过滤掉无爆率的分组坐标点
         _groups_with_rates = set(_group_drop_info.keys())
