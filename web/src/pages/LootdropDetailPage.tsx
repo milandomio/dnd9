@@ -68,6 +68,25 @@ export default function LootdropDetailPage() {
   );
   const [data, setData] = useState<LootdropItem | null>(ssrData?.item || null);
   const dataVersion = useDataVersion();
+
+  function defaultHidden(
+    monsters: LootdropMonster[],
+    groupDropInfo: Record<string, GroupDropInfo[]>
+  ): Set<string> {
+    const init = new Set<string>();
+    const transToName = new Map<string, string>();
+    for (const m of monsters) transToName.set(m.translation, m.name);
+    for (const entries of Object.values(groupDropInfo)) {
+      for (const entry of entries) {
+        const baseRate = entry.drop_rates?.['普通'];
+        if (baseRate == null || baseRate <= 0) continue;
+        if ((entry.spawn_rate * baseRate) / 100 >= 1.2) continue;
+        const mn = transToName.get(entry.translation);
+        if (mn) init.add(mn);
+      }
+    }
+    return init;
+  }
   // Prefer SSR-provided modules to avoid untranslated names during SSR/hydration
   const ssrModulesMap = useMemo(() => {
     if (!ssrData?.modules) return null;
@@ -84,7 +103,11 @@ export default function LootdropDetailPage() {
   }, [ssrData]);
   const { modules: fetchedModules } = useDungeonModules();
   const modules = ssrModulesMap ?? fetchedModules;
-  const [hidden, setHidden] = useState<Set<string>>(new Set());
+  const [hidden, setHidden] = useState<Set<string>>(() =>
+    ssrData?.item?.monsters && ssrData.item.group_drop_info
+      ? defaultHidden(ssrData.item.monsters, ssrData.item.group_drop_info)
+      : new Set()
+  );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
@@ -100,6 +123,7 @@ export default function LootdropDetailPage() {
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
         setData(item);
+        setHidden(defaultHidden(item.monsters, item.group_drop_info ?? {}));
       })
       .catch(console.error);
   }, [name, ssrData]);

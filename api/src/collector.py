@@ -1529,7 +1529,12 @@ def run():
         # Deduplicate coords and update translation for locked-merged entries
         for _base_data in merged.values():
             if _base_data.pop("_has_locked", False):
+                _old = _base_data["translation"]
                 _base_data["translation"] += "(可能上锁)"
+                for _g_list in _group_drop_info.values():
+                    for _entry in _g_list:
+                        if _entry["translation"] == _old:
+                            _entry["translation"] = _base_data["translation"]
                 _bn = _base_data["name"]
                 _ln = _bn.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _bn else _bn + "_Locked"
                 _common = _entity_spawners.get(_bn, set()) & _entity_spawners.get(_ln, set())
@@ -1550,9 +1555,9 @@ def run():
                             _c["spawn_rate"] = _combined_rate
                         deduped.append(_c)
                 _base_data["coords"] = deduped
-        # 按豪客赛爆率降序排列
+        # 按生成概率×普通爆率降序排列（乘积越大越优先显示）
         for _g_list in _group_drop_info.values():
-            _g_list.sort(key=lambda x: x["drop_rates"].get("豪客赛", 0), reverse=True)
+            _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("普通", 0), reverse=True)
 
         # 过滤掉无爆率的分组坐标点
         _groups_with_rates = set(_group_drop_info.keys())
