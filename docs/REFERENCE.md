@@ -484,21 +484,21 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 - `useDungeonModules()` — 全局缓存 `dungeon_modules.json`，所有地图模块页面复用同一份数据
 - `useSearchIndex()` — 全局缓存 `search_index.json`，供 NavBar 搜索使用
 
-### search_term_matches 精确度问题
+### search_term_matches 精确度问题 [已修复]
 
-当前 `search_engine.py` 对 spawner 的匹配逻辑会将 `FrostWyvernEgg`（物品）也匹配到搜索词 `FrostWyvern`（怪物），
-因为 `FrostWyvern` 是 `FrostWyvernEgg` 的前缀子串。
+> **状态：已修复**（2025-06-17：在 `collector.py` 的 re-match 步中添加跨类型前缀匹配过滤）
 
-**问题表现：** `lootdrops/FrozenIronKey.json` 中出现 `FrostWyvernEgg` 坐标的 2 条记录，
-其中 `label: "FrostWyvernEgg"` 的 spawner 实际上是一个物品生成点（物品无法作为容器/怪物掉落物品），
-不应出现在掉落来源列表中。但当前匹配逻辑不区分 spawner 类型（物品 vs 怪物），导致错误关联。
+**历史问题：** `search_engine.py` 的 `match_keyword()` 会将 `FrostWyvernEgg`（物品）也匹配到
+搜索词 `FrostWyvern`（怪物），因为 `FrostWyvern` 是 `FrostWyvernEgg` 的前缀子串。
+同样 `Banshee_Soulflame`（props）会被匹配到 `Banshee`（怪物）。
 
-**影响：** 坐标被计入但 spawn_rate 需回退用 `m_name`（怪物名）查询，因为 `spawner_entries` 中不存在
-`FrostWyvernEgg` 条目（无同名 `Id_Spawner_*.json`）。
+**修复方案：** 在 `collector.py` 的 re-match 步中，构建 `search_term → entity_type` 映射。
+当 spawner 同时匹配到短词（如 `Banshee`）和长词（如 `Banshee_Soulflame`）时，仅当短词和长词
+属于**不同类型实体**（monster vs props）时才丢弃短词。同类型的前缀匹配（如 `Banshee_Common` → 
+`Banshee`，均为 monster）保留不变。
 
-**待修复方向：**
-- 在 `search_engine.py` 的匹配逻辑中增加 spawner 类型过滤，确保物品类 spawner 不被匹配到怪物/容器搜索词
-- 或建立 spawner 类型白名单（仅怪物/容器/掉落物参与 lootdrops 关联）
+**修复效果：** `Banshee_Soulflame` 坐标不再出现在 `Banshee` 怪物页面，
+`FrostWyvernEgg` 坐标不再出现在 `FrostWyvern` 怪物页面。
 
 ### ChestSpecial → 具体宝箱类型概率丢失
 
