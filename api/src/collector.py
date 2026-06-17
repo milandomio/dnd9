@@ -1467,6 +1467,10 @@ def run():
     # 预加载 spawn_rate 缓存
     _spawn_rate_cache: dict[str, int] = {}
     _spawn_rate_detail: dict[tuple[str, str], int] = {}
+    # 生成器总权重：spawner_keyword → 所有实体 spawn_rate 之和
+    _spawner_total_rate: dict[str, int] = {}
+    # 实体所属生成器：entity_name → {spawner_keyword, ...}
+    _entity_spawners: dict[str, set[str]] = {}
     for _row in db.get_all_spawner_entries():
         sk = _row["spawner_keyword"]
         en = _row["entity_name"]
@@ -1478,6 +1482,10 @@ def run():
             _pair = (sk, en)
             if sr > _spawn_rate_detail.get(_pair, 0):
                 _spawn_rate_detail[_pair] = sr
+        if sk:
+            _spawner_total_rate[sk] = _spawner_total_rate.get(sk, 0) + sr
+        if en and sk:
+            _entity_spawners.setdefault(en, set()).add(sk)
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
@@ -1545,10 +1553,21 @@ def run():
                 _dr = _get_group_drop_rates(item_name, _base, _g)
                 if not _dr:
                     continue
-                # For locked-merged entries, sum spawn_rates from both variants
+                # For locked-merged entries: (locked + unlocked) / 生成器总权重 × 100
                 if _has_locked:
-                    _locked_name = _base + "_Locked"
-                    _sr = _spawn_rate_cache.get(_base, 100) + _spawn_rate_cache.get(_locked_name, 0)
+                    _locked_name = (
+                        _base.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _base else _base + "_Locked"
+                    )
+                    _common_sks = _entity_spawners.get(_base, set()) & _entity_spawners.get(_locked_name, set())
+                    _best_rate = 0
+                    for _sk in _common_sks:
+                        _ul_sr = _spawn_rate_detail.get((_sk, _base), 0)
+                        _l_sr = _spawn_rate_detail.get((_sk, _locked_name), 0)
+                        _total = _spawner_total_rate.get(_sk, 1)
+                        _rate = round((_ul_sr + _l_sr) / _total * 100)
+                        if _rate > _best_rate:
+                            _best_rate = _rate
+                    _sr = _best_rate if _best_rate > 0 else _spawn_rate_cache.get(_base, 100)
                 else:
                     _sr = _spawn_rate_cache.get(_base, 100)
                 _group_drop_info.setdefault(_g, []).append(
@@ -1562,12 +1581,25 @@ def run():
         for _base_data in merged.values():
             if _base_data.pop("_has_locked", False):
                 _base_data["translation"] += "(可能上锁)"
+                _bn = _base_data["name"]
+                _ln = _bn.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _bn else _bn + "_Locked"
+                _common = _entity_spawners.get(_bn, set()) & _entity_spawners.get(_ln, set())
+                _combined_rate = 0
+                for _sk in _common:
+                    _ul = _spawn_rate_detail.get((_sk, _bn), 0)
+                    _ll = _spawn_rate_detail.get((_sk, _ln), 0)
+                    _tot = _spawner_total_rate.get(_sk, 1)
+                    _r = round((_ul + _ll) / _tot * 100)
+                    if _r > _combined_rate:
+                        _combined_rate = _r
                 seen: set[tuple] = set()
                 deduped = []
                 for _c in _base_data["coords"]:
                     _k = (_c["x"], _c["y"], _c["z"], _c["file"])
                     if _k not in seen:
                         seen.add(_k)
+                        if _combined_rate > 0:
+                            _c["spawn_rate"] = _combined_rate
                         deduped.append(_c)
                 _base_data["coords"] = deduped
         # 按豪客赛爆率降序排列
