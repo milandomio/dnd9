@@ -1362,8 +1362,17 @@ def run():
 
     # lootdrop_rate_items: {lootdrop_id: {item_name: (luck_grade, drop_count)}}
     _ld_rate_items: dict[str, dict[str, tuple[int, int]]] = {}
+    # (lootdrop_id, luck_grade) → 该 luck_grade 下物品总数，用于分摊权重
+    _ld_luck_grade_count: dict[tuple[str, int], int] = {}
     for _row in _c.execute("SELECT lootdrop_id, item_name, luck_grade, drop_count FROM lootdrop_rate_items"):
         _ld_rate_items.setdefault(_row["lootdrop_id"], {})[_row["item_name"]] = (_row["luck_grade"], _row["drop_count"])
+    # 统计每 (lootdrop_id, luck_grade) 的物品数
+    for _ld_id, _items in _ld_rate_items.items():
+        _lg_counts: dict[int, int] = {}
+        for _item_name, (_lg, _) in _items.items():
+            _lg_counts[_lg] = _lg_counts.get(_lg, 0) + 1
+        for _lg, _cnt in _lg_counts.items():
+            _ld_luck_grade_count[(_ld_id, _lg)] = _cnt
 
     # lootdrop_rate_weights: {rate_id: {luck_grade: total_weight}}
     _ld_rate_weights: dict[str, dict[int, int]] = {}
@@ -1402,8 +1411,10 @@ def run():
                     continue
                 found = True
                 luck_grade, item_count = item_info
-                weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
-                total_weight += weight * group_count * item_count
+                _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+                # 权重是同 luck_grade 下所有物品共享的，按物品数均摊
+                _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
+                total_weight += _pool_weight / _shared * group_count * item_count
             if found:
                 return total_weight / 10000.0
         return 0.0

@@ -587,12 +587,14 @@ export default function LootdropDetailPage() {
                             display: 'inline-block',
                           }}
                         >
-                          {gi > 0 && '、'}
                           {info.translation}
                           {info.spawn_rate}%
                           {Object.entries(info.drop_rates)
                             .map(([mode, rate]) => `[${mode}:${rate}%]`)
                             .join('')}
+                          {gi <
+                            (data.group_drop_info?.[groupName]?.length ?? 0) -
+                              1 && '、'}
                         </span>
                       ))}
                     </span>
