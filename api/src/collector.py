@@ -371,6 +371,15 @@ def run():
                 _search_term_set.add(m.group(1) + "Ore")
         search_terms = sorted(_search_term_set)
 
+        # Build term→type map: "monster" / "item" / "props" / "" (from spawners)
+        _search_term_type: dict[str, str] = {}
+        for r in db.get_item_entities():
+            _search_term_type[r["item_name"]] = "item"
+        for r in db.get_monster_entities():
+            _search_term_type[r["monster_name"]] = "monster"
+        for r in db.get_props_entities():
+            _search_term_type[r["asset_name"]] = "props"
+
         from config import SPAWNER_ALIAS_MAP
         from search_engine import build_automaton, match_keyword
 
@@ -382,6 +391,22 @@ def run():
             sid = row["id"]
             kw = SPAWNER_ALIAS_MAP.get(row["keyword"], row["keyword"])
             matched_terms = match_keyword(kw, set(search_terms), auto)
+            # Remove shorter prefix matches when the longer term belongs to a DIFFERENT
+            # entity type than the shorter term.
+            # e.g. "Banshee_Soulflame" (props) should not also match "Banshee" (monster)
+            # but "Banshee_Common" (monster) SHOULD still match "Banshee" (monster)
+            if len(matched_terms) > 1:
+                sorted_m = sorted(matched_terms, key=len)
+                to_remove: set[str] = set()
+                for i, short_term in enumerate(sorted_m):
+                    short_type = _search_term_type.get(short_term, "")
+                    for long_term in sorted_m[i + 1 :]:
+                        long_type = _search_term_type.get(long_term, "")
+                        if long_term.lower().startswith(short_term.lower()) and short_type != long_type:
+                            # Only remove if types differ (cross-type prefix match is spurious)
+                            to_remove.add(short_term)
+                            break
+                matched_terms = [t for t in matched_terms if t not in to_remove]
             for term in matched_terms:
                 match_rows.append((term, sid))
         cur.executemany(
