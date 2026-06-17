@@ -58,6 +58,22 @@ dungeon_modules_coords、lootdrops）通过 `all_coords.get(name, [])` 查询，
 
 **覆盖范围：** 约 800 个互斥组，覆盖黄金宝箱、怪物、陷阱、神坛等。
 
+### 坐标分类名称获取优先级
+
+坐标点的显示名称（即 `label` / `search_term`）决定了它在哪个实体页面下显示、以及使用哪个翻译键（`Name.Key`）渲染中文名。获取优先级如下：
+
+1. **PreviewData（最高优先级）** — 地图 JSON 中 `BP_GameSpawner_C` 的 `Properties.PreviewData.AssetPathName` 字段直接指向被生成的实体（如 `.../Id_Props_FlatChestLarge`）。通过 `_preview_entity_name()` 提取实体名（如 `FlatChestLarge`），这是最精准的来源，因为同一 spawner 名称可能对应随机生成器（如 `ChestSpecial` 可产出 6 种宝箱），但 PreviewData 在每个坐标点上已锁定为具体实体。
+
+2. **Spawner 关键词** — 从 `SpawnerDataAsset.ObjectName` 经 `strip_id_prefix()` 提取（如 `OrnateChestLarge`），用于 Aho-Corasick 关键词匹配。对非随机 spawner（单条目），该值通常与 PreviewData 实体名一致；对随机 spawner，仅在展开后（`multi_entity_spawners` 映射）以实体名为准。
+
+3. **翻译键获取** — 通过实体名（如上一步确定的 `FlatChestLarge`）查找 `Id_Props_FlatChestLarge.json`（Props/Items/Monsters 目录），读取 `Properties.Name.Key`（如 `Text_DesignData_Props_Props_FlatChestLarge`），作为 `translation_key` 存入 DB 实体表。
+
+**实现位置：**
+- PreviewData 提取：`search_engine.py:_preview_entity_name()`（约 L236）
+- 实体名匹配：`search_engine.py:build_matches()`（约 L576~L579，同时匹配 preview_name 和 keyword）
+- 翻译键入库：`db_manager.py:import_props()` / `import_items()` / `import_monsters()`
+- 分类映射：`db_manager.py:get_entity_classification()`（约 L839~L856，汇总三张实体表）
+
 ### 实体分类
 
 `collector.py` 的 `run()` 通过 `db.get_entity_classification()` 从 DB 实体表直接构建分类映射，

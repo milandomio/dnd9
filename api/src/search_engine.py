@@ -577,6 +577,18 @@ def build_all_matches(search_terms: list[str]) -> tuple[dict[str, list[int]], li
         preview_name = s.get("preview_name", "")
         if preview_name:
             matched.update(match_keyword(preview_name, terms_set, auto))
+        # Remove shorter prefix matches when a longer exact match exists.
+        # e.g. "Banshee_Soulflame" should not also match "Banshee"; keep "Banshee_Soulflame".
+        if len(matched) > 1:
+            sorted_m = sorted(matched, key=len)
+            to_remove: set[str] = set()
+            for i, short_term in enumerate(sorted_m):
+                short_lower = short_term.lower()
+                for long_term in sorted_m[i + 1 :]:
+                    if long_term.lower().startswith(short_lower):
+                        to_remove.add(short_term)
+                        break
+            matched -= to_remove
         for m in matched:
             if m not in matches:
                 matches[m] = []
