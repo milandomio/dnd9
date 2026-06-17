@@ -72,11 +72,12 @@ def _ue_asset_base_name(asset_path: str) -> str:
 
 
 def _load_multi_entity_spawners() -> dict[str, list[dict]]:
-    """Build mapping of multi-entity random spawner keywords → entity details.
+    """Build mapping of spawner keywords → entity details for expansion/redirect.
 
     Returns: {keyword: [{"entity_name": str, "spawn_rate": int, "spawner_type": str,
                          "lootdrop_group_id": str}, ...]}
-    Only spawners with ≥2 distinct entity names are included (random generators).
+    - Multi-entity spawners (≥2 entities with LootDropGroupId) → expand to each entity
+    - Single-entity spawners where keyword ≠ entity_name → redirect keyword to entity_name
     """
     result: dict[str, list[dict]] = {}
     if not SPAWNER_DIR.exists():
@@ -103,8 +104,13 @@ def _load_multi_entity_spawners() -> dict[str, list[dict]]:
         props = entry.get("Properties", {}) or {}
         items = props.get("SpawnerItemArray", []) or []
 
+        # Only count items with LootDropGroupId (meaningful spawn entries)
+        active_items = [item for item in items if (item.get("LootDropGroupId", {}) or {}).get("AssetPathName", "")]
+        if not active_items:
+            continue
+
         entities: set[str] = set()
-        for item in items:
+        for item in active_items:
             entity_name = ""
             for id_key in ("MonsterId", "PropsId"):
                 id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
@@ -115,37 +121,51 @@ def _load_multi_entity_spawners() -> dict[str, list[dict]]:
             if entity_name:
                 entities.add(entity_name)
 
-        if len(entities) >= 2:
-            entries: list[dict] = []
-            for item in items:
-                entity_name = ""
-                spawner_type = ""
-                for id_key in ("MonsterId", "PropsId"):
-                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                    if id_path:
-                        raw = _ue_asset_base_name(id_path) or ""
-                        entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                        if "/V2/Monster/" in id_path:
-                            spawner_type = "monster"
-                        elif "/V2/Props/" in id_path:
-                            spawner_type = "props"
-                        break
-                if not entity_name:
-                    continue
-                spawn_rate = item.get("SpawnRate", 0)
-                ldg = item.get("LootDropGroupId", {}) or {}
-                ldg_path = ldg.get("AssetPathName", "")
-                ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
-                entries.append(
-                    {
-                        "entity_name": entity_name,
-                        "spawn_rate": spawn_rate,
-                        "spawner_type": spawner_type,
-                        "lootdrop_group_id": ldg_id,
-                    }
-                )
-            if entries:
-                result[keyword] = entries
+        if not entities:
+            continue
+
+        need_expand = len(entities) >= 2
+        need_redirect = len(entities) == 1 and keyword != next(iter(entities))
+
+        if not need_expand and not need_redirect:
+            continue
+
+        # Build entry list
+        entries: list[dict] = []
+        total_rate = sum(it.get("SpawnRate", 10000) for it in active_items)
+        if total_rate <= 0:
+            total_rate = 1
+
+        for item in active_items:
+            entity_name = ""
+            spawner_type = ""
+            for id_key in ("MonsterId", "PropsId"):
+                id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                if id_path:
+                    raw = _ue_asset_base_name(id_path) or ""
+                    entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                    if "/V2/Monster/" in id_path:
+                        spawner_type = "monster"
+                    elif "/V2/Props/" in id_path:
+                        spawner_type = "props"
+                    break
+            if not entity_name:
+                continue
+            raw_rate = item.get("SpawnRate", 10000)
+            spawn_rate = round(raw_rate / total_rate * 100)
+            ldg = item.get("LootDropGroupId", {}) or {}
+            ldg_path = ldg.get("AssetPathName", "")
+            ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
+            entries.append(
+                {
+                    "entity_name": entity_name,
+                    "spawn_rate": spawn_rate,
+                    "spawner_type": spawner_type,
+                    "lootdrop_group_id": ldg_id,
+                }
+            )
+        if entries:
+            result[keyword] = entries
 
     return result
 
