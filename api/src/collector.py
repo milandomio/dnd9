@@ -403,8 +403,12 @@ def run():
                     short_type = _search_term_type.get(short_term, "")
                     for long_term in sorted_m[i + 1 :]:
                         long_type = _search_term_type.get(long_term, "")
-                        if long_term.lower().startswith(short_term.lower()) and short_type != long_type:
-                            # Only remove if types differ (cross-type prefix match is spurious)
+                        if (
+                            long_term.lower().startswith(short_term.lower())
+                            and short_type
+                            and long_type
+                            and short_type != long_type
+                        ):
                             to_remove.add(short_term)
                             break
                 matched_terms = [t for t in matched_terms if t not in to_remove]
@@ -710,20 +714,19 @@ def run():
     _save("items.json", items_index)
     _log(f"[JSON] items export DONE -> {len(items_index)} items")
 
-    # ── monsters: index + individual files (merge quality variants) ──
+    # ── monsters: index + individual files (merged by translation) ──
     timer.start_step("[JSON] monsters")
     _log("[JSON] monsters export START")
 
-    # Merge quality suffix variants (_Common/_Elite/_Nightmare/_Unique) into base entry
-    _monster_quality_re = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
-    monster_base_map: dict[str, list[dict]] = {}
+    monsters_by_translation: dict[str, list[dict]] = {}
     for r in monsters:
-        base = _monster_quality_re.sub("", r["monster_name"])
-        monster_base_map.setdefault(base, []).append(r)
+        translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
+        monsters_by_translation.setdefault(translation, []).append(r)
 
     monsters_index = []
-    for base_name, group in monster_base_map.items():
-        primary = next((r for r in group if r["monster_name"] == base_name), group[0])
+    for translation, group in monsters_by_translation.items():
+        # Use entry with translation_key as canonical (typically the base monster)
+        canonical = next((r for r in group if r["translation_key"]), group[0])
         seen_coords: set[tuple] = set()
         merged_coords_list = []
         for r in group:
@@ -735,18 +738,17 @@ def run():
                     merged_coords_list.append(c)
         if not merged_coords_list:
             continue
-        translation = resolve_name(primary["monster_name"], primary["translation_key"], "monster")
         monsters_index.append(
             {
-                "name": base_name,
+                "name": canonical["monster_name"],
                 "translation": translation,
                 "coordCount": len(merged_coords_list),
             }
         )
         _save(
-            f"monsters/{base_name}.json",
+            f"monsters/{canonical['monster_name']}.json",
             {
-                "name": base_name,
+                "name": canonical["monster_name"],
                 "translation": translation,
                 "coords": [
                     {
