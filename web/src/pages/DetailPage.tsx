@@ -88,14 +88,15 @@ export default function DetailPage() {
   useEffect(() => {
     if (!page || !name) return;
     if (ssrData?.entity?.coords) return;
+    if (!dataVersion) return;
     const decoded = decodeURIComponent(name!);
-    fetch(`./data/json/${page}/${decoded}.json?v=${dataVersion}`)
+    fetch(`/data/json/${page}/${decoded}.json?v=${dataVersion}`)
       .then<Entity>((r) => r.json())
       .then((entityData) => {
         setEntity(entityData);
       })
       .catch(console.error);
-  }, [page, name, ssrData]);
+  }, [page, name, ssrData, dataVersion]);
 
   if (!entity)
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;
@@ -373,31 +374,85 @@ export default function DetailPage() {
                     const g = mod?.group || '';
                     const gdi = (entity as ItemEntity).group_drop_info?.[g];
                     if (!gdi || gdi.length === 0) return null;
+                    const hasVariant = mapCoords.some(
+                      (c) => c.variant_count && c.variant_count > 1
+                    );
+                    if (!hasVariant) return null;
                     return (
                       <div
                         style={{
-                          fontSize: 12,
-                          color: tokens.muted,
-                          marginTop: 4,
-                          textAlign: 'center',
-                          lineHeight: 1.4,
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '4px 10px',
+                          justifyContent: 'center',
+                          marginTop: 5,
+                          fontSize: 13,
+                          color: tokens.text,
+                          alignItems: 'center',
                         }}
                       >
                         {gdi.map((info, i) => (
                           <span
                             key={i}
-                            style={{ display: 'inline-block', marginRight: 6 }}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 3,
+                            }}
                           >
+                            <span
+                              style={{
+                                cursor: 'default',
+                              }}
+                            >
+                              {info.translation}
+                            </span>
                             {info.spawn_rate !== 100 && (
-                              <span style={{ color: tokens.accent }}>
+                              <span
+                                style={{
+                                  color: tokens.accent,
+                                  fontSize: 12,
+                                }}
+                              >
                                 {info.spawn_rate}%
                               </span>
                             )}
-                            {Object.entries(info.drop_rates)
-                              .map(([mode, rate]) => `${mode}:${rate}%`)
-                              .join(' ')}
+                            {Object.keys(info.drop_rates).length > 0 && (
+                              <span
+                                style={{
+                                  color: tokens.muted,
+                                  fontSize: 12,
+                                }}
+                              >
+                                (
+                                {Object.entries(info.drop_rates)
+                                  .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                                  .join('')}
+                                )
+                              </span>
+                            )}
                           </span>
                         ))}
+                        {(() => {
+                          const vc = mapCoords.find(
+                            (c) => c.variant_count && c.variant_count > 1
+                          );
+                          if (!vc) return null;
+                          const names = vc.variant_names ?? [];
+                          if (names.length > 0) {
+                            return (
+                              <span style={{ color: tokens.muted }}>
+                                ({names.join('、')}
+                                {vc.variant_count}种选1)
+                              </span>
+                            );
+                          }
+                          return (
+                            <span style={{ color: tokens.muted }}>
+                              ({vc.variant_count}点选1)
+                            </span>
+                          );
+                        })()}
                       </div>
                     );
                   })()}

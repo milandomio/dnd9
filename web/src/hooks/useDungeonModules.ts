@@ -9,7 +9,7 @@ function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
   if (cachedModules) return Promise.resolve(cachedModules);
   if (cachedPromise) return cachedPromise;
 
-  cachedPromise = fetch(`./data/json/dungeon_modules.json?v=${version}`)
+  cachedPromise = fetch(`/data/json/dungeon_modules.json?v=${version}`)
     .then<DungeonModule[]>((r) => r.json())
     .then((mods) => {
       const mm = new Map<string, DungeonModule>();

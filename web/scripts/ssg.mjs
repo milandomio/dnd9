@@ -68,6 +68,12 @@ for (const p of PAGES) {
     if (p === "props" && e.type) {
       entry.type = e.type;
     }
+    // Include lootdrop-specific fields for list page rendering
+    if (p === "lootdrops") {
+      if (e.variant_count != null) entry.variant_count = e.variant_count;
+      if (e.monsters) entry.monsters = e.monsters;
+      if (e.monster_translations) entry.monster_translations = e.monster_translations;
+    }
     searchIndex.push(entry);
   }
 }

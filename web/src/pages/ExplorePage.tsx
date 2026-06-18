@@ -39,7 +39,7 @@ export default function ExplorePage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch(`./data/json/explore.json?v=${dataVersion}`)
+    fetch(`/data/json/explore.json?v=${dataVersion}`)
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)
       .catch(console.error);
@@ -170,7 +170,7 @@ export default function ExplorePage() {
                         borderRadius: 4,
                         position: 'relative',
                         overflow: 'hidden',
-                        backgroundImage: `url(./data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp)`,
+                        backgroundImage: `url(/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp)`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                       }}

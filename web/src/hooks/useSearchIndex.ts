@@ -15,7 +15,7 @@ let cachedPromise: Promise<SearchEntry[]> | null = null;
 function fetchIndex(version: string): Promise<SearchEntry[]> {
   if (cachedIndex) return Promise.resolve(cachedIndex);
   if (cachedPromise) return cachedPromise;
-  cachedPromise = fetch(`./data/json/search_index.json?v=${version}`)
+  cachedPromise = fetch(`/data/json/search_index.json?v=${version}`)
     .then((r) => r.json())
     .then((data: SearchEntry[]) => {
       cachedIndex = data;

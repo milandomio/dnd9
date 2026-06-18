@@ -346,6 +346,8 @@ def run():
     _log("[JSON] get_all_coordinates START")
     all_coords = db.get_all_coordinates()
     _log(f"[JSON] get_all_coordinates DONE -> {len(all_coords)} entity keys")
+    _coord_variant_count = db.get_coord_variant_counts()
+    _log(f"[JSON] get_coord_variant_counts DONE -> {len(_coord_variant_count)} variant groups")
 
     # Query spawner info for props (spawner_type, has_lootdrop) to determine entity type
     _props_spawner_info: dict[str, dict] = {}
@@ -544,6 +546,24 @@ def run():
     print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
     print(f"  unique items after merge: {len(merged_loot)}")
 
+    def _build_coord_out(c: dict, vc: dict) -> dict:
+        """构建坐标输出 dict，附带变体信息。"""
+        out = {
+            "x": c["x"],
+            "y": c["y"],
+            "z": c["z"],
+            "yaw": c.get("yaw", 0),
+            "map": c["map_base"],
+            "file": c["json_filename"],
+            "version": c["version"],
+            "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
+        }
+        vc_info = vc.get((c["map_base"], c["json_filename"], c.get("group_parent", "")))
+        if vc_info and vc_info[0] > 1:
+            out["variant_count"] = vc_info[0]
+            out["variant_names"] = vc_info[1]
+        return out
+
     # ── items: index + individual files ──
     timer.start_step("[JSON] items")
     _log("[JSON] items export START")
@@ -580,19 +600,7 @@ def run():
                 "category": r["category"],
                 "variant_count": variant_count,
                 "monsters": merged_loot.get(name, []),
-                "coords": [
-                    {
-                        "x": c["x"],
-                        "y": c["y"],
-                        "z": c["z"],
-                        "yaw": c.get("yaw", 0),
-                        "map": c["map_base"],
-                        "file": c["json_filename"],
-                        "version": c["version"],
-                        "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-                    }
-                    for c in coords
-                ],
+                "coords": [_build_coord_out(c, _coord_variant_count) for c in coords],
             },
         )
     _save("items.json", items_index)
@@ -647,19 +655,7 @@ def run():
             {
                 "name": canonical["monster_name"],
                 "translation": translation,
-                "coords": [
-                    {
-                        "x": c["x"],
-                        "y": c["y"],
-                        "z": c["z"],
-                        "yaw": c.get("yaw", 0),
-                        "map": c["map_base"],
-                        "file": c["json_filename"],
-                        "version": c["version"],
-                        "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-                    }
-                    for c in merged_coords_list
-                ],
+                "coords": [_build_coord_out(c, _coord_variant_count) for c in merged_coords_list],
             },
         )
     _save("monsters.json", monsters_index)
@@ -738,19 +734,7 @@ def run():
             {
                 "name": name_key,
                 "translation": translation,
-                "coords": [
-                    {
-                        "x": c["x"],
-                        "y": c["y"],
-                        "z": c["z"],
-                        "yaw": c.get("yaw", 0),
-                        "map": c["map_base"],
-                        "file": c["json_filename"],
-                        "version": c["version"],
-                        "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-                    }
-                    for c in merged_coords
-                ],
+                "coords": [_build_coord_out(c, _coord_variant_count) for c in merged_coords],
             },
         )
     _save("props.json", props_index)
@@ -1414,46 +1398,20 @@ def run():
         if en and sk:
             _entity_spawners.setdefault(en, set()).add(sk)
 
-    # 预加载坐标点变体数：(map_base, file, group_parent) → (total_count, [translation_names])
-    # 两种互斥模式：
-    #   1. 不同怪物共享 group（如 Banshee + Skeleton）→ variant_names 非空，显示"N种选1"
-    #   2. 同一怪物多点共享 group（如 4个 GoldChest）→ variant_names 为空，显示"N点选1"
-    _coord_variant_count: dict[tuple[str, str, str], tuple[int, list[str]]] = {}
-    # 模式1：不同 original_keyword 共享 group_parent
-    for _row in _c.execute(
-        "SELECT map_base, json_filename, group_parent, "
-        "COUNT(DISTINCT original_keyword) as cnt, "
-        "COUNT(*) as total, "
-        "GROUP_CONCAT(DISTINCT original_keyword) as keywords "
-        "FROM spawners WHERE group_parent != '' "
-        "GROUP BY map_base, json_filename, group_parent HAVING cnt > 1"
-    ):
-        _names: list[str] = []
-        for _kw in _row["keywords"].split(","):
-            _cls = entity_class.get(_kw, {})
-            _mon_row = monsters_lookup.get(_kw)
-            if _mon_row:
-                _names.append(resolve_name(_kw, _mon_row["translation_key"], "monster"))
-            elif _cls and "props" in _cls.get("types", []):
-                _names.append(resolve_name(_kw, _cls.get("translation_key", ""), "props"))
-            else:
-                _names.append(_kw)
-        _coord_variant_count[(_row["map_base"], _row["json_filename"], _row["group_parent"])] = (
-            _row["total"],
-            _names,
-        )
-    # 模式2：同一 original_keyword 多个 spawner 共享 group_parent（N点选1）
-    for _row in _c.execute(
-        "SELECT map_base, json_filename, group_parent, "
-        "COUNT(*) as total, "
-        "MIN(original_keyword) as keyword "
-        "FROM spawners WHERE group_parent != '' "
-        "GROUP BY map_base, json_filename, group_parent "
-        "HAVING COUNT(DISTINCT original_keyword) = 1 AND COUNT(*) > 1"
-    ):
-        _key = (_row["map_base"], _row["json_filename"], _row["group_parent"])
-        if _key not in _coord_variant_count:
-            _coord_variant_count[_key] = (_row["total"], [])
+    # 翻译 variant_names（_coord_variant_count 已在管道开头计算，此处补充翻译）
+    for _key, (_cnt, _raw_names) in list(_coord_variant_count.items()):
+        if _raw_names:
+            _translated: list[str] = []
+            for _kw in _raw_names:
+                _cls = entity_class.get(_kw, {})
+                _mon_row = monsters_lookup.get(_kw)
+                if _mon_row:
+                    _translated.append(resolve_name(_kw, _mon_row["translation_key"], "monster"))
+                elif _cls and "props" in _cls.get("types", []):
+                    _translated.append(resolve_name(_kw, _cls.get("translation_key", ""), "props"))
+                else:
+                    _translated.append(_kw)
+            _coord_variant_count[_key] = (_cnt, _translated)
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)

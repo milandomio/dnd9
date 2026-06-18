@@ -89,7 +89,7 @@ export default function QuestItemGroupPage() {
       return;
     }
     fetch(
-      `./data/json/quest_items_groups/${encodeURIComponent(group)}.json?v=${dataVersion}`
+      `/data/json/quest_items_groups/${encodeURIComponent(group)}.json?v=${dataVersion}`
     )
       .then<GroupData>((r) => r.json())
       .then((gd) => {

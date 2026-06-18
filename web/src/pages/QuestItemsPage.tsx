@@ -33,7 +33,7 @@ export default function QuestItemsPage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch(`./data/json/quest_items_groups.json?v=${dataVersion}`)
+    fetch(`/data/json/quest_items_groups.json?v=${dataVersion}`)
       .then((r) => r.json())
       .then(setGroups)
       .catch(console.error)
