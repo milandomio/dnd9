@@ -564,85 +564,28 @@ value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
 - **SSR 数据复用** — DungeonModuleGroupPage 优先使用 `useSSRData()` 预渲染数据，避免客户端重复 fetch
 - **无用 JSON 清理** — `entity_index.json`（271KB）、`quest_items.json`（88KB）从交付目录移除（管道内部仍保留）
 
-## TODO：Spawner 变体合并 & AC 自动机移除
+## 已完成：Spawner 变体合并 & AC 自动机移除
 
-### 问题
+> **状态：已完成**（2025-06-19）
 
-`load_all_spawner_data()` 多实体展开时，entity_name 从 `MonsterId`/`PropsId` 直接提取，保留了 `_Elite`/`_Nightmare`/`_Common`/`_\d{4}` 等变体后缀。导致同一基准实体的不同变体成为独立的 spawner keyword。
+在 `load_all_spawner_data()` 和 `extract_spawners()` 中对 entity_name 应用变体后缀剥离，使 spawner keyword 直接等于基准实体名，无需 AC 自动机子串匹配。
 
-AC 自动机（`build_automaton` + `match_keyword`）被引入作为兜底：通过子串匹配让搜索 `Banshee` 能命中 `Banshee_Elite` spawner。但同时也引入了假阳性（如 `Banshee_Soulflame` 误命中 `Banshee`）。
-
-### 方案
-
-在多实体展开时对 entity_name 应用变体后缀剥离，合并到基准名：
-
-- `SkeletonArcher_Elite` → `SkeletonArcher`
-- `SkeletonArcher_Nightmare` → `SkeletonArcher`
-- `Mitre_5001` → `Mitre`
-
-剥离规则复用已有模式：
-| 模式 | 来源 |
+**剥离规则（`strip_variant_suffixes()` 函数，`search_engine.py:13`）：**
+| 模式 | 说明 |
 |------|------|
-| `_(Common\|Elite\|Nightmare\|Unique)$` | `_QUALITY_RE` |
-| `_(Hard\|VeryHard)$` | `_HARD_SUFFIX_RE` |
-| `_\d{4}$` | `_VARIANT_RE` |
+| `_(Common\|Elite\|Nightmare\|Unique)$` | 质量变体 |
+| `_(Hard\|VeryHard)$` | 难度变体 |
+| `_\d{4}$` | 编号变体（如物品 `Mitre_5001`） |
 
-原始 entity_name 保留在 spawner 记录中（如 `original_keyword`）供掉落表关联使用。
+**改动内容：**
+- `search_engine.py`：新增 `strip_variant_suffixes()`，删除 `build_automaton()`/`match_keyword()`/`build_all_matches()`；新增 `extract_all_spawners()` 替代匹配逻辑
+- `collector.py`：删除 Step 7.5 AC 重匹配 + 跨类型过滤段，spawner 存储直接以 variant-stripped keyword 入库
+- `db_manager.py`：删除 `search_term_matches` 表定义，删除 `get_spawner_matches()`，`get_all_coordinates()` 改为直接查 spawners 表按 keyword 分组
+- `.github/workflows/deploy.yml`：删除 `pip install pyahocorasick`
 
-### 影响
+**搜索索引**：由 `web/scripts/ssg.mjs` 在构建时从 JSON 输出文件生成 `search_index.json`，无 AC 自动机依赖。
 
-- `search_term_matches` 表不再需要，搜索改精确匹配
-- `build_automaton()` / `match_keyword()` / `build_all_matches()` 可整体移除
-- `collector.py` 中 AC 相关的类型交叉过滤代码可移除
-
-### 搜索索引重构
-
-搜索记录结构：
-
-```
-搜索项 = {搜索词, 翻译名, 页面路由, 分类表名, 变体列表}
-```
-
-- **搜索词**：从实体 ID 清洗取得（`Id_Item_Sling_5001` → `Sling`），或经翻译键回退链归并到基准名
-- **页面路由** = `分类表名/搜索词`（如 `/items/Sling`）
-  - 物品详情页以默认变体呈现（如 `/items/Sling` → 路由到 `Sling_5001` 的数据），但 `Sling_4001` 等所有变体也有独立路由
-  - 变体切换器在分类按钮模块上方，切换不同变体页面
-  - 标题显示稀有度：从 `Id_Item_Mitre_7001.json` 中提取 `RarityType` → `Type.Item.Rarity.Unique` → 拼接翻译键 `Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_Unique` → `(独特)`
-- **分类表名** = 实体所属表（`items`/`monsters`/`props`）
-- **多实体共用同搜索词**：默认合并显示并列出所有变体
-- **搜索 JSON**：DB 数据导入完成后创建，关联搜索词 → 分类 + 变体列表 + spawner 坐标
-- **`BP_*_C` 类 keyword**：同样按翻译键回退链归并，统一纳入搜索索引
-- **`Weapon`/`Armor` 等战利品类目**：走 `DetailPage`，仅显示点位（后续完善文档）
-
-### 掉落表默认变体映射
-
-变体合并后，当用 base name（如 `Banshee`）查找 lootdrop 数据时，按以下规则确定降级候选：
-
-1. **优先尝试无后缀**（base name 本身）
-2. **未命中时，按实体类型决定降级链**：
-
-| 实体类型 | 判定方式 | 降级候选 |
-|---------|---------|---------|
-| monster | 该 base 在 `monster_entities` 中有 `_Elite` 变体 | `_Elite` → `_Nightmare` → `_Common` |
-| item | 始终（item 无质量变体，但有 `_\d{4}` 编号） | `_5001` → `_4001` → `_3001` |
-| props | 非 monster 的所有情况 | 无降级，仅无后缀 |
-
-**示例：**
-- `Banshee` — monster，monster_entities 中有 `Banshee_Elite` → 降级链 `_Elite` → `_Nightmare` → `_Common`
-- `LivingStatue` — 同时是 monster 和 props，但 monster 表有 `LivingStatue_Elite` → 走 monster 降级链
-- `WoodenBarrel` — 纯 props，monster 表无 `WoodenBarrel_Elite` → 仅无后缀
-- `Mitre` — item → 降级链 `_5001` → `_4001` → `_3001`
-
-**额外变体**（`_UnderSea`、`_Locked`、`_OnlyActivate` 等）只归并不降级：spawner keyword 合并到 base，但掉落表查找时不会主动添加这些后缀，`_UnderSea` 版和陆上版共用同一份掉落数据。
-
-### 实施顺序
-
-1. **spawner keyword 变体合并** — `extract_spawners()` / `load_all_spawner_data()` 中剥离已知变体后缀
-2. **搜索词表重构** — 基于翻译键回退链和实体 ID 清洗，生成搜索索引
-3. **移除 AC 自动机** — 删除 `build_automaton()` / `match_keyword()` / `build_all_matches()` 及 `search_term_matches` 表
-4. **前端适配** — 搜索改用新索引，变体切换器，稀有度标题
-
-### 依赖
-
-- [x] 所有细节已敲定
-- [ ] 等待实施
+**影响数据：**
+- spawner 行数 ~61,359（72 个多实体展开器正确展开）
+- 实体数：items=92, monsters=138, props=247, lootdrops=452
+- 怪物数减少（~143→138）因 AC 前缀假阳性匹配的坐标不再错误归入；正确坐标不变

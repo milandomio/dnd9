@@ -200,14 +200,8 @@ class DatabaseManager:
                 json_filename TEXT NOT NULL,
                 module_type TEXT DEFAULT '',
                 version TEXT NOT NULL DEFAULT '',
-                map_base TEXT NOT NULL DEFAULT ''
-            );
-
-            CREATE TABLE IF NOT EXISTS search_term_matches (
-                search_term TEXT NOT NULL,
-                spawner_id INTEGER NOT NULL,
-                PRIMARY KEY (search_term, spawner_id),
-                FOREIGN KEY (spawner_id) REFERENCES spawners(id)
+                map_base TEXT NOT NULL DEFAULT '',
+                group_parent TEXT NOT NULL DEFAULT ''
             );
 
             CREATE VIRTUAL TABLE IF NOT EXISTS items_fts USING fts5(
@@ -857,49 +851,32 @@ class DatabaseManager:
 
         return classification
 
-    def get_spawner_matches(self) -> list[dict]:
-        c = self.conn.cursor()
-        c.execute("""
-            SELECT sm.search_term, s.keyword, s.spawner_type, s.x, s.y, s.z, s.yaw,
-                   s.json_filename, s.module_type, s.version, s.map_base
-            FROM search_term_matches sm
-            JOIN spawners s ON s.id = sm.spawner_id
-            ORDER BY sm.search_term
-        """)
-        return [dict(r) for r in c.fetchall()]
-
     def get_translations_map(self) -> dict[str, str]:
         c = self.conn.cursor()
         c.execute("SELECT key, value FROM translations")
         return {r["key"]: r["value"] for r in c.fetchall()}
 
     def get_all_coordinates(self) -> dict[str, list[dict]]:
-        """Bulk-fetch all search_term → coordinates mapping in a single query."""
+        """Bulk-fetch all spawner coordinates grouped by keyword (direct matching)."""
         c = self.conn.cursor()
         c.execute("""
-            SELECT sm.search_term, s.x, s.y, s.z, s.yaw, s.json_filename,
-                   s.version, s.map_base, s.module_type, s.keyword, s.original_keyword, s.spawner_type,
+            SELECT s.keyword, s.x, s.y, s.z, s.yaw, s.json_filename,
+                   s.version, s.map_base, s.original_keyword, s.spawner_type,
                    s.group_parent
-            FROM search_term_matches sm
-            JOIN spawners s ON s.id = sm.spawner_id
-            ORDER BY sm.search_term, s.map_base, s.json_filename
+            FROM spawners s
+            ORDER BY s.keyword, s.map_base, s.json_filename
         """)
         result: dict[str, list[dict]] = {}
         for row in c.fetchall():
-            term = row["search_term"]
+            term = row["keyword"]
             if term not in result:
                 result[term] = []
             coord = dict(row)
-            # Deduplicate: same (x, y, z, json_filename) can appear when a
-            # spawner keyword is a prefix of another and both expand from the
-            # same multi-entity spawner (e.g. OrnateChestLarge_Locked also
-            # matches "OrnateChestLarge" via prefix, adding the same position twice).
             dup_key = (coord["x"], coord["y"], coord["z"], coord["json_filename"])
             coord["_dup_key"] = dup_key
             existing_keys = {c["_dup_key"] for c in result[term]}
             if dup_key not in existing_keys:
                 result[term].append(coord)
-        # Strip internal dedup key before returning
         for term in result:
             for c in result[term]:
                 c.pop("_dup_key", None)

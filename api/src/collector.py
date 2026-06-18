@@ -33,7 +33,7 @@ from db_manager import DatabaseManager
 from layout_utils import load_all_layout_rotations
 from pipeline_timer import PipelineTimer
 from quest_collector import run_quest_extraction
-from search_engine import build_all_matches, load_all_spawner_data
+from search_engine import extract_all_spawners, load_all_spawner_data
 
 _log_file = None
 
@@ -229,37 +229,18 @@ def run():
         count = db.import_lootdrops(spawner_monster_map)
         _log(f"[6/9] import_lootdrops DONE -> {count}")
 
-        # 7. Build spawner matches via search engine
+        # 7. Build spawner matches via direct keyword matching (no AC automaton)
         timer.start_step("[DB] spawner matches")
-        _log("[7/9] build_all_matches START")
-        _search_term_set: set[str] = set()
-        for r in db.get_item_entities():
-            _search_term_set.add(r["item_name"])
-        for r in db.get_monster_entities():
-            _search_term_set.add(r["monster_name"])
-        for r in db.get_props_entities():
-            name = r["asset_name"]
-            m = _ORE_QUALITY_RE.match(name)
-            if m:
-                _search_term_set.add(m.group(1))
-            _search_term_set.add(name)
-        search_terms = sorted(_search_term_set)
-        for t in list(search_terms):
-            m = _ORE_ITEM_STRIP_RE.match(t)
-            if m:
-                _search_term_set.add(m.group(1) + "Ore")
-        search_terms = sorted(_search_term_set)
-        _log(f"[7/9] search_terms built: {len(search_terms)}")
-        matches, spawners = build_all_matches(
-            search_terms, has_lootdrop_map=spawner_has_lootdrop, multi_entity_spawners=spawner_multi_entity
+        _log("[7/9] extract_all_spawners START")
+        spawners = extract_all_spawners(
+            has_lootdrop_map=spawner_has_lootdrop, multi_entity_spawners=spawner_multi_entity
         )
-        _log(f"[7/9] build_all_matches DONE -> {len(spawners)} spawners, {len(matches)} matched")
+        _log(f"[7/9] extract_all_spawners DONE -> {len(spawners)} spawners")
 
         # Store spawners in DB
         _log("[7/9] storing spawners in DB...")
         c = db.connect()
         c.execute("DELETE FROM spawners")
-        c.execute("DELETE FROM search_term_matches")
         spawner_rows = [
             (
                 idx + 1,
@@ -285,82 +266,10 @@ def run():
         db.connect().commit()
         _log("[7/9] spawners stored in DB")
 
-        # 7.5. Add spawner fallback entities and rebuild matches
+        # 7.5. Add spawner fallback entities
         _log("[7.5/9] import_spawner_fallback_entities START")
         added = db.import_spawner_fallback_entities()
         _log(f"[7.5/9] import_spawner_fallback_entities DONE -> {added}")
-
-        _log("[7.5/9] rebuilding search terms + re-matching...")
-        _search_term_set = set()
-        for r in db.get_item_entities():
-            _search_term_set.add(r["item_name"])
-        for r in db.get_monster_entities():
-            _search_term_set.add(r["monster_name"])
-        for r in db.get_props_entities():
-            name = r["asset_name"]
-            m = _ORE_QUALITY_RE.match(name)
-            if m:
-                _search_term_set.add(m.group(1))
-            _search_term_set.add(name)
-        cur = db.connect().cursor()
-        cur.execute("SELECT DISTINCT keyword FROM spawners")
-        for row in cur.fetchall():
-            _search_term_set.add(row["keyword"])
-        search_terms = sorted(_search_term_set)
-        for t in list(search_terms):
-            m = _ORE_ITEM_STRIP_RE.match(t)
-            if m:
-                _search_term_set.add(m.group(1) + "Ore")
-        search_terms = sorted(_search_term_set)
-
-        # Build term→type map: "monster" / "item" / "props" / "" (from spawners)
-        _search_term_type: dict[str, str] = {}
-        for r in db.get_item_entities():
-            _search_term_type[r["item_name"]] = "item"
-        for r in db.get_monster_entities():
-            _search_term_type[r["monster_name"]] = "monster"
-        for r in db.get_props_entities():
-            _search_term_type[r["asset_name"]] = "props"
-
-        from config import SPAWNER_ALIAS_MAP
-        from search_engine import build_automaton, match_keyword
-
-        auto = build_automaton(search_terms)
-        cur.execute("SELECT id, keyword FROM spawners")
-        all_spawners_db = cur.fetchall()
-        match_rows = []
-        for row in all_spawners_db:
-            sid = row["id"]
-            kw = SPAWNER_ALIAS_MAP.get(row["keyword"], row["keyword"])
-            matched_terms = match_keyword(kw, set(search_terms), auto)
-            # Remove shorter prefix matches when the longer term belongs to a DIFFERENT
-            # entity type than the shorter term.
-            # e.g. "Banshee_Soulflame" (props) should not also match "Banshee" (monster)
-            # but "Banshee_Common" (monster) SHOULD still match "Banshee" (monster)
-            if len(matched_terms) > 1:
-                sorted_m = sorted(matched_terms, key=len)
-                to_remove: set[str] = set()
-                for i, short_term in enumerate(sorted_m):
-                    short_type = _search_term_type.get(short_term, "")
-                    for long_term in sorted_m[i + 1 :]:
-                        long_type = _search_term_type.get(long_term, "")
-                        if (
-                            long_term.lower().startswith(short_term.lower())
-                            and short_type
-                            and long_type
-                            and short_type != long_type
-                        ):
-                            to_remove.add(short_term)
-                            break
-                matched_terms = [t for t in matched_terms if t not in to_remove]
-            for term in matched_terms:
-                match_rows.append((term, sid))
-        cur.executemany(
-            "INSERT OR IGNORE INTO search_term_matches (search_term, spawner_id) VALUES (?, ?)",
-            match_rows,
-        )
-        db.connect().commit()
-        _log(f"[7.5/9] re-match DONE -> {len(match_rows)} matches")
 
         # 7.6. Build mutually_exclusive_groups table
         _log("[7.6/9] building mutually_exclusive_groups...")
@@ -459,7 +368,7 @@ def run():
         """Keep only coords whose search_term belongs to the target entity type."""
 
         def _match(c):
-            kw = c["search_term"]
+            kw = c.get("keyword") or c.get("search_term", "")
             st = c.get("spawner_type", "")
             return bool(kw in entity_names or (is_prop and kw.startswith("Ore_")) or (is_prop and st == "props"))
 

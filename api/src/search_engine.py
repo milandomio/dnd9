@@ -3,12 +3,19 @@ import os
 import re
 from pathlib import Path
 
-import ahocorasick
-
 from config import MAPS_DIR, SPAWNER_ALIAS_MAP, SPAWNER_DIR
 
 _VARIANT_RE = re.compile(r"_\d{4}$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
+_HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
+
+
+def strip_variant_suffixes(name: str) -> str:
+    result = name
+    result = _QUALITY_RE.sub("", result)
+    result = _HARD_SUFFIX_RE.sub("", result)
+    result = _VARIANT_RE.sub("", result)
+    return result
 
 
 def _ue_asset_base_name(asset_path: str) -> str:
@@ -59,6 +66,8 @@ def load_all_spawner_data(
         keyword = strip_id_prefix(name)
         if not keyword:
             continue
+        # Stripped keyword for has_lootdrop_map lookups (multi_entity uses original)
+        kw_base = strip_variant_suffixes(strip_id_prefix(name))
 
         props = entry.get("Properties", {}) or {}
         items = props.get("SpawnerItemArray", []) or []
@@ -69,7 +78,7 @@ def load_all_spawner_data(
             if (item.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""):
                 has_ld = True
                 break
-        keyword_has_lootdrop[keyword] = has_ld
+        keyword_has_lootdrop[kw_base] = has_ld
 
         # --- 2. multi-entity / redirect ---
         active_items = [it for it in items if (it.get("LootDropGroupId", {}) or {}).get("AssetPathName", "")]
@@ -82,6 +91,7 @@ def load_all_spawner_data(
                     if id_path:
                         raw = _ue_asset_base_name(id_path) or ""
                         e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                        e_name = strip_variant_suffixes(e_name)
                         break
                 if e_name:
                     entity_names.add(e_name)
@@ -109,6 +119,7 @@ def load_all_spawner_data(
                                 if id_path:
                                     raw = _ue_asset_base_name(id_path) or ""
                                     e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                                    e_name = strip_variant_suffixes(e_name)
                                     if "/V2/Monster/" in id_path:
                                         s_type = "monster"
                                     elif "/V2/Props/" in id_path:
@@ -160,7 +171,7 @@ def load_all_spawner_data(
                     if mid_name.startswith(pfx):
                         mid_name = mid_name[len(pfx) :]
                         break
-                mid_name = _QUALITY_RE.sub("", mid_name)
+                mid_name = strip_variant_suffixes(mid_name)
                 canonical = monster_name_map.get(mid_name.lower(), mid_name)
                 _ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
 
@@ -352,16 +363,21 @@ def extract_spawners(
             keyword = strip_id_prefix(raw_obj)
             if not keyword:
                 continue
+            # Apply alias map (before variant stripping)
+            keyword_alias = SPAWNER_ALIAS_MAP.get(keyword, keyword)
+            # Stripped keyword for direct entity matching
+            keyword_stripped = strip_variant_suffixes(keyword_alias)
             pd = props.get("PreviewData", {}) or {}
             asset_path = pd.get("AssetPathName", "")
             spawner_type = _preview_type(asset_path)
-            preview_name = _preview_entity_name(asset_path)
+            preview_name = strip_variant_suffixes(_preview_entity_name(asset_path))
             spawner_name = entry.get("Name", "")
             # Check if this spawner has lootdrop from spawner data asset
-            has_lootdrop = spawner_data_map.get(keyword, False)
+            has_lootdrop = spawner_data_map.get(keyword_stripped, False) or spawner_data_map.get(keyword_alias, False)
             if spawner_name:
                 spawners[spawner_name] = {
-                    "keyword": keyword,
+                    "keyword": keyword_stripped,
+                    "keyword_original": keyword,
                     "spawner_type": spawner_type,
                     "preview_name": preview_name,
                     "has_lootdrop": has_lootdrop,
@@ -461,14 +477,16 @@ def extract_spawners(
             version = "(A)"
         map_base = _sl_base_name(stem)
         keyword = info["keyword"]
+        kw_original = info.get("keyword_original", keyword)
         # Check if this spawner keyword is a multi-entity random generator
-        if multi_entity_spawners and keyword in multi_entity_spawners:
+        # Use the original (non-stripped) keyword for multi_entity lookup
+        if multi_entity_spawners and kw_original in multi_entity_spawners:
             # Expand: one spawner entry per possible entity type
-            for entity_info in multi_entity_spawners[keyword]:
+            for entity_info in multi_entity_spawners[kw_original]:
                 results.append(
                     {
                         "keyword": entity_info["entity_name"],
-                        "original_keyword": keyword,
+                        "original_keyword": kw_original,
                         "spawner_type": entity_info["spawner_type"],
                         "preview_name": entity_info["entity_name"],
                         "has_lootdrop": True,
@@ -486,7 +504,7 @@ def extract_spawners(
             results.append(
                 {
                     "keyword": info["keyword"],
-                    "original_keyword": info["keyword"],
+                    "original_keyword": info.get("keyword_original", info["keyword"]),
                     "spawner_type": info["spawner_type"],
                     "preview_name": info.get("preview_name", ""),
                     "has_lootdrop": info.get("has_lootdrop", False),
@@ -503,53 +521,19 @@ def extract_spawners(
     return results
 
 
-def build_automaton(terms: list[str]) -> ahocorasick.Automaton:
-    auto = ahocorasick.Automaton()
-    for t in terms:
-        t_lower = t.lower()
-        if len(t_lower) >= 5:
-            auto.add_word(t_lower, t)
-    auto.make_automaton()
-    return auto
-
-
-def match_keyword(keyword: str, terms: set[str], auto: ahocorasick.Automaton) -> list[str]:
-    kw_lower = keyword.lower()
-    matched = set()
-    for end_index, original_term in auto.iter(kw_lower):
-        start = end_index - len(original_term) + 1
-        # Word boundary check: char before match must not be a letter
-        if start > 0 and kw_lower[start - 1].isalpha():
-            continue
-        matched.add(original_term)
-    for t in terms:
-        t_lower = t.lower()
-        if len(t_lower) >= 5:
-            continue
-        if t_lower == kw_lower or f"_{t_lower}" in kw_lower:
-            matched.add(t)
-        elif kw_lower.startswith(t_lower) and len(kw_lower) > len(t_lower):
-            next_char = kw_lower[len(t_lower)]
-            if next_char.isdigit() or next_char == "_":
-                matched.add(t)
-    return sorted(matched, key=len, reverse=True)
-
-
 def coord_distance(a: tuple[float, float], b: tuple[float, float]) -> float:
     return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2) ** 0.5
 
 
-def build_all_matches(
-    search_terms: list[str],
+def extract_all_spawners(
     has_lootdrop_map: dict[str, bool] | None = None,
     multi_entity_spawners: dict[str, list[dict]] | None = None,
-) -> tuple[dict[str, list[int]], list[dict]]:
+) -> list[dict]:
+    """Iterate all map files, extract spawners, deduplicate across HR_D/D variants.
+    Returns a flat list of spawner dicts with variant-stripped keywords."""
     map_files = _list_map_jsons(MAPS_DIR)
     # Sort so HR_D comes first, then D, then A — single pass dedup ordering
     map_files.sort(key=lambda fp: (0 if fp.stem.endswith("_HR_D") else 1 if fp.stem.endswith("_D") else 2))
-
-    terms_set = set(t for t in search_terms if t)
-    auto = build_automaton(list(terms_set))
 
     hr_coords: dict[str, list[tuple[float, float, float]]] = {}
     d_coords: dict[str, list[tuple[float, float, float]]] = {}
@@ -577,18 +561,4 @@ def build_all_matches(
                 d_coords.setdefault(base, []).append(coord)
             all_spawners.append(s)
 
-    matches: dict[str, list[int]] = {}
-    for idx, s in enumerate(all_spawners):
-        # Always match against the spawner keyword itself
-        kw = SPAWNER_ALIAS_MAP.get(s["keyword"], s["keyword"])
-        matched = set(match_keyword(kw, terms_set, auto))
-        # Also match against preview_name if present
-        preview_name = s.get("preview_name", "")
-        if preview_name:
-            matched.update(match_keyword(preview_name, terms_set, auto))
-        for m in matched:
-            if m not in matches:
-                matches[m] = []
-            matches[m].append(idx)
-
-    return matches, all_spawners
+    return all_spawners

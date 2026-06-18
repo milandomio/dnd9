@@ -27,9 +27,6 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
-      - name: Install Python deps
-        run: pip install pyahocorasick
-
       - name: Run data pipeline
         run: python api/main.py
 
