@@ -516,7 +516,11 @@ def build_automaton(terms: list[str]) -> ahocorasick.Automaton:
 def match_keyword(keyword: str, terms: set[str], auto: ahocorasick.Automaton) -> list[str]:
     kw_lower = keyword.lower()
     matched = set()
-    for _end_index, original_term in auto.iter(kw_lower):
+    for end_index, original_term in auto.iter(kw_lower):
+        start = end_index - len(original_term) + 1
+        # Word boundary check: char before match must not be a letter
+        if start > 0 and kw_lower[start - 1].isalpha():
+            continue
         matched.add(original_term)
     for t in terms:
         t_lower = t.lower()

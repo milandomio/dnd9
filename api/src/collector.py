@@ -1427,6 +1427,13 @@ def run():
                 ldg_id = _spawner_ldg.get(monster_name + _suffix, "")
                 if ldg_id:
                     break
+        # 大小写不敏感回退（如 lootdrop_items 中 "DreadSpine" vs spawner_entries 中 "Dreadspine_Common"）
+        if not ldg_id:
+            _lower = monster_name.lower()
+            for _k, _v in _spawner_ldg.items():
+                if _k.lower() == _lower:
+                    ldg_id = _v
+                    break
         if not ldg_id:
             return {}
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
@@ -1464,6 +1471,30 @@ def run():
                 _spawn_rate_detail[_pair] = sr
         if en and sk:
             _entity_spawners.setdefault(en, set()).add(sk)
+
+    # 预加载坐标点变体数：(map_base, file, original_keyword) → (count, type)
+    # type="species"：同点位多种怪物（如 Dreadspine_Common/Elite/Nightmare 共享1个点）
+    # type="points"：同组多个点位（如 GoldChest 4个点位共享1个 group_parent，每次只生成1个）
+    _coord_variant_count: dict[tuple[str, str, str], tuple[int, str]] = {}
+    # 情况1：同点位不同 keyword 数
+    for _row in _c.execute(
+        "SELECT map_base, json_filename, original_keyword, COUNT(DISTINCT keyword) as cnt "
+        "FROM spawners WHERE group_parent != '' "
+        "GROUP BY map_base, json_filename, original_keyword, group_parent HAVING cnt > 1"
+    ):
+        _coord_variant_count[(_row["map_base"], _row["json_filename"], _row["original_keyword"])] = (
+            _row["cnt"],
+            "species",
+        )
+    # 情况2：同组多个点位数（同一 original_keyword + group_parent 下的不同坐标数）
+    for _row in _c.execute(
+        "SELECT map_base, json_filename, original_keyword, group_parent, COUNT(*) as cnt "
+        "FROM spawners WHERE group_parent != '' "
+        "GROUP BY map_base, json_filename, original_keyword, group_parent HAVING cnt > 1"
+    ):
+        _key = (_row["map_base"], _row["json_filename"], _row["original_keyword"])
+        if _key not in _coord_variant_count:
+            _coord_variant_count[_key] = (_row["cnt"], "points")
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
@@ -1545,13 +1576,21 @@ def run():
                         "version": _c["version"],
                         "label": _c.get("original_keyword", ""),
                     }
+                    _vc_info = _coord_variant_count.get(
+                        (_c["map_base"], _c["json_filename"], _c.get("original_keyword", ""))
+                    )
+                    if _vc_info and _vc_info[0] > 1:
+                        coord_out["variant_count"] = _vc_info[0]
+                        coord_out["variant_type"] = _vc_info[1]
                     if _c.get("keyword") != _c.get("original_keyword", ""):
                         _pair = (_c["original_keyword"], _c["keyword"])
-                        coord_out["spawn_rate"] = (
-                            _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
-                        )
+                        _sr = _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
                     else:
-                        coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
+                        _sr = _spawn_rate_cache.get(m_name, 100)
+                    # 共享点：spawn_rate 除以变体数（3选1则 90% → 30%）
+                    if _vc_info and _vc_info[0] > 1:
+                        _sr = round(_sr / _vc_info[0], 1)
+                    coord_out["spawn_rate"] = _sr
                     merged[_merge_key]["coords"].append(coord_out)
         # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）
         _group_drop_info: dict[str, list[dict]] = {}
