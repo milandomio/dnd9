@@ -97,26 +97,32 @@ Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run
 
 **已推断示例：** Shipgraveyard_UnderSeaCave_02 → sl_base Shipgraveyard_TwinChamber → 反查到 ShipGraveyard
 
-**剩余 19 个通用跨区域模块（无分组）：**
+**~~剩余 19 个通用跨区域模块（无分组）~~** — 已临时解决（2026-06-19）：
 
-| # | 模块名 | sl_base |
-|---|--------|---------|
-| 1 | AltarRoomAB_Center | AltarRoomAB_Center |
-| 2 | Armory_Center | (空) |
-| 3-6 | Connector_Half_01~04 | (空) |
-| 7 | CorridorofDarkPriests_Center | (空) |
-| 8 | DarkMagicLibrary | (空) |
-| 9-11 | DarkRitualRoom_01~03 | (空) |
-| 12 | DarkRitualRoom_04 | DarkRitualRoom_04 |
-| 13 | DeathHall_Center | DeathHall_Center |
-| 14 | GuardPost_Center | (空) |
-| 15 | MimicRoom_Center | (空) |
-| 16 | MummyRoom | MummyRoom |
-| 17 | PassingRoad_03 | (空) |
-| 18 | Sewers_Center | (空) |
-| 19 | Tomb | (空) |
+这 19 个通用模块名（如 `AltarRoomAB_Center`、`Armory_Center`）实际未被使用：
+- 无对应 JSON 文件（无 `ModuleType`）
+- 无对应地图文件在目录结构中
+- `db_manager.py:688` 清理无分组模块时被删除
+- 数据库中仅存 `DarkRitualRoom_04`（属 Inferno 分组，有 39 条 spawner）
 
-这些模块在前端无分组标题栏，直接排列在地图网格底部。sl_base 为空表示 JSON 中无 SubLevelAsset 属性。
+实际使用的是带区域前缀的版本（如 `Crypt_AltarRoomAB`、`Ruins_Armory`、`DeathHall` 等），均已有分组。
+
+| 通用模块名 | 实际使用的区域版本 | 分组 |
+|---|---|---|
+| AltarRoomAB_Center | Crypt_AltarRoomAB | Crypt |
+| Armory_Center | Armory, Ruins_Armory | Crypt, Ruins |
+| Connector_Half_01~04 | (无对应版本) | — |
+| CorridorofDarkPriests_Center | (无对应版本) | — |
+| DarkMagicLibrary | DarkMagicLibrary_Center | Crypt |
+| DarkRitualRoom_01~03 | Crypt_DarkRitualRoom_01 | Crypt |
+| DarkRitualRoom_04 | DarkRitualRoom_04 | Inferno |
+| DeathHall_Center | DeathHall | Crypt |
+| GuardPost_Center | GuardPost, IceCave_Guardpost | Crypt, IceCavern |
+| MimicRoom_Center | MimicRoom | Crypt |
+| MummyRoom | (无对应版本) | — |
+| PassingRoad_03 | (无对应版本) | — |
+| Sewers_Center | Sewers | Crypt |
+| Tomb | Tomb_Center, Cave_Tomb_Center, OldTomb | Crypt, GoblinCave |
 
 ### 地图图片匹配
 
