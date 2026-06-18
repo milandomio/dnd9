@@ -67,6 +67,27 @@ function AppRoutes() {
           <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
           <Route path="/:page" element={<ListPage />} />
           <Route path="/:page/:name" element={<DetailPage />} />
+          {/* 尾部斜杠兼容 */}
+          <Route path="/explore/" element={<ExplorePage />} />
+          <Route path="/quest_items/" element={<QuestItemsPage />} />
+          <Route path="/quest_items/:group/" element={<QuestItemGroupPage />} />
+          <Route path="/quest_npc/" element={<QuestNPCPage />} />
+          <Route
+            path="/quest_npc/:npc_name/"
+            element={<QuestNPCDetailPage />}
+          />
+          <Route path="/dungeon_modules/" element={<DungeonModulesPage />} />
+          <Route
+            path="/dungeon_modules/:group/"
+            element={<DungeonModuleGroupPage />}
+          />
+          <Route
+            path="/dungeon_modules/:group/:name/"
+            element={<DungeonModuleDetailPage />}
+          />
+          <Route path="/lootdrops/:name/" element={<LootdropDetailPage />} />
+          <Route path="/:page/" element={<ListPage />} />
+          <Route path="/:page/:name/" element={<DetailPage />} />
         </Routes>
       </Suspense>
     </div>
