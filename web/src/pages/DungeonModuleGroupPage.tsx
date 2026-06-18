@@ -186,7 +186,7 @@ export default function DungeonModuleGroupPage() {
                     borderRadius: 4,
                     position: 'relative',
                     overflow: 'hidden',
-                    backgroundImage: `url(./data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
+                    backgroundImage: `url(/data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                   }}

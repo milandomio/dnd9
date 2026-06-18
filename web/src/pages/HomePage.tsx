@@ -77,7 +77,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch(`./data/json/index.json?v=${dataVersion}`)
+    fetch(`/data/json/index.json?v=${dataVersion}`)
       .then((r) => r.json())
       .then(setData)
       .catch(console.error);

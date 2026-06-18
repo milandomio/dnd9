@@ -191,6 +191,35 @@ git reset HEAD~1 && rm /tmp/darkfindv5.db
 | `useDungeonModules.ts` | 地图模块数据 | DungeonModules/Group/Detail |
 | `useDataVersion.ts` | 数据版本（缓存 bust） | Disclaimer, NavBar, List, Explore |
 
+### 详情页同步规则
+
+`DetailPage.tsx` 同时处理 items、monsters、props 三种实体详情页（通过 `/:page/:name` 路由）。`LootdropDetailPage.tsx` 是独立的掉落详情页。
+
+**功能更新需同步的页面：**
+- `DetailPage.tsx` — items/monsters/props 共用，更新一处即覆盖三张表
+- `LootdropDetailPage.tsx` — 掉落详情页，功能独立但 UI 样式应保持一致
+
+**爆率显示规则（已同步）：**
+- 只在坐标对应的 spawn 文件是变体（`variant_count > 1`）时，才在地图模块图片下显示爆率
+- 非变体 spawn 不显示爆率
+- 爆率样式参考 `LootdropDetailPage` 的怪物列表区域
+
+### Fetch URL 必须使用绝对路径
+
+所有 `fetch()` 和 CSS `url()` 中的数据路径必须使用绝对路径（`/data/...`），不能使用相对路径（`./data/...`）。
+
+**原因：** 嵌套路由（如 `/items/Bandage/`）刷新时，相对路径 `./data/json/items/Bandage.json` 会解析为 `/items/Bandage/data/json/items/Bandage.json`，命中 SPA fallback 返回 HTML 而非 JSON，导致页面空白。客户端路由跳转不受影响（`dataVersion` 已缓存，fetch 立即执行）。
+
+**部署环境：** 自定义域名 `dnd9.icetar.com`，部署在根路径，`vite.config.ts` 中 `base: '/'`，绝对路径 `/data/...` 在本地预览和生产环境均正确解析。
+
+### 共享 Hook 状态：useDataVersion 必须同步所有调用者
+
+多个组件各自调用同一个自定义 hook 时，每个组件有独立的 `useState`。如果 hook 内部通过异步操作更新状态，只有触发该操作的组件实例会被更新，其他调用者的 state 保持初始值。
+
+**踩坑记录：** `useDataVersion()` 被 `Disclaimer` 和 `DetailPage` 等多个组件调用。fetch `meta.json` 后 `setDate()` 只更新了 `Disclaimer` 的 state，`DetailPage` 的 `dataVersion` 始终为空，导致详情页 F5 刷新后不加载数据。
+
+**解决方式：** 使用模块级 `listeners` 集合 + `notify()` 模式，fetch 完成后通知所有订阅者更新 state。
+
 ## React Hydration 规则（防止 #310 错误）
 
 React #310 = "Rendered more hooks than during the previous render"，hook 数量在渲染间不一致。

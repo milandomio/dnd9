@@ -1238,6 +1238,41 @@ class DatabaseManager:
         c.execute("SELECT spawner_keyword, entity_name, spawn_rate FROM spawner_entries")
         return [dict(r) for r in c.fetchall()]
 
+    def get_coord_variant_counts(self) -> dict[tuple[str, str, str], tuple[int, list[str]]]:
+        """预加载坐标点变体数：(map_base, json_filename, group_parent) → (total_count, [keyword_names])。
+        两种互斥模式：
+          1. 不同 keyword 共享 group → variant_names 非空
+          2. 同一 keyword 多点共享 group → variant_names 为空
+        """
+        c = self.conn.cursor()
+        result: dict[tuple[str, str, str], tuple[int, list[str]]] = {}
+        # 模式1：不同 original_keyword 共享 group_parent
+        for row in c.execute(
+            "SELECT map_base, json_filename, group_parent, "
+            "COUNT(DISTINCT original_keyword) as cnt, "
+            "COUNT(*) as total, "
+            "GROUP_CONCAT(DISTINCT original_keyword) as keywords "
+            "FROM spawners WHERE group_parent != '' "
+            "GROUP BY map_base, json_filename, group_parent HAVING cnt > 1"
+        ):
+            names = row["keywords"].split(",")
+            result[(row["map_base"], row["json_filename"], row["group_parent"])] = (
+                row["total"],
+                names,
+            )
+        # 模式2：同一 keyword 多个 spawner 共享 group_parent
+        for row in c.execute(
+            "SELECT map_base, json_filename, group_parent, "
+            "COUNT(*) as total "
+            "FROM spawners WHERE group_parent != '' "
+            "GROUP BY map_base, json_filename, group_parent "
+            "HAVING COUNT(DISTINCT original_keyword) = 1 AND COUNT(*) > 1"
+        ):
+            key = (row["map_base"], row["json_filename"], row["group_parent"])
+            if key not in result:
+                result[key] = (row["total"], [])
+        return result
+
     def get_item_drop_rate(self, lootdrop_group_id: str, item_name: str, full_grade: int) -> float:
         """查询某物品在指定 LootDropGroup + DungeonGrade 下的爆率（0~1）。"""
         c = self.conn.cursor()

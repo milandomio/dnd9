@@ -118,8 +118,9 @@ export default function LootdropDetailPage() {
   useEffect(() => {
     if (!name) return;
     if (ssrData?.item?.monsters) return;
+    if (!dataVersion) return;
     fetch(
-      `./data/json/lootdrops/${decodeURIComponent(name)}.json?v=${dataVersion}`
+      `/data/json/lootdrops/${decodeURIComponent(name)}.json?v=${dataVersion}`
     )
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
@@ -127,7 +128,7 @@ export default function LootdropDetailPage() {
         setHidden(defaultHidden(item.monsters, 2.5));
       })
       .catch(console.error);
-  }, [name, ssrData]);
+  }, [name, ssrData, dataVersion]);
 
   // 在调试模式下实时响应阈值变化
   useEffect(() => {
@@ -157,7 +158,7 @@ export default function LootdropDetailPage() {
         const imgName = mod?.img_name || mod?.sl_base_name || 'RareModule_1x1';
         const ctrl = new AbortController();
         controllersRef.current.set(mn, ctrl);
-        fetch(`./data/img/${imgName}.webp`, { signal: ctrl.signal })
+        fetch(`/data/img/${imgName}.webp`, { signal: ctrl.signal })
           .then((r) => r.blob())
           .then((blob) => {
             const url = URL.createObjectURL(blob);

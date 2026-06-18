@@ -57,7 +57,7 @@ export default function MapPanel({
         borderRadius: 4,
         position: 'relative',
         overflow: 'hidden',
-        backgroundImage: `url(${imageSrc || `./data/img/${imgName}.webp`})`,
+        backgroundImage: `url(${imageSrc || `/data/img/${imgName}.webp`})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
