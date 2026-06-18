@@ -1484,16 +1484,29 @@ def run():
             is_locked = locked_base != m_name
             if is_locked:
                 base = _base_monster_name(locked_base)
-            if base not in merged:
+            # Find existing entry by translation (same-named entities merge into one)
+            _existing_key = None
+            for _k, _v in merged.items():
+                if _v.get("translation") == m_trans:
+                    _existing_key = _k
+                    break
+            if _existing_key is not None:
+                merged[_existing_key]["_bases"].add(base)
+                _cur_key = _existing_key
+                if is_locked:
+                    merged[_existing_key]["_has_locked"] = True
+            else:
                 merged[base] = {
                     "name": base,
                     "translation": m_trans,
                     "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
                     "coords": [],
                     "_has_locked": False,
+                    "_bases": {base, m_name},
                 }
+                _cur_key = base
             if is_locked:
-                merged[base]["_has_locked"] = True
+                merged[_cur_key]["_has_locked"] = True
             for c in coords:
                 coord_out = {
                     "x": c["x"],
@@ -1512,7 +1525,7 @@ def run():
                     )
                 else:
                     coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
-                merged[base]["coords"].append(coord_out)
+                merged[_cur_key]["coords"].append(coord_out)
         # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）
         _group_drop_info: dict[str, list[dict]] = {}
         for _base, _m_data in merged.items():
@@ -1539,9 +1552,13 @@ def run():
                         _rate = _ul_sr + _l_sr
                         if _rate > _best_rate:
                             _best_rate = _rate
-                    _sr = _best_rate if _best_rate > 0 else _spawn_rate_cache.get(_base, 100)
+                    _sr = (
+                        _best_rate
+                        if _best_rate > 0
+                        else max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_base}))
+                    )
                 else:
-                    _sr = _spawn_rate_cache.get(_base, 100)
+                    _sr = max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_base}))
                 _group_drop_info.setdefault(_g, []).append(
                     {
                         "translation": _m_data["translation"],
@@ -1604,6 +1621,8 @@ def run():
                 c for c in _base_data["coords"] if _map_base_to_group.get(c["map"], "") in _groups_with_rates
             ]
         merged = {k: v for k, v in merged.items() if v["coords"]}
+        for _v in merged.values():
+            _v.pop("_bases", None)
         monsters_out = list(merged.values())
         # 预计算每个怪物的最大参考爆率（跨所有分组取 spawn_rate × 豪客赛 / 100 最大值）
         _max_scores: dict[str, float] = {}
