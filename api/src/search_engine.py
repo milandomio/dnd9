@@ -117,7 +117,7 @@ def load_all_spawner_data(
                             if not e_name:
                                 continue
                             raw_rate = item.get("SpawnRate", 10000)
-                            spawn_rate_val = raw_rate / _total * 100
+                            spawn_rate_val = round(raw_rate / _total * 100, 2)
                             ldg = item.get("LootDropGroupId", {}) or {}
                             ldg_path = ldg.get("AssetPathName", "")
                             ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""

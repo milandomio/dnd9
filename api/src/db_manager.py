@@ -1113,7 +1113,7 @@ class DatabaseManager:
                     if not ldg_path:
                         continue
                     raw_rate = item.get("SpawnRate", 10000)
-                    spawn_rate = raw_rate / _total * 100
+                    spawn_rate = round(raw_rate / _total * 100, 2)
                     dungeon_grades = item.get("DungeonGrades", []) or []
                     ldg_id = _ue_asset_base_name(ldg_path) or ""
                     entity_name = ""
