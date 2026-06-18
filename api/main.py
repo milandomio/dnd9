@@ -1,3 +1,4 @@
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -7,6 +8,8 @@ sys.path.insert(0, str(Path(__file__).parent / "src"))
 from collector import run
 from config import DATA_DELIVERY_DIR, IMG_SRC, LOG_DIR, OUTPUT_DIR
 from pipeline_timer import PipelineTimer
+
+PLACEHOLDER_IMG = "RareModule_1x1"
 
 
 def _deliver(timer: PipelineTimer | None = None):
@@ -62,6 +65,43 @@ def _deliver(timer: PipelineTimer | None = None):
         print(timer.summary())
 
 
+def _validate_images():
+    """Scan dungeon_modules.json and patch any missing img_name references.
+
+    After delivery, some modules may reference .webp files that don't exist
+    (e.g. image was never extracted). This replaces them with the placeholder
+    so the frontend never sees a 404.
+    """
+    img_dir = DATA_DELIVERY_DIR / "img"
+    json_dir = DATA_DELIVERY_DIR / "json"
+    modules_file = json_dir / "dungeon_modules.json"
+    if not modules_file.exists():
+        return
+
+    placeholder_src = img_dir / f"{PLACEHOLDER_IMG}.webp"
+    if not placeholder_src.exists():
+        print(f"[VALIDATE] placeholder {PLACEHOLDER_IMG}.webp not found, skipping")
+        return
+
+    modules = json.loads(modules_file.read_text(encoding="utf-8"))
+    patched = 0
+    for m in modules:
+        img_name = m.get("img_name", "")
+        if not img_name or img_name == PLACEHOLDER_IMG:
+            continue
+        if not (img_dir / f"{img_name}.webp").exists():
+            print(f"[VALIDATE] {m['name']}: {img_name}.webp missing → {PLACEHOLDER_IMG}")
+            m["img_name"] = PLACEHOLDER_IMG
+            m["has_img"] = True
+            patched += 1
+
+    if patched:
+        modules_file.write_text(json.dumps(modules, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[VALIDATE] patched {patched} missing images")
+    else:
+        print("[VALIDATE] all module images OK")
+
+
 def _cleanup_old_logs(log_dir: Path, keep: int = 10):
     """Remove old log files, keeping only the most recent ones."""
     if not log_dir.exists():
@@ -74,6 +114,7 @@ def _cleanup_old_logs(log_dir: Path, keep: int = 10):
 if __name__ == "__main__":
     timer = run()
     _deliver(timer)
+    _validate_images()
 
     # Save log and cleanup old ones
     if timer:
