@@ -271,28 +271,27 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 > 未命中则依次尝试 `_5001` / `_4001` / `_3001` 后缀。后续将在对应变体详情页
 > 提供其他变体的跳转。
 
-**计算逻辑（`lootdrop_rates.py`）：**
+**计算逻辑：**
 
-1. `get_spawn_rate_for_keyword(db, keyword)` — 从 `spawner_entries` 取 max(spawn_rate)，已是百分比（0~100）
-2. `get_drop_rates_for_item_with_coords(db, item, monster, coords, ...)` — **暂时未使用**（见下方注释清单）
+`collector.py` 在 lootdrop 详情导出前预加载全部爆率数据到内存（4 个 dict）：
 
-**暂时注释的代码（爆率计算）：**
+| 内存 dict | 来源表 | 用途 |
+|-----------|--------|------|
+| `_spawner_ldg` | `spawner_entries` | spawner_keyword / entity_name → lootdrop_group_id |
+| `_ld_groups` | `lootdrop_groups` | group_id → {dungeon_grade: [(lootdrop_id, rate_id, count)]} |
+| `_ld_rate_items` + `_ld_luck_grade_count` | `lootdrop_rate_items` | lootdrop_id → {item_name: (luck_grade, count)}，含同 luck_grade 物品数统计 |
+| `_ld_rate_weights` | `lootdrop_rate_weights` | rate_id → {luck_grade: total_weight} |
 
-| 文件 | 位置 | 注释内容 |
-|------|------|---------|
-| `api/src/collector.py` | `_get_drop_rates()` 函数定义（约 L1298~L1313） | 整个函数体注释掉 |
-| `api/src/collector.py` | lootdrop detail 循环内（约 L1335~L1345） | `_get_drop_rates()` 调用和 `merged[base]["drop_rates"]` 赋值注释掉 |
-| `api/src/collector.py` | 爆率查找表构建（约 L1272~L1288） | `map_base_to_group` 字典构建注释掉 |
+计算函数（`collector.py` 内联）：
+1. `_compute_drop_rate(ldg_id, item_name, full_grade)` — 纯内存计算某物品在指定组+等级下的爆率（0~1），支持变体后缀回退
+2. `_get_group_drop_rates(item_name, monster_name, group_key)` — 遍历 PVE/普通/豪客赛三种模式，返回各模式最佳爆率
 
-**注释原因：** `get_drop_rates_for_item_with_coords()` 对每个 (item, monster) 组合执行多次 DB 查询（遍历 mode × group × floor_suffix），452 个物品 × 多怪物 × 多坐标 = 数万次查询，导致 lootdrops 详情导出耗时 ~70s（占管道总时间 97%）。
-
-**待优化方向：**
-- 预加载所有爆率数据到内存，避免逐次 DB 查询
-- 或在 DB 层面批量查询后 Python 侧分组
+> `lootdrop_rates.py` 的 `get_drop_rates_for_item_with_coords()` 已被上述内联逻辑替代，不再使用。
 
 **前端显示（`LootdropDetailPage.tsx`）：**
 - `spawn_rate` 字段从 coord 级别取（仅 ≠100 时显示）— **已生效**
-- `drop_rates` 字段从 monster 级别取（`Record<string, number>`，key 为模式名）— **暂时无数据**
+- `drop_rates` 字段从 monster 级别取（`Record<string, number>`，key 为模式名）— **已生效**
+- **per-coord score filter**：`score = spawn_rate × 豪客赛爆率 / 100`，`score < 0.5` 的坐标在导出阶段被过滤（`collector.py:1650`）
 - **分类按钮**：掉落详情页顶部的一组彩色按钮，包含"全部显示/隐藏全部"切换按钮和各怪物切换按钮
   - **max_score**：后管在 `collector.py` 中预计算 `max_score = max(spawn_rate × 豪客赛爆率 / 100)`，写入每个怪物条目，前端直接读取
   - **排序**：所有怪物按钮按 `max_score` 降序排列（`max_score=-1` 表示无爆率数据，排最后）
@@ -302,28 +301,15 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
   - **默认变体**：当怪物同时存在 `_Common`/`_Elite`/`_Nightmare` 等多个质量变体时，默认显示 **Elite 变体**的爆率（即 Elite 按钮初始为可见，Common/Nightmare 受 threshold 控制）
 
 **已修改文件清单：**
-- `api/src/config.py` — 新增 `LOOTDROP_RATE_DIR`、扩展 `DUNGEON_GROUP_GRADES`（8组）、添加 `MODULE_GROUP_FLOOR_SUFFIXES`
-- `api/src/db_manager.py` — 新增 4 张表 + `import_spawner_entries()` / `import_lootdrop_groups()` / `import_lootdrop_rate_items()` / `import_lootdrop_rate_weights()` + `get_spawner_entries_for_keyword()` / `get_item_drop_rate()`
-- `api/src/lootdrop_rates.py` — 新建，爆率计算模块（从 DB 查询）
-- `api/src/collector.py` — 管道步骤 9 导入爆率数据，lootdrop 详情段计算 `spawn_rate`（`drop_rates` 暂时注释）
-- `web/src/pages/LootdropDetailPage.tsx` — 接口扩展 + 图例显示格式
-- `docs/REFERENCE.md` — 本章节
-
-**待完成步骤：**
-1. 优化爆率查询性能（预加载或批量查询）
-2. 取消 `collector.py` 中 `drop_rates` 相关注释
-3. 运行 `python main.py` 验证 JSON 输出（检查 `drop_rates` 字段）
-4. 运行 `npm run build` 验证前端构建
-5. 启动 web 预览，访问 `/lootdrops/FrozenIronKey` 验证图例显示
+- `api/src/config.py` — `LOOTDROP_RATE_DIR`、`DUNGEON_GROUP_GRADES`（8组）、`MODULE_GROUP_FLOOR_SUFFIXES`
+- `api/src/db_manager.py` — 4 张表 + 导入/查询方法
+- `api/src/lootdrop_rates.py` — 爆率计算模块（`get_spawn_rate_for_keyword()` 仍在使用，其余已被 collector.py 内联逻辑替代）
+- `api/src/collector.py` — 管道步骤 9 导入爆率数据 + 预加载 + 内联爆率计算 + per-coord score filter
+- `web/src/pages/LootdropDetailPage.tsx` — 接口扩展 + 图例显示 + 分类按钮 + 阈值滑块
 
 ### 旋转值
 
 从 Layout JSON 文件计算，优先级：`module_name` → `sl_base_name`，默认 1（90°）。
-
-### 废弃方法
-
-`db_manager.py` 的 `get_item_coordinates()` 已被 `get_all_coordinates()` 取代，不再被 `collector.py` 调用。
-保留为死代码，待后续清理。
 
 ## 地图模块表 V2
 
@@ -577,3 +563,67 @@ value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
 - **路由级代码分割** — `React.lazy()` 拆分 6 个页面（DetailPage、LootdropDetailPage、QuestItemGroupPage、QuestNPCDetailPage、DungeonModuleGroupPage、DungeonModuleDetailPage），主 bundle 84KB → 32KB
 - **SSR 数据复用** — DungeonModuleGroupPage 优先使用 `useSSRData()` 预渲染数据，避免客户端重复 fetch
 - **无用 JSON 清理** — `entity_index.json`（271KB）、`quest_items.json`（88KB）从交付目录移除（管道内部仍保留）
+
+## TODO：Spawner 变体合并 & AC 自动机移除
+
+### 问题
+
+`load_all_spawner_data()` 多实体展开时，entity_name 从 `MonsterId`/`PropsId` 直接提取，保留了 `_Elite`/`_Nightmare`/`_Common`/`_\d{4}` 等变体后缀。导致同一基准实体的不同变体成为独立的 spawner keyword。
+
+AC 自动机（`build_automaton` + `match_keyword`）被引入作为兜底：通过子串匹配让搜索 `Banshee` 能命中 `Banshee_Elite` spawner。但同时也引入了假阳性（如 `Banshee_Soulflame` 误命中 `Banshee`）。
+
+### 方案
+
+在多实体展开时对 entity_name 应用变体后缀剥离，合并到基准名：
+
+- `SkeletonArcher_Elite` → `SkeletonArcher`
+- `SkeletonArcher_Nightmare` → `SkeletonArcher`
+- `Mitre_5001` → `Mitre`
+
+剥离规则复用已有模式：
+| 模式 | 来源 |
+|------|------|
+| `_(Common\|Elite\|Nightmare\|Unique)$` | `_QUALITY_RE` |
+| `_(Hard\|VeryHard)$` | `_HARD_SUFFIX_RE` |
+| `_\d{4}$` | `_VARIANT_RE` |
+
+原始 entity_name 保留在 spawner 记录中（如 `original_keyword`）供掉落表关联使用。
+
+### 影响
+
+- `search_term_matches` 表不再需要，搜索改精确匹配
+- `build_automaton()` / `match_keyword()` / `build_all_matches()` 可整体移除
+- `collector.py` 中 AC 相关的类型交叉过滤代码可移除
+
+### 搜索词侧归一化
+
+spawner keyword 合并后，搜索词侧也需要做同样的变体剥离，否则搜索 `Banshee_Elite` 精确匹配不到 `Banshee`。
+
+但三类实体的变体模式不同：
+| 类型 | 变体模式 | 处理方式 |
+|------|---------|---------|
+| `item` | 无变体后缀（`_\d{4}` 是身份标识） | 不需要归一化 |
+| `monster` | `_Common/Elite/Nightmare` | 搜索词剥后缀→base，匹配合并后的 spawner keyword |
+| `props` | `_\d{4}` 装饰变体 | 待定 |
+
+### 掉落表默认变体映射
+
+变体合并后，当用 base name（如 `Banshee`）查找 lootdrop 数据时，需要指定一个默认变体后缀来解析：
+
+| 类型 | 默认 | 降级候选 | 现有代码位置 |
+|------|------|---------|------------|
+| item | `_5001` | `_4001` → `_3001` | `collector.py:1388` `_compute_drop_rate()` |
+| monster | `_Elite` | `_Nightmare` → `_Common` | `collector.py:1426` `_get_group_drop_rates()` |
+| props | TBD | — | 待按坐标点数量最多的变体确定 |
+
+### 影响
+
+- `search_term_matches` 表不再需要，搜索改精确匹配
+- `build_automaton()` / `match_keyword()` / `build_all_matches()` 可整体移除
+- `collector.py` 中 AC 相关的类型交叉过滤代码可移除
+
+### 依赖
+
+- [x] 掉落表默认变体映射规则已确定（item=_5001, monster=_Elite, props=TBD）
+- [ ] props 默认变体待敲定（按坐标点数量最多的变体判定）
+- [ ] 搜索词侧归一化实现

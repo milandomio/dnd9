@@ -26,6 +26,8 @@ interface LootdropCoord {
   version: string;
   label?: string;
   spawn_rate?: number;
+  variant_count?: number;
+  variant_type?: 'species' | 'points';
 }
 
 interface LootdropMonster {
@@ -101,11 +103,11 @@ export default function LootdropDetailPage() {
   const modules = ssrModulesMap ?? fetchedModules;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     ssrData?.item?.monsters
-      ? defaultHidden(ssrData.item.monsters, 1.0)
+      ? defaultHidden(ssrData.item.monsters, 2.5)
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
-  const [threshold, setThreshold] = useState(1.0);
+  const [threshold, setThreshold] = useState(2.5);
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
@@ -120,7 +122,7 @@ export default function LootdropDetailPage() {
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
         setData(item);
-        setHidden(defaultHidden(item.monsters, 1.0));
+        setHidden(defaultHidden(item.monsters, 2.5));
       })
       .catch(console.error);
   }, [name, ssrData]);
@@ -286,6 +288,8 @@ export default function LootdropDetailPage() {
         file: string;
         idx: number;
         spawn_rate?: number;
+        variant_count?: number;
+        variant_type?: 'species' | 'points';
       }[];
     }
   >();
@@ -302,6 +306,8 @@ export default function LootdropDetailPage() {
         file: c.file,
         idx: j,
         spawn_rate: c.spawn_rate,
+        variant_count: c.variant_count,
+        variant_type: c.variant_type,
       });
     });
   }
@@ -589,12 +595,13 @@ export default function LootdropDetailPage() {
                         const m = monsters.find(
                           (x) => x.translation === info.translation
                         );
-                        return !m || !hidden.has(m.name);
-                      }).map((info, gi, arr) => (
+                        return m && !hidden.has(m.name);
+                      }).map((info, gi) => (
                         <span
                           key={gi}
                           style={{
                             display: 'inline-block',
+                            marginRight: 8,
                           }}
                         >
                           {info.translation}
@@ -602,7 +609,6 @@ export default function LootdropDetailPage() {
                           {Object.entries(info.drop_rates)
                             .map(([mode, rate]) => `[${mode}:${rate}%]`)
                             .join('')}
-                          {gi < arr.length - 1 && '、'}
                         </span>
                       ))}
                     </span>
@@ -956,7 +962,19 @@ export default function LootdropDetailPage() {
                             </span>
                           )}
                           <span style={{ color: tokens.muted }}>
-                            ({mDots.length}点)
+                            {(() => {
+                              const vcDot = mDots.find(
+                                (d) => d.variant_count && d.variant_count > 1
+                              );
+                              if (vcDot) {
+                                const vc = vcDot.variant_count!;
+                                const vt = vcDot.variant_type;
+                                return vt === 'species'
+                                  ? `(${vc}种选1)`
+                                  : `(${vc}点选1)`;
+                              }
+                              return `(${mDots.length}点)`;
+                            })()}
                           </span>
                         </span>
                       );

@@ -873,20 +873,6 @@ class DatabaseManager:
         c.execute("SELECT key, value FROM translations")
         return {r["key"]: r["value"] for r in c.fetchall()}
 
-    def get_item_coordinates(self, item_name: str) -> list[dict]:
-        c = self.conn.cursor()
-        c.execute(
-            """
-            SELECT DISTINCT s.x, s.y, s.z, s.yaw, s.json_filename, s.version, s.map_base, s.module_type, s.original_keyword
-            FROM search_term_matches sm
-            JOIN spawners s ON s.id = sm.spawner_id
-            WHERE sm.search_term = ?
-            ORDER BY s.map_base, s.json_filename
-        """,
-            (item_name,),
-        )
-        return [dict(r) for r in c.fetchall()]
-
     def get_all_coordinates(self) -> dict[str, list[dict]]:
         """Bulk-fetch all search_term → coordinates mapping in a single query."""
         c = self.conn.cursor()
