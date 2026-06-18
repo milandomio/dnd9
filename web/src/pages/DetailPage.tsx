@@ -8,6 +8,7 @@ import type {
   PropsEntity,
   Coord,
   DungeonModule,
+  GroupDropInfo,
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
@@ -215,9 +216,6 @@ export default function DetailPage() {
                 key={`h-${groupName}`}
                 style={{
                   gridColumn: '1 / -1',
-                  fontSize: 22,
-                  fontWeight: 'bold',
-                  color: dark ? '#FFC107' : '#F57F17',
                   padding: '5px 0',
                   marginTop: 10,
                   borderBottom: dark
@@ -225,7 +223,54 @@ export default function DetailPage() {
                     : '2px solid #F57F17',
                 }}
               >
-                {GROUP_LABELS[groupName] || groupName}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: 10,
+                    color: dark ? '#FFC107' : '#F57F17',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 'bold',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {GROUP_LABELS[groupName] || groupName}
+                  </span>
+                  {(entity as ItemEntity).group_drop_info?.[groupName] && (
+                    <span
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 'normal',
+                        color: tokens.muted,
+                      }}
+                    >
+                      参考爆率：
+                      {(
+                        (entity as ItemEntity).group_drop_info![
+                          groupName
+                        ] as GroupDropInfo[]
+                      ).map((info, gi) => (
+                        <span
+                          key={gi}
+                          style={{
+                            display: 'inline-block',
+                            marginRight: 8,
+                          }}
+                        >
+                          {info.translation}
+                          {info.spawn_rate}%
+                          {Object.entries(info.drop_rates)
+                            .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                            .join('')}
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
             {items.map(({ mapName, mod, coords: mapCoords }) => {
@@ -324,6 +369,38 @@ export default function DetailPage() {
                     range={range}
                     singleCategory
                   />
+                  {(() => {
+                    const g = mod?.group || '';
+                    const gdi = (entity as ItemEntity).group_drop_info?.[g];
+                    if (!gdi || gdi.length === 0) return null;
+                    return (
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: tokens.muted,
+                          marginTop: 4,
+                          textAlign: 'center',
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {gdi.map((info, i) => (
+                          <span
+                            key={i}
+                            style={{ display: 'inline-block', marginRight: 6 }}
+                          >
+                            {info.spawn_rate !== 100 && (
+                              <span style={{ color: tokens.accent }}>
+                                {info.spawn_rate}%
+                              </span>
+                            )}
+                            {Object.entries(info.drop_rates)
+                              .map(([mode, rate]) => `${mode}:${rate}%`)
+                              .join(' ')}
+                          </span>
+                        ))}
+                      </div>
+                    );
+                  })()}
                   {debug && (
                     <div
                       style={{

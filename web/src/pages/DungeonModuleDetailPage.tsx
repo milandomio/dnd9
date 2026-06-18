@@ -539,7 +539,9 @@ export default function DungeonModuleDetailPage() {
           <>
             <br />
             <strong>包含实体：</strong>{' '}
-            {entities.map((e) => `${e.name}(${e.coords.length})`).join('、')}
+            {entities
+              .map((e) => `${e.translation || e.name}(${e.coords.length})`)
+              .join('、')}
           </>
         )}
       </div>

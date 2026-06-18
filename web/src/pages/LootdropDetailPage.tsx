@@ -970,7 +970,10 @@ export default function LootdropDetailPage() {
                               );
                               if (vcDot) {
                                 const names = vcDot.variant_names ?? [];
-                                return `(${names.join('、')}${vcDot.variant_count}种选1)`;
+                                if (names.length > 0) {
+                                  return `(${names.join('、')}${vcDot.variant_count}种选1)`;
+                                }
+                                return `(${vcDot.variant_count}点选1)`;
                               }
                               return `(${mDots.length}点)`;
                             })()}
