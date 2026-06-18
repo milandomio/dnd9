@@ -1468,6 +1468,25 @@ def run():
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
     _log(f"[JSON] lootdrop detail loop starting: {_loot_detail_total} items")
+
+    def _classify_label(label: str, entity_name: str) -> str:
+        if not label:
+            return "direct"
+        if label == entity_name or label.startswith(entity_name + "_"):
+            return "direct"
+        if "Random" in label:
+            return "random"
+        if "Special" in label or "ChestLarge" in label:
+            return "special"
+        return "other"
+
+    _label_type_suffix = {
+        "direct": "",
+        "special": "(特殊)",
+        "random": "(随机)",
+        "other": "",
+    }
+
     for entry in loot_index:
         item_name = entry["name"]
         merged: dict[str, dict] = {}
@@ -1483,54 +1502,57 @@ def run():
                 continue
             m_trans = entry["monster_translations"][_i]
             base = _base_monster_name(m_name)
-            # Merge _Locked variants into the base (unlocked) entry
-            # Handles both "OrnateChestLarge_Locked" and "OrnateChestLarge_Locked_UnderSea"
             locked_base = m_name.replace("_Locked", "")
             is_locked = locked_base != m_name
             if is_locked:
                 base = _base_monster_name(locked_base)
-            # Find existing entry by translation (same-named entities merge into one)
-            _existing_key = None
-            for _k, _v in merged.items():
-                if _v.get("translation") == m_trans:
-                    _existing_key = _k
-                    break
-            if _existing_key is not None:
-                merged[_existing_key]["_bases"].add(base)
-                _cur_key = _existing_key
-                if is_locked:
-                    merged[_existing_key]["_has_locked"] = True
-            else:
-                merged[base] = {
-                    "name": base,
-                    "translation": m_trans,
-                    "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
-                    "coords": [],
-                    "_has_locked": False,
-                    "_bases": {base, m_name},
-                }
-                _cur_key = base
-            if is_locked:
-                merged[_cur_key]["_has_locked"] = True
-            for c in coords:
-                coord_out = {
-                    "x": c["x"],
-                    "y": c["y"],
-                    "z": c["z"],
-                    "yaw": c.get("yaw", 0),
-                    "map": c["map_base"],
-                    "file": c["json_filename"],
-                    "version": c["version"],
-                    "label": c.get("original_keyword", ""),
-                }
-                if c.get("keyword") != c.get("original_keyword", ""):
-                    _pair = (c["original_keyword"], c["keyword"])
-                    coord_out["spawn_rate"] = (
-                        _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
-                    )
+            # Group coords by spawner-keyword label type
+            coords_by_type: dict[str, list[dict]] = {}
+            for _c in coords:
+                _t = _classify_label(_c.get("original_keyword", ""), m_name)
+                coords_by_type.setdefault(_t, []).append(_c)
+            for _type, _typed_coords in coords_by_type.items():
+                _suffix = _label_type_suffix.get(_type, "")
+                _type_trans = m_trans + _suffix if _suffix else m_trans
+                _use_suffix = _suffix != ""
+                _unique_name = base if not _use_suffix else f"{base}_{_type}"
+                _merge_key = f"{m_trans}|{_type}"
+                _existing = merged.get(_merge_key)
+                if _existing is not None:
+                    _existing["_bases"].add(base)
+                    if is_locked:
+                        _existing["_has_locked"] = True
                 else:
-                    coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
-                merged[_cur_key]["coords"].append(coord_out)
+                    merged[_merge_key] = {
+                        "name": _unique_name,
+                        "entity_name": base,
+                        "translation": _type_trans,
+                        "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
+                        "coords": [],
+                        "_has_locked": False,
+                        "_bases": {base, m_name},
+                    }
+                if is_locked:
+                    merged[_merge_key]["_has_locked"] = True
+                for _c in _typed_coords:
+                    coord_out = {
+                        "x": _c["x"],
+                        "y": _c["y"],
+                        "z": _c["z"],
+                        "yaw": _c.get("yaw", 0),
+                        "map": _c["map_base"],
+                        "file": _c["json_filename"],
+                        "version": _c["version"],
+                        "label": _c.get("original_keyword", ""),
+                    }
+                    if _c.get("keyword") != _c.get("original_keyword", ""):
+                        _pair = (_c["original_keyword"], _c["keyword"])
+                        coord_out["spawn_rate"] = (
+                            _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
+                        )
+                    else:
+                        coord_out["spawn_rate"] = _spawn_rate_cache.get(m_name, 100)
+                    merged[_merge_key]["coords"].append(coord_out)
         # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）
         _group_drop_info: dict[str, list[dict]] = {}
         for _base, _m_data in merged.items():
@@ -1541,18 +1563,19 @@ def run():
                 if _g:
                     _seen_groups.add(_g)
             for _g in _seen_groups:
-                _dr = _get_group_drop_rates(item_name, _base, _g)
+                _dr = _get_group_drop_rates(item_name, _m_data.get("entity_name", _m_data["name"]), _g)
                 if not _dr:
                     continue
                 # For locked-merged entries: 取共同生成器中上锁+未上锁 spawn_rate 之和
                 if _has_locked:
+                    _en = _m_data.get("entity_name", _m_data["name"])
                     _locked_name = (
-                        _base.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _base else _base + "_Locked"
+                        _en.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _en else _en + "_Locked"
                     )
-                    _common_sks = _entity_spawners.get(_base, set()) & _entity_spawners.get(_locked_name, set())
+                    _common_sks = _entity_spawners.get(_en, set()) & _entity_spawners.get(_locked_name, set())
                     _best_rate = 0
                     for _sk in _common_sks:
-                        _ul_sr = _spawn_rate_detail.get((_sk, _base), 0)
+                        _ul_sr = _spawn_rate_detail.get((_sk, _en), 0)
                         _l_sr = _spawn_rate_detail.get((_sk, _locked_name), 0)
                         _rate = _ul_sr + _l_sr
                         if _rate > _best_rate:
@@ -1560,16 +1583,17 @@ def run():
                     _sr = (
                         _best_rate
                         if _best_rate > 0
-                        else max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_base}))
+                        else max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
                     )
                 else:
-                    _sr = max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_base}))
+                    _en = _m_data.get("entity_name", _m_data["name"])
+                    _sr = max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
                 _group_drop_info.setdefault(_g, []).append(
                     {
                         "translation": _m_data["translation"],
                         "spawn_rate": _sr,
                         "drop_rates": _dr,
-                        "_variant": _base,
+                        "_variant": _m_data.get("entity_name", _m_data["name"]),
                     }
                 )
         # Deduplicate coords and update translation for locked-merged entries
@@ -1581,7 +1605,7 @@ def run():
                     for _entry in _g_list:
                         if _entry["translation"] == _old:
                             _entry["translation"] = _base_data["translation"]
-                _bn = _base_data["name"]
+                _bn = _base_data.get("entity_name", _base_data["name"])
                 _ln = _bn.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _bn else _bn + "_Locked"
                 _common = _entity_spawners.get(_bn, set()) & _entity_spawners.get(_ln, set())
                 _combined_rate = 0
