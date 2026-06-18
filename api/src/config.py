@@ -275,6 +275,7 @@ HARDCODED_TRANSLATIONS = {
     "CustomFogVolume_DCWaterExclusionVolume": "水排除区域",
     "CustomFogVolume_Sphere": "球形雾",
     "EasyFog": "简易雾",
+    "PlaneFog": "平面雾",
     "DCHitBox": "碰撞箱",
     "GameObjectLinker": "对象链接器",
     "GameSpawnerGroup": "生成器组",

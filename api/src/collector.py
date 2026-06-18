@@ -479,6 +479,40 @@ def run():
                         alias_key = "Text_DesignData_Dungeon_DungeonModule_" + stripped
                         if alias_key in translations:
                             return translations[alias_key]
+        # 剥离地牢分组前缀（Inferno_、Crypt_ 等）后重试翻译
+        for group_prefix in [
+            "Inferno_",
+            "Crypt_",
+            "Ruins_",
+            "GoblinCave_",
+            "Goblin_",
+            "IceCavern_",
+            "IceCave_",
+            "IceAbyss_",
+            "ShipGraveyard_",
+            "Shipgraveyard_",
+            "Swamp_",
+            "Cave_",
+            "Firedeep_",
+            "FireDeep_",
+        ]:
+            if name.startswith(group_prefix):
+                bare = name[len(group_prefix) :]
+                if bare in HARDCODED_TRANSLATIONS:
+                    return HARDCODED_TRANSLATIONS[bare]
+                bare_alias = TRANSLATION_ALIAS_MAP.get(bare, bare)
+                for prefix in [
+                    "Text_DesignData_Item_Item_",
+                    "Text_DesignData_Monster_Monster_",
+                    "Text_DesignData_Props_Props_",
+                    "Text_DesignData_Dungeon_DungeonModule_",
+                    "Text_DesignData_Emote_Emote_",
+                    "Text_DesignData_ActionSkin_",
+                ]:
+                    bare_key = prefix + bare_alias
+                    if bare_key in translations:
+                        return translations[bare_key]
+                break
         return name
 
     # ── Build merged lootdrop map with variant family merging ──
@@ -1294,7 +1328,7 @@ def run():
         f"[JSON] preloaded: {len(_ld_groups)} groups, {len(_ld_rate_items)} rate items, {len(_ld_rate_weights)} rate weights"
     )
 
-    _variant_suffixes = ["_5001", "_4001", "_3001"]
+    _variant_suffixes = ["_5001", "_4001", "_3001", "_2001", "_1001"]
 
     def _compute_drop_rate(ldg_id: str, item_name: str, full_grade: int) -> float:
         """纯内存计算某物品在指定组+等级下的爆率（0~1）。
@@ -1380,13 +1414,16 @@ def run():
         if en and sk:
             _entity_spawners.setdefault(en, set()).add(sk)
 
-    # 预加载坐标点变体数：(map_base, file, group_parent) → (count, [translation_names])
-    # 仅统计同 group_parent 下多种不同怪物（如 Banshee + Skeleton 共享1组）
-    # 同一怪物的质量变体（Common/Elite/Nightmare）不计入
+    # 预加载坐标点变体数：(map_base, file, group_parent) → (total_count, [translation_names])
+    # 两种互斥模式：
+    #   1. 不同怪物共享 group（如 Banshee + Skeleton）→ variant_names 非空，显示"N种选1"
+    #   2. 同一怪物多点共享 group（如 4个 GoldChest）→ variant_names 为空，显示"N点选1"
     _coord_variant_count: dict[tuple[str, str, str], tuple[int, list[str]]] = {}
+    # 模式1：不同 original_keyword 共享 group_parent
     for _row in _c.execute(
         "SELECT map_base, json_filename, group_parent, "
         "COUNT(DISTINCT original_keyword) as cnt, "
+        "COUNT(*) as total, "
         "GROUP_CONCAT(DISTINCT original_keyword) as keywords "
         "FROM spawners WHERE group_parent != '' "
         "GROUP BY map_base, json_filename, group_parent HAVING cnt > 1"
@@ -1402,9 +1439,21 @@ def run():
             else:
                 _names.append(_kw)
         _coord_variant_count[(_row["map_base"], _row["json_filename"], _row["group_parent"])] = (
-            _row["cnt"],
+            _row["total"],
             _names,
         )
+    # 模式2：同一 original_keyword 多个 spawner 共享 group_parent（N点选1）
+    for _row in _c.execute(
+        "SELECT map_base, json_filename, group_parent, "
+        "COUNT(*) as total, "
+        "MIN(original_keyword) as keyword "
+        "FROM spawners WHERE group_parent != '' "
+        "GROUP BY map_base, json_filename, group_parent "
+        "HAVING COUNT(DISTINCT original_keyword) = 1 AND COUNT(*) > 1"
+    ):
+        _key = (_row["map_base"], _row["json_filename"], _row["group_parent"])
+        if _key not in _coord_variant_count:
+            _coord_variant_count[_key] = (_row["total"], [])
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
@@ -1665,6 +1714,56 @@ def run():
             json.dump(_entity_data, _f, ensure_ascii=False, indent=2)
         _update_count += 1
     _log(f"[JSON] updated {_update_count} item entities with group drop info")
+
+    # ── 通过 spawner_entries 的 lootdrop_group_id 计算 group_drop_info（覆盖容器数据）──
+    _log("[JSON] computing group_drop_info from ID_LootDropGroup...")
+    _direct_count = 0
+    for _item_file in (OUTPUT_DIR / "items").glob("*.json"):
+        with open(_item_file) as _f:
+            _entity_data = json.load(_f)
+        _iname = _entity_data["name"]
+        _ldg_id = _spawner_ldg.get(_iname, "")
+        if not _ldg_id:
+            continue
+        _coords = _entity_data.get("coords", [])
+        if not _coords:
+            continue
+        _seen_groups: set[str] = set()
+        for _c in _coords:
+            _g = _map_base_to_group.get(_c["map"], "")
+            if _g:
+                _seen_groups.add(_g)
+        if not _seen_groups:
+            continue
+        _group_drop_info: dict[str, list[dict]] = {}
+        for _g in _seen_groups:
+            _suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(_g, [])
+            if not _suffixes:
+                continue
+            _mode_rates: dict[str, float] = {}
+            for _mode_id, _mode_name in DUNGEON_MODE_NAMES.items():
+                if _mode_id == 4:
+                    continue
+                _best_rate = 0.0
+                for _suffix in _suffixes:
+                    _full_grade = _mode_id * 1000 + _suffix
+                    _rate = _compute_drop_rate(_ldg_id, _iname, _full_grade)
+                    if _rate > _best_rate:
+                        _best_rate = _rate
+                _mode_rates[_mode_name] = round(_best_rate * 100, 1)
+            _group_drop_info[_g] = [
+                {
+                    "translation": _entity_data["translation"],
+                    "spawn_rate": 100,
+                    "drop_rates": _mode_rates,
+                }
+            ]
+        if _group_drop_info:
+            _entity_data["group_drop_info"] = _group_drop_info
+            with open(_item_file, "w") as _f:
+                json.dump(_entity_data, _f, ensure_ascii=False, indent=2)
+            _direct_count += 1
+    _log(f"[JSON] computed group_drop_info for {_direct_count} direct-spawn items")
 
     # ── Quest data (from DB) ──
     timer.start_step("[JSON] quest data")

@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Input, Switch } from 'antd';
-import { BulbOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input, Spin } from 'antd';
+import {
+  BulbOutlined,
+  LoadingOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
 import { useTheme } from '../hooks/useTheme';
 import { useSearchIndex, type SearchEntry } from '../hooks/useSearchIndex';
 
@@ -43,7 +47,7 @@ export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { dark, tokens, toggle } = useTheme();
-  const { index: searchIndex } = useSearchIndex();
+  const { index: searchIndex, loading: searchLoading } = useSearchIndex();
   const parts = location.pathname.split('/').filter(Boolean);
 
   const [query, setQuery] = useState('');
@@ -170,13 +174,19 @@ export default function NavBar() {
         <Input
           ref={inputRef}
           prefix={<SearchOutlined style={{ color: tokens.muted }} />}
-          placeholder="搜索物品/怪物/实体..."
+          suffix={
+            searchLoading ? (
+              <Spin indicator={<LoadingOutlined spin />} size="small" />
+            ) : undefined
+          }
+          placeholder={searchLoading ? '加载中...' : '搜索物品/怪物/实体...'}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => {
             if (results.length > 0) setShowDropdown(true);
           }}
           onKeyDown={handleKeyDown}
+          disabled={searchLoading}
           allowClear
           style={{
             background: dark ? '#333' : '#fff',
@@ -259,7 +269,34 @@ export default function NavBar() {
           <BulbOutlined
             style={{ color: dark ? '#ffd700' : '#333', fontSize: 16 }}
           />
-          <Switch checked={!dark} onChange={toggle} size="small" />
+          <button
+            onClick={toggle}
+            aria-label="切换主题"
+            style={{
+              width: 36,
+              height: 20,
+              borderRadius: 10,
+              border: 'none',
+              cursor: 'pointer',
+              position: 'relative',
+              background: dark ? '#555' : tokens.accent,
+              transition: 'background 0.2s',
+              padding: 0,
+            }}
+          >
+            <span
+              style={{
+                position: 'absolute',
+                top: 2,
+                left: dark ? 2 : 18,
+                width: 16,
+                height: 16,
+                borderRadius: '50%',
+                background: '#fff',
+                transition: 'left 0.2s',
+              }}
+            />
+          </button>
         </div>
         {breadcrumbs.map((crumb) => (
           <a
