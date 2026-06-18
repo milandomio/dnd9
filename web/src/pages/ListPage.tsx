@@ -179,7 +179,7 @@ export default function ListPage() {
                     {group.items.map((entity) => (
                       <div
                         key={entity.name}
-                        onClick={() => navigate(`/props/${entity.name}`)}
+                        onClick={() => navigate(`/props/${entity.name}/`)}
                         style={{
                           background: tokens.surface,
                           border: `1px solid ${tokens.border}`,
@@ -231,9 +231,9 @@ export default function ListPage() {
                 key={entity.name}
                 onClick={() => {
                   if (page === 'lootdrops') {
-                    navigate(`/lootdrops/${entity.name}`);
+                    navigate(`/lootdrops/${entity.name}/`);
                   } else {
-                    navigate(`/${page}/${entity.name}`);
+                    navigate(`/${page}/${entity.name}/`);
                   }
                 }}
                 style={{

@@ -123,7 +123,7 @@ export default function HomePage() {
             return (
               <div
                 key={entry.page}
-                onClick={() => navigate(`/${entry.page}`)}
+                onClick={() => navigate(`/${entry.page}/`)}
                 style={{
                   background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
                   border: `2px solid ${t.border}`,

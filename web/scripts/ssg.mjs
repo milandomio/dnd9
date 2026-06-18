@@ -61,8 +61,8 @@ for (const p of PAGES) {
   const list = readJSON(join(DATA, `${p}.json`));
   for (const e of list) {
     const url = p === "lootdrops"
-      ? `/lootdrops/${encodeURIComponent(e.name)}`
-      : `/${p}/${encodeURIComponent(e.name)}`;
+      ? `/lootdrops/${encodeURIComponent(e.name)}/`
+      : `/${p}/${encodeURIComponent(e.name)}/`;
     const entry = { name: e.name, translation: e.translation || "", page: p, url };
     // Include type field for props (decoration vs props)
     if (p === "props" && e.type) {
@@ -79,7 +79,7 @@ for (const e of questNpcData) {
     name: e.npc_name,
     translation: e.npc_name_display || "",
     page: "quest_npc",
-    url: "/quest_npc",
+    url: "/quest_npc/",
   });
 }
 
@@ -95,7 +95,7 @@ for (const g of dmGroupsArr) {
     name: g,
     translation: GROUP_LABELS[g] || g,
     page: "dungeon_modules",
-    url: `/dungeon_modules/${encodeURIComponent(g)}`,
+    url: `/dungeon_modules/${encodeURIComponent(g)}/`,
   });
 }
 for (const m of moduleData) {
@@ -104,19 +104,19 @@ for (const m of moduleData) {
     translation: m.translation || m.name,
     page: "dungeon_modules",
     tag: GROUP_LABELS[m.group] || m.group || "模块",
-    url: `/dungeon_modules/${encodeURIComponent(m.group || "")}/${encodeURIComponent(m.name)}`,
+    url: `/dungeon_modules/${encodeURIComponent(m.group || "")}/${encodeURIComponent(m.name)}/`,
   });
 }
 
 // List/index pages themselves (page="_nav" so they don't appear in list page data)
 const LIST_PAGES = [
-  { name: "items", translation: "物品表", page: "_nav", url: "/items" },
-  { name: "monsters", translation: "怪物表", page: "_nav", url: "/monsters" },
-  { name: "props", translation: "实体表", page: "_nav", url: "/props" },
-  { name: "lootdrops", translation: "掉落表", page: "_nav", url: "/lootdrops" },
-  { name: "explore", translation: "任务探索表", page: "_nav", url: "/explore" },
-  { name: "quest_npc", translation: "任务NPC表", page: "_nav", url: "/quest_npc" },
-  { name: "dungeon_modules", translation: "地图模块表", page: "_nav", url: "/dungeon_modules" },
+  { name: "items", translation: "物品表", page: "_nav", url: "/items/" },
+  { name: "monsters", translation: "怪物表", page: "_nav", url: "/monsters/" },
+  { name: "props", translation: "实体表", page: "_nav", url: "/props/" },
+  { name: "lootdrops", translation: "掉落表", page: "_nav", url: "/lootdrops/" },
+  { name: "explore", translation: "任务探索表", page: "_nav", url: "/explore/" },
+  { name: "quest_npc", translation: "任务NPC表", page: "_nav", url: "/quest_npc/" },
+  { name: "dungeon_modules", translation: "地图模块表", page: "_nav", url: "/dungeon_modules/" },
 ];
 for (const lp of LIST_PAGES) searchIndex.push(lp);
 

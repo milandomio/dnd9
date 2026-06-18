@@ -105,7 +105,7 @@ export default function NavBar() {
   const handleSelect = (hit: SearchEntry) => {
     setQuery('');
     setShowDropdown(false);
-    navigate(hit.url);
+    navigate(hit.url.endsWith('/') ? hit.url : hit.url + '/');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -148,7 +148,7 @@ export default function NavBar() {
         label = GROUP_LABEL_MAP[parts[1]] || parts[1];
       }
 
-      breadcrumbs.push({ label, path });
+      breadcrumbs.push({ label, path: path + '/' });
     }
   }
 
