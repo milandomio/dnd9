@@ -69,7 +69,9 @@ export default function LootdropDetailPage() {
   const ssrData = useSSRData<{ item: LootdropItem; modules: DungeonModule[] }>(
     dataKey
   );
-  const [data, setData] = useState<LootdropItem | null>(ssrData?.item || null);
+  const [data, setData] = useState<LootdropItem | null>(
+    ssrData?.item?.monsters ? ssrData.item : null
+  );
   const dataVersion = useDataVersion();
 
   function defaultHidden(
