@@ -1442,8 +1442,8 @@ def run():
         return mode_rates
 
     # 预加载 spawn_rate 缓存
-    _spawn_rate_cache: dict[str, int] = {}
-    _spawn_rate_detail: dict[tuple[str, str], int] = {}
+    _spawn_rate_cache: dict[str, float] = {}
+    _spawn_rate_detail: dict[tuple[str, str], float] = {}
     # 实体所属生成器：entity_name → {spawner_keyword, ...}
     _entity_spawners: dict[str, set[str]] = {}
     for _row in db.get_all_spawner_entries():
@@ -1547,6 +1547,7 @@ def run():
                         "translation": _m_data["translation"],
                         "spawn_rate": _sr,
                         "drop_rates": _dr,
+                        "_variant": _base,
                     }
                 )
         # Deduplicate coords and update translation for locked-merged entries
@@ -1578,6 +1579,20 @@ def run():
                             _c["spawn_rate"] = _combined_rate
                         deduped.append(_c)
                 _base_data["coords"] = deduped
+        # 质量变体去重：同一翻译只保留最高优先级变体（Elite > Nightmare > Common）
+        for _g_list in _group_drop_info.values():
+            _best: dict[str, dict] = {}
+            for _entry in _g_list:
+                _trans = _entry["translation"]
+                _m = _QUALITY_RE.search(_entry.get("_variant", ""))
+                _prio = {"Elite": 3, "Nightmare": 2, "Common": 1}.get(_m.group(1) if _m else "", -1)
+                if _trans not in _best or _prio > _best[_trans].get("_q_prio", -1):
+                    _best[_trans] = _entry
+                    _best[_trans]["_q_prio"] = _prio
+            _g_list[:] = list(_best.values())
+            for _entry in _g_list:
+                _entry.pop("_variant", None)
+                _entry.pop("_q_prio", None)
         # 按生成概率×豪客赛爆率降序排列（乘积越大越优先显示）
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
@@ -1590,6 +1605,16 @@ def run():
             ]
         merged = {k: v for k, v in merged.items() if v["coords"]}
         monsters_out = list(merged.values())
+        # 预计算每个怪物的最大参考爆率（跨所有分组取 spawn_rate × 豪客赛 / 100 最大值）
+        _max_scores: dict[str, float] = {}
+        for _g_list in _group_drop_info.values():
+            for _entry in _g_list:
+                _trans = _entry["translation"]
+                _score = _entry["spawn_rate"] * _entry["drop_rates"].get("豪客赛", 0) / 100
+                if _trans not in _max_scores or _score > _max_scores[_trans]:
+                    _max_scores[_trans] = _score
+        for _m in monsters_out:
+            _m["max_score"] = _max_scores.get(_m["translation"], -1)
         if monsters_out:
             _save(
                 f"lootdrops/{item_name}.json",

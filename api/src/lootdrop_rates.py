@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from db_manager import DatabaseManager
 
 
-def get_spawn_rate_for_keyword(db: DatabaseManager, keyword: str) -> int:
+def get_spawn_rate_for_keyword(db: DatabaseManager, keyword: str) -> float:
     """获取某 keyword 的生成概率（百分比，0~100）。"""
     entries = db.get_spawner_entries_for_keyword(keyword)
     if not entries:

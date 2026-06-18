@@ -293,8 +293,13 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 **前端显示（`LootdropDetailPage.tsx`）：**
 - `spawn_rate` 字段从 coord 级别取（仅 ≠100 时显示）— **已生效**
 - `drop_rates` 字段从 monster 级别取（`Record<string, number>`，key 为模式名）— **暂时无数据**
-- **怪物按钮排序**：使用 `豪客赛` 爆率计算参考爆率（`spawn_rate × 豪客赛爆率`），所有怪物按该值降序排列
-- **默认可见性阈值**：使用 `豪客赛` 爆率计算（`spawn_rate × 豪客赛爆率 / 100 ≥ threshold`），低于阈值（默认 2.4%）的怪物初始隐藏
+- **分类按钮**：掉落详情页顶部的一组彩色按钮，包含"全部显示/隐藏全部"切换按钮和各怪物切换按钮
+  - **max_score**：后管在 `collector.py` 中预计算 `max_score = max(spawn_rate × 豪客赛爆率 / 100)`，写入每个怪物条目，前端直接读取
+  - **排序**：所有怪物按钮按 `max_score` 降序排列（`max_score=-1` 表示无爆率数据，排最后）
+  - **默认隐藏**：`max_score < threshold`（默认 1.0）的怪物初始隐藏，在标题显示 `(+N)` 标记；`max_score` 为 null 或 < 0 的怪物始终可见
+  - **交互**：点击单个按钮切换该怪物地图坐标的显隐；点击"全部显示"恢复全部可见，"隐藏全部"隐藏所有怪物
+  - **阈值调节**：开启调试模式后，可通过滑块实时调整 threshold 值（0~10，步长 0.1）
+  - **默认变体**：当怪物同时存在 `_Common`/`_Elite`/`_Nightmare` 等多个质量变体时，默认显示 **Elite 变体**的爆率（即 Elite 按钮初始为可见，Common/Nightmare 受 threshold 控制）
 
 **已修改文件清单：**
 - `api/src/config.py` — 新增 `LOOTDROP_RATE_DIR`、扩展 `DUNGEON_GROUP_GRADES`（8组）、添加 `MODULE_GROUP_FLOOR_SUFFIXES`

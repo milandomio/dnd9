@@ -264,7 +264,7 @@ class DatabaseManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 spawner_keyword TEXT NOT NULL,
                 entity_name TEXT NOT NULL DEFAULT '',
-                spawn_rate INTEGER NOT NULL DEFAULT 10000,
+                spawn_rate REAL NOT NULL DEFAULT 100.0,
                 dungeon_grades TEXT NOT NULL DEFAULT '[]',
                 lootdrop_group_id TEXT NOT NULL DEFAULT ''
             );
@@ -1081,29 +1081,49 @@ class DatabaseManager:
                     break
             props = entry.get("Properties", {}) or {}
             items = props.get("SpawnerItemArray", []) or []
-            # 计算本 SpawnerItemArray 的 SpawnRate 总和（仅含 LootDropGroupId 的条目）
-            total_rate = sum(
-                it.get("SpawnRate", 10000) for it in items if (it.get("LootDropGroupId") or {}).get("AssetPathName")
-            )
-            if total_rate <= 0:
-                total_rate = 1
+            # 按 DungeonGrades 分组计算 spawn_rate
+            # 先将全量条目按 grade set 分组，再将含有该组 grade 的空条目（无 entity）纳入同一池
+            _grade_groups: dict[str, list[dict]] = {}
             for item in items:
-                ldg = item.get("LootDropGroupId", {}) or {}
-                ldg_path = ldg.get("AssetPathName", "")
-                if not ldg_path:
+                _dg = json.dumps(sorted(item.get("DungeonGrades", []) or []), sort_keys=True)
+                _grade_groups.setdefault(_dg, []).append(item)
+            # 对每个非空组，检查是否有空条目的 grade set 是其超集
+            _empty_items = [it for it in items if not ((it.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""))]
+            _dg_sets = {k: set(json.loads(k)) for k in _grade_groups}
+            for _dg_key, _dg_items in list(_grade_groups.items()):
+                _has_entity = any(
+                    (it.get("MonsterId", {}) or {}).get("AssetPathName", "")
+                    or (it.get("PropsId", {}) or {}).get("AssetPathName", "")
+                    for it in _dg_items
+                )
+                if not _has_entity:
                     continue
-                raw_rate = item.get("SpawnRate", 10000)
-                spawn_rate = round(raw_rate / total_rate * 100)
-                dungeon_grades = item.get("DungeonGrades", []) or []
-                ldg_id = _ue_asset_base_name(ldg_path) or ""
-                entity_name = ""
-                for id_key in ("MonsterId", "PropsId"):
-                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                    if id_path:
-                        raw = _ue_asset_base_name(id_path) or ""
-                        entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                        break
-                rows.append((keyword, entity_name, spawn_rate, json.dumps(dungeon_grades), ldg_id))
+                _dgs = _dg_sets[_dg_key]
+                for _ei in _empty_items:
+                    _e_grades = set(_ei.get("DungeonGrades", []) or [])
+                    if _dgs.issubset(_e_grades):
+                        _dg_items.append(_ei)
+            for _dg_items in _grade_groups.values():
+                _total = sum(it.get("SpawnRate", 10000) for it in _dg_items)
+                if _total <= 0:
+                    _total = 1
+                for item in _dg_items:
+                    ldg = item.get("LootDropGroupId", {}) or {}
+                    ldg_path = ldg.get("AssetPathName", "")
+                    if not ldg_path:
+                        continue
+                    raw_rate = item.get("SpawnRate", 10000)
+                    spawn_rate = raw_rate / _total * 100
+                    dungeon_grades = item.get("DungeonGrades", []) or []
+                    ldg_id = _ue_asset_base_name(ldg_path) or ""
+                    entity_name = ""
+                    for id_key in ("MonsterId", "PropsId"):
+                        id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                        if id_path:
+                            raw = _ue_asset_base_name(id_path) or ""
+                            entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                            break
+                    rows.append((keyword, entity_name, spawn_rate, json.dumps(dungeon_grades), ldg_id))
         c.executemany(
             "INSERT INTO spawner_entries (spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id) VALUES (?, ?, ?, ?, ?)",
             rows,
