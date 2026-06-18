@@ -1629,7 +1629,7 @@ def run():
         for _g_list in _group_drop_info.values():
             for _entry in _g_list:
                 _trans = _entry["translation"]
-                _score = _entry["spawn_rate"] * _entry["drop_rates"].get("豪客赛", 0) / 100
+                _score = round(_entry["spawn_rate"] * _entry["drop_rates"].get("豪客赛", 0) / 100, 4)
                 if _trans not in _max_scores or _score > _max_scores[_trans]:
                     _max_scores[_trans] = _score
         for _m in monsters_out:
