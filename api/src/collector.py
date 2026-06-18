@@ -1619,12 +1619,25 @@ def run():
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
 
-        # 过滤掉无爆率的分组坐标点
-        _groups_with_rates = set(_group_drop_info.keys())
+        # 过滤掉无爆率/低分坐标点（score = spawn_rate × 豪客赛爆率 / 100）
+        _hk_lookup: dict[str, dict[str, float]] = {}
+        for _g, _entries in _group_drop_info.items():
+            for _entry in _entries:
+                _hkl = _hk_lookup.setdefault(_entry["translation"], {})
+                _hkl[_g] = _entry["drop_rates"].get("豪客赛", 0)
+        _score_threshold = 0.5
         for _base_data in merged.values():
-            _base_data["coords"] = [
-                c for c in _base_data["coords"] if _map_base_to_group.get(c["map"], "") in _groups_with_rates
-            ]
+            _trans = _base_data["translation"]
+            _hk_map = _hk_lookup.get(_trans, {})
+            _filtered = []
+            for _c in _base_data["coords"]:
+                _g = _map_base_to_group.get(_c["map"], "")
+                _hk = _hk_map.get(_g, 0)
+                _score = (_c.get("spawn_rate", 0) or 0) * _hk / 100
+                if _score >= _score_threshold:
+                    _c["score"] = round(_score, 4)
+                    _filtered.append(_c)
+            _base_data["coords"] = _filtered
         merged = {k: v for k, v in merged.items() if v["coords"]}
         for _v in merged.values():
             _v.pop("_bases", None)

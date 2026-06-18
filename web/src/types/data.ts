@@ -12,6 +12,8 @@ export interface Coord {
   file: string;
   version: string;
   label: string;
+  spawn_rate?: number;
+  score?: number;
 }
 
 export interface GroupDropInfo {
