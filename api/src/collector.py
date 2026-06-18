@@ -646,7 +646,7 @@ def run():
                         "map": c["map_base"],
                         "file": c["json_filename"],
                         "version": c["version"],
-                        "label": c["original_keyword"],
+                        "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
                     }
                     for c in coords
                 ],
@@ -713,7 +713,7 @@ def run():
                         "map": c["map_base"],
                         "file": c["json_filename"],
                         "version": c["version"],
-                        "label": c["original_keyword"],
+                        "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
                     }
                     for c in merged_coords_list
                 ],
@@ -804,7 +804,7 @@ def run():
                         "map": c["map_base"],
                         "file": c["json_filename"],
                         "version": c["version"],
-                        "label": c["original_keyword"],
+                        "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
                     }
                     for c in merged_coords
                 ],
@@ -1071,7 +1071,7 @@ def run():
                 "z": row["z"],
                 "yaw": row["yaw"],
                 "version": row["version"] or "",
-                "label": row["original_keyword"],
+                "label": HARDCODED_TRANSLATIONS.get(row["original_keyword"], row["original_keyword"]),
                 "group_parent": gp,
             }
         )
@@ -1449,8 +1449,7 @@ def run():
                 rate = _compute_drop_rate(ldg_id, item_name, full_grade)
                 if rate > best_rate:
                     best_rate = rate
-            if best_rate > 0:
-                mode_rates[mode_name] = round(best_rate * 100, 1)
+            mode_rates[mode_name] = round(best_rate * 100, 1)
         return mode_rates
 
     # 预加载 spawn_rate 缓存
@@ -1568,6 +1567,7 @@ def run():
                 if is_locked:
                     merged[_merge_key]["_has_locked"] = True
                 for _c in _typed_coords:
+                    _raw_label = _c.get("original_keyword", "")
                     coord_out = {
                         "x": _c["x"],
                         "y": _c["y"],
@@ -1576,7 +1576,7 @@ def run():
                         "map": _c["map_base"],
                         "file": _c["json_filename"],
                         "version": _c["version"],
-                        "label": _c.get("original_keyword", ""),
+                        "label": HARDCODED_TRANSLATIONS.get(_raw_label, _raw_label),
                     }
                     _vc_info = _coord_variant_count.get(
                         (_c["map_base"], _c["json_filename"], _c.get("group_parent", ""))
@@ -1606,7 +1606,8 @@ def run():
             for _g in _seen_groups:
                 _dr = _get_group_drop_rates(item_name, _m_data.get("entity_name", _m_data["name"]), _g)
                 if not _dr:
-                    continue
+                    # 即使爆率为0，只要有该怪物在此分组有坐标就保留
+                    _dr = {"PVE": 0, "普通": 0, "豪客赛": 0}
                 # For locked-merged entries: 取共同生成器中上锁+未上锁 spawn_rate 之和
                 if _has_locked:
                     _en = _m_data.get("entity_name", _m_data["name"])
@@ -1888,7 +1889,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                     "map": mb,
                     "file": c["json_filename"],
                     "version": c["version"],
-                    "label": c["original_keyword"],
+                    "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
                 }
             )
         for mn in sorted(mnames):
@@ -1929,7 +1930,7 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
                             "map": mb,
                             "file": c["json_filename"],
                             "version": c["version"],
-                            "label": c["original_keyword"],
+                            "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
                         }
                     )
 
