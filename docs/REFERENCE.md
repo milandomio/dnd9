@@ -250,9 +250,9 @@ ID_Droprate_Key_Low_3012.json
 - `LootDropCount` 表示该掉落组每次触发时的抽取次数
 - 同一 `LootDropGroup` 中可有多条 `DungeonGrade: 3012` 的条目，每条对应不同物品类型（如钥匙、宝石、饰品等），各自有独立的 `LootDropRateId`
 
-### 爆率显示实现 [进行中]
+### 爆率显示实现 [已完成]
 
-> **状态：** 生成概率（spawn_rate）已完成并验证。物品爆率（drop_rates）代码已编写，因循环内逐坐标 DB 查询导致管道耗时过长（~70s），暂时注释掉，待优化后重新启用。
+> **状态：** 生成概率（spawn_rate）和物品爆率（drop_rates）均已完成并通过预加载优化。
 
 Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:25%][普通25%][豪客赛25%])`。
 
@@ -531,29 +531,24 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 **修复效果：** `Banshee_Soulflame` 坐标不再出现在 `Banshee` 怪物页面，
 `FrostWyvernEgg` 坐标不再出现在 `FrostWyvern` 怪物页面。
 
-### ChestSpecial → 具体宝箱类型概率丢失
+### 坐标按 Spawner 类型拆分（label-type split）
 
-`Id_Spawner_New_Props_ChestSpecial`（如 `Firedeep_MiningPassage` 中的 2 个 spawner）是一个**概率生成器**，
-其 `SpawnerItemArray` 中包含多种宝箱类型及各自权重：
+同一实体（如 `OrnateChestLarge`）可能从多种 spawner keyword 生成（`ChestSpecial`、`OrnateChestLargeRandom`、`OrnateChestLarge_UnderSea`）。为了在前端区分这些不同的生成来源，`collector.py` 按 `original_keyword` 的语义类型拆分坐标：
 
-| 产出宝箱 | spawn_rate |
-|---------|-----------|
-| OrnateChestLarge | 25% |
-| OrnateChestLarge_Locked | 25% |
-| SimpleChestLarge | 27% |
-| WoodChestLarge | 10% |
-| FlatChestLarge | 10% |
-| Mimic_* | ~3% |
+| 类型 | 识别规则 | 翻译后缀 | 示例 |
+|------|---------|---------|------|
+| `direct` | label == entity_name 或 label.startswith(entity_name + "_") | 无 | `OrnateChestLarge_UnderSea` → `狮头宝箱` |
+| `special` | label 含 "Special" 或 "ChestLarge" | `(特殊)` | `ChestSpecial` → `狮头宝箱(特殊)` |
+| `random` | label 含 "Random" | `(随机)` | `OrnateChestLargeRandom` → `狮头宝箱(随机)` |
+| `other` | 以上都不匹配 | 无 | `GoldChest__UnderSea`(对 entity `GoldChest_UnderSea`) → `黄金宝箱` |
 
-**当前问题：** 
-1. `search_engine.py` 将 `ChestSpecial` 匹配为搜索词 `"ChestSpecial"`，而非 `"OrnateChestLarge"`，导致其坐标不被归入 OrnateChestLarge 的 lootdrops 来源
-2. 即使关联上，当前 spawn_rate 缓存以 `m_name` 查 `OrnateChestLarge`，`OrnateChestLarge` 作为 spawner_keyword 的 rate=100 会覆盖 ChestSpecial 中的 25%
+**实现位置：** `collector.py` 的 `_classify_label()` 函数（约 L1472）和标签循环（约 L1509~L1556）。
 
-**影响：** 概率宝箱坐标存在但不在掉落来源列表中显示，玩家看不到游戏内实际概率。
+**合并规则：** 相同 `m_trans + 类型后缀` 的实体合并到同一 merged 条目。例如 `OrnateChestLarge` 和 `OrnateChestLarge_UnderSea` 的 `ChestSpecial_UnderSea` 坐标都归类为 `special`，合并到 `狮头宝箱(特殊)`。
 
-**待修复方向：**
-- 对随机 spawner（如 ChestSpecial、ChestLarge、OrnateChestLargeRandom），应将其子实体的概率分摊到各自对应的 lootdrop 条目上
-- spawn_rate 缓存键需要区分 label（实际 spawner）和 entity_name（产出实体），而非用 m_name 统一查 max
+**group_drop_rates 查询注意：** 对非 direct 类型，`_get_group_drop_rates()` 必须使用 `entity_name`（如 `OrnateChestLarge`）而非 `name`（如 `OrnateChestLarge_special`）作为查询键，否则无法找到对应 lootdrop_group_id → `_hk_lookup` 为空 → score=0 → 全部被过滤。（2025-06-18 修复）
+
+**影响范围：** 随机生成器类 spawner（ChestSpecial、ChestLarge、ChestSpecial_UnderSea、ChestLarge_UnderSea 等），以及含 Random 关键词的 spawner。使得狮头宝箱能拆分为 direct/special/random 三个独立条目。
 
 ### 生成概率查询优化
 
@@ -563,6 +558,19 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 
 **优化方案：** 在 `collector.py` 中预加载所有 `spawner_entries` 到内存 dict（key 为 `spawner_keyword` + `entity_name`，
 value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
+
+### Lock merge 与 spawn_rate 覆写修复 [2025-06-18]
+
+当 merged 条目同时包含锁定（`_Locked`）和非锁定变体的坐标时，lock merge 负责：
+1. 翻译添加 `(可能上锁)` 后缀
+2. 按 `(x, y, z, file)` 去重
+3. ~~将全部坐标的 `spawn_rate` 覆写为 `_combined_rate`（如 25+25=50）~~ ← **已删除**
+
+**原 bug：** `_combined_rate` 被应用到条目内所有坐标，即使坐标来自非锁定实体/其他 keyword 对（如 `ChestLarge_UnderSea` 的 3.68%），导致显示概率虚高。
+
+**修复：** 删除 `_c["spawn_rate"] = _combined_rate` 行，每个坐标保留其原始 `spawn_rate`（来自 `spawner_entries`）。去重仅移除同一位置的重复坐标，不改变概率。
+
+**效果：** 狮头宝箱(特殊) 的 spawn_rate 从 50% 恢复为 25%（ChestSpecial）和 15%（ChestSpecial_UnderSea）。
 
 ## 已完成优化
 
