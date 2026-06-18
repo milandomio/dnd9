@@ -288,7 +288,9 @@ for (let i = 0; i < routes.length; i++) {
   const routeData = ssrDataMap[dataKey];
 
   // Base tag must be first in <head> so script/link assets resolve correctly.
-  const templated = template.replace("</title>", `</title>\n    <base href="${baseHref}">`);
+  // Canonical URL with trailing slash for SEO
+  const canonical = urlPath === "/" ? "/" : urlPath.replace(/\/?$/, "/");
+  const templated = template.replace("</title>", `</title>\n    <link rel="canonical" href="${canonical}">\n    <base href="${baseHref}">`);
 
   let page;
   if (routeData) {
