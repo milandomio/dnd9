@@ -1,113 +1,84 @@
-# Hydration / Error #310 调试记录
+# Hydration Error #310 修复记录
 
 ## 问题现象
 
-- `/lootdrops/KrisDagger/` — 报 `Minified React error #310`，页面空白
-- `/items/Bandage/` — 正常显示
-- F5 刷新详情页可正常显示（SSR HTML 正确，hydrate 后内容出现）
-- 清除 `root.innerHTML` 后 `createRoot` 渲染正常（说明 React 能正确渲染，问题出在 hydrate 过程）
+- `/lootdrops/KrisDagger/`、`/lootdrops/Mitre/` 等详情页报 `Minified React error #310`
+- 页面空白，F5 刷新也无法显示
 
-## 环境
+## 根因
 
-- React 18.3.1 (`react: ^18.3.0`)
-- Ant Design 5.29.3
-- Vite 6 + vite preview
+React #310 = **"Rendered more hooks than during the previous render"**
 
-## 已尝试的修复
+`LootdropDetailPage` 中有一个 `useMemo` 放在了 `if (!data)` 提前返回**之后**：
 
-| 方案 | 结果 |
-|------|------|
-| `React.lazy` → 同步 `import` | ❌ 仍然报错 |
-| 移除 `Suspense`/`PageLoader` | ❌ 仍然报错 |
-| `createRoot` → `hydrateRoot` | ❌ 仍然报错 |
-| 移除 `React.StrictMode` | ❌ 未验证（prod build StrictMode 是 noop） |
-| `root.innerHTML = ''` + `createRoot` | ✅ 不报错，页面正常（但丢失 SSR） |
+```tsx
+// ❌ 错误结构
+useEffect(() => { ... }, []);      // hook #N
+useCallback(() => { ... }, []);    // hook #N+1
 
-## 错误 #310 定位
+if (!data) return <Loading />;     // 提前返回
 
-`Error(p(310))` 在 **react-dom 生产包** `react-dom.production.min.js` 的 `Uh` 函数中：
-
-```js
-function Uh() {
-  if (null === N) {
-    var a = M.alternate;
-    a = null !== a ? a.memoizedState : null;
-  } else a = N.next;
-  var b = null === O ? M.memoizedState : O.next;
-  if (null !== b) O = b, N = a;
-  else {
-    if (null === a) throw Error(p(310));  // ← #310
-    N = a;
-    a = { memoizedState: N.memoizedState, ... };
-    null === O ? M.memoizedState = O = a : O = O.next = a;
-  }
-  return O;
-}
+const orderedMonsters = useMemo(   // hook #N+2 — 只在 data 有值时调用
+  () => [...monsters].sort(...), [monsters]
+);
 ```
 
-React 开发版的对应错误消息：
+- 首次渲染（SSR / hydration）：`data` 为 null → 提前返回 → hooks 数量 = N
+- fetch 完成后：`data` 有值 → 继续渲染 → hooks 数量 = N+1
+- React 检测到 hook 数量变化 → 抛出 #310
 
-> **Rendered more hooks than during the previous render.**
+## 修复
 
-所以 #310 不是 hydration DOM 不匹配，而是 **hook 数量不一致**——组件在 hydrate 过程中，当前 fiber tree 和 work-in-progress fiber tree 的 hook 链表数量不匹配。
+将 `useMemo` 移到 `if (!data)` 之前，确保 hook 数量恒定：
 
-## 关键线索
+```tsx
+// ✅ 正确结构
+useEffect(() => { ... }, []);      // hook #N
+useCallback(() => { ... }, []);    // hook #N+1
 
-1. `/items/Bandage/`（`/:page/:name` → **`DetailPage`**）正常
-2. `/lootdrops/KrisDagger/`（`/lootdrops/:name` → **`LootdropDetailPage`**）报错
-3. 两个组件同步 import，row/lifecycle 顺序应一致
-4. 清除 root 内容后直接 render（跳过 hydrate）正常 → **问题一定在 hydrate 过程**
+const monsters = data?.monsters ?? [];
+const orderedMonsters = useMemo(   // hook #N+2 — 始终调用
+  () => [...monsters].sort(...), [monsters]
+);
 
-## 可能原因
-
-### 1. `AppInner.tsx`（SSR 用）与 `App.tsx`（客户端用）route 顺序不同
-
-**SSR** (`AppInner.tsx`):
-```
-<Route path="/:page" .../>        ← 在第 0 位
-<Route path="/lootdrops/:name" .../>
+if (!data) return <Loading />;     // 提前返回
 ```
 
-**客户端** (`App.tsx`):
-```
-<Route path="/lootdrops/:name" .../>  ← 在第 0 位
-<Route path="/:page" .../>
-```
+## 额外修复：组件树一致性
 
-虽然对于 URL `/lootdrops/KrisDagger` 两个都匹配 `/lootdrops/:name` 组件，但 React Router 内部 `useRoutes` 处理的 route config 数组顺序不同。如果 React Router 内部用了某个基于 route index 的 hook/state 判定，hook 序列可能变化。
+SSR 和客户端的组件树必须完全一致，否则 hydration 时 fiber 树 hook 链表也会错位。
 
-### 2. Ant Design 的 ConfigProvider 在 SSR vs Client 的包裹方式不同
-
-**SSR**（`ssr.tsx`）:
+### SSR (`ssr.tsx`)
 ```
-<ConfigProvider locale={zhCN} ...>
-  <DebugProvider>
-    <SSRDataContext.Provider>
-      <StaticRouter>
-        <AppInner />
+HelmetProvider → ThemeProvider → ConfigProvider → DebugProvider
+  → SSRDataContext.Provider → StaticRouter → AppInner
 ```
 
-**客户端**（`App.tsx`）:
+### 客户端 (`App.tsx`) — 必须匹配
 ```
-<AntdConfigProvider>  → 内部 <ConfigProvider>
-  <DebugProvider>
-    <BrowserRouter>
-      <AppRoutes />
+HelmetProvider → ThemeProvider → ConfigProvider → DebugProvider
+  → SSRDataContext.Provider → BrowserRouter → AppInner
 ```
 
-`AntdConfigProvider` 是多余的函数组件层，虽然 render 出一样的 ConfigProvider，但 fiber 树多了一个组件节点。hydrate 时 React 会对比 SSR fiber（没有 AntdConfigProvider）和 client fiber（有 AntdConfigProvider），hook 链表错位。
+已修复的问题：
+1. 移除 `AntdConfigProvider` 包装函数（额外 fiber 节点）
+2. 添加 `SSRDataContext.Provider value={null}`（SSR 有 context，客户端也要有）
+3. 移除 `App` 组件中的 `useTheme()` hook（在 `ThemeProvider` 外部调用，破坏 hook 一致性）
 
-### 3. `window.__SSR_DATA__` 在不同 route 的 key 格式不同
+## SSR 数据不完整（Quick 模式）
 
-- `/items/Bandage` → `dataKey = "items/Bandage"`
-- `/lootdrops/KrisDagger` → `dataKey = "lootdrops/KrisDagger"`
+Quick 模式只注入 `{ name, translation }`，缺少 `monsters` 等字段。
 
-`useSSRData` hook 在 SSR 期间读到数据（通过 SSRDataContext），在客户端 hydrate 时未提供 SSRDataContext → 回退到 `window.__SSR_DATA__`。
+修复：`useState` 初始化时检查数据完整性：
 
-如果 SSR 有 SSRDataContext 而客户端没有，context 使用方式不同可能影响 hook 数。
+```tsx
+const [data, setData] = useState<LootdropItem | null>(
+  ssrData?.item?.monsters ? ssrData.item : null
+);
+```
 
-## 下一步
+## 关键规则
 
-1. 验证 `AppInner` 与 `AppRoutes` 是否在路由顺序上导致`<Routes>` 内部 hook 数变化
-2. 尝试去掉 `AntdConfigProvider` 封装，改成直接在 `App()` 中嵌入 `<ConfigProvider>` 消除 fiber 树差异
-3. 尝试在 `App()` 中嵌入 `<SSRDataContext.Provider>`（值为空），使 SSR 和 client 的 context 层级一致
+1. **Hook 必须在条件返回之前** — 所有 `useState`/`useEffect`/`useMemo`/`useCallback` 必须在任何 `if (...) return` 之前
+2. **SSR 和客户端组件树必须一致** — Provider 层数、顺序、类型必须完全匹配
+3. **Quick 模式下 SSR 数据不完整** — 初始化时必须验证必要字段存在
