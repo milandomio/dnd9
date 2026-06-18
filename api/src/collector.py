@@ -1621,8 +1621,6 @@ def run():
                     _k = (_c["x"], _c["y"], _c["z"], _c["file"])
                     if _k not in seen:
                         seen.add(_k)
-                        if _combined_rate > 0:
-                            _c["spawn_rate"] = _combined_rate
                         deduped.append(_c)
                 _base_data["coords"] = deduped
         # 质量变体去重：同一翻译只保留最高优先级变体（Elite > Nightmare > Common）
