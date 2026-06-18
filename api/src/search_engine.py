@@ -89,38 +89,46 @@ def load_all_spawner_data(
                 need_expand = len(entity_names) >= 2
                 need_redirect = len(entity_names) == 1 and keyword != next(iter(entity_names))
                 if need_expand or need_redirect:
-                    total_rate = sum(it.get("SpawnRate", 10000) for it in active_items)
-                    if total_rate <= 0:
-                        total_rate = 1
+                    # 按 DungeonGrades 分组计算 spawn_rate
+                    _grade_groups: dict[str, list[dict]] = {}
+                    for _item in items:
+                        _dg = json.dumps(sorted(_item.get("DungeonGrades", []) or []), sort_keys=True)
+                        _grade_groups.setdefault(_dg, []).append(_item)
                     entries: list[dict] = []
-                    for item in active_items:
-                        e_name = ""
-                        s_type = ""
-                        for id_key in ("MonsterId", "PropsId"):
-                            id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                            if id_path:
-                                raw = _ue_asset_base_name(id_path) or ""
-                                e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                                if "/V2/Monster/" in id_path:
-                                    s_type = "monster"
-                                elif "/V2/Props/" in id_path:
-                                    s_type = "props"
-                                break
-                        if not e_name:
-                            continue
-                        raw_rate = item.get("SpawnRate", 10000)
-                        spawn_rate_val = round(raw_rate / total_rate * 100)
-                        ldg = item.get("LootDropGroupId", {}) or {}
-                        ldg_path = ldg.get("AssetPathName", "")
-                        ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
-                        entries.append(
-                            {
-                                "entity_name": e_name,
-                                "spawn_rate": spawn_rate_val,
-                                "spawner_type": s_type,
-                                "lootdrop_group_id": ldg_id,
-                            }
-                        )
+                    for _dg_items in _grade_groups.values():
+                        _total = sum(it.get("SpawnRate", 10000) for it in _dg_items)
+                        if _total <= 0:
+                            _total = 1
+                        for item in _dg_items:
+                            if not (item.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""):
+                                continue
+                            e_name = ""
+                            s_type = ""
+                            for id_key in ("MonsterId", "PropsId"):
+                                id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                                if id_path:
+                                    raw = _ue_asset_base_name(id_path) or ""
+                                    e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                                    if "/V2/Monster/" in id_path:
+                                        s_type = "monster"
+                                    elif "/V2/Props/" in id_path:
+                                        s_type = "props"
+                                    break
+                            if not e_name:
+                                continue
+                            raw_rate = item.get("SpawnRate", 10000)
+                            spawn_rate_val = raw_rate / _total * 100
+                            ldg = item.get("LootDropGroupId", {}) or {}
+                            ldg_path = ldg.get("AssetPathName", "")
+                            ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
+                            entries.append(
+                                {
+                                    "entity_name": e_name,
+                                    "spawn_rate": spawn_rate_val,
+                                    "spawner_type": s_type,
+                                    "lootdrop_group_id": ldg_id,
+                                }
+                            )
                     if entries:
                         multi_entity[keyword] = entries
 

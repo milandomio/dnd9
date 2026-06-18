@@ -34,6 +34,7 @@ interface LootdropMonster {
   color: string;
   coords: LootdropCoord[];
   drop_rates?: Record<string, number>;
+  max_score?: number;
 }
 
 interface GroupDropInfo {
@@ -71,20 +72,14 @@ export default function LootdropDetailPage() {
 
   function defaultHidden(
     monsters: LootdropMonster[],
-    groupDropInfo: Record<string, GroupDropInfo[]>,
     threshold: number
   ): Set<string> {
     const init = new Set<string>();
-    const transToName = new Map<string, string>();
-    for (const m of monsters) transToName.set(m.translation, m.name);
-    for (const entries of Object.values(groupDropInfo)) {
-      for (const entry of entries) {
-        const baseRate = entry.drop_rates?.['豪客赛'];
-        if (baseRate == null || baseRate <= 0) continue;
-        if ((entry.spawn_rate * baseRate) / 100 >= threshold) continue;
-        const mn = transToName.get(entry.translation);
-        if (mn) init.add(mn);
-      }
+    for (const m of monsters) {
+      if (m.name.endsWith('_Elite')) continue;
+      const sc = m.max_score;
+      if (sc == null || sc < 0) continue;
+      if (sc < threshold) init.add(m.name);
     }
     return init;
   }
@@ -105,12 +100,12 @@ export default function LootdropDetailPage() {
   const { modules: fetchedModules } = useDungeonModules();
   const modules = ssrModulesMap ?? fetchedModules;
   const [hidden, setHidden] = useState<Set<string>>(() =>
-    ssrData?.item?.monsters && ssrData.item.group_drop_info
-      ? defaultHidden(ssrData.item.monsters, ssrData.item.group_drop_info, 2.4)
+    ssrData?.item?.monsters
+      ? defaultHidden(ssrData.item.monsters, 1.0)
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
-  const [threshold, setThreshold] = useState(2.4);
+  const [threshold, setThreshold] = useState(1.0);
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
@@ -125,17 +120,15 @@ export default function LootdropDetailPage() {
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
         setData(item);
-        setHidden(
-          defaultHidden(item.monsters, item.group_drop_info ?? {}, 1.2)
-        );
+        setHidden(defaultHidden(item.monsters, 1.0));
       })
       .catch(console.error);
   }, [name, ssrData]);
 
   // 在调试模式下实时响应阈值变化
   useEffect(() => {
-    if (!data?.monsters || !data?.group_drop_info) return;
-    setHidden(defaultHidden(data.monsters, data.group_drop_info, threshold));
+    if (!data?.monsters) return;
+    setHidden(defaultHidden(data.monsters, threshold));
   }, [threshold]);
 
   const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
@@ -275,29 +268,11 @@ export default function LootdropDetailPage() {
   };
 
   const monsters = data.monsters ?? [];
-  const monsterSortScores = useMemo(() => {
-    const scores = new Map<string, number>();
-    if (!data?.group_drop_info) return scores;
-    for (const entries of Object.values(data.group_drop_info)) {
-      for (const e of entries) {
-        const baseRate = e.drop_rates?.['豪客赛'] ?? 0;
-        const score = e.spawn_rate * baseRate;
-        const m = monsters.find((x) => x.translation === e.translation);
-        if (m) {
-          const cur = scores.get(m.name) ?? -1;
-          if (score > cur) scores.set(m.name, score);
-        }
-      }
-    }
-    return scores;
-  }, [data, monsters]);
   const orderedMonsters = useMemo(() => {
     return [...monsters].sort(
-      (a, b) =>
-        (monsterSortScores.get(b.name) ?? -1) -
-        (monsterSortScores.get(a.name) ?? -1)
+      (a, b) => (b.max_score ?? -1) - (a.max_score ?? -1)
     );
-  }, [monsters, monsterSortScores]);
+  }, [monsters]);
   // Build per-map coordinate groups
   const mapGroups = new Map<
     string,
@@ -557,7 +532,7 @@ export default function LootdropDetailPage() {
               }}
             />
             <span style={{ color: tokens.muted, fontSize: 11 }}>
-              spawn_rate × 普通爆率 ≥ {threshold}% 则默认显示
+              spawn_rate × 豪客赛爆率 ≥ {threshold}% 则默认显示
             </span>
           </div>
         </div>
@@ -610,7 +585,12 @@ export default function LootdropDetailPage() {
                       }}
                     >
                       参考爆率：
-                      {data.group_drop_info[groupName]!.map((info, gi) => (
+                      {data.group_drop_info[groupName]!.filter((info) => {
+                        const m = monsters.find(
+                          (x) => x.translation === info.translation
+                        );
+                        return !m || !hidden.has(m.name);
+                      }).map((info, gi, arr) => (
                         <span
                           key={gi}
                           style={{
@@ -622,9 +602,7 @@ export default function LootdropDetailPage() {
                           {Object.entries(info.drop_rates)
                             .map(([mode, rate]) => `[${mode}:${rate}%]`)
                             .join('')}
-                          {gi <
-                            (data.group_drop_info?.[groupName]?.length ?? 0) -
-                              1 && '、'}
+                          {gi < arr.length - 1 && '、'}
                         </span>
                       ))}
                     </span>
