@@ -1472,16 +1472,31 @@ def run():
         if en and sk:
             _entity_spawners.setdefault(en, set()).add(sk)
 
-    # 预加载坐标点变体数：(map_base, file, group_parent) → count
+    # 预加载坐标点变体数：(map_base, file, group_parent) → (count, [translation_names])
     # 仅统计同 group_parent 下多种不同怪物（如 Banshee + Skeleton 共享1组）
     # 同一怪物的质量变体（Common/Elite/Nightmare）不计入
-    _coord_variant_count: dict[tuple[str, str, str], int] = {}
+    _coord_variant_count: dict[tuple[str, str, str], tuple[int, list[str]]] = {}
     for _row in _c.execute(
-        "SELECT map_base, json_filename, group_parent, COUNT(DISTINCT original_keyword) as cnt "
+        "SELECT map_base, json_filename, group_parent, "
+        "COUNT(DISTINCT original_keyword) as cnt, "
+        "GROUP_CONCAT(DISTINCT original_keyword) as keywords "
         "FROM spawners WHERE group_parent != '' "
         "GROUP BY map_base, json_filename, group_parent HAVING cnt > 1"
     ):
-        _coord_variant_count[(_row["map_base"], _row["json_filename"], _row["group_parent"])] = _row["cnt"]
+        _names: list[str] = []
+        for _kw in _row["keywords"].split(","):
+            _cls = entity_class.get(_kw, {})
+            _mon_row = monsters_lookup.get(_kw)
+            if _mon_row:
+                _names.append(resolve_name(_kw, _mon_row["translation_key"], "monster"))
+            elif _cls and "props" in _cls.get("types", []):
+                _names.append(resolve_name(_kw, _cls.get("translation_key", ""), "props"))
+            else:
+                _names.append(_kw)
+        _coord_variant_count[(_row["map_base"], _row["json_filename"], _row["group_parent"])] = (
+            _row["cnt"],
+            _names,
+        )
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
@@ -1566,16 +1581,17 @@ def run():
                     _vc_info = _coord_variant_count.get(
                         (_c["map_base"], _c["json_filename"], _c.get("group_parent", ""))
                     )
-                    if _vc_info and _vc_info > 1:
-                        coord_out["variant_count"] = _vc_info
+                    if _vc_info and _vc_info[0] > 1:
+                        coord_out["variant_count"] = _vc_info[0]
+                        coord_out["variant_names"] = _vc_info[1]
                     if _c.get("keyword") != _c.get("original_keyword", ""):
                         _pair = (_c["original_keyword"], _c["keyword"])
                         _sr = _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
                     else:
                         _sr = _spawn_rate_cache.get(m_name, 100)
                     # 多怪共享点：spawn_rate 除以变体数（3种怪各30% → 总90%）
-                    if _vc_info and _vc_info > 1:
-                        _sr = round(_sr / _vc_info, 1)
+                    if _vc_info and _vc_info[0] > 1:
+                        _sr = round(_sr / _vc_info[0], 1)
                     coord_out["spawn_rate"] = _sr
                     merged[_merge_key]["coords"].append(coord_out)
         # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）

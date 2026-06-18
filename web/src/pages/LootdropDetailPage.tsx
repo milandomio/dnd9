@@ -27,6 +27,7 @@ interface LootdropCoord {
   label?: string;
   spawn_rate?: number;
   variant_count?: number;
+  variant_names?: string[];
 }
 
 interface LootdropMonster {
@@ -288,6 +289,7 @@ export default function LootdropDetailPage() {
         idx: number;
         spawn_rate?: number;
         variant_count?: number;
+        variant_names?: string[];
       }[];
     }
   >();
@@ -305,6 +307,7 @@ export default function LootdropDetailPage() {
         idx: j,
         spawn_rate: c.spawn_rate,
         variant_count: c.variant_count,
+        variant_names: c.variant_names,
       });
     });
   }
@@ -964,7 +967,8 @@ export default function LootdropDetailPage() {
                                 (d) => d.variant_count && d.variant_count > 1
                               );
                               if (vcDot) {
-                                return `(${vcDot.variant_count}种选1)`;
+                                const names = vcDot.variant_names ?? [];
+                                return `(${names.join('、')}${vcDot.variant_count}种选1)`;
                               }
                               return `(${mDots.length}点)`;
                             })()}
