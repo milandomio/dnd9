@@ -191,6 +191,55 @@ git reset HEAD~1 && rm /tmp/darkfindv5.db
 | `useDungeonModules.ts` | 地图模块数据 | DungeonModules/Group/Detail |
 | `useDataVersion.ts` | 数据版本（缓存 bust） | Disclaimer, NavBar, List, Explore |
 
+## React Hydration 规则（防止 #310 错误）
+
+React #310 = "Rendered more hooks than during the previous render"，hook 数量在渲染间不一致。
+
+### 规则 1：所有 hooks 必须在条件返回之前
+
+```tsx
+// ❌ 错误 — useMemo 在条件返回之后，首次渲染不调用
+function Page() {
+  const [data, setData] = useState(null);
+  useEffect(() => { fetch(...).then(setData); }, []);
+  if (!data) return <Loading />;
+  const sorted = useMemo(() => data.items.sort(...), [data]); // ← 只在 data 有值时调用
+}
+
+// ✅ 正确 — 所有 hooks 在条件返回之前
+function Page() {
+  const [data, setData] = useState(null);
+  useEffect(() => { fetch(...).then(setData); }, []);
+  const items = data?.items ?? [];
+  const sorted = useMemo(() => items.sort(...), [items]);     // ← 始终调用
+  if (!data) return <Loading />;
+}
+```
+
+### 规则 2：SSR 和客户端组件树必须一致
+
+Provider 层数、顺序、类型必须完全匹配。差异会导致 fiber 树 hook 链表错位。
+
+- SSR (`ssr.tsx`) 和客户端 (`App.tsx`) 的 Provider 嵌套必须相同
+- 不要在客户端添加 SSR 没有的包装组件（如 `AntdConfigProvider`）
+- 如果 SSR 有 `SSRDataContext.Provider`，客户端也必须有（值可以为 `null`）
+
+### 规则 3：SSG Quick 模式下 SSR 数据不完整
+
+Quick 模式只注入 `{ name, translation }`，缺少 `monsters`、`coords` 等字段。
+
+```tsx
+// ❌ 不完整对象是 truthy，通过 null 检查但缺少必要字段
+const [data, setData] = useState(ssrData?.item || null);
+
+// ✅ 验证必要字段存在
+const [data, setData] = useState(
+  ssrData?.item?.monsters ? ssrData.item : null
+);
+```
+
+详细修复记录见 `docs/DEBUG_HYDRATION.md`。
+
 ## 数据管道关键规则
 
 - `_is_db_stale()` 必须在 `DatabaseManager()` 构造**之前**调用

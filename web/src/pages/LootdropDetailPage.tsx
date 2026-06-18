@@ -224,6 +224,13 @@ export default function LootdropDetailPage() {
     };
   }, []);
 
+  const monsters = data?.monsters ?? [];
+  const orderedMonsters = useMemo(() => {
+    return [...monsters].sort(
+      (a, b) => (b.max_score ?? -1) - (a.max_score ?? -1)
+    );
+  }, [monsters]);
+
   if (!data)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
@@ -270,13 +277,6 @@ export default function LootdropDetailPage() {
       return next;
     });
   };
-
-  const monsters = data.monsters ?? [];
-  const orderedMonsters = useMemo(() => {
-    return [...monsters].sort(
-      (a, b) => (b.max_score ?? -1) - (a.max_score ?? -1)
-    );
-  }, [monsters]);
   // Build per-map coordinate groups
   const mapGroups = new Map<
     string,
