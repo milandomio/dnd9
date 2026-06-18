@@ -41,8 +41,8 @@ export function AppInner() {
           path="/dungeon_modules/:group/:name"
           element={<DungeonModuleDetailPage />}
         />
-        <Route path="/:page" element={<ListPage />} />
         <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
+        <Route path="/:page" element={<ListPage />} />
         <Route path="/:page/:name" element={<DetailPage />} />
       </Routes>
     </div>

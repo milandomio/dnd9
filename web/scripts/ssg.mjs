@@ -321,8 +321,9 @@ for (let i = 0; i < routes.length; i++) {
 // ---- step 6: 404.html ----
 writeFileSync(join(DIST, "404.html"), readFileSync(join(DIST, "index.html"), "utf-8"), "utf-8");
 
-// ---- step 7: cleanup SSR bundle ----
+// ---- step 7: cleanup SSR bundle and manifest ----
 rmSync(SSR_OUT, { recursive: true, force: true });
+try { rmSync(join(DIST, ".vite"), { recursive: true, force: true }); } catch {}
 console.log("[ssg] SSR build cleaned up");
 
 const total = ((Date.now() - t0) / 1000).toFixed(1);
