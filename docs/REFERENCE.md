@@ -595,35 +595,54 @@ AC 自动机（`build_automaton` + `match_keyword`）被引入作为兜底：通
 - `build_automaton()` / `match_keyword()` / `build_all_matches()` 可整体移除
 - `collector.py` 中 AC 相关的类型交叉过滤代码可移除
 
-### 搜索词侧归一化
+### 搜索索引重构
 
-spawner keyword 合并后，搜索词侧也需要做同样的变体剥离，否则搜索 `Banshee_Elite` 精确匹配不到 `Banshee`。
+搜索记录结构：
 
-但三类实体的变体模式不同：
-| 类型 | 变体模式 | 处理方式 |
-|------|---------|---------|
-| `item` | 无变体后缀（`_\d{4}` 是身份标识） | 不需要归一化 |
-| `monster` | `_Common/Elite/Nightmare` | 搜索词剥后缀→base，匹配合并后的 spawner keyword |
-| `props` | `_\d{4}` 装饰变体 | 待定 |
+```
+搜索项 = {搜索词, 翻译名, 页面路由, 分类表名, 变体列表}
+```
+
+- **搜索词**：从实体 ID 清洗取得（`Id_Item_Sling_5001` → `Sling`），或经翻译键回退链归并到基准名
+- **页面路由** = `分类表名/搜索词`（如 `/items/Sling`）
+  - 物品详情页以默认变体呈现（如 `/items/Sling` → 路由到 `Sling_5001` 的数据），但 `Sling_4001` 等所有变体也有独立路由
+  - 变体切换器在分类按钮模块上方，切换不同变体页面
+  - 标题显示稀有度：从 `Id_Item_Mitre_7001.json` 中提取 `RarityType` → `Type.Item.Rarity.Unique` → 拼接翻译键 `Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_Unique` → `(独特)`
+- **分类表名** = 实体所属表（`items`/`monsters`/`props`）
+- **多实体共用同搜索词**：默认合并显示并列出所有变体
+- **搜索 JSON**：DB 数据导入完成后创建，关联搜索词 → 分类 + 变体列表 + spawner 坐标
+- **`BP_*_C` 类 keyword**：同样按翻译键回退链归并，统一纳入搜索索引
+- **`Weapon`/`Armor` 等战利品类目**：走 `DetailPage`，仅显示点位（后续完善文档）
 
 ### 掉落表默认变体映射
 
-变体合并后，当用 base name（如 `Banshee`）查找 lootdrop 数据时，需要指定一个默认变体后缀来解析：
+变体合并后，当用 base name（如 `Banshee`）查找 lootdrop 数据时，按以下规则确定降级候选：
 
-| 类型 | 默认 | 降级候选 | 现有代码位置 |
-|------|------|---------|------------|
-| item | `_5001` | `_4001` → `_3001` | `collector.py:1388` `_compute_drop_rate()` |
-| monster | `_Elite` | `_Nightmare` → `_Common` | `collector.py:1426` `_get_group_drop_rates()` |
-| props | TBD | — | 待按坐标点数量最多的变体确定 |
+1. **优先尝试无后缀**（base name 本身）
+2. **未命中时，按实体类型决定降级链**：
 
-### 影响
+| 实体类型 | 判定方式 | 降级候选 |
+|---------|---------|---------|
+| monster | 该 base 在 `monster_entities` 中有 `_Elite` 变体 | `_Elite` → `_Nightmare` → `_Common` |
+| item | 始终（item 无质量变体，但有 `_\d{4}` 编号） | `_5001` → `_4001` → `_3001` |
+| props | 非 monster 的所有情况 | 无降级，仅无后缀 |
 
-- `search_term_matches` 表不再需要，搜索改精确匹配
-- `build_automaton()` / `match_keyword()` / `build_all_matches()` 可整体移除
-- `collector.py` 中 AC 相关的类型交叉过滤代码可移除
+**示例：**
+- `Banshee` — monster，monster_entities 中有 `Banshee_Elite` → 降级链 `_Elite` → `_Nightmare` → `_Common`
+- `LivingStatue` — 同时是 monster 和 props，但 monster 表有 `LivingStatue_Elite` → 走 monster 降级链
+- `WoodenBarrel` — 纯 props，monster 表无 `WoodenBarrel_Elite` → 仅无后缀
+- `Mitre` — item → 降级链 `_5001` → `_4001` → `_3001`
+
+**额外变体**（`_UnderSea`、`_Locked`、`_OnlyActivate` 等）只归并不降级：spawner keyword 合并到 base，但掉落表查找时不会主动添加这些后缀，`_UnderSea` 版和陆上版共用同一份掉落数据。
+
+### 实施顺序
+
+1. **spawner keyword 变体合并** — `extract_spawners()` / `load_all_spawner_data()` 中剥离已知变体后缀
+2. **搜索词表重构** — 基于翻译键回退链和实体 ID 清洗，生成搜索索引
+3. **移除 AC 自动机** — 删除 `build_automaton()` / `match_keyword()` / `build_all_matches()` 及 `search_term_matches` 表
+4. **前端适配** — 搜索改用新索引，变体切换器，稀有度标题
 
 ### 依赖
 
-- [x] 掉落表默认变体映射规则已确定（item=_5001, monster=_Elite, props=TBD）
-- [ ] props 默认变体待敲定（按坐标点数量最多的变体判定）
-- [ ] 搜索词侧归一化实现
+- [x] 所有细节已敲定
+- [ ] 等待实施
