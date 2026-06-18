@@ -1423,6 +1423,11 @@ def run():
         """计算某物品在某怪物在某地图分组下的各模式爆率。"""
         ldg_id = _spawner_ldg.get(monster_name, "")
         if not ldg_id:
+            for _suffix in ("_Elite", "_Nightmare", "_Common"):
+                ldg_id = _spawner_ldg.get(monster_name + _suffix, "")
+                if ldg_id:
+                    break
+        if not ldg_id:
             return {}
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
         if not suffixes:
