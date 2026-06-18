@@ -1817,9 +1817,9 @@ def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modu
     # Build map_base -> module_group lookup
     map_to_group = {}
     for m in modules:
-        g = m.get("group", "") or ""
+        g = m.get("module_group", "") or ""
         if g:
-            map_to_group[m["name"]] = g
+            map_to_group[m["module_name"]] = g
             if m.get("sl_base_name"):
                 map_to_group[m["sl_base_name"]] = g
 
