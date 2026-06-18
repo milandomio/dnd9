@@ -293,6 +293,8 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 **前端显示（`LootdropDetailPage.tsx`）：**
 - `spawn_rate` 字段从 coord 级别取（仅 ≠100 时显示）— **已生效**
 - `drop_rates` 字段从 monster 级别取（`Record<string, number>`，key 为模式名）— **暂时无数据**
+- **怪物按钮排序**：使用 `豪客赛` 爆率计算参考爆率（`spawn_rate × 豪客赛爆率`），所有怪物按该值降序排列
+- **默认可见性阈值**：使用 `豪客赛` 爆率计算（`spawn_rate × 豪客赛爆率 / 100 ≥ threshold`），低于阈值（默认 2.4%）的怪物初始隐藏
 
 **已修改文件清单：**
 - `api/src/config.py` — 新增 `LOOTDROP_RATE_DIR`、扩展 `DUNGEON_GROUP_GRADES`（8组）、添加 `MODULE_GROUP_FLOOR_SUFFIXES`

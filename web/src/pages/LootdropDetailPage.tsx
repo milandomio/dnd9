@@ -79,7 +79,7 @@ export default function LootdropDetailPage() {
     for (const m of monsters) transToName.set(m.translation, m.name);
     for (const entries of Object.values(groupDropInfo)) {
       for (const entry of entries) {
-        const baseRate = entry.drop_rates?.['普通'];
+        const baseRate = entry.drop_rates?.['豪客赛'];
         if (baseRate == null || baseRate <= 0) continue;
         if ((entry.spawn_rate * baseRate) / 100 >= threshold) continue;
         const mn = transToName.get(entry.translation);
@@ -106,11 +106,11 @@ export default function LootdropDetailPage() {
   const modules = ssrModulesMap ?? fetchedModules;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     ssrData?.item?.monsters && ssrData.item.group_drop_info
-      ? defaultHidden(ssrData.item.monsters, ssrData.item.group_drop_info, 1.2)
+      ? defaultHidden(ssrData.item.monsters, ssrData.item.group_drop_info, 2.4)
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
-  const [threshold, setThreshold] = useState(1.2);
+  const [threshold, setThreshold] = useState(2.4);
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
@@ -292,28 +292,12 @@ export default function LootdropDetailPage() {
     return scores;
   }, [data, monsters]);
   const orderedMonsters = useMemo(() => {
-    const ordered: LootdropMonster[] = [];
-    const seen = new Set<string>();
-    if (data?.group_drop_info) {
-      for (const entries of Object.values(data.group_drop_info)) {
-        for (const e of entries) {
-          const m = monsters.find((x) => x.translation === e.translation);
-          if (m && !seen.has(m.name)) {
-            seen.add(m.name);
-            ordered.push(m);
-          }
-        }
-      }
-    }
-    const remaining = [...monsters]
-      .filter((m) => !seen.has(m.name))
-      .sort(
-        (a, b) =>
-          (monsterSortScores.get(b.name) ?? -1) -
-          (monsterSortScores.get(a.name) ?? -1)
-      );
-    return [...ordered, ...remaining];
-  }, [data, monsters, monsterSortScores]);
+    return [...monsters].sort(
+      (a, b) =>
+        (monsterSortScores.get(b.name) ?? -1) -
+        (monsterSortScores.get(a.name) ?? -1)
+    );
+  }, [monsters, monsterSortScores]);
   // Build per-map coordinate groups
   const mapGroups = new Map<
     string,
