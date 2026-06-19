@@ -13,12 +13,20 @@ echo "[2/4] 构建前端..."
 cd web && npm run build
 cd ..
 
-# 3. 启动web服务
+# 3. 启动web服务 + 验证
 echo "[3/4] 启动web服务..."
 cd web
 kill $(lsof -t -i:8080) 2>/dev/null || true
 sleep 0.5
-(npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
+(npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) || { echo "FAILED to start web"; exit 1; }
+sleep 2
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/)
+if [ "$HTTP_CODE" = "200" ]; then
+  echo "web started (HTTP $HTTP_CODE)"
+else
+  echo "FAILED: web returned HTTP $HTTP_CODE"
+  exit 1
+fi
 cd ..
 
 # 4. 自动git提交

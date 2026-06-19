@@ -1325,31 +1325,30 @@ def run():
         优先查基础名，未命中则尝试 _5001 → _4001 → _3001 变体后缀。
         详见 docs/REFERENCE.md 中的变体锁定说明。
         """
-        for grade in (full_grade, 0):
-            grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
-            if not grade_data:
+        grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
+        if not grade_data:
+            return 0.0
+        total_weight = 0.0
+        found = False
+        for ld_id, lr_id, _ in grade_data:
+            rate_items = _ld_rate_items.get(ld_id, {})
+            item_info = rate_items.get(item_name)
+            if item_info is None:
+                for _suffix in _variant_suffixes:
+                    item_info = rate_items.get(item_name + _suffix)
+                    if item_info is not None:
+                        break
+            if item_info is None:
                 continue
-            total_weight = 0.0
-            found = False
-            for ld_id, lr_id, _ in grade_data:
-                rate_items = _ld_rate_items.get(ld_id, {})
-                item_info = rate_items.get(item_name)
-                if item_info is None:
-                    for _suffix in _variant_suffixes:
-                        item_info = rate_items.get(item_name + _suffix)
-                        if item_info is not None:
-                            break
-                if item_info is None:
-                    continue
-                found = True
-                luck_grade, item_count = item_info
-                _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
-                # 权重是同 luck_grade 下所有物品共享的，按物品数均摊
-                _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
-                _rate_total = _ld_rate_totals.get(lr_id, 10000)
-                total_weight += _pool_weight / _shared / _rate_total
-            if found:
-                return total_weight
+            found = True
+            luck_grade, item_count = item_info
+            _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+            # 权重是同 luck_grade 下所有物品共享的，按物品数均摊
+            _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
+            _rate_total = _ld_rate_totals.get(lr_id, 10000)
+            total_weight += _pool_weight / _shared / _rate_total
+        if found:
+            return total_weight
         return 0.0
 
     def _get_group_drop_rates(item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
@@ -1397,57 +1396,59 @@ def run():
             best_rate = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
-                for grade in (full_grade, 0):
-                    grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
-                    if not grade_data:
+                grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
+                if not grade_data:
+                    continue
+                for ld_id, lr_id, _ in grade_data:
+                    rate_items = _ld_rate_items.get(ld_id, {})
+                    if not rate_items:
                         continue
-                    for ld_id, lr_id, _ in grade_data:
-                        rate_items = _ld_rate_items.get(ld_id, {})
-                        if not rate_items:
-                            continue
-                        _lg_weights: dict[int, int] = {}
-                        for _item_name, (lg, _) in rate_items.items():
-                            _w = _ld_rate_weights.get(lr_id, {}).get(lg, 0)
-                            if _w > _lg_weights.get(lg, 0):
-                                _lg_weights[lg] = _w
-                        _rate_total = _ld_rate_totals.get(lr_id, 10000)
-                        for lg, w in _lg_weights.items():
-                            _shared = _ld_luck_grade_count.get((ld_id, lg), 1)
-                            r = w / _shared / _rate_total
-                            if r > best_rate:
-                                best_rate = r
+                    _lg_weights: dict[int, int] = {}
+                    for _item_name, (lg, _) in rate_items.items():
+                        _w = _ld_rate_weights.get(lr_id, {}).get(lg, 0)
+                        if _w > _lg_weights.get(lg, 0):
+                            _lg_weights[lg] = _w
+                    _rate_total = _ld_rate_totals.get(lr_id, 10000)
+                    for lg, w in _lg_weights.items():
+                        _shared = _ld_luck_grade_count.get((ld_id, lg), 1)
+                        r = w / _shared / _rate_total
+                        if r > best_rate:
+                            best_rate = r
             mode_rates[mode_name] = round(best_rate * 100, 1)
         return mode_rates
 
     def _compute_variant_rate(
-        ldg_id: str, luck_grade: int, full_grade: int, target_ld_id: str = "", _rt_cache: dict[str, int] | None = None
+        ldg_id: str,
+        luck_grade: int,
+        full_grade: int,
+        target_ld_id: str = "",
+        _rt_cache: dict[str, int] | None = None,
     ) -> float:
         """根据指定 luck_grade 直接计算爆率（用于游戏 JSON 中的变体）。
 
         target_ld_id: 限定只计算该 lootdrop 的条目，避免将同组其他 lootdrop 的权重累加。
         _rt_cache: lr_id → rate_total 缓存，同组变体共享同一分母确保归一化。
         """
-        for grade in (full_grade, 0):
-            grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
-            if not grade_data:
+        grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
+        if not grade_data:
+            return 0.0
+        total_weight = 0.0
+        found = False
+        for ld_id, lr_id, _ in grade_data:
+            if target_ld_id and ld_id != target_ld_id:
                 continue
-            total_weight = 0.0
-            found = False
-            for ld_id, lr_id, _ in grade_data:
-                if target_ld_id and ld_id != target_ld_id:
-                    continue
-                found = True
-                _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
-                if _pool_weight == 0:
-                    continue
-                _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
-                if _rt_cache is not None:
-                    _rate_total = _rt_cache.setdefault(lr_id, _ld_rate_totals.get(lr_id, 10000))
-                else:
-                    _rate_total = _ld_rate_totals.get(lr_id, 10000)
-                total_weight += _pool_weight / _shared / _rate_total
-            if found:
-                return total_weight
+            found = True
+            _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+            if _pool_weight == 0:
+                continue
+            _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
+            if _rt_cache is not None:
+                _rate_total = _rt_cache.setdefault(lr_id, _ld_rate_totals.get(lr_id, 10000))
+            else:
+                _rate_total = _ld_rate_totals.get(lr_id, 10000)
+            total_weight += _pool_weight / _shared / _rate_total
+        if found:
+            return total_weight
         return 0.0
 
     # 预加载 spawn_rate 缓存
