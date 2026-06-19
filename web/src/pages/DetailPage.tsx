@@ -445,9 +445,12 @@ export default function DetailPage() {
                               </span>
                             );
                           }
+                          const uniquePositions = new Set(
+                            mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
+                          );
                           return (
                             <span style={{ color: tokens.muted }}>
-                              ({vc.variant_count}点选1)
+                              ({uniquePositions.size}点选1)
                             </span>
                           );
                         })()}

@@ -974,7 +974,10 @@ export default function LootdropDetailPage() {
                                 if (names.length > 0) {
                                   return `(${names.join('、')}${vcDot.variant_count}种选1)`;
                                 }
-                                return `(${vcDot.variant_count}点选1)`;
+                                const uniquePositions = new Set(
+                                  mDots.map((d) => `${d.x},${d.y},${d.z}`)
+                                );
+                                return `(${uniquePositions.size}点选1)`;
                               }
                               return `(${mDots.length}点)`;
                             })()}
