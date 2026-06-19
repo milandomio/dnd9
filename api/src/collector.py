@@ -1419,10 +1419,13 @@ def run():
             mode_rates[mode_name] = round(best_rate * 100, 1)
         return mode_rates
 
-    def _compute_variant_rate(ldg_id: str, luck_grade: int, full_grade: int, target_ld_id: str = "") -> float:
+    def _compute_variant_rate(
+        ldg_id: str, luck_grade: int, full_grade: int, target_ld_id: str = "", _rt_cache: dict[str, int] | None = None
+    ) -> float:
         """根据指定 luck_grade 直接计算爆率（用于游戏 JSON 中的变体）。
 
         target_ld_id: 限定只计算该 lootdrop 的条目，避免将同组其他 lootdrop 的权重累加。
+        _rt_cache: lr_id → rate_total 缓存，同组变体共享同一分母确保归一化。
         """
         for grade in (full_grade, 0):
             grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
@@ -1436,7 +1439,10 @@ def run():
                 if _pool_weight == 0:
                     continue
                 _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
-                _rate_total = _ld_rate_totals.get(lr_id, 10000)
+                if _rt_cache is not None:
+                    _rate_total = _rt_cache.setdefault(lr_id, _ld_rate_totals.get(lr_id, 10000))
+                else:
+                    _rate_total = _ld_rate_totals.get(lr_id, 10000)
                 total_weight += _pool_weight / _shared * group_count / _rate_total
             if total_weight > 0:
                 return total_weight
@@ -1574,6 +1580,13 @@ def run():
                     coord_out["spawn_rate"] = _sr
                     merged[_merge_key]["coords"].append(coord_out)
         # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）
+        # 收集每个 entity 的最大变体数（用于 group_drop_info spawn_rate 修正）
+        _entity_max_variant: dict[str, int] = {}
+        for _m_data in merged.values():
+            _en = _m_data.get("entity_name", _m_data["name"])
+            for _c in _m_data["coords"]:
+                if "variant_count" in _c and _c["variant_count"] > 1:
+                    _entity_max_variant[_en] = max(_entity_max_variant.get(_en, 1), _c["variant_count"])
         _group_drop_info: dict[str, list[dict]] = {}
         for _base, _m_data in merged.items():
             _has_locked = _m_data.get("_has_locked", False)
@@ -1587,9 +1600,9 @@ def run():
                 if not _dr:
                     # 即使爆率为0，只要有该怪物在此分组有坐标就保留
                     _dr = {"PVE": 0, "普通": 0, "豪客赛": 0}
+                _en = _m_data.get("entity_name", _m_data["name"])
                 # For locked-merged entries: 取共同生成器中上锁+未上锁 spawn_rate 之和
                 if _has_locked:
-                    _en = _m_data.get("entity_name", _m_data["name"])
                     _locked_name = (
                         _en.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _en else _en + "_Locked"
                     )
@@ -1607,8 +1620,11 @@ def run():
                         else max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
                     )
                 else:
-                    _en = _m_data.get("entity_name", _m_data["name"])
                     _sr = max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
+                # 多变体 spawner：spawn_rate 除以变体数
+                _max_vc = _entity_max_variant.get(_en, 1)
+                if _max_vc > 1:
+                    _sr = round(_sr / _max_vc, 1)
                 _group_drop_info.setdefault(_g, []).append(
                     {
                         "translation": _m_data["translation"],
@@ -1907,6 +1923,18 @@ def run():
             if _v_sr == 0.0:
                 _v_sr = _base_sr
             _has_variant_entry = False
+            # 预计算 lr_id → rate_total 缓存，同组变体共享分母
+            _rt_cache: dict[str, int] = {}
+            for _ldg_id_i, _, _ in _v_ldg_lg:
+                for _mode_id_i, _ in DUNGEON_MODE_NAMES.items():
+                    if _mode_id_i == 4:
+                        continue
+                    for _g_i in _group_keys:
+                        for _suffix_i in MODULE_GROUP_FLOOR_SUFFIXES.get(_g_i, []):
+                            _full_grade_i = _mode_id_i * 1000 + _suffix_i
+                            for _grade_i in (_full_grade_i, 0):
+                                for _, _lr_id_i, _ in _ld_groups.get(_ldg_id_i, {}).get(_grade_i, []):
+                                    _rt_cache.setdefault(_lr_id_i, _ld_rate_totals.get(_lr_id_i, 10000))
             for _g in _group_keys:
                 _mode_rates: dict[str, float] = {}
                 _any_nonzero = False
@@ -1917,7 +1945,7 @@ def run():
                     for _suffix in MODULE_GROUP_FLOOR_SUFFIXES.get(_g, []):
                         _full_grade = _mode_id * 1000 + _suffix
                         for _ldg_id, _lg, _ld_id in _v_ldg_lg:
-                            _rate = _compute_variant_rate(_ldg_id, _lg, _full_grade, _ld_id)
+                            _rate = _compute_variant_rate(_ldg_id, _lg, _full_grade, _ld_id, _rt_cache)
                             if _rate > _best_rate:
                                 _best_rate = _rate
                     if _best_rate > 0:
@@ -2111,6 +2139,18 @@ def run():
             if _v_sr == 0.0:
                 _v_sr = _base_sr
             _has_variant_entry = False
+            # 预计算 lr_id → rate_total 缓存，同组变体共享分母
+            _rt_cache: dict[str, int] = {}
+            for _ldg_id_i, _, _ in _v_ldg_lg:
+                for _mode_id_i, _ in DUNGEON_MODE_NAMES.items():
+                    if _mode_id_i == 4:
+                        continue
+                    for _g_i in _group_keys:
+                        for _suffix_i in MODULE_GROUP_FLOOR_SUFFIXES.get(_g_i, []):
+                            _full_grade_i = _mode_id_i * 1000 + _suffix_i
+                            for _grade_i in (_full_grade_i, 0):
+                                for _, _lr_id_i, _ in _ld_groups.get(_ldg_id_i, {}).get(_grade_i, []):
+                                    _rt_cache.setdefault(_lr_id_i, _ld_rate_totals.get(_lr_id_i, 10000))
             for _g in _group_keys:
                 _mode_rates: dict[str, float] = {}
                 _any_nonzero = False
@@ -2121,7 +2161,7 @@ def run():
                     for _suffix in MODULE_GROUP_FLOOR_SUFFIXES.get(_g, []):
                         _full_grade = _mode_id * 1000 + _suffix
                         for _ldg_id, _lg, _ld_id in _v_ldg_lg:
-                            _rate = _compute_variant_rate(_ldg_id, _lg, _full_grade, _ld_id)
+                            _rate = _compute_variant_rate(_ldg_id, _lg, _full_grade, _ld_id, _rt_cache)
                             if _rate > _best_rate:
                                 _best_rate = _rate
                     if _best_rate > 0:
