@@ -107,8 +107,8 @@ git add <新文件> && git commit -am "WIP: <改动摘要>"
 git commit -am "WIP: <描述>"   # 1. checkpoint
 cd api && python main.py        # 2. 数据管道（自动交付到 data/）
 cd web && npm run build          # 3. 前端构建
-# 4. 启动web
-cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
+# 4. 启动web + 验证
+cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
 
 ### 仅前端改动
@@ -117,8 +117,8 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --po
 
 ```bash
 cd web && npm run build          # 1. 前端构建（含 TS 类型检查 + SSG）
-# 2. 启动web
-cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"
+# 2. 启动web + 验证
+cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
 
 ### 一键部署
