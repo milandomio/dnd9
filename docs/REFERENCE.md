@@ -307,7 +307,8 @@ Total = sum(所有 DropRate)
 **注意事项：**
 - 同一 `lootdrop_group` 在不同 `dungeon_grade` 下有不同 `lootdrop_rate_id`（如 `ID_Droprate_Herbs_1023` vs `ID_Droprate_Herbs_2023`），需按 grade 匹配
 - 同一变体可能出现在多个 lootdrop 文件中（如 Lifeleaf_2001 同时在 `ID_Lootdrop_Spawn_Lifeleaf` 和 `ID_Lootdrop_Drop_Herbs`），需限定只计算 spawner 对应的 group
-- HR（豪客赛）group 有独立的 rate 文件（如 `ID_Droprate_Spawn_Herbs_HR`），权重数值不同（总和可能为 100000 而非 10000）
+- HR group（如 `Id_LootDropGroup_Lifeleaf_HR`）在变体聚合时被排除：其仅有 grade 0 数据，会给所有模式相同爆率，覆盖主 group 的模式区分数据
+- 变体聚合用 `_new_gdi` 替换基础条目（而非追加），确保各变体爆率之和 = 100%
 - 默认变体（无后缀，如 `Lifeleaf`）如无爆率数据则不显示
 
 **计算逻辑：**
