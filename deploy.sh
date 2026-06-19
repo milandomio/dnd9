@@ -18,7 +18,7 @@ echo "[3/4] 启动web服务..."
 cd web
 kill $(lsof -t -i:8080) 2>/dev/null || true
 sleep 0.5
-(npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) || { echo "FAILED to start web"; exit 1; }
+nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & || { echo "FAILED to start web"; exit 1; }
 sleep 2
 HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/)
 if [ "$HTTP_CODE" = "200" ]; then
