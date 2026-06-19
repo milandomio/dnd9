@@ -1331,7 +1331,7 @@ def run():
                 continue
             total_weight = 0.0
             found = False
-            for ld_id, lr_id, group_count in grade_data:
+            for ld_id, lr_id, _ in grade_data:
                 rate_items = _ld_rate_items.get(ld_id, {})
                 item_info = rate_items.get(item_name)
                 if item_info is None:
@@ -1347,7 +1347,7 @@ def run():
                 # 权重是同 luck_grade 下所有物品共享的，按物品数均摊
                 _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
                 _rate_total = _ld_rate_totals.get(lr_id, 10000)
-                total_weight += _pool_weight / _shared * group_count * item_count / _rate_total
+                total_weight += _pool_weight / _shared / _rate_total
             if found:
                 return total_weight
         return 0.0
@@ -1401,7 +1401,7 @@ def run():
                     grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
                     if not grade_data:
                         continue
-                    for ld_id, lr_id, group_count in grade_data:
+                    for ld_id, lr_id, _ in grade_data:
                         rate_items = _ld_rate_items.get(ld_id, {})
                         if not rate_items:
                             continue
@@ -1413,7 +1413,7 @@ def run():
                         _rate_total = _ld_rate_totals.get(lr_id, 10000)
                         for lg, w in _lg_weights.items():
                             _shared = _ld_luck_grade_count.get((ld_id, lg), 1)
-                            r = w * group_count / _shared / _rate_total
+                            r = w / _shared / _rate_total
                             if r > best_rate:
                                 best_rate = r
             mode_rates[mode_name] = round(best_rate * 100, 1)
@@ -1432,7 +1432,7 @@ def run():
             if not grade_data:
                 continue
             total_weight = 0.0
-            for ld_id, lr_id, group_count in grade_data:
+            for ld_id, lr_id, _ in grade_data:
                 if target_ld_id and ld_id != target_ld_id:
                     continue
                 _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
@@ -1443,7 +1443,7 @@ def run():
                     _rate_total = _rt_cache.setdefault(lr_id, _ld_rate_totals.get(lr_id, 10000))
                 else:
                     _rate_total = _ld_rate_totals.get(lr_id, 10000)
-                total_weight += _pool_weight / _shared * group_count / _rate_total
+                total_weight += _pool_weight / _shared / _rate_total
             if total_weight > 0:
                 return total_weight
         return 0.0
