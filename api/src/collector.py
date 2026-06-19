@@ -1845,6 +1845,14 @@ def run():
         if not _existing_gdi:
             continue
         _group_keys = list(_existing_gdi.keys())
+        # 从已有条目获取 spawn_rate（变体条目继承）
+        _base_sr = 0.0
+        for _entries in _existing_gdi.values():
+            if _entries:
+                _base_sr = _entries[0].get("spawn_rate", 0.0)
+                break
+        # 用新 dict 收集变体条目，替换基础条目（避免叠加超 100%）
+        _new_gdi: dict[str, list[dict]] = {}
         _has_new = False
         for _vname in sorted(_variants):
             # 获取变体稀有度翻译
@@ -1886,20 +1894,18 @@ def run():
                             _v_ldg_lg.append((_gid, _lg, _ld_id))
             if not _v_ldg_lg:
                 continue
-            # 仅保留该物品 spawner 对应的 group（及 _HR 变体），
+            # 仅保留该物品 spawner 对应的 group，
             # 避免将其他 group（如 GiantWorm）的权重混入
+            # 排除 _HR group：其 grade 0 数据会给所有模式相同爆率，覆盖主 group 的模式区分数据
             _spawner_ldg_id = _spawner_ldg.get(_base, "")
             if _spawner_ldg_id:
-                _allowed_ldgs = {_spawner_ldg_id, _spawner_ldg_id + "_HR"}
+                _allowed_ldgs = {_spawner_ldg_id}
                 _v_ldg_lg = [(g, lg, ld) for g, lg, ld in _v_ldg_lg if g in _allowed_ldgs]
             if not _v_ldg_lg:
                 continue
             _v_sr = _spawn_rate_cache.get(_vname, 0.0)
             if _v_sr == 0.0:
-                for _entries in _existing_gdi.values():
-                    if _entries:
-                        _v_sr = _entries[0].get("spawn_rate", 0.0)
-                        break
+                _v_sr = _base_sr
             _has_variant_entry = False
             for _g in _group_keys:
                 _mode_rates: dict[str, float] = {}
@@ -1918,7 +1924,7 @@ def run():
                         _any_nonzero = True
                     _mode_rates[_mode_name] = round(_best_rate * 100, 1)
                 if _any_nonzero:
-                    _existing_gdi.setdefault(_g, []).append(
+                    _new_gdi.setdefault(_g, []).append(
                         {
                             "translation": _v_trans,
                             "spawn_rate": _v_sr,
@@ -1929,7 +1935,7 @@ def run():
             if _has_variant_entry:
                 _has_new = True
         if _has_new:
-            _edata["group_drop_info"] = _existing_gdi
+            _edata["group_drop_info"] = _new_gdi
             with open(_item_file, "w") as _f:
                 json.dump(_edata, _f, ensure_ascii=False, indent=2)
             _variant_count += 1
@@ -2047,6 +2053,14 @@ def run():
         if not _variants:
             continue
         _group_keys = list(_existing_gdi.keys())
+        # 从已有条目获取 spawn_rate（变体条目继承）
+        _base_sr = 0.0
+        for _entries in _existing_gdi.values():
+            if _entries:
+                _base_sr = _entries[0].get("spawn_rate", 0.0)
+                break
+        # 用新 dict 收集变体条目，替换基础条目（避免叠加超 100%）
+        _new_gdi: dict[str, list[dict]] = {}
         _has_new = False
         for _vname in sorted(_variants):
             if _vname not in _rarity_cache:
@@ -2085,19 +2099,17 @@ def run():
                             _v_ldg_lg.append((_gid, _lg, _ld_id))
             if not _v_ldg_lg:
                 continue
-            # 仅保留该物品 spawner 对应的 group（及 _HR 变体）
+            # 仅保留该物品 spawner 对应的 group，
+            # 排除 _HR group：其 grade 0 数据会给所有模式相同爆率，覆盖主 group 的模式区分数据
             _spawner_ldg_id = _spawner_ldg.get(_base, "")
             if _spawner_ldg_id:
-                _allowed_ldgs = {_spawner_ldg_id, _spawner_ldg_id + "_HR"}
+                _allowed_ldgs = {_spawner_ldg_id}
                 _v_ldg_lg = [(g, lg, ld) for g, lg, ld in _v_ldg_lg if g in _allowed_ldgs]
             if not _v_ldg_lg:
                 continue
             _v_sr = _spawn_rate_cache.get(_vname, 0.0)
             if _v_sr == 0.0:
-                for _entries in _existing_gdi.values():
-                    if _entries:
-                        _v_sr = _entries[0].get("spawn_rate", 0.0)
-                        break
+                _v_sr = _base_sr
             _has_variant_entry = False
             for _g in _group_keys:
                 _mode_rates: dict[str, float] = {}
@@ -2116,7 +2128,7 @@ def run():
                         _any_nonzero = True
                     _mode_rates[_mode_name] = round(_best_rate * 100, 1)
                 if _any_nonzero:
-                    _existing_gdi.setdefault(_g, []).append(
+                    _new_gdi.setdefault(_g, []).append(
                         {
                             "translation": _v_trans,
                             "spawn_rate": _v_sr,
@@ -2127,7 +2139,7 @@ def run():
             if _has_variant_entry:
                 _has_new = True
         if _has_new:
-            _edata["group_drop_info"] = _existing_gdi
+            _edata["group_drop_info"] = _new_gdi
             with open(_pfile, "w") as _f:
                 json.dump(_edata, _f, ensure_ascii=False, indent=2)
             _prop_variant += 1
