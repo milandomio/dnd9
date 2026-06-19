@@ -276,14 +276,14 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 > 无以上变体时保留后缀最靠前的条目。`_compute_drop_rate()` 先用基础名查找，
 > 未命中则依次尝试 `_5001` / `_4001` / `_3001` 后缀。
 
-**多变体爆率展示（已修复 bd5e08e）：**
+**多变体爆率展示：**
 
-`variant_count > 1` 的物品（如 Lifeleaf 有 7 个变体）需在详情页展示所有有爆率的变体。
+`variant_count > 1` 的物品/道具需在详情页展示所有有爆率的变体，各变体爆率之和 = 100%。
 
 **变体查找链路：**
-1. `spawner_entries` → `entity_name='Lifeleaf'` → `lootdrop_group_id='Id_LootDropGroup_Lifeleaf'`
-2. 游戏 JSON `LOOTDROP_DIR/ID_Lootdrop_Spawn_Lifeleaf.json` → `LootDropItemArray` 包含所有变体（Lifeleaf_1001~7001）
-3. 用清洗后的基础名 `Lifeleaf` 在 `_lootdrop_variants` 中倒查所有变体名 + `LuckGrade`
+1. `spawner_entries` → `entity_name` → `lootdrop_group_id`（精确匹配，不加 `_HR` 后缀）
+2. 游戏 JSON `LOOTDROP_DIR/ID_Lootdrop_Spawn_{name}.json` → `LootDropItemArray` 包含所有变体
+3. 用基础名在 `_lootdrop_variants` 中倒查所有变体名 + `LuckGrade`
 
 **爆率计算公式：**
 
@@ -297,19 +297,20 @@ Total = sum(所有 DropRate)
 变体爆率 = DropRate / Total
 ```
 
-示例（`ID_Droprate_Herbs_2023.json`，Total=10000）：
-- lg=2(优秀): 5000/10000 → 50%
-- lg=3(罕见): 4000/10000 → 40%
-- lg=4(史诗): 1000/10000 → 10%
+示例（Lifeleaf，`ID_Droprate_Herbs` 系列）：
 
-> **历史 bug：** 旧公式使用硬编码 `/10000.0` 作为分母，但 HR rate_id（如 `ID_Droprate_Spawn_Herbs_HR`）权重总和为 100000 而非 10000，导致结果偏高 10 倍（600%→60%、400%→40%）。修复方式：预计算 `_ld_rate_totals` 替代硬编码。
+| 变体 | lg | PVE (1023) | 普通 (2023) | 豪客赛 (3023) |
+|------|----|-----------|------------|-------------|
+| 普通 | 2  | 60%       | 50%        | 25%         |
+| 优秀 | 3  | 35%       | 40%        | 55%         |
+| 罕见 | 4  | 5%        | 10%        | 20%         |
+| 合计 | —  | 100%      | 100%       | 100%        |
 
 **注意事项：**
 - 同一 `lootdrop_group` 在不同 `dungeon_grade` 下有不同 `lootdrop_rate_id`（如 `ID_Droprate_Herbs_1023` vs `ID_Droprate_Herbs_2023`），需按 grade 匹配
-- 同一变体可能出现在多个 lootdrop 文件中（如 Lifeleaf_2001 同时在 `ID_Lootdrop_Spawn_Lifeleaf` 和 `ID_Lootdrop_Drop_Herbs`），需限定只计算 spawner 对应的 group
-- HR group（如 `Id_LootDropGroup_Lifeleaf_HR`）在变体聚合时被排除：其仅有 grade 0 数据，会给所有模式相同爆率，覆盖主 group 的模式区分数据
+- 同一变体可能出现在多个 lootdrop 文件中（如 Lifeleaf_2001 同时在 `ID_Lootdrop_Spawn_Lifeleaf` 和 `ID_Lootdrop_Drop_Herbs`），需用 spawner 的 `lootdrop_group_id` 精确匹配，不加 `_HR` 后缀
 - 变体聚合用 `_new_gdi` 替换基础条目（而非追加），确保各变体爆率之和 = 100%
-- 默认变体（无后缀，如 `Lifeleaf`）如无爆率数据则不显示
+- 默认变体（无后缀）如无爆率数据则不显示
 
 **计算逻辑：**
 
