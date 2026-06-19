@@ -1308,6 +1308,11 @@ def run():
     ):
         _ld_rate_weights.setdefault(_row["rate_id"], {})[_row["luck_grade"]] = _row["total"]
 
+    # 每个 rate_id 的权重总和（用于归一化爆率）
+    _ld_rate_totals: dict[str, int] = {}
+    for _rid, _grades in _ld_rate_weights.items():
+        _ld_rate_totals[_rid] = sum(_w for _w in _grades.values() if _w > 0) or 10000
+
     _log(
         f"[JSON] preloaded: {len(_ld_groups)} groups, {len(_ld_rate_items)} rate items, {len(_ld_rate_weights)} rate weights"
     )
@@ -1341,9 +1346,10 @@ def run():
                 _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
                 # 权重是同 luck_grade 下所有物品共享的，按物品数均摊
                 _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
-                total_weight += _pool_weight / _shared * group_count * item_count
+                _rate_total = _ld_rate_totals.get(lr_id, 10000)
+                total_weight += _pool_weight / _shared * group_count * item_count / _rate_total
             if found:
-                return total_weight / 10000.0
+                return total_weight
         return 0.0
 
     def _get_group_drop_rates(item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
@@ -1404,9 +1410,10 @@ def run():
                             _w = _ld_rate_weights.get(lr_id, {}).get(lg, 0)
                             if _w > _lg_weights.get(lg, 0):
                                 _lg_weights[lg] = _w
+                        _rate_total = _ld_rate_totals.get(lr_id, 10000)
                         for lg, w in _lg_weights.items():
                             _shared = _ld_luck_grade_count.get((ld_id, lg), 1)
-                            r = w * group_count / _shared / 10000.0
+                            r = w * group_count / _shared / _rate_total
                             if r > best_rate:
                                 best_rate = r
             mode_rates[mode_name] = round(best_rate * 100, 1)
@@ -1429,9 +1436,10 @@ def run():
                 if _pool_weight == 0:
                     continue
                 _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
-                total_weight += _pool_weight / _shared * group_count
+                _rate_total = _ld_rate_totals.get(lr_id, 10000)
+                total_weight += _pool_weight / _shared * group_count / _rate_total
             if total_weight > 0:
-                return total_weight / 10000.0
+                return total_weight
         return 0.0
 
     # 预加载 spawn_rate 缓存
