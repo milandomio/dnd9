@@ -1271,12 +1271,21 @@ def run():
 
     # spawner_keyword / entity_name → lootdrop_group_id
     _spawner_ldg: dict[str, str] = {}
+    # stripped ore name → lootdrop_group_id (e.g. "CopperOre" → "Id_LootDropGroup_CopperOre")
+    _ore_ldg: dict[str, str] = {}
     for _row in _c.execute(
         "SELECT DISTINCT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
     ):
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
             if _key and _key not in _spawner_ldg:
                 _spawner_ldg[_key] = _row["lootdrop_group_id"]
+        # Build ore stripped-name mapping for props that use _ORE_QUALITY_RE
+        for _key in (_row["spawner_keyword"], _row["entity_name"]):
+            _m = _ORE_QUALITY_RE.match(_key)
+            if _m:
+                _stripped = _m.group(1)
+                if _stripped and _stripped not in _ore_ldg:
+                    _ore_ldg[_stripped] = _row["lootdrop_group_id"]
 
     # lootdrop_groups: {group_id: {dungeon_grade: [(lootdrop_id, lootdrop_rate_id, drop_count)]}}
     _ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
@@ -1463,6 +1472,12 @@ def run():
         for _key in (sk, en):
             if _key and sr > _spawn_rate_cache.get(_key, 0):
                 _spawn_rate_cache[_key] = sr
+        # Also map stripped ore name → max spawn_rate (only from entity_name, not spawner_keyword)
+        _om = _ORE_QUALITY_RE.match(en)
+        if _om:
+            _oname = _om.group(1)
+            if _oname and sr > _spawn_rate_cache.get(_oname, 0):
+                _spawn_rate_cache[_oname] = sr
         if sk and en:
             _pair = (sk, en)
             if sr > _spawn_rate_detail.get(_pair, 0):
@@ -2038,6 +2053,8 @@ def run():
                 if _k.lower() == _lower:
                     _ldg_id = _v
                     break
+        if not _ldg_id:
+            _ldg_id = _ore_ldg.get(_pname, "")
         if not _ldg_id:
             continue
         _coords = _edata.get("coords", [])
