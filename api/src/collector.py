@@ -1598,13 +1598,6 @@ def run():
                     coord_out["spawn_rate"] = _sr
                     merged[_merge_key]["coords"].append(coord_out)
         # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）
-        # 收集每个 entity 的最大变体数（用于 group_drop_info spawn_rate 修正）
-        _entity_max_variant: dict[str, int] = {}
-        for _m_data in merged.values():
-            _en = _m_data.get("entity_name", _m_data["name"])
-            for _c in _m_data["coords"]:
-                if "variant_count" in _c and _c["variant_count"] > 1:
-                    _entity_max_variant[_en] = max(_entity_max_variant.get(_en, 1), _c["variant_count"])
         _group_drop_info: dict[str, list[dict]] = {}
         for _base, _m_data in merged.items():
             _has_locked = _m_data.get("_has_locked", False)
@@ -1639,10 +1632,6 @@ def run():
                     )
                 else:
                     _sr = max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
-                # 多变体 spawner：spawn_rate 除以变体数
-                _max_vc = _entity_max_variant.get(_en, 1)
-                if _max_vc > 1:
-                    _sr = round(_sr / _max_vc, 1)
                 _group_drop_info.setdefault(_g, []).append(
                     {
                         "translation": _m_data["translation"],
