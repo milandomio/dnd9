@@ -241,7 +241,7 @@ export default function DetailPage() {
                   >
                     {GROUP_LABELS[groupName] || groupName}
                   </span>
-                  {(entity as ItemEntity).group_drop_info?.[groupName] && (
+                  {entity.group_drop_info?.[groupName] && (
                     <span
                       style={{
                         fontSize: 13,
@@ -251,9 +251,7 @@ export default function DetailPage() {
                     >
                       参考爆率：
                       {(
-                        (entity as ItemEntity).group_drop_info![
-                          groupName
-                        ] as GroupDropInfo[]
+                        entity.group_drop_info![groupName] as GroupDropInfo[]
                       ).map((info, gi) => (
                         <span
                           key={gi}
@@ -372,7 +370,7 @@ export default function DetailPage() {
                   />
                   {(() => {
                     const g = mod?.group || '';
-                    const gdi = (entity as ItemEntity).group_drop_info?.[g];
+                    const gdi = entity.group_drop_info?.[g];
                     if (!gdi || gdi.length === 0) return null;
                     const hasVariant = mapCoords.some(
                       (c) => c.variant_count && c.variant_count > 1

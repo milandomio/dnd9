@@ -1379,6 +1379,61 @@ def run():
             mode_rates[mode_name] = round(best_rate * 100, 1)
         return mode_rates
 
+    def _compute_group_drop_rates(ldg_id: str, group_key: str) -> dict[str, float]:
+        """计算某 lootdrop group 在某地图分组下所有物品的聚合爆率。"""
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        if not suffixes:
+            return {}
+        mode_rates: dict[str, float] = {}
+        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+            if mode_id == 4:
+                continue
+            best_rate = 0.0
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                for grade in (full_grade, 0):
+                    grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
+                    if not grade_data:
+                        continue
+                    for ld_id, lr_id, group_count in grade_data:
+                        rate_items = _ld_rate_items.get(ld_id, {})
+                        if not rate_items:
+                            continue
+                        _lg_weights: dict[int, int] = {}
+                        for _item_name, (lg, _) in rate_items.items():
+                            _w = _ld_rate_weights.get(lr_id, {}).get(lg, 0)
+                            if _w > _lg_weights.get(lg, 0):
+                                _lg_weights[lg] = _w
+                        for lg, w in _lg_weights.items():
+                            _shared = _ld_luck_grade_count.get((ld_id, lg), 1)
+                            r = w * group_count / _shared / 10000.0
+                            if r > best_rate:
+                                best_rate = r
+            mode_rates[mode_name] = round(best_rate * 100, 1)
+        return mode_rates
+
+    def _compute_variant_rate(ldg_id: str, luck_grade: int, full_grade: int, target_ld_id: str = "") -> float:
+        """根据指定 luck_grade 直接计算爆率（用于游戏 JSON 中的变体）。
+
+        target_ld_id: 限定只计算该 lootdrop 的条目，避免将同组其他 lootdrop 的权重累加。
+        """
+        for grade in (full_grade, 0):
+            grade_data = _ld_groups.get(ldg_id, {}).get(grade, [])
+            if not grade_data:
+                continue
+            total_weight = 0.0
+            for ld_id, lr_id, group_count in grade_data:
+                if target_ld_id and ld_id != target_ld_id:
+                    continue
+                _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+                if _pool_weight == 0:
+                    continue
+                _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
+                total_weight += _pool_weight / _shared * group_count
+            if total_weight > 0:
+                return total_weight / 10000.0
+        return 0.0
+
     # 预加载 spawn_rate 缓存
     _spawn_rate_cache: dict[str, float] = {}
     _spawn_rate_detail: dict[tuple[str, str], float] = {}
@@ -1722,6 +1777,381 @@ def run():
                 json.dump(_entity_data, _f, ensure_ascii=False, indent=2)
             _direct_count += 1
     _log(f"[JSON] computed group_drop_info for {_direct_count} direct-spawn items")
+
+    # ── 变体爆率聚合：为 variant_count > 1 的物品追加所有变体条目 ──
+    _log("[JSON] aggregating variant drop rates...")
+    # 反向查找：lootdrop_id → set of group_id
+    _ld_id_to_groups: dict[str, set[str]] = {}
+    for _gid, _grades in _ld_groups.items():
+        for _grade_entries in _grades.values():
+            for _ld_id, _, _ in _grade_entries:
+                _ld_id_to_groups.setdefault(_ld_id, set()).add(_gid)
+    # 从游戏 JSON 读取所有 lootdrop 的完整变体列表（绕过去重）
+    # lootdrop_id → [(item_name, luck_grade, item_count)]
+    _lootdrop_variants: dict[str, list[tuple[str, int, int]]] = {}
+    for _ld_file in LOOTDROP_DIR.glob("*.json"):
+        try:
+            with open(_ld_file) as _f:
+                _ld_data = json.load(_f)
+            _ld_name = _ld_data[0]["Name"]
+            _arr = _ld_data[0].get("Properties", {}).get("LootDropItemArray", [])
+            _entries: list[tuple[str, int, int]] = []
+            for _entry in _arr:
+                _asset = _entry.get("ItemId", {}).get("AssetPathName", "")
+                if not _asset:
+                    continue
+                _raw = _asset.rsplit("/", 1)[-1].split(".")[0]
+                _name = _raw.removeprefix("Id_Item_").removeprefix("Id_")
+                _lg = _entry.get("LuckGrade", 0)
+                _cnt = _entry.get("ItemCount", 1)
+                _entries.append((_name, _lg, _cnt))
+            if _entries:
+                _lootdrop_variants[_ld_name] = _entries
+        except Exception:
+            pass
+    # 收集所有变体名（按基础名分组），来自游戏 JSON
+    _variant_items: dict[str, set[str]] = {}
+    for _ld_id, _entries in _lootdrop_variants.items():
+        for _vname, _, _ in _entries:
+            _m = re.match(r"^(.+)_(\d{4})$", _vname)
+            if _m:
+                _variant_items.setdefault(_m.group(1), set()).add(_vname)
+    # 同时从 DB 补充（处理 DB 有但游戏 JSON 可能遗漏的边界情况）
+    for _ld_id, _items in _ld_rate_items.items():
+        for _vname in _items:
+            _m = re.match(r"^(.+)_(\d{4})$", _vname)
+            if _m:
+                _variant_items.setdefault(_m.group(1), set()).add(_vname)
+    _rarity_cache: dict[str, str] = {}
+    _variant_count = 0
+    for _item_file in (OUTPUT_DIR / "items").glob("*.json"):
+        with open(_item_file) as _f:
+            _edata = json.load(_f)
+        if _edata.get("variant_count", 1) <= 1:
+            continue
+        _base = _edata["name"]
+        _variants = _variant_items.get(_base, set())
+        if not _variants:
+            continue
+        _existing_gdi = _edata.get("group_drop_info", {})
+        if not _existing_gdi:
+            continue
+        _group_keys = list(_existing_gdi.keys())
+        _has_new = False
+        for _vname in sorted(_variants):
+            # 获取变体稀有度翻译
+            if _vname not in _rarity_cache:
+                _rarity_cache[_vname] = ""
+                try:
+                    _vfile = ITEM_DIR / f"Id_Item_{_vname}.json"
+                    if _vfile.exists():
+                        with open(_vfile) as _vf:
+                            _vdata = json.load(_vf)
+                        _props = _vdata[0].get("Properties", {})
+                        _rarity_tag = _props.get("RarityType", {})
+                        if isinstance(_rarity_tag, dict):
+                            _tag = _rarity_tag.get("TagName", "")
+                            if ".Rarity." in _tag:
+                                _rarity_raw = _tag.split(".Rarity.")[-1]
+                                _rarity_key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{_rarity_raw}"
+                                _rarity_cache[_vname] = translations.get(_rarity_key, _rarity_raw)
+                except Exception:
+                    pass
+            _rarity = _rarity_cache[_vname]
+            _v_trans = _edata["translation"]
+            if _rarity:
+                _v_trans = f"{_edata['translation']}({_rarity})"
+            # 查找变体所属的 lootdrop group + luck_grade + lootdrop_id
+            # （优先从游戏 JSON，回退到 DB）
+            _v_ldg_lg: list[tuple[str, int, str]] = []
+            for _ld_id, _entries in _lootdrop_variants.items():
+                for _ename, _lg, _ in _entries:
+                    if _vname == _ename:
+                        for _gid in _ld_id_to_groups.get(_ld_id, set()):
+                            _v_ldg_lg.append((_gid, _lg, _ld_id))
+                        break
+            if not _v_ldg_lg:
+                for _ld_id, _items_in_ld in _ld_rate_items.items():
+                    if _vname in _items_in_ld:
+                        _lg = _items_in_ld[_vname][0]
+                        for _gid in _ld_id_to_groups.get(_ld_id, set()):
+                            _v_ldg_lg.append((_gid, _lg, _ld_id))
+            if not _v_ldg_lg:
+                continue
+            # 仅保留该物品 spawner 对应的 group（及 _HR 变体），
+            # 避免将其他 group（如 GiantWorm）的权重混入
+            _spawner_ldg_id = _spawner_ldg.get(_base, "")
+            if _spawner_ldg_id:
+                _allowed_ldgs = {_spawner_ldg_id, _spawner_ldg_id + "_HR"}
+                _v_ldg_lg = [(g, lg, ld) for g, lg, ld in _v_ldg_lg if g in _allowed_ldgs]
+            if not _v_ldg_lg:
+                continue
+            _v_sr = _spawn_rate_cache.get(_vname, 0.0)
+            if _v_sr == 0.0:
+                for _entries in _existing_gdi.values():
+                    if _entries:
+                        _v_sr = _entries[0].get("spawn_rate", 0.0)
+                        break
+            _has_variant_entry = False
+            for _g in _group_keys:
+                _mode_rates: dict[str, float] = {}
+                _any_nonzero = False
+                for _mode_id, _mode_name in DUNGEON_MODE_NAMES.items():
+                    if _mode_id == 4:
+                        continue
+                    _best_rate = 0.0
+                    for _suffix in MODULE_GROUP_FLOOR_SUFFIXES.get(_g, []):
+                        _full_grade = _mode_id * 1000 + _suffix
+                        for _ldg_id, _lg, _ld_id in _v_ldg_lg:
+                            _rate = _compute_variant_rate(_ldg_id, _lg, _full_grade, _ld_id)
+                            if _rate > _best_rate:
+                                _best_rate = _rate
+                    if _best_rate > 0:
+                        _any_nonzero = True
+                    _mode_rates[_mode_name] = round(_best_rate * 100, 1)
+                if _any_nonzero:
+                    _existing_gdi.setdefault(_g, []).append(
+                        {
+                            "translation": _v_trans,
+                            "spawn_rate": _v_sr,
+                            "drop_rates": _mode_rates,
+                        }
+                    )
+                    _has_variant_entry = True
+            if _has_variant_entry:
+                _has_new = True
+        if _has_new:
+            _edata["group_drop_info"] = _existing_gdi
+            with open(_item_file, "w") as _f:
+                json.dump(_edata, _f, ensure_ascii=False, indent=2)
+            _variant_count += 1
+    _log(f"[JSON] aggregated variant drop rates for {_variant_count} items")
+
+    # ── 更新怪物实体 JSON，添加 group_drop_info ──
+    _log("[JSON] updating monster entities with group drop info...")
+    _mon_update = 0
+    for _mfile in (OUTPUT_DIR / "monsters").glob("*.json"):
+        with open(_mfile) as _f:
+            _edata = json.load(_f)
+        _mname = _edata["name"]
+        # 查找 lootdrop_group_id（含后缀回退）
+        _ldg_id = _spawner_ldg.get(_mname, "")
+        if not _ldg_id:
+            for _suffix in ("_Elite", "_Nightmare", "_Common"):
+                _ldg_id = _spawner_ldg.get(_mname + _suffix, "")
+                if _ldg_id:
+                    break
+        if not _ldg_id:
+            _lower = _mname.lower()
+            for _k, _v in _spawner_ldg.items():
+                if _k.lower() == _lower:
+                    _ldg_id = _v
+                    break
+        if not _ldg_id:
+            continue
+        _coords = _edata.get("coords", [])
+        if not _coords:
+            continue
+        _seen_groups: set[str] = set()
+        for _c in _coords:
+            _g = _map_base_to_group.get(_c["map"], "")
+            if _g:
+                _seen_groups.add(_g)
+        if not _seen_groups:
+            continue
+        _group_drop_info: dict[str, list[dict]] = {}
+        _sr = _spawn_rate_cache.get(_mname, 0.0)
+        for _g in _seen_groups:
+            _dr = _compute_group_drop_rates(_ldg_id, _g)
+            if not _dr and not _sr:
+                continue
+            _group_drop_info[_g] = [
+                {
+                    "translation": _edata["translation"],
+                    "spawn_rate": _sr,
+                    "drop_rates": _dr,
+                }
+            ]
+        if _group_drop_info:
+            _edata["group_drop_info"] = _group_drop_info
+            with open(_mfile, "w") as _f:
+                json.dump(_edata, _f, ensure_ascii=False, indent=2)
+            _mon_update += 1
+    _log(f"[JSON] updated {_mon_update} monster entities with group drop info")
+
+    # ── 更新实体（props）JSON，添加 group_drop_info ──
+    _log("[JSON] updating props entities with group drop info...")
+    _prop_update = 0
+    for _pfile in (OUTPUT_DIR / "props").glob("*.json"):
+        with open(_pfile) as _f:
+            _edata = json.load(_f)
+        _pname = _edata["name"]
+        _ldg_id = _spawner_ldg.get(_pname, "")
+        if not _ldg_id:
+            _lower = _pname.lower()
+            for _k, _v in _spawner_ldg.items():
+                if _k.lower() == _lower:
+                    _ldg_id = _v
+                    break
+        if not _ldg_id:
+            continue
+        _coords = _edata.get("coords", [])
+        if not _coords:
+            continue
+        _seen_groups: set[str] = set()
+        for _c in _coords:
+            _g = _map_base_to_group.get(_c["map"], "")
+            if _g:
+                _seen_groups.add(_g)
+        if not _seen_groups:
+            continue
+        _group_drop_info: dict[str, list[dict]] = {}
+        _sr = _spawn_rate_cache.get(_pname, 0.0)
+        for _g in _seen_groups:
+            _dr = _compute_group_drop_rates(_ldg_id, _g)
+            if not _dr and not _sr:
+                continue
+            _group_drop_info[_g] = [
+                {
+                    "translation": _edata["translation"],
+                    "spawn_rate": _sr,
+                    "drop_rates": _dr,
+                }
+            ]
+        if _group_drop_info:
+            _edata["group_drop_info"] = _group_drop_info
+            with open(_pfile, "w") as _f:
+                json.dump(_edata, _f, ensure_ascii=False, indent=2)
+            _prop_update += 1
+    _log(f"[JSON] updated {_prop_update} props entities with group drop info")
+
+    # ── props 变体爆率聚合 ──
+    _log("[JSON] aggregating variant drop rates for props...")
+    _prop_variant = 0
+    for _pfile in (OUTPUT_DIR / "props").glob("*.json"):
+        with open(_pfile) as _f:
+            _edata = json.load(_f)
+        _existing_gdi = _edata.get("group_drop_info", {})
+        if not _existing_gdi:
+            continue
+        _base = _edata["name"]
+        _variants = _variant_items.get(_base, set())
+        if not _variants:
+            continue
+        _group_keys = list(_existing_gdi.keys())
+        _has_new = False
+        for _vname in sorted(_variants):
+            if _vname not in _rarity_cache:
+                _rarity_cache[_vname] = ""
+                try:
+                    _vfile = ITEM_DIR / f"Id_Item_{_vname}.json"
+                    if _vfile.exists():
+                        with open(_vfile) as _vf:
+                            _vdata = json.load(_vf)
+                        _props = _vdata[0].get("Properties", {})
+                        _rarity_tag = _props.get("RarityType", {})
+                        if isinstance(_rarity_tag, dict):
+                            _tag = _rarity_tag.get("TagName", "")
+                            if ".Rarity." in _tag:
+                                _rarity_raw = _tag.split(".Rarity.")[-1]
+                                _rarity_key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{_rarity_raw}"
+                                _rarity_cache[_vname] = translations.get(_rarity_key, _rarity_raw)
+                except Exception:
+                    pass
+            _rarity = _rarity_cache[_vname]
+            _v_trans = _edata["translation"]
+            if _rarity:
+                _v_trans = f"{_edata['translation']}({_rarity})"
+            _v_ldg_lg: list[tuple[str, int, str]] = []
+            for _ld_id, _entries in _lootdrop_variants.items():
+                for _ename, _lg, _ in _entries:
+                    if _vname == _ename:
+                        for _gid in _ld_id_to_groups.get(_ld_id, set()):
+                            _v_ldg_lg.append((_gid, _lg, _ld_id))
+                        break
+            if not _v_ldg_lg:
+                for _ld_id, _items_in_ld in _ld_rate_items.items():
+                    if _vname in _items_in_ld:
+                        _lg = _items_in_ld[_vname][0]
+                        for _gid in _ld_id_to_groups.get(_ld_id, set()):
+                            _v_ldg_lg.append((_gid, _lg, _ld_id))
+            if not _v_ldg_lg:
+                continue
+            # 仅保留该物品 spawner 对应的 group（及 _HR 变体）
+            _spawner_ldg_id = _spawner_ldg.get(_base, "")
+            if _spawner_ldg_id:
+                _allowed_ldgs = {_spawner_ldg_id, _spawner_ldg_id + "_HR"}
+                _v_ldg_lg = [(g, lg, ld) for g, lg, ld in _v_ldg_lg if g in _allowed_ldgs]
+            if not _v_ldg_lg:
+                continue
+            _v_sr = _spawn_rate_cache.get(_vname, 0.0)
+            if _v_sr == 0.0:
+                for _entries in _existing_gdi.values():
+                    if _entries:
+                        _v_sr = _entries[0].get("spawn_rate", 0.0)
+                        break
+            _has_variant_entry = False
+            for _g in _group_keys:
+                _mode_rates: dict[str, float] = {}
+                _any_nonzero = False
+                for _mode_id, _mode_name in DUNGEON_MODE_NAMES.items():
+                    if _mode_id == 4:
+                        continue
+                    _best_rate = 0.0
+                    for _suffix in MODULE_GROUP_FLOOR_SUFFIXES.get(_g, []):
+                        _full_grade = _mode_id * 1000 + _suffix
+                        for _ldg_id, _lg, _ld_id in _v_ldg_lg:
+                            _rate = _compute_variant_rate(_ldg_id, _lg, _full_grade, _ld_id)
+                            if _rate > _best_rate:
+                                _best_rate = _rate
+                    if _best_rate > 0:
+                        _any_nonzero = True
+                    _mode_rates[_mode_name] = round(_best_rate * 100, 1)
+                if _any_nonzero:
+                    _existing_gdi.setdefault(_g, []).append(
+                        {
+                            "translation": _v_trans,
+                            "spawn_rate": _v_sr,
+                            "drop_rates": _mode_rates,
+                        }
+                    )
+                    _has_variant_entry = True
+            if _has_variant_entry:
+                _has_new = True
+        if _has_new:
+            _edata["group_drop_info"] = _existing_gdi
+            with open(_pfile, "w") as _f:
+                json.dump(_edata, _f, ensure_ascii=False, indent=2)
+            _prop_variant += 1
+    _log(f"[JSON] aggregated variant drop rates for {_prop_variant} props")
+
+    # ── 清理：移除所有爆率为 0 的条目 ──
+    _log("[JSON] cleaning up zero-rate entries...")
+    _clean_count = 0
+    for _subdir in ("items", "props", "monsters"):
+        for _efile in (OUTPUT_DIR / _subdir).glob("*.json"):
+            with open(_efile) as _f:
+                _edata = json.load(_f)
+            _gdi = _edata.get("group_drop_info")
+            if not _gdi:
+                continue
+            _changed = False
+            _new_gdi: dict[str, list[dict]] = {}
+            for _g, _entries in _gdi.items():
+                _filtered = [e for e in _entries if any(v > 0 for v in e.get("drop_rates", {}).values())]
+                if _filtered:
+                    _new_gdi[_g] = _filtered
+                if len(_filtered) != len(_entries):
+                    _changed = True
+            if _changed:
+                if _new_gdi:
+                    _edata["group_drop_info"] = _new_gdi
+                else:
+                    del _edata["group_drop_info"]
+                with open(_efile, "w") as _f:
+                    json.dump(_edata, _f, ensure_ascii=False, indent=2)
+                _clean_count += 1
+    _log(f"[JSON] cleaned {_clean_count} files with zero-rate entries")
 
     # ── Quest data (from DB) ──
     timer.start_step("[JSON] quest data")

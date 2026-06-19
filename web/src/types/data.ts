@@ -37,12 +37,14 @@ export interface MonsterEntity {
   name: string;
   translation: string;
   coords: Coord[];
+  group_drop_info?: Record<string, GroupDropInfo[]>;
 }
 
 export interface PropsEntity {
   name: string;
   translation: string;
   coords: Coord[];
+  group_drop_info?: Record<string, GroupDropInfo[]>;
 }
 
 export interface DungeonModule {
