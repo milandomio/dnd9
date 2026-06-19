@@ -1432,9 +1432,11 @@ def run():
             if not grade_data:
                 continue
             total_weight = 0.0
+            found = False
             for ld_id, lr_id, _ in grade_data:
                 if target_ld_id and ld_id != target_ld_id:
                     continue
+                found = True
                 _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
                 if _pool_weight == 0:
                     continue
@@ -1444,7 +1446,7 @@ def run():
                 else:
                     _rate_total = _ld_rate_totals.get(lr_id, 10000)
                 total_weight += _pool_weight / _shared / _rate_total
-            if total_weight > 0:
+            if found:
                 return total_weight
         return 0.0
 
