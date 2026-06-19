@@ -199,9 +199,11 @@ git reset HEAD~1 && rm /tmp/darkfindv5.db
 - `DetailPage.tsx` — items/monsters/props 共用，更新一处即覆盖三张表
 - `LootdropDetailPage.tsx` — 掉落详情页，功能独立但 UI 样式应保持一致
 
-**爆率显示规则（已同步）：**
+**爆率显示规则（三表同步）：**
+- `group_drop_info` 字段已注入 items、monsters、props 三张表的详情 JSON
 - 只在坐标对应的 spawn 文件是变体（`variant_count > 1`）时，才在地图模块图片下显示爆率
 - 非变体 spawn 不显示爆率
+- items 的 `drop_rates` 是指定物品的爆率；monsters/props 的 `drop_rates` 是该实体所有可掉落物品的聚合爆率
 - 爆率样式参考 `LootdropDetailPage` 的怪物列表区域
 
 ### Fetch URL 必须使用绝对路径
@@ -280,4 +282,3 @@ const [data, setData] = useState(
 - `_Hard`/`_VeryHard`/`_Unique` 后缀在 lootdrop 解析阶段合入基础怪物名，避免重复掉落条目
 - 地图图片优先级：`SubLevelAsset(sl_base) → Module name → MapImage`
 - 占位图 `RareModule_1x1` / `UnderConstruction_1x1` 被跳过
-- `get_item_coordinates()` 是死代码（已被 `get_all_coordinates()` 取代），待清理

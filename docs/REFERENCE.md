@@ -274,8 +274,39 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 > **变体锁定说明：** 物品有 `_\d{4}` 变体后缀时（如 `Mitre_1001`–`Mitre_7001`），`item_name`
 > 保留变体后缀，按 (lootdrop_id, base_name) 去重，优先级 `_5001 > _4001 > _3001`。
 > 无以上变体时保留后缀最靠前的条目。`_compute_drop_rate()` 先用基础名查找，
-> 未命中则依次尝试 `_5001` / `_4001` / `_3001` 后缀。后续将在对应变体详情页
-> 提供其他变体的跳转。
+> 未命中则依次尝试 `_5001` / `_4001` / `_3001` 后缀。
+
+**多变体爆率展示（待修复）：**
+
+`variant_count > 1` 的物品（如 Lifeleaf 有 7 个变体）需在详情页展示所有有爆率的变体。
+
+**变体查找链路：**
+1. `spawner_entries` → `entity_name='Lifeleaf'` → `lootdrop_group_id='Id_LootDropGroup_Lifeleaf'`
+2. 游戏 JSON `LOOTDROP_DIR/ID_Lootdrop_Spawn_Lifeleaf.json` → `LootDropItemArray` 包含所有变体（Lifeleaf_1001~7001）
+3. 用清洗后的基础名 `Lifeleaf` 在 `_lootdrop_variants` 中倒查所有变体名 + `LuckGrade`
+
+**正确爆率计算公式（待实现）：**
+
+当前 `_compute_variant_rate()` 使用 DB 权重累加，结果不正确。正确公式应直接读游戏 JSON：
+
+```
+rate_file = LootDropRate/{lootdrop_rate_id}.json   # 来自 lootdrop_groups 表
+LootDropRateItemArray = rate_file.Properties.LootDropRateItemArray
+DropRate = LootDropRateItemArray[luck_grade].DropRate
+Total = sum(所有 DropRate)
+变体爆率 = DropRate / Total
+```
+
+示例（`ID_Droprate_Herbs_2023.json`）：
+- lg=2(优秀): DropRate=5000, Total=10000 → 50%
+- lg=3(罕见): DropRate=4000, Total=10000 → 40%
+- lg=4(史诗): DropRate=1000, Total=10000 → 10%
+
+**注意事项：**
+- 同一 `lootdrop_group` 在不同 `dungeon_grade` 下有不同 `lootdrop_rate_id`（如 `ID_Droprate_Herbs_1023` vs `ID_Droprate_Herbs_2023`），需按 grade 匹配
+- 同一变体可能出现在多个 lootdrop 文件中（如 Lifeleaf_2001 同时在 `ID_Lootdrop_Spawn_Lifeleaf` 和 `ID_Lootdrop_Drop_Herbs`），需限定只计算 spawner 对应的 group
+- HR（豪客赛）group 有独立的 rate 文件（如 `ID_Droprate_Spawn_Herbs_HR`），权重数值不同
+- 默认变体（无后缀，如 `Lifeleaf`）如无爆率数据则不显示
 
 **计算逻辑：**
 
