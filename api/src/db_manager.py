@@ -1257,7 +1257,7 @@ class DatabaseManager:
         ):
             names = row["keywords"].split(",")
             result[(row["map_base"], row["json_filename"], row["group_parent"])] = (
-                row["total"],
+                row["cnt"],
                 names,
             )
         # 模式2：同一 keyword 多个 spawner 共享 group_parent
