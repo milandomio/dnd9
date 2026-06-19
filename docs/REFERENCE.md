@@ -276,7 +276,7 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 > 无以上变体时保留后缀最靠前的条目。`_compute_drop_rate()` 先用基础名查找，
 > 未命中则依次尝试 `_5001` / `_4001` / `_3001` 后缀。
 
-**多变体爆率展示（待修复）：**
+**多变体爆率展示（已修复 bd5e08e）：**
 
 `variant_count > 1` 的物品（如 Lifeleaf 有 7 个变体）需在详情页展示所有有爆率的变体。
 
@@ -285,27 +285,29 @@ Lootdrop 详情页地图模块卡片图例显示格式：`黄金宝箱100%([PVE:
 2. 游戏 JSON `LOOTDROP_DIR/ID_Lootdrop_Spawn_Lifeleaf.json` → `LootDropItemArray` 包含所有变体（Lifeleaf_1001~7001）
 3. 用清洗后的基础名 `Lifeleaf` 在 `_lootdrop_variants` 中倒查所有变体名 + `LuckGrade`
 
-**正确爆率计算公式（待实现）：**
+**爆率计算公式：**
 
-当前 `_compute_variant_rate()` 使用 DB 权重累加，结果不正确。正确公式应直接读游戏 JSON：
+变体爆率 = `weight[lg] / _ld_rate_totals[rate_id]`，其中 `_ld_rate_totals` 是该 rate_id 下所有非零权重之和。
 
+等价于直接读游戏 JSON：
 ```
 rate_file = LootDropRate/{lootdrop_rate_id}.json   # 来自 lootdrop_groups 表
-LootDropRateItemArray = rate_file.Properties.LootDropRateItemArray
 DropRate = LootDropRateItemArray[luck_grade].DropRate
 Total = sum(所有 DropRate)
 变体爆率 = DropRate / Total
 ```
 
-示例（`ID_Droprate_Herbs_2023.json`）：
-- lg=2(优秀): DropRate=5000, Total=10000 → 50%
-- lg=3(罕见): DropRate=4000, Total=10000 → 40%
-- lg=4(史诗): DropRate=1000, Total=10000 → 10%
+示例（`ID_Droprate_Herbs_2023.json`，Total=10000）：
+- lg=2(优秀): 5000/10000 → 50%
+- lg=3(罕见): 4000/10000 → 40%
+- lg=4(史诗): 1000/10000 → 10%
+
+> **历史 bug：** 旧公式使用硬编码 `/10000.0` 作为分母，但 HR rate_id（如 `ID_Droprate_Spawn_Herbs_HR`）权重总和为 100000 而非 10000，导致结果偏高 10 倍（600%→60%、400%→40%）。修复方式：预计算 `_ld_rate_totals` 替代硬编码。
 
 **注意事项：**
 - 同一 `lootdrop_group` 在不同 `dungeon_grade` 下有不同 `lootdrop_rate_id`（如 `ID_Droprate_Herbs_1023` vs `ID_Droprate_Herbs_2023`），需按 grade 匹配
 - 同一变体可能出现在多个 lootdrop 文件中（如 Lifeleaf_2001 同时在 `ID_Lootdrop_Spawn_Lifeleaf` 和 `ID_Lootdrop_Drop_Herbs`），需限定只计算 spawner 对应的 group
-- HR（豪客赛）group 有独立的 rate 文件（如 `ID_Droprate_Spawn_Herbs_HR`），权重数值不同
+- HR（豪客赛）group 有独立的 rate 文件（如 `ID_Droprate_Spawn_Herbs_HR`），权重数值不同（总和可能为 100000 而非 10000）
 - 默认变体（无后缀，如 `Lifeleaf`）如无爆率数据则不显示
 
 **计算逻辑：**
@@ -318,10 +320,13 @@ Total = sum(所有 DropRate)
 | `_ld_groups` | `lootdrop_groups` | group_id → {dungeon_grade: [(lootdrop_id, rate_id, count)]} |
 | `_ld_rate_items` + `_ld_luck_grade_count` | `lootdrop_rate_items` | lootdrop_id → {item_name: (luck_grade, count)}，含同 luck_grade 物品数统计 |
 | `_ld_rate_weights` | `lootdrop_rate_weights` | rate_id → {luck_grade: total_weight} |
+| `_ld_rate_totals` | 从 `_ld_rate_weights` 计算 | rate_id → 该 rate_id 下所有非零权重之和（用于归一化爆率） |
 
 计算函数（`collector.py` 内联）：
 1. `_compute_drop_rate(ldg_id, item_name, full_grade)` — 纯内存计算某物品在指定组+等级下的爆率（0~1），支持变体后缀回退
 2. `_get_group_drop_rates(item_name, monster_name, group_key)` — 遍历 PVE/普通/豪客赛三种模式，返回各模式最佳爆率
+3. `_compute_group_drop_rates(ldg_id, group_key)` — 计算某 lootdrop group 在某地图分组下所有物品的聚合爆率（用于怪物/道具基础条目）
+4. `_compute_variant_rate(ldg_id, luck_grade, full_grade, target_ld_id)` — 计算指定 luck_grade 变体的爆率（用于多变体聚合），通过 `target_ld_id` 限定只计算特定 lootdrop
 
 > `lootdrop_rates.py` 的 `get_drop_rates_for_item_with_coords()` 已被上述内联逻辑替代，不再使用。
 
