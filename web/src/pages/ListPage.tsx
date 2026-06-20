@@ -34,8 +34,13 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   const weapon: IndexEntry[] = [];
   const accessory: IndexEntry[] = [];
   const rare: IndexEntry[] = [];
+  const artifact: IndexEntry[] = [];
   const misc: IndexEntry[] = [];
   for (const item of items) {
+    if (item.name.endsWith('_8001')) {
+      artifact.push(item);
+      continue;
+    }
     const vc = item.variant_count ?? 1;
     if (vc === 7 || vc === 8) {
       weapon.push(item);
@@ -48,6 +53,8 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
     }
   }
   const groups: LootGroup[] = [];
+  if (artifact.length)
+    groups.push({ label: '神器', icon: '🏺', items: artifact });
   if (rare.length) groups.push({ label: '稀有掉落', icon: '✨', items: rare });
   if (misc.length) groups.push({ label: '物品', icon: '📦', items: misc });
   if (accessory.length)

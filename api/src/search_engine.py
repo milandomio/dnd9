@@ -171,8 +171,10 @@ def load_all_spawner_data(
                     if mid_name.startswith(pfx):
                         mid_name = mid_name[len(pfx) :]
                         break
-                mid_name = strip_variant_suffixes(mid_name)
-                canonical = monster_name_map.get(mid_name.lower(), mid_name)
+                canonical = monster_name_map.get(mid_name.lower())
+                if not canonical:
+                    stripped = strip_variant_suffixes(mid_name)
+                    canonical = monster_name_map.get(stripped.lower(), mid_name)
                 _ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
 
     lootdrop_monster = {k: sorted(v) for k, v in _ldg_to_monsters.items()}

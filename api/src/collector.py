@@ -347,6 +347,13 @@ def run():
     _log("[JSON] get_all_coordinates START")
     all_coords = db.get_all_coordinates()
     _log(f"[JSON] get_all_coordinates DONE -> {len(all_coords)} entity keys")
+    # Add quality-suffixed aliases for coord lookup
+    # (e.g. "SkeletonFootmanFromFakeDeath_Unique" → same coords as "SkeletonFootmanFromFakeDeath")
+    for _key in list(all_coords.keys()):
+        for _qs in ("_Common", "_Elite", "_Nightmare", "_Unique"):
+            _sk = _key + _qs
+            if _sk not in all_coords:
+                all_coords[_sk] = all_coords[_key]
     _coord_variant_count = db.get_coord_variant_counts()
     _log(f"[JSON] get_coord_variant_counts DONE -> {len(_coord_variant_count)} variant groups")
 
@@ -1221,6 +1228,7 @@ def run():
             if mn == item_name:
                 continue
             base = _HARD_SUFFIX_RE.sub("", mn)
+            base = _QUALITY_RE.sub("", base)
             base = _UNIQUE_SUFFIX_RE.sub("", base)
             if base not in seen_bases:
                 seen_bases.add(base)
@@ -1270,8 +1278,9 @@ def run():
     ]
 
     def _base_monster_name(name: str) -> str:
-        """Strip _Hard/_VeryHard/Unique suffix to get base name."""
+        """Strip quality/variant suffixes to get base name."""
         base = _HARD_SUFFIX_RE.sub("", name)
+        base = _QUALITY_RE.sub("", base)
         base = _UNIQUE_SUFFIX_RE.sub("", base)
         return base
 
@@ -1417,6 +1426,8 @@ def run():
                     break
         # 4. entity_ldg_all 回退（收集所有 variant 的 group）
         _all_groups = _entity_ldg_all.get(monster_name, set())
+        if not _all_groups:
+            _all_groups = _entity_ldg_all.get(_QUALITY_RE.sub("", monster_name), set())
         candidate_ids.update(_all_groups)
         if not candidate_ids:
             return {}
@@ -1552,7 +1563,9 @@ def run():
     def _classify_label(label: str, entity_name: str) -> str:
         if not label:
             return "direct"
-        if label == entity_name or label.startswith(entity_name + "_"):
+        # Strip quality suffix for matching (e.g. SkeletonFootmanFromFakeDeath_Unique → SkeletonFootmanFromFakeDeath)
+        en_base = _QUALITY_RE.sub("", entity_name)
+        if label == en_base or label.startswith(en_base + "_"):
             return "direct"
         if "Random" in label:
             return "random"
