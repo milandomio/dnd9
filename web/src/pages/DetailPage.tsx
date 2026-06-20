@@ -405,29 +405,52 @@ export default function DetailPage() {
                             >
                               {info.translation}
                             </span>
-                            {info.spawn_rate !== 100 && (
-                              <span
-                                style={{
-                                  color: tokens.accent,
-                                  fontSize: 12,
-                                }}
-                              >
-                                {info.spawn_rate}%
-                              </span>
-                            )}
-                            {Object.keys(info.drop_rates).length > 0 && (
+                            {info.spawn_rates &&
+                            Object.keys(info.spawn_rates).length > 1 ? (
                               <span
                                 style={{
                                   color: tokens.muted,
                                   fontSize: 12,
                                 }}
                               >
-                                (
                                 {Object.entries(info.drop_rates)
-                                  .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                                  .map(([mode, rate]) => {
+                                    const sRate = info.spawn_rates![mode];
+                                    return sRate != null
+                                      ? `[${mode}:${sRate}%×${rate}%]`
+                                      : `[${mode}:${rate}%]`;
+                                  })
                                   .join('')}
-                                )
                               </span>
+                            ) : (
+                              <>
+                                {info.spawn_rate !== 100 && (
+                                  <span
+                                    style={{
+                                      color: tokens.accent,
+                                      fontSize: 12,
+                                    }}
+                                  >
+                                    {info.spawn_rate}%
+                                  </span>
+                                )}
+                                {Object.keys(info.drop_rates).length > 0 && (
+                                  <span
+                                    style={{
+                                      color: tokens.muted,
+                                      fontSize: 12,
+                                    }}
+                                  >
+                                    (
+                                    {Object.entries(info.drop_rates)
+                                      .map(
+                                        ([mode, rate]) => `[${mode}:${rate}%]`
+                                      )
+                                      .join('')}
+                                    )
+                                  </span>
+                                )}
+                              </>
                             )}
                           </span>
                         ))}

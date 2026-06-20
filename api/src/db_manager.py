@@ -1040,7 +1040,7 @@ class DatabaseManager:
     def import_spawner_entries(self) -> int:
         """从 SpawnerDataAsset JSON 导入 spawner_entries 表。
 
-        SpawnRate 存储为百分比（0~100），按同 SpawnerItemArray 内的比例计算。
+        SpawnRate 存储为百分比（0~100），按同 grade 内的总 SpawnRate 比例计算（取跨 grade 最小值）。
         """
         c = self.conn.cursor()
         c.execute("DELETE FROM spawner_entries")
@@ -1068,49 +1068,34 @@ class DatabaseManager:
                     break
             props = entry.get("Properties", {}) or {}
             items = props.get("SpawnerItemArray", []) or []
-            # 按 DungeonGrades 分组计算 spawn_rate
-            # 先将全量条目按 grade set 分组，再将含有该组 grade 的空条目（无 entity）纳入同一池
-            _grade_groups: dict[str, list[dict]] = {}
+            # 按单个 grade 重叠计算 spawn_rate（而非按完全匹配的 DG 数组分组）
+            _all_grades: set[int] = set()
             for item in items:
-                _dg = json.dumps(sorted(item.get("DungeonGrades", []) or []), sort_keys=True)
-                _grade_groups.setdefault(_dg, []).append(item)
-            # 对每个非空组，检查是否有空条目的 grade set 是其超集
-            _empty_items = [it for it in items if not ((it.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""))]
-            _dg_sets = {k: set(json.loads(k)) for k in _grade_groups}
-            for _dg_key, _dg_items in list(_grade_groups.items()):
-                _has_entity = any(
-                    (it.get("MonsterId", {}) or {}).get("AssetPathName", "")
-                    or (it.get("PropsId", {}) or {}).get("AssetPathName", "")
-                    for it in _dg_items
+                _all_grades.update(item.get("DungeonGrades", []) or [])
+            _grade_totals: dict[int, int] = {}
+            for _g in _all_grades:
+                _grade_totals[_g] = max(
+                    sum(it.get("SpawnRate", 10000) for it in items if _g in (it.get("DungeonGrades", []) or [])),
+                    1,
                 )
-                if not _has_entity:
+            for item in items:
+                ldg = item.get("LootDropGroupId", {}) or {}
+                ldg_path = ldg.get("AssetPathName", "")
+                if not ldg_path:
                     continue
-                _dgs = _dg_sets[_dg_key]
-                for _ei in _empty_items:
-                    _e_grades = set(_ei.get("DungeonGrades", []) or [])
-                    if _dgs.issubset(_e_grades):
-                        _dg_items.append(_ei)
-            for _dg_items in _grade_groups.values():
-                _total = sum(it.get("SpawnRate", 10000) for it in _dg_items)
-                if _total <= 0:
-                    _total = 1
-                for item in _dg_items:
-                    ldg = item.get("LootDropGroupId", {}) or {}
-                    ldg_path = ldg.get("AssetPathName", "")
-                    if not ldg_path:
-                        continue
-                    raw_rate = item.get("SpawnRate", 10000)
-                    spawn_rate = round(raw_rate / _total * 100, 2)
-                    dungeon_grades = item.get("DungeonGrades", []) or []
-                    ldg_id = _ue_asset_base_name(ldg_path) or ""
-                    entity_name = ""
-                    for id_key in ("MonsterId", "PropsId"):
-                        id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                        if id_path:
-                            raw = _ue_asset_base_name(id_path) or ""
-                            entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                            break
-                    rows.append((keyword, entity_name, spawn_rate, json.dumps(dungeon_grades), ldg_id))
+                raw_rate = item.get("SpawnRate", 10000)
+                dungeon_grades = item.get("DungeonGrades", []) or []
+                _rates = [raw_rate / _grade_totals[_g] * 100 for _g in dungeon_grades]
+                spawn_rate = round(min(_rates), 2) if _rates else round(raw_rate / 10000 * 100, 2)
+                ldg_id = _ue_asset_base_name(ldg_path) or ""
+                entity_name = ""
+                for id_key in ("MonsterId", "PropsId"):
+                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                    if id_path:
+                        raw = _ue_asset_base_name(id_path) or ""
+                        entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                        break
+                rows.append((keyword, entity_name, spawn_rate, json.dumps(dungeon_grades), ldg_id))
         c.executemany(
             "INSERT INTO spawner_entries (spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id) VALUES (?, ?, ?, ?, ?)",
             rows,
@@ -1259,7 +1244,9 @@ class DatabaseManager:
     def get_all_spawner_entries(self) -> list[dict]:
         """获取所有 spawner_entries（批量预加载用）。"""
         c = self.conn.cursor()
-        c.execute("SELECT spawner_keyword, entity_name, spawn_rate FROM spawner_entries")
+        c.execute(
+            "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id FROM spawner_entries"
+        )
         return [dict(r) for r in c.fetchall()]
 
     def get_coord_variant_counts(self) -> dict[tuple[str, str, str], tuple[int, list[str]]]:

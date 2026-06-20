@@ -99,47 +99,50 @@ def load_all_spawner_data(
                 need_expand = len(entity_names) >= 2
                 need_redirect = len(entity_names) == 1 and keyword != next(iter(entity_names))
                 if need_expand or need_redirect:
-                    # 按 DungeonGrades 分组计算 spawn_rate
-                    _grade_groups: dict[str, list[dict]] = {}
+                    # 按单个 grade 重叠计算 spawn_rate（而非按完全匹配的 DG 数组分组）
+                    _all_grades: set[int] = set()
                     for _item in items:
-                        _dg = json.dumps(sorted(_item.get("DungeonGrades", []) or []), sort_keys=True)
-                        _grade_groups.setdefault(_dg, []).append(_item)
+                        _all_grades.update(_item.get("DungeonGrades", []) or [])
+                    _grade_totals: dict[int, int] = {}
+                    for _g in _all_grades:
+                        _gt = sum(
+                            it.get("SpawnRate", 10000) for it in items if _g in (it.get("DungeonGrades", []) or [])
+                        )
+                        _grade_totals[_g] = max(_gt, 1)
                     entries: list[dict] = []
-                    for _dg_items in _grade_groups.values():
-                        _total = sum(it.get("SpawnRate", 10000) for it in _dg_items)
-                        if _total <= 0:
-                            _total = 1
-                        for item in _dg_items:
-                            if not (item.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""):
-                                continue
-                            e_name = ""
-                            s_type = ""
-                            for id_key in ("MonsterId", "PropsId"):
-                                id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                                if id_path:
-                                    raw = _ue_asset_base_name(id_path) or ""
-                                    e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                                    e_name = strip_variant_suffixes(e_name)
-                                    if "/V2/Monster/" in id_path:
-                                        s_type = "monster"
-                                    elif "/V2/Props/" in id_path:
-                                        s_type = "props"
-                                    break
-                            if not e_name:
-                                continue
-                            raw_rate = item.get("SpawnRate", 10000)
-                            spawn_rate_val = round(raw_rate / _total * 100, 2)
-                            ldg = item.get("LootDropGroupId", {}) or {}
-                            ldg_path = ldg.get("AssetPathName", "")
-                            ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
-                            entries.append(
-                                {
-                                    "entity_name": e_name,
-                                    "spawn_rate": spawn_rate_val,
-                                    "spawner_type": s_type,
-                                    "lootdrop_group_id": ldg_id,
-                                }
-                            )
+                    for item in items:
+                        if not (item.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""):
+                            continue
+                        e_name = ""
+                        s_type = ""
+                        for id_key in ("MonsterId", "PropsId"):
+                            id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                            if id_path:
+                                raw = _ue_asset_base_name(id_path) or ""
+                                e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                                e_name = strip_variant_suffixes(e_name)
+                                if "/V2/Monster/" in id_path:
+                                    s_type = "monster"
+                                elif "/V2/Props/" in id_path:
+                                    s_type = "props"
+                                break
+                        if not e_name:
+                            continue
+                        raw_rate = item.get("SpawnRate", 10000)
+                        _grades = item.get("DungeonGrades", []) or []
+                        _rates = [raw_rate / _grade_totals[_g] * 100 for _g in _grades]
+                        spawn_rate_val = round(min(_rates), 2) if _rates else round(raw_rate / 10000 * 100, 2)
+                        ldg = item.get("LootDropGroupId", {}) or {}
+                        ldg_path = ldg.get("AssetPathName", "")
+                        ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
+                        entries.append(
+                            {
+                                "entity_name": e_name,
+                                "spawn_rate": spawn_rate_val,
+                                "spawner_type": s_type,
+                                "lootdrop_group_id": ldg_id,
+                            }
+                        )
                     if entries:
                         multi_entity[keyword] = entries
 
