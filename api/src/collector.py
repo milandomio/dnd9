@@ -1691,7 +1691,8 @@ def run():
                 _hkl[_g] = _entry["drop_rates"].get("豪客赛", 0)
         # 坐标少于100个时降低阈值，避免低爆率物品被完全过滤
         _total_coords = sum(len(v["coords"]) for v in merged.values())
-        _score_threshold = 0.0 if _total_coords < 100 else 0.5
+        _all_zero = all(v == 0 for hk_map in _hk_lookup.values() for v in hk_map.values())
+        _score_threshold = 0.0 if (_total_coords < 100 or _all_zero) else 0.5
         for _base_data in merged.values():
             _trans = _base_data["translation"]
             _hk_map = _hk_lookup.get(_trans, {})
