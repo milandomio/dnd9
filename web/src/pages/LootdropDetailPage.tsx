@@ -42,6 +42,7 @@ interface LootdropMonster {
 interface GroupDropInfo {
   translation: string;
   spawn_rate: number;
+  spawn_rates?: Record<string, number>;
   drop_rates: Record<string, number>;
 }
 
@@ -608,10 +609,21 @@ export default function LootdropDetailPage() {
                           }}
                         >
                           {info.translation}
-                          {info.spawn_rate}%
-                          {Object.entries(info.drop_rates)
-                            .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                            .join('')}
+                          {info.spawn_rates &&
+                          Object.keys(info.spawn_rates).length > 1
+                            ? Object.entries(info.drop_rates)
+                                .map(([mode, rate]) => {
+                                  const sRate = info.spawn_rates![mode];
+                                  return sRate != null
+                                    ? `[${mode}:${sRate}%×${rate}%]`
+                                    : `[${mode}:${rate}%]`;
+                                })
+                                .join('')
+                            : `${info.spawn_rate}%${Object.entries(
+                                info.drop_rates
+                              )
+                                .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                                .join('')}`}
                         </span>
                       ))}
                     </span>

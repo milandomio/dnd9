@@ -347,13 +347,6 @@ def run():
     _log("[JSON] get_all_coordinates START")
     all_coords = db.get_all_coordinates()
     _log(f"[JSON] get_all_coordinates DONE -> {len(all_coords)} entity keys")
-    # Add quality-suffixed aliases for coord lookup
-    # (e.g. "SkeletonFootmanFromFakeDeath_Unique" → same coords as "SkeletonFootmanFromFakeDeath")
-    for _key in list(all_coords.keys()):
-        for _qs in ("_Common", "_Elite", "_Nightmare", "_Unique"):
-            _sk = _key + _qs
-            if _sk not in all_coords:
-                all_coords[_sk] = all_coords[_key]
     _coord_variant_count = db.get_coord_variant_counts()
     _log(f"[JSON] get_coord_variant_counts DONE -> {len(_coord_variant_count)} variant groups")
 
@@ -1518,12 +1511,19 @@ def run():
     # 预加载 spawn_rate 缓存
     _spawn_rate_cache: dict[str, float] = {}
     _spawn_rate_detail: dict[tuple[str, str], float] = {}
+    # per-mode spawn rates: (sk, en) → {mode_name: rate}
+    _spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
     # 实体所属生成器：entity_name → {spawner_keyword, ...}
     _entity_spawners: dict[str, set[str]] = {}
     for _row in db.get_all_spawner_entries():
         sk = _row["spawner_keyword"]
         en = _row["entity_name"]
         sr = _row["spawn_rate"]
+        _grades_raw = _row.get("dungeon_grades", "[]")
+        try:
+            _grades = json.loads(_grades_raw) if isinstance(_grades_raw, str) else (_grades_raw or [])
+        except (json.JSONDecodeError, TypeError):
+            _grades = []
         for _key in (sk, en):
             if _key and sr > _spawn_rate_cache.get(_key, 0):
                 _spawn_rate_cache[_key] = sr
@@ -1537,6 +1537,25 @@ def run():
             _pair = (sk, en)
             if sr > _spawn_rate_detail.get(_pair, 0):
                 _spawn_rate_detail[_pair] = sr
+            # Compute per-mode spawn rates
+            _mode_rates: dict[str, float] = {}
+            for _g in _grades:
+                _mode_id = _g // 1000 if _g >= 1000 else 1
+                _mode_name = DUNGEON_MODE_NAMES.get(_mode_id, "")
+                if _mode_name and (_mode_name not in _mode_rates or sr < _mode_rates[_mode_name]):
+                    _mode_rates[_mode_name] = sr
+            if _mode_rates:
+                _existing = _spawn_rate_by_mode.get(_pair, {})
+                for _mn, _mr in _mode_rates.items():
+                    if _mn not in _existing or _mr < _existing[_mn]:
+                        _existing[_mn] = _mr
+                _spawn_rate_by_mode[_pair] = _existing
+            # Also track per-mode rates by entity_name alone (aggregated across all spawners)
+            _en_mode = _spawn_rate_by_mode.get(("", en), {})
+            for _mn, _mr in _mode_rates.items():
+                if _mn not in _en_mode or _mr < _en_mode[_mn]:
+                    _en_mode[_mn] = _mr
+            _spawn_rate_by_mode[("", en)] = _en_mode
         if en and sk:
             _entity_spawners.setdefault(en, set()).add(sk)
 
@@ -1588,6 +1607,11 @@ def run():
                 continue
             coords = all_coords.get(m_name, [])
             if not coords:
+                # Try stripping quality suffix for coord lookup
+                _m_base = _QUALITY_RE.sub("", m_name)
+                if _m_base != m_name:
+                    coords = all_coords.get(_m_base, [])
+            if not coords:
                 alias = TRANSLATION_ALIAS_MAP.get(m_name)
                 if alias:
                     coords = all_coords.get(alias, [])
@@ -1598,6 +1622,12 @@ def run():
                     if _c:
                         coords = _c
                         break
+            # 按 _entity_spawners 过滤：只保留当前实体确实关联的生成器坐标
+            _valid_sk = _entity_spawners.get(m_name, set())
+            if _valid_sk:
+                coords = [
+                    c for c in coords if c.get("keyword", "") in _valid_sk or c.get("original_keyword", "") in _valid_sk
+                ]
             if not coords:
                 continue
             m_trans = entry["monster_translations"][_i]
@@ -1624,8 +1654,8 @@ def run():
                         _existing["_has_locked"] = True
                 else:
                     merged[_merge_key] = {
-                        "name": _unique_name,
-                        "entity_name": base,
+                        "name": m_name,
+                        "entity_name": m_name,
                         "translation": _type_trans,
                         "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
                         "coords": [],
@@ -1635,7 +1665,7 @@ def run():
                 if is_locked:
                     merged[_merge_key]["_has_locked"] = True
                 for _c in _typed_coords:
-                    _raw_label = _c.get("original_keyword", "")
+                    _raw_label = _c.get("original_keyword") or _c.get("keyword", "")
                     coord_out = {
                         "x": _c["x"],
                         "y": _c["y"],
@@ -1644,7 +1674,7 @@ def run():
                         "map": _c["map_base"],
                         "file": _c["json_filename"],
                         "version": _c["version"],
-                        "label": HARDCODED_TRANSLATIONS.get(_raw_label, _raw_label),
+                        "label": _raw_label,
                     }
                     _vc_info = _coord_variant_count.get(
                         (_c["map_base"], _c["json_filename"], _c.get("group_parent", ""))
@@ -1653,7 +1683,7 @@ def run():
                         coord_out["variant_count"] = _vc_info[0]
                         coord_out["variant_names"] = _vc_info[1]
                     if _c.get("keyword") != _c.get("original_keyword", ""):
-                        _pair = (_c["original_keyword"], _c["keyword"])
+                        _pair = (_c["keyword"], m_name)
                         _sr = _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
                     else:
                         _sr = _spawn_rate_cache.get(m_name, 100)
@@ -1694,6 +1724,14 @@ def run():
                     )
                 else:
                     _sr = max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
+                _en_mode_rates = _spawn_rate_by_mode.get(("", _en), {})
+                _sr_by_mode: dict[str, float] = {}
+                if _en_mode_rates:
+                    for _mn in ("PVE", "普通", "豪客赛"):
+                        if _mn in _en_mode_rates:
+                            # Map group may restrict which grades are relevant
+                            _sr_by_mode[_mn] = _en_mode_rates[_mn]
+                _has_varied_spawn = len(set(_sr_by_mode.values())) > 1
                 _group_drop_info.setdefault(_g, []).append(
                     {
                         "translation": _m_data["translation"],
@@ -1702,6 +1740,8 @@ def run():
                         "_variant": _m_data.get("entity_name", _m_data["name"]),
                     }
                 )
+                if _has_varied_spawn:
+                    _group_drop_info[_g][-1]["spawn_rates"] = _sr_by_mode
         # Deduplicate coords and update translation for locked-merged entries
         for _base_data in merged.values():
             if _base_data.pop("_has_locked", False):
@@ -1747,34 +1787,20 @@ def run():
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
 
-        # 过滤掉无爆率/低分坐标点（score = spawn_rate × 豪客赛爆率 / 100）
+        # 计算每个坐标的 score（spawn_rate × 豪客赛爆率 / 100）
         _hk_lookup: dict[str, dict[str, float]] = {}
         for _g, _entries in _group_drop_info.items():
             for _entry in _entries:
                 _hkl = _hk_lookup.setdefault(_entry["translation"], {})
                 _hkl[_g] = _entry["drop_rates"].get("豪客赛", 0)
-        # 坐标少于100个时降低阈值，避免低爆率物品被完全过滤
-        _total_coords = sum(len(v["coords"]) for v in merged.values())
-        _score_threshold = 0.0
-        if _total_coords >= 100:
-            _max_hk = max(
-                (v for hk_map in _hk_lookup.values() for v in hk_map.values()),
-                default=0.0,
-            )
-            if _max_hk >= 0.5:
-                _score_threshold = 0.5
         for _base_data in merged.values():
             _trans = _base_data["translation"]
             _hk_map = _hk_lookup.get(_trans, {})
-            _filtered = []
             for _c in _base_data["coords"]:
                 _g = _map_base_to_group.get(_c["map"], "")
                 _hk = _hk_map.get(_g, 0)
                 _score = (_c.get("spawn_rate", 0) or 0) * _hk / 100
-                if _score >= _score_threshold:
-                    _c["score"] = round(_score, 4)
-                    _filtered.append(_c)
-            _base_data["coords"] = _filtered
+                _c["score"] = round(_score, 4)
         merged = {k: v for k, v in merged.items() if v["coords"]}
         for _v in merged.values():
             _v.pop("_bases", None)
@@ -1800,6 +1826,20 @@ def run():
                 },
             )
             _item_max_score[item_name] = max(_max_scores.values(), default=0.0)
+        elif item_name == "BloodsapBlade":
+            _log(
+                f"[DEBUG] BloodsapBlade: merged={ {k: v.get('translation','?') for k, v in merged.items()} }, group_drop_info={ {g: len(v) for g,v in _group_drop_info.items()} }"
+            )
+            for _i, m_name in enumerate(entry["monsters"]):
+                _log(f"[DEBUG]   monster: {m_name}, trans={entry['monster_translations'][_i]}")
+                coords = all_coords.get(m_name, [])
+                _log(f"[DEBUG]     all_coords direct: {len(coords)}")
+                _m_base = _QUALITY_RE.sub("", m_name)
+                if _m_base != m_name:
+                    coords2 = all_coords.get(_m_base, [])
+                    _log(f"[DEBUG]     all_coords base '{_m_base}': {len(coords2)}")
+                _valid_sk = _entity_spawners.get(m_name, set())
+                _log(f"[DEBUG]     _valid_sk: {_valid_sk}")
         _loot_detail_count += 1
         if _loot_detail_count % 100 == 0:
             _log(f"[JSON] lootdrops detail: {_loot_detail_count}/{_loot_detail_total}")
