@@ -53,86 +53,7 @@ const SINGLE = ["explore", "quest_items", "quest_npc", "dungeon_modules"];
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
 
-// ---- step 4a: build search index ----
-console.log("[ssg] building search index…");
-const searchIndex = [];
-
-for (const p of PAGES) {
-  const list = readJSON(join(DATA, `${p}.json`));
-  for (const e of list) {
-    const url = p === "lootdrops"
-      ? `/lootdrops/${encodeURIComponent(e.name)}/`
-      : `/${p}/${encodeURIComponent(e.name)}/`;
-    const entry = { name: e.name, translation: e.translation || "", page: p, url };
-    // Include type field for props (decoration vs props)
-    if (p === "props" && e.type) {
-      entry.type = e.type;
-    }
-    // Include lootdrop-specific fields for list page rendering
-    if (p === "lootdrops") {
-      if (e.variant_count != null) entry.variant_count = e.variant_count;
-      if (e.monsters) entry.monsters = e.monsters;
-      if (e.monster_translations) entry.monster_translations = e.monster_translations;
-    }
-    searchIndex.push(entry);
-  }
-}
-
-
-const questNpcData = readJSON(join(DATA, "quest_npc.json"));
-for (const e of questNpcData) {
-  searchIndex.push({
-    name: e.npc_name,
-    translation: e.npc_name_display || "",
-    page: "quest_npc",
-    url: "/quest_npc/",
-  });
-}
-
-// Dungeon modules search entries
-const dmGroupsArr = [...new Set(moduleData.map(m => m.group).filter(Boolean))];
-const GROUP_LABELS = {
-  Crypt: "废墟2层地牢", FireDeep: "哥布林洞穴2层", GoblinCave: "哥布林洞穴1层",
-  IceAbyss: "冰图2层", IceCavern: "冰图1层", Inferno: "废墟3层炼狱",
-  Ruins: "废墟1层", ShipGraveyard: "水图", Swamp: "沼泽",
-};
-for (const g of dmGroupsArr) {
-  searchIndex.push({
-    name: g,
-    translation: GROUP_LABELS[g] || g,
-    page: "dungeon_modules",
-    url: `/dungeon_modules/${encodeURIComponent(g)}/`,
-  });
-}
-for (const m of moduleData) {
-  searchIndex.push({
-    name: m.name,
-    translation: m.translation || m.name,
-    page: "dungeon_modules",
-    tag: GROUP_LABELS[m.group] || m.group || "模块",
-    url: `/dungeon_modules/${encodeURIComponent(m.group || "")}/${encodeURIComponent(m.name)}/`,
-  });
-}
-
-// List/index pages themselves (page="_nav" so they don't appear in list page data)
-const LIST_PAGES = [
-  { name: "items", translation: "物品表", page: "_nav", url: "/items/" },
-  { name: "monsters", translation: "怪物表", page: "_nav", url: "/monsters/" },
-  { name: "props", translation: "实体表", page: "_nav", url: "/props/" },
-  { name: "lootdrops", translation: "掉落表", page: "_nav", url: "/lootdrops/" },
-  { name: "explore", translation: "任务探索表", page: "_nav", url: "/explore/" },
-  { name: "quest_npc", translation: "任务NPC表", page: "_nav", url: "/quest_npc/" },
-  { name: "dungeon_modules", translation: "地图模块表", page: "_nav", url: "/dungeon_modules/" },
-];
-for (const lp of LIST_PAGES) searchIndex.push(lp);
-
-writeFileSync(join(DATA, "search_index.json"), JSON.stringify(searchIndex), "utf-8");
-// Also copy to dist so the deployed site has the latest search index
-mkdirSync(join(DIST, "data", "json"), { recursive: true });
-cpSync(join(DATA, "search_index.json"), join(DIST, "data", "json", "search_index.json"));
-console.log(`[ssg] search index: ${searchIndex.length} entries`);
-
-// ---- step 4b: generate meta.json with latest data date ----
+// ---- step 4: generate meta.json with latest data date ----
 let latestMtime = 0;
 function scanDir(dir) {
   for (const f of readdirSync(dir)) {
@@ -174,6 +95,7 @@ for (const p of PAGES) {
 }
 
 // Quest NPC detail pages
+const questNpcData = readJSON(join(DATA, "quest_npc.json"));
 for (const npc of questNpcData) {
   routes.push({ path: `/quest_npc/${encodeURIComponent(npc.npc_name)}`, file: `quest_npc/${npc.npc_name}/index.html` });
 }
@@ -210,7 +132,7 @@ for (const g of questGroups) {
 }
 
 // Dungeon modules group pages
-for (const g of dmGroupsArr) {
+for (const g of dmGroups) {
   const groupMods = moduleData.filter(m => m.group === g);
   ssrDataMap[`dungeon_modules/${g}`] = groupMods;
 }
