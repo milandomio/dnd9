@@ -556,6 +556,20 @@ def run():
     print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
     print(f"  unique items after merge: {len(merged_loot)}")
 
+    # split _8001 variants: remove from family merge, keep as own entry
+    _variant_override: dict[str, int] = {}
+    for base, variants in list(families.items()):
+        _8001 = [v for v in variants if v.endswith("_8001")]
+        if not _8001:
+            continue
+        v8001 = _8001[0]
+        skip_variants.discard(v8001)
+        merged_loot[base] = sorted(set(merged_loot[base]) - loot_map.get(v8001, set()))
+        merged_loot[v8001] = sorted(loot_map.get(v8001, []))
+        _variant_override[base] = len(variants) - 1
+    if _variant_override:
+        print(f"  _8001 variants split: {len(_variant_override)} bases affected")
+
     def _build_coord_out(c: dict, vc: dict) -> dict:
         """构建坐标输出 dict，附带变体信息。"""
         out = {
@@ -1198,7 +1212,7 @@ def run():
                 continue
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
-        variant_count = item_row.get("variant_count", 1) if item_row else 1
+        variant_count = _variant_override.get(item_name, item_row.get("variant_count", 1) if item_row else 1)
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
@@ -1279,8 +1293,10 @@ def run():
         for _alias in _m.get("aliases") or []:
             _map_base_to_group[_alias] = _g
 
-    # spawner_keyword / entity_name → lootdrop_group_id
+    # spawner_keyword / entity_name → lootdrop_group_id (first match wins)
     _spawner_ldg: dict[str, str] = {}
+    # entity base name → all possible lootdrop_group_ids (for multi-variant entities like Common+Unique)
+    _entity_ldg_all: dict[str, set[str]] = {}
     # stripped ore name → lootdrop_group_id (e.g. "CopperOre" → "Id_LootDropGroup_CopperOre")
     _ore_ldg: dict[str, str] = {}
     for _row in _c.execute(
@@ -1289,6 +1305,12 @@ def run():
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
             if _key and _key not in _spawner_ldg:
                 _spawner_ldg[_key] = _row["lootdrop_group_id"]
+        # Build entity → all groups mapping for multi-variant resolution
+        for _key in (_row["spawner_keyword"], _row["entity_name"]):
+            if _key:
+                _base = _QUALITY_RE.sub("", _key)
+                _base = _VARIANT_RE.sub(r"\1", _base) if _VARIANT_RE.search(_key) else _base
+                _entity_ldg_all.setdefault(_base, set()).add(_row["lootdrop_group_id"])
         # Build ore stripped-name mapping for props that use _ORE_QUALITY_RE
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
             _m = _ORE_QUALITY_RE.match(_key)
