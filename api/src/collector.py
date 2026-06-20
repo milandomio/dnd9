@@ -1503,6 +1503,7 @@ def run():
 
     _loot_detail_count = 0
     _loot_detail_total = len(loot_index)
+    _item_max_score: dict[str, float] = {}
     _log(f"[JSON] lootdrop detail loop starting: {_loot_detail_total} items")
 
     def _classify_label(label: str, entity_name: str) -> str:
@@ -1735,10 +1736,19 @@ def run():
                     "group_drop_info": _group_drop_info,
                 },
             )
+            _item_max_score[item_name] = max(_max_scores.values(), default=0.0)
         _loot_detail_count += 1
         if _loot_detail_count % 100 == 0:
             _log(f"[JSON] lootdrops detail: {_loot_detail_count}/{_loot_detail_total}")
     _log(f"[JSON] lootdrops detail files DONE -> {_loot_detail_count} items")
+
+    # ── 回写 lootdrops.json index，添加 max_score 和分类信息 ──
+    _log("[JSON] updating lootdrops index with max_score...")
+    for _entry in loot_index:
+        _iname = _entry["name"]
+        _entry["max_score"] = _item_max_score.get(_iname, 0.0)
+    _save("lootdrops.json", loot_index)
+    _log(f"[JSON] lootdrops index update DONE -> {len(loot_index)} items")
 
     # ── 更新物品实体 JSON，添加 group_drop_info ──
     _log("[JSON] updating item entities with group drop info...")
