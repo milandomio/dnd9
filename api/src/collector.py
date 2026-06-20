@@ -556,7 +556,7 @@ def run():
     print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
     print(f"  unique items after merge: {len(merged_loot)}")
 
-    # split _8001 variants: remove from family merge, keep as own entry
+    # split _8001 variants: keep as own entry (monsters are shared with base)
     _variant_override: dict[str, int] = {}
     for base, variants in list(families.items()):
         _8001 = [v for v in variants if v.endswith("_8001")]
@@ -564,7 +564,6 @@ def run():
             continue
         v8001 = _8001[0]
         skip_variants.discard(v8001)
-        merged_loot[base] = sorted(set(merged_loot[base]) - loot_map.get(v8001, set()))
         merged_loot[v8001] = sorted(loot_map.get(v8001, []))
         _variant_override[base] = len(variants) - 1
     if _variant_override:
@@ -1306,10 +1305,11 @@ def run():
             if _key and _key not in _spawner_ldg:
                 _spawner_ldg[_key] = _row["lootdrop_group_id"]
         # Build entity → all groups mapping for multi-variant resolution
+        # Strip quality suffixes (_Common/_Elite/_Nightmare/_Unique) to get base name
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
             if _key:
-                _base = _QUALITY_RE.sub("", _key)
-                _base = _VARIANT_RE.sub(r"\1", _base) if _VARIANT_RE.search(_key) else _base
+                _base = _HARD_SUFFIX_RE.sub("", _key)
+                _base = _QUALITY_RE.sub("", _base)
                 _entity_ldg_all.setdefault(_base, set()).add(_row["lootdrop_group_id"])
         # Build ore stripped-name mapping for props that use _ORE_QUALITY_RE
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
@@ -1393,21 +1393,32 @@ def run():
         return 0.0
 
     def _get_group_drop_rates(item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
-        """计算某物品在某怪物在某地图分组下的各模式爆率。"""
-        ldg_id = _spawner_ldg.get(monster_name, "")
-        if not ldg_id:
-            for _suffix in ("_Elite", "_Nightmare", "_Common"):
-                ldg_id = _spawner_ldg.get(monster_name + _suffix, "")
-                if ldg_id:
-                    break
-        # 大小写不敏感回退（如 lootdrop_items 中 "DreadSpine" vs spawner_entries 中 "Dreadspine_Common"）
-        if not ldg_id:
+        """计算某物品在某怪物在某地图分组下的各模式爆率。
+
+        支持多 variant（Common/Elite/Nightmare/Unique）共享同一 monster_name 的情况，
+        尝试所有可能的 lootdrop_group_id 取各模式最佳值。
+        """
+        candidate_ids: set[str] = set()
+        # 1. 直接通过 _spawner_ldg 获取（首次匹配）
+        _primary = _spawner_ldg.get(monster_name, "")
+        if _primary:
+            candidate_ids.add(_primary)
+        # 2. 尝试补充后缀
+        for _suffix in ("_Unique", "_Elite", "_Nightmare", "_Common"):
+            _v = _spawner_ldg.get(monster_name + _suffix, "")
+            if _v:
+                candidate_ids.add(_v)
+        # 3. 大小写不敏感回退
+        if not candidate_ids:
             _lower = monster_name.lower()
             for _k, _v in _spawner_ldg.items():
                 if _k.lower() == _lower:
-                    ldg_id = _v
+                    candidate_ids.add(_v)
                     break
-        if not ldg_id:
+        # 4. entity_ldg_all 回退（收集所有 variant 的 group）
+        _all_groups = _entity_ldg_all.get(monster_name, set())
+        candidate_ids.update(_all_groups)
+        if not candidate_ids:
             return {}
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
         if not suffixes:
@@ -1419,9 +1430,10 @@ def run():
             best_rate = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
-                rate = _compute_drop_rate(ldg_id, item_name, full_grade)
-                if rate > best_rate:
-                    best_rate = rate
+                for _ldg_id in candidate_ids:
+                    rate = _compute_drop_rate(_ldg_id, item_name, full_grade)
+                    if rate > best_rate:
+                        best_rate = rate
             mode_rates[mode_name] = round(best_rate * 100, 1)
         return mode_rates
 

@@ -351,6 +351,20 @@ Total = sum(所有 DropRate)
 - `api/src/collector.py` — 管道步骤 9 导入爆率数据 + 预加载 + 内联爆率计算 + per-coord score filter
 - `web/src/pages/LootdropDetailPage.tsx` — 接口扩展 + 图例显示 + 分类按钮 + 阈值滑块
 
+**掉落表列表页分组（`ListPage.tsx`）：**
+
+| 分组 | 图标 | 判定条件 | 数量 |
+|------|------|---------|------|
+| 武器装备 | ⚔️ | `variant_count` ∈ {7, 8} | 251 |
+| 饰品 | 💍 | `variant_count` = 5 | 19 |
+| 稀有掉落 | ✨ | `variant_count` ∉ {5, 7, 8} 且 `max_score` < 2.5 | 29 |
+| 物品 | 📦 | `variant_count` ∉ {5, 7, 8} 且 `max_score` ≥ 2.5 | 153 |
+
+**阈值计算：**
+- `max_score` = `max(spawn_rate × 豪客赛爆率 / 100)`，取该物品所有怪物中的最大值
+- 例：怪物生成概率 90%，该物品的豪客赛爆率 10%，则 `max_score = 90 × 10 / 100 = 9.0`
+- 分组显示顺序：稀有掉落 → 物品 → 饰品 → 武器装备
+
 ### 旋转值
 
 从 Layout JSON 文件计算，优先级：`module_name` → `sl_base_name`，默认 1（90°）。
