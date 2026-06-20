@@ -350,6 +350,15 @@ def run():
     _coord_variant_count = db.get_coord_variant_counts()
     _log(f"[JSON] get_coord_variant_counts DONE -> {len(_coord_variant_count)} variant groups")
 
+    # Build original_keyword → keyword mapping for multi-entity spawner resolution
+    # (e.g. "Jellyfish" → {Jellyfish_Tiny, Jellyfish_Small, Jellyfish_Medium, Jellyfish_Large})
+    _og_to_keywords: dict[str, set[str]] = {}
+    for _kw, _clist in all_coords.items():
+        for _c in _clist:
+            _og = _c.get("original_keyword", "")
+            if _og and _og != _kw and _og not in all_coords:
+                _og_to_keywords.setdefault(_og, set()).add(_kw)
+
     # Query spawner info for props (spawner_type, has_lootdrop) to determine entity type
     _props_spawner_info: dict[str, dict] = {}
     for row in (
@@ -1536,6 +1545,13 @@ def run():
                 if alias:
                     coords = all_coords.get(alias, [])
             if not coords:
+                alt_keywords = _og_to_keywords.get(m_name, set())
+                for _ak in sorted(alt_keywords):
+                    _c = all_coords.get(_ak, [])
+                    if _c:
+                        coords = _c
+                        break
+            if not coords:
                 continue
             m_trans = entry["monster_translations"][_i]
             base = _base_monster_name(m_name)
@@ -2038,6 +2054,7 @@ def run():
             si_entry["monsters"] = entry["monsters"]
         if entry.get("monster_translations"):
             si_entry["monster_translations"] = entry["monster_translations"]
+        si_entry["max_score"] = entry.get("max_score", 0.0)
         search_index.append(si_entry)
     for entry in quest_npcs_data:
         search_index.append(
