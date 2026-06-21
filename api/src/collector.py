@@ -1846,23 +1846,13 @@ def run():
             _log(f"[JSON] lootdrops detail: {_loot_detail_count}/{_loot_detail_total}")
     _log(f"[JSON] lootdrops detail files DONE -> {_loot_detail_count} items")
 
-    # ── 回写 lootdrops.json index，添加 max_score 并过滤无明细文件的条目 ──
+    # ── 回写 lootdrops.json index，添加 max_score 和分类信息 ──
     _log("[JSON] updating lootdrops index with max_score...")
-    _filtered = []
-    _skipped = 0
     for _entry in loot_index:
         _iname = _entry["name"]
-        _detail_path = OUTPUT_DIR / f"lootdrops/{_iname}.json"
-        if not _detail_path.exists():
-            _skipped += 1
-            continue
         _entry["max_score"] = _item_max_score.get(_iname, 0.0)
-        _filtered.append(_entry)
-    if _skipped:
-        _log(f"[JSON] filtered {_skipped} lootdrops without detail files")
-    _save("lootdrops.json", _filtered)
-    _log(f"[JSON] lootdrops index update DONE -> {len(_filtered)} items")
-    loot_index = _filtered
+    _save("lootdrops.json", loot_index)
+    _log(f"[JSON] lootdrops index update DONE -> {len(loot_index)} items")
 
     # ── 更新物品实体 JSON，添加 group_drop_info ──
     _log("[JSON] updating item entities with group drop info...")
