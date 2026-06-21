@@ -16,40 +16,24 @@
    - `score = 100 * 0.0 / 100 = 0` → 被 `if score > 0` 过滤掉
 4. **连带问题**：`lootdrop_items` 中有 3 个怪物名（`Hoard01`、`Hoard01_5`、`HoardChest01`）在地图中不存在对应 spawner 坐标，产生空条目浪费处理
 
-## 修复方案
+## 修复方案（已全部完成）
 
-| # | 问题 | 修复位置 |
-|---|------|----------|
-| 1 | 爆率 `round` 过早导致精度丢失 | `_get_group_drop_rates` (L1442) |
-| 2 | `score` 使用了舍入后的爆率 | loot 详情循环 (L1794~L1803) |
-| 3 | 怪物名无对应坐标 | `spawner_entries` 或 `lootdrop_items` |
-| 4 | 超级宝藏堆与普通宝藏堆共用同一 label | 可选优化 |
+| # | 问题 | 修复位置 | 状态 |
+|---|------|----------|------|
+| 1 | 爆率精度丢失 | `_round_rate` 改用 `decimal.Decimal` 量化到 3 位小数 | ✅ |
+| 2 | SuperHoard 与 Hoard 共用 label | `search_engine.py` 跳过 SuperHoard redirect；`config.py` 添加 HARDCODED_TRANSLATIONS | ✅ |
+| 3 | SuperHoard 无独立 entity 分类 | `collector.py` 往 `entity_class` 注入 SuperHoard props | ✅ |
+| 4 | SuperHoard 不出现在物品怪物列表 | `collector.py` merged_loot 注入 SuperHoard spawner 关键字 | ✅ |
 
-## 关键修改
+## 实际修改汇总
 
-不需要改 DB 数据（数据已经是正确的），只需改 `collector.py` 中两个函数的精度处理逻辑。具体而言：让 `drop_rates` 存储原始值（用于算分）并在前端做舍入展示。
+### 1. 爆率精度修复（`a549848`）
+- 引入 `decimal.Decimal`，`_round_rate` 使用 `Decimal(str(v)).quantize("0.001", ROUND_HALF_UP)`，替代 `round(v, 1)`
+- 所有爆率输出点均通过该函数，消除浮点长尾（如 `0.011999999999999999` → `0.012`）
 
-### 修改 1：删除 `round` 精度截断
-
-**文件**：`api/src/collector.py`
-
-- L1442：`round(best_rate * 100, 1)` → `best_rate * 100`
-- L1475：`round(best_rate * 100, 1)` → `best_rate * 100`
-- L1917：`round(_best_rate * 100, 1)` → `_best_rate * 100`
-
-### 修改 2：score 使用原始爆率
-
-**文件**：`api/src/collector.py`
-
-- L1803~L1804：`_score = _c.get("spawn_rate", 0) * _hk / 100` 改为使用原始 `drop_rates`（非 round 后的值）
-- L1815：同处理
-
-### 修改 3：清理无坐标的怪物名
-
-**文件**：`api/src/collector.py` 或 `api/src/db_manager.py`
-
-- 从 `lootdrop_items` 或 `merged_loot` 中剔除 `Hoard01`、`Hoard01_5`、`HoardChest01` 等无坐标条目
-
-### 修改 4（可选）：分离超级宝藏堆 label
-
-需涉及 `search_engine.py` → `spawners` 表 → `collector.py` 多级联动，见 `docs/REFERENCE.md` 中关于 SuperHoard 的讨论。
+### 2. SuperHoard 实体分离
+- **`api/src/search_engine.py`**：SuperHoard 关键字不走 redirect，保留独立 identity
+- **`api/src/config.py`**：添加 `SuperHoard01_9` / `SuperHoardChest01_9` 翻译 "超级宝藏堆"
+- **`api/src/collector.py`**：
+  - `entity_class` 注入 SuperHoard 为 props 类型
+  - `merged_loot` 注入 SuperHoard spawner 关键字，使其出现在物品怪物列表中
