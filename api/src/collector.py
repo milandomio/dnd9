@@ -569,6 +569,25 @@ def run():
     if _variant_override:
         print(f"  _8001 variants split: {len(_variant_override)} bases affected")
 
+    # -- Inject SuperHoard spawners as separate monster entries --
+    _superhoard_map: dict[str, list[str]] = {}
+    for _row in (
+        db.connect()
+        .execute(
+            "SELECT DISTINCT spawner_keyword, entity_name FROM spawner_entries WHERE entity_name IN ('Hoard01_9', 'HoardChest01') AND spawner_keyword != entity_name"
+        )
+        .fetchall()
+    ):
+        _sk, _en = _row
+        _superhoard_map.setdefault(_en, []).append(_sk)
+    for _item_name, monsters in merged_loot.items():
+        for _en, _sks in _superhoard_map.items():
+            if _en in monsters:
+                for _sk in _sks:
+                    if _sk not in monsters:
+                        monsters.append(_sk)
+    merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
+
     def _build_coord_out(c: dict, vc: dict) -> dict:
         """构建坐标输出 dict，附带变体信息。"""
         out = {
@@ -921,6 +940,10 @@ def run():
                 "types": ["props", "monster"],
                 "translation_key": "Text_DesignData_Monster_Monster_" + base,
             }
+    # SuperHoard 类 spawner 作为独立 props 实体注入（无 DB entity 记录）
+    for _sh_name in ("SuperHoard01_9", "SuperHoardChest01_9"):
+        if _sh_name not in entity_class:
+            entity_class[_sh_name] = {"types": ["props"], "translation_key": ""}
     _save(
         "entity_index.json",
         [
@@ -1439,7 +1462,7 @@ def run():
                     rate = _compute_drop_rate(_ldg_id, item_name, full_grade)
                     if rate > best_rate:
                         best_rate = rate
-            mode_rates[mode_name] = round(best_rate * 100, 1)
+            mode_rates[mode_name] = best_rate * 100
         return mode_rates
 
     def _compute_group_drop_rates(ldg_id: str, group_key: str) -> dict[str, float]:
@@ -1472,7 +1495,7 @@ def run():
                         r = w / _shared / _rate_total
                         if r > best_rate:
                             best_rate = r
-            mode_rates[mode_name] = round(best_rate * 100, 1)
+            mode_rates[mode_name] = best_rate * 100
         return mode_rates
 
     def _compute_variant_rate(
@@ -1914,7 +1937,7 @@ def run():
                     _rate = _compute_drop_rate(_ldg_id, _iname, _full_grade)
                     if _rate > _best_rate:
                         _best_rate = _rate
-                _mode_rates[_mode_name] = round(_best_rate * 100, 1)
+                _mode_rates[_mode_name] = _best_rate * 100
             _group_drop_info[_g] = [
                 {
                     "translation": _entity_data["translation"],

@@ -98,6 +98,9 @@ def load_all_spawner_data(
             if entity_names:
                 need_expand = len(entity_names) >= 2
                 need_redirect = len(entity_names) == 1 and keyword != next(iter(entity_names))
+                # Preserve SuperHoard spawner keyword (don't redirect to base entity name)
+                if need_redirect and keyword.startswith("SuperHoard"):
+                    need_redirect = False
                 if need_expand or need_redirect:
                     # 按单个 grade 重叠计算 spawn_rate（而非按完全匹配的 DG 数组分组）
                     _all_grades: set[int] = set()
