@@ -118,7 +118,13 @@ export default function LootdropDetailPage() {
 
   useEffect(() => {
     if (!name) return;
-    if (ssrData?.item?.monsters) return;
+    if (ssrData?.item?.monsters) {
+      setData(ssrData.item);
+      setHidden(defaultHidden(ssrData.item.monsters, 2.5));
+      return;
+    }
+    setData(null);
+    setHidden(new Set());
     if (!dataVersion) return;
     fetch(
       `/data/json/lootdrops/${decodeURIComponent(name)}.json?v=${dataVersion}`
