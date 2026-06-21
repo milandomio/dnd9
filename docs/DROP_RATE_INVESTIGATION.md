@@ -41,7 +41,7 @@
 
 ---
 
-## 问题2：Firedeep_MiningPassage 狮头宝箱坐标缺失（待确认）
+## ~~问题2：Firedeep_MiningPassage 狮头宝箱坐标缺失~~ [已修复：变体识别]
 
 ### 现象
 
@@ -88,11 +88,9 @@ score：`1.3 * 3.0 / 100 = 0.039` > 阈值 0.0（总坐标 < 100）
 2. locked merge 去重步骤可能意外移除了 MiningPassage 坐标
 3. `_map_base_to_group` 可能未包含 MiningPassage
 
-### 待办
+### ~~待办~~ [已通过变体识别解决]
 
-- [ ] 在 collector.py 中添加调试日志，追踪 MiningPassage 坐标的处理流程
-- [ ] 确认 `_map_base_to_group["Firedeep_MiningPassage"]` 返回值
-- [ ] 确认 score 过滤是否正确计算 MiningPassage 的 score
+- [x] MiningPassage 坐标缺失问题已通过变体识别机制修复
 
 ---
 
