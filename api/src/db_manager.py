@@ -1170,13 +1170,14 @@ class DatabaseManager:
                 count = li.get("ItemCount", 1)
                 rows.append((stem, item_name, luck_grade, count))
         # 去重：有变体后缀时每 (lootdrop_id, base_name) 按优先级保留；无后缀时保留末条（兼容多 LuckGrade 物品）
+        # _8001 特殊变体使用完整 item_name 作为去重键（独立物品，不参与归属合并）
         seen: dict[tuple[str, str], int] = {}
         filtered = []
         for _i, (stem, item_name, luck_grade, count) in enumerate(rows):
             base = _variant_re.sub("", item_name)
-            key = (stem, base)
+            # _8001 使用完整 item_name 为键（不参与归属合并），其余使用 base_name
+            key = (stem, item_name) if item_name.endswith("_8001") else (stem, base)
             if base == item_name:
-                # 无变体后缀：保留最后一条
                 seen[key] = len(filtered)
                 filtered.append((stem, item_name, luck_grade, count))
             elif key in seen:
