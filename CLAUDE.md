@@ -26,13 +26,16 @@ DarkFindV5/
 ├── api/                  # 后端
 │   ├── main.py               # 入口（运行管道 + 自动交付到 data/）
 │   ├── src/
-│   │   ├── collector.py          # 数据清洗 + JSON 输出
+│   │   ├── collector.py          # 数据清洗 + JSON 输出（含爆率计算、search_index 生成）
 │   │   ├── config.py             # 路径配置
 │   │   ├── db_manager.py         # SQLite 建表/导入/查询
 │   │   ├── search_engine.py      # 地图文件遍历 + 关键词匹配
 │   │   ├── layout_utils.py       # 地图旋转值计算
+│   │   ├── dungeon_mode.py       # DungeonGrade 分组代码解析
+│   │   ├── lootdrop_rates.py     # 爆率查询（get_spawn_rate_for_keyword）
+│   │   ├── pipeline_timer.py     # 管道步骤计时工具
 │   │   ├── quest_collector.py    # 任务提取入口
-│   │   ├── quest_extractor/      # 任务提取模块
+│   │   ├── quest_extractor/      # 任务提取模块（11 个 Python 模块）
 │   │   └── img/                  # 地图图片 .webp（不可再生，严**禁**清理）
 │   ├── lint.sh / lint-fix.sh    # ruff lint 脚本
 │   ├── data/                # DB（darkfindv5.db）
@@ -44,10 +47,11 @@ DarkFindV5/
 │   ├── src/
 │   │   ├── main.tsx             # 客户端入口
 │   │   ├── ssr.tsx              # SSR 入口
-│   │   ├── App.tsx              # 路由定义
+│   │   ├── App.tsx              # 客户端入口（Provider 包装）
+│   │   ├── AppInner.tsx         # 路由定义（Routes/Route 声明）
 │   │   ├── pages/               # 页面组件
 │   │   ├── components/          # MapDebug, MapPanel, Disclaimer, DebugCoordTable, NavBar, QuestSearchBar
-│   │   ├── hooks/               # useDebug, useTheme, useDungeonModules, useDataVersion
+│   │   ├── hooks/               # useDebug, useTheme, useDungeonModules, useDataVersion, useSearchIndex
 │   │   ├── context/             # SSRDataContext
 │   │   └── types/               # data.ts, quest.ts
 │   ├── scripts/ssg.mjs        # SSG 构建脚本（--quick 模式下详情页为 CSR）
@@ -190,6 +194,7 @@ git reset HEAD~1 && rm /tmp/darkfindv5.db
 | `useTheme.tsx` | 主题切换 | 全局 |
 | `useDungeonModules.ts` | 地图模块数据 | DungeonModules/Group/Detail |
 | `useDataVersion.ts` | 数据版本（缓存 bust） | Disclaimer, NavBar, List, Explore |
+| `useSearchIndex.ts` | 搜索索引（全局缓存 search_index.json） | NavBar |
 
 ### 详情页同步规则
 

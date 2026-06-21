@@ -1503,6 +1503,43 @@ def run():
             mode_rates[mode_name] = _round_rate(best_rate * 100)
         return mode_rates
 
+    def _compute_container_drop_rates(ldg_id: str, group_key: str) -> dict[str, float]:
+        """计算容器（宝箱等）的聚合爆率：所有独立 lootdrop 的总掉落概率。"""
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        if not suffixes:
+            return {}
+        mode_rates: dict[str, float] = {}
+        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+            if mode_id == 4:
+                continue
+            best_total = 0.0
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
+                if not grade_data:
+                    continue
+                total_any_prob = 0.0
+                for ld_id, lr_id, drop_count in grade_data:
+                    rate_items = _ld_rate_items.get(ld_id, {})
+                    if not rate_items:
+                        continue
+                    rate_total = _ld_rate_totals.get(lr_id, 10000)
+                    _lg_set: set[int] = set()
+                    for _item_name, (lg, _) in rate_items.items():
+                        _lg_set.add(lg)
+                    ld_prob = 0.0
+                    for lg in _lg_set:
+                        w = _ld_rate_weights.get(lr_id, {}).get(lg, 0)
+                        if w > 0:
+                            ld_prob += w / rate_total
+                    if ld_prob > 0:
+                        any_prob_rolls = 1.0 - (1.0 - ld_prob) ** drop_count
+                        total_any_prob = 1.0 - (1.0 - total_any_prob) * (1.0 - any_prob_rolls)
+                if total_any_prob > best_total:
+                    best_total = total_any_prob
+            mode_rates[mode_name] = _round_rate(best_total * 100)
+        return mode_rates
+
     def _compute_variant_rate(
         ldg_id: str,
         luck_grade: int,
@@ -2040,9 +2077,10 @@ def run():
         if not _seen_groups:
             continue
         _group_drop_info: dict[str, list[dict]] = {}
-        _sr = _spawn_rate_cache.get(_pname, 0.0)
+        _sr_list = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _entity_spawners.get(_pname, set())]
+        _sr = max(_sr_list) if _sr_list else 0.0
         for _g in _seen_groups:
-            _dr = _compute_group_drop_rates(_ldg_id, _g)
+            _dr = _compute_container_drop_rates(_ldg_id, _g)
             if not _dr and not _sr:
                 continue
             _group_drop_info[_g] = [

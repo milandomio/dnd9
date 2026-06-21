@@ -5,7 +5,7 @@
 
 ## 待修复问题
 
-### _8001 变体物品爆率：超级宝藏堆（SuperHoard）缺失
+### ~~_8001 变体物品爆率：超级宝藏堆（SuperHoard）缺失~~ [已修复]
 
 **背景**：25 个 Artifact 武器 `_8001` 变体（`LuckGrade=8`）已在 `db_manager.py` 中修复为独立条目。
 但"宝藏堆"只显示了普通宝藏（`ID_Lootdrop_Spawn_Treasure`）的掉落，缺少"超级宝藏堆"（SuperHoard）的部分。
@@ -33,6 +33,8 @@
 
 **修复思路**：在 `_compute_drop_rate` 中或 spawner 映射阶段，超级宝藏堆（`Id_Spawner_New_Props_SuperHoard01_9`）的
 掉落应使用 `ID_Lootdrop_Drop_HoardWeaponArmor` 及其对应的 `ID_Droprate_Hoard_WeaponArmor_*` 率值计算，而非普通宝藏堆的率值。
+
+> **状态：已修复**（2026-06-21：参见 `docs/SUPERHOARD_FIX.md`）
 
 ## 数据管道
 
@@ -680,7 +682,7 @@ value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
 - `db_manager.py`：删除 `search_term_matches` 表定义，删除 `get_spawner_matches()`，`get_all_coordinates()` 改为直接查 spawners 表按 keyword 分组
 - `.github/workflows/deploy.yml`：删除 `pip install pyahocorasick`
 
-**搜索索引**：由 `web/scripts/ssg.mjs` 在构建时从 JSON 输出文件生成 `search_index.json`，无 AC 自动机依赖。
+**搜索索引**：由 `api/src/collector.py` 在数据管道中直接生成 `search_index.json`，无 AC 自动机依赖。
 
 **影响数据：**
 - spawner 行数 ~61,359（72 个多实体展开器正确展开）
