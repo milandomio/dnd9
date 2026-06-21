@@ -67,6 +67,8 @@ HARDCODED_TRANSLATIONS = {
     "SuperHoard": "超级宝藏",
     "SuperHoardChest": "超级宝藏",
     "SuperHoardChest01": "超级宝藏",
+    "SuperHoard01_9": "超级宝藏堆",
+    "SuperHoardChest01_9": "超级宝藏堆",
     "Trinkets": "小饰品",
     "Weapon": "武器",
     "Weapon_DualBoss": "双Boss-武器",
@@ -208,8 +210,6 @@ HARDCODED_TRANSLATIONS = {
     "SkeletonCorpse_01_UnderSea": "海底骷髅尸体",
     "SkeletonCorpse_02_UnderSea": "海底骷髅尸体",
     "SkeletonCorpse_03_UnderSea": "海底骷髅尸体",
-    "SuperHoard01_9": "超级宝藏",
-    "SuperHoardChest01_9": "超级宝藏",
     # 环境/装饰（Game.json 无匹配）
     "BlackDespairBanner": "黑色绝望旗帜",
     "CandleHolder_Bronze": "青铜烛台",
