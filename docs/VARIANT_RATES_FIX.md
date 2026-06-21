@@ -25,9 +25,10 @@
 
 ## 已完成的修改 (898c238)
 
-### 说明
-- `_round_rate` 现为身份函数，不再进行四舍五入。所有爆率保留原始精度。
-- 如需在前端展示保留特定小数位，请在 UI 层进行格式化。
+### `_round_rate` 使用 Decimal 精确格式化
+- 改用 `decimal.Decimal` 替代 `float` 做精确计算，消除二进制浮点数产生的小数长尾（如 `0.011999999999999999`）。
+- `_round_rate(v)` 将 `float` 值转换为 `Decimal` 后执行 `quantize(0.001, ROUND_HALF_UP)` 四舍五入到 3 位小数，再转回 `float`。
+- 所有爆率输出点（`_get_group_drop_rates`、`_compute_group_drop_rates`、直连物品爆率）均通过此函数输出。
 
 ### 1. 移除 `* item_count` 和 `* group_count`
 - **根因**: `drop_count`（如 Arrow_2001 的 `drop_count=3`）和 `lootdrop_groups.drop_count`（如 PirateBowman 的 2）乘入概率公式，导致 >100% 爆率
