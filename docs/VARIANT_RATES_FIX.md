@@ -25,6 +25,10 @@
 
 ## 已完成的修改 (898c238)
 
+### 说明
+- `_round_rate` 现为身份函数，不再进行四舍五入。所有爆率保留原始精度。
+- 如需在前端展示保留特定小数位，请在 UI 层进行格式化。
+
 ### 1. 移除 `* item_count` 和 `* group_count`
 - **根因**: `drop_count`（如 Arrow_2001 的 `drop_count=3`）和 `lootdrop_groups.drop_count`（如 PirateBowman 的 2）乘入概率公式，导致 >100% 爆率
 - **修复**: 公式统一为 `_pool_weight / _shared / _rate_total`

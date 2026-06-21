@@ -2,6 +2,7 @@ import json
 import os
 import re
 import urllib.parse
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 from config import (
@@ -1386,7 +1387,8 @@ def run():
     _variant_suffixes = ["_5001", "_4001", "_3001", "_2001", "_1001"]
 
     def _round_rate(v: float) -> float:
-        return round(v, 3)
+        d = Decimal(str(v)).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
+        return float(d)
 
     def _compute_drop_rate(ldg_id: str, item_name: str, full_grade: int) -> float:
         """纯内存计算某物品在指定组+等级下的爆率（0~1）。
