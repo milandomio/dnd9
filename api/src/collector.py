@@ -2069,54 +2069,37 @@ def run():
         _coords = _edata.get("coords", [])
         if not _coords:
             continue
-        # Compute spawn_rate: combine with locked variant if exists
-        _pname_sks = _entity_spawners.get(_pname, set())
-        _sr = 0.0
-        # Check _Locked variant (shares common keywords)
+        # Build per-keyword-type entries: {type: {translation, spawn_rate}}
+        _kw_entries: dict[str, dict] = {}
         _locked_name = _pname + "_Locked"
-        if _locked_name in _entity_spawners:
-            _locked_sks = _entity_spawners[_locked_name]
-            _common_sks = _pname_sks & _locked_sks
-            if _common_sks:
-                _combined = 0
-                for _sk in _common_sks:
-                    _ul = _spawn_rate_detail.get((_sk, _pname), 0)
-                    _ll = _spawn_rate_detail.get((_sk, _locked_name), 0)
-                    _rate = _ul + _ll
-                    if _rate > _combined:
-                        _combined = _rate
-                _non_common_rates = [_spawn_rate_detail.get((sk, _pname), 0) for sk in (_pname_sks - _common_sks)]
-                _sr = max(_combined, max(_non_common_rates) if _non_common_rates else 0)
-        # Check _UnderSea variant (separate keywords, take max)
         _undersea_name = _pname + "_UnderSea"
+        _locked_undersea = _pname + "_Locked_UnderSea"
+        _base_trans = _edata["translation"]
+        for _sk in _entity_spawners.get(_pname, set()):
+            _base = _spawn_rate_detail.get((_sk, _pname), 0)
+            _lock = _spawn_rate_detail.get((_sk, _locked_name), 0) if _locked_name in _entity_spawners else 0
+            _combined = _base + _lock
+            if _combined > 0:
+                _type = _classify_label(_sk, _pname)
+                _suffix = _label_type_suffix.get(_type, "")
+                _label = _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
+                if _type not in _kw_entries or _combined > _kw_entries[_type]["spawn_rate"]:
+                    _kw_entries[_type] = {"translation": _label, "spawn_rate": _combined}
         if _undersea_name in _entity_spawners:
-            _us_sks = _entity_spawners[_undersea_name]
-            _us_rates = [_spawn_rate_detail.get((sk, _undersea_name), 0) for sk in _us_sks]
-            _us_sr = max(_us_rates) if _us_rates else 0
-            # Also check _Locked_UnderSea
-            _locked_undersea = _pname + "_Locked_UnderSea"
-            if _locked_undersea in _entity_spawners:
-                _lus_sks = _entity_spawners[_locked_undersea]
-                _common_us = _us_sks & _lus_sks
-                if _common_us:
-                    _us_combined = 0
-                    for _sk in _common_us:
-                        _us_ul = _spawn_rate_detail.get((_sk, _undersea_name), 0)
-                        _us_ll = _spawn_rate_detail.get((_sk, _locked_undersea), 0)
-                        _rate = _us_ul + _us_ll
-                        if _rate > _us_combined:
-                            _us_combined = _rate
-                    _us_non = [_spawn_rate_detail.get((sk, _undersea_name), 0) for sk in (_us_sks - _common_us)]
-                    _us_sr = max(_us_combined, max(_us_non) if _us_non else 0)
-            _sr = max(_sr, _us_sr)
-        if _sr == 0.0:
-            _sr_list = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _pname_sks]
-            _sr = max(_sr_list) if _sr_list else 0.0
-        # Mark as "可能上锁" if locked variant contributes
-        if (
-            _locked_name in _entity_spawners or _pname + "_Locked_UnderSea" in _entity_spawners
-        ) and "(可能上锁)" not in _edata["translation"]:
-            _edata["translation"] += "(可能上锁)"
+            for _sk in _entity_spawners[_undersea_name]:
+                _base = _spawn_rate_detail.get((_sk, _undersea_name), 0)
+                _lock = (
+                    _spawn_rate_detail.get((_sk, _locked_undersea), 0) if _locked_undersea in _entity_spawners else 0
+                )
+                _combined = _base + _lock
+                if _combined > 0:
+                    _type = _classify_label(_sk, _undersea_name)
+                    _suffix = _label_type_suffix.get(_type, "")
+                    _label = _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
+                    if _type not in _kw_entries or _combined > _kw_entries[_type]["spawn_rate"]:
+                        _kw_entries[_type] = {"translation": _label, "spawn_rate": _combined}
+        if not _kw_entries:
+            continue
         _seen_groups: set[str] = set()
         for _c in _coords:
             _g = _map_base_to_group.get(_c["map"], "")
@@ -2127,15 +2110,9 @@ def run():
         _group_drop_info: dict[str, list[dict]] = {}
         for _g in _seen_groups:
             _dr = _compute_container_drop_rates(_ldg_id, _g)
-            if not _dr and not _sr:
+            if not _dr:
                 continue
-            _group_drop_info[_g] = [
-                {
-                    "translation": _edata["translation"],
-                    "spawn_rate": _sr,
-                    "drop_rates": _dr,
-                }
-            ]
+            _group_drop_info[_g] = [{**_entry, "drop_rates": _dr} for _entry in _kw_entries.values()]
         if _group_drop_info:
             _edata["group_drop_info"] = _group_drop_info
             with open(_pfile, "w") as _f:
