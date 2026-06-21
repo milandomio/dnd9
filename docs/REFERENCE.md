@@ -210,6 +210,16 @@ info = parse_grade(3001)
 - 多条目 spawner（如 ChestLarge 含 9 个实体）：各条目按权重占比计算百分比
 - 原始 `SpawnRate` 以 `10000` 为基准，`2500` = 25%（单条目时），`0` = 不生成
 
+**Per-grade 归一化（2025-06 修复）：**
+不同怪物变体（Common/Elite/Nightmare/Unique）的 `DungeonGrades` 数组可能重叠（如 Unique 在 grade 1023 存在，Common 也包含 grade 1023）。旧逻辑按完整 DG 数组分组，导致 Unique 独占地级时 spawn_rate 虚增为 100%。修复后：
+
+1. 对每个 `spawner_keyword`，收集所有实体在所有 grade 的 `SpawnRate`
+2. 按 grade 汇总每个 grade 的总 SpawnRate
+3. 每个实体的最终 spawn_rate = `min(raw_rate / grade_total × 100)` 取其所有 grade 中的最小值
+4. 该计算在 `db_manager.py:import_spawner_entries()` 和 `search_engine.py:load_all_spawner_data()` 中各自独立实现
+
+**效果：** Unique 怪物的 spawn_rate 从 100% 降至 0.09%~0.3%（正确反映其在竞争 grade 中的实际占比），Common 从 63.69% 降至 63.64%（极小变化）。
+
 **实现位置：** `db_manager.py` 的 `import_spawner_entries()` 在导入时计算百分比，
 `lootdrop_rates.py` 的 `get_spawn_rate_for_keyword()` 直接从 DB 读取百分比。
 
@@ -335,7 +345,8 @@ Total = sum(所有 DropRate)
 **前端显示（`LootdropDetailPage.tsx`）：**
 - `spawn_rate` 字段从 coord 级别取（仅 ≠100 时显示）— **已生效**
 - `drop_rates` 字段从 monster 级别取（`Record<string, number>`，key 为模式名）— **已生效**
-- **per-coord score filter**：`score = spawn_rate × 豪客赛爆率 / 100`，`score < 0.5` 的坐标在导出阶段被过滤（`collector.py:1650`）
+- **per-mode spawn_rates**（`collector.py:1516`）：当实体在不同游戏模式（PVE/普通/豪客赛）的 spawn_rate 不同时，`group_drop_info` 条目额外包含 `spawn_rates: Record<string, number>` 字段。前端显示格式：`战争遗骨[PVE:0.09%×Y%][普通:0.09%×Y%][豪客赛:0.3%×Y%]`；无差异时回退为原始单值格式 `spawn_rate% + [mode:drop%]`
+- **per-coord score filter**：`score = spawn_rate × 豪客赛爆率 / 100`，`score=0` 的坐标在导出阶段被过滤（无豪客赛爆率的无用坐标点），其余坐标保留（`collector.py:1790`）
 - **分类按钮**：掉落详情页顶部的一组彩色按钮，包含"全部显示/隐藏全部"切换按钮和各怪物切换按钮
   - **max_score**：后管在 `collector.py` 中预计算 `max_score = max(spawn_rate × 豪客赛爆率 / 100)`，写入每个怪物条目，前端直接读取
   - **排序**：所有怪物按钮按 `max_score` 降序排列（`max_score=-1` 表示无爆率数据，排最后）
@@ -346,10 +357,13 @@ Total = sum(所有 DropRate)
 
 **已修改文件清单：**
 - `api/src/config.py` — `LOOTDROP_RATE_DIR`、`DUNGEON_GROUP_GRADES`（8组）、`MODULE_GROUP_FLOOR_SUFFIXES`
-- `api/src/db_manager.py` — 4 张表 + 导入/查询方法
+- `api/src/db_manager.py` — 4 张表 + 导入/查询方法；`import_spawner_entries()` per-grade 归一化 spawn_rate
+- `api/src/search_engine.py` — `load_all_spawner_data()` per-grade 归一化 spawn_rate（与 db_manager 独立实现）
 - `api/src/lootdrop_rates.py` — 爆率计算模块（`get_spawn_rate_for_keyword()` 仍在使用，其余已被 collector.py 内联逻辑替代）
-- `api/src/collector.py` — 管道步骤 9 导入爆率数据 + 预加载 + 内联爆率计算 + per-coord score filter
-- `web/src/pages/LootdropDetailPage.tsx` — 接口扩展 + 图例显示 + 分类按钮 + 阈值滑块
+- `api/src/collector.py` — 管道步骤 9 导入爆率数据 + 预加载 + 内联爆率计算 + per-coord score=0 过滤 + per-mode spawn_rates 字段
+- `web/src/pages/LootdropDetailPage.tsx` — 接口扩展 + 图例显示 + 分类按钮 + 阈值滑块 + per-mode spawn_rates 格式显示
+- `web/src/pages/DetailPage.tsx` — per-mode spawn_rates 格式显示（同步 LootdropDetailPage）
+- `web/src/types/data.ts` — `GroupDropInfo` 接口添加可选的 `spawn_rates` 字段
 
 **掉落表列表页分组（`ListPage.tsx`）：**
 
