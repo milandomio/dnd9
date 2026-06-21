@@ -8,6 +8,14 @@
 4. **898c238** — 移除 `item_count` 和 `group_count` 对爆率概率的乘法
 5. **d0eef7b** — `_compute_variant_rate` 添加 `found` 守卫，权重 0 时不回退
 6. **058c8da** — 彻底移除 `(full_grade, 0)` 回退机制，三处爆率函数统一
+7. **a549848** — 改用 `decimal.Decimal` 精确格式化爆率，消除浮点长尾
+
+## 已完成的修改 (a549848)
+
+### Decimal 精确格式化
+- **根因**: 二进制浮点数除法产生长尾（如 `0.011999999999999999`），`round(v, 1)` 会将极小值截断为 0.0，导致 score 归零被过滤
+- **修复**: 新增 `from decimal import Decimal, ROUND_HALF_UP`；`_round_rate(v)` 将 float 转为 `Decimal(str(v))` 后执行 `quantize("0.001", ROUND_HALF_UP)`，再转回 float
+- **影响**: 所有爆率输出点均已使用该函数；极低爆率（如 `0.002%`）正确保留，无浮点尾数
 
 ## 已完成的修改 (058c8da)
 
@@ -24,11 +32,6 @@
 - 与 `_compute_drop_rate` 保持一致：在 full_grade 找到匹配条目后 return（无论权重是否为 0），不回退
 
 ## 已完成的修改 (898c238)
-
-### `_round_rate` 使用 Decimal 精确格式化
-- 改用 `decimal.Decimal` 替代 `float` 做精确计算，消除二进制浮点数产生的小数长尾（如 `0.011999999999999999`）。
-- `_round_rate(v)` 将 `float` 值转换为 `Decimal` 后执行 `quantize(0.001, ROUND_HALF_UP)` 四舍五入到 3 位小数，再转回 `float`。
-- 所有爆率输出点（`_get_group_drop_rates`、`_compute_group_drop_rates`、直连物品爆率）均通过此函数输出。
 
 ### 1. 移除 `* item_count` 和 `* group_count`
 - **根因**: `drop_count`（如 Arrow_2001 的 `drop_count=3`）和 `lootdrop_groups.drop_count`（如 PirateBowman 的 2）乘入概率公式，导致 >100% 爆率
