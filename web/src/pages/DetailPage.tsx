@@ -87,7 +87,11 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (!page || !name) return;
-    if (ssrData?.entity?.coords) return;
+    if (ssrData?.entity?.coords) {
+      setEntity(ssrData.entity);
+      return;
+    }
+    setEntity(null);
     if (!dataVersion) return;
     const decoded = decodeURIComponent(name!);
     fetch(`/data/json/${page}/${decoded}.json?v=${dataVersion}`)
