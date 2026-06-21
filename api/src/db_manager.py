@@ -1068,16 +1068,17 @@ class DatabaseManager:
                     break
             props = entry.get("Properties", {}) or {}
             items = props.get("SpawnerItemArray", []) or []
-            # 按单个 grade 重叠计算 spawn_rate（而非按完全匹配的 DG 数组分组）
-            _all_grades: set[int] = set()
+            # 计算每个 spawner 的总池（用于无 DG 条目的分母）
+            _total_pool = max(sum(item.get("SpawnRate", 10000) for item in items), 1)
+            # 按 grade 后缀（地图分组代码）聚合 SpawnRate
+            _suffix_totals: dict[int, int] = {}
             for item in items:
-                _all_grades.update(item.get("DungeonGrades", []) or [])
-            _grade_totals: dict[int, int] = {}
-            for _g in _all_grades:
-                _grade_totals[_g] = max(
-                    sum(it.get("SpawnRate", 10000) for it in items if _g in (it.get("DungeonGrades", []) or [])),
-                    1,
-                )
+                dg_list = item.get("DungeonGrades", []) or []
+                if dg_list:
+                    suffixes = set(g % 1000 for g in dg_list)
+                    sr = item.get("SpawnRate", 10000)
+                    for s in suffixes:
+                        _suffix_totals[s] = _suffix_totals.get(s, 0) + sr
             for item in items:
                 ldg = item.get("LootDropGroupId", {}) or {}
                 ldg_path = ldg.get("AssetPathName", "")
@@ -1085,8 +1086,14 @@ class DatabaseManager:
                     continue
                 raw_rate = item.get("SpawnRate", 10000)
                 dungeon_grades = item.get("DungeonGrades", []) or []
-                _rates = [raw_rate / _grade_totals[_g] * 100 for _g in dungeon_grades]
-                spawn_rate = round(min(_rates), 2) if _rates else round(raw_rate / 10000 * 100, 2)
+                if dungeon_grades:
+                    _suffixes = set(g % 1000 for g in dungeon_grades)
+                    _rates = [raw_rate / _suffix_totals[s] * 100 for s in _suffixes]
+                    spawn_rate = round(min(_rates), 2)
+                elif len(items) > 1:
+                    spawn_rate = round(raw_rate / _total_pool * 100, 2)
+                else:
+                    spawn_rate = round(raw_rate / 10000 * 100, 2)
                 ldg_id = _ue_asset_base_name(ldg_path) or ""
                 entity_name = ""
                 for id_key in ("MonsterId", "PropsId"):
