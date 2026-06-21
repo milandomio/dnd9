@@ -3,6 +3,37 @@
 > 本文档包含数据管道、数据库、地图模块的详细技术规范。
 > 日常开发请参考 `CLAUDE.md`。
 
+## 待修复问题
+
+### _8001 变体物品爆率：超级宝藏堆（SuperHoard）缺失
+
+**背景**：25 个 Artifact 武器 `_8001` 变体（`LuckGrade=8`）已在 `db_manager.py` 中修复为独立条目。
+但"宝藏堆"只显示了普通宝藏（`ID_Lootdrop_Spawn_Treasure`）的掉落，缺少"超级宝藏堆"（SuperHoard）的部分。
+
+**关键差异**：
+
+| 实体 | LootDropId | RateId | LG8 权重 | 含 _8001 |
+|------|-----------|--------|---------|---------|
+| 宝藏堆（普通） | `ID_Lootdrop_Spawn_Treasure` | `ID_Droprate_Hoard_Treasure*` | 全部为 0 | ✗（最大 LG=7） |
+| 超级宝藏堆（SuperHoard） | `ID_Lootdrop_Drop_HoardWeaponArmor` | `ID_Droprate_Hoard_WeaponArmor*` | **部分 >0** | ✓（25 件 _8001） |
+
+**超级宝藏堆中 _8001 的有效 LG8 权重**（rate_id 及对应 dungeon grade）：
+
+| DungeonGrade | RateId | LG8 权重 |
+|-------------|--------|---------|
+| 3001-3031 | `ID_Droprate_Hoard_WeaponArmor_3xxx` | 5~30 |
+| 4002 | `ID_Droprate_Hoard_WeaponArmor_4002` | 30 |
+| 4012 | `ID_Droprate_Hoard_WeaponArmor_4012` | 30 |
+| 4023 | `ID_Droprate_Hoard_WeaponArmor_4023` | 30 |
+
+**数据来源**：
+- `ID_LootDropGroup_SuperHoard.json` — 164 个条目，包含 `ID_Lootdrop_Drop_HoardWeaponArmor`（+ Gems、GoldCoinChest 等）
+- `ID_Lootdrop_Drop_HoardWeaponArmor.json` — 1342 个物品，含 25 件 `_8001`（LG=8）
+- `ID_Droprate_Hoard_WeaponArmor_*.json` — 41 个 rate 文件
+
+**修复思路**：在 `_compute_drop_rate` 中或 spawner 映射阶段，超级宝藏堆（`Id_Spawner_New_Props_SuperHoard01_9`）的
+掉落应使用 `ID_Lootdrop_Drop_HoardWeaponArmor` 及其对应的 `ID_Droprate_Hoard_WeaponArmor_*` 率值计算，而非普通宝藏堆的率值。
+
 ## 数据管道
 
 ### DB 过期判断时序
