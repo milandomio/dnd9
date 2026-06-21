@@ -580,12 +580,12 @@ def run():
     ):
         _sk, _en = _row
         _superhoard_map.setdefault(_en, []).append(_sk)
-    for _item_name, monsters in merged_loot.items():
+    for _mons in merged_loot.values():
         for _en, _sks in _superhoard_map.items():
-            if _en in monsters:
+            if _en in _mons:
                 for _sk in _sks:
-                    if _sk not in monsters:
-                        monsters.append(_sk)
+                    if _sk not in _mons:
+                        _mons.append(_sk)
     merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
 
     def _build_coord_out(c: dict, vc: dict) -> dict:
