@@ -2069,8 +2069,8 @@ def run():
         _coords = _edata.get("coords", [])
         if not _coords:
             continue
-        # Build per-keyword-type entries: {type: {translation, spawn_rate}}
-        _kw_entries: dict[str, dict] = {}
+        # Build per-keyword-type entries: {(is_undersea, type): {translation, spawn_rate}}
+        _kw_entries: dict[tuple[bool, str], dict] = {}
         _locked_name = _pname + "_Locked"
         _undersea_name = _pname + "_UnderSea"
         _locked_undersea = _pname + "_Locked_UnderSea"
@@ -2083,8 +2083,9 @@ def run():
                 _type = _classify_label(_sk, _pname)
                 _suffix = _label_type_suffix.get(_type, "")
                 _label = _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
-                if _type not in _kw_entries or _combined > _kw_entries[_type]["spawn_rate"]:
-                    _kw_entries[_type] = {"translation": _label, "spawn_rate": _combined}
+                _key = (False, _type)
+                if _key not in _kw_entries or _combined > _kw_entries[_key]["spawn_rate"]:
+                    _kw_entries[_key] = {"translation": _label, "spawn_rate": _combined}
         if _undersea_name in _entity_spawners:
             for _sk in _entity_spawners[_undersea_name]:
                 _base = _spawn_rate_detail.get((_sk, _undersea_name), 0)
@@ -2095,9 +2096,10 @@ def run():
                 if _combined > 0:
                     _type = _classify_label(_sk, _undersea_name)
                     _suffix = _label_type_suffix.get(_type, "")
-                    _label = _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
-                    if _type not in _kw_entries or _combined > _kw_entries[_type]["spawn_rate"]:
-                        _kw_entries[_type] = {"translation": _label, "spawn_rate": _combined}
+                    _label = "(海底)" + _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
+                    _key = (True, _type)
+                    if _key not in _kw_entries or _combined > _kw_entries[_key]["spawn_rate"]:
+                        _kw_entries[_key] = {"translation": _label, "spawn_rate": _combined}
         if not _kw_entries:
             continue
         _seen_groups: set[str] = set()
