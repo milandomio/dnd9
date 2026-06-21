@@ -2051,10 +2051,14 @@ def run():
     # ── 更新实体（props）JSON，添加 group_drop_info ──
     _log("[JSON] updating props entities with group drop info...")
     _prop_update = 0
+    _locked_props: set[str] = set()
     for _pfile in (OUTPUT_DIR / "props").glob("*.json"):
         with open(_pfile) as _f:
             _edata = json.load(_f)
         _pname = _edata["name"]
+        if _LOCKED_RE.search(_pname):
+            _locked_props.add(_pname)
+            continue
         _ldg_id = _spawner_ldg.get(_pname, "")
         if not _ldg_id:
             _lower = _pname.lower()
@@ -2069,6 +2073,42 @@ def run():
         _coords = _edata.get("coords", [])
         if not _coords:
             continue
+        # Check for locked variant merge
+        _locked_name = _pname + "_Locked"
+        _locked_pfile = OUTPUT_DIR / "props" / f"{_locked_name}.json"
+        if _locked_pfile.exists() and _locked_name in _locked_props:
+            _pname_sks = _entity_spawners.get(_pname, set())
+            _locked_sks = _entity_spawners.get(_locked_name, set())
+            _common_sks = _pname_sks & _locked_sks
+            if _common_sks:
+                _combined_rate = 0
+                for _sk in _common_sks:
+                    _ul_sr = _spawn_rate_detail.get((_sk, _pname), 0)
+                    _l_sr = _spawn_rate_detail.get((_sk, _locked_name), 0)
+                    _rate = _ul_sr + _l_sr
+                    if _rate > _combined_rate:
+                        _combined_rate = _rate
+                # Also consider non-common keyword rates
+                _non_common_sks = _pname_sks - _common_sks
+                _non_common_rates = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _non_common_sks]
+                _sr = max(_combined_rate, max(_non_common_rates) if _non_common_rates else 0)
+                # Merge locked variant coords
+                with open(_locked_pfile) as _f:
+                    _locked_data = json.load(_f)
+                _locked_coords = _locked_data.get("coords", [])
+                _seen_keys: set[tuple] = set()
+                for _c in _coords:
+                    _seen_keys.add((_c["x"], _c["y"], _c["z"], _c.get("file", "")))
+                for _c in _locked_coords:
+                    _k = (_c["x"], _c["y"], _c["z"], _c.get("file", ""))
+                    if _k not in _seen_keys:
+                        _seen_keys.add(_k)
+                        _coords.append(_c)
+                _edata["coords"] = _coords
+                _edata["translation"] += "(可能上锁)"
+        else:
+            _sr_list = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _entity_spawners.get(_pname, set())]
+            _sr = max(_sr_list) if _sr_list else 0.0
         _seen_groups: set[str] = set()
         for _c in _coords:
             _g = _map_base_to_group.get(_c["map"], "")
@@ -2077,8 +2117,6 @@ def run():
         if not _seen_groups:
             continue
         _group_drop_info: dict[str, list[dict]] = {}
-        _sr_list = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _entity_spawners.get(_pname, set())]
-        _sr = max(_sr_list) if _sr_list else 0.0
         for _g in _seen_groups:
             _dr = _compute_container_drop_rates(_ldg_id, _g)
             if not _dr and not _sr:
