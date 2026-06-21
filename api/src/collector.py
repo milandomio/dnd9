@@ -1,7 +1,6 @@
 import json
 import os
 import re
-import urllib.parse
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
@@ -32,10 +31,23 @@ from config import (
     TRANSLATION_ALIAS_MAP,
 )
 from db_manager import DatabaseManager
+from entity_export import export_items, export_monsters, export_props
+from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
 from layout_utils import load_all_layout_rotations
 from pipeline_timer import PipelineTimer
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
+from translator import (
+    DEBUG_VARIANT_RE,
+    DUMMY_AS_MONSTER,
+    HARD_SUFFIX_RE,
+    ORE_QUALITY_RE,
+    QUALITY_RE,
+    UNIQUE_SUFFIX_RE,
+    VARIANT_RE,
+    NameResolver,
+    base_monster_name,
+)
 
 _log_file = None
 
@@ -49,55 +61,6 @@ def _log(msg: str):
     if _log_file:
         _log_file.write(line + "\n")
         _log_file.flush()
-
-
-_VARIANT_RE = re.compile(r"^(.+)_\d{4}$")
-_HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
-_UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
-_QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
-_ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_)?(?:High|Med|Low|VeryLow|Random)$")
-_ORE_ITEM_STRIP_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
-_ORE_ITEM_COORD_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
-_RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique|VeryLow|Low|Med|High|Random)$")
-# 模糊后缀：先于 HARDCODED 兜底，用这些后缀剥离后重试 Game.json 前缀匹配
-_RESOLVE_FUZZY_RE = re.compile(
-    r"(?:"
-    r"_[Rr]"  # _R（棺材变体）
-    r"|_On$|_Off$"  # 开关状态
-    r"|_Lit$|_Unlit$"  # 灯光状态
-    r"|__UnderSea$"  # 海底变体（双下划线）
-    r"|_UnderSea$"  # 海底变体
-    r"|Random$"  # 随机变体（含 BlackRoseRandom 无下划线前缀）
-    r"|_(?:Elite|Nightmare)$"  # 难度变体
-    r"|(?:_0[1-9])$"  # 编号后缀 _01~_09
-    r")"
-)
-# 第二轮模糊：On/Off + 中间段 + 尾部数字组合剥离（迭代应用）
-_RESOLVE_FUZZY_PASS2_RE = re.compile(
-    r"(?:"
-    r"_On$|_Off$"  # 尾部 On/Off
-    r"|_Lit$|_Unlit$"  # 尾部灯光
-    r"|_[A-Z](?!\w)$"  # 单字母后缀 _A _B
-    r"|_\w+_(?:On|Off|Lit|Unlit)$"  # 中间段+状态 Torch02_Purple_On
-    r"|_\d+(?:_(?:On|Off|Lit|Unlit))?$"  # 尾部数字+可选状态 _03_On
-    r"|_\d+(?:On|Off|ON|OFF)$"  # 尾部数字+状态（无间隔）_01ON
-    r"|(?:\d+(?:On|Off|ON|OFF))$"  # 无下划线数字+状态 Roaster07On
-    r"|(?:\d+)$"  # 尾部纯数字（剥离 On 后残留）Torch03
-    r"|_Ruins$|_Cave$|_Crypt$"  # 地图变体后缀
-    r")"
-)
-_DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
-_LOCKED_RE = re.compile(r"_Locked$")
-
-# Props 目录中的 _Dummy 实体同时也是怪物
-_DUMMY_AS_MONSTER = {
-    "LivingArmor",
-    "LivingStatue",
-    "LivingArmor_Elite",
-    "LivingArmor_Nightmare",
-    "LivingStatue_Elite",
-    "LivingStatue_Nightmare",
-}
 
 
 _SOURCE_PATHS = [
@@ -377,156 +340,12 @@ def run():
     _monster_names = {r["monster_name"] for r in monsters}
     _prop_names = {r["asset_name"] for r in props}
 
-    def _filter_coords(coords: list[dict], entity_names: set[str], is_prop: bool = False) -> list[dict]:
-        """Keep only coords whose search_term belongs to the target entity type."""
-
-        def _match(c):
-            kw = c.get("keyword") or c.get("search_term", "")
-            st = c.get("spawner_type", "")
-            return bool(kw in entity_names or (is_prop and kw.startswith("Ore_")) or (is_prop and st == "props"))
-
-        return [c for c in coords if _match(c)]
-
     # ─── Export JSON ───
     print("\nExporting JSON files...")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     translations = db.get_translations_map()
 
-    cracked_re = re.compile(r"（裂开）")
-
-    def resolve_name(name: str, translation_key: str, scope: str = "item") -> str:
-        result = _resolve_name_inner(name, translation_key, scope)
-        return cracked_re.sub("", result)
-
-    def _resolve_name_inner(name: str, translation_key: str, scope: str) -> str:
-        if translation_key and translation_key in translations:
-            return translations[translation_key]
-        alias_name = TRANSLATION_ALIAS_MAP.get(name, name)
-        for prefix in [
-            "Text_DesignData_Item_Item_",
-            "Text_DesignData_Monster_Monster_",
-            "Text_DesignData_Props_Props_",
-            "Text_DesignData_Dungeon_DungeonModule_",
-            "Text_DesignData_Emote_Emote_",
-            "Text_DesignData_ActionSkin_",
-        ]:
-            alias_key = prefix + alias_name
-            if alias_key in translations:
-                return translations[alias_key]
-        if name in HARDCODED_TRANSLATIONS:
-            return HARDCODED_TRANSLATIONS[name]
-        # 模糊后缀剥离后重试 Game.json 前缀匹配
-        fuzzy = _RESOLVE_FUZZY_RE.sub("", name)
-        if fuzzy != name:
-            fuzzy_alias = TRANSLATION_ALIAS_MAP.get(fuzzy, fuzzy)
-            for prefix in [
-                "Text_DesignData_Item_Item_",
-                "Text_DesignData_Monster_Monster_",
-                "Text_DesignData_Props_Props_",
-                "Text_DesignData_Dungeon_DungeonModule_",
-                "Text_DesignData_Emote_Emote_",
-                "Text_DesignData_ActionSkin_",
-            ]:
-                fuzzy_key = prefix + fuzzy_alias
-                if fuzzy_key in translations:
-                    return translations[fuzzy_key]
-        # 第二轮模糊：On/Off+数字/中间段 组合剥离（迭代最多3次）
-        prev = name
-        fuzzy2 = name
-        for _ in range(3):
-            fuzzy2 = _RESOLVE_FUZZY_PASS2_RE.sub("", fuzzy2)
-            if fuzzy2 == prev:
-                break
-            prev = fuzzy2
-        if fuzzy2 != name and fuzzy2 != fuzzy:
-            fuzzy2_alias = TRANSLATION_ALIAS_MAP.get(fuzzy2, fuzzy2)
-            for prefix in [
-                "Text_DesignData_Item_Item_",
-                "Text_DesignData_Monster_Monster_",
-                "Text_DesignData_Props_Props_",
-                "Text_DesignData_Dungeon_DungeonModule_",
-                "Text_DesignData_Emote_Emote_",
-                "Text_DesignData_ActionSkin_",
-            ]:
-                fuzzy2_key = prefix + fuzzy2_alias
-                if fuzzy2_key in translations:
-                    return translations[fuzzy2_key]
-        # 剥离末尾数字/难度/矿石品质后缀后重试翻译
-        stripped = _RESOLVE_STRIP_RE.sub("", name)
-        if stripped != name:
-            if stripped in HARDCODED_TRANSLATIONS:
-                return HARDCODED_TRANSLATIONS[stripped]
-            stripped_alias = TRANSLATION_ALIAS_MAP.get(stripped, stripped)
-            for prefix in [
-                "Text_DesignData_Item_Item_",
-                "Text_DesignData_Monster_Monster_",
-                "Text_DesignData_Props_Props_",
-                "Text_DesignData_Dungeon_DungeonModule_",
-                "Text_DesignData_Emote_Emote_",
-                "Text_DesignData_ActionSkin_",
-            ]:
-                stripped_key = prefix + stripped_alias
-                if stripped_key in translations:
-                    return translations[stripped_key]
-        if scope == "module":
-            if name in MODULE_NAME_OVERRIDE:
-                return MODULE_NAME_OVERRIDE[name]
-            for group_prefix in [
-                "Firedeep_",
-                "Inferno_",
-                "Crypt_",
-                "Ruins_",
-                "GoblinCave_",
-                "Goblin_",
-                "IceCavern_",
-                "IceCave_",
-                "IceAbyss_",
-                "ShipGraveyard_",
-                "Shipgraveyard_",
-                "Swamp_",
-                "Cave_",
-            ]:
-                if name.startswith(group_prefix):
-                    stripped = name[len(group_prefix) :]
-                    if stripped:
-                        alias_key = "Text_DesignData_Dungeon_DungeonModule_" + stripped
-                        if alias_key in translations:
-                            return translations[alias_key]
-        # 剥离地牢分组前缀（Inferno_、Crypt_ 等）后重试翻译
-        for group_prefix in [
-            "Inferno_",
-            "Crypt_",
-            "Ruins_",
-            "GoblinCave_",
-            "Goblin_",
-            "IceCavern_",
-            "IceCave_",
-            "IceAbyss_",
-            "ShipGraveyard_",
-            "Shipgraveyard_",
-            "Swamp_",
-            "Cave_",
-            "Firedeep_",
-            "FireDeep_",
-        ]:
-            if name.startswith(group_prefix):
-                bare = name[len(group_prefix) :]
-                if bare in HARDCODED_TRANSLATIONS:
-                    return HARDCODED_TRANSLATIONS[bare]
-                bare_alias = TRANSLATION_ALIAS_MAP.get(bare, bare)
-                for prefix in [
-                    "Text_DesignData_Item_Item_",
-                    "Text_DesignData_Monster_Monster_",
-                    "Text_DesignData_Props_Props_",
-                    "Text_DesignData_Dungeon_DungeonModule_",
-                    "Text_DesignData_Emote_Emote_",
-                    "Text_DesignData_ActionSkin_",
-                ]:
-                    bare_key = prefix + bare_alias
-                    if bare_key in translations:
-                        return translations[bare_key]
-                break
-        return name
+    resolver = NameResolver(translations)
 
     # ── Build merged lootdrop map with variant family merging ──
     _log("[JSON] building merged lootdrop map...")
@@ -538,7 +357,7 @@ def run():
     # detect variant families (_\d{4} suffix, ≥2 members)
     families: dict[str, list[str]] = {}
     for item_name in loot_map:
-        m = _VARIANT_RE.match(item_name)
+        m = VARIANT_RE.match(item_name)
         if m:
             base = m.group(1)
             families.setdefault(base, []).append(item_name)
@@ -550,7 +369,7 @@ def run():
     # merge: base_name → union of all monsters from its variants
     merged_loot: dict[str, list[str]] = {}
     for item_name, monster_set in loot_map.items():
-        m = _VARIANT_RE.match(item_name)
+        m = VARIANT_RE.match(item_name)
         base = m.group(1) if m else item_name
         merged_loot.setdefault(base, set()).update(monster_set)
     merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
@@ -589,198 +408,28 @@ def run():
                         _mons.append(_sk)
     merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
 
-    def _build_coord_out(c: dict, vc: dict) -> dict:
-        """构建坐标输出 dict，附带变体信息。"""
-        out = {
-            "x": c["x"],
-            "y": c["y"],
-            "z": c["z"],
-            "yaw": c.get("yaw", 0),
-            "map": c["map_base"],
-            "file": c["json_filename"],
-            "version": c["version"],
-            "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-        }
-        vc_info = vc.get((c["map_base"], c["json_filename"], c.get("group_parent", "")))
-        if vc_info and vc_info[0] > 1:
-            out["variant_count"] = vc_info[0]
-            out["variant_names"] = vc_info[1]
-        return out
-
     # ── items: index + individual files ──
     timer.start_step("[JSON] items")
     _log("[JSON] items export START")
-    items_index = []
-    for r in items:
-        name = r["item_name"]
-        if name in skip_variants:
-            continue
-        coords = _filter_coords(all_coords.get(name, []), _item_names)
-        # Try ore name cleaning: GoldOres → GoldOre
-        if not coords:
-            m = _ORE_ITEM_COORD_RE.match(name)
-            if m:
-                coords = _filter_coords(all_coords.get(m.group(1) + "Ore", []), _item_names)
-        if not coords:
-            continue
-        translation = resolve_name(name, r["translation_key"], "item")
-        variant_count = r.get("variant_count", 1)
-        items_index.append(
-            {
-                "name": name,
-                "translation": translation,
-                "category": r["category"],
-                "variant_count": variant_count,
-                "monsters": merged_loot.get(name, []),
-                "coordCount": len(coords),
-            }
-        )
-        _save(
-            f"items/{name}.json",
-            {
-                "name": name,
-                "translation": translation,
-                "category": r["category"],
-                "variant_count": variant_count,
-                "monsters": merged_loot.get(name, []),
-                "coords": [_build_coord_out(c, _coord_variant_count) for c in coords],
-            },
-        )
-    _save("items.json", items_index)
+    items_index = export_items(
+        items, merged_loot, all_coords, resolver.resolve, skip_variants, _coord_variant_count, _item_names, OUTPUT_DIR
+    )
     _log(f"[JSON] items export DONE -> {len(items_index)} items")
 
     # ── monsters: index + individual files (merged by translation) ──
     timer.start_step("[JSON] monsters")
     _log("[JSON] monsters export START")
-
-    monsters_by_translation: dict[str, list[dict]] = {}
-    for r in monsters:
-        translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
-        # 翻译失败（返回原始名）且有质量后缀时，改用基础怪物的翻译作为分组键
-        if translation == r["monster_name"] and _QUALITY_RE.search(r["monster_name"]):
-            base = _QUALITY_RE.sub("", r["monster_name"])
-            if base != r["monster_name"]:
-                for br in monsters:
-                    if br["monster_name"] == base:
-                        if br["translation_key"]:
-                            bt = resolve_name(br["monster_name"], br["translation_key"], "monster")
-                            if bt != br["monster_name"]:
-                                translation = bt
-                        else:
-                            translation = base
-                        break
-        monsters_by_translation.setdefault(translation, []).append(r)
-
-    monsters_index = []
-    for translation, group in monsters_by_translation.items():
-        # Use entry with translation_key as canonical (typically the base monster)
-        canonical = next((r for r in group if r["translation_key"]), group[0])
-        seen_coords: set[tuple] = set()
-        merged_coords_list = []
-        for r in group:
-            coords = _filter_coords(all_coords.get(r["monster_name"], []), _monster_names)
-            for c in coords:
-                key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
-                if key not in seen_coords:
-                    seen_coords.add(key)
-                    merged_coords_list.append(c)
-        if not merged_coords_list:
-            continue
-        monsters_index.append(
-            {
-                "name": canonical["monster_name"],
-                "translation": translation,
-                "coordCount": len(merged_coords_list),
-            }
-        )
-        _save(
-            f"monsters/{canonical['monster_name']}.json",
-            {
-                "name": canonical["monster_name"],
-                "translation": translation,
-                "coords": [_build_coord_out(c, _coord_variant_count) for c in merged_coords_list],
-            },
-        )
-    _save("monsters.json", monsters_index)
+    monsters_index = export_monsters(
+        monsters, all_coords, resolver.resolve, _coord_variant_count, _monster_names, OUTPUT_DIR
+    )
     _log(f"[JSON] monsters export DONE -> {len(monsters_index)} monsters")
 
     # ── props: index + individual files (merged by translation) ──
     timer.start_step("[JSON] props")
     _log("[JSON] props export START")
-    _ORE_QUALITY_ORDER = {"VeryLow": 0, "Low": 1, "Med": 2, "High": 3}  # noqa: N806
-
-    def _ore_quality_key(r):
-        m = re.search(r"_(High|Med|Low|VeryLow)$", r["asset_name"])
-        return _ORE_QUALITY_ORDER.get(m.group(1), 99) if m else 99
-
-    props_index = []
-    props_by_translation: dict[str, list[dict]] = {}
-    for r in sorted(props, key=_ore_quality_key):
-        translation = resolve_name(r["asset_name"], r["translation_key"], "props")
-        # Ore quality variants without translation: normalize to base ore name
-        if translation == r["asset_name"]:
-            m = _ORE_QUALITY_RE.match(r["asset_name"])
-            if m:
-                translation = m.group(1) if m.group(1).startswith("Ore_") else "Ore_" + m.group(1)
-        props_by_translation.setdefault(translation, []).append(r)
-    for translation, group in props_by_translation.items():
-        merged_coords = []
-        seen_coords: set[tuple] = set()
-        for r in group:
-            coords = _filter_coords(all_coords.get(r["asset_name"], []), _prop_names, is_prop=True)
-            for c in coords:
-                key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
-                if key not in seen_coords:
-                    seen_coords.add(key)
-                    merged_coords.append(c)
-        # Also try matching via cleaned ore name
-        if not merged_coords:
-            for r in group:
-                m = _ORE_QUALITY_RE.match(r["asset_name"])
-                if m:
-                    coords = _filter_coords(all_coords.get(m.group(1), []), _prop_names, is_prop=True)
-                    for c in coords:
-                        key = (c["x"], c["y"], c["z"], c["map_base"], c["json_filename"])
-                        if key not in seen_coords:
-                            seen_coords.add(key)
-                            merged_coords.append(c)
-                    if merged_coords:
-                        break
-        if not merged_coords:
-            continue
-        # For merged ore quality variants, use English base ore name as key
-        name_key = group[0]["asset_name"]
-        if len(group) > 1:
-            m = _ORE_QUALITY_RE.match(name_key)
-            if m:
-                name_key = m.group(1)
-
-        # Determine entity type: decoration (no lootdrop in spawner_data) or props
-        entity_type = "props"
-        for r in group:
-            asset = r["asset_name"]
-            info = _props_spawner_info.get(asset)
-            if info and info["has_lootdrop"] == 0:
-                entity_type = "decoration"
-                break
-
-        props_index.append(
-            {
-                "name": name_key,
-                "translation": translation,
-                "coordCount": len(merged_coords),
-                "type": entity_type,
-            }
-        )
-        _save(
-            f"props/{name_key}.json",
-            {
-                "name": name_key,
-                "translation": translation,
-                "coords": [_build_coord_out(c, _coord_variant_count) for c in merged_coords],
-            },
-        )
-    _save("props.json", props_index)
+    props_index = export_props(
+        props, all_coords, resolver.resolve, _props_spawner_info, _coord_variant_count, _prop_names, OUTPUT_DIR
+    )
     _log(f"[JSON] props export DONE -> {len(props_index)} props")
 
     # ── dungeon_modules.json ──
@@ -874,7 +523,7 @@ def run():
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation_key": r["translation_key"],
-            "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
+            "translation": resolver.resolve(r["module_name"], r["translation_key"], "module"),
             "group": r["module_group"],
             "size_x": sx,
             "size_y": sy,
@@ -927,16 +576,16 @@ def run():
     # Build entity classification index from DB (ground truth type)
     entity_class = db.get_entity_classification()
     # _Dummy 实体同时也是怪物，补全 monster 翻译键
-    for name in _DUMMY_AS_MONSTER:
+    for name in DUMMY_AS_MONSTER:
         if name in entity_class:
             if "monster" not in entity_class[name]["types"]:
                 entity_class[name]["types"].append("monster")
             if not entity_class[name]["translation_key"]:
-                base = _QUALITY_RE.sub("", name)
+                base = QUALITY_RE.sub("", name)
                 if base != name:
                     entity_class[name]["translation_key"] = "Text_DesignData_Monster_Monster_" + base
         else:
-            base = _QUALITY_RE.sub("", name)
+            base = QUALITY_RE.sub("", name)
             entity_class[name] = {
                 "types": ["props", "monster"],
                 "translation_key": "Text_DesignData_Monster_Monster_" + base,
@@ -956,11 +605,11 @@ def run():
     # Build translation lookup from DB entity tables (covers all names including props variants)
     trans_lookup = {}
     for r in items:
-        trans_lookup[r["item_name"]] = resolve_name(r["item_name"], r["translation_key"], "item")
+        trans_lookup[r["item_name"]] = resolver.resolve(r["item_name"], r["translation_key"], "item")
     for r in monsters:
-        trans_lookup[r["monster_name"]] = resolve_name(r["monster_name"], r["translation_key"], "monster")
+        trans_lookup[r["monster_name"]] = resolver.resolve(r["monster_name"], r["translation_key"], "monster")
     for r in props:
-        trans_lookup[r["asset_name"]] = resolve_name(r["asset_name"], r["translation_key"], "props")
+        trans_lookup[r["asset_name"]] = resolver.resolve(r["asset_name"], r["translation_key"], "props")
 
     _MODULE_COLORS = [  # noqa: N806
         "#E74C3C",
@@ -1025,7 +674,7 @@ def run():
                     entity_type = mapped_st if mapped_st in types else types[0]
             else:
                 entity_type = mapped_st
-            translation = trans_lookup.get(ek) or resolve_name(ek, None, entity_type)
+            translation = trans_lookup.get(ek) or resolver.resolve(ek, None, entity_type)
             module_coords[mb]["entities"][ek] = {
                 "name": ek,
                 "translation": translation,
@@ -1153,7 +802,7 @@ def run():
             merged_modules.append(primary)
 
     modules_data = sorted(merged_modules, key=lambda x: x["name"])
-    modules_data = [m for m in modules_data if not _DEBUG_VARIANT_RE.search(m["name"])]
+    modules_data = [m for m in modules_data if not DEBUG_VARIANT_RE.search(m["name"])]
     # 过滤无坐标模块（详情页无数据的模块从列表中剔除）
     # 仅当模块自身名字在 merged_coords 中才算有坐标（排除 sl_base 指向其他模块的别名）
     modules_with_coords = {mn for mn in modules_map if mn in merged_coords}
@@ -1191,9 +840,9 @@ def run():
     for item_name, monster_names in merged_loot.items():
         item_row = items_lookup.get(item_name)
         translation = (
-            resolve_name(item_name, item_row["translation_key"] if item_row else None, "item")
+            resolver.resolve(item_name, item_row["translation_key"] if item_row else None, "item")
             if item_row
-            else (resolve_name(item_name, None, "item") or item_name)
+            else (resolver.resolve(item_name, None, "item") or item_name)
         )
         mon_translations = []
         for m in sorted(monster_names):
@@ -1201,40 +850,40 @@ def run():
             if cls and "item" in cls["types"]:
                 item_row = items_lookup.get(m)
                 if item_row:
-                    mon_translations.append(resolve_name(m, item_row["translation_key"], "item"))
+                    mon_translations.append(resolver.resolve(m, item_row["translation_key"], "item"))
                     continue
                 tk = cls.get("translation_key", "")
                 if tk:
-                    mon_translations.append(resolve_name(m, tk, "item"))
+                    mon_translations.append(resolver.resolve(m, tk, "item"))
                     continue
             elif cls and "props" in cls["types"]:
-                mon_translations.append(resolve_name(m, cls.get("translation_key", ""), "props"))
+                mon_translations.append(resolver.resolve(m, cls.get("translation_key", ""), "props"))
                 continue
             # Try direct monster lookup
             mon_row = monsters_lookup.get(m)
             if mon_row:
-                mon_translations.append(resolve_name(m, mon_row["translation_key"], "monster"))
+                mon_translations.append(resolver.resolve(m, mon_row["translation_key"], "monster"))
                 continue
             # Try stripping _Hard/_VeryHard suffix → base monster lookup
-            base = _HARD_SUFFIX_RE.sub("", m) if _HARD_SUFFIX_RE.search(m) else m
+            base = HARD_SUFFIX_RE.sub("", m) if HARD_SUFFIX_RE.search(m) else m
             if base != m:
                 mon_row = monsters_lookup.get(base)
                 if mon_row:
-                    mon_translations.append(resolve_name(base, mon_row["translation_key"], "monster"))
+                    mon_translations.append(resolver.resolve(base, mon_row["translation_key"], "monster"))
                     continue
             # Try stripping trailing Unique → base monster lookup (e.g. FrostImpUnique → FrostImp)
-            base2 = _UNIQUE_SUFFIX_RE.sub("", base) if _UNIQUE_SUFFIX_RE.search(base) else base
+            base2 = UNIQUE_SUFFIX_RE.sub("", base) if UNIQUE_SUFFIX_RE.search(base) else base
             if base2 != base:
                 mon_row = monsters_lookup.get(base2)
                 if mon_row:
-                    mon_translations.append(resolve_name(base2, mon_row["translation_key"], "monster"))
+                    mon_translations.append(resolver.resolve(base2, mon_row["translation_key"], "monster"))
                     continue
             # Try entity_class translation key as fallback
             if cls and cls.get("translation_key"):
-                mon_translations.append(resolve_name(m, cls["translation_key"], cls["types"][0]))
+                mon_translations.append(resolver.resolve(m, cls["translation_key"], cls["types"][0]))
                 continue
             # Generic fallback
-            mon_translations.append(resolve_name(m, None, "monster") or m)
+            mon_translations.append(resolver.resolve(m, None, "monster") or m)
         variant_count = _variant_override.get(item_name, item_row.get("variant_count", 1) if item_row else 1)
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
@@ -1244,9 +893,9 @@ def run():
             # Skip self-referencing
             if mn == item_name:
                 continue
-            base = _HARD_SUFFIX_RE.sub("", mn)
-            base = _QUALITY_RE.sub("", base)
-            base = _UNIQUE_SUFFIX_RE.sub("", base)
+            base = HARD_SUFFIX_RE.sub("", mn)
+            base = QUALITY_RE.sub("", base)
+            base = UNIQUE_SUFFIX_RE.sub("", base)
             if base not in seen_bases:
                 seen_bases.add(base)
                 merged_names.append(mn)
@@ -1294,13 +943,6 @@ def run():
         "#00CED1",
     ]
 
-    def _base_monster_name(name: str) -> str:
-        """Strip quality/variant suffixes to get base name."""
-        base = _HARD_SUFFIX_RE.sub("", name)
-        base = _QUALITY_RE.sub("", base)
-        base = _UNIQUE_SUFFIX_RE.sub("", base)
-        return base
-
     # ── 预加载爆率数据 ──
     _log("[JSON] preloading drop rate data...")
     _c = db.connect().cursor()
@@ -1334,12 +976,12 @@ def run():
         # Strip quality suffixes (_Common/_Elite/_Nightmare/_Unique) to get base name
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
             if _key:
-                _base = _HARD_SUFFIX_RE.sub("", _key)
-                _base = _QUALITY_RE.sub("", _base)
+                _base = HARD_SUFFIX_RE.sub("", _key)
+                _base = QUALITY_RE.sub("", _base)
                 _entity_ldg_all.setdefault(_base, set()).add(_row["lootdrop_group_id"])
-        # Build ore stripped-name mapping for props that use _ORE_QUALITY_RE
+        # Build ore stripped-name mapping for props that use ORE_QUALITY_RE
         for _key in (_row["spawner_keyword"], _row["entity_name"]):
-            _m = _ORE_QUALITY_RE.match(_key)
+            _m = ORE_QUALITY_RE.match(_key)
             if _m:
                 _stripped = _m.group(1)
                 if _stripped and _stripped not in _ore_ldg:
@@ -1449,7 +1091,7 @@ def run():
         # 4. entity_ldg_all 回退（收集所有 variant 的 group）
         _all_groups = _entity_ldg_all.get(monster_name, set())
         if not _all_groups:
-            _all_groups = _entity_ldg_all.get(_QUALITY_RE.sub("", monster_name), set())
+            _all_groups = _entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
         candidate_ids.update(_all_groups)
         if not candidate_ids:
             return {}
@@ -1594,7 +1236,7 @@ def run():
             if _key and sr > _spawn_rate_cache.get(_key, 0):
                 _spawn_rate_cache[_key] = sr
         # Also map stripped ore name → max spawn_rate (only from entity_name, not spawner_keyword)
-        _om = _ORE_QUALITY_RE.match(en)
+        _om = ORE_QUALITY_RE.match(en)
         if _om:
             _oname = _om.group(1)
             if _oname and sr > _spawn_rate_cache.get(_oname, 0):
@@ -1633,9 +1275,9 @@ def run():
                 _cls = entity_class.get(_kw, {})
                 _mon_row = monsters_lookup.get(_kw)
                 if _mon_row:
-                    _translated.append(resolve_name(_kw, _mon_row["translation_key"], "monster"))
+                    _translated.append(resolver.resolve(_kw, _mon_row["translation_key"], "monster"))
                 elif _cls and "props" in _cls.get("types", []):
-                    _translated.append(resolve_name(_kw, _cls.get("translation_key", ""), "props"))
+                    _translated.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
                 else:
                     _translated.append(_kw)
             _coord_variant_count[_key] = (_cnt, _translated)
@@ -1649,7 +1291,7 @@ def run():
         if not label:
             return "direct"
         # Strip quality suffix for matching (e.g. SkeletonFootmanFromFakeDeath_Unique → SkeletonFootmanFromFakeDeath)
-        en_base = _QUALITY_RE.sub("", entity_name)
+        en_base = QUALITY_RE.sub("", entity_name)
         if label == en_base or label.startswith(en_base + "_"):
             return "direct"
         if "Random" in label:
@@ -1674,7 +1316,7 @@ def run():
             coords = all_coords.get(m_name, [])
             if not coords:
                 # Try stripping quality suffix for coord lookup
-                _m_base = _QUALITY_RE.sub("", m_name)
+                _m_base = QUALITY_RE.sub("", m_name)
                 if _m_base != m_name:
                     coords = all_coords.get(_m_base, [])
             if not coords:
@@ -1697,11 +1339,11 @@ def run():
             if not coords:
                 continue
             m_trans = entry["monster_translations"][_i]
-            base = _base_monster_name(m_name)
+            base = base_monster_name(m_name)
             locked_base = m_name.replace("_Locked", "")
             is_locked = locked_base != m_name
             if is_locked:
-                base = _base_monster_name(locked_base)
+                base = base_monster_name(locked_base)
             # Group coords by spawner-keyword label type
             coords_by_type: dict[str, list[dict]] = {}
             for _c in coords:
@@ -1840,7 +1482,7 @@ def run():
             _best: dict[str, dict] = {}
             for _entry in _g_list:
                 _trans = _entry["translation"]
-                _m = _QUALITY_RE.search(_entry.get("_variant", ""))
+                _m = QUALITY_RE.search(_entry.get("_variant", ""))
                 _prio = {"Elite": 3, "Nightmare": 2, "Common": 1}.get(_m.group(1) if _m else "", -1)
                 if _trans not in _best or _prio > _best[_trans].get("_q_prio", -1):
                     _best[_trans] = _entry
@@ -1901,7 +1543,7 @@ def run():
                 _log(f"[DEBUG]   monster: {m_name}, trans={entry['monster_translations'][_i]}")
                 coords = all_coords.get(m_name, [])
                 _log(f"[DEBUG]     all_coords direct: {len(coords)}")
-                _m_base = _QUALITY_RE.sub("", m_name)
+                _m_base = QUALITY_RE.sub("", m_name)
                 if _m_base != m_name:
                     coords2 = all_coords.get(_m_base, [])
                     _log(f"[DEBUG]     all_coords base '{_m_base}': {len(coords2)}")
@@ -2156,138 +1798,30 @@ def run():
     timer.start_step("[JSON] quest data")
     _log("[JSON] quest data export START")
     print("\nExporting quest data from DB...")
-    explore_data = db.get_explore_targets()
-    quest_items_data = db.get_quest_items()
-    quest_npcs_data = db.get_quest_npcs()
-    explore_count = len(explore_data)
-    quest_items_count = len(quest_items_data)
-    quest_npc_count = sum(n.get("quest_count", 0) for n in quest_npcs_data)
-    _save("explore.json", explore_data)
-    _save("quest_items.json", quest_items_data)
-    _save("quest_npc.json", quest_npcs_data)
+    explore_count, quest_items_count, quest_npc_count, quest_npcs_data = save_quest_data(db, OUTPUT_DIR)
     print(f"  explore: {explore_count}, quest items: {quest_items_count}, quest NPCs: {quest_npc_count}")
 
     # ── Quest items groups (with coordinates) ──
     timer.start_step("[JSON] quest items groups")
     _log("[JSON] quest_items_groups START")
-    _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules)
+    generate_quest_items_groups(db, merged_loot, resolver.resolve, all_coords, modules, OUTPUT_DIR)
     _log("[JSON] quest_items_groups DONE")
 
-    # ── index.json: page index ──
-    index_data = [
-        {
-            "_comment": "该文件由 api/src/collector.py 自动生成，请勿手动编辑。如需修改，请编辑 collector.py 中的 index_data 列表。"
-        },
-        {"page": "items", "label": "物品表", "count": len(items_index)},
-        {"page": "props", "label": "实体表", "count": len(props_index)},
-        {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
-        {"page": "lootdrops", "label": "掉落表", "count": len(loot_index)},
-        {"page": "explore", "label": "任务探索表", "count": explore_count},
-        {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
-        {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
-        {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
-    ]
-    _save("index.json", index_data)
-
-    # ── search_index.json ──
+    # ── index.json + search_index.json ──
     timer.start_step("[JSON] search index")
     _log("[JSON] search_index START")
-    search_index = []
-    for entry in items_index:
-        search_index.append(
-            {
-                "name": entry["name"],
-                "translation": entry.get("translation", ""),
-                "page": "items",
-                "url": f"/items/{urllib.parse.quote(entry['name'], safe='')}/",
-            }
-        )
-    for entry in monsters_index:
-        search_index.append(
-            {
-                "name": entry["name"],
-                "translation": entry.get("translation", ""),
-                "page": "monsters",
-                "url": f"/monsters/{urllib.parse.quote(entry['name'], safe='')}/",
-            }
-        )
-    for entry in props_index:
-        si_entry = {
-            "name": entry["name"],
-            "translation": entry.get("translation", ""),
-            "page": "props",
-            "url": f"/props/{urllib.parse.quote(entry['name'], safe='')}/",
-        }
-        if entry.get("type"):
-            si_entry["type"] = entry["type"]
-        search_index.append(si_entry)
-    for entry in loot_index:
-        si_entry = {
-            "name": entry["name"],
-            "translation": entry.get("translation", ""),
-            "page": "lootdrops",
-            "url": f"/lootdrops/{urllib.parse.quote(entry['name'], safe='')}/",
-        }
-        if entry.get("variant_count") is not None:
-            si_entry["variant_count"] = entry["variant_count"]
-        if entry.get("monsters"):
-            si_entry["monsters"] = entry["monsters"]
-        if entry.get("monster_translations"):
-            si_entry["monster_translations"] = entry["monster_translations"]
-        si_entry["max_score"] = entry.get("max_score", 0.0)
-        search_index.append(si_entry)
-    for entry in quest_npcs_data:
-        search_index.append(
-            {
-                "name": entry["npc_name"],
-                "translation": entry.get("npc_name_display", ""),
-                "page": "quest_npc",
-                "url": "/quest_npc/",
-            }
-        )
-    dm_groups = sorted({m.get("group") for m in modules_data if m.get("group")})
-    GROUP_LABELS = {  # noqa: N806
-        "Crypt": "废墟2层地牢",
-        "FireDeep": "哥布林洞穴2层",
-        "GoblinCave": "哥布林洞穴1层",
-        "IceAbyss": "冰图2层",
-        "IceCavern": "冰图1层",
-        "Inferno": "废墟3层炼狱",
-        "Ruins": "废墟1层",
-        "ShipGraveyard": "水图",
-        "Swamp": "沼泽",
-    }
-    for g in dm_groups:
-        search_index.append(
-            {
-                "name": g,
-                "translation": GROUP_LABELS.get(g, g),
-                "page": "dungeon_modules",
-                "url": f"/dungeon_modules/{urllib.parse.quote(g, safe='')}/",
-            }
-        )
-    for m in modules_data:
-        search_index.append(
-            {
-                "name": m["name"],
-                "translation": m.get("translation", m["name"]),
-                "page": "dungeon_modules",
-                "tag": GROUP_LABELS.get(m.get("group", ""), m.get("group", "模块")),
-                "url": f"/dungeon_modules/{urllib.parse.quote(m.get('group', '') or '', safe='')}/{urllib.parse.quote(m['name'], safe='')}/",
-            }
-        )
-    LIST_PAGES = [  # noqa: N806
-        {"name": "items", "translation": "物品表", "page": "_nav", "url": "/items/"},
-        {"name": "monsters", "translation": "怪物表", "page": "_nav", "url": "/monsters/"},
-        {"name": "props", "translation": "实体表", "page": "_nav", "url": "/props/"},
-        {"name": "lootdrops", "translation": "掉落表", "page": "_nav", "url": "/lootdrops/"},
-        {"name": "explore", "translation": "任务探索表", "page": "_nav", "url": "/explore/"},
-        {"name": "quest_npc", "translation": "任务NPC表", "page": "_nav", "url": "/quest_npc/"},
-        {"name": "dungeon_modules", "translation": "地图模块表", "page": "_nav", "url": "/dungeon_modules/"},
-    ]
-    search_index.extend(LIST_PAGES)
-    _save("search_index.json", search_index)
-    print(f"  search_index: {len(search_index)} entries")
+    index_data = build_and_save_indexes(
+        items_index,
+        monsters_index,
+        props_index,
+        loot_index,
+        modules_data,
+        explore_count,
+        quest_items_count,
+        quest_npc_count,
+        quest_npcs_data,
+        OUTPUT_DIR,
+    )
     _log("[JSON] search_index DONE")
 
     print(f"\n[DONE] Output written to {OUTPUT_DIR}")
@@ -2301,172 +1835,6 @@ def run():
         _log_file.close()
         _log_file = None
     return timer
-
-
-def _generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules):
-    quest_items_path = OUTPUT_DIR / "quest_items.json"
-    if not quest_items_path.exists():
-        return
-    with open(quest_items_path) as f:
-        quest_items = json.load(f)
-
-    # Build map_base -> module_group lookup
-    map_to_group = {}
-    for m in modules:
-        g = m.get("module_group", "") or ""
-        if g:
-            map_to_group[m["module_name"]] = g
-            if m.get("sl_base_name"):
-                map_to_group[m["sl_base_name"]] = g
-
-    item_names = sorted(set(qi["item_name"] for qi in quest_items))
-    quest_map = {}
-    for qi in quest_items:
-        quest_map.setdefault(qi["item_name"], []).append(qi)
-
-    _COLORS = [  # noqa: N806
-        "#E74C3C",
-        "#3498DB",
-        "#2ECC71",
-        "#E67E22",
-        "#9B59B6",
-        "#1ABC9C",
-        "#F39C12",
-        "#2980B9",
-        "#D35400",
-        "#C0392B",
-        "#7F8C8D",
-        "#27AE60",
-        "#16A085",
-        "#8E44AD",
-        "#2C3E50",
-        "#F1C40F",
-    ]
-
-    groups = {}
-    ci = 0
-    for item_name in item_names:
-        info_list = quest_map.get(item_name, [])
-        trans = info_list[0]["item_translation"] if info_list else item_name
-
-        icoords = all_coords.get(item_name, [])
-        mnames = merged_loot.get(item_name, [])
-        for c in icoords:
-            mb = c["map_base"]
-            mt = map_to_group.get(mb, "")
-            if not mt:
-                continue
-            groups.setdefault(mt, {"group": mt, "entities": {}})
-            ek = f"item::{item_name}"
-            if ek not in groups[mt]["entities"]:
-                groups[mt]["entities"][ek] = {
-                    "name": item_name,
-                    "translation": trans,
-                    "type": "item",
-                    "color": _COLORS[ci % len(_COLORS)],
-                    "coords": [],
-                    "quest_npcs": [
-                        {
-                            "npc_name": qi["npc_name"],
-                            "npc_name_cn": qi["npc_name_cn"],
-                            "quest_number": qi["quest_number"],
-                            "count": qi["count"],
-                        }
-                        for qi in info_list
-                    ],
-                }
-                ci += 1
-            groups[mt]["entities"][ek]["coords"].append(
-                {
-                    "x": c["x"],
-                    "y": c["y"],
-                    "z": c["z"],
-                    "yaw": c.get("yaw", 0),
-                    "map": mb,
-                    "file": c["json_filename"],
-                    "version": c["version"],
-                    "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-                }
-            )
-        for mn in sorted(mnames):
-            if mn == item_name:
-                continue
-            mtrans = resolve_name(mn, None, "monster")
-            mcoords = all_coords.get(mn, [])
-            for c in mcoords:
-                mb = c["map_base"]
-                mt = map_to_group.get(mb, "")
-                if not mt:
-                    continue
-                groups.setdefault(mt, {"group": mt, "entities": {}})
-                ek = f"monster::{mn}"
-                if ek not in groups[mt]["entities"]:
-                    groups[mt]["entities"][ek] = {
-                        "name": mn,
-                        "translation": mtrans,
-                        "type": "monster",
-                        "color": _COLORS[ci % len(_COLORS)],
-                        "coords": [],
-                        "quest_items": [item_name],
-                        "_seen_coords": set(),
-                    }
-                    ci += 1
-                else:
-                    if item_name not in groups[mt]["entities"][ek]["quest_items"]:
-                        groups[mt]["entities"][ek]["quest_items"].append(item_name)
-                coord_key = (c["x"], c["y"], c["z"], mb, c["json_filename"])
-                if coord_key not in groups[mt]["entities"][ek]["_seen_coords"]:
-                    groups[mt]["entities"][ek]["_seen_coords"].add(coord_key)
-                    groups[mt]["entities"][ek]["coords"].append(
-                        {
-                            "x": c["x"],
-                            "y": c["y"],
-                            "z": c["z"],
-                            "yaw": c.get("yaw", 0),
-                            "map": mb,
-                            "file": c["json_filename"],
-                            "version": c["version"],
-                            "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-                        }
-                    )
-
-    GROUP_LABELS = {  # noqa: N806
-        "Crypt": "废墟2层地牢",
-        "FireDeep": "哥布林洞穴2层",
-        "GoblinCave": "哥布林洞穴1层",
-        "IceAbyss": "冰图2层",
-        "IceCavern": "冰图1层",
-        "Inferno": "废墟3层炼狱",
-        "Ruins": "废墟1层",
-        "ShipGraveyard": "水图",
-        "Swamp": "沼泽",
-    }
-    groups_index = []
-    for gname in sorted(groups):
-        g = groups[gname]
-        g["group_display"] = GROUP_LABELS.get(gname, gname)
-        entities = list(g["entities"].values())
-        for e in entities:
-            e.pop("_seen_coords", None)
-        pos_count = sum(len(e["coords"]) for e in entities)
-        groups_index.append(
-            {
-                "group": gname,
-                "group_display": g["group_display"],
-                "entity_count": len(entities),
-                "position_count": pos_count,
-            }
-        )
-        _save(
-            f"quest_items_groups/{gname}.json",
-            {
-                "group": gname,
-                "group_display": g["group_display"],
-                "entities": entities,
-            },
-        )
-    _save("quest_items_groups.json", groups_index)
-    print(f"  quest items groups: {len(groups_index)}")
 
 
 def _match_in_dir(directory: Path, sl: str):
