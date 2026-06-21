@@ -1801,6 +1801,7 @@ def run():
                 _hk = _hk_map.get(_g, 0)
                 _score = (_c.get("spawn_rate", 0) or 0) * _hk / 100
                 _c["score"] = round(_score, 4)
+            _base_data["coords"] = [c for c in _base_data["coords"] if c["score"] > 0]
         merged = {k: v for k, v in merged.items() if v["coords"]}
         for _v in merged.values():
             _v.pop("_bases", None)
