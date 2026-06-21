@@ -1366,7 +1366,7 @@ def run():
         """纯内存计算某物品在指定组+等级下的爆率（0~1）。
 
         优先查基础名，未命中则尝试 _5001 → _4001 → _3001 变体后缀，
-        也尝试剥离 _\\d{4} 后缀（如 _8001）后以基础名称查询。
+        _8001 特殊变体已在 lootdrop_rate_items 中以独立条目存储（LuckGrade=8）。
         详见 docs/REFERENCE.md 中的变体锁定说明。
         """
         grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
@@ -1374,9 +1374,6 @@ def run():
             return 0.0
         total_weight = 0.0
         found = False
-        # 如果物品名以 _\d{4} 结尾（如 HeaterShield_8001），缓存基础名
-        _variant_m = _VARIANT_RE.match(item_name)
-        _base_name = _variant_m.group(1) if _variant_m else None
         for ld_id, lr_id, _ in grade_data:
             rate_items = _ld_rate_items.get(ld_id, {})
             item_info = rate_items.get(item_name)
@@ -1385,15 +1382,6 @@ def run():
                     item_info = rate_items.get(item_name + _suffix)
                     if item_info is not None:
                         break
-            if item_info is None and _base_name:
-                # 尝试以基础名（去 _\d{4}）查询
-                item_info = rate_items.get(_base_name)
-                if item_info is None:
-                    # 再尝试基础名 + 变体后缀（如 HeaterShield → HeaterShield_5001）
-                    for _suffix in _variant_suffixes:
-                        item_info = rate_items.get(_base_name + _suffix)
-                        if item_info is not None:
-                            break
             if item_info is None:
                 continue
             found = True
