@@ -4,6 +4,7 @@ export interface QuestContent {
   count: number;
   loot_state?: string;
   rarity?: string;
+  dungeon_type?: string;
 }
 
 export interface QuestReward {

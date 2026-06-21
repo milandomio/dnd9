@@ -369,6 +369,9 @@ export default function QuestNPCDetailPage() {
                     (() => {
                       const hasLoot = q.contents.some((c) => c.loot_state);
                       const hasRarity = q.contents.some((c) => c.rarity);
+                      const hasDungeonType = q.contents.some(
+                        (c) => c.dungeon_type
+                      );
                       return (
                         <div
                           style={{
@@ -427,6 +430,20 @@ export default function QuestNPCDetailPage() {
                                 >
                                   目标
                                 </th>
+                                {hasDungeonType && (
+                                  <th
+                                    style={{
+                                      textAlign: 'left',
+                                      padding: '4px 8px',
+                                      color: tokens.muted,
+                                      fontSize: 13,
+                                      whiteSpace: 'nowrap',
+                                      width: '5em',
+                                    }}
+                                  >
+                                    目标地图
+                                  </th>
+                                )}
                                 {hasLoot && (
                                   <th
                                     style={{
@@ -544,6 +561,18 @@ export default function QuestNPCDetailPage() {
                                         }}
                                       />
                                     </td>
+                                    {hasDungeonType && (
+                                      <td
+                                        style={{
+                                          padding: '3px 8px',
+                                          color: dark ? '#42a5f5' : '#1565c0',
+                                          fontSize: 12,
+                                          whiteSpace: 'nowrap',
+                                        }}
+                                      >
+                                        {c.dungeon_type || ''}
+                                      </td>
+                                    )}
                                     {hasLoot && (
                                       <td
                                         style={{

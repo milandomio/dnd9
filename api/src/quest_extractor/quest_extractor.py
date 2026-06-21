@@ -304,8 +304,8 @@ class QuestExtractor:
             return translated if translated else source_string
         return source_string
 
-    def get_escape_target_translation(self, content_data):
-        """获取逃脱任务的翻译目标"""
+    def get_dungeon_type_translation(self, content_data):
+        """从 content_data 中提取 DungeonIdTags 并翻译为地图类型名称。"""
         if not content_data:
             return None
         dungeon_id_tags = content_data.get("DungeonIdTags", [])
@@ -342,6 +342,10 @@ class QuestExtractor:
                     return translated
 
         return dungeon_name
+
+    def get_escape_target_translation(self, content_data):
+        """获取逃脱任务的翻译目标（委托给 get_dungeon_type_translation）"""
+        return self.get_dungeon_type_translation(content_data)
 
     def get_reward_item_info(self, reward_item):
         """

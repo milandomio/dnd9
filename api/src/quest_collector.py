@@ -260,6 +260,9 @@ def _extract_npc_list(translator, extractor, quests):
                 cd = c.get("content_data", {}) or {}
                 ap = c.get("asset_path", "")
                 item = {"type": ct}
+                dungeon_type = extractor.get_dungeon_type_translation(cd)
+                if dungeon_type:
+                    item["dungeon_type"] = dungeon_type
                 if ct == "Kill":
                     kill_tag = cd.get("KillTag", {})
                     tag_name = kill_tag.get("TagName", "") if isinstance(kill_tag, dict) else ""
