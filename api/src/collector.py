@@ -2051,14 +2051,10 @@ def run():
     # ── 更新实体（props）JSON，添加 group_drop_info ──
     _log("[JSON] updating props entities with group drop info...")
     _prop_update = 0
-    _locked_props: set[str] = set()
     for _pfile in (OUTPUT_DIR / "props").glob("*.json"):
         with open(_pfile) as _f:
             _edata = json.load(_f)
         _pname = _edata["name"]
-        if _LOCKED_RE.search(_pname):
-            _locked_props.add(_pname)
-            continue
         _ldg_id = _spawner_ldg.get(_pname, "")
         if not _ldg_id:
             _lower = _pname.lower()
@@ -2073,42 +2069,54 @@ def run():
         _coords = _edata.get("coords", [])
         if not _coords:
             continue
-        # Check for locked variant merge
+        # Compute spawn_rate: combine with locked variant if exists
+        _pname_sks = _entity_spawners.get(_pname, set())
+        _sr = 0.0
+        # Check _Locked variant (shares common keywords)
         _locked_name = _pname + "_Locked"
-        _locked_pfile = OUTPUT_DIR / "props" / f"{_locked_name}.json"
-        if _locked_pfile.exists() and _locked_name in _locked_props:
-            _pname_sks = _entity_spawners.get(_pname, set())
-            _locked_sks = _entity_spawners.get(_locked_name, set())
+        if _locked_name in _entity_spawners:
+            _locked_sks = _entity_spawners[_locked_name]
             _common_sks = _pname_sks & _locked_sks
             if _common_sks:
-                _combined_rate = 0
+                _combined = 0
                 for _sk in _common_sks:
-                    _ul_sr = _spawn_rate_detail.get((_sk, _pname), 0)
-                    _l_sr = _spawn_rate_detail.get((_sk, _locked_name), 0)
-                    _rate = _ul_sr + _l_sr
-                    if _rate > _combined_rate:
-                        _combined_rate = _rate
-                # Also consider non-common keyword rates
-                _non_common_sks = _pname_sks - _common_sks
-                _non_common_rates = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _non_common_sks]
-                _sr = max(_combined_rate, max(_non_common_rates) if _non_common_rates else 0)
-                # Merge locked variant coords
-                with open(_locked_pfile) as _f:
-                    _locked_data = json.load(_f)
-                _locked_coords = _locked_data.get("coords", [])
-                _seen_keys: set[tuple] = set()
-                for _c in _coords:
-                    _seen_keys.add((_c["x"], _c["y"], _c["z"], _c.get("file", "")))
-                for _c in _locked_coords:
-                    _k = (_c["x"], _c["y"], _c["z"], _c.get("file", ""))
-                    if _k not in _seen_keys:
-                        _seen_keys.add(_k)
-                        _coords.append(_c)
-                _edata["coords"] = _coords
-                _edata["translation"] += "(可能上锁)"
-        else:
-            _sr_list = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _entity_spawners.get(_pname, set())]
+                    _ul = _spawn_rate_detail.get((_sk, _pname), 0)
+                    _ll = _spawn_rate_detail.get((_sk, _locked_name), 0)
+                    _rate = _ul + _ll
+                    if _rate > _combined:
+                        _combined = _rate
+                _non_common_rates = [_spawn_rate_detail.get((sk, _pname), 0) for sk in (_pname_sks - _common_sks)]
+                _sr = max(_combined, max(_non_common_rates) if _non_common_rates else 0)
+        # Check _UnderSea variant (separate keywords, take max)
+        _undersea_name = _pname + "_UnderSea"
+        if _undersea_name in _entity_spawners:
+            _us_sks = _entity_spawners[_undersea_name]
+            _us_rates = [_spawn_rate_detail.get((sk, _undersea_name), 0) for sk in _us_sks]
+            _us_sr = max(_us_rates) if _us_rates else 0
+            # Also check _Locked_UnderSea
+            _locked_undersea = _pname + "_Locked_UnderSea"
+            if _locked_undersea in _entity_spawners:
+                _lus_sks = _entity_spawners[_locked_undersea]
+                _common_us = _us_sks & _lus_sks
+                if _common_us:
+                    _us_combined = 0
+                    for _sk in _common_us:
+                        _us_ul = _spawn_rate_detail.get((_sk, _undersea_name), 0)
+                        _us_ll = _spawn_rate_detail.get((_sk, _locked_undersea), 0)
+                        _rate = _us_ul + _us_ll
+                        if _rate > _us_combined:
+                            _us_combined = _rate
+                    _us_non = [_spawn_rate_detail.get((sk, _undersea_name), 0) for sk in (_us_sks - _common_us)]
+                    _us_sr = max(_us_combined, max(_us_non) if _us_non else 0)
+            _sr = max(_sr, _us_sr)
+        if _sr == 0.0:
+            _sr_list = [_spawn_rate_detail.get((sk, _pname), 0) for sk in _pname_sks]
             _sr = max(_sr_list) if _sr_list else 0.0
+        # Mark as "可能上锁" if locked variant contributes
+        if (
+            _locked_name in _entity_spawners or _pname + "_Locked_UnderSea" in _entity_spawners
+        ) and "(可能上锁)" not in _edata["translation"]:
+            _edata["translation"] += "(可能上锁)"
         _seen_groups: set[str] = set()
         for _c in _coords:
             _g = _map_base_to_group.get(_c["map"], "")
