@@ -58,11 +58,11 @@ _get_group_drop_rates(monster_name)：
   → _spawner_ldg.get(monster_name, "") → 映射到错误的 LootDropGroup
 ```
 
-## 已知问题
+## 问题（已部分缓解）
 
-### Bug: `_spawner_ldg` 首次命中覆盖
+### `_spawner_ldg` 首次命中覆盖
 
-`collector.py` 第 1286-1291 行：
+`collector.py` 第 1304-1311 行：
 
 ```python
 for _row in _c.execute(
@@ -73,8 +73,8 @@ for _row in _c.execute(
             _spawner_ldg[_key] = _row["lootdrop_group_id"]
 ```
 
-一个 `spawner_keyword`（如 `SkeletonFootmanFromFakeDeath`）可能在多条记录中出现，对应不同 variant（Common/Elite/Nightmare/Unique）的 lootdrop_group_id。但当前逻辑仅存储**第一条**遇到的，后续 variant 的 group_id 被静默丢弃。
+`spawner_keyword`（如 `SkeletonFootmanFromFakeDeath`）有多个 variant 记录，但仅存储**第一条**遇到的。但 `entity_name` 键（含 `_Unique`/`_Elite` 等后缀）各 variant 独立不冲突。
 
-**影响**：Unique 物品（如 BloodsapBlade）的爆率被计算在 Common group 下 → 返回 `0.0`。
+**缓解原因**（2025-06 修复）：`_get_group_drop_rates()` 使用 `entity_name`（含质量后缀）作为查询键（`collector.py:1702`），精确命中 Unique 变体的正确 group_id。**非已知 bug** 导致 BloodsapBlade 爆率计算失败（前次 session 确认 `group_drop_info` 正确填充）。
 
-**修复方案**：构建 `entity_ldg_map: dict[str, set[str]]` 存储实体名称到所有可能 group_id 的映射，在 `_get_group_drop_rates` 中按优先级尝试。
+**仍存风险**：若通过 `spawner_keyword`（不含后缀）查询，会错误命中第一条记录的对应 variant。当前代码路径无此调用，但需注意后续改动。
