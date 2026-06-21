@@ -1385,6 +1385,9 @@ def run():
 
     _variant_suffixes = ["_5001", "_4001", "_3001", "_2001", "_1001"]
 
+    def _round_rate(v: float) -> float:
+        return round(v, 3)
+
     def _compute_drop_rate(ldg_id: str, item_name: str, full_grade: int) -> float:
         """纯内存计算某物品在指定组+等级下的爆率（0~1）。
 
@@ -1462,7 +1465,7 @@ def run():
                     rate = _compute_drop_rate(_ldg_id, item_name, full_grade)
                     if rate > best_rate:
                         best_rate = rate
-            mode_rates[mode_name] = best_rate * 100
+            mode_rates[mode_name] = _round_rate(best_rate * 100)
         return mode_rates
 
     def _compute_group_drop_rates(ldg_id: str, group_key: str) -> dict[str, float]:
@@ -1495,7 +1498,7 @@ def run():
                         r = w / _shared / _rate_total
                         if r > best_rate:
                             best_rate = r
-            mode_rates[mode_name] = best_rate * 100
+            mode_rates[mode_name] = _round_rate(best_rate * 100)
         return mode_rates
 
     def _compute_variant_rate(
@@ -1937,7 +1940,7 @@ def run():
                     _rate = _compute_drop_rate(_ldg_id, _iname, _full_grade)
                     if _rate > _best_rate:
                         _best_rate = _rate
-                _mode_rates[_mode_name] = _best_rate * 100
+                _mode_rates[_mode_name] = _round_rate(_best_rate * 100)
             _group_drop_info[_g] = [
                 {
                     "translation": _entity_data["translation"],
