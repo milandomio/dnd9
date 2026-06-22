@@ -18,6 +18,7 @@ except ImportError:
     from content_loader import ContentLoader, RewardLoader
     from file_indexer import FileIndexer
     from quest_parser import QuestParser
+
     from translator import Translator
 
 

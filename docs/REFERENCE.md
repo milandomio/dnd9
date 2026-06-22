@@ -584,10 +584,14 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 
 | 页面 | SSR Key | 客户端 Fetch | SSR 跳过条件 |
 |------|---------|-------------|-------------|
-| 物品/怪物/实体详情 `/:page/:name` | `"{page}/{name}"` | `{page}/{name}.json` | quick 模式仍 fetch（SSR 无 coords） |
-| 掉落详情 `/lootdrops/:name` | `"lootdrops/{name}"` | `lootdrops/{name}.json` | quick 模式仍 fetch（SSR 无 monsters） |
+| 物品/怪物/实体详情 `/:page/:name` | `"{page}/{name}"` | `{page}/{name}.json`（含 `_modules`） | quick 模式仍 fetch（SSR 无 coords） |
+| 掉落详情 `/lootdrops/:name` | `"lootdrops/{name}"` | `lootdrops/{name}.json`（含 `_modules`） | quick 模式仍 fetch（SSR 无 monsters） |
 | 任务NPC详情 `/quest_npc/:npc_name` | `"quest_npc"`（共享） | `quest_npc.json` | SSR 存在即跳过 |
 | 地图模块详情 `/dungeon_modules/:group/:name` | 无 | `dungeon_modules_coords/{name}.json` | 始终客户端 fetch |
+
+**详情页 `_modules` 字段：** 2026-06-22 起，items/monsters/props/lootdrops 的详情 JSON 均包含 `_modules` 字段，
+内联了该实体引用的所有地图模块的旋转/偏移/尺寸/分组/翻译/图片数据。详情页不再依赖 `dungeon_modules.json` 的单独 fetch，
+从 `_modules` 构建本地 modules Map，消除了远程部署时 `dungeon_modules.json` 加载失败导致地图不显示旋转的问题。
 
 ### `--quick` 模式行为
 
@@ -596,7 +600,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 
 ### 共享 Hook
 
-- `useDungeonModules()` — 全局缓存 `dungeon_modules.json`，所有地图模块页面复用同一份数据
+- `useDungeonModules()` — 全局缓存 `dungeon_modules.json`，地图模块列表页/分组页/详情页复用同一份数据（实体详情页已改用 `_modules` 内联数据，不再依赖此 hook）
 - `useSearchIndex()` — 全局缓存 `search_index.json`，供 NavBar 搜索使用
 
 ### search_term_matches 精确度问题 [已被 AC 自动机移除替代]
