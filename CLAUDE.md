@@ -26,13 +26,19 @@ DarkFindV5/
 ├── api/                  # 后端
 │   ├── main.py               # 入口（运行管道 + 自动交付到 data/）
 │   ├── src/
-│   │   ├── collector.py          # 数据清洗 + JSON 输出（含爆率计算、search_index 生成）
-│   │   ├── config.py             # 路径配置
+│   │   ├── collector.py          # 管道协调器（DB 导入 + 模块编排）
+│   │   ├── config.py             # 路径配置 + 常量
 │   │   ├── db_manager.py         # SQLite 建表/导入/查询
-│   │   ├── search_engine.py      # 地图文件遍历 + 关键词匹配
+│   │   ├── translator.py         # NameResolver 类、regex 常量、翻译工具
+│   │   ├── entity_export.py      # items/monsters/props JSON 导出
+│   │   ├── drop_rate.py          # DropRateEngine 类（爆率预加载 + 计算）
+│   │   ├── module_builder.py     # 地图模块构建 + 坐标导出
+│   │   ├── lootdrop_builder.py   # lootdrop 索引 + 详情文件生成
+│   │   ├── enrichment.py         # group_drop_info 注入 + 零爆率清理
+│   │   ├── index_export.py       # quest 数据 + search_index 导出
+│   │   ├── search_engine.py      # 地图文件遍历 + spawner 提取
 │   │   ├── layout_utils.py       # 地图旋转值计算
 │   │   ├── dungeon_mode.py       # DungeonGrade 分组代码解析
-│   │   ├── lootdrop_rates.py     # 爆率查询（get_spawn_rate_for_keyword）
 │   │   ├── pipeline_timer.py     # 管道步骤计时工具
 │   │   ├── quest_collector.py    # 任务提取入口
 │   │   ├── quest_extractor/      # 任务提取模块（11 个 Python 模块）

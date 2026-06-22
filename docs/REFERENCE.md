@@ -159,7 +159,7 @@ Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run
 
 ### 地图图片匹配
 
-`collector.py` 中 `_resolve_img()` 返回三态：
+`module_builder.py` 中 `_resolve_img()` 返回三态：
 
 - `found` — Art 目录存在且找到匹配（含大小写/tail/数值后缀处理）
 - `not_found` — Art 目录存在但无匹配 → 尝试 module_name
@@ -176,7 +176,7 @@ Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run
 
 怪物列表中 `Abomination_Common` / `Abomination_Elite` / `Abomination_Nightmare` 等质量后缀变体通过**翻译键**合并，而非硬编码后缀剥离。
 
-**合并机制（`collector.py` 怪物导出段）：**
+**合并机制（`entity_export.py` 怪物导出段）：**
 1. 对每个怪物实体调用 `resolve_name(monster_name, translation_key, "monster")` 解析翻译
 2. 按解析后的翻译文本分组。若翻译失败（返回原始名）且怪物名含质量后缀（`_Common`/`_Elite`/`_Nightmare`/`_Unique`），则剥离后缀后取基础条目的翻译作为分组键
 3. 每组中优先使用 `translation_key` 非空的条目作为规范名（基础怪物）
@@ -347,7 +347,7 @@ Total = sum(所有 DropRate)
 
 **计算逻辑：**
 
-`collector.py` 在 lootdrop 详情导出前预加载全部爆率数据到内存（4 个 dict）：
+`drop_rate.py` 的 `DropRateEngine.preload()` 在 lootdrop 详情导出前预加载全部爆率数据到内存：
 
 | 内存 dict | 来源表 | 用途 |
 |-----------|--------|------|
@@ -357,20 +357,20 @@ Total = sum(所有 DropRate)
 | `_ld_rate_weights` | `lootdrop_rate_weights` | rate_id → {luck_grade: total_weight} |
 | `_ld_rate_totals` | 从 `_ld_rate_weights` 计算 | rate_id → 该 rate_id 下所有非零权重之和（用于归一化爆率） |
 
-计算函数（`collector.py` 内联）：
-1. `_compute_drop_rate(ldg_id, item_name, full_grade)` — 纯内存计算某物品在指定组+等级下的爆率（0~1），支持变体后缀回退
-2. `_get_group_drop_rates(item_name, monster_name, group_key)` — 遍历 PVE/普通/豪客赛三种模式，返回各模式最佳爆率
-3. `_compute_group_drop_rates(ldg_id, group_key)` — 计算某 lootdrop group 在某地图分组下所有物品的聚合爆率（用于怪物/道具基础条目）
-4. `_compute_variant_rate(ldg_id, luck_grade, full_grade, target_ld_id)` — 计算指定 luck_grade 变体的爆率（用于多变体聚合），通过 `target_ld_id` 限定只计算特定 lootdrop
+计算函数（`drop_rate.py` 的 `DropRateEngine` 方法）：
+1. `compute_drop_rate(ldg_id, item_name, full_grade)` — 纯内存计算某物品在指定组+等级下的爆率（0~1），支持变体后缀回退
+2. `get_group_drop_rates(item_name, monster_name, group_key)` — 遍历 PVE/普通/豪客赛三种模式，返回各模式最佳爆率
+3. `compute_group_drop_rates(ldg_id, group_key)` — 计算某 lootdrop group 在某地图分组下所有物品的聚合爆率（用于怪物/道具基础条目）
+4. `compute_variant_rate(ldg_id, luck_grade, full_grade, target_ld_id)` — 计算指定 luck_grade 变体的爆率（用于多变体聚合），通过 `target_ld_id` 限定只计算特定 lootdrop
 
 > `lootdrop_rates.py` 的 `get_drop_rates_for_item_with_coords()` 已被上述内联逻辑替代，不再使用。
 
 **前端显示（`LootdropDetailPage.tsx`）：**
 - `spawn_rate` 字段从 coord 级别取（仅 ≠100 时显示）— **已生效**
 - `drop_rates` 字段从 monster 级别取（`Record<string, number>`，key 为模式名）— **已生效**
-- **per-coord score filter**：`score = spawn_rate × 豪客赛爆率 / 100`，`score < 0.5` 的坐标在导出阶段被过滤（`collector.py:1650`）
+- **per-coord score filter**：`score = spawn_rate × 豪客赛爆率 / 100`，`score < 0.5` 的坐标在导出阶段被过滤（`lootdrop_builder.py`）
 - **分类按钮**：掉落详情页顶部的一组彩色按钮，包含"全部显示/隐藏全部"切换按钮和各怪物切换按钮
-  - **max_score**：后管在 `collector.py` 中预计算 `max_score = max(spawn_rate × 豪客赛爆率 / 100)`，写入每个怪物条目，前端直接读取
+  - **max_score**：后管在 `lootdrop_builder.py` 中预计算 `max_score = max(spawn_rate × 豪客赛爆率 / 100)`，写入每个怪物条目，前端直接读取
   - **排序**：所有怪物按钮按 `max_score` 降序排列（`max_score=-1` 表示无爆率数据，排最后）
   - **默认隐藏**：`max_score < threshold`（默认 1.0）的怪物初始隐藏，在标题显示 `(+N)` 标记；`max_score` 为 null 或 < 0 的怪物始终可见
   - **交互**：点击单个按钮切换该怪物地图坐标的显隐；点击"全部显示"恢复全部可见，"隐藏全部"隐藏所有怪物
@@ -380,8 +380,10 @@ Total = sum(所有 DropRate)
 **已修改文件清单：**
 - `api/src/config.py` — `LOOTDROP_RATE_DIR`、`DUNGEON_GROUP_GRADES`（8组）、`MODULE_GROUP_FLOOR_SUFFIXES`
 - `api/src/db_manager.py` — 4 张表 + 导入/查询方法
-- `api/src/lootdrop_rates.py` — 爆率计算模块（`get_spawn_rate_for_keyword()` 仍在使用，其余已被 collector.py 内联逻辑替代）
-- `api/src/collector.py` — 管道步骤 9 导入爆率数据 + 预加载 + 内联爆率计算 + per-coord score filter
+- `api/src/drop_rate.py` — `DropRateEngine` 类（爆率预加载 + 计算方法）
+- `api/src/lootdrop_builder.py` — lootdrop 索引 + 详情文件生成 + per-coord score filter + max_score 预计算
+- `api/src/enrichment.py` — group_drop_info 注入 items/monsters/props + 零爆率清理
+- `api/src/collector.py` — 管道协调器（DB 导入 + 模块编排）
 - `web/src/pages/LootdropDetailPage.tsx` — 接口扩展 + 图例显示 + 分类按钮 + 阈值滑块
 
 **掉落表列表页分组（`ListPage.tsx`）：**
@@ -602,7 +604,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 
 ### search_term_matches 精确度问题 [已修复]
 
-> **状态：已修复**（2025-06-17：在 `collector.py` 的 re-match 步中添加跨类型前缀匹配过滤）
+> **状态：已修复**（2025-06-17：在 re-match 步中添加跨类型前缀匹配过滤）
 
 **历史问题：** `search_engine.py` 的 `match_keyword()` 会将 `FrostWyvernEgg`（物品）也匹配到
 搜索词 `FrostWyvern`（怪物），因为 `FrostWyvern` 是 `FrostWyvernEgg` 的前缀子串。
@@ -618,7 +620,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 
 ### 坐标按 Spawner 类型拆分（label-type split）
 
-同一实体（如 `OrnateChestLarge`）可能从多种 spawner keyword 生成（`ChestSpecial`、`OrnateChestLargeRandom`、`OrnateChestLarge_UnderSea`）。为了在前端区分这些不同的生成来源，`collector.py` 按 `original_keyword` 的语义类型拆分坐标：
+同一实体（如 `OrnateChestLarge`）可能从多种 spawner keyword 生成（`ChestSpecial`、`OrnateChestLargeRandom`、`OrnateChestLarge_UnderSea`）。为了在前端区分这些不同的生成来源，`lootdrop_builder.py` 按 `original_keyword` 的语义类型拆分坐标：
 
 | 类型 | 识别规则 | 翻译后缀 | 示例 |
 |------|---------|---------|------|
@@ -627,7 +629,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 | `random` | label 含 "Random" | `(随机)` | `OrnateChestLargeRandom` → `狮头宝箱(随机)` |
 | `other` | 以上都不匹配 | 无 | `GoldChest__UnderSea`(对 entity `GoldChest_UnderSea`) → `黄金宝箱` |
 
-**实现位置：** `collector.py` 的 `_classify_label()` 函数（约 L1472）和标签循环（约 L1509~L1556）。
+**实现位置：** `lootdrop_builder.py` 的 `_classify_label()` 函数和标签循环。
 
 **合并规则：** 相同 `m_trans + 类型后缀` 的实体合并到同一 merged 条目。例如 `OrnateChestLarge` 和 `OrnateChestLarge_UnderSea` 的 `ChestSpecial_UnderSea` 坐标都归类为 `special`，合并到 `狮头宝箱(特殊)`。
 
@@ -641,7 +643,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 - 同一怪物名对 N 个坐标重复查 N 次 `spawner_entries` 表
 - 第二个参数 `map_base` 传入但从未使用
 
-**优化方案：** 在 `collector.py` 中预加载所有 `spawner_entries` 到内存 dict（key 为 `spawner_keyword` + `entity_name`，
+**优化方案：** 在 `drop_rate.py` 的 `DropRateEngine.preload()` 中预加载所有 `spawner_entries` 到内存 dict（key 为 `spawner_keyword` + `entity_name`，
 value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
 
 ### Lock merge 与 spawn_rate 覆写修复 [2025-06-18]
@@ -678,11 +680,11 @@ value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
 
 **改动内容：**
 - `search_engine.py`：新增 `strip_variant_suffixes()`，删除 `build_automaton()`/`match_keyword()`/`build_all_matches()`；新增 `extract_all_spawners()` 替代匹配逻辑
-- `collector.py`：删除 Step 7.5 AC 重匹配 + 跨类型过滤段，spawner 存储直接以 variant-stripped keyword 入库
+- `collector.py`：spawner 存储直接以 variant-stripped keyword 入库
 - `db_manager.py`：删除 `search_term_matches` 表定义，删除 `get_spawner_matches()`，`get_all_coordinates()` 改为直接查 spawners 表按 keyword 分组
 - `.github/workflows/deploy.yml`：删除 `pip install pyahocorasick`
 
-**搜索索引**：由 `api/src/collector.py` 在数据管道中直接生成 `search_index.json`，无 AC 自动机依赖。
+**搜索索引**：由 `api/src/index_export.py` 在数据管道中直接生成 `search_index.json`，无 AC 自动机依赖。
 
 **影响数据：**
 - spawner 行数 ~61,359（72 个多实体展开器正确展开）
