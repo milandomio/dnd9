@@ -69,6 +69,13 @@ dungeon_modules_coords、lootdrops）通过 `all_coords.get(name, [])` 查询，
 `AttachParent` 通过 `ObjectPath`（如 `xxx/MapName.390`）引用父级，后缀数字为 JSON 数组索引。
 无 `AttachParent` 的组件直接使用 `RelativeLocation` 作为世界坐标。
 
+**父级旋转：** 累加坐标时必须考虑父级的 `RelativeRotation.Yaw`。子组件的 `RelativeLocation` 在父级的局部坐标系中，
+需要先按父级的累计 Yaw 旋转后再累加到世界坐标。`_resolve_world_loc()` 从根节点向叶节点遍历，逐级旋转累加：
+```
+world_x += local_x * cos(parent_yaw) - local_y * sin(parent_yaw)
+world_y += local_x * sin(parent_yaw) + local_y * cos(parent_yaw)
+```
+
 **影响范围：** 约 16.5% 的 spawner（~1980 个）有父级变换，分布在 ~144 个地图文件中。
 典型场景：`GameObjectLinker`、`SingleGameSpawnerGroup` 等分组容器下的 spawner。
 
