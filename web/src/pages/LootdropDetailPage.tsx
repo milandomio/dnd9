@@ -130,13 +130,15 @@ export default function LootdropDetailPage() {
 
   const modules =
     inlineModulesMap ?? ssrModulesMap ?? new Map<string, DungeonModule>();
+  const isArtifact = (name ?? '').endsWith('_8001');
+  const defaultThreshold = isArtifact ? 0.1 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     ssrData?.item?.monsters
-      ? defaultHidden(ssrData.item.monsters, 2.5)
+      ? defaultHidden(ssrData.item.monsters, defaultThreshold)
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
-  const [threshold, setThreshold] = useState(2.5);
+  const [threshold, setThreshold] = useState(defaultThreshold);
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();

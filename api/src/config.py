@@ -47,6 +47,11 @@ TRANSLATION_ALIAS_MAP = {
     "CandleHolder": "GoldCandleHolder",
     "Chalice": "GoldChaliceA",
     "Cloak": "AdventurerCloak",
+    # Case mismatch between lootdrop_items and spawners
+    "DreadSpine": "Dreadspine",
+    "DwarfHandCannoneer": "DwarfHandcannoneer",
+    "TideWalkerShaman": "TidewalkerShaman",
+    "BlueMarlin": "Bluemarlin",
 }
 
 HARDCODED_TRANSLATIONS = {
