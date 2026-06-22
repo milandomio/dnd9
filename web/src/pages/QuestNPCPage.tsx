@@ -41,12 +41,12 @@ export default function QuestNPCPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ssrData) return;
+    if (ssrData || !dataVersion) return;
     fetch(`/data/json/quest_npc.json?v=${dataVersion}`)
       .then<NPCEntry[]>((r) => r.json())
       .then(setData)
       .catch(console.error);
-  }, [ssrData]);
+  }, [ssrData, dataVersion]);
 
   const grouped = new Map<string, NPCEntry[]>();
   for (const npc of data) {

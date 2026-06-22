@@ -273,34 +273,69 @@ export default function DetailPage() {
                   >
                     {GROUP_LABELS[groupName] || groupName}
                   </span>
-                  {entity.group_drop_info?.[groupName] && (
-                    <span
-                      style={{
-                        fontSize: 13,
-                        fontWeight: 'normal',
-                        color: tokens.muted,
-                      }}
-                    >
-                      参考爆率：
-                      {(
-                        entity.group_drop_info![groupName] as GroupDropInfo[]
-                      ).map((info, gi) => (
-                        <span
-                          key={gi}
-                          style={{
-                            display: 'inline-block',
-                            marginRight: 8,
-                          }}
-                        >
-                          {info.translation}
-                          {info.spawn_rate}%
-                          {Object.entries(info.drop_rates)
-                            .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                            .join('')}
-                        </span>
-                      ))}
-                    </span>
-                  )}
+                  {(() => {
+                    const gdi = entity.group_drop_info?.[groupName] as
+                      | GroupDropInfo[]
+                      | undefined;
+                    if (!gdi || gdi.length === 0) return null;
+                    // Collect all coord labels across the group
+                    const allLabels = items.flatMap((it) =>
+                      it.coords.map((c) => c.label || '')
+                    );
+                    const hasType = (t: string) =>
+                      allLabels.some((l) => l.includes(t));
+                    const hasUndersea = hasType('海底');
+                    const hasSpecial = hasType('特殊') || hasType('华丽');
+                    const hasRandom = hasType('随机') || hasType('Random');
+                    const hasRegular = allLabels.some(
+                      (l) =>
+                        l &&
+                        !l.includes('海底') &&
+                        !l.includes('特殊') &&
+                        !l.includes('华丽') &&
+                        !l.includes('随机') &&
+                        !l.includes('Random')
+                    );
+                    const filtered = gdi.filter((info) => {
+                      const t = info.translation;
+                      const isUndersea = t.includes('海底');
+                      const isSpecial = t.includes('特殊');
+                      const isRandom = t.includes('随机');
+                      if (isUndersea && !hasUndersea) return false;
+                      if (isSpecial && !hasSpecial) return false;
+                      if (isRandom && !hasRandom) return false;
+                      if (!isUndersea && !isSpecial && !isRandom && !hasRegular)
+                        return false;
+                      return true;
+                    });
+                    if (filtered.length === 0) return null;
+                    return (
+                      <span
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 'normal',
+                          color: tokens.muted,
+                        }}
+                      >
+                        参考爆率：
+                        {filtered.map((info, gi) => (
+                          <span
+                            key={gi}
+                            style={{
+                              display: 'inline-block',
+                              marginRight: 8,
+                            }}
+                          >
+                            {info.translation}
+                            {info.spawn_rate}%
+                            {Object.entries(info.drop_rates)
+                              .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                              .join('')}
+                          </span>
+                        ))}
+                      </span>
+                    );
+                  })()}
                 </div>
               </div>
             )}
@@ -408,6 +443,34 @@ export default function DetailPage() {
                       (c) => c.variant_count && c.variant_count > 1
                     );
                     if (!hasVariant) return null;
+                    // Collect spawner types present in this module's coords
+                    const labels = mapCoords.map((c) => c.label || '');
+                    const hasType = (t: string) =>
+                      labels.some((l) => l.includes(t));
+                    const hasUndersea = hasType('海底');
+                    const hasSpecial = hasType('特殊') || hasType('华丽');
+                    const hasRandom = hasType('随机') || hasType('Random');
+                    const hasRegular = labels.some(
+                      (l) =>
+                        l &&
+                        !l.includes('海底') &&
+                        !l.includes('特殊') &&
+                        !l.includes('华丽') &&
+                        !l.includes('随机')
+                    );
+                    const filteredGdi = gdi.filter((info) => {
+                      const t = info.translation;
+                      const isUndersea = t.includes('海底');
+                      const isSpecial = t.includes('特殊');
+                      const isRandom = t.includes('随机');
+                      if (isUndersea && !hasUndersea) return false;
+                      if (isSpecial && !hasSpecial) return false;
+                      if (isRandom && !hasRandom) return false;
+                      if (!isUndersea && !isSpecial && !isRandom && !hasRegular)
+                        return false;
+                      return true;
+                    });
+                    if (filteredGdi.length === 0) return null;
                     return (
                       <div
                         style={{
@@ -421,7 +484,7 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        {gdi.map((info, i) => (
+                        {filteredGdi.map((info, i) => (
                           <span
                             key={i}
                             style={{

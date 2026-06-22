@@ -38,12 +38,12 @@ export default function ExplorePage() {
   const { tokens, dark } = useTheme();
 
   useEffect(() => {
-    if (ssrData) return;
+    if (ssrData || !dataVersion) return;
     fetch(`/data/json/explore.json?v=${dataVersion}`)
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)
       .catch(console.error);
-  }, [ssrData]);
+  }, [ssrData, dataVersion]);
 
   const grouped = new Map<string, ExploreTarget[]>();
   for (const t of data) {

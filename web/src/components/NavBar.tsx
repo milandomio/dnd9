@@ -109,7 +109,7 @@ export default function NavBar() {
   const handleSelect = (hit: SearchEntry) => {
     setQuery('');
     setShowDropdown(false);
-    navigate(hit.url + '/');
+    navigate(hit.url);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

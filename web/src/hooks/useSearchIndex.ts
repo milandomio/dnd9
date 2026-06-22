@@ -11,10 +11,13 @@ export interface SearchEntry {
 
 let cachedIndex: SearchEntry[] | null = null;
 let cachedPromise: Promise<SearchEntry[]> | null = null;
+let cachedVersion = '';
 
 function fetchIndex(version: string): Promise<SearchEntry[]> {
-  if (cachedIndex) return Promise.resolve(cachedIndex);
-  if (cachedPromise) return cachedPromise;
+  if (cachedIndex && cachedVersion === version)
+    return Promise.resolve(cachedIndex);
+  if (cachedPromise && cachedVersion === version) return cachedPromise;
+  cachedVersion = version;
   cachedPromise = fetch(`/data/json/search_index.json?v=${version}`)
     .then((r) => r.json())
     .then((data: SearchEntry[]) => {
@@ -47,7 +50,8 @@ export function useSearchIndex() {
   const [loading, setLoading] = useState(!cachedIndex);
 
   useEffect(() => {
-    if (cachedIndex) {
+    if (!dataVersion) return;
+    if (cachedIndex && cachedVersion === dataVersion) {
       setIndex(cachedIndex);
       setLoading(false);
       return;
@@ -56,7 +60,7 @@ export function useSearchIndex() {
       setIndex(data);
       setLoading(false);
     });
-  }, []);
+  }, [dataVersion]);
 
   return { index, loading };
 }

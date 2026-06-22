@@ -143,6 +143,11 @@ export default function LootdropDetailPage() {
   const ctrlInput = useCtrlInput();
   const lootFetchedRef = useRef(false);
 
+  // Reset fetch guard when name changes (e.g. navigation between lootdrops)
+  useEffect(() => {
+    lootFetchedRef.current = false;
+  }, [name]);
+
   useEffect(() => {
     if (!name) return;
     if (ssrData?.item?.monsters) {
@@ -260,6 +265,21 @@ export default function LootdropDetailPage() {
       for (const url of imageUrlsRef.current.values()) URL.revokeObjectURL(url);
     };
   }, []);
+
+  // Reset image lazy-load state when name changes (navigation between lootdrops)
+  useEffect(() => {
+    for (const t of timersRef.current.values()) clearTimeout(t);
+    for (const ctrl of controllersRef.current.values()) ctrl.abort();
+    for (const url of imageUrlsRef.current.values()) URL.revokeObjectURL(url);
+    timersRef.current.clear();
+    controllersRef.current.clear();
+    imageUrlsRef.current.clear();
+    setVisibleMaps(new Set());
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
+  }, [name]);
 
   const monsters = data?.monsters ?? [];
   const orderedMonsters = useMemo(() => {
