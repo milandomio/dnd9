@@ -331,6 +331,22 @@ def run():
 
     resolver = NameResolver(translations)
 
+    # Translate variant_names in _coord_variant_count (before entity export)
+    _monsters_lookup = {r["monster_name"]: r for r in monsters}
+    for _vkey, (_vcnt, _vraw) in list(_coord_variant_count.items()):
+        if _vraw:
+            _vtr: list[str] = []
+            for _kw in _vraw:
+                _cls = entity_class.get(_kw, {})
+                _mrow = _monsters_lookup.get(_kw)
+                if _mrow:
+                    _vtr.append(resolver.resolve(_kw, _mrow["translation_key"], "monster"))
+                elif _cls and "props" in _cls.get("types", []):
+                    _vtr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                else:
+                    _vtr.append(_kw)
+            _coord_variant_count[_vkey] = (_vcnt, _vtr)
+
     # ── Build merged lootdrop map with variant family merging ──
     _log("[JSON] building merged lootdrop map...")
     merged_loot, skip_variants, _variant_override = build_merged_loot_map(db)
