@@ -1,4 +1,5 @@
 import json
+import math
 import os
 import re
 from pathlib import Path
@@ -412,8 +413,8 @@ def extract_spawners(
 
     def _resolve_world_loc(start_idx: int) -> tuple[float, float, float, float, str]:
         """Walk up AttachParent chain to compute world-space x, y, z, yaw and group name."""
-        x = y = z = 0.0
-        yaw_total = 0.0
+        # Collect chain from leaf to root
+        chain: list[tuple[float, float, float, float]] = []
         group_name = ""
         visited: set[int] = set()
         cur = start_idx
@@ -427,14 +428,34 @@ def extract_spawners(
             props = entry.get("Properties", {}) or {}
             loc = props.get("RelativeLocation", {}) or {}
             rot = props.get("RelativeRotation", {}) or {}
-            x += loc.get("X", 0)
-            y += loc.get("Y", 0)
-            z += loc.get("Z", 0)
-            yaw_total += rot.get("Yaw", 0)
+            chain.append(
+                (
+                    loc.get("X", 0),
+                    loc.get("Y", 0),
+                    loc.get("Z", 0),
+                    rot.get("Yaw", 0),
+                )
+            )
             ap = props.get("AttachParent", {}) or {}
             ap_path = ap.get("ObjectPath", "")
             m = _ap_suffix_re.search(ap_path)
             cur = int(m.group(1)) if m else -1
+        # Accumulate from root to leaf, rotating child offsets by parent rotation
+        x = y = z = 0.0
+        yaw_total = 0.0
+        for lx, ly, lz, lyaw in reversed(chain):
+            # Rotate local offset by accumulated parent yaw
+            if yaw_total != 0:
+                r = math.radians(yaw_total)
+                cos_r, sin_r = math.cos(r), math.sin(r)
+                rx = lx * cos_r - ly * sin_r
+                ry = lx * sin_r + ly * cos_r
+            else:
+                rx, ry = lx, ly
+            x += rx
+            y += ry
+            z += lz
+            yaw_total += lyaw
         return x, y, z, yaw_total, group_name
 
     for idx, entry in _sc_entries:
