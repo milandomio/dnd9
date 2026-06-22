@@ -57,7 +57,7 @@ export default function DungeonModuleDetailPage() {
   const mod = (name && modules.get(name)) || null;
 
   useEffect(() => {
-    if (!group || !name) return;
+    if (!group || !name || !dataVersion) return;
     fetch(
       `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json?v=${dataVersion}`
     )
@@ -70,7 +70,7 @@ export default function DungeonModuleDetailPage() {
       })
       .catch(() => null)
       .finally(() => setLoading(false));
-  }, [group, name]);
+  }, [group, name, dataVersion]);
 
   if (loading)
     return (

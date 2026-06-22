@@ -83,7 +83,7 @@ export default function QuestItemGroupPage() {
   const ctrlInput = useCtrlInput();
 
   useEffect(() => {
-    if (!group) return;
+    if (!group || !dataVersion) return;
     if (ssrData?.entities?.length) {
       setLoading(false);
       return;

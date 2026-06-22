@@ -32,13 +32,13 @@ export default function QuestItemsPage() {
   const { tokens } = useTheme();
 
   useEffect(() => {
-    if (ssrData) return;
+    if (ssrData || !dataVersion) return;
     fetch(`/data/json/quest_items_groups.json?v=${dataVersion}`)
       .then((r) => r.json())
       .then(setGroups)
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, []);
+  }, [ssrData, dataVersion]);
 
   if (loading)
     return (

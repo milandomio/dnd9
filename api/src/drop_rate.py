@@ -27,6 +27,7 @@ class DropRateEngine:
         self._ld_rate_weights: dict[str, dict[int, int]] = {}
         self._ld_rate_totals: dict[str, int] = {}
         self._map_base_to_group: dict[str, str] = {}
+        self._group_spawner_keywords: dict[str, set[str]] = {}
         self._spawn_rate_cache: dict[str, float] = {}
         self._spawn_rate_detail: dict[tuple[str, str], float] = {}
         self._spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
@@ -96,6 +97,12 @@ class DropRateEngine:
 
         for _rid, _grades in self._ld_rate_weights.items():
             self._ld_rate_totals[_rid] = sum(_w for _w in _grades.values() if _w > 0) or 10000
+
+        # group → spawner keywords mapping (for per-group filtering in enrichment)
+        for _row in _c.execute("SELECT DISTINCT keyword, map_base FROM spawners WHERE map_base != ''"):
+            _g = self._map_base_to_group.get(_row["map_base"], "")
+            if _g:
+                self._group_spawner_keywords.setdefault(_g, set()).add(_row["keyword"])
 
         # spawn_rate cache
         for _row in db.get_all_spawner_entries():
@@ -170,6 +177,10 @@ class DropRateEngine:
     @property
     def map_base_to_group(self) -> dict[str, str]:
         return self._map_base_to_group
+
+    @property
+    def group_spawner_keywords(self) -> dict[str, set[str]]:
+        return self._group_spawner_keywords
 
     def compute_drop_rate(self, ldg_id: str, item_name: str, full_grade: int) -> float:
         """Compute drop rate for an item in a specific group+grade (0~1)."""

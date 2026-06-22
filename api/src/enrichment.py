@@ -185,7 +185,7 @@ def enrich_all_entities(
         for sk in entity_spawners.get(pname, set()):
             base = spawn_rate_detail.get((sk, pname), 0)
             lock = spawn_rate_detail.get((sk, locked_name), 0) if locked_name in entity_spawners else 0
-            combined = base + lock
+            combined = round(base + lock, 2)
             if combined > 0:
                 typ = _classify_label(sk, pname)
                 suffix = _LABEL_TYPE_SUFFIX.get(typ, "")
@@ -197,7 +197,7 @@ def enrich_all_entities(
             for sk in entity_spawners[undersea_name]:
                 base = spawn_rate_detail.get((sk, undersea_name), 0)
                 lock = spawn_rate_detail.get((sk, locked_undersea), 0) if locked_undersea in entity_spawners else 0
-                combined = base + lock
+                combined = round(base + lock, 2)
                 if combined > 0:
                     typ = _classify_label(sk, undersea_name)
                     suffix = _LABEL_TYPE_SUFFIX.get(typ, "")
