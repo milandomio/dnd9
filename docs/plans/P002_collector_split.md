@@ -9,24 +9,28 @@
 | 3 | index_export.py | ✅ 完成 | 2026-06-22 | ~260 行，含 quest/index 导出 |
 | 4 | drop_rate.py | ✅ 完成 | 2026-06-22 | ~280 行，含 DropRateEngine 类 |
 | 5 | module_builder.py | ✅ 完成 | 2026-06-22 | ~550 行，含 build_modules_map/build_map_mappings/build_module_coords/build_modules_data |
-| 6 | lootdrop_builder.py | ⏳ 待开始 | - | |
-| 7 | enrichment.py | ⏳ 待开始 | - | |
-| 8 | collector.py 最终清理 | ⏳ 待开始 | - | |
+| 6 | lootdrop_builder.py | ✅ 完成 | 2026-06-22 | ~520 行，含 build_merged_loot_map/build_loot_index/build_and_save_lootdrop_details |
+| 7 | enrichment.py | ✅ 完成 | 2026-06-22 | ~260 行，含 group_drop_info 注入 + 零爆率清理 |
+| 8 | collector.py 最终清理 | ✅ 完成 | 2026-06-22 | 移除未用函数/变量，454 行 |
 
-**当前状态：**
-- `collector.py`: 1145 行（原始 2581 行，已减少 55.6%）
-- `module_builder.py`: 547 行（含 build_modules_map/build_map_mappings/build_module_coords/build_modules_data + _resolve_img/_match_in_dir）
-- 基线已建立：`/tmp/p002_baseline_json/`
+**最终状态：**
+- `collector.py`: 454 行（原始 2581 行，已减少 82.4%）
+- `enrichment.py`: 262 行
+- `module_builder.py`: 547 行
+- `lootdrop_builder.py`: 518 行
+- `drop_rate.py`: ~280 行
+- `translator.py`: ~250 行
+- `entity_export.py`: ~200 行
+- `index_export.py`: ~260 行
 - 验证命令：`cd api && python main.py`（返回 0）+ `./lint.sh`（通过）
-- module coords 253 文件与基线完全一致
+- items/monsters/lootdrops 与基线完全匹配，props 仅条目顺序不同（数据一致）
+- dungeon_modules.json、module coords 253 文件、lootdrops.json 均与基线一致
 
-**下一步（Step 6: lootdrop_builder.py）：**
-- 移 lines 350-433（lootdrop 映射）+ lines 834-914（lootdrop 索引）+ lines 916-1240（lootdrop 详情循环）
-- 含 `_classify_label` + `_label_type_suffix`
+**下一步（Step 7: enrichment.py）：**
+- 移 collector.py 中 group_drop_info 注入代码（items/monsters/props + 零爆率清理）
 
-**Step 6-8 待提取代码位置（当前行号，Step 5 完成后）：**
-- Step 6: lines 346-430（lootdrop 映射）+ lines 444-524（lootdrop 索引）+ lines 526-850（lootdrop 详情循环）
-- Step 7: lines 851-1090（enrichment：group_drop_info 注入）
+**Step 7-8 待提取代码位置（当前行号，Step 6 完成后）：**
+- Step 7: lines 420-650（enrichment：group_drop_info 注入 items/monsters/props + 零爆率清理）
 - Step 8: 最终清理
 
 ---
