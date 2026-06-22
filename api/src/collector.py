@@ -107,16 +107,6 @@ def _is_db_stale(db_path: Path) -> bool:
     return db_mtime < latest_source
 
 
-def _ue_asset_base_name(asset_path: str) -> str:
-    """Extract base name from UE asset path like '/Game/.../Id_Foo.Id_Foo' → 'Id_Foo'."""
-    if not asset_path:
-        return ""
-    part = asset_path.rsplit("/", 1)[-1]
-    if "." in part:
-        part = part.split(".")[0]
-    return part
-
-
 def run():
     global _log_file
     print("=" * 50)
@@ -395,17 +385,9 @@ def run():
     _log("[JSON] preloading drop rate data...")
     drop_engine = DropRateEngine()
     drop_engine.preload(db, modules_data)
-    _map_base_to_group = drop_engine.map_base_to_group
-    _spawner_ldg = drop_engine.spawner_ldg
-    _entity_ldg_all = drop_engine.entity_ldg_all
-    _ore_ldg = drop_engine.ore_ldg
-    _spawn_rate_cache = drop_engine.spawn_rate_cache
-    _spawn_rate_detail = drop_engine.spawn_rate_detail
-    _spawn_rate_by_mode = drop_engine.spawn_rate_by_mode
-    _entity_spawners = drop_engine.entity_spawners
     _log("[JSON] preloaded drop rate data via DropRateEngine")
 
-    _item_max_score = build_and_save_lootdrop_details(
+    build_and_save_lootdrop_details(
         loot_index,
         drop_engine,
         all_coords,
