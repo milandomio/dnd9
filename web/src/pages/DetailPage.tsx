@@ -91,10 +91,11 @@ export default function DetailPage() {
       setEntity(ssrData.entity);
       return;
     }
-    setEntity(null);
-    if (!dataVersion) return;
     const decoded = decodeURIComponent(name!);
-    fetch(`/data/json/${page}/${decoded}.json?v=${dataVersion}`)
+    const url = dataVersion
+      ? `/data/json/${page}/${decoded}.json?v=${dataVersion}`
+      : `/data/json/${page}/${decoded}.json`;
+    fetch(url)
       .then<Entity>((r) => r.json())
       .then((entityData) => {
         setEntity(entityData);

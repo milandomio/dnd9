@@ -125,10 +125,10 @@ export default function LootdropDetailPage() {
     }
     setData(null);
     setHidden(new Set());
-    if (!dataVersion) return;
-    fetch(
-      `/data/json/lootdrops/${decodeURIComponent(name)}.json?v=${dataVersion}`
-    )
+    const lootUrl = dataVersion
+      ? `/data/json/lootdrops/${decodeURIComponent(name)}.json?v=${dataVersion}`
+      : `/data/json/lootdrops/${decodeURIComponent(name)}.json`;
+    fetch(lootUrl)
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
         setData(item);
