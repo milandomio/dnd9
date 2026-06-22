@@ -78,9 +78,13 @@ DarkFindV5/
 查询游戏解包数据（`/home/mio/fmod/Output/Exports/DungeonCrawler/...`）。
 工具：`list_directory`、`search_files`、`read_file`、`get_file_info`、`search_json_keys`
 
+**查询游戏数据必须使用此 MCP 工具，禁止用 `Bash(find/grep/cat)` 直接操作游戏解包目录。**
+
 ### sqlite-debug
 直接读写 `api/data/darkfindv5.db`。
 工具：`query`、`execute`、`list_tables`、`describe_table`、`export_table`
+
+**DB 查询必须使用此 MCP 工具，禁止用 `Bash(python3 -c "import sqlite3…")` 方式。**
 
 ## 项目上下文工具
 
