@@ -2,13 +2,20 @@ import { useState, useEffect } from 'react';
 import type { DungeonModule } from '../types/data';
 import { useDataVersion } from './useDataVersion';
 
+let cachedVersion: string | null = null;
 let cachedModules: Map<string, DungeonModule> | null = null;
 let cachedPromise: Promise<Map<string, DungeonModule>> | null = null;
 
 function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
+  // 版本变化时清除旧缓存，确保带正确的 ?v= 参数
+  if (cachedVersion !== version) {
+    cachedModules = null;
+    cachedPromise = null;
+  }
   if (cachedModules) return Promise.resolve(cachedModules);
   if (cachedPromise) return cachedPromise;
 
+  cachedVersion = version;
   cachedPromise = fetch(`/data/json/dungeon_modules.json?v=${version}`)
     .then<DungeonModule[]>((r) => r.json())
     .then((mods) => {
@@ -39,7 +46,8 @@ export function useDungeonModules() {
   const [loading, setLoading] = useState(!cachedModules);
 
   useEffect(() => {
-    if (cachedModules) {
+    if (!dataVersion) return; // 等版本号就绪
+    if (cachedModules && cachedVersion === dataVersion) {
       setModules(cachedModules);
       setLoading(false);
       return;
@@ -48,7 +56,7 @@ export function useDungeonModules() {
       setModules(mm);
       setLoading(false);
     });
-  }, []);
+  }, [dataVersion]);
 
   return { modules, loading };
 }

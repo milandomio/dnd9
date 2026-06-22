@@ -198,7 +198,7 @@ git reset HEAD~1 && rm /tmp/darkfindv5.db
 | `QuestSearchBar.tsx` | 任务搜索栏 | QuestNPC, QuestNPCDetail |
 | `useDebug.tsx` | 调试开关/偏移量 | Detail, LootdropDetail |
 | `useTheme.tsx` | 主题切换 | 全局 |
-| `useDungeonModules.ts` | 地图模块数据 | DungeonModules/Group/Detail |
+| `useDungeonModules.ts` | 地图模块数据（详情页已改用 `_modules` 内联） | DungeonModules/Group |
 | `useDataVersion.ts` | 数据版本（缓存 bust） | Disclaimer, NavBar, List, Explore |
 | `useSearchIndex.ts` | 搜索索引（全局缓存 search_index.json） | NavBar |
 
@@ -293,3 +293,5 @@ const [data, setData] = useState(
 - `_Hard`/`_VeryHard`/`_Unique` 后缀在 lootdrop 解析阶段合入基础怪物名，避免重复掉落条目
 - 地图图片优先级：`SubLevelAsset(sl_base) → Module name → MapImage`
 - 占位图 `RareModule_1x1` / `UnderConstruction_1x1` 被跳过
+- `modules_map` 必须在实体导出（items/monsters/props）**之前**构建，供 `_modules` 内联注入
+- 实体 JSON（items/monsters/props/lootdrops）均包含 `_modules` 字段，内联引用模块的旋转/偏移/尺寸/分组/翻译/图片数据

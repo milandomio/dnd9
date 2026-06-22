@@ -5,7 +5,6 @@ import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { useSSRData } from '../context/SSRDataContext';
-import { useDungeonModules } from '../hooks/useDungeonModules';
 import type { DungeonModule, InlineModuleData } from '../types/data';
 import {
   getAdj,
@@ -103,8 +102,6 @@ export default function LootdropDetailPage() {
     }
     return mm;
   }, [ssrData]);
-  const { modules: fetchedModules } = useDungeonModules();
-
   // Build local modules map from inline _modules data
   const inlineModulesMap = useMemo(() => {
     if (!data?._modules) return null;
@@ -131,7 +128,8 @@ export default function LootdropDetailPage() {
     return mm;
   }, [data?._modules]);
 
-  const modules = inlineModulesMap ?? ssrModulesMap ?? fetchedModules;
+  const modules =
+    inlineModulesMap ?? ssrModulesMap ?? new Map<string, DungeonModule>();
   const [hidden, setHidden] = useState<Set<string>>(() =>
     ssrData?.item?.monsters
       ? defaultHidden(ssrData.item.monsters, 2.5)

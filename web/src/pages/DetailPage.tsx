@@ -13,7 +13,6 @@ import type {
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
-import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useTheme } from '../hooks/useTheme';
 import {
   getAdj,
@@ -45,36 +44,33 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
-  const { modules: globalModules } = useDungeonModules();
   const dataVersion = useDataVersion();
 
   // Build local modules map from entity's inline _modules data
   const modules = useMemo(() => {
-    if (entity?._modules) {
-      const mm = new Map<string, DungeonModule>();
-      for (const [mapName, data] of Object.entries(entity._modules)) {
-        const mod: DungeonModule = {
-          name: mapName,
-          names: [mapName],
-          translation: data.translation,
-          group: data.group,
-          size_x: data.size_x,
-          size_y: data.size_y,
-          sl_base_name: data.sl_base_name,
-          img_name: data.img_name,
-          has_img: true,
-          has_useful_entities: true,
-          offset_x: data.offset_x,
-          offset_y: data.offset_y,
-          rotate: data.rotate,
-          range: data.range,
-        };
-        mm.set(mapName, mod);
-      }
-      return mm;
+    if (!entity?._modules) return new Map<string, DungeonModule>();
+    const mm = new Map<string, DungeonModule>();
+    for (const [mapName, data] of Object.entries(entity._modules)) {
+      const mod: DungeonModule = {
+        name: mapName,
+        names: [mapName],
+        translation: data.translation,
+        group: data.group,
+        size_x: data.size_x,
+        size_y: data.size_y,
+        sl_base_name: data.sl_base_name,
+        img_name: data.img_name,
+        has_img: true,
+        has_useful_entities: true,
+        offset_x: data.offset_x,
+        offset_y: data.offset_y,
+        rotate: data.rotate,
+        range: data.range,
+      };
+      mm.set(mapName, mod);
     }
-    return globalModules;
-  }, [entity?._modules, globalModules]);
+    return mm;
+  }, [entity?._modules]);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const fetchedRef = useRef(false);
 
