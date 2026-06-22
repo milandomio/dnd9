@@ -20,13 +20,19 @@ from config import (
     OUTPUT_DIR,
     PROPS_DIR,
     SPAWNER_DIR,
-    TRANSLATION_ALIAS_MAP,
 )
 from db_manager import DatabaseManager
 from drop_rate import DropRateEngine, _round_rate
 from entity_export import export_items, export_monsters, export_props
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
 from layout_utils import load_all_layout_rotations
+from lootdrop_builder import (
+    _LABEL_TYPE_SUFFIX,
+    _classify_label,
+    build_and_save_lootdrop_details,
+    build_loot_index,
+    build_merged_loot_map,
+)
 from module_builder import (
     build_and_save_module_coords,
     build_and_save_modules_data,
@@ -37,12 +43,7 @@ from pipeline_timer import PipelineTimer
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
 from translator import (
-    HARD_SUFFIX_RE,
-    QUALITY_RE,
-    UNIQUE_SUFFIX_RE,
-    VARIANT_RE,
     NameResolver,
-    base_monster_name,
 )
 
 _log_file = None
@@ -346,64 +347,7 @@ def run():
 
     # ── Build merged lootdrop map with variant family merging ──
     _log("[JSON] building merged lootdrop map...")
-    loot_raw = db.get_lootdrop_relationships()
-    loot_map: dict[str, set[str]] = {}
-    for r in loot_raw:
-        loot_map.setdefault(r["item_name"], set()).add(r["monster_name"])
-
-    # detect variant families (_\d{4} suffix, ≥2 members)
-    families: dict[str, list[str]] = {}
-    for item_name in loot_map:
-        m = VARIANT_RE.match(item_name)
-        if m:
-            base = m.group(1)
-            families.setdefault(base, []).append(item_name)
-    families = {k: sorted(v) for k, v in families.items() if len(v) >= 2}
-    skip_variants: set[str] = set()
-    for variants in families.values():
-        skip_variants.update(variants)
-
-    # merge: base_name → union of all monsters from its variants
-    merged_loot: dict[str, list[str]] = {}
-    for item_name, monster_set in loot_map.items():
-        m = VARIANT_RE.match(item_name)
-        base = m.group(1) if m else item_name
-        merged_loot.setdefault(base, set()).update(monster_set)
-    merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
-    print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
-    print(f"  unique items after merge: {len(merged_loot)}")
-
-    # split _8001 variants: keep as own entry (monsters are shared with base)
-    _variant_override: dict[str, int] = {}
-    for base, variants in list(families.items()):
-        _8001 = [v for v in variants if v.endswith("_8001")]
-        if not _8001:
-            continue
-        v8001 = _8001[0]
-        skip_variants.discard(v8001)
-        merged_loot[v8001] = sorted(loot_map.get(v8001, []))
-        _variant_override[base] = len(variants) - 1
-    if _variant_override:
-        print(f"  _8001 variants split: {len(_variant_override)} bases affected")
-
-    # -- Inject SuperHoard spawners as separate monster entries --
-    _superhoard_map: dict[str, list[str]] = {}
-    for _row in (
-        db.connect()
-        .execute(
-            "SELECT DISTINCT spawner_keyword, entity_name FROM spawner_entries WHERE entity_name IN ('Hoard01_9', 'HoardChest01') AND spawner_keyword != entity_name"
-        )
-        .fetchall()
-    ):
-        _sk, _en = _row
-        _superhoard_map.setdefault(_en, []).append(_sk)
-    for _mons in merged_loot.values():
-        for _en, _sks in _superhoard_map.items():
-            if _en in _mons:
-                for _sk in _sks:
-                    if _sk not in _mons:
-                        _mons.append(_sk)
-    merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
+    merged_loot, skip_variants, _variant_override = build_merged_loot_map(db)
 
     # ── items: index + individual files ──
     timer.start_step("[JSON] items")
@@ -445,116 +389,12 @@ def run():
     # ── lootdrops.json (grouped by item for list page) ──
     timer.start_step("[JSON] lootdrops")
     _log("[JSON] lootdrops export START")
-    items_lookup = {r["item_name"]: r for r in items}
-    monsters_lookup = {r["monster_name"]: r for r in monsters}
-    loot_index = []
-    for item_name, monster_names in merged_loot.items():
-        item_row = items_lookup.get(item_name)
-        translation = (
-            resolver.resolve(item_name, item_row["translation_key"] if item_row else None, "item")
-            if item_row
-            else (resolver.resolve(item_name, None, "item") or item_name)
-        )
-        mon_translations = []
-        for m in sorted(monster_names):
-            cls = entity_class.get(m)
-            if cls and "item" in cls["types"]:
-                item_row = items_lookup.get(m)
-                if item_row:
-                    mon_translations.append(resolver.resolve(m, item_row["translation_key"], "item"))
-                    continue
-                tk = cls.get("translation_key", "")
-                if tk:
-                    mon_translations.append(resolver.resolve(m, tk, "item"))
-                    continue
-            elif cls and "props" in cls["types"]:
-                mon_translations.append(resolver.resolve(m, cls.get("translation_key", ""), "props"))
-                continue
-            # Try direct monster lookup
-            mon_row = monsters_lookup.get(m)
-            if mon_row:
-                mon_translations.append(resolver.resolve(m, mon_row["translation_key"], "monster"))
-                continue
-            # Try stripping _Hard/_VeryHard suffix → base monster lookup
-            base = HARD_SUFFIX_RE.sub("", m) if HARD_SUFFIX_RE.search(m) else m
-            if base != m:
-                mon_row = monsters_lookup.get(base)
-                if mon_row:
-                    mon_translations.append(resolver.resolve(base, mon_row["translation_key"], "monster"))
-                    continue
-            # Try stripping trailing Unique → base monster lookup (e.g. FrostImpUnique → FrostImp)
-            base2 = UNIQUE_SUFFIX_RE.sub("", base) if UNIQUE_SUFFIX_RE.search(base) else base
-            if base2 != base:
-                mon_row = monsters_lookup.get(base2)
-                if mon_row:
-                    mon_translations.append(resolver.resolve(base2, mon_row["translation_key"], "monster"))
-                    continue
-            # Try entity_class translation key as fallback
-            if cls and cls.get("translation_key"):
-                mon_translations.append(resolver.resolve(m, cls["translation_key"], cls["types"][0]))
-                continue
-            # Generic fallback
-            mon_translations.append(resolver.resolve(m, None, "monster") or m)
-        variant_count = _variant_override.get(item_name, item_row.get("variant_count", 1) if item_row else 1)
-        # Merge _Hard/_VeryHard/Unique variants in loot_index too
-        merged_names: list[str] = []
-        merged_translations: list[str] = []
-        seen_bases: set[str] = set()
-        for mn, mt in zip(monster_names, mon_translations, strict=False):
-            # Skip self-referencing
-            if mn == item_name:
-                continue
-            base = HARD_SUFFIX_RE.sub("", mn)
-            base = QUALITY_RE.sub("", base)
-            base = UNIQUE_SUFFIX_RE.sub("", base)
-            if base not in seen_bases:
-                seen_bases.add(base)
-                merged_names.append(mn)
-                merged_translations.append(mt)
-        loot_index.append(
-            {
-                "name": item_name,
-                "translation": translation,
-                "variant_count": variant_count,
-                "monsters": sorted(merged_names),
-                "monster_translations": merged_translations,
-            }
-        )
-    loot_index.sort(key=lambda x: x["translation"] or x["name"])
+    loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve, _variant_override)
     _save("lootdrops.json", loot_index)
     _log(f"[JSON] lootdrops index DONE -> {len(loot_index)} items")
 
     # ── lootdrops detail files ──
     _log("[JSON] lootdrops detail files START")
-    _MONSTER_COLORS = [  # noqa: N806
-        "#E74C3C",
-        "#3498DB",
-        "#2ECC71",
-        "#F39C12",
-        "#9B59B6",
-        "#1ABC9C",
-        "#E67E22",
-        "#2980B9",
-        "#27AE60",
-        "#D35400",
-        "#8E44AD",
-        "#16A085",
-        "#C0392B",
-        "#2C3E50",
-        "#7F8C8D",
-        "#FF6B35",
-        "#00BFFF",
-        "#FFD700",
-        "#FF69B4",
-        "#32CD32",
-        "#FF4500",
-        "#9370DB",
-        "#00FA9A",
-        "#DC143C",
-        "#00CED1",
-    ]
-
-    # ── 预加载爆率数据 ──
     _log("[JSON] preloading drop rate data...")
     drop_engine = DropRateEngine()
     drop_engine.preload(db, modules_data)
@@ -568,300 +408,19 @@ def run():
     _entity_spawners = drop_engine.entity_spawners
     _log("[JSON] preloaded drop rate data via DropRateEngine")
 
-    # 翻译 variant_names（_coord_variant_count 已在管道开头计算，此处补充翻译）
-    for _key, (_cnt, _raw_names) in list(_coord_variant_count.items()):
-        if _raw_names:
-            _translated: list[str] = []
-            for _kw in _raw_names:
-                _cls = entity_class.get(_kw, {})
-                _mon_row = monsters_lookup.get(_kw)
-                if _mon_row:
-                    _translated.append(resolver.resolve(_kw, _mon_row["translation_key"], "monster"))
-                elif _cls and "props" in _cls.get("types", []):
-                    _translated.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
-                else:
-                    _translated.append(_kw)
-            _coord_variant_count[_key] = (_cnt, _translated)
-
-    _loot_detail_count = 0
-    _loot_detail_total = len(loot_index)
-    _item_max_score: dict[str, float] = {}
-    _log(f"[JSON] lootdrop detail loop starting: {_loot_detail_total} items")
-
-    def _classify_label(label: str, entity_name: str) -> str:
-        if not label:
-            return "direct"
-        # Strip quality suffix for matching (e.g. SkeletonFootmanFromFakeDeath_Unique → SkeletonFootmanFromFakeDeath)
-        en_base = QUALITY_RE.sub("", entity_name)
-        if label == en_base or label.startswith(en_base + "_"):
-            return "direct"
-        if "Random" in label:
-            return "random"
-        if "Special" in label or "ChestLarge" in label:
-            return "special"
-        return "other"
-
-    _label_type_suffix = {
-        "direct": "",
-        "special": "(特殊)",
-        "random": "(随机)",
-        "other": "",
-    }
-
-    for entry in loot_index:
-        item_name = entry["name"]
-        merged: dict[str, dict] = {}
-        for _i, m_name in enumerate(entry["monsters"]):
-            if m_name == item_name:
-                continue
-            coords = all_coords.get(m_name, [])
-            if not coords:
-                # Try stripping quality suffix for coord lookup
-                _m_base = QUALITY_RE.sub("", m_name)
-                if _m_base != m_name:
-                    coords = all_coords.get(_m_base, [])
-            if not coords:
-                alias = TRANSLATION_ALIAS_MAP.get(m_name)
-                if alias:
-                    coords = all_coords.get(alias, [])
-            if not coords:
-                alt_keywords = _og_to_keywords.get(m_name, set())
-                for _ak in sorted(alt_keywords):
-                    _c = all_coords.get(_ak, [])
-                    if _c:
-                        coords = _c
-                        break
-            # 按 _entity_spawners 过滤：只保留当前实体确实关联的生成器坐标
-            _valid_sk = _entity_spawners.get(m_name, set())
-            if _valid_sk:
-                coords = [
-                    c for c in coords if c.get("keyword", "") in _valid_sk or c.get("original_keyword", "") in _valid_sk
-                ]
-            if not coords:
-                continue
-            m_trans = entry["monster_translations"][_i]
-            base = base_monster_name(m_name)
-            locked_base = m_name.replace("_Locked", "")
-            is_locked = locked_base != m_name
-            if is_locked:
-                base = base_monster_name(locked_base)
-            # Group coords by spawner-keyword label type
-            coords_by_type: dict[str, list[dict]] = {}
-            for _c in coords:
-                _t = _classify_label(_c.get("original_keyword", ""), m_name)
-                coords_by_type.setdefault(_t, []).append(_c)
-            for _type, _typed_coords in coords_by_type.items():
-                _suffix = _label_type_suffix.get(_type, "")
-                _type_trans = m_trans + _suffix if _suffix else m_trans
-                _use_suffix = _suffix != ""
-                _unique_name = base if not _use_suffix else f"{base}_{_type}"
-                _merge_key = f"{m_trans}|{_type}"
-                _existing = merged.get(_merge_key)
-                if _existing is not None:
-                    _existing["_bases"].add(base)
-                    if is_locked:
-                        _existing["_has_locked"] = True
-                else:
-                    merged[_merge_key] = {
-                        "name": m_name,
-                        "entity_name": m_name,
-                        "translation": _type_trans,
-                        "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
-                        "coords": [],
-                        "_has_locked": False,
-                        "_bases": {base, m_name},
-                    }
-                if is_locked:
-                    merged[_merge_key]["_has_locked"] = True
-                for _c in _typed_coords:
-                    _raw_label = _c.get("original_keyword") or _c.get("keyword", "")
-                    coord_out = {
-                        "x": _c["x"],
-                        "y": _c["y"],
-                        "z": _c["z"],
-                        "yaw": _c.get("yaw", 0),
-                        "map": _c["map_base"],
-                        "file": _c["json_filename"],
-                        "version": _c["version"],
-                        "label": _raw_label,
-                    }
-                    _vc_info = _coord_variant_count.get(
-                        (_c["map_base"], _c["json_filename"], _c.get("group_parent", ""))
-                    )
-                    if _vc_info and _vc_info[0] > 1:
-                        coord_out["variant_count"] = _vc_info[0]
-                        coord_out["variant_names"] = _vc_info[1]
-                    if _c.get("keyword") != _c.get("original_keyword", ""):
-                        _pair = (_c["keyword"], m_name)
-                        _sr = _spawn_rate_detail.get(_pair, 100) if _pair else _spawn_rate_cache.get(m_name, 100)
-                    else:
-                        _sr = _spawn_rate_cache.get(m_name, 100)
-                    coord_out["spawn_rate"] = _sr
-                    merged[_merge_key]["coords"].append(coord_out)
-        # 计算 per-group 爆率（在 dedup 之前，保留 _has_locked 标记）
-        _group_drop_info: dict[str, list[dict]] = {}
-        for _base, _m_data in merged.items():
-            _has_locked = _m_data.get("_has_locked", False)
-            _seen_groups: set[str] = set()
-            for _c in _m_data["coords"]:
-                _g = _map_base_to_group.get(_c["map"], "")
-                if _g:
-                    _seen_groups.add(_g)
-            for _g in _seen_groups:
-                _dr = drop_engine.get_group_drop_rates(item_name, _m_data.get("entity_name", _m_data["name"]), _g)
-                if not _dr:
-                    # 即使爆率为0，只要有该怪物在此分组有坐标就保留
-                    _dr = {"PVE": 0, "普通": 0, "豪客赛": 0}
-                _en = _m_data.get("entity_name", _m_data["name"])
-                # For locked-merged entries: 取共同生成器中上锁+未上锁 spawn_rate 之和
-                if _has_locked:
-                    _locked_name = (
-                        _en.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _en else _en + "_Locked"
-                    )
-                    _common_sks = _entity_spawners.get(_en, set()) & _entity_spawners.get(_locked_name, set())
-                    _best_rate = 0
-                    for _sk in _common_sks:
-                        _ul_sr = _spawn_rate_detail.get((_sk, _en), 0)
-                        _l_sr = _spawn_rate_detail.get((_sk, _locked_name), 0)
-                        _rate = _ul_sr + _l_sr
-                        if _rate > _best_rate:
-                            _best_rate = _rate
-                    _sr = (
-                        _best_rate
-                        if _best_rate > 0
-                        else max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
-                    )
-                else:
-                    _sr = max(_spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
-                _en_mode_rates = _spawn_rate_by_mode.get(("", _en), {})
-                _sr_by_mode: dict[str, float] = {}
-                if _en_mode_rates:
-                    for _mn in ("PVE", "普通", "豪客赛"):
-                        if _mn in _en_mode_rates:
-                            # Map group may restrict which grades are relevant
-                            _sr_by_mode[_mn] = _en_mode_rates[_mn]
-                _has_varied_spawn = len(set(_sr_by_mode.values())) > 1
-                _group_drop_info.setdefault(_g, []).append(
-                    {
-                        "translation": _m_data["translation"],
-                        "spawn_rate": _sr,
-                        "drop_rates": _dr,
-                        "_variant": _m_data.get("entity_name", _m_data["name"]),
-                    }
-                )
-                if _has_varied_spawn:
-                    _group_drop_info[_g][-1]["spawn_rates"] = _sr_by_mode
-        # Deduplicate coords and update translation for locked-merged entries
-        for _base_data in merged.values():
-            if _base_data.pop("_has_locked", False):
-                _old = _base_data["translation"]
-                _base_data["translation"] += "(可能上锁)"
-                for _g_list in _group_drop_info.values():
-                    for _entry in _g_list:
-                        if _entry["translation"] == _old:
-                            _entry["translation"] = _base_data["translation"]
-                _bn = _base_data.get("entity_name", _base_data["name"])
-                _ln = _bn.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _bn else _bn + "_Locked"
-                _common = _entity_spawners.get(_bn, set()) & _entity_spawners.get(_ln, set())
-                _combined_rate = 0
-                for _sk in _common:
-                    _ul = _spawn_rate_detail.get((_sk, _bn), 0)
-                    _ll = _spawn_rate_detail.get((_sk, _ln), 0)
-                    _r = _ul + _ll
-                    if _r > _combined_rate:
-                        _combined_rate = _r
-                seen: set[tuple] = set()
-                deduped = []
-                for _c in _base_data["coords"]:
-                    _k = (_c["x"], _c["y"], _c["z"], _c["file"])
-                    if _k not in seen:
-                        seen.add(_k)
-                        deduped.append(_c)
-                _base_data["coords"] = deduped
-        # 质量变体去重：同一翻译只保留最高优先级变体（Elite > Nightmare > Common）
-        for _g_list in _group_drop_info.values():
-            _best: dict[str, dict] = {}
-            for _entry in _g_list:
-                _trans = _entry["translation"]
-                _m = QUALITY_RE.search(_entry.get("_variant", ""))
-                _prio = {"Elite": 3, "Nightmare": 2, "Common": 1}.get(_m.group(1) if _m else "", -1)
-                if _trans not in _best or _prio > _best[_trans].get("_q_prio", -1):
-                    _best[_trans] = _entry
-                    _best[_trans]["_q_prio"] = _prio
-            _g_list[:] = list(_best.values())
-            for _entry in _g_list:
-                _entry.pop("_variant", None)
-                _entry.pop("_q_prio", None)
-        # 按生成概率×豪客赛爆率降序排列（乘积越大越优先显示）
-        for _g_list in _group_drop_info.values():
-            _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
-
-        # 计算每个坐标的 score（spawn_rate × 豪客赛爆率 / 100）
-        _hk_lookup: dict[str, dict[str, float]] = {}
-        for _g, _entries in _group_drop_info.items():
-            for _entry in _entries:
-                _hkl = _hk_lookup.setdefault(_entry["translation"], {})
-                _hkl[_g] = _entry["drop_rates"].get("豪客赛", 0)
-        for _base_data in merged.values():
-            _trans = _base_data["translation"]
-            _hk_map = _hk_lookup.get(_trans, {})
-            for _c in _base_data["coords"]:
-                _g = _map_base_to_group.get(_c["map"], "")
-                _hk = _hk_map.get(_g, 0)
-                _score = (_c.get("spawn_rate", 0) or 0) * _hk / 100
-                _c["score"] = round(_score, 4)
-            _base_data["coords"] = [c for c in _base_data["coords"] if c["score"] > 0]
-        merged = {k: v for k, v in merged.items() if v["coords"]}
-        for _v in merged.values():
-            _v.pop("_bases", None)
-        monsters_out = list(merged.values())
-        # 预计算每个怪物的最大参考爆率（跨所有分组取 spawn_rate × 豪客赛 / 100 最大值）
-        _max_scores: dict[str, float] = {}
-        for _g_list in _group_drop_info.values():
-            for _entry in _g_list:
-                _trans = _entry["translation"]
-                _score = round(_entry["spawn_rate"] * _entry["drop_rates"].get("豪客赛", 0) / 100, 4)
-                if _trans not in _max_scores or _score > _max_scores[_trans]:
-                    _max_scores[_trans] = _score
-        for _m in monsters_out:
-            _m["max_score"] = _max_scores.get(_m["translation"], -1)
-        if monsters_out:
-            _save(
-                f"lootdrops/{item_name}.json",
-                {
-                    "name": item_name,
-                    "translation": entry["translation"],
-                    "monsters": monsters_out,
-                    "group_drop_info": _group_drop_info,
-                },
-            )
-            _item_max_score[item_name] = max(_max_scores.values(), default=0.0)
-        elif item_name == "BloodsapBlade":
-            _log(
-                f"[DEBUG] BloodsapBlade: merged={ {k: v.get('translation','?') for k, v in merged.items()} }, group_drop_info={ {g: len(v) for g,v in _group_drop_info.items()} }"
-            )
-            for _i, m_name in enumerate(entry["monsters"]):
-                _log(f"[DEBUG]   monster: {m_name}, trans={entry['monster_translations'][_i]}")
-                coords = all_coords.get(m_name, [])
-                _log(f"[DEBUG]     all_coords direct: {len(coords)}")
-                _m_base = QUALITY_RE.sub("", m_name)
-                if _m_base != m_name:
-                    coords2 = all_coords.get(_m_base, [])
-                    _log(f"[DEBUG]     all_coords base '{_m_base}': {len(coords2)}")
-                _valid_sk = _entity_spawners.get(m_name, set())
-                _log(f"[DEBUG]     _valid_sk: {_valid_sk}")
-        _loot_detail_count += 1
-        if _loot_detail_count % 100 == 0:
-            _log(f"[JSON] lootdrops detail: {_loot_detail_count}/{_loot_detail_total}")
-    _log(f"[JSON] lootdrops detail files DONE -> {_loot_detail_count} items")
-
-    # ── 回写 lootdrops.json index，添加 max_score 和分类信息 ──
-    _log("[JSON] updating lootdrops index with max_score...")
-    for _entry in loot_index:
-        _iname = _entry["name"]
-        _entry["max_score"] = _item_max_score.get(_iname, 0.0)
-    _save("lootdrops.json", loot_index)
-    _log(f"[JSON] lootdrops index update DONE -> {len(loot_index)} items")
+    _item_max_score = build_and_save_lootdrop_details(
+        loot_index,
+        drop_engine,
+        all_coords,
+        resolver.resolve,
+        _og_to_keywords,
+        _coord_variant_count,
+        entity_class,
+        monsters,
+        OUTPUT_DIR,
+        _log,
+    )
+    _log("[JSON] lootdrops detail files DONE")
 
     # ── 更新物品实体 JSON，添加 group_drop_info ──
     _log("[JSON] updating item entities with group drop info...")
@@ -1024,7 +583,7 @@ def run():
             _combined = _base + _lock
             if _combined > 0:
                 _type = _classify_label(_sk, _pname)
-                _suffix = _label_type_suffix.get(_type, "")
+                _suffix = _LABEL_TYPE_SUFFIX.get(_type, "")
                 _label = _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
                 _key = (False, _type)
                 if _key not in _kw_entries or _combined > _kw_entries[_key]["spawn_rate"]:
@@ -1038,7 +597,7 @@ def run():
                 _combined = _base + _lock
                 if _combined > 0:
                     _type = _classify_label(_sk, _undersea_name)
-                    _suffix = _label_type_suffix.get(_type, "")
+                    _suffix = _LABEL_TYPE_SUFFIX.get(_type, "")
                     _label = "(海底)" + _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
                     _key = (True, _type)
                     if _key not in _kw_entries or _combined > _kw_entries[_key]["spawn_rate"]:
