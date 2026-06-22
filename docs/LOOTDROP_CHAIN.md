@@ -62,7 +62,7 @@ _get_group_drop_rates(monster_name)：
 
 ### Bug: `_spawner_ldg` 首次命中覆盖
 
-`collector.py` 第 1286-1291 行：
+`drop_rate.py`（原 `collector.py`）：
 
 ```python
 for _row in _c.execute(
