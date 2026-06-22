@@ -80,7 +80,7 @@ SimpleChestLarge, WoodChestLarge
 spawn_rate 计算：`round(25.0 / 20, 1) = 1.3`
 score：`1.3 * 3.0 / 100 = 0.039` > 阈值 0.0（总坐标 < 100）
 
-**理论上应通过 score 过滤，但实际缺失。需要进一步调试 collector.py 确认原因。**
+**理论上应通过 score 过滤，但实际缺失。需要进一步调试 `lootdrop_builder.py` 确认原因。**
 
 ### 可能原因
 
@@ -117,4 +117,4 @@ score：`1.3 * 3.0 / 100 = 0.039` > 阈值 0.0（总坐标 < 100）
 
 修复：
 - db_manager.py: `row["total"]` → `row["cnt"]`
-- collector.py: 移除 `_entity_max_variant` 和 spawn_rate 除以变体数逻辑
+- lootdrop_builder.py（原 collector.py）: 移除 `_entity_max_variant` 和 spawn_rate 除以变体数逻辑

@@ -22,8 +22,8 @@
 |---|------|----------|------|
 | 1 | 爆率精度丢失 | `_round_rate` 改用 `decimal.Decimal` 量化到 3 位小数 | ✅ |
 | 2 | SuperHoard 与 Hoard 共用 label | `search_engine.py` 跳过 SuperHoard redirect；`config.py` 添加 HARDCODED_TRANSLATIONS | ✅ |
-| 3 | SuperHoard 无独立 entity 分类 | `collector.py` 往 `entity_class` 注入 SuperHoard props | ✅ |
-| 4 | SuperHoard 不出现在物品怪物列表 | `collector.py` merged_loot 注入 SuperHoard spawner 关键字 | ✅ |
+| 3 | SuperHoard 无独立 entity 分类 | `enrichment.py`（原 `collector.py`）往 `entity_class` 注入 SuperHoard props | ✅ |
+| 4 | SuperHoard 不出现在物品怪物列表 | `lootdrop_builder.py`（原 `collector.py`）merged_loot 注入 SuperHoard spawner 关键字 | ✅ |
 
 ## 实际修改汇总
 
@@ -34,6 +34,5 @@
 ### 2. SuperHoard 实体分离
 - **`api/src/search_engine.py`**：SuperHoard 关键字不走 redirect，保留独立 identity
 - **`api/src/config.py`**：添加 `SuperHoard01_9` / `SuperHoardChest01_9` 翻译 "超级宝藏堆"
-- **`api/src/collector.py`**：
-  - `entity_class` 注入 SuperHoard 为 props 类型
-  - `merged_loot` 注入 SuperHoard spawner 关键字，使其出现在物品怪物列表中
+- **`api/src/enrichment.py`**（原 `collector.py`）：`entity_class` 注入 SuperHoard 为 props 类型
+- **`api/src/lootdrop_builder.py`**（原 `collector.py`）：`merged_loot` 注入 SuperHoard spawner 关键字，使其出现在物品怪物列表中
