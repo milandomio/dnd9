@@ -336,11 +336,27 @@ def run():
     _log("[JSON] building merged lootdrop map...")
     merged_loot, skip_variants, _variant_override = build_merged_loot_map(db)
 
+    # ── Build modules_map early (needed for entity inline _modules) ──
+    _log("[JSON] building modules_map...")
+    module_rotations = load_all_layout_rotations()
+    modules = db.get_dungeon_modules()
+    modules_map = build_modules_map(db, resolver.resolve, module_rotations)
+    map_to_module, module_to_maps = build_map_mappings(modules_map)
+
     # ── items: index + individual files ──
     timer.start_step("[JSON] items")
     _log("[JSON] items export START")
     items_index = export_items(
-        items, merged_loot, all_coords, resolver.resolve, skip_variants, _coord_variant_count, _item_names, OUTPUT_DIR
+        items,
+        merged_loot,
+        all_coords,
+        resolver.resolve,
+        skip_variants,
+        _coord_variant_count,
+        _item_names,
+        OUTPUT_DIR,
+        modules_map,
+        map_to_module,
     )
     _log(f"[JSON] items export DONE -> {len(items_index)} items")
 
@@ -348,7 +364,14 @@ def run():
     timer.start_step("[JSON] monsters")
     _log("[JSON] monsters export START")
     monsters_index = export_monsters(
-        monsters, all_coords, resolver.resolve, _coord_variant_count, _monster_names, OUTPUT_DIR
+        monsters,
+        all_coords,
+        resolver.resolve,
+        _coord_variant_count,
+        _monster_names,
+        OUTPUT_DIR,
+        modules_map,
+        map_to_module,
     )
     _log(f"[JSON] monsters export DONE -> {len(monsters_index)} monsters")
 
@@ -356,17 +379,21 @@ def run():
     timer.start_step("[JSON] props")
     _log("[JSON] props export START")
     props_index = export_props(
-        props, all_coords, resolver.resolve, _props_spawner_info, _coord_variant_count, _prop_names, OUTPUT_DIR
+        props,
+        all_coords,
+        resolver.resolve,
+        _props_spawner_info,
+        _coord_variant_count,
+        _prop_names,
+        OUTPUT_DIR,
+        modules_map,
+        map_to_module,
     )
     _log(f"[JSON] props export DONE -> {len(props_index)} props")
 
     # ── dungeon_modules.json ──
     timer.start_step("[JSON] dungeon modules")
     _log("[JSON] dungeon_modules export START")
-    module_rotations = load_all_layout_rotations()
-    modules = db.get_dungeon_modules()
-    modules_map = build_modules_map(db, resolver.resolve, module_rotations)
-    map_to_module, module_to_maps = build_map_mappings(modules_map)
     merged_coords = build_and_save_module_coords(
         db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR
     )
@@ -398,6 +425,8 @@ def run():
         monsters,
         OUTPUT_DIR,
         _log,
+        modules_map,
+        map_to_module,
     )
     _log("[JSON] lootdrops detail files DONE")
 

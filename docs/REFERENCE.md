@@ -115,8 +115,8 @@ dungeon_modules_coords、lootdrops）通过 `all_coords.get(name, [])` 查询，
 
 ### Spawner 导入架构
 
-Spawner 和 search_term_matches 的插入逻辑直接在 `collector.py` 的 `run()` 中内联执行，
-使用 `executemany` 批量插入（~32,000+ spawner 行 + ~483 matched term 行）。
+Spawner 的插入逻辑直接在 `collector.py` 的 `run()` 中内联执行，
+使用 `executemany` 批量插入（~32,000+ spawner 行）。
 通过 `db.connect()` 获取原始 sqlite3.Connection 操作，而非通过 `db_manager.py` 的封装方法。
 
 ## 数据库
@@ -243,8 +243,7 @@ info = parse_grade(3001)
 - 多条目 spawner（如 ChestLarge 含 9 个实体）：各条目按权重占比计算百分比
 - 原始 `SpawnRate` 以 `10000` 为基准，`2500` = 25%（单条目时），`0` = 不生成
 
-**实现位置：** `db_manager.py` 的 `import_spawner_entries()` 在导入时计算百分比，
-`lootdrop_rates.py` 的 `get_spawn_rate_for_keyword()` 直接从 DB 读取百分比。
+**实现位置：** `db_manager.py` 的 `import_spawner_entries()` 在导入时计算百分比并写入 `spawner_entries.spawn_rate`，`drop_rate.py` 的 `DropRateEngine.preload()` 预加载到内存供 O(1) 查询。
 
 #### 物品爆率（DropRate）查询链
 
@@ -600,18 +599,16 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 - `useDungeonModules()` — 全局缓存 `dungeon_modules.json`，所有地图模块页面复用同一份数据
 - `useSearchIndex()` — 全局缓存 `search_index.json`，供 NavBar 搜索使用
 
-### search_term_matches 精确度问题 [已修复]
+### search_term_matches 精确度问题 [已被 AC 自动机移除替代]
 
-> **状态：已修复**（2025-06-17：在 re-match 步中添加跨类型前缀匹配过滤）
+> **状态：已过期** — 该修复基于 AC 自动机 `match_keyword()` 的 re-match 补丁，已被后续的 AC 自动机整体移除（2025-06-19，变体后缀剥离 + `extract_all_spawners()` 直接匹配）彻底替代。AC 移除后子串前缀匹配不再存在，详见下方章节。
 
 **历史问题：** `search_engine.py` 的 `match_keyword()` 会将 `FrostWyvernEgg`（物品）也匹配到
 搜索词 `FrostWyvern`（怪物），因为 `FrostWyvern` 是 `FrostWyvernEgg` 的前缀子串。
 同样 `Banshee_Soulflame`（props）会被匹配到 `Banshee`（怪物）。
 
-**修复方案：** 在 `collector.py` 的 re-match 步中，构建 `search_term → entity_type` 映射。
-当 spawner 同时匹配到短词（如 `Banshee`）和长词（如 `Banshee_Soulflame`）时，仅当短词和长词
-都属于**已知实体类型且类型不同**时才丢弃短词。如果长词不在类型映射中（如 `Abomination_Common`
-已被合并到 `Abomination`，无独立类型），保留短词不动，确保质量变体坐标能正确归入基础怪物。
+**当时的修复方案：** 在 re-match 步中构建 `search_term → entity_type` 映射，
+当短词和长词属于不同实体类型时丢弃短词。
 
 **修复效果：** `Banshee_Soulflame` 坐标不再出现在 `Banshee` 怪物页面，
 `FrostWyvernEgg` 坐标不再出现在 `FrostWyvern` 怪物页面。
@@ -659,7 +656,7 @@ value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
 
 ## 已完成优化
 
-- **路由级代码分割** — `React.lazy()` 拆分 6 个页面（DetailPage、LootdropDetailPage、QuestItemGroupPage、QuestNPCDetailPage、DungeonModuleGroupPage、DungeonModuleDetailPage），主 bundle 84KB → 32KB
+- **vendor 分包** — `vite.config.ts` 的 `manualChunks` 将 antd 和 react 相关依赖拆分为独立 chunk，减少主 bundle 体积
 - **SSR 数据复用** — DungeonModuleGroupPage 优先使用 `useSSRData()` 预渲染数据，避免客户端重复 fetch
 - **无用 JSON 清理** — `entity_index.json`（271KB）、`quest_items.json`（88KB）从交付目录移除（管道内部仍保留）
 
@@ -686,5 +683,5 @@ value 为 `max(spawn_rate)`），坐标循环内直接查内存，消除 N+1。
 
 **影响数据：**
 - spawner 行数 ~61,359（72 个多实体展开器正确展开）
-- 实体数：items=92, monsters=138, props=247, lootdrops=452
+- 实体数：items=92, monsters=138, props=247, lootdrops=452（数据截至 2025-06-19，AC 自动机移除时）
 - 怪物数减少（~143→138）因 AC 前缀假阳性匹配的坐标不再错误归入；正确坐标不变
