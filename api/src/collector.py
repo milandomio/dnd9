@@ -24,7 +24,6 @@ from drop_rate import DropRateEngine
 from enrichment import enrich_all_entities
 from entity_export import export_items, export_monsters, export_props
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
-from layout_utils import load_all_layout_rotations
 from lootdrop_builder import (
     build_and_save_lootdrop_details,
     build_loot_index,
@@ -338,9 +337,8 @@ def run():
 
     # ── Build modules_map early (needed for entity inline _modules) ──
     _log("[JSON] building modules_map...")
-    module_rotations = load_all_layout_rotations()
     modules = db.get_dungeon_modules()
-    modules_map = build_modules_map(db, resolver.resolve, module_rotations)
+    modules_map = build_modules_map(db, resolver.resolve)
     map_to_module, module_to_maps = build_map_mappings(modules_map)
 
     # ── items: index + individual files ──

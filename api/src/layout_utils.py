@@ -14,6 +14,7 @@ def load_all_layout_rotations() -> dict[str, int]:
         for fn in filenames:
             if not fn.endswith(".json"):
                 continue
+            # 只处理 ShipGraveyard 布局文件 — 其他地图组的旋转值已直接存储在 DB dungeon_modules.rotation 中
             if not fn.startswith("ShipGraveyard_"):
                 continue
             fp = Path(dirpath) / fn

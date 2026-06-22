@@ -124,8 +124,8 @@ def _resolve_img(art_root: Path, group: str, sl: str, webp_cache: Path | None = 
     return sl, "not_found"
 
 
-def build_modules_map(db, resolve_name, module_rotations: dict) -> dict[str, dict]:
-    """Build modules_map from DB dungeon modules."""
+def build_modules_map(db, resolve_name, module_rotations: dict | None = None) -> dict[str, dict]:
+    """Build modules_map from DB dungeon modules. Rotation is read from DB."""
     modules = db.get_dungeon_modules()
     art_root = (
         Path(__file__).parent.parent.parent.parent
@@ -145,8 +145,7 @@ def build_modules_map(db, resolve_name, module_rotations: dict) -> dict[str, dic
         sy = override.get("size_y", r["size_y"])
         custom_range = override.get("range", 0)
         offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
-        rot1 = module_rotations.get(r["module_name"])
-        rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 270)
+        rotate = r["rotation"] if r.get("rotation") is not None else 270
         sl = r["sl_base_name"]
         map_image = r.get("map_image_name", "")
         module_name = r["module_name"]
