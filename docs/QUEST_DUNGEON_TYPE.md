@@ -59,7 +59,7 @@ export interface QuestContent {
 
 - **第 371 行**：`hasDungeonType` 检测（`q.contents.some(c => c.dungeon_type)`）
 - **第 430-442 行**：条件渲染 `<th>目标地图</th>`（宽度 5em，紧跟"目标"列后）
-- **第 548-556 行**：条件渲染 `<td>{c.dungeon_type || ''}</td>`（蓝色字体，colorke\#42a5f5/浅色 \#1565c0）
+- **第 548-556 行**：条件渲染 `<td>{c.dungeon_type || ''}</td>`（蓝色字体，color: #42a5f5 / 浅色: #1565c0）
 
 列仅在当前任务的任意内容条目标包含 `dungeon_type` 时显示；无限定的条目该列留空。
 

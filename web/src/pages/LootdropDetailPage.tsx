@@ -102,7 +102,8 @@ export default function LootdropDetailPage() {
     }
     return mm;
   }, [ssrData]);
-  const { modules: fetchedModules } = useDungeonModules();
+  const { modules: fetchedModules, loading: modulesLoading } =
+    useDungeonModules();
   const modules = ssrModulesMap ?? fetchedModules;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     ssrData?.item?.monsters
@@ -115,6 +116,7 @@ export default function LootdropDetailPage() {
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
+  const lootFetchedRef = useRef(false);
 
   useEffect(() => {
     if (!name) return;
@@ -123,6 +125,9 @@ export default function LootdropDetailPage() {
       setHidden(defaultHidden(ssrData.item.monsters, 2.5));
       return;
     }
+    if (modulesLoading) return;
+    if (lootFetchedRef.current) return;
+    lootFetchedRef.current = true;
     setData(null);
     setHidden(new Set());
     const lootUrl = dataVersion
@@ -135,7 +140,7 @@ export default function LootdropDetailPage() {
         setHidden(defaultHidden(item.monsters, 2.5));
       })
       .catch(console.error);
-  }, [name, ssrData, dataVersion]);
+  }, [name, ssrData, dataVersion, modulesLoading]);
 
   // 在调试模式下实时响应阈值变化
   useEffect(() => {

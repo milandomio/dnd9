@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Typography } from 'antd';
@@ -45,9 +45,10 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
-  const { modules } = useDungeonModules();
+  const { modules, loading: modulesLoading } = useDungeonModules();
   const dataVersion = useDataVersion();
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
+  const fetchedRef = useRef(false);
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
@@ -91,6 +92,9 @@ export default function DetailPage() {
       setEntity(ssrData.entity);
       return;
     }
+    if (modulesLoading) return;
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
     const decoded = decodeURIComponent(name!);
     const url = dataVersion
       ? `/data/json/${page}/${decoded}.json?v=${dataVersion}`
@@ -101,7 +105,7 @@ export default function DetailPage() {
         setEntity(entityData);
       })
       .catch(console.error);
-  }, [page, name, ssrData, dataVersion]);
+  }, [page, name, ssrData, dataVersion, modulesLoading]);
 
   if (!entity)
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;
