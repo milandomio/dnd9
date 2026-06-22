@@ -1,0 +1,339 @@
+"""Drop rate computation engine extracted from collector.py."""
+
+import json
+from decimal import ROUND_HALF_UP, Decimal
+
+from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
+from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE
+
+_VARIANT_SUFFIXES = ["_5001", "_4001", "_3001", "_2001", "_1001"]
+
+
+def _round_rate(v: float) -> float:
+    d = Decimal(str(v)).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
+    return float(d)
+
+
+class DropRateEngine:
+    """Preloads drop rate data from DB and provides O(1) computation methods."""
+
+    def __init__(self):
+        self._spawner_ldg: dict[str, str] = {}
+        self._entity_ldg_all: dict[str, set[str]] = {}
+        self._ore_ldg: dict[str, str] = {}
+        self._ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
+        self._ld_rate_items: dict[str, dict[str, tuple[int, int]]] = {}
+        self._ld_luck_grade_count: dict[tuple[str, int], int] = {}
+        self._ld_rate_weights: dict[str, dict[int, int]] = {}
+        self._ld_rate_totals: dict[str, int] = {}
+        self._map_base_to_group: dict[str, str] = {}
+        self._spawn_rate_cache: dict[str, float] = {}
+        self._spawn_rate_detail: dict[tuple[str, str], float] = {}
+        self._spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
+        self._entity_spawners: dict[str, set[str]] = {}
+
+    def preload(self, db, modules_data: list[dict]) -> None:
+        """Preload all drop rate data from DB."""
+        _c = db.connect().cursor()
+
+        # Build map_base → group mapping
+        for _m in modules_data:
+            _g = _m.get("group", "") or ""
+            if not _g:
+                continue
+            self._map_base_to_group[_m["name"]] = _g
+            _sl = _m.get("sl_base_name", "")
+            if _sl:
+                self._map_base_to_group[_sl] = _g
+            for _alias in _m.get("aliases") or []:
+                self._map_base_to_group[_alias] = _g
+
+        # spawner_keyword / entity_name → lootdrop_group_id
+        for _row in _c.execute(
+            "SELECT DISTINCT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
+        ):
+            for _key in (_row["spawner_keyword"], _row["entity_name"]):
+                if _key and _key not in self._spawner_ldg:
+                    self._spawner_ldg[_key] = _row["lootdrop_group_id"]
+            for _key in (_row["spawner_keyword"], _row["entity_name"]):
+                if _key:
+                    _base = HARD_SUFFIX_RE.sub("", _key)
+                    _base = QUALITY_RE.sub("", _base)
+                    self._entity_ldg_all.setdefault(_base, set()).add(_row["lootdrop_group_id"])
+            for _key in (_row["spawner_keyword"], _row["entity_name"]):
+                _m = ORE_QUALITY_RE.match(_key)
+                if _m:
+                    _stripped = _m.group(1)
+                    if _stripped and _stripped not in self._ore_ldg:
+                        self._ore_ldg[_stripped] = _row["lootdrop_group_id"]
+
+        # lootdrop_groups
+        for _row in _c.execute(
+            "SELECT group_id, dungeon_grade, lootdrop_id, lootdrop_rate_id, drop_count FROM lootdrop_groups"
+        ):
+            self._ld_groups.setdefault(_row["group_id"], {}).setdefault(_row["dungeon_grade"], []).append(
+                (_row["lootdrop_id"], _row["lootdrop_rate_id"], _row["drop_count"])
+            )
+
+        # lootdrop_rate_items
+        for _row in _c.execute("SELECT lootdrop_id, item_name, luck_grade, drop_count FROM lootdrop_rate_items"):
+            self._ld_rate_items.setdefault(_row["lootdrop_id"], {})[_row["item_name"]] = (
+                _row["luck_grade"],
+                _row["drop_count"],
+            )
+        for _ld_id, _items in self._ld_rate_items.items():
+            _lg_counts: dict[int, int] = {}
+            for _item_name, (_lg, _) in _items.items():
+                _lg_counts[_lg] = _lg_counts.get(_lg, 0) + 1
+            for _lg, _cnt in _lg_counts.items():
+                self._ld_luck_grade_count[(_ld_id, _lg)] = _cnt
+
+        # lootdrop_rate_weights
+        for _row in _c.execute(
+            "SELECT rate_id, luck_grade, SUM(weight) as total FROM lootdrop_rate_weights GROUP BY rate_id, luck_grade"
+        ):
+            self._ld_rate_weights.setdefault(_row["rate_id"], {})[_row["luck_grade"]] = _row["total"]
+
+        for _rid, _grades in self._ld_rate_weights.items():
+            self._ld_rate_totals[_rid] = sum(_w for _w in _grades.values() if _w > 0) or 10000
+
+        # spawn_rate cache
+        for _row in db.get_all_spawner_entries():
+            sk = _row["spawner_keyword"]
+            en = _row["entity_name"]
+            sr = _row["spawn_rate"]
+            _grades_raw = _row.get("dungeon_grades", "[]")
+            try:
+                _grades = json.loads(_grades_raw) if isinstance(_grades_raw, str) else (_grades_raw or [])
+            except (json.JSONDecodeError, TypeError):
+                _grades = []
+            for _key in (sk, en):
+                if _key and sr > self._spawn_rate_cache.get(_key, 0):
+                    self._spawn_rate_cache[_key] = sr
+            _om = ORE_QUALITY_RE.match(en)
+            if _om:
+                _oname = _om.group(1)
+                if _oname and sr > self._spawn_rate_cache.get(_oname, 0):
+                    self._spawn_rate_cache[_oname] = sr
+            if sk and en:
+                _pair = (sk, en)
+                if sr > self._spawn_rate_detail.get(_pair, 0):
+                    self._spawn_rate_detail[_pair] = sr
+                _mode_rates: dict[str, float] = {}
+                for _g in _grades:
+                    _mode_id = _g // 1000 if _g >= 1000 else 1
+                    _mode_name = DUNGEON_MODE_NAMES.get(_mode_id, "")
+                    if _mode_name and (_mode_name not in _mode_rates or sr < _mode_rates[_mode_name]):
+                        _mode_rates[_mode_name] = sr
+                if _mode_rates:
+                    _existing = self._spawn_rate_by_mode.get(_pair, {})
+                    for _mn, _mr in _mode_rates.items():
+                        if _mn not in _existing or _mr < _existing[_mn]:
+                            _existing[_mn] = _mr
+                    self._spawn_rate_by_mode[_pair] = _existing
+                    _en_mode = self._spawn_rate_by_mode.get(("", en), {})
+                    for _mn, _mr in _mode_rates.items():
+                        if _mn not in _en_mode or _mr < _en_mode[_mn]:
+                            _en_mode[_mn] = _mr
+                    self._spawn_rate_by_mode[("", en)] = _en_mode
+            if en and sk:
+                self._entity_spawners.setdefault(en, set()).add(sk)
+
+    @property
+    def spawner_ldg(self) -> dict[str, str]:
+        return self._spawner_ldg
+
+    @property
+    def entity_ldg_all(self) -> dict[str, set[str]]:
+        return self._entity_ldg_all
+
+    @property
+    def ore_ldg(self) -> dict[str, str]:
+        return self._ore_ldg
+
+    @property
+    def spawn_rate_cache(self) -> dict[str, float]:
+        return self._spawn_rate_cache
+
+    @property
+    def spawn_rate_detail(self) -> dict[tuple[str, str], float]:
+        return self._spawn_rate_detail
+
+    @property
+    def spawn_rate_by_mode(self) -> dict[tuple[str, str], dict[str, float]]:
+        return self._spawn_rate_by_mode
+
+    @property
+    def entity_spawners(self) -> dict[str, set[str]]:
+        return self._entity_spawners
+
+    @property
+    def map_base_to_group(self) -> dict[str, str]:
+        return self._map_base_to_group
+
+    def compute_drop_rate(self, ldg_id: str, item_name: str, full_grade: int) -> float:
+        """Compute drop rate for an item in a specific group+grade (0~1)."""
+        grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
+        if not grade_data:
+            return 0.0
+        total_weight = 0.0
+        found = False
+        for ld_id, lr_id, _ in grade_data:
+            rate_items = self._ld_rate_items.get(ld_id, {})
+            item_info = rate_items.get(item_name)
+            if item_info is None:
+                for _suffix in _VARIANT_SUFFIXES:
+                    item_info = rate_items.get(item_name + _suffix)
+                    if item_info is not None:
+                        break
+            if item_info is None:
+                continue
+            found = True
+            luck_grade, item_count = item_info
+            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+            _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
+            _rate_total = self._ld_rate_totals.get(lr_id, 10000)
+            total_weight += _pool_weight / _shared / _rate_total
+        if found:
+            return total_weight
+        return 0.0
+
+    def get_group_drop_rates(self, item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
+        """Compute per-mode drop rates for an item/monster in a map group."""
+        candidate_ids: set[str] = set()
+        _primary = self._spawner_ldg.get(monster_name, "")
+        if _primary:
+            candidate_ids.add(_primary)
+        for _suffix in ("_Unique", "_Elite", "_Nightmare", "_Common"):
+            _v = self._spawner_ldg.get(monster_name + _suffix, "")
+            if _v:
+                candidate_ids.add(_v)
+        if not candidate_ids:
+            _lower = monster_name.lower()
+            for _k, _v in self._spawner_ldg.items():
+                if _k.lower() == _lower:
+                    candidate_ids.add(_v)
+                    break
+        _all_groups = self._entity_ldg_all.get(monster_name, set())
+        if not _all_groups:
+            _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
+        candidate_ids.update(_all_groups)
+        if not candidate_ids:
+            return {}
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        if not suffixes:
+            return {}
+        mode_rates: dict[str, float] = {}
+        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+            if mode_id == 4:
+                continue
+            best_rate = 0.0
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                for _ldg_id in candidate_ids:
+                    rate = self.compute_drop_rate(_ldg_id, item_name, full_grade)
+                    if rate > best_rate:
+                        best_rate = rate
+            mode_rates[mode_name] = _round_rate(best_rate * 100)
+        return mode_rates
+
+    def compute_group_drop_rates(self, ldg_id: str, group_key: str) -> dict[str, float]:
+        """Compute aggregated drop rates for all items in a lootdrop group."""
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        if not suffixes:
+            return {}
+        mode_rates: dict[str, float] = {}
+        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+            if mode_id == 4:
+                continue
+            best_rate = 0.0
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
+                if not grade_data:
+                    continue
+                for ld_id, lr_id, _ in grade_data:
+                    rate_items = self._ld_rate_items.get(ld_id, {})
+                    if not rate_items:
+                        continue
+                    _lg_weights: dict[int, int] = {}
+                    for _item_name, (lg, _) in rate_items.items():
+                        _w = self._ld_rate_weights.get(lr_id, {}).get(lg, 0)
+                        if _w > _lg_weights.get(lg, 0):
+                            _lg_weights[lg] = _w
+                    _rate_total = self._ld_rate_totals.get(lr_id, 10000)
+                    for lg, w in _lg_weights.items():
+                        _shared = self._ld_luck_grade_count.get((ld_id, lg), 1)
+                        r = w / _shared / _rate_total
+                        if r > best_rate:
+                            best_rate = r
+            mode_rates[mode_name] = _round_rate(best_rate * 100)
+        return mode_rates
+
+    def compute_container_drop_rates(self, ldg_id: str, group_key: str) -> dict[str, float]:
+        """Compute container (chest etc.) aggregated drop rates."""
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        if not suffixes:
+            return {}
+        mode_rates: dict[str, float] = {}
+        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+            if mode_id == 4:
+                continue
+            best_total = 0.0
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
+                if not grade_data:
+                    continue
+                total_any_prob = 0.0
+                for ld_id, lr_id, drop_count in grade_data:
+                    rate_items = self._ld_rate_items.get(ld_id, {})
+                    if not rate_items:
+                        continue
+                    rate_total = self._ld_rate_totals.get(lr_id, 10000)
+                    _lg_set: set[int] = set()
+                    for _item_name, (lg, _) in rate_items.items():
+                        _lg_set.add(lg)
+                    ld_prob = 0.0
+                    for lg in _lg_set:
+                        w = self._ld_rate_weights.get(lr_id, {}).get(lg, 0)
+                        if w > 0:
+                            ld_prob += w / rate_total
+                    if ld_prob > 0:
+                        any_prob_rolls = 1.0 - (1.0 - ld_prob) ** drop_count
+                        total_any_prob = 1.0 - (1.0 - total_any_prob) * (1.0 - any_prob_rolls)
+                if total_any_prob > best_total:
+                    best_total = total_any_prob
+            mode_rates[mode_name] = _round_rate(best_total * 100)
+        return mode_rates
+
+    def compute_variant_rate(
+        self,
+        ldg_id: str,
+        luck_grade: int,
+        full_grade: int,
+        target_ld_id: str = "",
+        _rt_cache: dict[str, int] | None = None,
+    ) -> float:
+        """Compute drop rate by luck_grade directly (for game JSON variants)."""
+        grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
+        if not grade_data:
+            return 0.0
+        total_weight = 0.0
+        found = False
+        for ld_id, lr_id, _ in grade_data:
+            if target_ld_id and ld_id != target_ld_id:
+                continue
+            found = True
+            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+            if _pool_weight == 0:
+                continue
+            _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
+            if _rt_cache is not None:
+                _rate_total = _rt_cache.setdefault(lr_id, self._ld_rate_totals.get(lr_id, 10000))
+            else:
+                _rate_total = self._ld_rate_totals.get(lr_id, 10000)
+            total_weight += _pool_weight / _shared / _rate_total
+        if found:
+            return total_weight
+        return 0.0

@@ -1,7 +1,5 @@
 import json
 import os
-import re
-from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 from config import (
@@ -10,9 +8,6 @@ from config import (
     DUNGEON_MODULE_DIR,
     GAME_JSON,
     GAME_ROOT,
-    GROUP_TO_ART_DIR,
-    HARDCODED_TRANSLATIONS,
-    IMG_SRC,
     ITEM_DIR,
     LAYOUT_DIR,
     LOG_DIR,
@@ -20,10 +15,7 @@ from config import (
     LOOTDROP_GROUP_DIR,
     LOOTDROP_RATE_DIR,
     MAPS_DIR,
-    MODULE_DISPLAY_OVERRIDE,
     MODULE_GROUP_FLOOR_SUFFIXES,
-    MODULE_NAME_OVERRIDE,
-    MODULE_OFFSET_MAP,
     MONSTER_DIR,
     OUTPUT_DIR,
     PROPS_DIR,
@@ -31,17 +23,21 @@ from config import (
     TRANSLATION_ALIAS_MAP,
 )
 from db_manager import DatabaseManager
+from drop_rate import DropRateEngine, _round_rate
 from entity_export import export_items, export_monsters, export_props
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
 from layout_utils import load_all_layout_rotations
+from module_builder import (
+    build_and_save_module_coords,
+    build_and_save_modules_data,
+    build_map_mappings,
+    build_modules_map,
+)
 from pipeline_timer import PipelineTimer
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
 from translator import (
-    DEBUG_VARIANT_RE,
-    DUMMY_AS_MONSTER,
     HARD_SUFFIX_RE,
-    ORE_QUALITY_RE,
     QUALITY_RE,
     UNIQUE_SUFFIX_RE,
     VARIANT_RE,
@@ -148,6 +144,10 @@ def run():
     _log("DatabaseManager ready")
 
     game_available = GAME_ROOT.exists() and db_stale
+
+    _log("get_entity_classification START")
+    entity_class = db.get_entity_classification()
+    _log(f"get_entity_classification DONE -> {len(entity_class)}")
 
     if game_available:
         # 1. Import translations
@@ -268,9 +268,6 @@ def run():
 
         # 8. Quest extraction
         timer.start_step("[DB] quest extraction")
-        _log("[8/9] get_entity_classification START")
-        entity_class = db.get_entity_classification()
-        _log(f"[8/9] get_entity_classification DONE -> {len(entity_class)}")
         _log("[8/9] run_quest_extraction START")
         explore_data, quest_items_data, quest_npcs_data = run_quest_extraction(entity_classification=entity_class)
         _log(
@@ -437,398 +434,12 @@ def run():
     _log("[JSON] dungeon_modules export START")
     module_rotations = load_all_layout_rotations()
     modules = db.get_dungeon_modules()
-    art_root = (
-        Path(__file__).parent.parent.parent.parent
-        / "Output"
-        / "Exports"
-        / "DungeonCrawler"
-        / "Content"
-        / "DungeonCrawler"
-        / "Data"
-        / "Art"
-        / "DungeonModuleMapImage"
+    modules_map = build_modules_map(db, resolver.resolve, module_rotations)
+    map_to_module, module_to_maps = build_map_mappings(modules_map)
+    merged_coords = build_and_save_module_coords(
+        db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR
     )
-    modules_map: dict[str, dict] = {}
-    for r in modules:
-        override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
-        sx = override.get("size_x", r["size_x"])
-        sy = override.get("size_y", r["size_y"])
-        custom_range = override.get("range", 0)
-        offset_x, offset_y = MODULE_OFFSET_MAP.get(r["module_name"], (0, 0))
-        rot1 = module_rotations.get(r["module_name"])
-        rotate = rot1 if rot1 is not None else module_rotations.get(r["sl_base_name"], 270)
-        sl = r["sl_base_name"]
-        map_image = r.get("map_image_name", "")
-        module_name = r["module_name"]
-        PLACEHOLDERS = ("RareModule_1x1", "UnderConstruction_1x1")  # noqa: N806
-
-        def _try_resolve(name: str):
-            """Return (resolved_name, status). status: 'found'|'not_found'|'no_art'."""
-            resolved, status = _resolve_img(art_root, r["module_group"], name, IMG_SRC)  # noqa: B023
-            if resolved in PLACEHOLDERS:  # noqa: B023
-                return resolved, status  # placeholder — don't accept
-            return resolved, status
-
-        img_name, art_status = _try_resolve(sl)
-
-        # Priority logic:
-        # 1. sl_base_name (SubLevelAsset) — always primary
-        # 2. module_name — only when Art dir exists AND sl was not found
-        # 3. MapImage — last resort
-        if art_status == "no_art":
-            # No Art dir → sl is the best guess (matches webp in img/ dir)
-            # BUT if MapImage is a placeholder, the module's own image might differ from sl
-            if map_image in PLACEHOLDERS and module_name != sl:
-                candidate, c_status = _try_resolve(module_name)
-                if c_status in ("no_art", "found"):
-                    img_name = candidate
-        elif art_status == "not_found":
-            # Art dir exists but no match for sl → try module_name (may differ)
-            if module_name != sl:
-                candidate, c_status = _try_resolve(module_name)
-                if c_status == "found":
-                    img_name = candidate
-                elif c_status == "not_found":
-                    pass  # neither found; keep sl
-        else:
-            # 'found' → sl had an exact match in Art; use it
-            pass
-
-        # If result is still a placeholder, try MapImage
-        if img_name in PLACEHOLDERS and map_image and map_image not in PLACEHOLDERS:
-            candidate, _ = _try_resolve(map_image)
-            if candidate not in PLACEHOLDERS:
-                img_name = candidate
-
-        # Fallback: strip variant suffixes (_D, _A, _S) from module_name and check IMG_SRC for .webp
-        if art_status in ("not_found", "no_art") and img_name not in PLACEHOLDERS:  # noqa: SIM102
-            if not (IMG_SRC / f"{img_name}.webp").exists() and module_name:
-                stripped = re.sub(r"_[A-Z]$", "", module_name)
-                if stripped != module_name and (IMG_SRC / f"{stripped}.webp").exists():
-                    img_name = stripped
-
-        # Final fallback: if nothing matched and the only candidate was a placeholder,
-        # keep the placeholder so the frontend shows RareModule_1x1.webp.
-        # Only when Art was searched (not_found) AND sl == module_name (single source) AND MapImage was a placeholder.
-        if not img_name or img_name in PLACEHOLDERS:
-            img_name = module_name or ""
-        elif art_status == "not_found" and img_name == module_name == sl and map_image in PLACEHOLDERS:
-            img_name = map_image
-        has_img = (IMG_SRC / f"{img_name}.webp").exists()
-        # Final fallback: no image found → use placeholder so frontend shows a fallback
-        if not has_img:
-            img_name = "RareModule_1x1"
-            has_img = True
-        aliases = r.get("aliases", []) or []
-        modules_map[r["module_name"]] = {
-            "name": r["module_name"],
-            "translation_key": r["translation_key"],
-            "translation": resolver.resolve(r["module_name"], r["translation_key"], "module"),
-            "group": r["module_group"],
-            "size_x": sx,
-            "size_y": sy,
-            "sl_base_name": sl,
-            "img_name": img_name,
-            "has_img": has_img,
-            "offset_x": offset_x,
-            "offset_y": offset_y,
-            "rotate": rotate,
-            "range": custom_range,
-            "aliases": aliases,
-        }
-    for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
-        if override_name not in modules_map:
-            resolved_name, _ = _resolve_img(art_root, "", override_name, IMG_SRC)
-            modules_map[override_name] = {
-                "name": override_name,
-                "translation": override_translation,
-                "group": "",
-                "size_x": 1,
-                "size_y": 1,
-                "sl_base_name": override_name,
-                "img_name": resolved_name,
-                "has_img": (IMG_SRC / f"{resolved_name}.webp").exists(),
-                "offset_x": 0,
-                "offset_y": 0,
-                "rotate": 270,
-                "range": 0,
-            }
-    # ── 模块名 ↔ 地图名 双向映射 ──
-    # map_base → module_name（正向：地图名查模块名）
-    map_to_module: dict[str, str] = {}
-    # module_name → {关联的所有 map_base}（反向：模块名查地图名）
-    module_to_maps: dict[str, set[str]] = {}
-    # 第一遍：建立直接映射 (module_name → module_name)
-    for mn in modules_map:
-        map_to_module[mn] = mn
-        module_to_maps.setdefault(mn, set()).add(mn)
-    # 第二遍：建立 sl_base 映射 (sl_base → module_name)
-    # DungeonModule JSON 定义的模块名优先于地图文件名，允许覆盖直接映射
-    # 但如果 sl 已经自映射（自身就是该 sublevel 的主模块），则保留自映射不被覆盖
-    for mn, mod in modules_map.items():
-        sl = mod["sl_base_name"]
-        if sl and sl != mn:
-            if map_to_module.get(sl) != sl:
-                map_to_module[sl] = mn
-            module_to_maps.setdefault(mn, set()).add(sl)
-
-    # ── dungeon_module_coords: per-module entity coordinates ──
-    # Build entity classification index from DB (ground truth type)
-    entity_class = db.get_entity_classification()
-    # _Dummy 实体同时也是怪物，补全 monster 翻译键
-    for name in DUMMY_AS_MONSTER:
-        if name in entity_class:
-            if "monster" not in entity_class[name]["types"]:
-                entity_class[name]["types"].append("monster")
-            if not entity_class[name]["translation_key"]:
-                base = QUALITY_RE.sub("", name)
-                if base != name:
-                    entity_class[name]["translation_key"] = "Text_DesignData_Monster_Monster_" + base
-        else:
-            base = QUALITY_RE.sub("", name)
-            entity_class[name] = {
-                "types": ["props", "monster"],
-                "translation_key": "Text_DesignData_Monster_Monster_" + base,
-            }
-    # SuperHoard 类 spawner 作为独立 props 实体注入（无 DB entity 记录）
-    for _sh_name in ("SuperHoard01_9", "SuperHoardChest01_9"):
-        if _sh_name not in entity_class:
-            entity_class[_sh_name] = {"types": ["props"], "translation_key": ""}
-    _save(
-        "entity_index.json",
-        [
-            {"name": n, "types": v["types"], "translation_key": v["translation_key"]}
-            for n, v in sorted(entity_class.items())
-        ],
-    )
-
-    # Build translation lookup from DB entity tables (covers all names including props variants)
-    trans_lookup = {}
-    for r in items:
-        trans_lookup[r["item_name"]] = resolver.resolve(r["item_name"], r["translation_key"], "item")
-    for r in monsters:
-        trans_lookup[r["monster_name"]] = resolver.resolve(r["monster_name"], r["translation_key"], "monster")
-    for r in props:
-        trans_lookup[r["asset_name"]] = resolver.resolve(r["asset_name"], r["translation_key"], "props")
-
-    _MODULE_COLORS = [  # noqa: N806
-        "#E74C3C",
-        "#3498DB",
-        "#2ECC71",
-        "#F39C12",
-        "#9B59B6",
-        "#1ABC9C",
-        "#E67E22",
-        "#2980B9",
-        "#27AE60",
-        "#D35400",
-        "#8E44AD",
-        "#16A085",
-        "#C0392B",
-        "#2C3E50",
-        "#7F8C8D",
-        "#FF6B35",
-        "#00BFFF",
-        "#FFD700",
-        "#FF69B4",
-        "#32CD32",
-        "#FF4500",
-        "#9370DB",
-        "#00FA9A",
-        "#DC143C",
-        "#00CED1",
-    ]
-    rows = (
-        db.connect()
-        .execute(
-            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base, group_parent FROM spawners ORDER BY map_base, keyword"
-        )
-        .fetchall()
-    )
-    module_coords: dict[str, dict] = {}
-    color_idx = 0
-    for row in rows:
-        mb = row["map_base"]
-        if not mb:
-            continue
-        if mb not in module_coords:
-            module_coords[mb] = {"map_base": mb, "entities": {}}
-        ek = row["keyword"]
-        if ek not in module_coords[mb]["entities"]:
-            cls = entity_class.get(ek, {})
-            st = row["spawner_type"]
-            has_ld = row["has_lootdrop"]
-            # Determine entity type: decoration (no lootdrop), item (lootdrop type), or props/monster
-            if st == "lootdrop":
-                mapped_st = "item"
-            elif st == "props" and has_ld == 0:
-                mapped_st = "decoration"
-            else:
-                mapped_st = st
-            if cls:
-                types = cls.get("types", [])
-                # If mapped_st is decoration, always use it (overrides props classification)
-                if mapped_st == "decoration":
-                    entity_type = "decoration"
-                else:
-                    entity_type = mapped_st if mapped_st in types else types[0]
-            else:
-                entity_type = mapped_st
-            translation = trans_lookup.get(ek) or resolver.resolve(ek, None, entity_type)
-            module_coords[mb]["entities"][ek] = {
-                "name": ek,
-                "translation": translation,
-                "type": entity_type,
-                "color": _MODULE_COLORS[color_idx % len(_MODULE_COLORS)],
-                "coords": [],
-            }
-            color_idx += 1
-        try:
-            gp = row["group_parent"] or ""
-        except KeyError:
-            gp = ""
-        module_coords[mb]["entities"][ek]["coords"].append(
-            {
-                "x": row["x"],
-                "y": row["y"],
-                "z": row["z"],
-                "yaw": row["yaw"],
-                "version": row["version"] or "",
-                "label": HARDCODED_TRANSLATIONS.get(row["original_keyword"], row["original_keyword"]),
-                "group_parent": gp,
-            }
-        )
-    # 按模块名合并坐标并保存（处理多个 map_base 映射到同一模块的情况）
-    merged_coords: dict[str, dict] = {}
-    for mb, data in module_coords.items():
-        target = map_to_module.get(mb, mb)
-        if target not in merged_coords:
-            merged_coords[target] = {"map_base": target, "entities": {}}
-        for ek, entity in data["entities"].items():
-            if ek not in merged_coords[target]["entities"]:
-                merged_coords[target]["entities"][ek] = entity
-            else:
-                merged_coords[target]["entities"][ek]["coords"].extend(entity["coords"])
-    # 按 (translation, type) 合并同翻译实体（如 GlowingCoralRoaster01_On/02/03 → 灯架子）
-    for target_name, data in merged_coords.items():
-        merge_groups: dict[tuple, list[dict]] = {}
-        for entity in data["entities"].values():
-            key = (entity["translation"], entity["type"])
-            merge_groups.setdefault(key, []).append(entity)
-        merged_entities = []
-        for (_trans, _type), group in merge_groups.items():
-            if len(group) == 1:
-                entity = group[0]
-                coords = entity["coords"]
-                gps = {c.get("group_parent", "") for c in coords}
-                if len(gps) == 1 and "" not in gps and len(coords) > 1:
-                    entity["mutually_exclusive"] = True
-                else:
-                    entity["mutually_exclusive"] = False
-                merged_entities.append(entity)
-                continue
-            canonical = min(group, key=lambda e: len(e["name"]))
-            seen: set[tuple] = set()
-            deduped = []
-            for e in group:
-                for c in e["coords"]:
-                    ck = (c["x"], c["y"], c["z"], c.get("label", ""))
-                    if ck not in seen:
-                        seen.add(ck)
-                        deduped.append(c)
-            all_group_parents = {c.get("group_parent", "") for e in group for c in e["coords"]}
-            is_mutex = len(all_group_parents) == 1 and "" not in all_group_parents and len(deduped) > 1
-            merged_entities.append(
-                {
-                    "name": canonical["name"],
-                    "translation": _trans,
-                    "type": _type,
-                    "color": canonical["color"],
-                    "coords": deduped,
-                    "mutually_exclusive": is_mutex,
-                    "group_size": len(deduped) if is_mutex else None,
-                }
-            )
-        _save(
-            f"dungeon_modules_coords/{target_name}.json",
-            {
-                "map_base": target_name,
-                "entities": merged_entities,
-            },
-        )
-    # 清理孤立坐标文件（旧 map_base 命名残留）
-    coord_dir = OUTPUT_DIR / "dungeon_modules_coords"
-    if coord_dir.exists():
-        expected = set(merged_coords.keys())
-        for p in coord_dir.iterdir():
-            if p.suffix == ".json" and p.stem not in expected:
-                p.unlink()
-    print(f"  module coords: {len(merged_coords)} modules with coordinates")
-
-    # ── dungeon_modules.json（在坐标构建之后保存，过滤无坐标模块）──
-    # 合并使用相同翻译键（相同地图）的模块
-    from collections import defaultdict
-
-    translation_groups: dict[str, list[dict]] = defaultdict(list)
-    for mod in modules_map.values():
-        tk = mod.get("translation_key", "")
-        if tk:
-            translation_groups[tk].append(mod)
-        else:
-            # 无翻译键的模块单独处理
-            translation_groups[mod["name"]].append(mod)
-
-    merged_modules: list[dict] = []
-    for _tk, group in translation_groups.items():
-        if len(group) == 1:
-            # 单个模块，直接使用
-            mod = group[0].copy()
-            # 收集所有名称：主名称 + 别名
-            all_names = [mod["name"]] + mod.get("aliases", [])
-            mod["names"] = list(dict.fromkeys(all_names))  # 去重保序
-            merged_modules.append(mod)
-        else:
-            # 多个模块共享同一翻译，合并
-            primary = group[0].copy()
-            # 收集所有名称：所有模块主名称 + 所有别名
-            all_names = []
-            for m in group:
-                all_names.append(m["name"])
-                all_names.extend(m.get("aliases", []))
-            primary["names"] = list(dict.fromkeys(all_names))  # 去重保序
-            # 合并 sl_base_name 列表
-            all_sl_bases = list(dict.fromkeys(m["sl_base_name"] for m in group if m["sl_base_name"]))
-            primary["all_sl_base_names"] = all_sl_bases
-            merged_modules.append(primary)
-
-    modules_data = sorted(merged_modules, key=lambda x: x["name"])
-    modules_data = [m for m in modules_data if not DEBUG_VARIANT_RE.search(m["name"])]
-    # 过滤无坐标模块（详情页无数据的模块从列表中剔除）
-    # 仅当模块自身名字在 merged_coords 中才算有坐标（排除 sl_base 指向其他模块的别名）
-    modules_with_coords = {mn for mn in modules_map if mn in merged_coords}
-    exempt = set(MODULE_NAME_OVERRIDE.keys())
-    before_count = len(modules_data)
-    modules_data = [m for m in modules_data if m["name"] in modules_with_coords or m["name"] in exempt]
-    # 标记是否含有物品/怪物坐标（仅 props 的模块在列表页默认隐藏）
-    for m in modules_data:
-        # 合并后的模块检查所有相关地图
-        maps = set()
-        for name in m.get("names", [m["name"]]):
-            maps.update(module_to_maps.get(name, {name}))
-        has_useful = False
-        for mk in maps:
-            if mk in merged_coords:
-                for e in merged_coords[mk]["entities"].values():
-                    if e["type"] in ("item", "monster"):
-                        has_useful = True
-                        break
-            if has_useful:
-                break
-        m["has_useful_entities"] = has_useful
-    filtered_count = before_count - len(modules_data)
-    if filtered_count:
-        print(f"  filtered {filtered_count} modules without coordinates")
-    _save("dungeon_modules.json", modules_data)
+    modules_data = build_and_save_modules_data(modules_map, module_to_maps, merged_coords, OUTPUT_DIR)
     _log(f"[JSON] dungeon_modules export DONE -> {len(modules_data)} modules")
 
     # ── lootdrops.json (grouped by item for list page) ──
@@ -945,327 +556,17 @@ def run():
 
     # ── 预加载爆率数据 ──
     _log("[JSON] preloading drop rate data...")
-    _c = db.connect().cursor()
-
-    # 构建 map_base → group 映射
-    _map_base_to_group: dict[str, str] = {}
-    for _m in modules_data:
-        _g = _m.get("group", "") or ""
-        if not _g:
-            continue
-        _map_base_to_group[_m["name"]] = _g
-        _sl = _m.get("sl_base_name", "")
-        if _sl:
-            _map_base_to_group[_sl] = _g
-        for _alias in _m.get("aliases") or []:
-            _map_base_to_group[_alias] = _g
-
-    # spawner_keyword / entity_name → lootdrop_group_id (first match wins)
-    _spawner_ldg: dict[str, str] = {}
-    # entity base name → all possible lootdrop_group_ids (for multi-variant entities like Common+Unique)
-    _entity_ldg_all: dict[str, set[str]] = {}
-    # stripped ore name → lootdrop_group_id (e.g. "CopperOre" → "Id_LootDropGroup_CopperOre")
-    _ore_ldg: dict[str, str] = {}
-    for _row in _c.execute(
-        "SELECT DISTINCT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
-    ):
-        for _key in (_row["spawner_keyword"], _row["entity_name"]):
-            if _key and _key not in _spawner_ldg:
-                _spawner_ldg[_key] = _row["lootdrop_group_id"]
-        # Build entity → all groups mapping for multi-variant resolution
-        # Strip quality suffixes (_Common/_Elite/_Nightmare/_Unique) to get base name
-        for _key in (_row["spawner_keyword"], _row["entity_name"]):
-            if _key:
-                _base = HARD_SUFFIX_RE.sub("", _key)
-                _base = QUALITY_RE.sub("", _base)
-                _entity_ldg_all.setdefault(_base, set()).add(_row["lootdrop_group_id"])
-        # Build ore stripped-name mapping for props that use ORE_QUALITY_RE
-        for _key in (_row["spawner_keyword"], _row["entity_name"]):
-            _m = ORE_QUALITY_RE.match(_key)
-            if _m:
-                _stripped = _m.group(1)
-                if _stripped and _stripped not in _ore_ldg:
-                    _ore_ldg[_stripped] = _row["lootdrop_group_id"]
-
-    # lootdrop_groups: {group_id: {dungeon_grade: [(lootdrop_id, lootdrop_rate_id, drop_count)]}}
-    _ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
-    for _row in _c.execute(
-        "SELECT group_id, dungeon_grade, lootdrop_id, lootdrop_rate_id, drop_count FROM lootdrop_groups"
-    ):
-        _ld_groups.setdefault(_row["group_id"], {}).setdefault(_row["dungeon_grade"], []).append(
-            (_row["lootdrop_id"], _row["lootdrop_rate_id"], _row["drop_count"])
-        )
-
-    # lootdrop_rate_items: {lootdrop_id: {item_name: (luck_grade, drop_count)}}
-    _ld_rate_items: dict[str, dict[str, tuple[int, int]]] = {}
-    # (lootdrop_id, luck_grade) → 该 luck_grade 下物品总数，用于分摊权重
-    _ld_luck_grade_count: dict[tuple[str, int], int] = {}
-    for _row in _c.execute("SELECT lootdrop_id, item_name, luck_grade, drop_count FROM lootdrop_rate_items"):
-        _ld_rate_items.setdefault(_row["lootdrop_id"], {})[_row["item_name"]] = (_row["luck_grade"], _row["drop_count"])
-    # 统计每 (lootdrop_id, luck_grade) 的物品数
-    for _ld_id, _items in _ld_rate_items.items():
-        _lg_counts: dict[int, int] = {}
-        for _item_name, (_lg, _) in _items.items():
-            _lg_counts[_lg] = _lg_counts.get(_lg, 0) + 1
-        for _lg, _cnt in _lg_counts.items():
-            _ld_luck_grade_count[(_ld_id, _lg)] = _cnt
-
-    # lootdrop_rate_weights: {rate_id: {luck_grade: total_weight}}
-    _ld_rate_weights: dict[str, dict[int, int]] = {}
-    for _row in _c.execute(
-        "SELECT rate_id, luck_grade, SUM(weight) as total FROM lootdrop_rate_weights GROUP BY rate_id, luck_grade"
-    ):
-        _ld_rate_weights.setdefault(_row["rate_id"], {})[_row["luck_grade"]] = _row["total"]
-
-    # 每个 rate_id 的权重总和（用于归一化爆率）
-    _ld_rate_totals: dict[str, int] = {}
-    for _rid, _grades in _ld_rate_weights.items():
-        _ld_rate_totals[_rid] = sum(_w for _w in _grades.values() if _w > 0) or 10000
-
-    _log(
-        f"[JSON] preloaded: {len(_ld_groups)} groups, {len(_ld_rate_items)} rate items, {len(_ld_rate_weights)} rate weights"
-    )
-
-    _variant_suffixes = ["_5001", "_4001", "_3001", "_2001", "_1001"]
-
-    def _round_rate(v: float) -> float:
-        d = Decimal(str(v)).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
-        return float(d)
-
-    def _compute_drop_rate(ldg_id: str, item_name: str, full_grade: int) -> float:
-        """纯内存计算某物品在指定组+等级下的爆率（0~1）。
-
-        优先查基础名，未命中则尝试 _5001 → _4001 → _3001 变体后缀，
-        _8001 特殊变体已在 lootdrop_rate_items 中以独立条目存储（LuckGrade=8）。
-        详见 docs/REFERENCE.md 中的变体锁定说明。
-        """
-        grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
-        if not grade_data:
-            return 0.0
-        total_weight = 0.0
-        found = False
-        for ld_id, lr_id, _ in grade_data:
-            rate_items = _ld_rate_items.get(ld_id, {})
-            item_info = rate_items.get(item_name)
-            if item_info is None:
-                for _suffix in _variant_suffixes:
-                    item_info = rate_items.get(item_name + _suffix)
-                    if item_info is not None:
-                        break
-            if item_info is None:
-                continue
-            found = True
-            luck_grade, item_count = item_info
-            _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
-            # 权重是同 luck_grade 下所有物品共享的，按物品数均摊
-            _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
-            _rate_total = _ld_rate_totals.get(lr_id, 10000)
-            total_weight += _pool_weight / _shared / _rate_total
-        if found:
-            return total_weight
-        return 0.0
-
-    def _get_group_drop_rates(item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
-        """计算某物品在某怪物在某地图分组下的各模式爆率。
-
-        支持多 variant（Common/Elite/Nightmare/Unique）共享同一 monster_name 的情况，
-        尝试所有可能的 lootdrop_group_id 取各模式最佳值。
-        """
-        candidate_ids: set[str] = set()
-        # 1. 直接通过 _spawner_ldg 获取（首次匹配）
-        _primary = _spawner_ldg.get(monster_name, "")
-        if _primary:
-            candidate_ids.add(_primary)
-        # 2. 尝试补充后缀
-        for _suffix in ("_Unique", "_Elite", "_Nightmare", "_Common"):
-            _v = _spawner_ldg.get(monster_name + _suffix, "")
-            if _v:
-                candidate_ids.add(_v)
-        # 3. 大小写不敏感回退
-        if not candidate_ids:
-            _lower = monster_name.lower()
-            for _k, _v in _spawner_ldg.items():
-                if _k.lower() == _lower:
-                    candidate_ids.add(_v)
-                    break
-        # 4. entity_ldg_all 回退（收集所有 variant 的 group）
-        _all_groups = _entity_ldg_all.get(monster_name, set())
-        if not _all_groups:
-            _all_groups = _entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
-        candidate_ids.update(_all_groups)
-        if not candidate_ids:
-            return {}
-        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
-        if not suffixes:
-            return {}
-        mode_rates: dict[str, float] = {}
-        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-            if mode_id == 4:
-                continue
-            best_rate = 0.0
-            for suffix in suffixes:
-                full_grade = mode_id * 1000 + suffix
-                for _ldg_id in candidate_ids:
-                    rate = _compute_drop_rate(_ldg_id, item_name, full_grade)
-                    if rate > best_rate:
-                        best_rate = rate
-            mode_rates[mode_name] = _round_rate(best_rate * 100)
-        return mode_rates
-
-    def _compute_group_drop_rates(ldg_id: str, group_key: str) -> dict[str, float]:
-        """计算某 lootdrop group 在某地图分组下所有物品的聚合爆率。"""
-        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
-        if not suffixes:
-            return {}
-        mode_rates: dict[str, float] = {}
-        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-            if mode_id == 4:
-                continue
-            best_rate = 0.0
-            for suffix in suffixes:
-                full_grade = mode_id * 1000 + suffix
-                grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
-                if not grade_data:
-                    continue
-                for ld_id, lr_id, _ in grade_data:
-                    rate_items = _ld_rate_items.get(ld_id, {})
-                    if not rate_items:
-                        continue
-                    _lg_weights: dict[int, int] = {}
-                    for _item_name, (lg, _) in rate_items.items():
-                        _w = _ld_rate_weights.get(lr_id, {}).get(lg, 0)
-                        if _w > _lg_weights.get(lg, 0):
-                            _lg_weights[lg] = _w
-                    _rate_total = _ld_rate_totals.get(lr_id, 10000)
-                    for lg, w in _lg_weights.items():
-                        _shared = _ld_luck_grade_count.get((ld_id, lg), 1)
-                        r = w / _shared / _rate_total
-                        if r > best_rate:
-                            best_rate = r
-            mode_rates[mode_name] = _round_rate(best_rate * 100)
-        return mode_rates
-
-    def _compute_container_drop_rates(ldg_id: str, group_key: str) -> dict[str, float]:
-        """计算容器（宝箱等）的聚合爆率：所有独立 lootdrop 的总掉落概率。"""
-        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
-        if not suffixes:
-            return {}
-        mode_rates: dict[str, float] = {}
-        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-            if mode_id == 4:
-                continue
-            best_total = 0.0
-            for suffix in suffixes:
-                full_grade = mode_id * 1000 + suffix
-                grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
-                if not grade_data:
-                    continue
-                total_any_prob = 0.0
-                for ld_id, lr_id, drop_count in grade_data:
-                    rate_items = _ld_rate_items.get(ld_id, {})
-                    if not rate_items:
-                        continue
-                    rate_total = _ld_rate_totals.get(lr_id, 10000)
-                    _lg_set: set[int] = set()
-                    for _item_name, (lg, _) in rate_items.items():
-                        _lg_set.add(lg)
-                    ld_prob = 0.0
-                    for lg in _lg_set:
-                        w = _ld_rate_weights.get(lr_id, {}).get(lg, 0)
-                        if w > 0:
-                            ld_prob += w / rate_total
-                    if ld_prob > 0:
-                        any_prob_rolls = 1.0 - (1.0 - ld_prob) ** drop_count
-                        total_any_prob = 1.0 - (1.0 - total_any_prob) * (1.0 - any_prob_rolls)
-                if total_any_prob > best_total:
-                    best_total = total_any_prob
-            mode_rates[mode_name] = _round_rate(best_total * 100)
-        return mode_rates
-
-    def _compute_variant_rate(
-        ldg_id: str,
-        luck_grade: int,
-        full_grade: int,
-        target_ld_id: str = "",
-        _rt_cache: dict[str, int] | None = None,
-    ) -> float:
-        """根据指定 luck_grade 直接计算爆率（用于游戏 JSON 中的变体）。
-
-        target_ld_id: 限定只计算该 lootdrop 的条目，避免将同组其他 lootdrop 的权重累加。
-        _rt_cache: lr_id → rate_total 缓存，同组变体共享同一分母确保归一化。
-        """
-        grade_data = _ld_groups.get(ldg_id, {}).get(full_grade, [])
-        if not grade_data:
-            return 0.0
-        total_weight = 0.0
-        found = False
-        for ld_id, lr_id, _ in grade_data:
-            if target_ld_id and ld_id != target_ld_id:
-                continue
-            found = True
-            _pool_weight = _ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
-            if _pool_weight == 0:
-                continue
-            _shared = _ld_luck_grade_count.get((ld_id, luck_grade), 1)
-            if _rt_cache is not None:
-                _rate_total = _rt_cache.setdefault(lr_id, _ld_rate_totals.get(lr_id, 10000))
-            else:
-                _rate_total = _ld_rate_totals.get(lr_id, 10000)
-            total_weight += _pool_weight / _shared / _rate_total
-        if found:
-            return total_weight
-        return 0.0
-
-    # 预加载 spawn_rate 缓存
-    _spawn_rate_cache: dict[str, float] = {}
-    _spawn_rate_detail: dict[tuple[str, str], float] = {}
-    # per-mode spawn rates: (sk, en) → {mode_name: rate}
-    _spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
-    # 实体所属生成器：entity_name → {spawner_keyword, ...}
-    _entity_spawners: dict[str, set[str]] = {}
-    for _row in db.get_all_spawner_entries():
-        sk = _row["spawner_keyword"]
-        en = _row["entity_name"]
-        sr = _row["spawn_rate"]
-        _grades_raw = _row.get("dungeon_grades", "[]")
-        try:
-            _grades = json.loads(_grades_raw) if isinstance(_grades_raw, str) else (_grades_raw or [])
-        except (json.JSONDecodeError, TypeError):
-            _grades = []
-        for _key in (sk, en):
-            if _key and sr > _spawn_rate_cache.get(_key, 0):
-                _spawn_rate_cache[_key] = sr
-        # Also map stripped ore name → max spawn_rate (only from entity_name, not spawner_keyword)
-        _om = ORE_QUALITY_RE.match(en)
-        if _om:
-            _oname = _om.group(1)
-            if _oname and sr > _spawn_rate_cache.get(_oname, 0):
-                _spawn_rate_cache[_oname] = sr
-        if sk and en:
-            _pair = (sk, en)
-            if sr > _spawn_rate_detail.get(_pair, 0):
-                _spawn_rate_detail[_pair] = sr
-            # Compute per-mode spawn rates
-            _mode_rates: dict[str, float] = {}
-            for _g in _grades:
-                _mode_id = _g // 1000 if _g >= 1000 else 1
-                _mode_name = DUNGEON_MODE_NAMES.get(_mode_id, "")
-                if _mode_name and (_mode_name not in _mode_rates or sr < _mode_rates[_mode_name]):
-                    _mode_rates[_mode_name] = sr
-            if _mode_rates:
-                _existing = _spawn_rate_by_mode.get(_pair, {})
-                for _mn, _mr in _mode_rates.items():
-                    if _mn not in _existing or _mr < _existing[_mn]:
-                        _existing[_mn] = _mr
-                _spawn_rate_by_mode[_pair] = _existing
-            # Also track per-mode rates by entity_name alone (aggregated across all spawners)
-            _en_mode = _spawn_rate_by_mode.get(("", en), {})
-            for _mn, _mr in _mode_rates.items():
-                if _mn not in _en_mode or _mr < _en_mode[_mn]:
-                    _en_mode[_mn] = _mr
-            _spawn_rate_by_mode[("", en)] = _en_mode
-        if en and sk:
-            _entity_spawners.setdefault(en, set()).add(sk)
+    drop_engine = DropRateEngine()
+    drop_engine.preload(db, modules_data)
+    _map_base_to_group = drop_engine.map_base_to_group
+    _spawner_ldg = drop_engine.spawner_ldg
+    _entity_ldg_all = drop_engine.entity_ldg_all
+    _ore_ldg = drop_engine.ore_ldg
+    _spawn_rate_cache = drop_engine.spawn_rate_cache
+    _spawn_rate_detail = drop_engine.spawn_rate_detail
+    _spawn_rate_by_mode = drop_engine.spawn_rate_by_mode
+    _entity_spawners = drop_engine.entity_spawners
+    _log("[JSON] preloaded drop rate data via DropRateEngine")
 
     # 翻译 variant_names（_coord_variant_count 已在管道开头计算，此处补充翻译）
     for _key, (_cnt, _raw_names) in list(_coord_variant_count.items()):
@@ -1407,7 +708,7 @@ def run():
                 if _g:
                     _seen_groups.add(_g)
             for _g in _seen_groups:
-                _dr = _get_group_drop_rates(item_name, _m_data.get("entity_name", _m_data["name"]), _g)
+                _dr = drop_engine.get_group_drop_rates(item_name, _m_data.get("entity_name", _m_data["name"]), _g)
                 if not _dr:
                     # 即使爆率为0，只要有该怪物在此分组有坐标就保留
                     _dr = {"PVE": 0, "普通": 0, "豪客赛": 0}
@@ -1618,7 +919,7 @@ def run():
                 _best_rate = 0.0
                 for _suffix in _suffixes:
                     _full_grade = _mode_id * 1000 + _suffix
-                    _rate = _compute_drop_rate(_ldg_id, _iname, _full_grade)
+                    _rate = drop_engine.compute_drop_rate(_ldg_id, _iname, _full_grade)
                     if _rate > _best_rate:
                         _best_rate = _rate
                 _mode_rates[_mode_name] = _round_rate(_best_rate * 100)
@@ -1673,7 +974,7 @@ def run():
         _group_drop_info: dict[str, list[dict]] = {}
         _sr = _spawn_rate_cache.get(_mname, 0.0)
         for _g in _seen_groups:
-            _dr = _compute_group_drop_rates(_ldg_id, _g)
+            _dr = drop_engine.compute_group_drop_rates(_ldg_id, _g)
             if not _dr and not _sr:
                 continue
             _group_drop_info[_g] = [
@@ -1753,7 +1054,7 @@ def run():
             continue
         _group_drop_info: dict[str, list[dict]] = {}
         for _g in _seen_groups:
-            _dr = _compute_container_drop_rates(_ldg_id, _g)
+            _dr = drop_engine.compute_container_drop_rates(_ldg_id, _g)
             if not _dr:
                 continue
             _group_drop_info[_g] = [{**_entry, "drop_rates": _dr} for _entry in _kw_entries.values()]
@@ -1835,111 +1136,6 @@ def run():
         _log_file.close()
         _log_file = None
     return timer
-
-
-def _match_in_dir(directory: Path, sl: str):
-    """Match sl against webp/png files in a flat directory using the same logic as _resolve_img."""
-    import re
-
-    files = [p for p in directory.iterdir() if p.suffix.lower() in (".png", ".webp")]
-    stems_lower = {p.stem.lower(): p.stem for p in files}
-    sl_lower = sl.lower()
-    # exact
-    if sl_lower in stems_lower:
-        return stems_lower[sl_lower], "found"
-    # tail
-    tail = sl.split("_", 1)[-1] if "_" in sl else sl
-    if tail.lower() in stems_lower:
-        return stems_lower[tail.lower()], "found"
-    # strip numeric suffix
-    sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
-    if sl_stripped != sl and sl_stripped.lower() in stems_lower:
-        return stems_lower[sl_stripped.lower()], "found"
-    tail_stripped = re.sub(r"_\d{2,4}$", "", tail)
-    if tail_stripped != tail and tail_stripped.lower() in stems_lower:
-        return stems_lower[tail_stripped.lower()], "found"
-    # strip _Center/_Corner/_Passage
-    sl_center = re.sub(r"_(?:Center|Corner|Passage)(?=_\d|$)", "", sl)
-    if sl_center != sl and sl_center.lower() in stems_lower:
-        return stems_lower[sl_center.lower()], "found"
-    # strip debug suffixes
-    sl_debug = re.sub(r"_(?:Resize|Test|BossTest|DistantView)$", "", sl)
-    if sl_debug != sl and sl_debug.lower() in stems_lower:
-        return stems_lower[sl_debug.lower()], "found"
-    # numeric prefix
-    if sl_stripped != sl:
-        prefix = sl_stripped.lower()
-        for s, orig in stems_lower.items():
-            if s.startswith(prefix):
-                return orig, "found"
-    return sl, "not_found"
-
-
-def _resolve_img(art_root: Path, group: str, sl: str, webp_cache: Path | None = None):
-    """Return (resolved_name, status).
-    Priority: webp cache first (already processed), then Art directory (raw PNG).
-    status: 'found', 'not_found' (searched, no match), 'no_art' (no source available).
-    """
-    import re
-
-    # 1. Always check webp cache first — if a cached webp exists, use it directly
-    if webp_cache and webp_cache.exists():
-        cached, cache_status = _match_in_dir(webp_cache, sl)
-        if cache_status == "found":
-            return cached, "found"
-
-    # 2. Fall back to Art directory (raw PNG files)
-    if not art_root.exists() or not group:
-        return sl, "no_art"
-    art_dir_name = GROUP_TO_ART_DIR.get(group, group)
-    group_dir = art_root / art_dir_name
-    if not group_dir.exists():
-        return sl, "no_art"
-    # Try exact match (case-insensitive)
-    png = group_dir / f"{sl}.png"
-    if png.exists():
-        return sl, "found"
-    for p in group_dir.iterdir():
-        if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl.lower():
-            return p.stem, "found"
-    # Try tail match (part after first underscore)
-    tail = sl.split("_", 1)[-1] if "_" in sl else sl
-    png = group_dir / f"{tail}.png"
-    if png.exists():
-        return tail, "found"
-    for p in group_dir.iterdir():
-        if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail.lower():
-            return p.stem, "found"
-    # Try stripping numeric suffix (_01, _02 etc.)
-    sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
-    if sl_stripped != sl:
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_stripped.lower():
-                return p.stem, "found"
-        tail_stripped = re.sub(r"_\d{2,4}$", "", tail)
-        if tail_stripped != tail:
-            for p in group_dir.iterdir():
-                if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail_stripped.lower():
-                    return p.stem, "found"
-    # Try stripping _Center / _Corner / _Passage suffix (keep trailing _NN)
-    sl_center_stripped = re.sub(r"_(?:Center|Corner|Passage)(?=_\d|$)", "", sl)
-    if sl_center_stripped != sl:
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_center_stripped.lower():
-                return p.stem, "found"
-    # Try stripping _Resize / _Test / _BossTest / _DistantView debug suffixes
-    sl_debug_stripped = re.sub(r"_(?:Resize|Test|BossTest|DistantView)$", "", sl)
-    if sl_debug_stripped != sl:
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_debug_stripped.lower():
-                return p.stem, "found"
-    # Try numeric prefix match: after stripping _\d{2,4}$, find any file starting with the stripped prefix
-    if sl_stripped != sl:
-        prefix = sl_stripped.lower()
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower().startswith(prefix):
-                return p.stem, "found"
-    return sl, "not_found"
 
 
 def _save(filename: str, data: list | dict):
