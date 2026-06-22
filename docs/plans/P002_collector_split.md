@@ -1,5 +1,36 @@
 # P002: collector.py 按职责拆分（优化版）
 
+## 进度追踪
+
+| Step | 模块 | 状态 | 完成时间 | 备注 |
+|------|------|------|---------|------|
+| 1 | translator.py | ✅ 完成 | 2026-06-22 | ~250 行，含 NameResolver 类 |
+| 2 | entity_export.py | ✅ 完成 | 2026-06-22 | ~200 行，含 export_items/monsters/props |
+| 3 | index_export.py | ✅ 完成 | 2026-06-22 | ~260 行，含 quest/index 导出 |
+| 4 | drop_rate.py | ✅ 完成 | 2026-06-22 | ~280 行，含 DropRateEngine 类 |
+| 5 | module_builder.py | ✅ 完成 | 2026-06-22 | ~550 行，含 build_modules_map/build_map_mappings/build_module_coords/build_modules_data |
+| 6 | lootdrop_builder.py | ⏳ 待开始 | - | |
+| 7 | enrichment.py | ⏳ 待开始 | - | |
+| 8 | collector.py 最终清理 | ⏳ 待开始 | - | |
+
+**当前状态：**
+- `collector.py`: 1145 行（原始 2581 行，已减少 55.6%）
+- `module_builder.py`: 547 行（含 build_modules_map/build_map_mappings/build_module_coords/build_modules_data + _resolve_img/_match_in_dir）
+- 基线已建立：`/tmp/p002_baseline_json/`
+- 验证命令：`cd api && python main.py`（返回 0）+ `./lint.sh`（通过）
+- module coords 253 文件与基线完全一致
+
+**下一步（Step 6: lootdrop_builder.py）：**
+- 移 lines 350-433（lootdrop 映射）+ lines 834-914（lootdrop 索引）+ lines 916-1240（lootdrop 详情循环）
+- 含 `_classify_label` + `_label_type_suffix`
+
+**Step 6-8 待提取代码位置（当前行号，Step 5 完成后）：**
+- Step 6: lines 346-430（lootdrop 映射）+ lines 444-524（lootdrop 索引）+ lines 526-850（lootdrop 详情循环）
+- Step 7: lines 851-1090（enrichment：group_drop_info 注入）
+- Step 8: 最终清理
+
+---
+
 ## Context
 
 `collector.py` 已膨胀至 2580 行，其中 `run()` 函数约 2100 行，包含 17 个阶段（A-Q）。原计划提出 6 模块拆分，但模块边界与实际代码内聚性不匹配。本方案基于完整的代码依赖分析，提出 7 个新模块 + 1 个精简协调器。
