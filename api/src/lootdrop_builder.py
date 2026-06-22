@@ -238,27 +238,11 @@ def build_and_save_lootdrop_details(
     map_to_module: dict | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
-    monsters_lookup = {r["monster_name"]: r for r in monsters}
     map_base_to_group = drop_engine.map_base_to_group
     spawn_rate_cache = drop_engine.spawn_rate_cache
     spawn_rate_detail = drop_engine.spawn_rate_detail
     spawn_rate_by_mode = drop_engine.spawn_rate_by_mode
     entity_spawners = drop_engine.entity_spawners
-
-    # Translate variant_names
-    for _key, (_cnt, _raw_names) in list(coord_variant_count.items()):
-        if _raw_names:
-            _translated: list[str] = []
-            for _kw in _raw_names:
-                _cls = entity_class.get(_kw, {})
-                _mon_row = monsters_lookup.get(_kw)
-                if _mon_row:
-                    _translated.append(resolve_name(_kw, _mon_row["translation_key"], "monster"))
-                elif _cls and "props" in _cls.get("types", []):
-                    _translated.append(resolve_name(_kw, _cls.get("translation_key", ""), "props"))
-                else:
-                    _translated.append(_kw)
-            coord_variant_count[_key] = (_cnt, _translated)
 
     item_max_score: dict[str, float] = {}
     detail_count = 0
