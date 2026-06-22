@@ -4,7 +4,6 @@ from pathlib import Path
 
 from config import (
     DB_PATH,
-    DUNGEON_MODE_NAMES,
     DUNGEON_MODULE_DIR,
     GAME_JSON,
     GAME_ROOT,
@@ -15,20 +14,18 @@ from config import (
     LOOTDROP_GROUP_DIR,
     LOOTDROP_RATE_DIR,
     MAPS_DIR,
-    MODULE_GROUP_FLOOR_SUFFIXES,
     MONSTER_DIR,
     OUTPUT_DIR,
     PROPS_DIR,
     SPAWNER_DIR,
 )
 from db_manager import DatabaseManager
-from drop_rate import DropRateEngine, _round_rate
+from drop_rate import DropRateEngine
+from enrichment import enrich_all_entities
 from entity_export import export_items, export_monsters, export_props
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
 from layout_utils import load_all_layout_rotations
 from lootdrop_builder import (
-    _LABEL_TYPE_SUFFIX,
-    _classify_label,
     build_and_save_lootdrop_details,
     build_loot_index,
     build_merged_loot_map,
@@ -422,237 +419,8 @@ def run():
     )
     _log("[JSON] lootdrops detail files DONE")
 
-    # ── 更新物品实体 JSON，添加 group_drop_info ──
-    _log("[JSON] updating item entities with group drop info...")
-    _update_count = 0
-    for _entry in loot_index:
-        _iname = _entry["name"]
-        _loot_path = OUTPUT_DIR / f"lootdrops/{_iname}.json"
-        if not _loot_path.exists():
-            continue
-        with open(_loot_path) as _f:
-            _loot_data = json.load(_f)
-        _gdi = _loot_data.get("group_drop_info", {})
-        if not _gdi:
-            continue
-        _entity_path = OUTPUT_DIR / f"items/{_iname}.json"
-        if not _entity_path.exists():
-            continue
-        with open(_entity_path) as _f:
-            _entity_data = json.load(_f)
-        _entity_data["group_drop_info"] = _gdi
-        with open(_entity_path, "w") as _f:
-            json.dump(_entity_data, _f, ensure_ascii=False, indent=2)
-        _update_count += 1
-    _log(f"[JSON] updated {_update_count} item entities with group drop info")
-
-    # ── 通过 spawner_entries 的 lootdrop_group_id 计算 group_drop_info（覆盖容器数据）──
-    _log("[JSON] computing group_drop_info from ID_LootDropGroup...")
-    _direct_count = 0
-    for _item_file in (OUTPUT_DIR / "items").glob("*.json"):
-        with open(_item_file) as _f:
-            _entity_data = json.load(_f)
-        _iname = _entity_data["name"]
-        _ldg_id = _spawner_ldg.get(_iname, "")
-        if not _ldg_id:
-            continue
-        _coords = _entity_data.get("coords", [])
-        if not _coords:
-            continue
-        _seen_groups: set[str] = set()
-        for _c in _coords:
-            _g = _map_base_to_group.get(_c["map"], "")
-            if _g:
-                _seen_groups.add(_g)
-        if not _seen_groups:
-            continue
-        _group_drop_info: dict[str, list[dict]] = {}
-        for _g in _seen_groups:
-            _suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(_g, [])
-            if not _suffixes:
-                continue
-            _mode_rates: dict[str, float] = {}
-            for _mode_id, _mode_name in DUNGEON_MODE_NAMES.items():
-                if _mode_id == 4:
-                    continue
-                _best_rate = 0.0
-                for _suffix in _suffixes:
-                    _full_grade = _mode_id * 1000 + _suffix
-                    _rate = drop_engine.compute_drop_rate(_ldg_id, _iname, _full_grade)
-                    if _rate > _best_rate:
-                        _best_rate = _rate
-                _mode_rates[_mode_name] = _round_rate(_best_rate * 100)
-            _group_drop_info[_g] = [
-                {
-                    "translation": _entity_data["translation"],
-                    "spawn_rate": 100,
-                    "drop_rates": _mode_rates,
-                }
-            ]
-        if _group_drop_info:
-            _entity_data["group_drop_info"] = _group_drop_info
-            with open(_item_file, "w") as _f:
-                json.dump(_entity_data, _f, ensure_ascii=False, indent=2)
-            _direct_count += 1
-    _log(f"[JSON] computed group_drop_info for {_direct_count} direct-spawn items")
-
-    # ── 变体爆率聚合已禁用：variant_count 仅作为显示信息，不影响爆率计算 ──
-
-    # ── 更新怪物实体 JSON，添加 group_drop_info ──
-    _log("[JSON] updating monster entities with group drop info...")
-    _mon_update = 0
-    for _mfile in (OUTPUT_DIR / "monsters").glob("*.json"):
-        with open(_mfile) as _f:
-            _edata = json.load(_f)
-        _mname = _edata["name"]
-        # 查找 lootdrop_group_id（含后缀回退）
-        _ldg_id = _spawner_ldg.get(_mname, "")
-        if not _ldg_id:
-            for _suffix in ("_Elite", "_Nightmare", "_Common"):
-                _ldg_id = _spawner_ldg.get(_mname + _suffix, "")
-                if _ldg_id:
-                    break
-        if not _ldg_id:
-            _lower = _mname.lower()
-            for _k, _v in _spawner_ldg.items():
-                if _k.lower() == _lower:
-                    _ldg_id = _v
-                    break
-        if not _ldg_id:
-            continue
-        _coords = _edata.get("coords", [])
-        if not _coords:
-            continue
-        _seen_groups: set[str] = set()
-        for _c in _coords:
-            _g = _map_base_to_group.get(_c["map"], "")
-            if _g:
-                _seen_groups.add(_g)
-        if not _seen_groups:
-            continue
-        _group_drop_info: dict[str, list[dict]] = {}
-        _sr = _spawn_rate_cache.get(_mname, 0.0)
-        for _g in _seen_groups:
-            _dr = drop_engine.compute_group_drop_rates(_ldg_id, _g)
-            if not _dr and not _sr:
-                continue
-            _group_drop_info[_g] = [
-                {
-                    "translation": _edata["translation"],
-                    "spawn_rate": _sr,
-                    "drop_rates": _dr,
-                }
-            ]
-        if _group_drop_info:
-            _edata["group_drop_info"] = _group_drop_info
-            with open(_mfile, "w") as _f:
-                json.dump(_edata, _f, ensure_ascii=False, indent=2)
-            _mon_update += 1
-    _log(f"[JSON] updated {_mon_update} monster entities with group drop info")
-
-    # ── 更新实体（props）JSON，添加 group_drop_info ──
-    _log("[JSON] updating props entities with group drop info...")
-    _prop_update = 0
-    for _pfile in (OUTPUT_DIR / "props").glob("*.json"):
-        with open(_pfile) as _f:
-            _edata = json.load(_f)
-        _pname = _edata["name"]
-        _ldg_id = _spawner_ldg.get(_pname, "")
-        if not _ldg_id:
-            _lower = _pname.lower()
-            for _k, _v in _spawner_ldg.items():
-                if _k.lower() == _lower:
-                    _ldg_id = _v
-                    break
-        if not _ldg_id:
-            _ldg_id = _ore_ldg.get(_pname, "")
-        if not _ldg_id:
-            continue
-        _coords = _edata.get("coords", [])
-        if not _coords:
-            continue
-        # Build per-keyword-type entries: {(is_undersea, type): {translation, spawn_rate}}
-        _kw_entries: dict[tuple[bool, str], dict] = {}
-        _locked_name = _pname + "_Locked"
-        _undersea_name = _pname + "_UnderSea"
-        _locked_undersea = _pname + "_Locked_UnderSea"
-        _base_trans = _edata["translation"]
-        for _sk in _entity_spawners.get(_pname, set()):
-            _base = _spawn_rate_detail.get((_sk, _pname), 0)
-            _lock = _spawn_rate_detail.get((_sk, _locked_name), 0) if _locked_name in _entity_spawners else 0
-            _combined = _base + _lock
-            if _combined > 0:
-                _type = _classify_label(_sk, _pname)
-                _suffix = _LABEL_TYPE_SUFFIX.get(_type, "")
-                _label = _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
-                _key = (False, _type)
-                if _key not in _kw_entries or _combined > _kw_entries[_key]["spawn_rate"]:
-                    _kw_entries[_key] = {"translation": _label, "spawn_rate": _combined}
-        if _undersea_name in _entity_spawners:
-            for _sk in _entity_spawners[_undersea_name]:
-                _base = _spawn_rate_detail.get((_sk, _undersea_name), 0)
-                _lock = (
-                    _spawn_rate_detail.get((_sk, _locked_undersea), 0) if _locked_undersea in _entity_spawners else 0
-                )
-                _combined = _base + _lock
-                if _combined > 0:
-                    _type = _classify_label(_sk, _undersea_name)
-                    _suffix = _LABEL_TYPE_SUFFIX.get(_type, "")
-                    _label = "(海底)" + _base_trans + _suffix + ("(可能上锁)" if _lock > 0 else "")
-                    _key = (True, _type)
-                    if _key not in _kw_entries or _combined > _kw_entries[_key]["spawn_rate"]:
-                        _kw_entries[_key] = {"translation": _label, "spawn_rate": _combined}
-        if not _kw_entries:
-            continue
-        _seen_groups: set[str] = set()
-        for _c in _coords:
-            _g = _map_base_to_group.get(_c["map"], "")
-            if _g:
-                _seen_groups.add(_g)
-        if not _seen_groups:
-            continue
-        _group_drop_info: dict[str, list[dict]] = {}
-        for _g in _seen_groups:
-            _dr = drop_engine.compute_container_drop_rates(_ldg_id, _g)
-            if not _dr:
-                continue
-            _group_drop_info[_g] = [{**_entry, "drop_rates": _dr} for _entry in _kw_entries.values()]
-        if _group_drop_info:
-            _edata["group_drop_info"] = _group_drop_info
-            with open(_pfile, "w") as _f:
-                json.dump(_edata, _f, ensure_ascii=False, indent=2)
-            _prop_update += 1
-    _log(f"[JSON] updated {_prop_update} props entities with group drop info")
-
-    # ── props 变体爆率聚合已禁用 ──
-
-    # ── 清理：移除所有爆率为 0 的条目 ──
-    _log("[JSON] cleaning up zero-rate entries...")
-    _clean_count = 0
-    for _subdir in ("items", "props", "monsters"):
-        for _efile in (OUTPUT_DIR / _subdir).glob("*.json"):
-            with open(_efile) as _f:
-                _edata = json.load(_f)
-            _gdi = _edata.get("group_drop_info")
-            if not _gdi:
-                continue
-            _changed = False
-            _new_gdi: dict[str, list[dict]] = {}
-            for _g, _entries in _gdi.items():
-                _filtered = [e for e in _entries if any(v > 0 for v in e.get("drop_rates", {}).values())]
-                if _filtered:
-                    _new_gdi[_g] = _filtered
-                if len(_filtered) != len(_entries):
-                    _changed = True
-            if _changed:
-                if _new_gdi:
-                    _edata["group_drop_info"] = _new_gdi
-                else:
-                    del _edata["group_drop_info"]
-                with open(_efile, "w") as _f:
-                    json.dump(_edata, _f, ensure_ascii=False, indent=2)
-                _clean_count += 1
-    _log(f"[JSON] cleaned {_clean_count} files with zero-rate entries")
+    # ── Enrichment: inject group_drop_info into entity files ──
+    enrich_all_entities(drop_engine, loot_index, OUTPUT_DIR, _log)
 
     # ── Quest data (from DB) ──
     timer.start_step("[JSON] quest data")
