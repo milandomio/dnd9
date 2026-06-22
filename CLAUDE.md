@@ -41,7 +41,7 @@ DarkFindV5/
 │   │   ├── dungeon_mode.py       # DungeonGrade 分组代码解析
 │   │   ├── pipeline_timer.py     # 管道步骤计时工具
 │   │   ├── quest_collector.py    # 任务提取入口
-│   │   ├── quest_extractor/      # 任务提取模块（11 个 Python 模块）
+│   │   ├── quest_extractor/      # 任务提取模块（12 个 Python 模块，含 __init__.py）
 │   │   └── img/                  # 地图图片 .webp（不可再生，严**禁**清理）
 │   ├── lint.sh / lint-fix.sh    # ruff lint 脚本
 │   ├── data/                # DB（darkfindv5.db）

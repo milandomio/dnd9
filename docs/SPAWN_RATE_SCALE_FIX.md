@@ -58,7 +58,7 @@ for item in items:
 
 ### 狮头宝箱锁+无锁合计（前端已合并）
 
-`enrichment.py`（原 `collector.py`）中 locked-merge 逻辑取 `_spawn_rate_detail` 中 same-keyword 的 locked + unlocked 之和，跨 keyword 取 max。
+`lootdrop_builder.py` 中 locked-merge 逻辑取 `_spawn_rate_detail` 中 same-keyword 的 locked + unlocked 之和，跨 keyword 取 max。
 
 - ChestSpecial 下：25+25=50%
 - OrnateChestLargeRandom 下：2.41+1.03=3.44%
