@@ -48,7 +48,7 @@ LootDrop JSON → LootDropGroup JSON
   → DB: lootdrop_items (BloodsapBlade_5001, SkeletonFootmanFromFakeDeath, ...)
 ```
 
-### 3. 爆率查询 — `collector.py`
+### 3. 爆率查询 — `drop_rate.py`（原 `collector.py`）
 ```
 _spawner_ldg 构建：
   SELECT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries
