@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Typography } from 'antd';
@@ -45,8 +45,36 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
-  const { modules, loading: modulesLoading } = useDungeonModules();
+  const { modules: globalModules } = useDungeonModules();
   const dataVersion = useDataVersion();
+
+  // Build local modules map from entity's inline _modules data
+  const modules = useMemo(() => {
+    if (entity?._modules) {
+      const mm = new Map<string, DungeonModule>();
+      for (const [mapName, data] of Object.entries(entity._modules)) {
+        const mod: DungeonModule = {
+          name: mapName,
+          names: [mapName],
+          translation: data.translation,
+          group: data.group,
+          size_x: data.size_x,
+          size_y: data.size_y,
+          sl_base_name: data.sl_base_name,
+          img_name: data.img_name,
+          has_img: true,
+          has_useful_entities: true,
+          offset_x: data.offset_x,
+          offset_y: data.offset_y,
+          rotate: data.rotate,
+          range: data.range,
+        };
+        mm.set(mapName, mod);
+      }
+      return mm;
+    }
+    return globalModules;
+  }, [entity?._modules, globalModules]);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const fetchedRef = useRef(false);
 
@@ -92,7 +120,6 @@ export default function DetailPage() {
       setEntity(ssrData.entity);
       return;
     }
-    if (modulesLoading) return;
     if (fetchedRef.current) return;
     fetchedRef.current = true;
     const decoded = decodeURIComponent(name!);
@@ -105,7 +132,7 @@ export default function DetailPage() {
         setEntity(entityData);
       })
       .catch(console.error);
-  }, [page, name, ssrData, dataVersion, modulesLoading]);
+  }, [page, name, ssrData, dataVersion]);
 
   if (!entity)
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;

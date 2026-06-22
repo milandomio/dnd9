@@ -234,6 +234,8 @@ def build_and_save_lootdrop_details(
     monsters: list[dict],
     output_dir: Path,
     log_fn=None,
+    modules_map: dict | None = None,
+    map_to_module: dict | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
     monsters_lookup = {r["monster_name"]: r for r in monsters}
@@ -477,16 +479,38 @@ def build_and_save_lootdrop_details(
         for _m in monsters_out:
             _m["max_score"] = _max_scores.get(_m["translation"], -1)
         if monsters_out:
-            _save(
-                output_dir,
-                f"lootdrops/{item_name}.json",
-                {
-                    "name": item_name,
-                    "translation": entry["translation"],
-                    "monsters": monsters_out,
-                    "group_drop_info": _group_drop_info,
-                },
-            )
+            detail = {
+                "name": item_name,
+                "translation": entry["translation"],
+                "monsters": monsters_out,
+                "group_drop_info": _group_drop_info,
+            }
+            # Inline module data for all referenced maps
+            if modules_map and map_to_module:
+                inline: dict[str, dict] = {}
+                for _m in monsters_out:
+                    for _c in _m["coords"]:
+                        _mb = _c["map"]
+                        if _mb in inline:
+                            continue
+                        _mn = map_to_module.get(_mb, _mb)
+                        _mod = modules_map.get(_mn)
+                        if _mod:
+                            inline[_mb] = {
+                                "rotate": _mod["rotate"],
+                                "offset_x": _mod["offset_x"],
+                                "offset_y": _mod["offset_y"],
+                                "size_x": _mod["size_x"],
+                                "size_y": _mod["size_y"],
+                                "range": _mod["range"],
+                                "group": _mod["group"],
+                                "translation": _mod["translation"],
+                                "img_name": _mod["img_name"],
+                                "sl_base_name": _mod["sl_base_name"],
+                            }
+                if inline:
+                    detail["_modules"] = inline
+            _save(output_dir, f"lootdrops/{item_name}.json", detail)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
         elif item_name == "BloodsapBlade":
             if log_fn:

@@ -32,6 +32,7 @@ export interface ItemEntity {
   monsters: string[];
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  _modules?: Record<string, InlineModuleData>;
 }
 
 export interface MonsterEntity {
@@ -39,6 +40,7 @@ export interface MonsterEntity {
   translation: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  _modules?: Record<string, InlineModuleData>;
 }
 
 export interface PropsEntity {
@@ -46,6 +48,7 @@ export interface PropsEntity {
   translation: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  _modules?: Record<string, InlineModuleData>;
 }
 
 export interface DungeonModule {
@@ -64,4 +67,18 @@ export interface DungeonModule {
   offset_y: number;
   rotate: number;
   range: number;
+}
+
+/** Inline module data subset embedded in entity JSON (_modules field) */
+export interface InlineModuleData {
+  rotate: number;
+  offset_x: number;
+  offset_y: number;
+  size_x: number;
+  size_y: number;
+  range: number;
+  group: string;
+  translation: string;
+  img_name: string;
+  sl_base_name: string;
 }

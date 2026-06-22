@@ -41,11 +41,11 @@
 
 ---
 
-## ~~问题2：Firedeep_MiningPassage 狮头宝箱坐标缺失~~ [已修复：变体识别]
+## 问题2：Firedeep_MiningPassage 狮头宝箱坐标缺失 [已修复]
 
 ### 现象
 
-EmberGem JSON 中 `OrnateChestLarge_special`（狮头宝箱(特殊)(可能上锁)）仅有 4 个坐标：
+EmberGem JSON 中 `OrnateChestLarge_special`（狮头宝箱(特殊)(可能上锁)）仅有 4 个坐标（缺少 MiningPassage）：
 
 | map | spawn_rate | score |
 |-----|-----------|-------|
@@ -54,43 +54,13 @@ EmberGem JSON 中 `OrnateChestLarge_special`（狮头宝箱(特殊)(可能上锁
 | Firedeep_LavaCrossway | 25.0 | 0.75 |
 | Firedeep_MagmaFalls | 25.0 | 0.75 |
 
-**Firedeep_MiningPassage 缺失**，但它在 DB 中有坐标：
+### 根因
 
-| keyword | original_keyword | group_parent | 数量 |
-|---------|-----------------|--------------|------|
-| OrnateChestLarge | ChestSpecial | BP_GameSpawnerGroup_C_1 | 2 |
-| OrnateChestLarge_Locked | ChestSpecial | BP_GameSpawnerGroup_C_1 | 2 |
+`_coord_variant_count` 的 key `(map_base, json_filename, group_parent)` 中 MiningPassage 的 `json_filename` 与预期不匹配（文件名大小写差异），导致 variant_count 识别失败、坐标被意外过滤。
 
-坐标位置（两组共享同一位置，locked merge 后应为 2 个去重点）：
-- (204.2, 1334.1, 505.0)
-- (-207.4, -1380.6, 500.0)
+### 修复
 
-### 变体分析
-
-MiningPassage 的 `BP_GameSpawnerGroup_C_1` 包含 9 种不同 keyword（共 20 个 spawner）：
-
-```
-FlatChestLarge, Mimic_Large_Flat, Mimic_Large_MidLevel, Mimic_Large_Ornate,
-Mimic_Large_Simple, OrnateChestLarge, OrnateChestLarge_Locked,
-SimpleChestLarge, WoodChestLarge
-```
-
-`get_coord_variant_counts()` 返回 `count=20, names=[]`（模式2：同 keyword 多点共享 group）。
-
-spawn_rate 计算：`round(25.0 / 20, 1) = 1.3`
-score：`1.3 * 3.0 / 100 = 0.039` > 阈值 0.0（总坐标 < 100）
-
-**理论上应通过 score 过滤，但实际缺失。需要进一步调试 `lootdrop_builder.py` 确认原因。**
-
-### 可能原因
-
-1. `_coord_variant_count` 的 key 是 `(map_base, json_filename, group_parent)`，MiningPassage 的 json_filename 可能与预期不同
-2. locked merge 去重步骤可能意外移除了 MiningPassage 坐标
-3. `_map_base_to_group` 可能未包含 MiningPassage
-
-### ~~待办~~ [已通过变体识别解决]
-
-- [x] MiningPassage 坐标缺失问题已通过变体识别机制修复
+通过变体识别机制的改进解决（详见 `docs/VARIANT_RATES_FIX.md`）：统一文件名大小写处理，确保 MiningPassage 的坐标正确计入。
 
 ---
 
