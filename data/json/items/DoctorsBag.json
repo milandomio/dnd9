@@ -1,0 +1,156 @@
+{
+  "name": "DoctorsBag",
+  "translation": "医师的包",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 1099.6367,
+      "y": -1099.7938,
+      "z": -909.47974,
+      "yaw": 291.2,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "DoctorsBag"
+    },
+    {
+      "x": 1459.0,
+      "y": 3499.0,
+      "z": 628.197,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "DoctorsBag"
+    },
+    {
+      "x": 186.3989,
+      "y": 908.35834,
+      "z": 87.1751,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "DoctorsBag"
+    },
+    {
+      "x": 4780.2607,
+      "y": 3040.4192,
+      "z": -980.7157,
+      "yaw": 198.5,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "DoctorsBag"
+    },
+    {
+      "x": 1394.4242,
+      "y": 690.68896,
+      "z": 14.543071,
+      "yaw": 5.7,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "DoctorsBag"
+    },
+    {
+      "x": -1278.7611,
+      "y": -972.49023,
+      "z": -994.98645,
+      "yaw": 32.5,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "DoctorsBag"
+    }
+  ],
+  "_modules": {
+    "EmptyModule_1F_15": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "7-4模块",
+      "img_name": "EmptyModule_1F_15",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_CircleIsland": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "环形岛",
+      "img_name": "ShipGraveyard_CircleIsland",
+      "sl_base_name": "ShipGraveyard_CircleIsland"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "ShipGraveyard_StarfishValley": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海星谷",
+      "img_name": "ShipGraveyard_StarfishValley",
+      "sl_base_name": "ShipGraveyard_StarfishValley"
+    },
+    "ShipGraveyard_SunkenShip_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉没之船",
+      "img_name": "ShipGraveyard_SunkenShip_01",
+      "sl_base_name": "ShipGraveyard_SunkenShip_01"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "医师的包",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

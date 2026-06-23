@@ -1,0 +1,52 @@
+{
+  "name": "OceanCurrent",
+  "translation": "洋流",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_D.json",
+      "version": "(D)",
+      "label": "洋流"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_D.json",
+      "version": "(D)",
+      "label": "洋流"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_HangingShip": {
+      "rotate": 90.0,
+      "offset_x": 1600,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "吊船",
+      "img_name": "ShipGraveyard_HangingShip",
+      "sl_base_name": "ShipGraveyard_HangingShip"
+    }
+  }
+}

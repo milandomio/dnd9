@@ -1,0 +1,141 @@
+{
+  "name": "TidewalkerShaman",
+  "translation": "踏潮者萨满",
+  "coords": [
+    {
+      "x": -520.0,
+      "y": -204.0,
+      "z": -978.5746,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "踏潮者萨满"
+    },
+    {
+      "x": 442.0,
+      "y": 532.0,
+      "z": -956.6459,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "踏潮者萨满"
+    },
+    {
+      "x": -30.0,
+      "y": -60.0,
+      "z": -650.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_CoralForest_01",
+      "file": "ShipGraveyard_CoralForest_01_D.json",
+      "version": "(D)",
+      "label": "踏潮者萨满"
+    },
+    {
+      "x": -1035.1244,
+      "y": -1030.0,
+      "z": 397.0,
+      "yaw": 30.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "踏潮者萨满"
+    },
+    {
+      "x": 335.0,
+      "y": 860.0,
+      "z": 203.16948,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "踏潮者萨满"
+    },
+    {
+      "x": -85.0,
+      "y": -105.0,
+      "z": -2985.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "踏潮者萨满"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_CircleIsland": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "环形岛",
+      "img_name": "ShipGraveyard_CircleIsland",
+      "sl_base_name": "ShipGraveyard_CircleIsland"
+    },
+    "ShipGraveyard_CoralForest_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "珊瑚密林",
+      "img_name": "ShipGraveyard_CoralForest_01",
+      "sl_base_name": "ShipGraveyard_CoralForest_01"
+    },
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_MistWatch": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 B",
+      "img_name": "ShipGraveyard_MistWatch",
+      "sl_base_name": "ShipGraveyard_MistWatch"
+    },
+    "Shipgraveyard_TwinChamber": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底洞穴 B",
+      "img_name": "Shipgraveyard_TwinChamber",
+      "sl_base_name": "Shipgraveyard_TwinChamber"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "踏潮者萨满",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 45.0,
+          "豪客赛": 68.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "name": "DemonBerserker",
+  "translation": "恶魔狂战士",
+  "coords": [
+    {
+      "x": -73.0,
+      "y": -19.0,
+      "z": 100.0,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": -1046.0,
+      "y": -1029.0,
+      "z": 2.000101,
+      "yaw": 270.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": -749.443,
+      "y": -809.5673,
+      "z": -100.0,
+      "yaw": 210.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": 0.0,
+      "y": 480.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    }
+  ],
+  "_modules": {
+    "DeathAltar": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "死亡祭坛",
+      "img_name": "DeathAltar",
+      "sl_base_name": "DeathAltar"
+    },
+    "DemonDen": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "炼狱魔窟",
+      "img_name": "DemonDen",
+      "sl_base_name": "DemonDen"
+    },
+    "Inferno_DeathPlatforms": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火平台",
+      "img_name": "Inferno_DeathPlatforms",
+      "sl_base_name": "Inferno_DeathPlatforms"
+    },
+    "Inferno_LavaStairway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔阶梯",
+      "img_name": "Inferno_LavaStairway",
+      "sl_base_name": "Inferno_LavaStairway"
+    }
+  },
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔狂战士",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,1070 @@
+{
+  "name": "Torch",
+  "translation": "火把",
+  "monsters": [
+    {
+      "name": "Ghoul",
+      "entity_name": "Ghoul",
+      "translation": "食尸鬼",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 200.0,
+          "y": -300.0,
+          "z": -350.0,
+          "yaw": 270.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": -200.0,
+          "y": 300.0,
+          "z": -350.0,
+          "yaw": 90.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": 600.0,
+          "y": -585.0,
+          "z": 0.0,
+          "yaw": 135.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": -595.7538,
+          "y": 601.4645,
+          "z": 0.0,
+          "yaw": 315.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": 1355.0,
+          "y": 1310.0,
+          "z": 450.0,
+          "yaw": 180.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": 810.0,
+          "y": -891.60254,
+          "z": 0.0,
+          "yaw": 120.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": -1170.0,
+          "y": -89.0,
+          "z": 0.010099,
+          "yaw": 0.0,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": -539.0,
+          "y": 349.0,
+          "z": 9.0,
+          "yaw": 0.0,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        },
+        {
+          "x": -989.48193,
+          "y": 963.9551,
+          "z": 0.0001,
+          "yaw": 280.0,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 0.9
+        }
+      ],
+      "max_score": 0.9
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "书架",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.767,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.767,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(随机)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.4,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 5.4,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "书架",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.367,
+          "普通": 6.5,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "恐狼",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.367,
+          "普通": 6.5,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(随机)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.95,
+          "普通": 4.583,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "史莱姆",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 6.95,
+          "普通": 4.583,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "幻灵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "书架",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.767,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "冰霜狼",
+        "spawn_rate": 44.98,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "寒冰狗头人弓手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "寒冰狗头人斧手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.767,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.4,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 5.4,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.367,
+          "普通": 6.5,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.95,
+          "普通": 4.583,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 6.95,
+          "普通": 4.583,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "冰霜鬼童",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "冰霜怨灵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.167,
+          "普通": 4.75,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.917,
+          "普通": 2.5,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "食尸鬼",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔鬼童",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "魔蛆",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.167,
+          "普通": 4.75,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.917,
+          "普通": 2.5,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 3.917,
+          "普通": 2.5,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "FireDeep": [
+      {
+        "translation": "火元素",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "火灵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "烈焰野猪",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "炎魔",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "熔岩史莱姆",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.767,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.4,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Inferno_Batroost": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "蝙蝠窝",
+      "img_name": "Inferno_Batroost",
+      "sl_base_name": "Inferno_Batroost"
+    },
+    "Inferno_Doomcage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "末日囚笼",
+      "img_name": "Inferno_Doomcage",
+      "sl_base_name": "Inferno_Doomcage"
+    },
+    "Inferno_Hellwind": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "厄风领",
+      "img_name": "Inferno_Hellwind",
+      "sl_base_name": "Inferno_Hellwind"
+    },
+    "Inferno_Obelisk": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "腐化尖碑",
+      "img_name": "Inferno_Obelisk",
+      "sl_base_name": "Inferno_Obelisk"
+    },
+    "Skull": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火监牢",
+      "img_name": "Skull",
+      "sl_base_name": "Skull"
+    },
+    "ThroneRoom_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔王座",
+      "img_name": "ThroneRoom_02",
+      "sl_base_name": "ThroneRoom_02"
+    }
+  }
+}

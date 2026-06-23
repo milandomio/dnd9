@@ -1,0 +1,46 @@
+{
+  "name": "BlackThreadSpool",
+  "translation": "黑线卷",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -170.22853,
+      "y": 354.25027,
+      "z": 13.942395,
+      "yaw": 319.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_D.json",
+      "version": "(D)",
+      "label": "BlackThreadSpool"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_SeaFortress": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 A",
+      "img_name": "ShipGraveyard_SeaFortress",
+      "sl_base_name": "ShipGraveyard_SeaFortress"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "黑线卷",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

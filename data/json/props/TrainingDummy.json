@@ -1,0 +1,82 @@
+{
+  "name": "TrainingDummy",
+  "translation": "训练假人",
+  "coords": [
+    {
+      "x": -237.0,
+      "y": -170.0,
+      "z": 1.0,
+      "yaw": 190.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": "",
+      "label": "TrainingDummy"
+    },
+    {
+      "x": -207.0,
+      "y": -440.0,
+      "z": 1.0,
+      "yaw": 160.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": "",
+      "label": "TrainingDummy"
+    },
+    {
+      "x": 521.4586,
+      "y": 1263.2281,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "TrainingDummy"
+    },
+    {
+      "x": 323.0818,
+      "y": 1233.819,
+      "z": 0.0,
+      "yaw": 310.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "TrainingDummy"
+    },
+    {
+      "x": 272.45386,
+      "y": 1050.7964,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "TrainingDummy"
+    }
+  ],
+  "_modules": {
+    "Ruins_Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "城堡军械库",
+      "img_name": "Ruins_Armory",
+      "sl_base_name": "Ruins_Armory"
+    },
+    "Ruins_Barbican_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "瓮城",
+      "img_name": "Ruins_Barbican_01",
+      "sl_base_name": "Ruins_Barbican_01"
+    }
+  }
+}

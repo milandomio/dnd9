@@ -1,0 +1,90 @@
+{
+  "name": "TornSail",
+  "translation": "破损船帆",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 2325.0,
+      "y": 3415.0,
+      "z": 641.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "TornSail"
+    },
+    {
+      "x": 815.0,
+      "y": -41.0,
+      "z": 2622.9521,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "TornSail"
+    },
+    {
+      "x": 1270.0,
+      "y": 570.0,
+      "z": 20.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "TornSail"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_StarfishValley": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海星谷",
+      "img_name": "ShipGraveyard_StarfishValley",
+      "sl_base_name": "ShipGraveyard_StarfishValley"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "破损船帆",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  }
+}

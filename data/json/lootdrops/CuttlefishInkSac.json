@@ -1,0 +1,244 @@
+{
+  "name": "CuttlefishInkSac",
+  "translation": "乌贼墨汁袋",
+  "monsters": [
+    {
+      "name": "Cuttlefish",
+      "entity_name": "Cuttlefish",
+      "translation": "乌贼",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 914.0,
+          "y": 1009.0,
+          "z": -556.90904,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_FlippedShip",
+          "file": "ShipGraveyard_FlippedShip_D.json",
+          "version": "(D)",
+          "label": "Cuttlefish",
+          "variant_count": 3,
+          "variant_names": [
+            "乌贼",
+            "人鱼",
+            "章鱼"
+          ],
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": -700.0,
+          "y": -100.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_FloatingVillage",
+          "file": "ShipGraveyard_FloatingVillage_D.json",
+          "version": "(D)",
+          "label": "Cuttlefish",
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": 2800.0,
+          "y": 1100.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Hole",
+          "file": "ShipGraveyard_Hole_HR_D.json",
+          "version": "",
+          "label": "Cuttlefish",
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": -3800.0,
+          "y": 3700.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Hole",
+          "file": "ShipGraveyard_Hole_HR_D.json",
+          "version": "",
+          "label": "Cuttlefish",
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": -19.0,
+          "y": 111.0,
+          "z": -1155.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_MermaidTomb",
+          "file": "ShipGraveyard_MermaidTomb_HR_D.json",
+          "version": "",
+          "label": "Cuttlefish",
+          "variant_count": 2,
+          "variant_names": [
+            "乌贼",
+            "章鱼"
+          ],
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": 0.0,
+          "y": 400.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Oceanvolcano",
+          "file": "ShipGraveyard_Oceanvolcano_D.json",
+          "version": "(D)",
+          "label": "Cuttlefish",
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": -1009.0,
+          "y": 38.0,
+          "z": -1637.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Trench",
+          "file": "ShipGraveyard_Trench_D.json",
+          "version": "(D)",
+          "label": "Cuttlefish",
+          "variant_count": 2,
+          "variant_names": [
+            "章鱼",
+            "乌贼"
+          ],
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": 555.0,
+          "y": -746.0,
+          "z": -2413.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Trench",
+          "file": "ShipGraveyard_Trench_D.json",
+          "version": "(D)",
+          "label": "Cuttlefish",
+          "variant_count": 3,
+          "variant_names": [
+            "大白鲨",
+            "章鱼",
+            "乌贼"
+          ],
+          "spawn_rate": 100.0,
+          "score": 20.0
+        },
+        {
+          "x": 400.0,
+          "y": -200.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "map": "Shipgraveyard_TwinChamber",
+          "file": "Shipgraveyard_TwinChamber_D.json",
+          "version": "(D)",
+          "label": "Cuttlefish",
+          "spawn_rate": 100.0,
+          "score": 20.0
+        }
+      ],
+      "max_score": 20.0
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "乌贼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_Hole": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 4800,
+      "group": "ShipGraveyard",
+      "translation": "蓝洞",
+      "img_name": "ShipGraveyard_Hole",
+      "sl_base_name": "ShipGraveyard_Hole"
+    },
+    "ShipGraveyard_MermaidTomb": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "人鱼冢",
+      "img_name": "ShipGraveyard_MermaidTomb",
+      "sl_base_name": "ShipGraveyard_MermaidTomb"
+    },
+    "ShipGraveyard_Oceanvolcano": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底火山",
+      "img_name": "ShipGraveyard_Oceanvolcano",
+      "sl_base_name": "ShipGraveyard_Oceanvolcano"
+    },
+    "ShipGraveyard_Trench": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海沟",
+      "img_name": "ShipGraveyard_Trench",
+      "sl_base_name": "ShipGraveyard_Trench"
+    },
+    "Shipgraveyard_TwinChamber": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底洞穴 B",
+      "img_name": "Shipgraveyard_TwinChamber",
+      "sl_base_name": "Shipgraveyard_TwinChamber"
+    }
+  }
+}

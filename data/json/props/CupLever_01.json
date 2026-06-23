@@ -1,0 +1,96 @@
+{
+  "name": "CupLever_01",
+  "translation": "金圣杯",
+  "coords": [
+    {
+      "x": 93.0,
+      "y": -1206.0,
+      "z": -545.0,
+      "yaw": 0.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_A.json",
+      "version": "(A)",
+      "label": "CupLever_01",
+      "variant_count": 4,
+      "variant_names": [
+        "金圣杯",
+        "银酒杯",
+        "拉杆",
+        "生成器组"
+      ]
+    },
+    {
+      "x": -277.07079999999996,
+      "y": -407.7297,
+      "z": -545.0,
+      "yaw": 280.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_A.json",
+      "version": "(A)",
+      "label": "CupLever_01",
+      "variant_count": 4,
+      "variant_names": [
+        "金圣杯",
+        "银酒杯",
+        "拉杆",
+        "生成器组"
+      ]
+    },
+    {
+      "x": -480.35535,
+      "y": -4116.5147,
+      "z": -934.0,
+      "yaw": 315.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_A.json",
+      "version": "(A)",
+      "label": "CupLever_01"
+    },
+    {
+      "x": -502.878044,
+      "y": -4199.20550424,
+      "z": -934.0,
+      "yaw": 355.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_A.json",
+      "version": "(A)",
+      "label": "CupLever_01"
+    },
+    {
+      "x": -447.12134000000003,
+      "y": -4028.12637,
+      "z": -935.0,
+      "yaw": 315.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_A.json",
+      "version": "(A)",
+      "label": "CupLever_01"
+    }
+  ],
+  "_modules": {
+    "IceCave_CrossRoad": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "十字路口",
+      "img_name": "IceCave_CrossRoad",
+      "sl_base_name": "IceCave_CrossRoad"
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    }
+  }
+}

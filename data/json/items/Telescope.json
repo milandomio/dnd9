@@ -1,0 +1,198 @@
+{
+  "name": "Telescope",
+  "translation": "望远镜",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 2515.0,
+      "y": 3212.0,
+      "z": 587.3577,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "Telescope"
+    },
+    {
+      "x": -363.49948,
+      "y": -970.81146,
+      "z": 51.72162,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Telescope"
+    },
+    {
+      "x": -750.23444,
+      "y": -626.0483,
+      "z": 552.31537,
+      "yaw": 310.1,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "Telescope"
+    },
+    {
+      "x": -46.948353,
+      "y": -1230.8698,
+      "z": 135.2552,
+      "yaw": 131.5,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "Telescope"
+    },
+    {
+      "x": 730.2808,
+      "y": -2428.2954,
+      "z": 226.4525,
+      "yaw": 286.9,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "Telescope"
+    },
+    {
+      "x": -486.0,
+      "y": -1351.0,
+      "z": 688.0,
+      "yaw": 45.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "Telescope"
+    },
+    {
+      "x": 2241.2358,
+      "y": 4985.628,
+      "z": 824.7509,
+      "yaw": 160.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Telescope"
+    },
+    {
+      "x": 4738.08,
+      "y": 3202.6335,
+      "z": -954.741,
+      "yaw": 333.5,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Telescope"
+    },
+    {
+      "x": 17.787888,
+      "y": -195.67198,
+      "z": 676.0528,
+      "yaw": 352.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_D.json",
+      "version": "(D)",
+      "label": "Telescope"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_FloatingHouse_01": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水手客栈",
+      "img_name": "ShipGraveyard_FloatingHouse_01",
+      "sl_base_name": "ShipGraveyard_FloatingHouse_01"
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_MistWatch": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 B",
+      "img_name": "ShipGraveyard_MistWatch",
+      "sl_base_name": "ShipGraveyard_MistWatch"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "ShipGraveyard_SeaFortress": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 A",
+      "img_name": "ShipGraveyard_SeaFortress",
+      "sl_base_name": "ShipGraveyard_SeaFortress"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "望远镜",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

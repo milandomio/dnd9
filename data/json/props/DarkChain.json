@@ -1,0 +1,52 @@
+{
+  "name": "DarkChain",
+  "translation": "DarkChain",
+  "coords": [
+    {
+      "x": -10.0,
+      "y": 15.0,
+      "z": 1035.0,
+      "yaw": 199.5,
+      "map": "DeathHall",
+      "file": "DeathHall_A.json",
+      "version": "(A)",
+      "label": "DarkChain"
+    },
+    {
+      "x": 203.0,
+      "y": -493.0,
+      "z": 1750.0,
+      "yaw": 174.9,
+      "map": "HighPriestOssuary",
+      "file": "HighPriestOssuary_A.json",
+      "version": "(A)",
+      "label": "DarkChain"
+    }
+  ],
+  "_modules": {
+    "DeathHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "死亡厅堂",
+      "img_name": "DeathHall",
+      "sl_base_name": "DeathHall"
+    },
+    "HighPriestOssuary": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "大祭司",
+      "img_name": "HighPriestOssuary",
+      "sl_base_name": "HighPriestOssuary"
+    }
+  }
+}

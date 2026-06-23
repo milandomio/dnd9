@@ -1,0 +1,79 @@
+{
+  "name": "Ifrit",
+  "translation": "炎魔",
+  "coords": [
+    {
+      "x": -145.0,
+      "y": 380.0,
+      "z": -87.62408,
+      "yaw": 120.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "火元素",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -45.0,
+      "y": -250.0,
+      "z": 2.8484504,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "火元素",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": 110.0,
+      "y": -65.0,
+      "z": 195.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "火元素"
+    }
+  ],
+  "_modules": {
+    "Firedeep_BlazeTunnel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "烈火隧道",
+      "img_name": "BlazeTunnel",
+      "sl_base_name": "Firedeep_BlazeTunnel"
+    },
+    "Firedeep_MagmaFalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "岩浆瀑布",
+      "img_name": "Magmafalls",
+      "sl_base_name": "Firedeep_MagmaFalls"
+    }
+  },
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "炎魔",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 40.0,
+          "普通": 50.0,
+          "豪客赛": 6.5
+        }
+      }
+    ]
+  }
+}

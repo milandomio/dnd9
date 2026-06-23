@@ -1,0 +1,30 @@
+{
+  "name": "DoubleStoneDoor",
+  "translation": "双开石门",
+  "coords": [
+    {
+      "x": -594.0,
+      "y": 0.0,
+      "z": 200.0,
+      "yaw": 0.0,
+      "map": "InfernoGate",
+      "file": "InfernoGate_HR_D.json",
+      "version": "",
+      "label": "DoubleStoneDoor"
+    }
+  ],
+  "_modules": {
+    "InfernoGate": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔之门",
+      "img_name": "InfernoGate",
+      "sl_base_name": "InfernoGate"
+    }
+  }
+}

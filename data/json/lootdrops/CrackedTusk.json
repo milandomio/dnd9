@@ -1,0 +1,78 @@
+{
+  "name": "CrackedTusk",
+  "translation": "开裂长牙",
+  "monsters": [
+    {
+      "name": "FlameBoar",
+      "entity_name": "FlameBoar",
+      "translation": "烈焰野猪",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -200.0,
+          "y": -20.0,
+          "z": -140.0,
+          "yaw": 0.0,
+          "map": "Firedeep_LavaCrossway",
+          "file": "Firedeep_LavaCrossway_D.json",
+          "version": "(D)",
+          "label": "FlameBoar",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -125.0,
+          "y": 200.0,
+          "z": -275.0,
+          "yaw": 0.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)",
+          "label": "FlameBoar",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        }
+      ],
+      "max_score": 2.25
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "烈焰野猪",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Firedeep_LavaCrossway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔岩岔路",
+      "img_name": "LavaCrossway",
+      "sl_base_name": "Firedeep_LavaCrossway"
+    },
+    "Firedeep_MagmaFalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "岩浆瀑布",
+      "img_name": "Magmafalls",
+      "sl_base_name": "Firedeep_MagmaFalls"
+    }
+  }
+}

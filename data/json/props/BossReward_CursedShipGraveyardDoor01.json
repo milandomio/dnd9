@@ -1,0 +1,52 @@
+{
+  "name": "BossReward_CursedShipGraveyardDoor01",
+  "translation": "诅咒的船墓之门",
+  "coords": [
+    {
+      "x": 855.0,
+      "y": -1420.00003,
+      "z": -3520.9999,
+      "yaw": 360.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "BossReward_CursedShipGraveyardDoor01"
+    },
+    {
+      "x": -98.49243000000001,
+      "y": -205.06097,
+      "z": 550.0,
+      "yaw": 225.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BossReward_CursedShipGraveyardDoor02"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    }
+  }
+}

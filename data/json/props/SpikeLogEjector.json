@@ -1,0 +1,40 @@
+{
+  "name": "SpikeLogEjector",
+  "translation": "尖刺滚木弹射口",
+  "coords": [
+    {
+      "x": -1260.0,
+      "y": 1195.0,
+      "z": 340.0,
+      "yaw": 270.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "尖刺滚木弹射口"
+    },
+    {
+      "x": -3781.0,
+      "y": -1258.0,
+      "z": 343.0,
+      "yaw": 90.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "尖刺滚木弹射口"
+    }
+  ],
+  "_modules": {
+    "Ruins_TowerBridge_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "塔桥",
+      "img_name": "Ruins_TowerBridge_Destroyed",
+      "sl_base_name": "Ruins_TowerBridge_Destroyed"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "SkullKey",
+  "translation": "骷髅钥匙",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "CofferSmall",
+    "DemonOverseer",
+    "DemonOverseer_Elite",
+    "GoldChest",
+    "GoldChest_UnderSea",
+    "OrnateChestLarge",
+    "OrnateChestLarge_Locked",
+    "OrnateChestLarge_Locked_UnderSea",
+    "OrnateChestLarge_UnderSea",
+    "OrnateChestMedium",
+    "OrnateChestMedium_Locked",
+    "OrnateChestMedium_Locked_UnderSea",
+    "OrnateChestMedium_UnderSea",
+    "OrnateChestSmall",
+    "OrnateChestSmall_Locked"
+  ],
+  "coords": [
+    {
+      "x": -563.0,
+      "y": 0.0,
+      "z": 400.00012,
+      "yaw": 90.0,
+      "map": "ThroneRoom_02",
+      "file": "ThroneRoom_02_HR_D.json",
+      "version": "",
+      "label": "SkullKey"
+    }
+  ],
+  "_modules": {
+    "ThroneRoom_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔王座",
+      "img_name": "ThroneRoom_02",
+      "sl_base_name": "ThroneRoom_02"
+    }
+  },
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "骷髅钥匙",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.5,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

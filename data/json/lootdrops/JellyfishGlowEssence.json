@@ -1,0 +1,222 @@
+{
+  "name": "JellyfishGlowEssence",
+  "translation": "水母萤光精华",
+  "monsters": [
+    {
+      "name": "Jellyfish",
+      "entity_name": "Jellyfish",
+      "translation": "水母",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 150.0,
+          "y": 400.0,
+          "z": -650.0,
+          "yaw": 270.0,
+          "map": "EmptyModule_1F_15",
+          "file": "EmptyModule_1F_15_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 100.0,
+          "y": 450.0,
+          "z": -700.0,
+          "yaw": 270.0,
+          "map": "EmptyModule_1F_15",
+          "file": "EmptyModule_1F_15_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 200.0,
+          "y": 350.0,
+          "z": -750.0,
+          "yaw": 270.0,
+          "map": "EmptyModule_1F_15",
+          "file": "EmptyModule_1F_15_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 1650.0,
+          "y": 2300.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 1700.0,
+          "y": 2250.0,
+          "z": -400.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 1750.0,
+          "y": 2200.0,
+          "z": -450.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": -1.645093,
+          "y": -825.39325,
+          "z": -700.0,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_CoralForest_01",
+          "file": "ShipGraveyard_CoralForest_01_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": -101.645096,
+          "y": -725.39325,
+          "z": -700.0,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_CoralForest_01",
+          "file": "ShipGraveyard_CoralForest_01_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": -1.645093,
+          "y": -725.39325,
+          "z": -600.0,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_CoralForest_01",
+          "file": "ShipGraveyard_CoralForest_01_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 700.0,
+          "y": -900.0,
+          "z": -700.0,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_ShipRest",
+          "file": "ShipGraveyard_ShipRest_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 600.0,
+          "y": -900.0,
+          "z": -800.0,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_ShipRest",
+          "file": "ShipGraveyard_ShipRest_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 600.0,
+          "y": -850.0,
+          "z": -750.0,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_ShipRest",
+          "file": "ShipGraveyard_ShipRest_D.json",
+          "version": "(D)",
+          "label": "Jellyfish",
+          "spawn_rate": 100,
+          "score": 20.0
+        }
+      ],
+      "max_score": 5.0
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "水母",
+        "spawn_rate": 25.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "EmptyModule_1F_15": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "7-4模块",
+      "img_name": "EmptyModule_1F_15",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_CoralForest_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "珊瑚密林",
+      "img_name": "ShipGraveyard_CoralForest_01",
+      "sl_base_name": "ShipGraveyard_CoralForest_01"
+    },
+    "ShipGraveyard_ShipRest": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉眠之船",
+      "img_name": "ShipGraveyard_ShipRest",
+      "sl_base_name": "ShipGraveyard_ShipRest"
+    }
+  }
+}

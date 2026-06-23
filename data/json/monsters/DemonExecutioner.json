@@ -1,0 +1,180 @@
+{
+  "name": "DemonExecutioner",
+  "translation": "恶魔处刑者",
+  "coords": [
+    {
+      "x": 568.3833,
+      "y": 533.7097,
+      "z": 0.0,
+      "yaw": 41.2,
+      "map": "InfernoCastleConner",
+      "file": "InfernoCastleConner_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 1025.0,
+      "y": -482.0,
+      "z": 14.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -665.0,
+      "y": -800.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "InfernoRooms",
+      "file": "InfernoRooms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 670.0,
+      "y": 660.0,
+      "z": 500.0,
+      "yaw": 220.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -5.0,
+      "y": -10.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "variant_count": 4,
+      "variant_names": [
+        "地狱三头犬",
+        "地狱猎手",
+        "憎恶",
+        "恶魔处刑者"
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": -375.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "variant_count": 2,
+      "variant_names": [
+        "恶魔处刑者",
+        "恶魔鬼童"
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 357.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "variant_count": 2,
+      "variant_names": [
+        "恶魔处刑者",
+        "恶魔鬼童"
+      ]
+    }
+  ],
+  "_modules": {
+    "InfernoCastleConner": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火城堡",
+      "img_name": "InfernoCastleConner",
+      "sl_base_name": "InfernoCastleConner"
+    },
+    "InfernoColumns": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火柱廊",
+      "img_name": "InfernoColumns",
+      "sl_base_name": "InfernoColumns"
+    },
+    "InfernoRooms": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "仪式室",
+      "img_name": "InfernoRooms",
+      "sl_base_name": "InfernoRooms"
+    },
+    "Inferno_DeathPlatforms": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火平台",
+      "img_name": "Inferno_DeathPlatforms",
+      "sl_base_name": "Inferno_DeathPlatforms"
+    },
+    "Inferno_Doomcage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "末日囚笼",
+      "img_name": "Inferno_Doomcage",
+      "sl_base_name": "Inferno_Doomcage"
+    },
+    "Inferno_Judgementroad": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "判罪之路",
+      "img_name": "Inferno_Judgementroad",
+      "sl_base_name": "Inferno_Judgementroad"
+    }
+  },
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔处刑者",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

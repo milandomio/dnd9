@@ -1,0 +1,212 @@
+{
+  "name": "LivingStatue",
+  "translation": "石像鬼",
+  "coords": [
+    {
+      "x": 200.00000000000009,
+      "y": 0.0,
+      "z": -200.0,
+      "yaw": 185.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "石像鬼",
+      "variant_count": 2,
+      "variant_names": [
+        "石像鬼",
+        "精英石像鬼（假）"
+      ]
+    },
+    {
+      "x": -205.0,
+      "y": 10.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "石像鬼",
+      "variant_count": 2,
+      "variant_names": [
+        "精英石像鬼（假）",
+        "石像鬼"
+      ]
+    },
+    {
+      "x": -555.0,
+      "y": 15.0,
+      "z": 105.0,
+      "yaw": 180.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": -320.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": 330.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": -320.00003,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": 329.99997,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": 505.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": -515.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": -3905.0,
+      "y": -315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    },
+    {
+      "x": -3905.0,
+      "y": 315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "石像鬼"
+    }
+  ],
+  "_modules": {
+    "Inferno_Drain": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "排水沟",
+      "img_name": "Inferno_Drain",
+      "sl_base_name": "Inferno_Drain"
+    },
+    "Ruins_Bath": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "洗澡堂",
+      "img_name": "Ruins_Bath",
+      "sl_base_name": "Ruins_Bath"
+    },
+    "Ruins_Chapel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "教堂",
+      "img_name": "Ruins_Chapel",
+      "sl_base_name": ""
+    },
+    "Ruins_Grave": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "坟场",
+      "img_name": "Ruins_Grave",
+      "sl_base_name": "Ruins_Grave"
+    },
+    "Ruins_TowerBridge_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "塔桥",
+      "img_name": "Ruins_TowerBridge_Destroyed",
+      "sl_base_name": "Ruins_TowerBridge_Destroyed"
+    }
+  },
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "石像鬼",
+        "spawn_rate": 34.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 50.0,
+          "豪客赛": 61.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "石像鬼",
+        "spawn_rate": 34.0,
+        "drop_rates": {
+          "PVE": 66.8,
+          "普通": 32.95,
+          "豪客赛": 71.5
+        }
+      }
+    ]
+  }
+}

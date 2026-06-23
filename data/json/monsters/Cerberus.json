@@ -1,0 +1,130 @@
+{
+  "name": "Cerberus",
+  "translation": "地狱三头犬",
+  "coords": [
+    {
+      "x": 331.0,
+      "y": 382.0,
+      "z": -449.9999,
+      "yaw": 230.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "Cerberus"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "Cerberus",
+      "variant_count": 4,
+      "variant_names": [
+        "地狱三头犬",
+        "地狱猎手",
+        "憎恶",
+        "恶魔处刑者"
+      ]
+    },
+    {
+      "x": -70.0,
+      "y": 0.0,
+      "z": 400.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "Cerberus",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "Cerberus",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 986.1547,
+      "y": -59.017056,
+      "z": 0.000101,
+      "yaw": 185.0,
+      "map": "ThroneRoom_02",
+      "file": "ThroneRoom_02_HR_D.json",
+      "version": "",
+      "label": "Cerberus"
+    }
+  ],
+  "_modules": {
+    "InfernoColumns": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火柱廊",
+      "img_name": "InfernoColumns",
+      "sl_base_name": "InfernoColumns"
+    },
+    "Inferno_Doomcage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "末日囚笼",
+      "img_name": "Inferno_Doomcage",
+      "sl_base_name": "Inferno_Doomcage"
+    },
+    "Inferno_Hellcrossbridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "百鬼桥",
+      "img_name": "Inferno_Hellcrossbridge",
+      "sl_base_name": "Inferno_Hellcrossbridge"
+    },
+    "ThroneRoom_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔王座",
+      "img_name": "ThroneRoom_02",
+      "sl_base_name": "ThroneRoom_02"
+    }
+  },
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "地狱三头犬",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

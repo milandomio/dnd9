@@ -1,0 +1,183 @@
+{
+  "name": "WoodsmanAxe",
+  "translation": "砍柴斧",
+  "category": "",
+  "variant_count": 7,
+  "monsters": [
+    "AshPile",
+    "DwarfHandCannoneer",
+    "DwarfMauler",
+    "FallenDwarf01",
+    "FallenDwarf02",
+    "FallenDwarf03",
+    "FlatChestLarge",
+    "FlatChestLarge_UnderSea",
+    "FrostImp",
+    "FrostImp_Unique",
+    "GoblinAxeman",
+    "GoblinWarrior",
+    "GoblinWarrior_Unique",
+    "Ground",
+    "LavaGolem",
+    "SimpleChestLarge",
+    "SimpleChestLarge_UnderSea",
+    "SkeletonCorpse01",
+    "SkeletonCorpse01_UnderSea",
+    "SkeletonCorpse02",
+    "SkeletonCorpse02_UnderSea",
+    "SkeletonCorpse03",
+    "SkeletonCorpse03_UnderSea",
+    "WoodChestLarge",
+    "WoodChestLarge_UnderSea",
+    "WoodenBarrel",
+    "WoodenBarrel01",
+    "WoodenBarrel02",
+    "WoodenBarrel04",
+    "WoodenBarrel_Firedeep",
+    "WoodenBarrel_UnderSea",
+    "WoodenCrateMedium01",
+    "WoodenCrateMedium_UnderSea",
+    "WoodenCrateSmall",
+    "WoodenCrateSmall_UnderSea",
+    "WoodenCrate_Firedeep_01",
+    "WoodenCrate_Firedeep_02",
+    "WoodsmanAxe"
+  ],
+  "coords": [
+    {
+      "x": 1290.0,
+      "y": 585.0,
+      "z": 80.0,
+      "yaw": 180.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -1235.0,
+      "y": -970.0,
+      "z": 65.0,
+      "yaw": 285.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -610.0,
+      "y": -1445.0,
+      "z": 55.0,
+      "yaw": 70.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": 1015.0,
+      "y": 380.0,
+      "z": 40.0,
+      "yaw": 180.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -150.0,
+      "y": 1425.0,
+      "z": 40.0,
+      "yaw": 65.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -1175.0,
+      "y": -665.0,
+      "z": 50.0,
+      "yaw": 45.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    }
+  ],
+  "_modules": {
+    "Firedeep_BlazeTunnel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "烈火隧道",
+      "img_name": "BlazeTunnel",
+      "sl_base_name": "Firedeep_BlazeTunnel"
+    },
+    "Firedeep_BurningCourt": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "焚庭",
+      "img_name": "BurningCourt",
+      "sl_base_name": "Firedeep_BurningCourt"
+    },
+    "Firedeep_LavaCrossway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔岩岔路",
+      "img_name": "LavaCrossway",
+      "sl_base_name": "Firedeep_LavaCrossway"
+    },
+    "Firedeep_MiningPassage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "采矿通道",
+      "img_name": "MiningPassage",
+      "sl_base_name": "Firedeep_MiningPassage"
+    },
+    "Firedeep_MoltenPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔坑",
+      "img_name": "MoltenPit",
+      "sl_base_name": "Firedeep_MoltenPit"
+    }
+  },
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "砍柴斧",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

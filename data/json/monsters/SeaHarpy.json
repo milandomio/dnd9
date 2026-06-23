@@ -1,0 +1,195 @@
+{
+  "name": "SeaHarpy",
+  "translation": "海洋鹰身女妖",
+  "coords": [
+    {
+      "x": 1028.1771,
+      "y": 704.3205,
+      "z": 670.0,
+      "yaw": 175.0,
+      "map": "EmptyModule_1F_09",
+      "file": "EmptyModule_1F_09_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 550.0802,
+      "y": 243.994,
+      "z": 670.0,
+      "yaw": 345.0,
+      "map": "EmptyModule_1F_13",
+      "file": "EmptyModule_1F_13_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": -578.0,
+      "y": -638.0,
+      "z": 1317.7876,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 635.0,
+      "y": 286.0,
+      "z": 1317.7876,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": -8.0,
+      "y": 379.0,
+      "z": 3291.8486,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": -167.0,
+      "y": 2445.0,
+      "z": 3291.8486,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 115.0,
+      "y": 322.0,
+      "z": 1259.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 180.0,
+      "y": 105.0,
+      "z": 3125.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 940.0,
+      "y": -1410.0,
+      "z": 670.0,
+      "yaw": 165.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    }
+  ],
+  "_modules": {
+    "EmptyModule_1F_09": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "5-1模块",
+      "img_name": "EmptyModule_1F_09",
+      "sl_base_name": ""
+    },
+    "EmptyModule_1F_13": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "6-5模块",
+      "img_name": "EmptyModule_1F_13",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_HangingShip": {
+      "rotate": 90.0,
+      "offset_x": 1600,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "吊船",
+      "img_name": "ShipGraveyard_HangingShip",
+      "sl_base_name": "ShipGraveyard_HangingShip"
+    },
+    "ShipGraveyard_Oceanvolcano": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底火山",
+      "img_name": "ShipGraveyard_Oceanvolcano",
+      "sl_base_name": "ShipGraveyard_Oceanvolcano"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_Trench": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海沟",
+      "img_name": "ShipGraveyard_Trench",
+      "sl_base_name": "ShipGraveyard_Trench"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "海洋鹰身女妖",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 45.0,
+          "豪客赛": 68.0
+        }
+      }
+    ]
+  }
+}

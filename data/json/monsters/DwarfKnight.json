@@ -1,0 +1,43 @@
+{
+  "name": "DwarfKnight",
+  "translation": "矮人骑士",
+  "coords": [
+    {
+      "x": 5.0,
+      "y": 0.0,
+      "z": 465.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight"
+    }
+  ],
+  "_modules": {
+    "Firedeep_LavaCrossway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔岩岔路",
+      "img_name": "LavaCrossway",
+      "sl_base_name": "Firedeep_LavaCrossway"
+    }
+  },
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "矮人骑士",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

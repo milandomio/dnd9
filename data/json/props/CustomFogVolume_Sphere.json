@@ -1,0 +1,30 @@
+{
+  "name": "CustomFogVolume_Sphere",
+  "translation": "球形雾",
+  "coords": [
+    {
+      "x": 750.0,
+      "y": -1350.0001,
+      "z": -3360.4297,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_A.json",
+      "version": "(A)",
+      "label": "球形雾"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    }
+  }
+}

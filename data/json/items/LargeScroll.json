@@ -1,0 +1,147 @@
+{
+  "name": "LargeScroll",
+  "translation": "远古卷轴",
+  "category": "",
+  "variant_count": 7,
+  "monsters": [
+    "Coffin_06",
+    "GoldChest",
+    "GoldChest_UnderSea",
+    "Hoard01",
+    "Hoard01_3",
+    "Hoard01_5",
+    "Hoard01_6",
+    "Hoard01_9",
+    "HoardChest",
+    "HoardChest01",
+    "HoardChest01_3",
+    "HoardChest01_9",
+    "LargeScroll",
+    "MarvelousChest",
+    "OrnateChestLarge",
+    "OrnateChestLarge_Locked",
+    "OrnateChestLarge_Locked_UnderSea",
+    "OrnateChestLarge_UnderSea",
+    "SuperHoard01_9",
+    "WoodenCrateMedium01",
+    "WoodenCrateMedium_UnderSea",
+    "WoodenCrateSmall",
+    "WoodenCrateSmall_UnderSea",
+    "WoodenCrate_Firedeep_01",
+    "WoodenCrate_Firedeep_02"
+  ],
+  "coords": [
+    {
+      "x": -1333.0,
+      "y": -150.0,
+      "z": 60.0,
+      "yaw": 270.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "LargeScroll"
+    },
+    {
+      "x": -143.49403,
+      "y": 737.14954,
+      "z": 75.586716,
+      "yaw": 330.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LargeScroll"
+    },
+    {
+      "x": 489.47055,
+      "y": -427.4095,
+      "z": 76.0,
+      "yaw": 35.0,
+      "map": "Ruins_GreatHall_02_Destroyed",
+      "file": "Ruins_GreatHall_02_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LargeScroll"
+    },
+    {
+      "x": 405.3622,
+      "y": 30.184124,
+      "z": 100.0,
+      "yaw": 335.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LargeScroll"
+    },
+    {
+      "x": 565.0,
+      "y": -765.0,
+      "z": 700.0,
+      "yaw": 5.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "LargeScroll"
+    }
+  ],
+  "_modules": {
+    "Ruins_Bath": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "洗澡堂",
+      "img_name": "Ruins_Bath",
+      "sl_base_name": "Ruins_Bath"
+    },
+    "Ruins_GreatHall_01_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "礼拜堂 A",
+      "img_name": "Ruins_GreatHall_01_Destroyed",
+      "sl_base_name": "Ruins_GreatHall_01_Destroyed"
+    },
+    "Ruins_GreatHall_02_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "礼拜堂 B",
+      "img_name": "Ruins_GreatHall_02_Destroyed",
+      "sl_base_name": "Ruins_GreatHall_02_Destroyed"
+    },
+    "Ruins_GreatHall_03_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "礼拜堂 C",
+      "img_name": "Ruins_GreatHall_03_Destroyed",
+      "sl_base_name": "Ruins_GreatHall_03_Destroyed"
+    },
+    "Ruins_Keep": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "要塞",
+      "img_name": "Ruins_Keep",
+      "sl_base_name": "Ruins_Keep"
+    }
+  }
+}

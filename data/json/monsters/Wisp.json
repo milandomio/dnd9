@@ -1,0 +1,158 @@
+{
+  "name": "Wisp",
+  "translation": "幻灵",
+  "coords": [
+    {
+      "x": 1105.0034,
+      "y": 714.1544,
+      "z": 0.0,
+      "yaw": 175.0,
+      "map": "Ruins_Forest_01",
+      "file": "Ruins_Forest_01_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": -1361.7740928,
+      "y": 634.49127,
+      "z": 0.0,
+      "yaw": 295.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Wisp",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -1294.80454,
+      "y": -647.58749,
+      "z": 0.0,
+      "yaw": 295.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Wisp",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 528.0,
+      "y": 603.00002,
+      "z": 0.0,
+      "yaw": 35.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Wisp",
+      "variant_count": 2,
+      "variant_names": [
+        "幻灵",
+        "史莱姆"
+      ]
+    },
+    {
+      "x": -359.0,
+      "y": -81.00001,
+      "z": 0.0,
+      "yaw": 35.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": 244.0,
+      "y": 252.0,
+      "z": 9.318847e-05,
+      "yaw": 180.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": -856.0,
+      "y": 827.0,
+      "z": 0.0001,
+      "yaw": 180.0,
+      "map": "Ruins_WollfColony",
+      "file": "Ruins_WollfColony_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": -1096.0,
+      "y": -526.0,
+      "z": 0.0001,
+      "yaw": 180.0,
+      "map": "Ruins_WollfColony",
+      "file": "Ruins_WollfColony_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    }
+  ],
+  "_modules": {
+    "Ruins_Forest_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "森林 A",
+      "img_name": "Ruins_Forest_01",
+      "sl_base_name": "Ruins_Forest_01"
+    },
+    "Ruins_Forest_08": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "林间小路",
+      "img_name": "Ruins_Forest_08",
+      "sl_base_name": "Ruins_Forest_08"
+    },
+    "Ruins_Wells_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "水井",
+      "img_name": "Ruins_Wells_02",
+      "sl_base_name": "Ruins_Wells_02"
+    },
+    "Ruins_WollfColony": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "狼穴",
+      "img_name": "Ruins_WollfColony",
+      "sl_base_name": "Ruins_WollfColony"
+    }
+  },
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "幻灵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 33.4,
+          "普通": 32.95,
+          "豪客赛": 71.5
+        }
+      }
+    ]
+  }
+}

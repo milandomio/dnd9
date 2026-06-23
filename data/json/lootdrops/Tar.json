@@ -1,0 +1,126 @@
+{
+  "name": "Tar",
+  "translation": "焦油",
+  "monsters": [
+    {
+      "name": "TarBarrel",
+      "entity_name": "TarBarrel",
+      "translation": "焦油木桶",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 1705.715,
+          "y": 9.2612705,
+          "z": 20.0,
+          "yaw": 255.0,
+          "map": "ShipGraveyard_AbandonedShip_01",
+          "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+          "version": "",
+          "label": "TarBarrel",
+          "spawn_rate": 100.0,
+          "score": 100.0
+        },
+        {
+          "x": 3763.9504,
+          "y": 2119.0369,
+          "z": 303.24527,
+          "yaw": 45.0,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)",
+          "label": "TarBarrel",
+          "spawn_rate": 100.0,
+          "score": 100.0
+        },
+        {
+          "x": 120.0,
+          "y": -460.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_SeaFortress",
+          "file": "ShipGraveyard_SeaFortress_D.json",
+          "version": "(D)",
+          "label": "TarBarrel",
+          "spawn_rate": 100.0,
+          "score": 100.0
+        },
+        {
+          "x": 606.27875,
+          "y": 485.87515,
+          "z": 995.0,
+          "yaw": 210.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)",
+          "label": "TarBarrel",
+          "spawn_rate": 100.0,
+          "score": 100.0
+        }
+      ],
+      "max_score": 100.0
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "焦油木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_SeaFortress": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 A",
+      "img_name": "ShipGraveyard_SeaFortress",
+      "sl_base_name": "ShipGraveyard_SeaFortress"
+    },
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "name": "WhiteShark",
+  "translation": "大白鲨",
+  "coords": [
+    {
+      "x": 2800.0,
+      "y": 1300.0,
+      "z": -350.0,
+      "yaw": 290.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "WhiteShark"
+    },
+    {
+      "x": 215.0,
+      "y": 65.0,
+      "z": -110.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "WhiteShark",
+      "variant_count": 2,
+      "variant_names": [
+        "巨型水母",
+        "大白鲨"
+      ]
+    },
+    {
+      "x": 1004.0,
+      "y": -1230.0,
+      "z": -530.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "WhiteShark"
+    },
+    {
+      "x": 501.979454,
+      "y": -1447.4524999999999,
+      "z": -254.0,
+      "yaw": 175.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "WhiteShark",
+      "variant_count": 3,
+      "variant_names": [
+        "大白鲨",
+        "章鱼",
+        "乌贼"
+      ]
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_Hole": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 4800,
+      "group": "ShipGraveyard",
+      "translation": "蓝洞",
+      "img_name": "ShipGraveyard_Hole",
+      "sl_base_name": "ShipGraveyard_Hole"
+    },
+    "ShipGraveyard_SunkenShip_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉没之船",
+      "img_name": "ShipGraveyard_SunkenShip_01",
+      "sl_base_name": "ShipGraveyard_SunkenShip_01"
+    },
+    "ShipGraveyard_Trench": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海沟",
+      "img_name": "ShipGraveyard_Trench",
+      "sl_base_name": "ShipGraveyard_Trench"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "大白鲨",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 33.25,
+          "普通": 25.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

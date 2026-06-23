@@ -1,0 +1,40 @@
+{
+  "name": "ArcheryTarget",
+  "translation": "射箭靶",
+  "coords": [
+    {
+      "x": -115.0,
+      "y": 1205.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "射箭靶"
+    },
+    {
+      "x": -125.0,
+      "y": 910.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "射箭靶"
+    }
+  ],
+  "_modules": {
+    "Ruins_Barbican_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "瓮城",
+      "img_name": "Ruins_Barbican_01",
+      "sl_base_name": "Ruins_Barbican_01"
+    }
+  }
+}

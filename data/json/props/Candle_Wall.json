@@ -1,0 +1,118 @@
+{
+  "name": "Candle_Wall",
+  "translation": "Candle_Wall",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "AdmirerRoom",
+      "file": "AdmirerRoom_A.json",
+      "version": "(A)",
+      "label": "Candle_Wall"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CliffBridge",
+      "file": "CliffBridge_A.json",
+      "version": "(A)",
+      "label": "Candle_Wall"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_A.json",
+      "version": "(A)",
+      "label": "Candle_Wall"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "FourWayConnect",
+      "file": "FourWayConnect_A.json",
+      "version": "(A)",
+      "label": "Candle_Wall"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "TheCage",
+      "file": "TheCage_A.json",
+      "version": "(A)",
+      "label": "Candle_Wall"
+    }
+  ],
+  "_modules": {
+    "AdmirerRoom": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "信徒会所",
+      "img_name": "AdmirerRoom",
+      "sl_base_name": "AdmirerRoom"
+    },
+    "CliffBridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "悬崖",
+      "img_name": "CliffBridge",
+      "sl_base_name": "CliffBridge"
+    },
+    "ComplexHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "门控房间",
+      "img_name": "ComplexHall",
+      "sl_base_name": "ComplexHall"
+    },
+    "FourWayConnect": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "中心祭坛",
+      "img_name": "FourWayConnect",
+      "sl_base_name": "FourWayConnect"
+    },
+    "TheCage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "牢笼",
+      "img_name": "TheCage",
+      "sl_base_name": "TheCage"
+    }
+  }
+}

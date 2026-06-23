@@ -1,0 +1,96 @@
+{
+  "name": "Inferno_SplineMeshParticle_Fog",
+  "translation": "Inferno_SplineMeshParticle_Fog",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_A.json",
+      "version": "(A)",
+      "label": "Inferno_SplineMeshParticle_Fog"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_A.json",
+      "version": "(A)",
+      "label": "Inferno_SplineMeshParticle_Fog"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_A.json",
+      "version": "(A)",
+      "label": "Inferno_SplineMeshParticle_Fog"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_A.json",
+      "version": "(A)",
+      "label": "Inferno_SplineMeshParticle_Fog"
+    }
+  ],
+  "_modules": {
+    "Inferno_Bloodyfalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火瀑布",
+      "img_name": "Inferno_Bloodyfalls",
+      "sl_base_name": "Inferno_Bloodyfalls"
+    },
+    "Inferno_Drain": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "排水沟",
+      "img_name": "Inferno_Drain",
+      "sl_base_name": "Inferno_Drain"
+    },
+    "Inferno_Judgementroad": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "判罪之路",
+      "img_name": "Inferno_Judgementroad",
+      "sl_base_name": "Inferno_Judgementroad"
+    },
+    "Inferno_Obelisk": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "腐化尖碑",
+      "img_name": "Inferno_Obelisk",
+      "sl_base_name": "Inferno_Obelisk"
+    }
+  }
+}

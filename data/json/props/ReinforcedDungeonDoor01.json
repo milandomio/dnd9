@@ -1,0 +1,118 @@
+{
+  "name": "ReinforcedDungeonDoor01",
+  "translation": "铁门",
+  "coords": [
+    {
+      "x": -90.0,
+      "y": -30.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "Armory",
+      "file": "Armory_A.json",
+      "version": "(A)",
+      "label": "ReinforcedDungeonDoor01"
+    },
+    {
+      "x": -1000.0,
+      "y": -230.0,
+      "z": 500.0,
+      "yaw": 90.0,
+      "map": "InfernoRooms",
+      "file": "InfernoRooms_A.json",
+      "version": "(A)",
+      "label": "ReinforcedDungeonDoor01"
+    },
+    {
+      "x": -190.0,
+      "y": -970.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Ruins_GreatHall_02_Destroyed",
+      "file": "Ruins_GreatHall_02_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ReinforcedDungeonDoor02"
+    },
+    {
+      "x": 2258.0,
+      "y": 4055.0,
+      "z": 200.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_A.json",
+      "version": "(A)",
+      "label": "ReinforcedDungeonDoor02"
+    },
+    {
+      "x": 344.99997,
+      "y": 70.00004,
+      "z": -399.9999,
+      "yaw": 180.0,
+      "map": "TreasureRoom_01",
+      "file": "TreasureRoom_01_A.json",
+      "version": "(A)",
+      "label": "ReinforcedDungeonDoor01"
+    }
+  ],
+  "_modules": {
+    "Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军械库",
+      "img_name": "Armory",
+      "sl_base_name": "Armory"
+    },
+    "InfernoRooms": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "仪式室",
+      "img_name": "InfernoRooms",
+      "sl_base_name": "InfernoRooms"
+    },
+    "Ruins_GreatHall_02_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "礼拜堂 B",
+      "img_name": "Ruins_GreatHall_02_Destroyed",
+      "sl_base_name": "Ruins_GreatHall_02_Destroyed"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "TreasureRoom_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "宝藏间",
+      "img_name": "TreasureRoom_01",
+      "sl_base_name": "TreasureRoom_01"
+    }
+  }
+}

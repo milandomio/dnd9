@@ -1,0 +1,229 @@
+{
+  "name": "TidewalkerSlinger",
+  "translation": "踏潮者飞镖投手",
+  "coords": [
+    {
+      "x": -340.0,
+      "y": -410.0,
+      "z": -755.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_09",
+      "file": "EmptyModule_1F_09_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "variant_count": 3,
+      "variant_names": [
+        "TideWalkerClubFighter",
+        "踏潮者飞镖投手",
+        "TideWalkerSpearer"
+      ]
+    },
+    {
+      "x": -950.0,
+      "y": -520.0,
+      "z": -955.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_13",
+      "file": "EmptyModule_1F_13_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "variant_count": 3,
+      "variant_names": [
+        "TideWalkerClubFighter",
+        "踏潮者飞镖投手",
+        "TideWalkerSpearer"
+      ]
+    },
+    {
+      "x": -689.0,
+      "y": 431.0,
+      "z": -999.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger"
+    },
+    {
+      "x": -218.0,
+      "y": -697.0,
+      "z": 397.0,
+      "yaw": 190.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger"
+    },
+    {
+      "x": -3005.0,
+      "y": -165.0,
+      "z": -905.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "TidewalkerSlinger",
+      "variant_count": 3,
+      "variant_names": [
+        "TideWalkerClubFighter",
+        "踏潮者飞镖投手",
+        "TideWalkerSpearer"
+      ]
+    },
+    {
+      "x": -220.0,
+      "y": 4085.0,
+      "z": -880.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "TidewalkerSlinger",
+      "variant_count": 3,
+      "variant_names": [
+        "TideWalkerClubFighter",
+        "踏潮者飞镖投手",
+        "TideWalkerSpearer"
+      ]
+    },
+    {
+      "x": -18.0,
+      "y": 365.0,
+      "z": -2630.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "variant_count": 5,
+      "variant_names": [
+        "对象链接器",
+        "踏潮者飞镖投手",
+        "TideWalkerClubFighter",
+        "深海食人鱼",
+        "生成器组"
+      ]
+    },
+    {
+      "x": -585.0,
+      "y": 560.0,
+      "z": -1895.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "variant_count": 4,
+      "variant_names": [
+        "TideWalkerClubFighter",
+        "踏潮者飞镖投手",
+        "TideWalkerSpearer",
+        "生成器组"
+      ]
+    },
+    {
+      "x": 598.6364969704582,
+      "y": -572.1141424577584,
+      "z": -1925.0,
+      "yaw": 40.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "variant_count": 4,
+      "variant_names": [
+        "TideWalkerClubFighter",
+        "踏潮者飞镖投手",
+        "TideWalkerSpearer",
+        "生成器组"
+      ]
+    }
+  ],
+  "_modules": {
+    "EmptyModule_1F_09": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "5-1模块",
+      "img_name": "EmptyModule_1F_09",
+      "sl_base_name": ""
+    },
+    "EmptyModule_1F_13": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "6-5模块",
+      "img_name": "EmptyModule_1F_13",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_Hole": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 4800,
+      "group": "ShipGraveyard",
+      "translation": "蓝洞",
+      "img_name": "ShipGraveyard_Hole",
+      "sl_base_name": "ShipGraveyard_Hole"
+    },
+    "ShipGraveyard_Trench": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海沟",
+      "img_name": "ShipGraveyard_Trench",
+      "sl_base_name": "ShipGraveyard_Trench"
+    },
+    "Shipgraveyard_TwinChamber": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底洞穴 B",
+      "img_name": "Shipgraveyard_TwinChamber",
+      "sl_base_name": "Shipgraveyard_TwinChamber"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "踏潮者飞镖投手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 13.4,
+          "普通": 22.5,
+          "豪客赛": 34.0
+        }
+      }
+    ]
+  }
+}

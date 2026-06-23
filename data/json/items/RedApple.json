@@ -1,0 +1,153 @@
+{
+  "name": "RedApple",
+  "translation": "红苹果",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "Slime",
+    "Slime_Unique"
+  ],
+  "coords": [
+    {
+      "x": -1273.0,
+      "y": -11.0,
+      "z": 109.0,
+      "yaw": 0.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": -455.0,
+      "y": -78.0,
+      "z": 507.0,
+      "yaw": 0.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": -459.0,
+      "y": 92.0,
+      "z": 515.0,
+      "yaw": 0.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": 813.0,
+      "y": -868.0,
+      "z": 698.0,
+      "yaw": 0.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": 748.0,
+      "y": -1362.0,
+      "z": 680.0,
+      "yaw": 0.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": 626.0,
+      "y": -770.0,
+      "z": 698.0,
+      "yaw": 0.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": -1197.0,
+      "y": -448.0,
+      "z": -325.0,
+      "yaw": 0.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": -1189.0,
+      "y": -515.0,
+      "z": -325.0,
+      "yaw": 0.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    },
+    {
+      "x": 830.0,
+      "y": -589.0,
+      "z": 98.0,
+      "yaw": 0.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "RedApple"
+    }
+  ],
+  "_modules": {
+    "Ruins_Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "城堡军械库",
+      "img_name": "Ruins_Armory",
+      "sl_base_name": "Ruins_Armory"
+    },
+    "Ruins_Keep": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "要塞",
+      "img_name": "Ruins_Keep",
+      "sl_base_name": "Ruins_Keep"
+    },
+    "Ruins_Refectory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "修道院食堂",
+      "img_name": "Ruins_Refectory",
+      "sl_base_name": "Ruins_Refectory"
+    }
+  },
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "红苹果",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

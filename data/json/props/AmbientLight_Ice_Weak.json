@@ -1,0 +1,128 @@
+{
+  "name": "AmbientLight_Ice_Weak",
+  "translation": "环境光（冰-弱）",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_AbyssTooth",
+      "file": "IceAbyss_AbyssTooth_A.json",
+      "version": "(A)",
+      "label": "环境光（冰-弱）"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_A.json",
+      "version": "(A)",
+      "label": "环境光（冰-弱）"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_HR_D.json",
+      "version": "",
+      "label": "环境光（冰-弱）"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_A.json",
+      "version": "(A)",
+      "label": "环境光（冰-弱）"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_A.json",
+      "version": "(A)",
+      "label": "环境光（冰-弱）"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "环境光（冰-弱）"
+    }
+  ],
+  "_modules": {
+    "IceAbyss_AbyssTooth": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "冰川獠牙",
+      "img_name": "IceAbyss_AbyssTooth",
+      "sl_base_name": "IceAbyss_AbyssTooth"
+    },
+    "IceAbyss_DeepFlow": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "寒渊之流",
+      "img_name": "IceAbyss_DeepFlow",
+      "sl_base_name": "IceAbyss_DeepFlow"
+    },
+    "IceAbyss_FrozenHold": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "霜锢堡垒",
+      "img_name": "IceAbyss_FrozenHold",
+      "sl_base_name": "IceAbyss_FrozenHold"
+    },
+    "IceAbyss_HoundVale": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "犬啸谷",
+      "img_name": "IceAbyss_HoundVale",
+      "sl_base_name": "IceAbyss_HoundVale"
+    },
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    }
+  }
+}

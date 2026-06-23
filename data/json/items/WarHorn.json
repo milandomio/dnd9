@@ -1,0 +1,68 @@
+{
+  "name": "WarHorn",
+  "translation": "战争号角",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 1461.0,
+      "y": 3446.0,
+      "z": 522.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "WarHorn"
+    },
+    {
+      "x": -411.67966,
+      "y": 559.1226,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "WarHorn"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_ShipRest": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉眠之船",
+      "img_name": "ShipGraveyard_ShipRest",
+      "sl_base_name": "ShipGraveyard_ShipRest"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "战争号角",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

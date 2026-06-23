@@ -1,0 +1,74 @@
+{
+  "name": "BrimstoneOre",
+  "translation": "Ore_BrimstoneOre",
+  "coords": [
+    {
+      "x": -45.0,
+      "y": 625.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "Ore_BrimstoneOre"
+    },
+    {
+      "x": -570.0,
+      "y": 330.0,
+      "z": -159.9999,
+      "yaw": 0.0,
+      "map": "InfernoRiver",
+      "file": "InfernoRiver_HR_D.json",
+      "version": "",
+      "label": "Ore_BrimstoneOre"
+    },
+    {
+      "x": 1090.0,
+      "y": 500.0,
+      "z": -200.0,
+      "yaw": 180.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "Ore_BrimstoneOre"
+    }
+  ],
+  "_modules": {
+    "DemonDen": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "炼狱魔窟",
+      "img_name": "DemonDen",
+      "sl_base_name": "DemonDen"
+    },
+    "InfernoRiver": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火之河",
+      "img_name": "InfernoRiver",
+      "sl_base_name": "InfernoRiver"
+    },
+    "Inferno_DeathPlatforms": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火平台",
+      "img_name": "Inferno_DeathPlatforms",
+      "sl_base_name": "Inferno_DeathPlatforms"
+    }
+  }
+}

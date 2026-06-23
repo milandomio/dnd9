@@ -1,0 +1,94 @@
+{
+  "name": "ObsidianOre",
+  "translation": "黑曜石矿",
+  "coords": [
+    {
+      "x": 180.0,
+      "y": 1160.0,
+      "z": -50.0,
+      "yaw": 0.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "Ore_ObsidianOreRandom"
+    },
+    {
+      "x": 80.0,
+      "y": -370.0,
+      "z": 0.0,
+      "yaw": 70.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "Ore_ObsidianOreRandom"
+    },
+    {
+      "x": -1900.0,
+      "y": 2775.0,
+      "z": -3575.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "Ore_ObsidianOre"
+    },
+    {
+      "x": 575.0,
+      "y": -5.0,
+      "z": 100.0,
+      "yaw": 305.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "Ore_ObsidianOreRandom"
+    },
+    {
+      "x": -1245.5024,
+      "y": 1690.6498,
+      "z": -3585.0,
+      "yaw": 270.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "Ore_ObsidianOre"
+    }
+  ],
+  "_modules": {
+    "Firedeep_AnvilOutpost": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "砧火哨站",
+      "img_name": "AnvilOutpost",
+      "sl_base_name": "Firedeep_AnvilOutpost"
+    },
+    "Firedeep_CollapsedDigSite": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "崩陷矿场",
+      "img_name": "CollapsedDigSite",
+      "sl_base_name": "Firedeep_CollapsedDigSite"
+    },
+    "Firedeep_MagmaFalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "岩浆瀑布",
+      "img_name": "Magmafalls",
+      "sl_base_name": "Firedeep_MagmaFalls"
+    }
+  }
+}

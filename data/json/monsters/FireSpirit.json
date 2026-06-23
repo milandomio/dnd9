@@ -1,0 +1,187 @@
+{
+  "name": "FireSpirit",
+  "translation": "火灵",
+  "coords": [
+    {
+      "x": 125.0,
+      "y": -145.0,
+      "z": -110.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "FireSpirit"
+    },
+    {
+      "x": -545.0,
+      "y": 675.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 6,
+      "variant_names": []
+    },
+    {
+      "x": -1250.0,
+      "y": 465.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 6,
+      "variant_names": []
+    },
+    {
+      "x": -485.0,
+      "y": 75.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 6,
+      "variant_names": []
+    },
+    {
+      "x": -750.0,
+      "y": -290.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 6,
+      "variant_names": []
+    },
+    {
+      "x": 65.0,
+      "y": -100.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 6,
+      "variant_names": []
+    },
+    {
+      "x": 865.0,
+      "y": 280.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 6,
+      "variant_names": []
+    },
+    {
+      "x": 200.0,
+      "y": 650.0,
+      "z": -104.99990000000003,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": 1200.0,
+      "y": 1400.0,
+      "z": 450.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -1250.0,
+      "y": -1350.0,
+      "z": 450.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -100.0,
+      "y": -700.0,
+      "z": -104.99990000000003,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireSpirit",
+      "variant_count": 4,
+      "variant_names": []
+    }
+  ],
+  "_modules": {
+    "Firedeep_BrokenStonebridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "断石桥",
+      "img_name": "BrokenStonebridge",
+      "sl_base_name": "Firedeep_BrokenStonebridge"
+    },
+    "Firedeep_MagmaFalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "岩浆瀑布",
+      "img_name": "Magmafalls",
+      "sl_base_name": "Firedeep_MagmaFalls"
+    },
+    "Firedeep_MoltenPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔坑",
+      "img_name": "MoltenPit",
+      "sl_base_name": "Firedeep_MoltenPit"
+    }
+  },
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "火灵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 22.6,
+          "普通": 50.0,
+          "豪客赛": 61.0
+        }
+      }
+    ]
+  }
+}

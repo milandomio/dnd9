@@ -1,0 +1,30 @@
+{
+  "name": "CommemorativePlaque",
+  "translation": "铭文",
+  "coords": [
+    {
+      "x": -1215.0,
+      "y": 820.0,
+      "z": -398.0,
+      "yaw": 0.0,
+      "map": "Hallways",
+      "file": "Hallways_HR_D.json",
+      "version": "",
+      "label": "CommemorativePlaque"
+    }
+  ],
+  "_modules": {
+    "Hallways": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "回廊",
+      "img_name": "Hallways",
+      "sl_base_name": "Hallways"
+    }
+  }
+}

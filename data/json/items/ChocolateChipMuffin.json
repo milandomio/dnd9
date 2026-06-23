@@ -1,0 +1,46 @@
+{
+  "name": "ChocolateChipMuffin",
+  "translation": "巧克力松饼",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 783.0,
+      "y": -262.0,
+      "z": 99.0,
+      "yaw": 0.0,
+      "map": "Barracks",
+      "file": "Barracks_HR_D.json",
+      "version": "",
+      "label": "ChocolateChipMuffin"
+    }
+  ],
+  "_modules": {
+    "Barracks": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军营",
+      "img_name": "Barracks",
+      "sl_base_name": "Barracks"
+    }
+  },
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "巧克力松饼",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.1,
+          "普通": 0.35,
+          "豪客赛": 0.5
+        }
+      }
+    ]
+  }
+}

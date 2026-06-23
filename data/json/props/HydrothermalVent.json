@@ -1,0 +1,134 @@
+{
+  "name": "HydrothermalVent",
+  "translation": "热喷泉口",
+  "coords": [
+    {
+      "x": -855.0,
+      "y": -4030.0,
+      "z": -765.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": 985.0,
+      "y": -635.0,
+      "z": -3495.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": 635.0,
+      "y": -2355.0,
+      "z": -3495.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": -90.0,
+      "y": -1320.0,
+      "z": -3495.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": 1790.0,
+      "y": -1320.0,
+      "z": -3495.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": -420.0,
+      "y": 85.0,
+      "z": -2380.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": 465.0,
+      "y": -230.0,
+      "z": -2385.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": 155.0,
+      "y": 550.0,
+      "z": -2795.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    },
+    {
+      "x": -620.0,
+      "y": -10.0,
+      "z": -2790.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "HydrothermalVent"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    },
+    "ShipGraveyard_StarfishValley": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海星谷",
+      "img_name": "ShipGraveyard_StarfishValley",
+      "sl_base_name": "ShipGraveyard_StarfishValley"
+    },
+    "ShipGraveyard_Trench": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海沟",
+      "img_name": "ShipGraveyard_Trench",
+      "sl_base_name": "ShipGraveyard_Trench"
+    }
+  }
+}

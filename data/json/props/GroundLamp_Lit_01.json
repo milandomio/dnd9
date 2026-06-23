@@ -1,0 +1,272 @@
+{
+  "name": "GroundLamp_Lit_01",
+  "translation": "地面灯",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveMaze_Center_02",
+      "file": "CaveMaze_Center_02_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveTown",
+      "file": "CaveTown_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center_02",
+      "file": "GoblinJail_Center_02_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "LowPyramid",
+      "file": "LowPyramid_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "SpiderCave_02",
+      "file": "SpiderCave_02_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_A.json",
+      "version": "(A)",
+      "label": "地面灯"
+    }
+  ],
+  "_modules": {
+    "CaveMaze": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 A",
+      "img_name": "CaveMaze",
+      "sl_base_name": "CaveMaze"
+    },
+    "CaveMaze_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 B",
+      "img_name": "CaveMaze_02",
+      "sl_base_name": "CaveMaze_Center_02"
+    },
+    "CaveTown": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林小镇 A",
+      "img_name": "CaveTown",
+      "sl_base_name": "CaveTown"
+    },
+    "CaveTown_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林小镇 B",
+      "img_name": "CaveTown_02",
+      "sl_base_name": "CaveTown_02"
+    },
+    "Cave_AntsNest": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蚁巢",
+      "img_name": "Cave_AntsNest",
+      "sl_base_name": "Cave_AntsNest"
+    },
+    "CavernLake_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "岩洞湖 A",
+      "img_name": "CavernLake_02",
+      "sl_base_name": "CavernLake_02"
+    },
+    "GoblinJail_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林监狱 A",
+      "img_name": "GoblinJail_Center",
+      "sl_base_name": "GoblinJail_Center"
+    },
+    "GoblinJail_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林监狱 B",
+      "img_name": "GoblinJail_Center_02",
+      "sl_base_name": "GoblinJail_Center_02"
+    },
+    "LowPyramid": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "金字塔",
+      "img_name": "LowPyramid",
+      "sl_base_name": "LowPyramid"
+    },
+    "Ruins_Forest_06": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "迷失森林",
+      "img_name": "Ruins_Forest_06",
+      "sl_base_name": "Ruins_Forest_06"
+    },
+    "SpiderCave_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蜘蛛洞",
+      "img_name": "SpiderCave_02",
+      "sl_base_name": "SpiderCave_02"
+    },
+    "StoneGrave_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "石坟 A",
+      "img_name": "StoneGrave_Center",
+      "sl_base_name": "StoneGrave_Center"
+    }
+  }
+}

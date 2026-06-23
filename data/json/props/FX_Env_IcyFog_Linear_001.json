@@ -1,0 +1,52 @@
+{
+  "name": "FX_Env_IcyFog_Linear_001",
+  "translation": "FX_Env_IcyFog_Linear_001",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_Pillars",
+      "file": "IceAbyss_Pillars_A.json",
+      "version": "(A)",
+      "label": "FX_Env_IcyFog_Linear_001"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_StaircaseHill",
+      "file": "IceAbyss_StaircaseHill_A.json",
+      "version": "(A)",
+      "label": "FX_Env_IcyFog_Linear_001"
+    }
+  ],
+  "_modules": {
+    "IceAbyss_Pillars": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "石柱廊",
+      "img_name": "IceAbyss_Pillars",
+      "sl_base_name": "IceAbyss_Pillars"
+    },
+    "IceAbyss_StaircaseHill": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "阶梯山丘",
+      "img_name": "IceAbyss_StaircaseHill",
+      "sl_base_name": "IceAbyss_StaircaseHill"
+    }
+  }
+}

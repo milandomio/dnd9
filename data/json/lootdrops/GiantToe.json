@@ -1,0 +1,240 @@
+{
+  "name": "GiantToe",
+  "translation": "巨人脚趾",
+  "monsters": [
+    {
+      "name": "FrostGiantBerserker",
+      "entity_name": "FrostGiantBerserker",
+      "translation": "冰霜巨人狂战士",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 708.0,
+          "y": -7.0,
+          "z": 0.0001,
+          "yaw": 20.0,
+          "map": "IceCave_Barricade",
+          "file": "IceCave_Barricade_HR_D.json",
+          "version": "",
+          "label": "FrostGiantBerserker",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 644.0,
+          "y": -157.00002,
+          "z": -81.902596,
+          "yaw": 180.0,
+          "map": "IceCave_Bridge",
+          "file": "IceCave_Bridge_HR_D.json",
+          "version": "",
+          "label": "FrostGiantBerserker",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 161.0,
+          "y": -253.0,
+          "z": -299.99988,
+          "yaw": 0.0,
+          "map": "IceCave_DualCaverns",
+          "file": "IceCave_DualCaverns_HR_D.json",
+          "version": "",
+          "label": "FrostGiantBerserker",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -21.0,
+          "y": 188.0,
+          "z": 68.46484,
+          "yaw": 0.0,
+          "map": "IceCave_NarrowBridge",
+          "file": "IceCave_NarrowBridge_HR_D.json",
+          "version": "",
+          "label": "FrostGiantBerserker",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 288.999985,
+          "y": -356.0,
+          "z": -399.99989539649,
+          "yaw": 180.0,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_HR_D.json",
+          "version": "",
+          "label": "FrostGiantBerserker",
+          "variant_count": 3,
+          "variant_names": [
+            "冰霜骷髅弩手",
+            "冰霜巨人狂战士",
+            "冰霜持盾巨人"
+          ],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        }
+      ],
+      "max_score": 4.5
+    },
+    {
+      "name": "FrostGiantShielder",
+      "entity_name": "FrostGiantShielder",
+      "translation": "冰霜持盾巨人",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 161.0,
+          "y": -112.0,
+          "z": -198.9999,
+          "yaw": 180.0,
+          "map": "IceCave_CaveSwamp",
+          "file": "IceCave_CaveSwamp_HR_D.json",
+          "version": "",
+          "label": "FrostGiantShielder",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -254.0,
+          "y": 1038.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "IceCave_IcicleCave",
+          "file": "IceCave_IcicleCave_HR_D.json",
+          "version": "",
+          "label": "FrostGiantShielder",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 289.0,
+          "y": -40.0,
+          "z": -399.999895,
+          "yaw": 180.0,
+          "map": "IceCave_Spiral",
+          "file": "IceCave_Spiral_HR_D.json",
+          "version": "",
+          "label": "FrostGiantShielder",
+          "variant_count": 3,
+          "variant_names": [
+            "冰霜骷髅弩手",
+            "冰霜巨人狂战士",
+            "冰霜持盾巨人"
+          ],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        }
+      ],
+      "max_score": 4.5
+    }
+  ],
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰霜巨人狂战士",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      },
+      {
+        "translation": "冰霜持盾巨人",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "IceCave_Barricade": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "拒马阵地",
+      "img_name": "IceCave_Barricade",
+      "sl_base_name": "IceCave_Barricade"
+    },
+    "IceCave_Bridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰桥",
+      "img_name": "IceCave_Bridge",
+      "sl_base_name": "IceCave_Bridge"
+    },
+    "IceCave_DualCaverns": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "双子洞穴",
+      "img_name": "IceCave_DualCaverns",
+      "sl_base_name": "IceCave_DualCaverns"
+    },
+    "IceCave_NarrowBridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "窄桥",
+      "img_name": "IceCave_NarrowBridge",
+      "sl_base_name": "IceCave_NarrowBridge"
+    },
+    "IceCave_Spiral": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "转楼",
+      "img_name": "IceCave_Spiral",
+      "sl_base_name": "IceCave_Spiral"
+    },
+    "IceCave_CaveSwamp": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "洞穴沼泽",
+      "img_name": "IceCave_CaveSwamp",
+      "sl_base_name": "IceCave_CaveSwamp"
+    },
+    "IceCave_IcicleCave": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰柱洞",
+      "img_name": "IceCave_IcicleCave",
+      "sl_base_name": "IceCave_IcicleCave"
+    }
+  }
+}

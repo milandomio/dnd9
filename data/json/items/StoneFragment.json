@@ -1,0 +1,98 @@
+{
+  "name": "StoneFragment",
+  "translation": "小碎石",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -1053.8586,
+      "y": -941.10406,
+      "z": -1407.1415,
+      "yaw": 344.8,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "StoneFragment"
+    },
+    {
+      "x": -435.09412,
+      "y": -1299.598,
+      "z": -955.4719,
+      "yaw": 147.1,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "StoneFragment"
+    },
+    {
+      "x": 1412.0515,
+      "y": 1410.2119,
+      "z": -960.1615,
+      "yaw": 298.2,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "StoneFragment"
+    },
+    {
+      "x": 1150.1445,
+      "y": 1000.6179,
+      "z": -1508.5464,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "StoneFragment"
+    },
+    {
+      "x": 1.7578763,
+      "y": 332.13425,
+      "z": -2000.6415,
+      "yaw": 89.3,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "StoneFragment"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_ShipRest": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉眠之船",
+      "img_name": "ShipGraveyard_ShipRest",
+      "sl_base_name": "ShipGraveyard_ShipRest"
+    },
+    "ShipGraveyard_SpawningPool": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "孵化池",
+      "img_name": "ShipGraveyard_SpawningPool",
+      "sl_base_name": "ShipGraveyard_SpawningPool"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "小碎石",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

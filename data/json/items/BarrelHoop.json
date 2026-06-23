@@ -1,0 +1,166 @@
+{
+  "name": "BarrelHoop",
+  "translation": "桶箍",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -1249.4319,
+      "y": 1230.0737,
+      "z": -879.7757,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "BarrelHoop"
+    },
+    {
+      "x": 304.2021,
+      "y": -1652.2007,
+      "z": 435.04498,
+      "yaw": 42.2,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BarrelHoop"
+    },
+    {
+      "x": 118.789566,
+      "y": -1731.4846,
+      "z": -242.4386,
+      "yaw": 290.5,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BarrelHoop"
+    },
+    {
+      "x": 170.0,
+      "y": 899.0,
+      "z": 213.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "BarrelHoop"
+    },
+    {
+      "x": -455.0,
+      "y": -495.0,
+      "z": 2355.0,
+      "yaw": 60.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "BarrelHoop"
+    },
+    {
+      "x": -428.0608,
+      "y": -120.881004,
+      "z": -1799.8156,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "BarrelHoop"
+    },
+    {
+      "x": 611.9907,
+      "y": 136.54211,
+      "z": -1564.3541,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "BarrelHoop"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_FloatingHouse_01": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水手客栈",
+      "img_name": "ShipGraveyard_FloatingHouse_01",
+      "sl_base_name": "ShipGraveyard_FloatingHouse_01"
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_MistWatch": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 B",
+      "img_name": "ShipGraveyard_MistWatch",
+      "sl_base_name": "ShipGraveyard_MistWatch"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_SpawningPool": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "孵化池",
+      "img_name": "ShipGraveyard_SpawningPool",
+      "sl_base_name": "ShipGraveyard_SpawningPool"
+    },
+    "ShipGraveyard_SunkenShip_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉没之船",
+      "img_name": "ShipGraveyard_SunkenShip_01",
+      "sl_base_name": "ShipGraveyard_SunkenShip_01"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "桶箍",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

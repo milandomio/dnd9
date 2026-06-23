@@ -1,0 +1,30 @@
+{
+  "name": "SceneRenderInterior",
+  "translation": "SceneRenderInterior",
+  "coords": [
+    {
+      "x": -62.0,
+      "y": -636.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "IceCave_Watchtower",
+      "file": "IceCave_Watchtower_A.json",
+      "version": "(A)",
+      "label": "SceneRenderInterior"
+    }
+  ],
+  "_modules": {
+    "IceCave_Watchtower": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "了望塔",
+      "img_name": "IceCave_WatchTower",
+      "sl_base_name": "IceCave_Watchtower"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "BossTriggerBase",
+  "translation": "Boss触发器",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_DemonicDen",
+      "file": "IceAbyss_DemonicDen_A.json",
+      "version": "(A)",
+      "label": "Boss触发器"
+    }
+  ],
+  "_modules": {
+    "IceAbyss_DemonicDen": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "冰渊魔窟",
+      "img_name": "IceAbyss_DemonicDen",
+      "sl_base_name": "IceAbyss_DemonicDen"
+    }
+  }
+}

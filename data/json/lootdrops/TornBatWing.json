@@ -1,0 +1,326 @@
+{
+  "name": "TornBatWing",
+  "translation": "被扯下的蝙蝠翅膀",
+  "monsters": [
+    {
+      "name": "DemonBat",
+      "entity_name": "DemonBat",
+      "translation": "恶魔蝙蝠",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 1070.0,
+          "y": 890.0,
+          "z": 585.0,
+          "yaw": 0.0,
+          "map": "InfernoMouth",
+          "file": "InfernoMouth_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -1170.0,
+          "y": 30.0,
+          "z": 561.0,
+          "yaw": 0.0,
+          "map": "InfernoMouth",
+          "file": "InfernoMouth_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 810.0,
+          "y": -280.0,
+          "z": 804.0,
+          "yaw": 0.0,
+          "map": "InfernoMouth",
+          "file": "InfernoMouth_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -210.0,
+          "y": -210.0,
+          "z": -122.0,
+          "yaw": 55.0,
+          "map": "InfernoRiver",
+          "file": "InfernoRiver_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -50.0,
+          "y": 0.0,
+          "z": 450.0,
+          "yaw": 0.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 600.0,
+          "y": 600.0,
+          "z": 400.0,
+          "yaw": 225.0,
+          "map": "Inferno_Bloodyfalls",
+          "file": "Inferno_Bloodyfalls_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 600.0,
+          "y": -600.0,
+          "z": 400.0,
+          "yaw": 135.0,
+          "map": "Inferno_Bloodyfalls",
+          "file": "Inferno_Bloodyfalls_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -600.0,
+          "y": -600.0,
+          "z": 400.0,
+          "yaw": 45.0,
+          "map": "Inferno_Bloodyfalls",
+          "file": "Inferno_Bloodyfalls_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -600.0,
+          "y": 600.0,
+          "z": 400.0,
+          "yaw": 315.0,
+          "map": "Inferno_Bloodyfalls",
+          "file": "Inferno_Bloodyfalls_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -96.0,
+          "y": -70.0,
+          "z": 180.0,
+          "yaw": 0.0,
+          "map": "Inferno_DownStair",
+          "file": "Inferno_DownStair_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -950.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 2,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 950.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 180.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 2,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 0.0,
+          "y": 250.0,
+          "z": 750.0,
+          "yaw": 90.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 0.0,
+          "y": -250.0,
+          "z": 750.0,
+          "yaw": 270.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 250.0,
+          "y": 0.0,
+          "z": 750.0,
+          "yaw": 360.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -250.0,
+          "y": 0.0,
+          "z": 750.0,
+          "yaw": 180.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_HR_D.json",
+          "version": "",
+          "label": "DemonBat",
+          "variant_count": 4,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 4.5
+        }
+      ],
+      "max_score": 4.5
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔蝙蝠",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "InfernoMouth": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔之口",
+      "img_name": "InfernoMouth",
+      "sl_base_name": "InfernoMouth"
+    },
+    "InfernoRiver": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火之河",
+      "img_name": "InfernoRiver",
+      "sl_base_name": "InfernoRiver"
+    },
+    "Inferno_Batroost": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "蝙蝠窝",
+      "img_name": "Inferno_Batroost",
+      "sl_base_name": "Inferno_Batroost"
+    },
+    "Inferno_Bloodyfalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火瀑布",
+      "img_name": "Inferno_Bloodyfalls",
+      "sl_base_name": "Inferno_Bloodyfalls"
+    },
+    "Inferno_DownStair": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "等候室",
+      "img_name": "Inferno_DownStair",
+      "sl_base_name": "Inferno_DownStair"
+    },
+    "Inferno_Hellwind": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "厄风领",
+      "img_name": "Inferno_Hellwind",
+      "sl_base_name": "Inferno_Hellwind"
+    },
+    "Inferno_Obelisk": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "腐化尖碑",
+      "img_name": "Inferno_Obelisk",
+      "sl_base_name": "Inferno_Obelisk"
+    }
+  }
+}

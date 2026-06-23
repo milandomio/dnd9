@@ -1,0 +1,40 @@
+{
+  "name": "UnderBlood",
+  "translation": "UnderBlood",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 800.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_A.json",
+      "version": "(A)",
+      "label": "UnderBlood"
+    },
+    {
+      "x": -2.7975653e-05,
+      "y": -800.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_A.json",
+      "version": "(A)",
+      "label": "UnderBlood"
+    }
+  ],
+  "_modules": {
+    "Inferno_Judgementroad": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "判罪之路",
+      "img_name": "Inferno_Judgementroad",
+      "sl_base_name": "Inferno_Judgementroad"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "name": "HerbPouch",
+  "translation": "草药袋",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -4846.3037,
+      "y": -729.4646,
+      "z": 4303.829,
+      "yaw": 131.4,
+      "map": "ShipGraveyard_ElephantIsland",
+      "file": "ShipGraveyard_ElephantIsland_HR_D.json",
+      "version": "",
+      "label": "HerbPouch"
+    },
+    {
+      "x": 5.4732547,
+      "y": -334.1443,
+      "z": 65.79547,
+      "yaw": 78.6,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "HerbPouch"
+    },
+    {
+      "x": -291.0,
+      "y": -998.0,
+      "z": 2341.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "HerbPouch"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_ElephantIsland": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "象岛",
+      "img_name": "ShipGraveyard_ElephantIsland",
+      "sl_base_name": "ShipGraveyard_ElephantIsland"
+    },
+    "ShipGraveyard_FloatingHouse_01": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水手客栈",
+      "img_name": "ShipGraveyard_FloatingHouse_01",
+      "sl_base_name": "ShipGraveyard_FloatingHouse_01"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "草药袋",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

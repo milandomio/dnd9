@@ -1,0 +1,52 @@
+{
+  "name": "GoldenDoor",
+  "translation": "黄金门",
+  "coords": [
+    {
+      "x": -1840.0,
+      "y": 1533.0,
+      "z": 946.0,
+      "yaw": 0.0,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "GoldenDoor"
+    },
+    {
+      "x": -345.0,
+      "y": -70.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "TreasureRoom_01",
+      "file": "TreasureRoom_01_HR_D.json",
+      "version": "",
+      "label": "GoldenDoor"
+    }
+  ],
+  "_modules": {
+    "CenterTower": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "巨型环厅",
+      "img_name": "CenterTower",
+      "sl_base_name": "CenterTower"
+    },
+    "TreasureRoom_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "宝藏间",
+      "img_name": "TreasureRoom_01",
+      "sl_base_name": "TreasureRoom_01"
+    }
+  }
+}

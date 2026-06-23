@@ -1,0 +1,30 @@
+{
+  "name": "UnlockingFloorLeverByMonsterKill",
+  "translation": "击杀怪物解锁拉杆",
+  "coords": [
+    {
+      "x": -499.0000009999999,
+      "y": 191.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "击杀怪物解锁拉杆"
+    }
+  ],
+  "_modules": {
+    "Ruins_TowerBridge_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "塔桥",
+      "img_name": "Ruins_TowerBridge_Destroyed",
+      "sl_base_name": "Ruins_TowerBridge_Destroyed"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "FX_Placer_FlyingBook",
+  "translation": "FX_Placer_FlyingBook",
+  "coords": [
+    {
+      "x": 146.0,
+      "y": -772.0,
+      "z": 780.0,
+      "yaw": 0.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_A.json",
+      "version": "(A)",
+      "label": "FX_Placer_FlyingBook"
+    },
+    {
+      "x": -361.0,
+      "y": -13.0,
+      "z": 780.0,
+      "yaw": 0.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_A.json",
+      "version": "(A)",
+      "label": "FX_Placer_FlyingBook"
+    }
+  ],
+  "_modules": {
+    "DarkMagicLibrary_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "黑魔法图书馆",
+      "img_name": "DarkMagicLibrary_Center",
+      "sl_base_name": "DarkMagicLibrary_Center"
+    }
+  }
+}

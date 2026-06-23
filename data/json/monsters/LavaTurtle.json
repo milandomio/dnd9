@@ -1,0 +1,117 @@
+{
+  "name": "LavaTurtle",
+  "translation": "熔岩龟",
+  "coords": [
+    {
+      "x": 905.0,
+      "y": 170.0,
+      "z": -5.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "LavaTurtle"
+    },
+    {
+      "x": -165.0,
+      "y": 765.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "LavaTurtle"
+    },
+    {
+      "x": -570.0,
+      "y": -930.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "LavaTurtle"
+    },
+    {
+      "x": 350.0,
+      "y": 720.0,
+      "z": 10.0,
+      "yaw": 0.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "LavaTurtle"
+    },
+    {
+      "x": -955.0,
+      "y": 5.0,
+      "z": -140.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "LavaTurtle"
+    },
+    {
+      "x": 915.0,
+      "y": -70.0,
+      "z": -140.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "LavaTurtle"
+    }
+  ],
+  "_modules": {
+    "Firedeep_BurningCourt": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "焚庭",
+      "img_name": "BurningCourt",
+      "sl_base_name": "Firedeep_BurningCourt"
+    },
+    "Firedeep_CollapsedDigSite": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "崩陷矿场",
+      "img_name": "CollapsedDigSite",
+      "sl_base_name": "Firedeep_CollapsedDigSite"
+    },
+    "Firedeep_LavaCrossway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔岩岔路",
+      "img_name": "LavaCrossway",
+      "sl_base_name": "Firedeep_LavaCrossway"
+    }
+  },
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "熔岩龟",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "name": "Food_Set_02",
+  "translation": "食物",
+  "coords": [
+    {
+      "x": 793.35626,
+      "y": -225.84337,
+      "z": 99.0,
+      "yaw": 50.0,
+      "map": "Barracks",
+      "file": "Barracks_A.json",
+      "version": "(A)",
+      "label": "食物"
+    },
+    {
+      "x": 985.0,
+      "y": 613.0,
+      "z": 220.75385,
+      "yaw": 305.0,
+      "map": "DeathHall",
+      "file": "DeathHall_A.json",
+      "version": "(A)",
+      "label": "食物"
+    },
+    {
+      "x": 534.74664,
+      "y": -433.94293,
+      "z": 218.0,
+      "yaw": 295.0,
+      "map": "IceCave_Barricade",
+      "file": "IceCave_Barricade_A.json",
+      "version": "(A)",
+      "label": "食物"
+    },
+    {
+      "x": 1226.0,
+      "y": 25.0,
+      "z": -400.0,
+      "yaw": 85.0,
+      "map": "TheCage",
+      "file": "TheCage_A.json",
+      "version": "(A)",
+      "label": "食物"
+    }
+  ],
+  "_modules": {
+    "Barracks": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军营",
+      "img_name": "Barracks",
+      "sl_base_name": "Barracks"
+    },
+    "DeathHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "死亡厅堂",
+      "img_name": "DeathHall",
+      "sl_base_name": "DeathHall"
+    },
+    "IceCave_Barricade": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "拒马阵地",
+      "img_name": "IceCave_Barricade",
+      "sl_base_name": "IceCave_Barricade"
+    },
+    "TheCage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "牢笼",
+      "img_name": "TheCage",
+      "sl_base_name": "TheCage"
+    }
+  }
+}

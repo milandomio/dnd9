@@ -1,0 +1,50 @@
+{
+  "name": "JailDoor02_Unlocked",
+  "translation": "未锁牢门",
+  "coords": [
+    {
+      "x": 625.0,
+      "y": -1115.0,
+      "z": 7.0,
+      "yaw": 0.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_A.json",
+      "version": "(A)",
+      "label": "未锁牢门"
+    },
+    {
+      "x": 165.0,
+      "y": 835.0,
+      "z": -149.0,
+      "yaw": 180.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_A.json",
+      "version": "(A)",
+      "label": "未锁牢门"
+    },
+    {
+      "x": -615.0,
+      "y": -635.0,
+      "z": 3.0,
+      "yaw": 0.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_A.json",
+      "version": "(A)",
+      "label": "未锁牢门"
+    }
+  ],
+  "_modules": {
+    "ComplexHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "门控房间",
+      "img_name": "ComplexHall",
+      "sl_base_name": "ComplexHall"
+    }
+  }
+}

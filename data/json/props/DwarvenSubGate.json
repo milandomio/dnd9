@@ -1,0 +1,30 @@
+{
+  "name": "DwarvenSubGate",
+  "translation": "矮人之门",
+  "coords": [
+    {
+      "x": 800.0,
+      "y": -250.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "DwarvenSubGate"
+    }
+  ],
+  "_modules": {
+    "Firedeep_BrokenStonebridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "断石桥",
+      "img_name": "BrokenStonebridge",
+      "sl_base_name": "Firedeep_BrokenStonebridge"
+    }
+  }
+}

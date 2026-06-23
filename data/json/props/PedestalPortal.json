@@ -1,0 +1,74 @@
+{
+  "name": "PedestalPortal",
+  "translation": "传送门底座",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_Pillars",
+      "file": "IceAbyss_Pillars_HR_D.json",
+      "version": "",
+      "label": "PedestalPortal"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "PedestalPortal"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_ElephantIsland",
+      "file": "ShipGraveyard_ElephantIsland_D.json",
+      "version": "(D)",
+      "label": "PedestalPortal"
+    }
+  ],
+  "_modules": {
+    "IceAbyss_Pillars": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "石柱廊",
+      "img_name": "IceAbyss_Pillars",
+      "sl_base_name": "IceAbyss_Pillars"
+    },
+    "InfernoColumns": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火柱廊",
+      "img_name": "InfernoColumns",
+      "sl_base_name": "InfernoColumns"
+    },
+    "ShipGraveyard_ElephantIsland": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "象岛",
+      "img_name": "ShipGraveyard_ElephantIsland",
+      "sl_base_name": "ShipGraveyard_ElephantIsland"
+    }
+  }
+}

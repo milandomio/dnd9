@@ -1,0 +1,50 @@
+{
+  "name": "Lich",
+  "translation": "巫妖",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -25.0,
+      "yaw": 180.0,
+      "map": "Crypt_DarkRitualRoom_01",
+      "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+      "version": "",
+      "label": "Lich",
+      "variant_count": 4,
+      "variant_names": [
+        "鬼王",
+        "骷髅督军",
+        "巫妖",
+        "生成器组"
+      ]
+    }
+  ],
+  "_modules": {
+    "Crypt_DarkRitualRoom_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "仪式间",
+      "img_name": "Crypt_DarkRitualRoom_01",
+      "sl_base_name": "Crypt_DarkRitualRoom_01"
+    }
+  },
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "巫妖",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0
+        }
+      }
+    ]
+  }
+}

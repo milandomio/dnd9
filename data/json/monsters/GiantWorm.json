@@ -1,0 +1,70 @@
+{
+  "name": "GiantWorm",
+  "translation": "巨型蠕虫",
+  "coords": [
+    {
+      "x": -105.00002,
+      "y": 955.0,
+      "z": -899.6859,
+      "yaw": 270.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "GiantWorm"
+    },
+    {
+      "x": 41.00001,
+      "y": 390.0,
+      "z": -599.999899,
+      "yaw": 90.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_HR_D.json",
+      "version": "",
+      "label": "GiantWorm",
+      "variant_count": 2,
+      "variant_names": [
+        "废墟魔像",
+        "巨型蠕虫"
+      ]
+    }
+  ],
+  "_modules": {
+    "Ruins_Forest_08": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "林间小路",
+      "img_name": "Ruins_Forest_08",
+      "sl_base_name": "Ruins_Forest_08"
+    },
+    "Ruins_Square_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "广场 A",
+      "img_name": "Ruins_Square_01",
+      "sl_base_name": "Ruins_Square_01"
+    }
+  },
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "巨型蠕虫",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 25.0
+        }
+      }
+    ]
+  }
+}

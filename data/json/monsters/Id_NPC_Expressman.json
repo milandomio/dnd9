@@ -1,0 +1,30 @@
+{
+  "name": "Id_NPC_Expressman",
+  "translation": "快递员",
+  "coords": [
+    {
+      "x": 725.0,
+      "y": -70.0,
+      "z": 1665.0,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_ElephantIsland",
+      "file": "ShipGraveyard_ElephantIsland_HR_D.json",
+      "version": "",
+      "label": "快递员"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_ElephantIsland": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "象岛",
+      "img_name": "ShipGraveyard_ElephantIsland",
+      "sl_base_name": "ShipGraveyard_ElephantIsland"
+    }
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "name": "FrostSkeletonWoodenBarrer",
+  "translation": "冰霜骷髅木栅栏",
+  "coords": [
+    {
+      "x": -1320.0,
+      "y": 140.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Altar",
+      "file": "IceCave_Altar_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -1344.0,
+      "y": -75.0,
+      "z": 8.900317e-05,
+      "yaw": 0.0,
+      "map": "IceCave_Altar",
+      "file": "IceCave_Altar_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": 1030.0,
+      "y": 840.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Barricade",
+      "file": "IceCave_Barricade_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -298.00006,
+      "y": -1265.0,
+      "z": -9.0,
+      "yaw": 235.0,
+      "map": "IceCave_Bridge",
+      "file": "IceCave_Bridge_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": 761.4109,
+      "y": 431.2494,
+      "z": -500.0,
+      "yaw": 210.0,
+      "map": "IceCave_CavePathway",
+      "file": "IceCave_CavePathway_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -2801.5532,
+      "y": 447.12164,
+      "z": -416.0,
+      "yaw": 60.0,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -238.3929,
+      "y": 1113.4266,
+      "z": 0.0,
+      "yaw": 65.0,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -1142.915,
+      "y": -1361.3542,
+      "z": 0.0001246134,
+      "yaw": 270.0,
+      "map": "IceCave_Hut_03",
+      "file": "IceCave_Hut_03_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": 450.21918,
+      "y": -484.62177,
+      "z": -599.9999,
+      "yaw": 60.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -1240.0,
+      "y": 540.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -1370.0,
+      "y": 130.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    },
+    {
+      "x": -1370.0,
+      "y": -240.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "冰霜骷髅木桶"
+    }
+  ],
+  "_modules": {
+    "IceCave_Altar": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "圣坛",
+      "img_name": "IceCave_Altar",
+      "sl_base_name": "IceCave_Altar"
+    },
+    "IceCave_Barricade": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "拒马阵地",
+      "img_name": "IceCave_Barricade",
+      "sl_base_name": "IceCave_Barricade"
+    },
+    "IceCave_Bridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰桥",
+      "img_name": "IceCave_Bridge",
+      "sl_base_name": "IceCave_Bridge"
+    },
+    "IceCave_CavePathway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "洞穴通道",
+      "img_name": "IceCave_CavePathway",
+      "sl_base_name": "IceCave_CavePathway"
+    },
+    "IceCave_Hive_03": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "蜂巢",
+      "img_name": "IceCave_Hive_03",
+      "sl_base_name": "IceCave_Hive_03"
+    },
+    "IceCave_Hut_03": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "小屋 C",
+      "img_name": "IceCave_Hut_03",
+      "sl_base_name": "IceCave_Hut_03"
+    },
+    "IceCave_NarrowBridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "窄桥",
+      "img_name": "IceCave_NarrowBridge",
+      "sl_base_name": "IceCave_NarrowBridge"
+    },
+    "IceCave_Path": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "小道 A",
+      "img_name": "IceCave_Path",
+      "sl_base_name": "IceCave_Path"
+    }
+  },
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰霜骷髅木栅栏(随机)",
+        "spawn_rate": 28.26,
+        "drop_rates": {
+          "PVE": 30.28,
+          "普通": 37.0,
+          "豪客赛": 49.625
+        }
+      }
+    ]
+  }
+}

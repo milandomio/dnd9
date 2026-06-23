@@ -1,0 +1,138 @@
+{
+  "name": "HardCrabShell",
+  "translation": "坚硬的蟹壳",
+  "monsters": [
+    {
+      "name": "PinchclawCrab",
+      "entity_name": "PinchclawCrab",
+      "translation": "钳爪蟹",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 2943.0,
+          "y": -1206.0,
+          "z": 102.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_AbandonedShip_01",
+          "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+          "version": "",
+          "label": "PinchclawCrab",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -9.0,
+          "y": 882.0,
+          "z": 298.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Oceanvolcano",
+          "file": "ShipGraveyard_Oceanvolcano_D.json",
+          "version": "(D)",
+          "label": "PinchclawCrab",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 693.0,
+          "y": -168.0,
+          "z": 339.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Oceanvolcano",
+          "file": "ShipGraveyard_Oceanvolcano_D.json",
+          "version": "(D)",
+          "label": "PinchclawCrab",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -1029.0,
+          "y": 422.0,
+          "z": 126.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Oceanvolcano",
+          "file": "ShipGraveyard_Oceanvolcano_D.json",
+          "version": "(D)",
+          "label": "PinchclawCrab",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": -228.0,
+          "y": -889.0,
+          "z": 88.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_Oceanvolcano",
+          "file": "ShipGraveyard_Oceanvolcano_D.json",
+          "version": "(D)",
+          "label": "PinchclawCrab",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        },
+        {
+          "x": 142.0,
+          "y": -398.0,
+          "z": 912.0,
+          "yaw": 0.0,
+          "map": "ShipGraveyard_RockIsland",
+          "file": "ShipGraveyard_RockIsland_D.json",
+          "version": "(D)",
+          "label": "PinchclawCrab",
+          "spawn_rate": 45.0,
+          "score": 4.5
+        }
+      ],
+      "max_score": 4.5
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "钳爪蟹",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_Oceanvolcano": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底火山",
+      "img_name": "ShipGraveyard_Oceanvolcano",
+      "sl_base_name": "ShipGraveyard_Oceanvolcano"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    }
+  }
+}

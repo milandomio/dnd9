@@ -1,0 +1,371 @@
+{
+  "name": "GoblinMage",
+  "translation": "哥布林法师",
+  "coords": [
+    {
+      "x": 1107.6002,
+      "y": -1039.733,
+      "z": -959.9999,
+      "yaw": 155.0,
+      "map": "CaveTown",
+      "file": "CaveTown_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 1107.6002,
+      "y": -1039.733,
+      "z": -959.9999,
+      "yaw": 155.0,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 983.9388,
+      "y": 606.51196,
+      "z": -430.9999,
+      "yaw": 180.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 1107.6002,
+      "y": -187.73303,
+      "z": -596.6183,
+      "yaw": 155.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinMage"
+    },
+    {
+      "x": -613.0,
+      "y": -582.0,
+      "z": 0.314089,
+      "yaw": 0.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinMage"
+    },
+    {
+      "x": -546.5519,
+      "y": 366.12552,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Cave_MoleTunnel",
+      "file": "Cave_MoleTunnel_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 84.932,
+      "y": 80.690895,
+      "z": -219.68593,
+      "yaw": 65.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 144.2649,
+      "y": 679.29333,
+      "z": 0.0,
+      "yaw": 140.0,
+      "map": "Cave_Valley",
+      "file": "Cave_Valley_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 460.93845,
+      "y": 1087.5117,
+      "z": -349.9999,
+      "yaw": 270.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 1005.00366,
+      "y": -449.0887,
+      "z": -510.0,
+      "yaw": 150.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 540.0,
+      "y": 1220.0,
+      "z": 15.144034,
+      "yaw": 270.0,
+      "map": "CavernLake_03",
+      "file": "CavernLake_03_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 307.4139,
+      "y": 235.01752,
+      "z": 0.0001,
+      "yaw": 275.0,
+      "map": "GoblinCaveCorner_01",
+      "file": "GoblinCaveCorner_01_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": -710.0,
+      "y": -60.0,
+      "z": 202.0,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 580.0,
+      "y": 1222.0,
+      "z": 0.314065,
+      "yaw": 0.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 799.0,
+      "y": 218.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 792.8479,
+      "y": -872.5006,
+      "z": -399.9999,
+      "yaw": 230.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 112.924644,
+      "y": 215.2274,
+      "z": 0.0,
+      "yaw": 55.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    }
+  ],
+  "_modules": {
+    "CaveTown": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林小镇 A",
+      "img_name": "CaveTown",
+      "sl_base_name": "CaveTown"
+    },
+    "CaveTown_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林小镇 B",
+      "img_name": "CaveTown_02",
+      "sl_base_name": "CaveTown_02"
+    },
+    "Cave_Altar_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴祭坛 A",
+      "img_name": "Cave_Altar_Center",
+      "sl_base_name": "Cave_Altar_Center"
+    },
+    "Cave_AntsNest": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蚁巢",
+      "img_name": "Cave_AntsNest",
+      "sl_base_name": "Cave_AntsNest"
+    },
+    "Cave_MoleTunnel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "鼹鼠隧道",
+      "img_name": "Cave_MoleTunnel",
+      "sl_base_name": "Cave_MoleTunnel"
+    },
+    "Cave_PitHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞坑大厅",
+      "img_name": "Cave_PitHall",
+      "sl_base_name": "Cave_PitHall"
+    },
+    "Cave_Valley": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "峡谷 A",
+      "img_name": "Cave_Valley",
+      "sl_base_name": "Cave_Valley"
+    },
+    "Cave_Valley_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "峡谷 B",
+      "img_name": "Cave_Valley_02",
+      "sl_base_name": "Cave_Valley_02"
+    },
+    "CavernLake_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "岩洞湖 A",
+      "img_name": "CavernLake_02",
+      "sl_base_name": "CavernLake_02"
+    },
+    "CavernLake_03": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "岩洞湖 B",
+      "img_name": "CavernLake_03",
+      "sl_base_name": "CavernLake_03"
+    },
+    "GoblinCaveCorner_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴隧道",
+      "img_name": "GoblinCaveCorner_01",
+      "sl_base_name": "GoblinCaveCorner_01"
+    },
+    "GoblinJail_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林监狱 A",
+      "img_name": "GoblinJail_Center",
+      "sl_base_name": "GoblinJail_Center"
+    },
+    "HideoutCave_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴藏身处 B",
+      "img_name": "HideoutCave_02",
+      "sl_base_name": "HideoutCave_02"
+    },
+    "HideoutCave_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴藏身处 A",
+      "img_name": "HideoutCave_Center",
+      "sl_base_name": "HideoutCave_Center"
+    },
+    "StoneGrave_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "石坟 A",
+      "img_name": "StoneGrave_Center",
+      "sl_base_name": "StoneGrave_Center"
+    }
+  },
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "哥布林法师",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

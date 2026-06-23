@@ -1,0 +1,140 @@
+{
+  "name": "Portcullis_Down_Infinite",
+  "translation": "下行吊桥（无限）",
+  "coords": [
+    {
+      "x": -992.0,
+      "y": -962.0,
+      "z": -609.0,
+      "yaw": 0.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "下行吊桥（无限）"
+    },
+    {
+      "x": -674.6691556837916,
+      "y": 68.320853542482,
+      "z": -517.0,
+      "yaw": 250.0,
+      "map": "Cave_SpiderNest_02",
+      "file": "Cave_SpiderNest_02_D.json",
+      "version": "(D)",
+      "label": "下行吊桥（无限）"
+    },
+    {
+      "x": 1225.0,
+      "y": -1275.0,
+      "z": 19.0,
+      "yaw": 270.0,
+      "map": "Crypt_LargeRoomPit",
+      "file": "Crypt_LargeRoomPit_HR_D.json",
+      "version": "",
+      "label": "下行吊桥（无限）"
+    },
+    {
+      "x": 1055.0,
+      "y": -469.0,
+      "z": 114.0,
+      "yaw": 270.0,
+      "map": "FourWayConnect",
+      "file": "FourWayConnect_HR_D.json",
+      "version": "",
+      "label": "下行吊桥（无限）"
+    },
+    {
+      "x": -674.0,
+      "y": -556.0,
+      "z": -595.0,
+      "yaw": 90.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "下行吊桥（无限）"
+    },
+    {
+      "x": -3581.0,
+      "y": -989.0,
+      "z": -900.0,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "下行吊桥（无限）"
+    }
+  ],
+  "_modules": {
+    "Cave_AntsNest": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蚁巢",
+      "img_name": "Cave_AntsNest",
+      "sl_base_name": "Cave_AntsNest"
+    },
+    "Cave_SpiderNest_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蛛网巢穴",
+      "img_name": "Cave_SpiderNest_02",
+      "sl_base_name": "Cave_SpiderNest_02"
+    },
+    "Crypt_LargeRoomPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "断桥",
+      "img_name": "Crypt_LargeRoomPit",
+      "sl_base_name": "Crypt_LargeRoomPit"
+    },
+    "FourWayConnect": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "中心祭坛",
+      "img_name": "FourWayConnect",
+      "sl_base_name": "FourWayConnect"
+    },
+    "Ruins_GreatHall_03_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "礼拜堂 C",
+      "img_name": "Ruins_GreatHall_03_Destroyed",
+      "sl_base_name": "Ruins_GreatHall_03_Destroyed"
+    },
+    "Ruins_TowerBridge_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "塔桥",
+      "img_name": "Ruins_TowerBridge_Destroyed",
+      "sl_base_name": "Ruins_TowerBridge_Destroyed"
+    }
+  }
+}

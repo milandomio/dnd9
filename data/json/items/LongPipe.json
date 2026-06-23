@@ -1,0 +1,134 @@
+{
+  "name": "LongPipe",
+  "translation": "长烟斗",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 3894.1228,
+      "y": 690.1872,
+      "z": 373.18924,
+      "yaw": 196.9,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    },
+    {
+      "x": 1347.1262,
+      "y": -2095.2,
+      "z": 163.4525,
+      "yaw": 286.9,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    },
+    {
+      "x": 181.0,
+      "y": -1040.0,
+      "z": 740.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    },
+    {
+      "x": 4593.6904,
+      "y": 4814.9478,
+      "z": -600.5672,
+      "yaw": 116.4,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "LongPipe"
+    },
+    {
+      "x": 23.406246,
+      "y": 218.59364,
+      "z": -1000.0,
+      "yaw": 70.3,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_MistWatch": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 B",
+      "img_name": "ShipGraveyard_MistWatch",
+      "sl_base_name": "ShipGraveyard_MistWatch"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "ShipGraveyard_ShipRest": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉眠之船",
+      "img_name": "ShipGraveyard_ShipRest",
+      "sl_base_name": "ShipGraveyard_ShipRest"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "长烟斗",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

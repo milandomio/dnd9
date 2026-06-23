@@ -1,0 +1,282 @@
+{
+  "name": "BlemishedPearl",
+  "translation": "有瑕疵的珍珠",
+  "monsters": [
+    {
+      "name": "GiantClam_Chest",
+      "entity_name": "GiantClam_Chest",
+      "translation": "巨蚌",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 417.04056,
+          "y": 801.00806,
+          "z": -1345.2208,
+          "yaw": 47.5,
+          "map": "ShipGraveyard_BladehandRefuge",
+          "file": "ShipGraveyard_BladehandRefuge_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": 921.11774,
+          "y": -420.5111,
+          "z": -990.0,
+          "yaw": 285.0,
+          "map": "ShipGraveyard_FloatingIsland",
+          "file": "ShipGraveyard_FloatingIsland_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": -1009.02716,
+          "y": 3089.0,
+          "z": -541.1884,
+          "yaw": 360.0,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_HR_D.json",
+          "version": "",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": -120.83445,
+          "y": 3999.6467,
+          "z": -969.0741,
+          "yaw": 41.8,
+          "map": "ShipGraveyard_HangingShip",
+          "file": "ShipGraveyard_HangingShip_HR_D.json",
+          "version": "",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": 1513.6234,
+          "y": -488.1667,
+          "z": -1000.0,
+          "yaw": 155.0,
+          "map": "ShipGraveyard_Hole",
+          "file": "ShipGraveyard_Hole_A.json",
+          "version": "(A)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": -797.9026,
+          "y": 844.6245,
+          "z": -1021.0341,
+          "yaw": 164.6,
+          "map": "ShipGraveyard_MistWatch",
+          "file": "ShipGraveyard_MistWatch_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": -95.58156,
+          "y": 154.20201,
+          "z": -986.45447,
+          "yaw": 354.2,
+          "map": "ShipGraveyard_RockIsland",
+          "file": "ShipGraveyard_RockIsland_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": 817.7729,
+          "y": -1455.3427,
+          "z": -1101.3949,
+          "yaw": 150.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": -674.4302,
+          "y": 364.4302,
+          "z": -1624.8044,
+          "yaw": 319.9,
+          "map": "ShipGraveyard_StarfishValley",
+          "file": "ShipGraveyard_StarfishValley_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": -359.74393,
+          "y": -1172.8687,
+          "z": -2120.0796,
+          "yaw": 90.0,
+          "map": "ShipGraveyard_SunkenShip_01",
+          "file": "ShipGraveyard_SunkenShip_01_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        },
+        {
+          "x": -699.23505,
+          "y": 258.51556,
+          "z": -2976.589,
+          "yaw": 180.0,
+          "map": "ShipGraveyard_UnderSeaCave_01",
+          "file": "ShipGraveyard_UnderSeaCave_01_D.json",
+          "version": "(D)",
+          "label": "GiantClam_Chest",
+          "spawn_rate": 100.0,
+          "score": 55.0
+        }
+      ],
+      "max_score": 55.0
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "巨蚌",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.5,
+          "普通": 20.0,
+          "豪客赛": 55.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_FloatingIsland": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "浮岛 A",
+      "img_name": "ShipGraveyard_FloatingIsland",
+      "sl_base_name": "ShipGraveyard_FloatingIsland"
+    },
+    "ShipGraveyard_HangingShip": {
+      "rotate": 90.0,
+      "offset_x": 1600,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "吊船",
+      "img_name": "ShipGraveyard_HangingShip",
+      "sl_base_name": "ShipGraveyard_HangingShip"
+    },
+    "ShipGraveyard_Hole": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 4800,
+      "group": "ShipGraveyard",
+      "translation": "蓝洞",
+      "img_name": "ShipGraveyard_Hole",
+      "sl_base_name": "ShipGraveyard_Hole"
+    },
+    "ShipGraveyard_MistWatch": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 B",
+      "img_name": "ShipGraveyard_MistWatch",
+      "sl_base_name": "ShipGraveyard_MistWatch"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    },
+    "ShipGraveyard_StarfishValley": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海星谷",
+      "img_name": "ShipGraveyard_StarfishValley",
+      "sl_base_name": "ShipGraveyard_StarfishValley"
+    },
+    "ShipGraveyard_SunkenShip_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉没之船",
+      "img_name": "ShipGraveyard_SunkenShip_01",
+      "sl_base_name": "ShipGraveyard_SunkenShip_01"
+    },
+    "ShipGraveyard_UnderSeaCave_01": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底洞穴 A",
+      "img_name": "ShipGraveyard_UnderSeaCave_01",
+      "sl_base_name": "ShipGraveyard_UnderSeaCave_01"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "TearoftheVolcano",
+  "translation": "火山之泪",
+  "monsters": [
+    {
+      "name": "FireColossus",
+      "entity_name": "FireColossus",
+      "translation": "赤焰巨像",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -3450.0,
+          "yaw": 0.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)",
+          "label": "FireColossus",
+          "spawn_rate": 50.0,
+          "score": 5.0
+        }
+      ],
+      "max_score": 5.0
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "赤焰巨像",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 5.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Firedeep_MagmaFalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "岩浆瀑布",
+      "img_name": "Magmafalls",
+      "sl_base_name": "Firedeep_MagmaFalls"
+    }
+  }
+}

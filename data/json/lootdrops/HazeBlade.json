@@ -1,0 +1,208 @@
+{
+  "name": "HazeBlade",
+  "translation": "迷乱之刃",
+  "monsters": [
+    {
+      "name": "Slime_Unique",
+      "entity_name": "Slime_Unique",
+      "translation": "奥泽灵",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -250.00002,
+          "y": 650.0,
+          "z": 0.0,
+          "yaw": 70.0,
+          "map": "Ruins_Forest_08",
+          "file": "Ruins_Forest_08_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": 1340.8682,
+          "y": -39.60041,
+          "z": 0.0,
+          "yaw": 135.0,
+          "map": "Ruins_Forest_08",
+          "file": "Ruins_Forest_08_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": 1040.0,
+          "y": 1205.9999,
+          "z": 0.0,
+          "yaw": 270.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": 1461.0,
+          "y": 889.9999,
+          "z": 0.0,
+          "yaw": 270.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": -1350.0,
+          "y": 1065.0001,
+          "z": 0.0,
+          "yaw": 270.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": -1099.0,
+          "y": -190.99994,
+          "z": 0.0001,
+          "yaw": 180.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": 210.0,
+          "y": 376.99990000000014,
+          "z": 0.0,
+          "yaw": 270.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": -464.0000000000002,
+          "y": -324.00009999999975,
+          "z": 0.0,
+          "yaw": 270.0,
+          "map": "Ruins_SlimeForest_01",
+          "file": "Ruins_SlimeForest_01_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": -51.4854,
+          "y": -162.39166,
+          "z": 0.0,
+          "yaw": 145.0,
+          "map": "Ruins_Wells_02",
+          "file": "Ruins_Wells_02_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": -169.0,
+          "y": 208.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "Ruins_Wells_02",
+          "file": "Ruins_Wells_02_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "spawn_rate": 0.07,
+          "score": 0.07
+        },
+        {
+          "x": 518.0,
+          "y": 603.00002,
+          "z": 0.0001,
+          "yaw": 35.0,
+          "map": "Ruins_Wells_02",
+          "file": "Ruins_Wells_02_HR_D.json",
+          "version": "",
+          "label": "Slime",
+          "variant_count": 2,
+          "variant_names": [
+            "幻灵",
+            "史莱姆"
+          ],
+          "spawn_rate": 0.07,
+          "score": 0.07
+        }
+      ],
+      "max_score": 45.0
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "奥泽灵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0
+        },
+        "spawn_rates": {
+          "PVE": 0.02,
+          "普通": 0.02,
+          "豪客赛": 0.07
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Ruins_Forest_08": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "林间小路",
+      "img_name": "Ruins_Forest_08",
+      "sl_base_name": "Ruins_Forest_08"
+    },
+    "Ruins_SlimeForest_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "史莱姆森林",
+      "img_name": "Ruins_SlimeForest_01",
+      "sl_base_name": "Ruins_SlimeForest_01"
+    },
+    "Ruins_Wells_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "水井",
+      "img_name": "Ruins_Wells_02",
+      "sl_base_name": "Ruins_Wells_02"
+    }
+  }
+}

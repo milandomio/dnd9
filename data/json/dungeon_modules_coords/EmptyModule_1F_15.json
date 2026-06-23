@@ -1,0 +1,863 @@
+{
+  "map_base": "EmptyModule_1F_15",
+  "entities": [
+    {
+      "name": "Anchor",
+      "translation": "船锚",
+      "type": "item",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 290.68646,
+          "y": 258.59796,
+          "z": -825.9812,
+          "yaw": 56.1,
+          "version": "(D)",
+          "label": "Anchor",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BlackRose",
+      "translation": "黑玫瑰",
+      "type": "props",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 589.5545,
+          "y": 134.57257,
+          "z": -799.10016,
+          "yaw": 215.4,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 694.44855,
+          "y": 49.80595,
+          "z": -829.7082,
+          "yaw": 215.4,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 747.46545,
+          "y": -27.894802,
+          "z": -847.6191,
+          "yaw": 229.1,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 820.1543,
+          "y": -149.22734,
+          "z": -880.53937,
+          "yaw": 229.1,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 499.79825,
+          "y": -186.31982,
+          "z": -716.69867,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 409.90125,
+          "y": -234.78415,
+          "z": -716.094,
+          "yaw": 198.4,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 527.886,
+          "y": -290.60004,
+          "z": -749.28265,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 441.60782,
+          "y": -329.59906,
+          "z": -773.60675,
+          "yaw": 200.1,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BrokenJarShard",
+      "translation": "坏罐子碎片",
+      "type": "item",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": -945.9427,
+          "y": -1260.8104,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "BrokenJarShard",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BrokenWoodenBarrelFragment",
+      "translation": "坏木桶的碎片",
+      "type": "item",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": -969.7658,
+          "y": 904.9159,
+          "z": -961.322,
+          "yaw": 6.7,
+          "version": "(D)",
+          "label": "BrokenWoodenBarrelFragment",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DoctorsBag",
+      "translation": "医师的包",
+      "type": "item",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": 1099.6367,
+          "y": -1099.7938,
+          "z": -909.47974,
+          "yaw": 291.2,
+          "version": "(D)",
+          "label": "DoctorsBag",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FlatChestLarge_UnderSea",
+      "translation": "方型宝箱",
+      "type": "props",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 1189.1915,
+          "y": 538.1487,
+          "z": -968.07983,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "海底大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "type": "decoration",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 170.0,
+          "y": -1490.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 590.0,
+          "y": -1180.0,
+          "z": -910.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1390.0,
+          "y": -1430.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1450.0,
+          "y": -690.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1450.0,
+          "y": 10.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1190.0,
+          "y": 1190.0,
+          "z": -850.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 660.0,
+          "y": 730.0,
+          "z": -900.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -360.0,
+          "y": 560.0,
+          "z": -930.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -340.0,
+          "y": 1260.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -970.0,
+          "y": 1250.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -1400.0,
+          "y": 1000.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -1360.0,
+          "y": 140.0,
+          "z": -960.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -1240.0,
+          "y": -590.0,
+          "z": -980.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -200.0,
+          "y": -450.0,
+          "z": -980.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 500.0,
+          "y": -230.0,
+          "z": -730.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 260.0,
+          "y": 1010.0,
+          "z": -910.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 530.0,
+          "y": -710.0,
+          "z": -950.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -670.0,
+          "y": -130.0,
+          "z": -780.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -1330.0,
+          "y": -1380.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -1240.0,
+          "z": -900.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GlowingCoralRoaster01_On",
+      "translation": "灯架子",
+      "type": "props",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -228.32123,
+          "y": 318.94528,
+          "z": -947.0,
+          "yaw": 250.3,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster01_On",
+          "group_parent": ""
+        },
+        {
+          "x": 760.6788,
+          "y": 1391.9453,
+          "z": -991.0,
+          "yaw": 173.1,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster01_On",
+          "group_parent": ""
+        },
+        {
+          "x": -641.3212,
+          "y": -977.05475,
+          "z": -383.0,
+          "yaw": 55.5,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster01_On",
+          "group_parent": ""
+        },
+        {
+          "x": -722.3212,
+          "y": 1043.9453,
+          "z": -991.0,
+          "yaw": 34.5,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster02_On",
+          "group_parent": ""
+        },
+        {
+          "x": -829.3212,
+          "y": -769.05475,
+          "z": -892.0,
+          "yaw": 152.6,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster02_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1297.6788,
+          "y": 681.94525,
+          "z": -991.0,
+          "yaw": 266.7,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster03_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1008.3212,
+          "y": 185.94527,
+          "z": -892.0,
+          "yaw": 175.1,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster03_On",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "IronChain",
+      "translation": "铁链",
+      "type": "item",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": -1105.8027,
+          "y": -373.63684,
+          "z": -982.5598,
+          "yaw": 178.7,
+          "version": "(D)",
+          "label": "IronChain",
+          "group_parent": ""
+        },
+        {
+          "x": -843.59814,
+          "y": -959.0926,
+          "z": -416.91037,
+          "yaw": 359.5,
+          "version": "(D)",
+          "label": "IronChain",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Jellyfish_Tiny",
+      "translation": "水母",
+      "type": "monster",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 150.0,
+          "y": 400.0,
+          "z": -650.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "Jellyfish",
+          "group_parent": ""
+        },
+        {
+          "x": 100.0,
+          "y": 450.0,
+          "z": -700.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "Jellyfish",
+          "group_parent": ""
+        },
+        {
+          "x": 200.0,
+          "y": 350.0,
+          "z": -750.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "Jellyfish",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "LuminpearlsTorch02_On",
+      "translation": "火把",
+      "type": "decoration",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 712.1984,
+          "y": 301.0887,
+          "z": -850.5057,
+          "yaw": 185.6,
+          "version": "(A)",
+          "label": "LuminpearlsTorch02_On",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "NavigationalCompass",
+      "translation": "航海罗盘",
+      "type": "item",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 975.61615,
+          "y": -515.3537,
+          "z": -225.3746,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "NavigationalCompass",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "OrnateChestLarge_UnderSea",
+      "translation": "狮头宝箱",
+      "type": "props",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 1189.1915,
+          "y": 538.1487,
+          "z": -968.07983,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "海底大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OxyVent",
+      "translation": "氧气口",
+      "type": "decoration",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -396.0,
+          "y": -194.0,
+          "z": -915.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "OxyVent",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Saltvine",
+      "translation": "盐藤",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 589.5545,
+          "y": 134.57257,
+          "z": -799.10016,
+          "yaw": 215.4,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 694.44855,
+          "y": 49.80595,
+          "z": -829.7082,
+          "yaw": 215.4,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 747.46545,
+          "y": -27.894802,
+          "z": -847.6191,
+          "yaw": 229.1,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 820.1543,
+          "y": -149.22734,
+          "z": -880.53937,
+          "yaw": 229.1,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 499.79825,
+          "y": -186.31982,
+          "z": -716.69867,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 409.90125,
+          "y": -234.78415,
+          "z": -716.094,
+          "yaw": 198.4,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 527.886,
+          "y": -290.60004,
+          "z": -749.28265,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        },
+        {
+          "x": 441.60782,
+          "y": -329.59906,
+          "z": -773.60675,
+          "yaw": 200.1,
+          "version": "(D)",
+          "label": "SaltvineRandom",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Sheepshead",
+      "translation": "羊头鲷",
+      "type": "monster",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -500.0,
+          "y": 60.0,
+          "z": -595.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "Sheepshead",
+          "group_parent": ""
+        },
+        {
+          "x": -500.0,
+          "y": 165.0,
+          "z": -595.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "Sheepshead",
+          "group_parent": ""
+        },
+        {
+          "x": -500.0,
+          "y": 165.0,
+          "z": -520.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "Sheepshead",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "ShipsWheel",
+      "translation": "舵轮",
+      "type": "item",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": -829.92035,
+          "y": -181.41019,
+          "z": -896.60364,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "ShipsWheel",
+          "group_parent": ""
+        },
+        {
+          "x": 1197.4249,
+          "y": 1302.2284,
+          "z": -850.00073,
+          "yaw": 1.6,
+          "version": "(D)",
+          "label": "ShipsWheel",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestLarge_UnderSea",
+      "translation": "大型橡木宝箱",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 1189.1915,
+          "y": 538.1487,
+          "z": -968.07983,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "海底大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Starfish",
+      "translation": "海星",
+      "type": "item",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 846.0314,
+          "y": -1189.3917,
+          "z": -363.93597,
+          "yaw": 1.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": 1566.283,
+          "y": 1220.2017,
+          "z": -948.16846,
+          "yaw": 1.7,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": 936.176,
+          "y": -759.99713,
+          "z": -926.9048,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": 59.12,
+          "y": 50.988705,
+          "z": -665.9001,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": -279.1735,
+          "y": -234.73668,
+          "z": -962.4019,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": 1404.8772,
+          "y": -686.1519,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": -516.70184,
+          "y": 521.20337,
+          "z": -950.15247,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": -1167.9004,
+          "y": 438.45743,
+          "z": -751.97156,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        },
+        {
+          "x": 666.0277,
+          "y": -1361.8947,
+          "z": -912.41583,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "Starfish",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SturdyRope",
+      "translation": "结实的绳索",
+      "type": "item",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 1104.27,
+          "y": 1256.4261,
+          "z": -846.361,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "SturdyRope",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestLarge_UnderSea",
+      "translation": "大型加固宝箱",
+      "type": "props",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 1189.1915,
+          "y": 538.1487,
+          "z": -968.07983,
+          "yaw": 209.8,
+          "version": "(D)",
+          "label": "海底大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

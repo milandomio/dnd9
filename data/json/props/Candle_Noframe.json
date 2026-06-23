@@ -1,0 +1,52 @@
+{
+  "name": "Candle_Noframe",
+  "translation": "Candle_Noframe",
+  "coords": [
+    {
+      "x": 851.0,
+      "y": -417.0,
+      "z": 100.0,
+      "yaw": 0.0,
+      "map": "Barracks",
+      "file": "Barracks_A.json",
+      "version": "(A)",
+      "label": "Candle_Noframe"
+    },
+    {
+      "x": 941.0,
+      "y": -270.0,
+      "z": -371.0,
+      "yaw": 0.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_A.json",
+      "version": "(A)",
+      "label": "Candle_Noframe"
+    }
+  ],
+  "_modules": {
+    "Barracks": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军营",
+      "img_name": "Barracks",
+      "sl_base_name": "Barracks"
+    },
+    "Ruins_Square_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "广场 A",
+      "img_name": "Ruins_Square_01",
+      "sl_base_name": "Ruins_Square_01"
+    }
+  }
+}

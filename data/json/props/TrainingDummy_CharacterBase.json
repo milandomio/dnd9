@@ -1,0 +1,30 @@
+{
+  "name": "TrainingDummy_CharacterBase",
+  "translation": "TrainingDummy_CharacterBase",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_A.json",
+      "version": "(A)",
+      "label": "TrainingDummy_CharacterBase"
+    }
+  ],
+  "_modules": {
+    "HideoutCave_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴藏身处 A",
+      "img_name": "HideoutCave_Center",
+      "sl_base_name": "HideoutCave_Center"
+    }
+  }
+}

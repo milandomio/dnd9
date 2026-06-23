@@ -1,0 +1,30 @@
+{
+  "name": "Portcullis_Escape_Infinite",
+  "translation": "逃生吊桥（无限）",
+  "coords": [
+    {
+      "x": 1297.0,
+      "y": -448.0,
+      "z": -399.9999,
+      "yaw": 270.0,
+      "map": "Cistern",
+      "file": "Cistern_HR_D.json",
+      "version": "",
+      "label": "逃生吊桥（无限）"
+    }
+  ],
+  "_modules": {
+    "Cistern": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "蓄水池",
+      "img_name": "Cistern",
+      "sl_base_name": "Cistern"
+    }
+  }
+}

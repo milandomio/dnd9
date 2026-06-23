@@ -1,0 +1,54 @@
+{
+  "name": "CrownoftheMidnightStag",
+  "translation": "午夜雄鹿之冠",
+  "monsters": [
+    {
+      "name": "MidnightStag",
+      "entity_name": "MidnightStag",
+      "translation": "午夜雄鹿",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 1155.0,
+          "y": 175.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "map": "Ruins_Forest_02",
+          "file": "Ruins_Forest_02_HR_D.json",
+          "version": "",
+          "label": "MidnightStag",
+          "spawn_rate": 0.04,
+          "score": 0.0133
+        }
+      ],
+      "max_score": 0.0133
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "午夜雄鹿",
+        "spawn_rate": 0.04,
+        "drop_rates": {
+          "PVE": 33.333,
+          "普通": 33.333,
+          "豪客赛": 33.333
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Ruins_Forest_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "森林 B",
+      "img_name": "Ruins_Forest_02",
+      "sl_base_name": "Ruins_Forest_02"
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "name": "GiantCentipede",
+  "translation": "巨型蜈蚣",
+  "coords": [
+    {
+      "x": -742.0,
+      "y": 1260.0,
+      "z": -413.38272,
+      "yaw": 0.0,
+      "map": "CaveMaze_Center_02",
+      "file": "CaveMaze_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": 277.0,
+      "y": -1028.0,
+      "z": 600.3141,
+      "yaw": 270.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": 905.7453,
+      "y": 921.847,
+      "z": -399.9999,
+      "yaw": 305.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": -1000.2547,
+      "y": -907.153,
+      "z": -399.9999,
+      "yaw": 305.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": 171.61517,
+      "y": -785.4069,
+      "z": -499.9999,
+      "yaw": 75.0,
+      "map": "Cave_SpiderNest_02",
+      "file": "Cave_SpiderNest_02_D.json",
+      "version": "(D)",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": -159.46973,
+      "y": -748.0339,
+      "z": -350.0,
+      "yaw": 350.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": -660.09625,
+      "y": -683.3288,
+      "z": -399.9999,
+      "yaw": 90.0,
+      "map": "GoblinCaveCorner_01",
+      "file": "GoblinCaveCorner_01_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": -1170.0,
+      "y": 107.0,
+      "z": -400.0,
+      "yaw": 325.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": -134.0,
+      "y": 353.0,
+      "z": -400.0,
+      "yaw": 85.0,
+      "map": "GoblinJail_Center_02",
+      "file": "GoblinJail_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": -723.0,
+      "y": -949.0,
+      "z": -399.9999,
+      "yaw": 90.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": 166.0,
+      "y": -1292.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede"
+    },
+    {
+      "x": -1308.0071707129973,
+      "y": -1179.8921559316368,
+      "z": -399.9999,
+      "yaw": 185.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantCentipede",
+      "variant_count": 3,
+      "variant_names": [
+        "巨型蜈蚣",
+        "巨型蜘蛛",
+        "巨型蝙蝠"
+      ]
+    }
+  ],
+  "_modules": {
+    "CaveMaze_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 B",
+      "img_name": "CaveMaze_02",
+      "sl_base_name": "CaveMaze_Center_02"
+    },
+    "Cave_AntsNest": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蚁巢",
+      "img_name": "Cave_AntsNest",
+      "sl_base_name": "Cave_AntsNest"
+    },
+    "Cave_PitHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞坑大厅",
+      "img_name": "Cave_PitHall",
+      "sl_base_name": "Cave_PitHall"
+    },
+    "Cave_SpiderNest_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蛛网巢穴",
+      "img_name": "Cave_SpiderNest_02",
+      "sl_base_name": "Cave_SpiderNest_02"
+    },
+    "Cave_Valley_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "峡谷 B",
+      "img_name": "Cave_Valley_02",
+      "sl_base_name": "Cave_Valley_02"
+    },
+    "GoblinCaveCorner_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴隧道",
+      "img_name": "GoblinCaveCorner_01",
+      "sl_base_name": "GoblinCaveCorner_01"
+    },
+    "GoblinJail_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林监狱 A",
+      "img_name": "GoblinJail_Center",
+      "sl_base_name": "GoblinJail_Center"
+    },
+    "GoblinJail_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林监狱 B",
+      "img_name": "GoblinJail_Center_02",
+      "sl_base_name": "GoblinJail_Center_02"
+    },
+    "HideoutCave_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴藏身处 B",
+      "img_name": "HideoutCave_02",
+      "sl_base_name": "HideoutCave_02"
+    },
+    "StoneGrave_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "石坟 B",
+      "img_name": "StoneGrave_Center_02",
+      "sl_base_name": "StoneGrave_Center_02"
+    }
+  },
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "巨型蜈蚣",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.028,
+          "普通": 0.17,
+          "豪客赛": 0.455
+        }
+      }
+    ]
+  }
+}

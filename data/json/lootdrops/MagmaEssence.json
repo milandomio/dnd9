@@ -1,0 +1,156 @@
+{
+  "name": "MagmaEssence",
+  "translation": "岩浆精华",
+  "monsters": [
+    {
+      "name": "LavaSlime",
+      "entity_name": "LavaSlime",
+      "translation": "熔岩史莱姆",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 150.0,
+          "y": 1190.0,
+          "z": 205.0,
+          "yaw": 60.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)",
+          "label": "LavaSlime",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -1325.0,
+          "y": 175.0,
+          "z": 205.0,
+          "yaw": 60.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)",
+          "label": "LavaSlime",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -513.16986,
+          "y": -265.1314,
+          "z": 210.80829,
+          "yaw": 60.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)",
+          "label": "LavaSlime",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": 5.0,
+          "y": 1035.0,
+          "z": -26.975525,
+          "yaw": 0.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)",
+          "label": "LavaSlime",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": 1250.0,
+          "y": 1200.0,
+          "z": 450.0,
+          "yaw": 0.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)",
+          "label": "LavaSlime",
+          "variant_count": 3,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -2.3654439999999965,
+          "y": -19.43651,
+          "z": 59.3698281,
+          "yaw": 225.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)",
+          "label": "LavaSlime",
+          "variant_count": 3,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -1300.0,
+          "y": -1200.0,
+          "z": 450.0,
+          "yaw": 0.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)",
+          "label": "LavaSlime",
+          "variant_count": 3,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 2.25
+        }
+      ],
+      "max_score": 2.25
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "熔岩史莱姆",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Firedeep_BurningCourt": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "焚庭",
+      "img_name": "BurningCourt",
+      "sl_base_name": "Firedeep_BurningCourt"
+    },
+    "Firedeep_MagmaFalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "岩浆瀑布",
+      "img_name": "Magmafalls",
+      "sl_base_name": "Firedeep_MagmaFalls"
+    },
+    "Firedeep_MoltenPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔坑",
+      "img_name": "MoltenPit",
+      "sl_base_name": "Firedeep_MoltenPit"
+    }
+  }
+}

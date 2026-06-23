@@ -1,0 +1,96 @@
+{
+  "name": "FloatingIce",
+  "translation": "FloatingIce",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Bridge",
+      "file": "IceCave_Bridge_A.json",
+      "version": "(A)",
+      "label": "FloatingIce"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Cabin_Raft",
+      "file": "IceCave_Cabin_Raft_A.json",
+      "version": "(A)",
+      "label": "FloatingIce"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_CaveSwamp",
+      "file": "IceCave_CaveSwamp_A.json",
+      "version": "(A)",
+      "label": "FloatingIce"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_A.json",
+      "version": "(A)",
+      "label": "FloatingIce"
+    }
+  ],
+  "_modules": {
+    "IceCave_Bridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰桥",
+      "img_name": "IceCave_Bridge",
+      "sl_base_name": "IceCave_Bridge"
+    },
+    "IceCave_Cabin_Raft": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰港",
+      "img_name": "IceCave_Cabin_Raft",
+      "sl_base_name": "IceCave_Cabin_Raft"
+    },
+    "IceCave_CaveSwamp": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "洞穴沼泽",
+      "img_name": "IceCave_CaveSwamp",
+      "sl_base_name": "IceCave_CaveSwamp"
+    },
+    "IceCave_NarrowBridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "窄桥",
+      "img_name": "IceCave_NarrowBridge",
+      "sl_base_name": "IceCave_NarrowBridge"
+    }
+  }
+}

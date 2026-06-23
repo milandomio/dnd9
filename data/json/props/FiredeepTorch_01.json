@@ -1,0 +1,40 @@
+{
+  "name": "FiredeepTorch_01",
+  "translation": "熔岩火把",
+  "coords": [
+    {
+      "x": 1144.6724,
+      "y": -916.512,
+      "z": -3280.0,
+      "yaw": 318.2,
+      "map": "Firedeep_Greatforge",
+      "file": "Firedeep_Greatforge_A.json",
+      "version": "(A)",
+      "label": "熔岩火把"
+    },
+    {
+      "x": 873.1984,
+      "y": -1166.2683,
+      "z": -3280.0,
+      "yaw": 302.1,
+      "map": "Firedeep_Greatforge",
+      "file": "Firedeep_Greatforge_A.json",
+      "version": "(A)",
+      "label": "熔岩火把"
+    }
+  ],
+  "_modules": {
+    "Firedeep_Greatforge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "巨熔炉",
+      "img_name": "RareModule_1x1",
+      "sl_base_name": "Firedeep_Greatforge"
+    }
+  }
+}

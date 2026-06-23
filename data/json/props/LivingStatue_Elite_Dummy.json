@@ -1,0 +1,50 @@
+{
+  "name": "LivingStatue_Elite_Dummy",
+  "translation": "精英石像鬼（假）",
+  "coords": [
+    {
+      "x": -200.0,
+      "y": 10.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "精英石像鬼（假）",
+      "variant_count": 2,
+      "variant_names": [
+        "精英石像鬼（假）",
+        "石像鬼"
+      ]
+    },
+    {
+      "x": 200.00000021679577,
+      "y": 0.0,
+      "z": -200.0,
+      "yaw": 185.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "精英石像鬼（假）",
+      "variant_count": 2,
+      "variant_names": [
+        "石像鬼",
+        "精英石像鬼（假）"
+      ]
+    }
+  ],
+  "_modules": {
+    "Inferno_Drain": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "排水沟",
+      "img_name": "Inferno_Drain",
+      "sl_base_name": "Inferno_Drain"
+    }
+  }
+}

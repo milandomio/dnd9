@@ -1,0 +1,80 @@
+{
+  "name": "LukewarmStew",
+  "translation": "温香乱炖",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "Zombie"
+  ],
+  "coords": [
+    {
+      "x": 715.0,
+      "y": 580.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Prison_01",
+      "file": "Prison_01_HR_D.json",
+      "version": "",
+      "label": "LukewarmStew"
+    },
+    {
+      "x": 270.0,
+      "y": 455.0,
+      "z": 254.0,
+      "yaw": 0.0,
+      "map": "Storeroom",
+      "file": "Storeroom_HR_D.json",
+      "version": "",
+      "label": "LukewarmStew"
+    },
+    {
+      "x": 301.0,
+      "y": 1463.0,
+      "z": 248.0,
+      "yaw": 0.0,
+      "map": "Storeroom",
+      "file": "Storeroom_HR_D.json",
+      "version": "",
+      "label": "LukewarmStew"
+    }
+  ],
+  "_modules": {
+    "Prison_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "监狱 B",
+      "img_name": "Prison_01",
+      "sl_base_name": "Prison_01"
+    },
+    "Storeroom": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "储藏室",
+      "img_name": "Storeroom",
+      "sl_base_name": "Storeroom"
+    }
+  },
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "温香乱炖",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "name": "SplineMesh_Ladder",
+  "translation": "梯子（样条）",
+  "coords": [
+    {
+      "x": 2536.413,
+      "y": -671.05426,
+      "z": 480.0,
+      "yaw": 255.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 4271.6616,
+      "y": -763.3133,
+      "z": 1015.0,
+      "yaw": 345.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 2828.186,
+      "y": 429.6478,
+      "z": 474.0,
+      "yaw": 75.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 2261.4507,
+      "y": -4.6624727,
+      "z": 1521.0,
+      "yaw": 345.7,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 1865.8951,
+      "y": 2843.511,
+      "z": 499.0,
+      "yaw": 230.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": -108.29111,
+      "y": -239.57426,
+      "z": 2497.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": -255.0,
+      "y": -51.0,
+      "z": 586.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": -48.0,
+      "y": -445.0,
+      "z": 1529.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 437.0,
+      "y": 117.0,
+      "z": 606.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 2.0,
+      "y": -153.0,
+      "z": -23.0,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": -49.872845,
+      "y": 148.04668,
+      "z": 613.3313,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 598.5478,
+      "y": -678.29816,
+      "z": 618.0,
+      "yaw": 350.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    },
+    {
+      "x": 1199.7275,
+      "y": 78.807816,
+      "z": 204.26352,
+      "yaw": 24.9,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_A.json",
+      "version": "(A)",
+      "label": "梯子（样条）"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_SeaFortress": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 A",
+      "img_name": "ShipGraveyard_SeaFortress",
+      "sl_base_name": "ShipGraveyard_SeaFortress"
+    },
+    "ShipGraveyard_SunkenShip_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉没之船",
+      "img_name": "ShipGraveyard_SunkenShip_01",
+      "sl_base_name": "ShipGraveyard_SunkenShip_01"
+    }
+  }
+}

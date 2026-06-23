@@ -1,0 +1,210 @@
+{
+  "name": "SkinnyFinger",
+  "translation": "干枯的手指",
+  "monsters": [
+    {
+      "name": "Ghoul",
+      "entity_name": "Ghoul",
+      "translation": "食尸鬼",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 200.0,
+          "y": -300.0,
+          "z": -350.0,
+          "yaw": 270.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": -200.0,
+          "y": 300.0,
+          "z": -350.0,
+          "yaw": 90.0,
+          "map": "Inferno_Batroost",
+          "file": "Inferno_Batroost_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": 600.0,
+          "y": -585.0,
+          "z": 0.0,
+          "yaw": 135.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": -595.7538,
+          "y": 601.4645,
+          "z": 0.0,
+          "yaw": 315.0,
+          "map": "Inferno_Doomcage",
+          "file": "Inferno_Doomcage_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": 1355.0,
+          "y": 1310.0,
+          "z": 450.0,
+          "yaw": 180.0,
+          "map": "Inferno_Hellwind",
+          "file": "Inferno_Hellwind_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": 810.0,
+          "y": -891.60254,
+          "z": 0.0,
+          "yaw": 120.0,
+          "map": "Inferno_Obelisk",
+          "file": "Inferno_Obelisk_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": -1170.0,
+          "y": -89.0,
+          "z": 0.010099,
+          "yaw": 0.0,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": -539.0,
+          "y": 349.0,
+          "z": 9.0,
+          "yaw": 0.0,
+          "map": "Skull",
+          "file": "Skull_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": -989.48193,
+          "y": 963.9551,
+          "z": 0.0001,
+          "yaw": 280.0,
+          "map": "ThroneRoom_02",
+          "file": "ThroneRoom_02_HR_D.json",
+          "version": "",
+          "label": "Ghoul",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        }
+      ],
+      "max_score": 9.0
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "食尸鬼",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Inferno_Batroost": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "蝙蝠窝",
+      "img_name": "Inferno_Batroost",
+      "sl_base_name": "Inferno_Batroost"
+    },
+    "Inferno_Doomcage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "末日囚笼",
+      "img_name": "Inferno_Doomcage",
+      "sl_base_name": "Inferno_Doomcage"
+    },
+    "Inferno_Hellwind": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "厄风领",
+      "img_name": "Inferno_Hellwind",
+      "sl_base_name": "Inferno_Hellwind"
+    },
+    "Inferno_Obelisk": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "腐化尖碑",
+      "img_name": "Inferno_Obelisk",
+      "sl_base_name": "Inferno_Obelisk"
+    },
+    "Skull": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火监牢",
+      "img_name": "Skull",
+      "sl_base_name": "Skull"
+    },
+    "ThroneRoom_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔王座",
+      "img_name": "ThroneRoom_02",
+      "sl_base_name": "ThroneRoom_02"
+    }
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "name": "SturdyCloth",
+  "translation": "结实的布料",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -184.0,
+      "y": -4.0,
+      "z": -422.0,
+      "yaw": 80.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth",
+      "variant_count": 3,
+      "variant_names": [
+        "SturdyCloth",
+        "殭尸",
+        "木乃伊"
+      ]
+    },
+    {
+      "x": 1024.0,
+      "y": -195.0,
+      "z": 5.712918,
+      "yaw": 0.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth",
+      "variant_count": 4,
+      "variant_names": [
+        "Bandage",
+        "Ground",
+        "Potion",
+        "SturdyCloth"
+      ]
+    },
+    {
+      "x": -1069.0,
+      "y": -20.0,
+      "z": 7.0,
+      "yaw": 275.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth",
+      "variant_count": 4,
+      "variant_names": [
+        "Bandage",
+        "Ground",
+        "Potion",
+        "SturdyCloth"
+      ]
+    },
+    {
+      "x": -1325.0,
+      "y": 108.0,
+      "z": 47.0,
+      "yaw": 320.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -1436.0,
+      "y": 1061.0,
+      "z": 160.0,
+      "yaw": 320.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -1445.0,
+      "y": -387.0,
+      "z": 84.0,
+      "yaw": 320.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -599.0,
+      "y": 952.0,
+      "z": -520.50037,
+      "yaw": 30.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 865.0,
+      "y": -173.0,
+      "z": 650.0,
+      "yaw": 30.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 336.0,
+      "y": -387.0,
+      "z": 522.0,
+      "yaw": 30.0,
+      "map": "Ruins_EndWall",
+      "file": "Ruins_EndWall_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 42.0,
+      "y": 155.0,
+      "z": 100.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 2276.6094,
+      "y": 926.9765,
+      "z": 818.05963,
+      "yaw": 117.2,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -444.83908,
+      "y": 529.0492,
+      "z": 21.933466,
+      "yaw": 203.0,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    }
+  ],
+  "_modules": {
+    "Cave_Altar_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴祭坛 A",
+      "img_name": "Cave_Altar_Center",
+      "sl_base_name": "Cave_Altar_Center"
+    },
+    "Cave_BanditCamp_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林匪窝",
+      "img_name": "Cave_BanditCamp_Center",
+      "sl_base_name": "Cave_BanditCamp_Center"
+    },
+    "IceCave_FrozenLake": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冻湖",
+      "img_name": "IceCave_FrozenLake",
+      "sl_base_name": "IceCave_FrozenLake"
+    },
+    "Ruins_BanditForest": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "强盗森林",
+      "img_name": "Ruins_BanditForest",
+      "sl_base_name": "Ruins_BanditForest"
+    },
+    "Ruins_Barbican_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "瓮城",
+      "img_name": "Ruins_Barbican_01",
+      "sl_base_name": "Ruins_Barbican_01"
+    },
+    "Ruins_EndWall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "城墙尽头",
+      "img_name": "Ruins_EndWall",
+      "sl_base_name": "Ruins_EndWall"
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "ShipGraveyard_ShipRest": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉眠之船",
+      "img_name": "ShipGraveyard_ShipRest",
+      "sl_base_name": "ShipGraveyard_ShipRest"
+    }
+  },
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  }
+}

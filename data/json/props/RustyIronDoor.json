@@ -1,0 +1,52 @@
+{
+  "name": "RustyIronDoor",
+  "translation": "生锈的铁门",
+  "coords": [
+    {
+      "x": -350.0,
+      "y": -230.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Armory",
+      "file": "Armory_HR_D.json",
+      "version": "",
+      "label": "RustyIronDoor"
+    },
+    {
+      "x": 331.0,
+      "y": -273.0,
+      "z": -897.0,
+      "yaw": 270.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "RustyIronDoor"
+    }
+  ],
+  "_modules": {
+    "Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军械库",
+      "img_name": "Armory",
+      "sl_base_name": "Armory"
+    },
+    "Ruins_TowerBridge_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "塔桥",
+      "img_name": "Ruins_TowerBridge_Destroyed",
+      "sl_base_name": "Ruins_TowerBridge_Destroyed"
+    }
+  }
+}

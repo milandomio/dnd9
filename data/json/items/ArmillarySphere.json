@@ -1,0 +1,78 @@
+{
+  "name": "ArmillarySphere",
+  "translation": "浑天仪",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -1280.0,
+      "y": -1300.0,
+      "z": 616.0,
+      "yaw": 0.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ArmillarySphere"
+    },
+    {
+      "x": -1313.0,
+      "y": -1249.0,
+      "z": 616.0,
+      "yaw": 0.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ArmillarySphere"
+    },
+    {
+      "x": -207.0,
+      "y": 3.0,
+      "z": -397.0,
+      "yaw": 0.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_D.json",
+      "version": "(D)",
+      "label": "ArmillarySphere"
+    }
+  ],
+  "_modules": {
+    "IceCave_MountainPass": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "山隘",
+      "img_name": "IceCave_MountainPass",
+      "sl_base_name": "IceCave_MountainPass"
+    },
+    "IceCave_Quarry": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "采石场",
+      "img_name": "IceCave_Quarry",
+      "sl_base_name": "IceCave_Quarry"
+    }
+  },
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "浑天仪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

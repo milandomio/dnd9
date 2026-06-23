@@ -1,0 +1,139 @@
+{
+  "name": "PirateCrossbowman",
+  "translation": "海盗弩手",
+  "coords": [
+    {
+      "x": -178.0,
+      "y": 11.0,
+      "z": 1103.0002,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "海盗弩"
+    },
+    {
+      "x": 100.0,
+      "y": 850.0,
+      "z": 800.0,
+      "yaw": 150.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "海盗弩"
+    },
+    {
+      "x": -900.0,
+      "y": 150.0,
+      "z": 1500.0,
+      "yaw": 255.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "海盗弩"
+    },
+    {
+      "x": -618.68274,
+      "y": 631.31726,
+      "z": 100.0,
+      "yaw": 45.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "海盗弩"
+    },
+    {
+      "x": 200.0,
+      "y": -959.0,
+      "z": 415.47705,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "海盗弩"
+    },
+    {
+      "x": 2945.0,
+      "y": 145.0,
+      "z": 385.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "海盗弩",
+      "variant_count": 14,
+      "variant_names": []
+    },
+    {
+      "x": 970.0,
+      "y": -695.0,
+      "z": 1800.0,
+      "yaw": 135.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "海盗弩"
+    },
+    {
+      "x": -52.52718,
+      "y": 1132.6338,
+      "z": 2070.0,
+      "yaw": 360.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "海盗弩"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_HangingShip": {
+      "rotate": 90.0,
+      "offset_x": 1600,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "吊船",
+      "img_name": "ShipGraveyard_HangingShip",
+      "sl_base_name": "ShipGraveyard_HangingShip"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "海盗弩手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 17.867,
+          "普通": 22.5,
+          "豪客赛": 34.0
+        }
+      }
+    ]
+  }
+}

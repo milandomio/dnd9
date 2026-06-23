@@ -1,0 +1,184 @@
+{
+  "name": "Dock",
+  "translation": "码头",
+  "coords": [
+    {
+      "x": 504.8177,
+      "y": -1493.9163,
+      "z": 16.0,
+      "yaw": 190.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "Dock"
+    },
+    {
+      "x": 4458.7476,
+      "y": 3459.303,
+      "z": 35.0,
+      "yaw": 285.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "Dock"
+    },
+    {
+      "x": -1624.0,
+      "y": 804.0,
+      "z": 35.0,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "Dock"
+    },
+    {
+      "x": -1327.1895,
+      "y": -1557.1249,
+      "z": 10.0,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "Dock"
+    },
+    {
+      "x": 99.39987,
+      "y": -1836.7574,
+      "z": 25.0,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "Dock"
+    },
+    {
+      "x": 907.0219,
+      "y": -775.45105,
+      "z": 25.0,
+      "yaw": 235.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "Dock"
+    },
+    {
+      "x": -1210.8121,
+      "y": 1096.1517,
+      "z": 0.0,
+      "yaw": 55.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_D.json",
+      "version": "(D)",
+      "label": "Dock"
+    },
+    {
+      "x": 301.32077,
+      "y": 539.65814,
+      "z": 14.0,
+      "yaw": 110.0,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "Dock"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_CircleIsland": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "环形岛",
+      "img_name": "ShipGraveyard_CircleIsland",
+      "sl_base_name": "ShipGraveyard_CircleIsland"
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_MistWatch": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 B",
+      "img_name": "ShipGraveyard_MistWatch",
+      "sl_base_name": "ShipGraveyard_MistWatch"
+    },
+    "ShipGraveyard_Oceanvolcano": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底火山",
+      "img_name": "ShipGraveyard_Oceanvolcano",
+      "sl_base_name": "ShipGraveyard_Oceanvolcano"
+    },
+    "ShipGraveyard_SeaFortress": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 A",
+      "img_name": "ShipGraveyard_SeaFortress",
+      "sl_base_name": "ShipGraveyard_SeaFortress"
+    },
+    "ShipGraveyard_StarfishValley": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海星谷",
+      "img_name": "ShipGraveyard_StarfishValley",
+      "sl_base_name": "ShipGraveyard_StarfishValley"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "name": "SpentCandle",
+  "translation": "燃尽的蜡烛",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -628.40216,
+      "y": -71.57669,
+      "z": 128.98215,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    },
+    {
+      "x": -346.41336,
+      "y": -956.3005,
+      "z": 122.94324,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    },
+    {
+      "x": 854.4007,
+      "y": -41.792725,
+      "z": 83.07296,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    },
+    {
+      "x": 2445.8025,
+      "y": 1022.0696,
+      "z": 772.81256,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "SpentCandle"
+    },
+    {
+      "x": 670.0,
+      "y": 235.0,
+      "z": 315.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_FloatingHouse_01": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水手客栈",
+      "img_name": "ShipGraveyard_FloatingHouse_01",
+      "sl_base_name": "ShipGraveyard_FloatingHouse_01"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "燃尽的蜡烛",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  }
+}

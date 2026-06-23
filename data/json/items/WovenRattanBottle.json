@@ -1,0 +1,286 @@
+{
+  "name": "WovenRattanBottle",
+  "translation": "藤编壶",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 2785.639,
+      "y": -415.93103,
+      "z": -240.25789,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": 665.58936,
+      "y": 3832.4998,
+      "z": 316.99478,
+      "yaw": 244.1,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": -1188.2074,
+      "y": -628.1459,
+      "z": 156.87321,
+      "yaw": 43.6,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": -3555.5608,
+      "y": 196.87572,
+      "z": 2492.3362,
+      "yaw": 147.5,
+      "map": "ShipGraveyard_ElephantIsland",
+      "file": "ShipGraveyard_ElephantIsland_HR_D.json",
+      "version": "",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": 748.89703,
+      "y": 88.229576,
+      "z": 0.2831747,
+      "yaw": 196.5,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": 1168.0428,
+      "y": -793.294,
+      "z": 277.64407,
+      "yaw": 80.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": 4403.52,
+      "y": 872.5529,
+      "z": 1201.1326,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": 1328.9066,
+      "y": 51.959064,
+      "z": -994.6992,
+      "yaw": 212.9,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": -540.7261,
+      "y": -2374.2805,
+      "z": 451.8544,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": -903.06586,
+      "y": -658.52576,
+      "z": -1307.379,
+      "yaw": 262.5,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": -878.41284,
+      "y": -626.381,
+      "z": -1312.9352,
+      "yaw": 349.8,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": -20.680439,
+      "y": -325.33463,
+      "z": -1197.0247,
+      "yaw": 276.8,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    },
+    {
+      "x": -288.05246,
+      "y": -62.703968,
+      "z": -3108.6553,
+      "yaw": 190.6,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "WovenRattanBottle"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_CircleIsland": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "环形岛",
+      "img_name": "ShipGraveyard_CircleIsland",
+      "sl_base_name": "ShipGraveyard_CircleIsland"
+    },
+    "ShipGraveyard_ElephantIsland": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "象岛",
+      "img_name": "ShipGraveyard_ElephantIsland",
+      "sl_base_name": "ShipGraveyard_ElephantIsland"
+    },
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_FloatingHouse_01": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水手客栈",
+      "img_name": "ShipGraveyard_FloatingHouse_01",
+      "sl_base_name": "ShipGraveyard_FloatingHouse_01"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    },
+    "ShipGraveyard_StarfishValley": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海星谷",
+      "img_name": "ShipGraveyard_StarfishValley",
+      "sl_base_name": "ShipGraveyard_StarfishValley"
+    },
+    "ShipGraveyard_SunkenShip_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉没之船",
+      "img_name": "ShipGraveyard_SunkenShip_01",
+      "sl_base_name": "ShipGraveyard_SunkenShip_01"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "藤编壶",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

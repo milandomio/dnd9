@@ -1,0 +1,147 @@
+{
+  "name": "BlackDurgon",
+  "translation": "黑炮弹鱼",
+  "coords": [
+    {
+      "x": 195.0,
+      "y": 195.0,
+      "z": -655.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_14",
+      "file": "EmptyModule_1F_14_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 290.0,
+      "y": 195.0,
+      "z": -655.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_14",
+      "file": "EmptyModule_1F_14_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 20.0,
+      "y": 195.0,
+      "z": -655.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_14",
+      "file": "EmptyModule_1F_14_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 95.0,
+      "y": 430.0,
+      "z": -495.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 215.0,
+      "y": 430.0,
+      "z": -495.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 215.0,
+      "y": 240.0,
+      "z": -370.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": -145.0,
+      "y": 15.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": -60.0,
+      "y": 15.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": -110.0,
+      "y": 140.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    }
+  ],
+  "_modules": {
+    "EmptyModule_1F_14": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "3-1模块",
+      "img_name": "EmptyModule_1F_14",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_Oceanvolcano": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底火山",
+      "img_name": "ShipGraveyard_Oceanvolcano",
+      "sl_base_name": "ShipGraveyard_Oceanvolcano"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "黑炮弹鱼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 22.5,
+          "豪客赛": 34.0
+        }
+      }
+    ]
+  }
+}

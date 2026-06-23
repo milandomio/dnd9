@@ -1,0 +1,184 @@
+{
+  "name": "UnderWater",
+  "translation": "水下区域",
+  "coords": [
+    {
+      "x": -480.0,
+      "y": -310.0,
+      "z": -20.0,
+      "yaw": 0.0,
+      "map": "CavernLake_03",
+      "file": "CavernLake_03_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    },
+    {
+      "x": 588.0,
+      "y": 440.0,
+      "z": 7.0,
+      "yaw": 0.0,
+      "map": "FishingGround",
+      "file": "FishingGround_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -113.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -319.0,
+      "yaw": 180.0,
+      "map": "IceCave_Bridge",
+      "file": "IceCave_Bridge_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -345.0,
+      "yaw": 0.0,
+      "map": "IceCave_Cabin_Raft",
+      "file": "IceCave_Cabin_Raft_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -100.0,
+      "yaw": 0.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    },
+    {
+      "x": 653.0,
+      "y": 1.0,
+      "z": -50.0,
+      "yaw": 0.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    },
+    {
+      "x": 58.0,
+      "y": -4.000003,
+      "z": -565.0,
+      "yaw": 180.0,
+      "map": "Ruins_WaterHole",
+      "file": "Ruins_WaterHole_A.json",
+      "version": "(A)",
+      "label": "水下区域"
+    }
+  ],
+  "_modules": {
+    "CavernLake_03": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "岩洞湖 B",
+      "img_name": "CavernLake_03",
+      "sl_base_name": "CavernLake_03"
+    },
+    "FishingGround": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "渔场",
+      "img_name": "FishingGround",
+      "sl_base_name": "FishingGround"
+    },
+    "IceAbyss_DeepFlow": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "寒渊之流",
+      "img_name": "IceAbyss_DeepFlow",
+      "sl_base_name": "IceAbyss_DeepFlow"
+    },
+    "IceCave_Bridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰桥",
+      "img_name": "IceCave_Bridge",
+      "sl_base_name": "IceCave_Bridge"
+    },
+    "IceCave_Cabin_Raft": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰港",
+      "img_name": "IceCave_Cabin_Raft",
+      "sl_base_name": "IceCave_Cabin_Raft"
+    },
+    "IceCave_FrozenLake": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冻湖",
+      "img_name": "IceCave_FrozenLake",
+      "sl_base_name": "IceCave_FrozenLake"
+    },
+    "Ruins_Bath": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "洗澡堂",
+      "img_name": "Ruins_Bath",
+      "sl_base_name": "Ruins_Bath"
+    },
+    "Ruins_WaterHole": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "饮水池",
+      "img_name": "Ruins_WaterHole",
+      "sl_base_name": "Ruins_WaterHole"
+    }
+  }
+}

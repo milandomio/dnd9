@@ -1,0 +1,96 @@
+{
+  "name": "MapIconElevatorEscape",
+  "translation": "地图图标-逃生电梯",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -413.0,
+      "yaw": 0.0,
+      "map": "CaveMaze_Center_02",
+      "file": "CaveMaze_Center_02_A.json",
+      "version": "(A)",
+      "label": "地图图标-逃生电梯"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -216.0,
+      "yaw": 0.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_A.json",
+      "version": "(A)",
+      "label": "地图图标-逃生电梯"
+    },
+    {
+      "x": 490.0,
+      "y": 270.0,
+      "z": -140.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_A.json",
+      "version": "(A)",
+      "label": "地图图标-逃生电梯"
+    },
+    {
+      "x": 13.0,
+      "y": -9.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "IceCave_FourRoute",
+      "file": "IceCave_FourRoute_A.json",
+      "version": "(A)",
+      "label": "地图图标-逃生电梯"
+    }
+  ],
+  "_modules": {
+    "CaveMaze_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 B",
+      "img_name": "CaveMaze_02",
+      "sl_base_name": "CaveMaze_Center_02"
+    },
+    "Cave_PitHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞坑大厅",
+      "img_name": "Cave_PitHall",
+      "sl_base_name": "Cave_PitHall"
+    },
+    "Firedeep_LavaCrossway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔岩岔路",
+      "img_name": "LavaCrossway",
+      "sl_base_name": "Firedeep_LavaCrossway"
+    },
+    "IceCave_FourRoute": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "四方路",
+      "img_name": "IceCave_FourRoute",
+      "sl_base_name": "IceCave_FourRoute"
+    }
+  }
+}

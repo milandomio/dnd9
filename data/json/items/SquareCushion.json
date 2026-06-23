@@ -1,0 +1,46 @@
+{
+  "name": "SquareCushion",
+  "translation": "方形坐垫",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -285.03598,
+      "y": 370.66702,
+      "z": 47.691322,
+      "yaw": 357.0,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "SquareCushion"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_ShipRest": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉眠之船",
+      "img_name": "ShipGraveyard_ShipRest",
+      "sl_base_name": "ShipGraveyard_ShipRest"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "方形坐垫",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

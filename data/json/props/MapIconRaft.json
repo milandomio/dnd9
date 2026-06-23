@@ -1,0 +1,52 @@
+{
+  "name": "MapIconRaft",
+  "translation": "MapIconRaft",
+  "coords": [
+    {
+      "x": -1308.0,
+      "y": -29.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "IceCave_Bridge",
+      "file": "IceCave_Bridge_A.json",
+      "version": "(A)",
+      "label": "MapIconRaft"
+    },
+    {
+      "x": -994.0,
+      "y": -526.0,
+      "z": -637.0,
+      "yaw": 0.0,
+      "map": "IceCave_Cabin_Raft",
+      "file": "IceCave_Cabin_Raft_A.json",
+      "version": "(A)",
+      "label": "MapIconRaft"
+    }
+  ],
+  "_modules": {
+    "IceCave_Bridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰桥",
+      "img_name": "IceCave_Bridge",
+      "sl_base_name": "IceCave_Bridge"
+    },
+    "IceCave_Cabin_Raft": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "冰港",
+      "img_name": "IceCave_Cabin_Raft",
+      "sl_base_name": "IceCave_Cabin_Raft"
+    }
+  }
+}

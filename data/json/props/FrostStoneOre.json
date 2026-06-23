@@ -1,0 +1,56 @@
+{
+  "name": "FrostStoneOre",
+  "translation": "霜石矿",
+  "coords": [
+    {
+      "x": -2940.0,
+      "y": 1830.0,
+      "z": 539.26044,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "Ore_FrostStoneOre"
+    },
+    {
+      "x": -2880.0,
+      "y": 1770.0,
+      "z": 560.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "Ore_FrostStoneOre"
+    },
+    {
+      "x": -2710.0,
+      "y": 2130.0,
+      "z": 560.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "Ore_FrostStoneOre",
+      "variant_count": 3,
+      "variant_names": [
+        "Ore_FrostStoneOre",
+        "Ground",
+        "生成器组"
+      ]
+    }
+  ],
+  "_modules": {
+    "IceAbyss_WyvernLair": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "冰龙巢穴",
+      "img_name": "IceAbyss_WyvernLair",
+      "sl_base_name": "IceAbyss_WyvernLair"
+    }
+  }
+}

@@ -1,0 +1,3818 @@
+{
+  "name": "MysticalGem",
+  "translation": "神秘宝石",
+  "monsters": [
+    {
+      "name": "CaveTroll",
+      "entity_name": "CaveTroll",
+      "translation": "洞穴巨魔",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 387.47646,
+          "y": -7.702599999999961,
+          "z": -1667.9999,
+          "yaw": 85.0,
+          "map": "CaveTown_02",
+          "file": "CaveTown_02_HR_D.json",
+          "version": "",
+          "label": "CaveTroll",
+          "spawn_rate": 50.0,
+          "score": 25.0
+        }
+      ],
+      "max_score": 25.0
+    },
+    {
+      "name": "CofferSmall",
+      "entity_name": "CofferSmall",
+      "translation": "迷你宝盒",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 880.0,
+          "y": -480.0,
+          "z": -0.31240000000000023,
+          "yaw": 0.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestMedium",
+            "罐子",
+            "骷髅步兵"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 61.70666,
+          "y": 323.49664,
+          "z": -449.9999,
+          "yaw": 5.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 81.0918,
+          "y": -1351.0636,
+          "z": -397.9999,
+          "yaw": 40.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1185.0,
+          "y": 195.0,
+          "z": 245.0,
+          "yaw": 0.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1185.0,
+          "y": 370.0,
+          "z": 245.0,
+          "yaw": 0.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -245.24612,
+          "y": 1262.2572,
+          "z": -959.9999,
+          "yaw": 250.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1378.693,
+          "y": 327.04678,
+          "z": -959.9999,
+          "yaw": 180.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1388.0,
+          "y": 1186.0,
+          "z": 8.614032,
+          "yaw": 284.5,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1390.0,
+          "y": 203.0,
+          "z": 325.0,
+          "yaw": 180.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1252.8872,
+          "y": -1304.4111,
+          "z": -959.9999,
+          "yaw": 40.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1202.1395,
+          "y": 992.6886,
+          "z": -959.9999,
+          "yaw": 330.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -993.0,
+          "y": -1039.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "map": "Cave_AntsNest",
+          "file": "Cave_AntsNest_D.json",
+          "version": "(D)",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 486.18378,
+          "y": -1367.244,
+          "z": 0.0001,
+          "yaw": 20.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -4.816227,
+          "y": 1416.756,
+          "z": 0.0001,
+          "yaw": 270.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1179.1395,
+          "y": -90.362,
+          "z": -399.9999,
+          "yaw": 0.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 358.9864,
+          "y": 1138.5504,
+          "z": -399.9999,
+          "yaw": 270.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1403.1837,
+          "y": -7.243987,
+          "z": 0.0001,
+          "yaw": 180.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -4.816227,
+          "y": -1410.244,
+          "z": 0.0001,
+          "yaw": 90.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1327.8163,
+          "y": -17.243986,
+          "z": 0.0001,
+          "yaw": 0.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1299.999985,
+          "y": 385.999936,
+          "z": 9.999999999976694e-05,
+          "yaw": 275.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1312.000015,
+          "y": -436.00006,
+          "z": 9.999999999976694e-05,
+          "yaw": 95.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1236.000015,
+          "y": 462.00005600000003,
+          "z": 9.999999999976694e-05,
+          "yaw": 275.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1258.999985,
+          "y": -441.99994,
+          "z": 9.999999999976694e-05,
+          "yaw": 95.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 869.3628780343515,
+          "y": -1341.3609168985256,
+          "z": 9.999999999976694e-05,
+          "yaw": 180.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -398.7208306380726,
+          "y": -1285.7216560637798,
+          "z": 9.999999999976694e-05,
+          "yaw": 10.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1289.3629380343514,
+          "y": -1231.6389831014744,
+          "z": 9.999999999976694e-05,
+          "yaw": 0.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -646.6371229618433,
+          "y": -1306.3609168113699,
+          "z": 9.999999999976694e-05,
+          "yaw": 180.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 134.36097681136994,
+          "y": 1393.3629370381568,
+          "z": 9.999999999976694e-05,
+          "yaw": 270.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -187.999953,
+          "y": 1343.999996,
+          "z": 9.999999999976694e-05,
+          "yaw": 257.1,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 2,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 485.3609768113699,
+          "y": 1373.3629370381568,
+          "z": 9.999999999976694e-05,
+          "yaw": 270.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1348.7534603063796,
+          "y": 1330.3661033259293,
+          "z": 9.999999999976694e-05,
+          "yaw": 355.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestLarge",
+            "ChestSmall",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1227.8776,
+          "y": 1356.0027,
+          "z": 8.9373774e-05,
+          "yaw": 215.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1410.5819,
+          "y": -275.7761,
+          "z": -349.9999,
+          "yaw": 20.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1424.7826,
+          "y": -1171.5518,
+          "z": 0.0,
+          "yaw": 200.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 116.47715,
+          "y": -1012.4654,
+          "z": -349.9999,
+          "yaw": 70.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1427.9974,
+          "y": 1176.4185,
+          "z": 0.0,
+          "yaw": 360.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1397.9974,
+          "y": 146.41844,
+          "z": 0.0,
+          "yaw": 90.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -860.46265,
+          "y": -465.40494,
+          "z": 0.0,
+          "yaw": 320.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1003.6612,
+          "y": 987.8096,
+          "z": -349.9999,
+          "yaw": 255.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -572.0,
+          "y": 776.0,
+          "z": -310.78378,
+          "yaw": 326.1,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -458.11862,
+          "y": 1391.2048,
+          "z": 0.00013051758,
+          "yaw": 251.1,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 872.0,
+          "y": 1075.0,
+          "z": -310.0,
+          "yaw": 134.4,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 391.0,
+          "y": -1003.0,
+          "z": -310.0,
+          "yaw": 26.1,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1210.4156,
+          "y": -66.899,
+          "z": -510.0,
+          "yaw": 200.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 61.86109,
+          "y": -620.0264,
+          "z": 0.0,
+          "yaw": 85.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 137.07886,
+          "y": 265.70062,
+          "z": 0.0,
+          "yaw": 205.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 159.2129,
+          "y": 605.20685,
+          "z": 0.0,
+          "yaw": 205.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -486.99994,
+          "y": 1120.0,
+          "z": -508.9999,
+          "yaw": 220.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -406.11337,
+          "y": -164.34245,
+          "z": -508.9999,
+          "yaw": 185.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1166.6223,
+          "y": -1131.2325,
+          "z": 0.0,
+          "yaw": 40.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -174.7795,
+          "y": -410.95837,
+          "z": 10.019027,
+          "yaw": 325.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -431.2641,
+          "y": 152.27826,
+          "z": -313.99704,
+          "yaw": 185.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 334.7299,
+          "y": 1384.5413,
+          "z": 0.0,
+          "yaw": 275.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -201.62236,
+          "y": -1231.2325,
+          "z": 0.0,
+          "yaw": 90.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1154.5941,
+          "y": 466.11655,
+          "z": 0.0,
+          "yaw": 135.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -380.7107,
+          "y": 1370.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 380.11926,
+          "y": -167.77295,
+          "z": 0.0001,
+          "yaw": 165.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1259.8744,
+          "y": 1116.8761,
+          "z": 0.0001,
+          "yaw": 185.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1275.366,
+          "y": -380.57773,
+          "z": 0.0001,
+          "yaw": 195.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1270.3136,
+          "y": -679.27405,
+          "z": 0.0001,
+          "yaw": 175.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1398.939,
+          "y": 351.00714,
+          "z": -400.0,
+          "yaw": 225.0,
+          "map": "GoblinJail_Center",
+          "file": "GoblinJail_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -830.0,
+          "y": -390.0,
+          "z": 0.3140658,
+          "yaw": 90.0,
+          "map": "GoblinJail_Center_02",
+          "file": "GoblinJail_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -423.89008,
+          "y": 255.50316,
+          "z": 8.831469,
+          "yaw": 210.0,
+          "map": "GoblinJail_Center_02",
+          "file": "GoblinJail_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1290.8163,
+          "y": 1357.756,
+          "z": -15.0,
+          "yaw": 300.0,
+          "map": "GoblinMineCenter_01",
+          "file": "GoblinMineCenter_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1315.1395,
+          "y": 1280.6381,
+          "z": -395.0,
+          "yaw": 330.0,
+          "map": "GoblinMineCenter_01",
+          "file": "GoblinMineCenter_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -195.0136,
+          "y": 973.5504,
+          "z": -555.0189,
+          "yaw": 305.0,
+          "map": "GoblinMineCenter_01",
+          "file": "GoblinMineCenter_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -476.46764,
+          "y": -958.029763,
+          "z": 0.314066,
+          "yaw": 175.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 2,
+          "variant_names": [
+            "木乃伊蜘蛛",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 120.0,
+          "y": 1220.0,
+          "z": 212.0001,
+          "yaw": 270.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 220.0,
+          "y": 483.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 370.0,
+          "y": -118.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -239.99998,
+          "y": 690.0,
+          "z": -399.25345,
+          "yaw": 90.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1373.0,
+          "y": -1266.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -905.0,
+          "y": 229.99998,
+          "z": 0.0,
+          "yaw": 360.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 567.9998,
+          "y": -1206.7742,
+          "z": -81.76931,
+          "yaw": 150.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 949.2088,
+          "y": -879.45276,
+          "z": -73.2499,
+          "yaw": 90.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1366.4187,
+          "y": 736.3838,
+          "z": 0.0001,
+          "yaw": 225.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 761.99999,
+          "y": -140.00001,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 4,
+          "variant_names": [
+            "骷髅冠军",
+            "ChestSpecial",
+            "ChestLarge",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -91.04055,
+          "y": -1393.8956,
+          "z": 0.0,
+          "yaw": 90.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 304.95944,
+          "y": -1362.8956,
+          "z": 0.0,
+          "yaw": 105.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1337.9396,
+          "y": -167.02579,
+          "z": 0.0,
+          "yaw": 360.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 1344.5107,
+          "y": 1311.8844,
+          "z": 0.0,
+          "yaw": 220.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 502.3771,
+          "y": 955.0705,
+          "z": -344.5143,
+          "yaw": 240.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": -1412.8575,
+          "y": -1013.3237,
+          "z": -399.9999,
+          "yaw": 360.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        },
+        {
+          "x": 326.0924,
+          "y": 73.17013,
+          "z": -399.9999,
+          "yaw": 235.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100,
+          "score": 25.0
+        }
+      ],
+      "max_score": 0.75
+    },
+    {
+      "name": "GoldChest",
+      "entity_name": "GoldChest",
+      "translation": "黄金宝箱",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -1404.0,
+          "y": 775.00006,
+          "z": -430.9999,
+          "yaw": 0.0,
+          "map": "Cave_Altar_Center",
+          "file": "Cave_Altar_Center_HR_D.json",
+          "version": "",
+          "label": "GoldChest",
+          "spawn_rate": 100.0,
+          "score": 25.0
+        },
+        {
+          "x": 571.1863,
+          "y": -939.4354,
+          "z": -499.9999,
+          "yaw": 90.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "GoldChest",
+          "spawn_rate": 100.0,
+          "score": 25.0
+        },
+        {
+          "x": 351.38617,
+          "y": -27.869164,
+          "z": -356.4122,
+          "yaw": 178.9,
+          "map": "Cave_Tomb_Center",
+          "file": "Cave_Tomb_Center_HR_D.json",
+          "version": "",
+          "label": "GoldChest",
+          "spawn_rate": 100.0,
+          "score": 25.0
+        },
+        {
+          "x": 1439.2024,
+          "y": 3.7013783,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "GoblinJail_Center",
+          "file": "GoblinJail_Center_HR_D.json",
+          "version": "",
+          "label": "GoldChest",
+          "spawn_rate": 100.0,
+          "score": 25.0
+        },
+        {
+          "x": 1274.9774559824878,
+          "y": 404.31109501368684,
+          "z": -347.72374900000005,
+          "yaw": 265.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "GoldChest",
+          "variant_count": 2,
+          "variant_names": [
+            "ChestLarge",
+            "黄金宝箱"
+          ],
+          "spawn_rate": 100.0,
+          "score": 25.0
+        }
+      ],
+      "max_score": 25.0
+    },
+    {
+      "name": "OrnateChestLarge",
+      "entity_name": "OrnateChestLarge",
+      "translation": "狮头宝箱(特殊)(可能上锁)",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 539.999999,
+          "y": 340.000003,
+          "z": -449.9999,
+          "yaw": 180.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "variant_count": 2,
+          "variant_names": [
+            "ChestSpecial",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": 1408.0,
+          "y": 777.9016,
+          "z": -322.67715,
+          "yaw": 180.0,
+          "map": "CaveMaze_Center_02",
+          "file": "CaveMaze_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": -287.53845,
+          "y": 425.69138,
+          "z": 0.000106822255,
+          "yaw": 220.0,
+          "map": "Cave_MoleTunnel",
+          "file": "Cave_MoleTunnel_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": -1254.133514,
+          "y": -478.866486,
+          "z": -400.0,
+          "yaw": 315.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "variant_count": 20,
+          "variant_names": [],
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": 241.0,
+          "y": 549.0,
+          "z": -400.0,
+          "yaw": 0.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "variant_count": 20,
+          "variant_names": [],
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": 1281.6885,
+          "y": -466.41025,
+          "z": -500.0,
+          "yaw": 170.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": -113.4203,
+          "y": -782.7463,
+          "z": 0.0,
+          "yaw": 155.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": -1226.0,
+          "y": 116.0,
+          "z": -399.9999,
+          "yaw": 0.0,
+          "map": "GoblinJail_Center_02",
+          "file": "GoblinJail_Center_02_D.json",
+          "version": "(D)",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": 670.7016,
+          "y": -35.180233,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "GoblinJail_Center_02",
+          "file": "GoblinJail_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": -1239.0251,
+          "y": -986.1308,
+          "z": -539.9999,
+          "yaw": 45.0,
+          "map": "GoblinMineCenter_01",
+          "file": "GoblinMineCenter_01_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": -825.9932,
+          "y": -1405.154,
+          "z": -399.9999,
+          "yaw": 90.0,
+          "map": "HideoutCave_02",
+          "file": "HideoutCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": 1387.7104,
+          "y": -1102.7164,
+          "z": -399.9999,
+          "yaw": 195.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": 810.0,
+          "y": -140.00001,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "variant_count": 4,
+          "variant_names": [
+            "骷髅冠军",
+            "ChestSpecial",
+            "ChestLarge",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100,
+          "score": 3.0
+        },
+        {
+          "x": 45.862125,
+          "y": -276.89432,
+          "z": -399.9999,
+          "yaw": 45.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestSpecial",
+          "spawn_rate": 100,
+          "score": 3.0
+        }
+      ],
+      "max_score": 1.5
+    },
+    {
+      "name": "OrnateChestMedium",
+      "entity_name": "OrnateChestMedium",
+      "translation": "重型华丽宝箱(特殊)(可能上锁)",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 480.0,
+          "y": 100.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 855.0,
+          "y": 430.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 539.999999,
+          "y": 340.000003,
+          "z": -449.9999,
+          "yaw": 180.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 2,
+          "variant_names": [
+            "ChestSpecial",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -50.0,
+          "y": -930.0,
+          "z": -430.9999,
+          "yaw": 110.0,
+          "map": "Cave_Altar_Center",
+          "file": "Cave_Altar_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 369.0,
+          "y": 47.0,
+          "z": -430.9999,
+          "yaw": 355.0,
+          "map": "Cave_Altar_Center",
+          "file": "Cave_Altar_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 906.0,
+          "y": -984.0,
+          "z": -430.9999,
+          "yaw": 90.0,
+          "map": "Cave_Altar_Center",
+          "file": "Cave_Altar_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1322.7392725823413,
+          "y": 1299.3780082399371,
+          "z": 9.999999999976694e-05,
+          "yaw": 355.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestLarge",
+            "ChestSmall",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1273.999985,
+          "y": 354.999936,
+          "z": 9.999999999976694e-05,
+          "yaw": 275.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1338.000015,
+          "y": -405.00006,
+          "z": 9.999999999976694e-05,
+          "yaw": 95.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -693.1733,
+          "y": -327.3267,
+          "z": -499.9999,
+          "yaw": 20.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1262.000015,
+          "y": 431.00005600000003,
+          "z": 9.999999999976694e-05,
+          "yaw": 275.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1232.999985,
+          "y": -410.99994,
+          "z": 9.999999999976694e-05,
+          "yaw": 95.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 840.7468917049465,
+          "y": -1312.758026722963,
+          "z": 9.999999999976694e-05,
+          "yaw": 180.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1018.78757,
+          "y": 522.91325,
+          "z": -499.999907,
+          "yaw": 150.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -365.57274568578936,
+          "y": -1308.9208901889879,
+          "z": 9.999999999976694e-05,
+          "yaw": 10.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1260.7469517049465,
+          "y": -1260.241873277037,
+          "z": 9.999999999976694e-05,
+          "yaw": 0.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -675.2531082950535,
+          "y": -1277.758026722963,
+          "z": 9.999999999976694e-05,
+          "yaw": 180.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -495.8137,
+          "y": -509.43536,
+          "z": -499.9999,
+          "yaw": 90.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 105.7580867229629,
+          "y": 1364.7469517049465,
+          "z": 9.999999999976694e-05,
+          "yaw": 270.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 456.75808672296284,
+          "y": 1344.7469517049465,
+          "z": 9.999999999976694e-05,
+          "yaw": 270.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 120.0,
+          "y": 1090.0,
+          "z": 0.0,
+          "yaw": 255.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1342.4265,
+          "y": -170.4003,
+          "z": -349.9999,
+          "yaw": 0.0,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1381.8344,
+          "y": 805.9702,
+          "z": -349.9999,
+          "yaw": 265.0,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 906.0,
+          "y": -984.0,
+          "z": -349.9999,
+          "yaw": 90.0,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1179.6183,
+          "y": -208.74936,
+          "z": -313.99704,
+          "yaw": 45.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 133.29384,
+          "y": 227.08144,
+          "z": 0.0001,
+          "yaw": 285.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 200.0,
+          "y": -312.0,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "GoblinJail_Center",
+          "file": "GoblinJail_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -907.0,
+          "y": -260.0,
+          "z": 202.0,
+          "yaw": 90.0,
+          "map": "GoblinJail_Center",
+          "file": "GoblinJail_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -267.0,
+          "y": -1247.0,
+          "z": -400.0,
+          "yaw": 0.0,
+          "map": "GoblinJail_Center_02",
+          "file": "GoblinJail_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -830.09143,
+          "y": 129.75494,
+          "z": -294.64236,
+          "yaw": 91.1,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -479.0,
+          "y": 324.0,
+          "z": 107.606576,
+          "yaw": 175.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 3,
+          "variant_names": [
+            "速度之泉",
+            "ChestLarge",
+            "生命神坛"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1204.1003,
+          "y": -797.5731,
+          "z": -81.60438,
+          "yaw": 175.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 791.99999,
+          "y": -140.00001,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 4,
+          "variant_names": [
+            "骷髅冠军",
+            "ChestSpecial",
+            "ChestLarge",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1275.027142023354,
+          "y": 416.17827664639526,
+          "z": -347.72374900000005,
+          "yaw": 265.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "variant_count": 2,
+          "variant_names": [
+            "ChestLarge",
+            "黄金宝箱"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -14.880154,
+          "y": 116.067825,
+          "z": 57.89752,
+          "yaw": 45.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestLarge",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        }
+      ],
+      "max_score": 0.025
+    },
+    {
+      "name": "OrnateChestSmall",
+      "entity_name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱(可能上锁)",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 880.0,
+          "y": -480.0,
+          "z": -0.31240000000000023,
+          "yaw": 0.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestMedium",
+            "罐子",
+            "骷髅步兵"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 61.70666,
+          "y": 323.49664,
+          "z": -449.9999,
+          "yaw": 5.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 81.0918,
+          "y": -1351.0636,
+          "z": -397.9999,
+          "yaw": 40.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1185.0,
+          "y": 195.0,
+          "z": 245.0,
+          "yaw": 0.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1185.0,
+          "y": 370.0,
+          "z": 245.0,
+          "yaw": 0.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -245.24612,
+          "y": 1262.2572,
+          "z": -959.9999,
+          "yaw": 250.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1378.693,
+          "y": 327.04678,
+          "z": -959.9999,
+          "yaw": 180.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1388.0,
+          "y": 1186.0,
+          "z": 8.614032,
+          "yaw": 284.5,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1390.0,
+          "y": 203.0,
+          "z": 325.0,
+          "yaw": 180.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1252.8872,
+          "y": -1304.4111,
+          "z": -959.9999,
+          "yaw": 40.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1202.1395,
+          "y": 992.6886,
+          "z": -959.9999,
+          "yaw": 330.0,
+          "map": "CaveTown",
+          "file": "CaveTown_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -993.0,
+          "y": -1039.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "map": "Cave_AntsNest",
+          "file": "Cave_AntsNest_D.json",
+          "version": "(D)",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 486.18378,
+          "y": -1367.244,
+          "z": 0.0001,
+          "yaw": 20.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -4.816227,
+          "y": 1416.756,
+          "z": 0.0001,
+          "yaw": 270.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1179.1395,
+          "y": -90.362,
+          "z": -399.9999,
+          "yaw": 0.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 358.9864,
+          "y": 1138.5504,
+          "z": -399.9999,
+          "yaw": 270.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1403.1837,
+          "y": -7.243987,
+          "z": 0.0001,
+          "yaw": 180.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -4.816227,
+          "y": -1410.244,
+          "z": 0.0001,
+          "yaw": 90.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1327.8163,
+          "y": -17.243986,
+          "z": 0.0001,
+          "yaw": 0.0,
+          "map": "Cave_PitHall",
+          "file": "Cave_PitHall_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1299.999985,
+          "y": 385.999936,
+          "z": 9.999999999976694e-05,
+          "yaw": 275.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1312.000015,
+          "y": -436.00006,
+          "z": 9.999999999976694e-05,
+          "yaw": 95.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1236.000015,
+          "y": 462.00005600000003,
+          "z": 9.999999999976694e-05,
+          "yaw": 275.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1258.999985,
+          "y": -441.99994,
+          "z": 9.999999999976694e-05,
+          "yaw": 95.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 869.3628780343515,
+          "y": -1341.3609168985256,
+          "z": 9.999999999976694e-05,
+          "yaw": 180.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -398.7208306380726,
+          "y": -1285.7216560637798,
+          "z": 9.999999999976694e-05,
+          "yaw": 10.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1289.3629380343514,
+          "y": -1231.6389831014744,
+          "z": 9.999999999976694e-05,
+          "yaw": 0.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -646.6371229618433,
+          "y": -1306.3609168113699,
+          "z": 9.999999999976694e-05,
+          "yaw": 180.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 134.36097681136994,
+          "y": 1393.3629370381568,
+          "z": 9.999999999976694e-05,
+          "yaw": 270.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -187.999953,
+          "y": 1343.999996,
+          "z": 9.999999999976694e-05,
+          "yaw": 257.1,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 2,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 485.3609768113699,
+          "y": 1373.3629370381568,
+          "z": 9.999999999976694e-05,
+          "yaw": 270.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestSmall",
+            "ChestMedium",
+            "ChestLarge"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1348.7534603063796,
+          "y": 1330.3661033259293,
+          "z": 9.999999999976694e-05,
+          "yaw": 355.0,
+          "map": "Cave_Rooms",
+          "file": "Cave_Rooms_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 3,
+          "variant_names": [
+            "ChestLarge",
+            "ChestSmall",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1227.8776,
+          "y": 1356.0027,
+          "z": 8.9373774e-05,
+          "yaw": 215.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1410.5819,
+          "y": -275.7761,
+          "z": -349.9999,
+          "yaw": 20.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1424.7826,
+          "y": -1171.5518,
+          "z": 0.0,
+          "yaw": 200.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 116.47715,
+          "y": -1012.4654,
+          "z": -349.9999,
+          "yaw": 70.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1427.9974,
+          "y": 1176.4185,
+          "z": 0.0,
+          "yaw": 360.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1397.9974,
+          "y": 146.41844,
+          "z": 0.0,
+          "yaw": 90.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -860.46265,
+          "y": -465.40494,
+          "z": 0.0,
+          "yaw": 320.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1003.6612,
+          "y": 987.8096,
+          "z": -349.9999,
+          "yaw": 255.0,
+          "map": "Cave_Valley",
+          "file": "Cave_Valley_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -572.0,
+          "y": 776.0,
+          "z": -310.78378,
+          "yaw": 326.1,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -458.11862,
+          "y": 1391.2048,
+          "z": 0.00013051758,
+          "yaw": 251.1,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 872.0,
+          "y": 1075.0,
+          "z": -310.0,
+          "yaw": 134.4,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 391.0,
+          "y": -1003.0,
+          "z": -310.0,
+          "yaw": 26.1,
+          "map": "Cave_Valley_02",
+          "file": "Cave_Valley_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1210.4156,
+          "y": -66.899,
+          "z": -510.0,
+          "yaw": 200.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 61.86109,
+          "y": -620.0264,
+          "z": 0.0,
+          "yaw": 85.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 137.07886,
+          "y": 265.70062,
+          "z": 0.0,
+          "yaw": 205.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 159.2129,
+          "y": 605.20685,
+          "z": 0.0,
+          "yaw": 205.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -486.99994,
+          "y": 1120.0,
+          "z": -508.9999,
+          "yaw": 220.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -406.11337,
+          "y": -164.34245,
+          "z": -508.9999,
+          "yaw": 185.0,
+          "map": "CavernLake_02",
+          "file": "CavernLake_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1166.6223,
+          "y": -1131.2325,
+          "z": 0.0,
+          "yaw": 40.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -174.7795,
+          "y": -410.95837,
+          "z": 10.019027,
+          "yaw": 325.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -431.2641,
+          "y": 152.27826,
+          "z": -313.99704,
+          "yaw": 185.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 334.7299,
+          "y": 1384.5413,
+          "z": 0.0,
+          "yaw": 275.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -201.62236,
+          "y": -1231.2325,
+          "z": 0.0,
+          "yaw": 90.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1154.5941,
+          "y": 466.11655,
+          "z": 0.0,
+          "yaw": 135.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -380.7107,
+          "y": 1370.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "map": "CavernLake_03",
+          "file": "CavernLake_03_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 380.11926,
+          "y": -167.77295,
+          "z": 0.0001,
+          "yaw": 165.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1259.8744,
+          "y": 1116.8761,
+          "z": 0.0001,
+          "yaw": 185.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1275.366,
+          "y": -380.57773,
+          "z": 0.0001,
+          "yaw": 195.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1270.3136,
+          "y": -679.27405,
+          "z": 0.0001,
+          "yaw": 175.0,
+          "map": "GoblinCaveCorner_01",
+          "file": "GoblinCaveCorner_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1398.939,
+          "y": 351.00714,
+          "z": -400.0,
+          "yaw": 225.0,
+          "map": "GoblinJail_Center",
+          "file": "GoblinJail_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -830.0,
+          "y": -390.0,
+          "z": 0.3140658,
+          "yaw": 90.0,
+          "map": "GoblinJail_Center_02",
+          "file": "GoblinJail_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -423.89008,
+          "y": 255.50316,
+          "z": 8.831469,
+          "yaw": 210.0,
+          "map": "GoblinJail_Center_02",
+          "file": "GoblinJail_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1290.8163,
+          "y": 1357.756,
+          "z": -15.0,
+          "yaw": 300.0,
+          "map": "GoblinMineCenter_01",
+          "file": "GoblinMineCenter_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1315.1395,
+          "y": 1280.6381,
+          "z": -395.0,
+          "yaw": 330.0,
+          "map": "GoblinMineCenter_01",
+          "file": "GoblinMineCenter_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -195.0136,
+          "y": 973.5504,
+          "z": -555.0189,
+          "yaw": 305.0,
+          "map": "GoblinMineCenter_01",
+          "file": "GoblinMineCenter_01_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -476.46764,
+          "y": -958.029763,
+          "z": 0.314066,
+          "yaw": 175.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 2,
+          "variant_names": [
+            "木乃伊蜘蛛",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 120.0,
+          "y": 1220.0,
+          "z": 212.0001,
+          "yaw": 270.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 220.0,
+          "y": 483.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 370.0,
+          "y": -118.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -239.99998,
+          "y": 690.0,
+          "z": -399.25345,
+          "yaw": 90.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1373.0,
+          "y": -1266.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "HideoutCave_Center",
+          "file": "HideoutCave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -905.0,
+          "y": 229.99998,
+          "z": 0.0,
+          "yaw": 360.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 567.9998,
+          "y": -1206.7742,
+          "z": -81.76931,
+          "yaw": 150.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 949.2088,
+          "y": -879.45276,
+          "z": -73.2499,
+          "yaw": 90.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1366.4187,
+          "y": 736.3838,
+          "z": 0.0001,
+          "yaw": 225.0,
+          "map": "SpiderCave_02",
+          "file": "SpiderCave_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 761.99999,
+          "y": -140.00001,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "variant_count": 4,
+          "variant_names": [
+            "骷髅冠军",
+            "ChestSpecial",
+            "ChestLarge",
+            "ChestMedium"
+          ],
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -91.04055,
+          "y": -1393.8956,
+          "z": 0.0,
+          "yaw": 90.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 304.95944,
+          "y": -1362.8956,
+          "z": 0.0,
+          "yaw": 105.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1337.9396,
+          "y": -167.02579,
+          "z": 0.0,
+          "yaw": 360.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 1344.5107,
+          "y": 1311.8844,
+          "z": 0.0,
+          "yaw": 220.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 502.3771,
+          "y": 955.0705,
+          "z": -344.5143,
+          "yaw": 240.0,
+          "map": "StoneGrave_Center",
+          "file": "StoneGrave_Center_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": -1412.8575,
+          "y": -1013.3237,
+          "z": -399.9999,
+          "yaw": 360.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        },
+        {
+          "x": 326.0924,
+          "y": 73.17013,
+          "z": -399.9999,
+          "yaw": 235.0,
+          "map": "StoneGrave_Center_02",
+          "file": "StoneGrave_Center_02_HR_D.json",
+          "version": "",
+          "label": "ChestMedium",
+          "spawn_rate": 100.0,
+          "score": 0.5
+        }
+      ],
+      "max_score": 0.025
+    },
+    {
+      "name": "id_Monster_Cyclops",
+      "entity_name": "id_Monster_Cyclops",
+      "translation": "独眼巨人",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 387.47644,
+          "y": -7.702599999999961,
+          "z": -1149.999905,
+          "yaw": 85.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "Cyclops",
+          "spawn_rate": 100,
+          "score": 50.0
+        }
+      ],
+      "max_score": 50.0
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "独眼巨人",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0
+        }
+      },
+      {
+        "translation": "洞穴巨魔",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 25.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 3.0,
+          "普通": 3.0,
+          "豪客赛": 3.0
+        }
+      },
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 25.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.5,
+          "普通": 0.5,
+          "豪客赛": 0.5
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.5,
+          "普通": 0.5,
+          "豪客赛": 0.5
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(随机)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "Crypt": [
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(随机)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 3.68,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "FireDeep": [
+      {
+        "translation": "迷你宝盒",
+        "spawn_rate": 3.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "CaveTown_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林小镇 B",
+      "img_name": "CaveTown_02",
+      "sl_base_name": "CaveTown_02"
+    },
+    "CaveMaze": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 A",
+      "img_name": "CaveMaze",
+      "sl_base_name": "CaveMaze"
+    },
+    "CaveTown": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林小镇 A",
+      "img_name": "CaveTown",
+      "sl_base_name": "CaveTown"
+    },
+    "Cave_AntsNest": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蚁巢",
+      "img_name": "Cave_AntsNest",
+      "sl_base_name": "Cave_AntsNest"
+    },
+    "Cave_PitHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞坑大厅",
+      "img_name": "Cave_PitHall",
+      "sl_base_name": "Cave_PitHall"
+    },
+    "Cave_Rooms": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林宿舍",
+      "img_name": "Cave_Rooms",
+      "sl_base_name": "Cave_Rooms"
+    },
+    "Cave_Valley": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "峡谷 A",
+      "img_name": "Cave_Valley",
+      "sl_base_name": "Cave_Valley"
+    },
+    "Cave_Valley_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "峡谷 B",
+      "img_name": "Cave_Valley_02",
+      "sl_base_name": "Cave_Valley_02"
+    },
+    "CavernLake_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "岩洞湖 A",
+      "img_name": "CavernLake_02",
+      "sl_base_name": "CavernLake_02"
+    },
+    "CavernLake_03": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "岩洞湖 B",
+      "img_name": "CavernLake_03",
+      "sl_base_name": "CavernLake_03"
+    },
+    "GoblinCaveCorner_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴隧道",
+      "img_name": "GoblinCaveCorner_01",
+      "sl_base_name": "GoblinCaveCorner_01"
+    },
+    "GoblinJail_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林监狱 A",
+      "img_name": "GoblinJail_Center",
+      "sl_base_name": "GoblinJail_Center"
+    },
+    "GoblinJail_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林监狱 B",
+      "img_name": "GoblinJail_Center_02",
+      "sl_base_name": "GoblinJail_Center_02"
+    },
+    "GoblinMineCenter_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林矿井",
+      "img_name": "GoblinMineCenter_01",
+      "sl_base_name": "GoblinMineCenter_01"
+    },
+    "HideoutCave_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴藏身处 A",
+      "img_name": "HideoutCave_Center",
+      "sl_base_name": "HideoutCave_Center"
+    },
+    "SpiderCave_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "蜘蛛洞",
+      "img_name": "SpiderCave_02",
+      "sl_base_name": "SpiderCave_02"
+    },
+    "StoneGrave_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "石坟 A",
+      "img_name": "StoneGrave_Center",
+      "sl_base_name": "StoneGrave_Center"
+    },
+    "StoneGrave_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "石坟 B",
+      "img_name": "StoneGrave_Center_02",
+      "sl_base_name": "StoneGrave_Center_02"
+    },
+    "Cave_Altar_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴祭坛 A",
+      "img_name": "Cave_Altar_Center",
+      "sl_base_name": "Cave_Altar_Center"
+    },
+    "Cave_Tomb_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴墓葬",
+      "img_name": "Cave_Tomb_Center",
+      "sl_base_name": "Cave_Tomb_Center"
+    },
+    "CaveMaze_Center_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 B",
+      "img_name": "CaveMaze_02",
+      "sl_base_name": "CaveMaze_Center_02"
+    },
+    "Cave_MoleTunnel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "鼹鼠隧道",
+      "img_name": "Cave_MoleTunnel",
+      "sl_base_name": "Cave_MoleTunnel"
+    },
+    "HideoutCave_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "洞穴藏身处 B",
+      "img_name": "HideoutCave_02",
+      "sl_base_name": "HideoutCave_02"
+    }
+  }
+}

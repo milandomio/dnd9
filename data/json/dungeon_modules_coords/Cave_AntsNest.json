@@ -1,0 +1,3186 @@
+{
+  "map_base": "Cave_AntsNest",
+  "entities": [
+    {
+      "name": "Arrow",
+      "translation": "箭",
+      "type": "item",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 532.0821,
+          "y": -779.94086,
+          "z": -582.32764,
+          "yaw": 170.0,
+          "version": "(D)",
+          "label": "Arrow",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BlackRose",
+      "translation": "黑玫瑰",
+      "type": "props",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 80.0,
+          "y": -840.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "BlackRoseRandom",
+          "group_parent": ""
+        },
+        {
+          "x": -435.0,
+          "y": -1135.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "BlackRoseRandom",
+          "group_parent": ""
+        },
+        {
+          "x": -740.0,
+          "y": 330.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "护符草",
+          "group_parent": ""
+        },
+        {
+          "x": -570.0,
+          "y": 350.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "护符草",
+          "group_parent": ""
+        },
+        {
+          "x": 90.0,
+          "y": -1110.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "BlackRoseRandom",
+          "group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 670.0,
+          "z": -590.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "护符草",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Candle_A",
+      "translation": "蜡烛",
+      "type": "decoration",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": -1334.0,
+          "y": -555.0,
+          "z": 712.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "CofferSmall",
+      "translation": "迷你宝盒",
+      "type": "props",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": -993.0,
+          "y": -1039.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DeathSkull",
+      "translation": "飞行骷髅头",
+      "type": "monster",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 39.114166,
+          "y": -247.128736,
+          "z": 988.3141,
+          "yaw": 190.0,
+          "version": "(D)",
+          "label": "DeathSkull",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonDown",
+      "translation": "地牢下方门",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -966.000004,
+          "y": -1005.0,
+          "z": -263.0,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "地牢下方门",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonDown_IndicatorTorch",
+      "translation": "下行指示火把",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": -795.0,
+          "y": -964.0,
+          "z": -444.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "下行指示火把",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "type": "decoration",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FlatChestLarge",
+      "translation": "方型宝箱",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 313.0,
+          "y": -1267.0,
+          "z": 600.0,
+          "yaw": 125.0,
+          "version": "(D)",
+          "label": "OrnateChestLarge",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "type": "decoration",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": -757.0,
+          "y": -1217.0,
+          "z": 0.31405255,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -164.0,
+          "y": -133.0,
+          "z": -599.99994,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1140.0,
+          "y": -1109.0,
+          "z": 7.6322527,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 184.0,
+          "y": 36.0,
+          "z": 600.1571,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -738.0,
+          "y": 144.0,
+          "z": 0.31405348,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -702.0,
+          "y": 1000.0,
+          "z": 0.31405377,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -457.0,
+          "y": 857.0,
+          "z": 600.1571,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 522.07825,
+          "y": 1226.2448,
+          "z": 0.31405282,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1057.0,
+          "y": -443.0,
+          "z": 9.406215,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -1079.2719,
+          "y": 808.40594,
+          "z": 0.3140555,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1094.0,
+          "y": 1058.0,
+          "z": 0.31405157,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 365.0,
+          "y": -117.0,
+          "z": 0.31405127,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 735.0,
+          "y": 399.0,
+          "z": 0.31405294,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -1223.0,
+          "y": 158.0,
+          "z": 0.3140504,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 1216.0,
+          "y": 729.0,
+          "z": 0.31405616,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -1123.0724,
+          "y": -836.60223,
+          "z": 0.3140514,
+          "yaw": 320.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": -212.0,
+          "y": -690.0,
+          "z": 0.31405255,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorSpikes",
+      "translation": "地刺陷阱",
+      "type": "decoration",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 794.0,
+          "y": 1210.0,
+          "z": 0.31399999999996453,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6"
+        },
+        {
+          "x": -646.64276,
+          "y": -89.76605,
+          "z": 0.31399999999996453,
+          "yaw": 50.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6"
+        },
+        {
+          "x": -208.128086,
+          "y": -544.2551599999999,
+          "z": -599.9999,
+          "yaw": 275.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": "BP_GameSpawnerGroup_C_2"
+        },
+        {
+          "x": 507.38055,
+          "y": -62.48341,
+          "z": -599.9999,
+          "yaw": 245.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": ""
+        },
+        {
+          "x": -380.53851,
+          "y": -509.66585,
+          "z": -599.9999,
+          "yaw": 275.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": "BP_GameSpawnerGroup_C_2"
+        },
+        {
+          "x": 452.0,
+          "y": 527.0,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": ""
+        },
+        {
+          "x": 949.0,
+          "y": -145.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": 848.0,
+          "y": -399.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": 775.0376,
+          "y": -807.0,
+          "z": -356.08884,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "FloorSpikes",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": -1003.0,
+          "y": -934.0,
+          "z": -595.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "对象链接器",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 773.0,
+          "y": -245.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": ""
+        },
+        {
+          "x": -264.0,
+          "y": -380.0,
+          "z": -534.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": ""
+        },
+        {
+          "x": 95.0,
+          "y": -258.0,
+          "z": 983.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": ""
+        },
+        {
+          "x": 30.0,
+          "y": 420.0,
+          "z": 617.4782,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GiantBat",
+      "translation": "巨型蝙蝠",
+      "type": "monster",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 116.114166,
+          "y": -185.12874,
+          "z": 988.3141,
+          "yaw": 240.0,
+          "version": "(D)",
+          "label": "GiantBat",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GiantCentipede",
+      "translation": "巨型蜈蚣",
+      "type": "monster",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 277.0,
+          "y": -1028.0,
+          "z": 600.3141,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "GiantCentipede",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoblinArcher",
+      "translation": "哥布林弓手",
+      "type": "monster",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoblinAxeman",
+      "translation": "哥布林斧手",
+      "type": "monster",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoblinBolaslinger",
+      "translation": "哥布林投石手",
+      "type": "monster",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": 695.99994,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 1066.0,
+          "y": -675.0,
+          "z": 616.7196,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": -1239.0,
+          "y": -875.0,
+          "z": 615.28217,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        },
+        {
+          "x": 999.0,
+          "y": 586.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林远程",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoblinCaveModuleConnector",
+      "translation": "木门",
+      "type": "decoration",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "GoblinCaveModuleConnector",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoblinMage",
+      "translation": "哥布林法师",
+      "type": "monster",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 1107.6002,
+          "y": -187.73303,
+          "z": -596.6183,
+          "yaw": 155.0,
+          "version": "(D)",
+          "label": "GoblinMage",
+          "group_parent": ""
+        },
+        {
+          "x": -613.0,
+          "y": -582.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinMage",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoblinWarrior",
+      "translation": "哥布林战士",
+      "type": "monster",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -408.0,
+          "y": -1088.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": -997.0,
+          "y": 39.0,
+          "z": 0.314089,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "哥布林近战",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Ground",
+      "translation": "地面",
+      "type": "item",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": -1284.0,
+          "y": 1317.0,
+          "z": 116.20695,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "地面",
+          "group_parent": ""
+        },
+        {
+          "x": -1321.0,
+          "y": 1300.0,
+          "z": 116.20695,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "地面",
+          "group_parent": ""
+        },
+        {
+          "x": -1362.0,
+          "y": 1279.0,
+          "z": 116.20695,
+          "yaw": 50.0,
+          "version": "(D)",
+          "label": "地面",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GroundLamp_Lit_01",
+      "translation": "地面灯",
+      "type": "decoration",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地面灯",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地面灯",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地面灯",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地面灯",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Lamp02Random",
+      "translation": "灯",
+      "type": "decoration",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -346.43103,
+          "y": 298.68042,
+          "z": 800.0,
+          "yaw": 235.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -771.431,
+          "y": -971.3196,
+          "z": 800.0,
+          "yaw": 320.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 188.56897,
+          "y": 1343.6804,
+          "z": 800.0,
+          "yaw": 60.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -1323.431,
+          "y": -1110.3196,
+          "z": 800.0,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -1425.431,
+          "y": -1031.3196,
+          "z": 180.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -961.431,
+          "y": -1416.3196,
+          "z": 180.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -1424.136,
+          "y": 1113.6804,
+          "z": 180.0,
+          "yaw": 173.4,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 1433.569,
+          "y": 638.6804,
+          "z": 180.0,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 1347.569,
+          "y": -999.3196,
+          "z": 210.0,
+          "yaw": 347.2,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 636.569,
+          "y": 1420.7814,
+          "z": 180.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 876.8216,
+          "y": -141.39317,
+          "z": -440.0,
+          "yaw": 140.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 144.37982,
+          "y": -1055.9966,
+          "z": -440.0,
+          "yaw": 287.1,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -362.2094,
+          "y": -1148.0765,
+          "z": -440.0,
+          "yaw": 295.1,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -1441.7095,
+          "y": 422.51822,
+          "z": 800.0,
+          "yaw": 173.8,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 150.56898,
+          "y": 669.6804,
+          "z": 437.0,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -1420.5645,
+          "y": 784.20685,
+          "z": 800.0,
+          "yaw": 173.8,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -790.86456,
+          "y": -384.08133,
+          "z": 180.0,
+          "yaw": 148.8,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -1424.431,
+          "y": -636.3196,
+          "z": 180.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -1063.431,
+          "y": 496.68042,
+          "z": 180.0,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -561.431,
+          "y": 1436.6804,
+          "z": 180.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": 114.37982,
+          "y": -585.9966,
+          "z": -398.0,
+          "yaw": 107.1,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        },
+        {
+          "x": -406.72253,
+          "y": -732.0959,
+          "z": -440.0,
+          "yaw": 280.8,
+          "version": "(A)",
+          "label": "灯",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LavaGolem",
+      "translation": "熔岩魔像",
+      "type": "monster",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 257.0,
+          "y": -151.0,
+          "z": 0.31408826,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -852.8421,
+          "y": -770.4071,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -59.56544,
+          "y": -851.32947,
+          "z": -599.9999,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": -910.0,
+          "y": 322.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 659.0,
+          "y": -1148.0,
+          "z": 0.314088,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        },
+        {
+          "x": 555.91675,
+          "y": 943.9099,
+          "z": -599.9999,
+          "yaw": 195.0,
+          "version": "(D)",
+          "label": "GoblinWarrior",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MapIconFixedStairDown",
+      "translation": "地图图标-下行楼梯",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": -1000.0,
+          "y": -940.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "地图图标-下行楼梯",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Mimic_Small_Ornate",
+      "translation": "小型宝箱怪",
+      "type": "monster",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": -993.0,
+          "y": -1039.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱",
+      "type": "props",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": -993.0,
+          "y": -1039.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Portcullis_Down_Infinite",
+      "translation": "下行吊桥（无限）",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": -992.0,
+          "y": -962.0,
+          "z": -609.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "下行吊桥（无限）",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Pot04",
+      "translation": "罐子",
+      "type": "props",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 287.71426,
+          "y": -891.6726,
+          "z": -599.9999,
+          "yaw": 135.0,
+          "version": "(D)",
+          "label": "Pot04",
+          "group_parent": ""
+        },
+        {
+          "x": 420.17517,
+          "y": -805.81476,
+          "z": 2.5069897,
+          "yaw": 135.0,
+          "version": "(D)",
+          "label": "Pot04",
+          "group_parent": ""
+        },
+        {
+          "x": 246.83202,
+          "y": -679.2046,
+          "z": -599.9999,
+          "yaw": 135.0,
+          "version": "(D)",
+          "label": "Pot04",
+          "group_parent": ""
+        },
+        {
+          "x": 287.4695,
+          "y": -779.10913,
+          "z": -599.9999,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "Pot04",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Roaster01On",
+      "translation": "灯架子",
+      "type": "decoration",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 1392.6323,
+          "y": -952.93274,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 529.6323,
+          "y": -633.93274,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -364.36765,
+          "y": -188.93274,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -130.36765,
+          "y": -14.932732,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1413.2941,
+          "y": 234.96947,
+          "z": 0.31406492,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -435.36765,
+          "y": 826.06726,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 757.815,
+          "y": 174.75014,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -400.36765,
+          "y": -1253.9327,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 944.6323,
+          "y": -1383.9327,
+          "z": -0.2282953,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 594.2551,
+          "y": -232.79857,
+          "z": 1.1985846,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 494.63235,
+          "y": 571.06726,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 1348.0521,
+          "y": 1293.1329,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -28.397217,
+          "y": -700.07275,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 359.63235,
+          "y": -703.93274,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 966.878,
+          "y": -585.9603,
+          "z": -1.685935,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 1399.6323,
+          "y": 596.06726,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 200.63235,
+          "y": -507.93274,
+          "z": 611.02875,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 764.6323,
+          "y": 501.06726,
+          "z": -599.9999,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -297.36765,
+          "y": 958.06726,
+          "z": -599.9999,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -934.3677,
+          "y": 919.06726,
+          "z": -599.9999,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -285.36765,
+          "y": 35.06727,
+          "z": -599.9999,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1335.3677,
+          "y": -409.93274,
+          "z": -599.9999,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 866.6323,
+          "y": -1127.9327,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 552.6323,
+          "y": 1103.0673,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -234.68947,
+          "y": 1303.4913,
+          "z": 601.507,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -907.3677,
+          "y": 545.06726,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 325.63235,
+          "y": 171.06726,
+          "z": 600.27344,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1054.8602,
+          "y": -287.7907,
+          "z": 0.3140532,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -419.05627,
+          "y": 54.311584,
+          "z": 0.314053,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 549.0521,
+          "y": 954.13293,
+          "z": 0.314065,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -464.36765,
+          "y": 607.06726,
+          "z": -599.9999,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 365.1172,
+          "y": -962.87854,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 1417.3153,
+          "y": -328.04584,
+          "z": 1.198585,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -475.36765,
+          "y": -1088.9327,
+          "z": 600.3141,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1022.3677,
+          "y": 188.06726,
+          "z": -599.9999,
+          "yaw": 340.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": ""
+        },
+        {
+          "x": 412.63235,
+          "y": 1232.0673,
+          "z": -496.9999,
+          "yaw": 338.2,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": ""
+        },
+        {
+          "x": 755.6323,
+          "y": 1232.0673,
+          "z": -599.9999,
+          "yaw": 338.2,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": ""
+        },
+        {
+          "x": 50.63235,
+          "y": 870.06726,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "SimpleChestMedium",
+      "translation": "橡木宝箱",
+      "type": "props",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -841.08636,
+          "y": 982.7983,
+          "z": -599.9999,
+          "yaw": 305.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": 36.0,
+          "y": 1241.0,
+          "z": 601.507,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": -1439.0,
+          "y": 138.0,
+          "z": 0.314053,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": -1372.0,
+          "y": 673.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": -1377.0,
+          "y": 511.0,
+          "z": 600.3141,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": -1036.0,
+          "y": 1412.0,
+          "z": 0.31405252,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": 1132.0,
+          "y": -1142.0,
+          "z": 600.3141,
+          "yaw": 110.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": -775.0,
+          "y": 598.0,
+          "z": 0.314053,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": 1272.0,
+          "y": 545.0,
+          "z": 600.3141,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": -342.5816,
+          "y": -96.73315,
+          "z": -599.9999,
+          "yaw": 325.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        },
+        {
+          "x": -530.54266,
+          "y": 538.97845,
+          "z": -599.9999,
+          "yaw": 105.0,
+          "version": "(D)",
+          "label": "SimpleChestMedium",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestSmall",
+      "translation": "小型橡木宝箱",
+      "type": "props",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 31.999979,
+          "y": -856.0,
+          "z": 0.3140646,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": -319.87222,
+          "y": -1187.0812,
+          "z": 0.314065,
+          "yaw": 110.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": 1162.7606,
+          "y": 1390.5726,
+          "z": 2.1101136,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": 1266.7576,
+          "y": 1389.1993,
+          "z": 0.31406647,
+          "yaw": 265.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": -993.0,
+          "y": -1039.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 92.084625,
+          "y": 801.2679,
+          "z": -599.9999,
+          "yaw": 35.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": 685.0949,
+          "y": 1262.4182,
+          "z": -599.9999,
+          "yaw": 265.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": 631.0,
+          "y": 994.0,
+          "z": 600.3141,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": 1428.0,
+          "y": 330.0,
+          "z": 10.528486,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": -500.79288,
+          "y": -1083.7812,
+          "z": -599.9999,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "SimpleChestSmall",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonCorpse03",
+      "translation": "遗骸",
+      "type": "props",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 58.827457,
+          "y": -128.45636,
+          "z": -599.9999,
+          "yaw": 345.0,
+          "version": "(D)",
+          "label": "SkeletonCorpse_03",
+          "group_parent": ""
+        },
+        {
+          "x": 987.7765,
+          "y": -9.609316,
+          "z": -599.9999,
+          "yaw": 5.0,
+          "version": "(D)",
+          "label": "SkeletonCorpse_03",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Statue01",
+      "translation": "生命神坛",
+      "type": "decoration",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 58.0,
+          "y": -1276.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "生命神坛",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Wardweed",
+      "translation": "护符草",
+      "type": "props",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -740.0,
+          "y": 330.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "护符草",
+          "group_parent": ""
+        },
+        {
+          "x": -570.0,
+          "y": 350.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "护符草",
+          "group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 670.0,
+          "z": -590.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "护符草",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "小型加固宝箱",
+      "type": "props",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 1018.6497,
+          "y": -65.12699,
+          "z": 0.3140635,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "WoodChestSmall",
+          "group_parent": ""
+        },
+        {
+          "x": -993.0,
+          "y": -1039.0,
+          "z": 600.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenBarrel01",
+      "translation": "木桶",
+      "type": "props",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -1268.0,
+          "y": -506.0,
+          "z": 39.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": ""
+        },
+        {
+          "x": -1322.0,
+          "y": -523.0,
+          "z": 0.31406483,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": ""
+        },
+        {
+          "x": -1398.0,
+          "y": -588.0,
+          "z": 0.314065,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": ""
+        },
+        {
+          "x": -720.0,
+          "y": -497.0,
+          "z": 639.3141,
+          "yaw": 199.5,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": ""
+        },
+        {
+          "x": -996.9402,
+          "y": -432.4564,
+          "z": -599.9999,
+          "yaw": 40.0,
+          "version": "(D)",
+          "label": "WoodenBarrel02",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "WoodenCrateMedium01",
+      "translation": "中型木箱子",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": -92.70778,
+          "y": 1219.9023,
+          "z": -599.9999,
+          "yaw": 265.0,
+          "version": "(D)",
+          "label": "WoodenCrateMedium01",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenCrateSmall",
+      "translation": "小型木板箱",
+      "type": "props",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -1008.2085,
+          "y": 450.68326,
+          "z": -496.9999,
+          "yaw": 280.0,
+          "version": "(D)",
+          "label": "WoodenCrateSmall",
+          "group_parent": ""
+        },
+        {
+          "x": -1014.7706,
+          "y": 446.74973,
+          "z": -599.9999,
+          "yaw": 245.0,
+          "version": "(D)",
+          "label": "WoodenCrateSmall",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

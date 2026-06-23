@@ -1,0 +1,292 @@
+{
+  "name": "Octopus",
+  "translation": "章鱼",
+  "coords": [
+    {
+      "x": 3865.0,
+      "y": -1050.0,
+      "z": -795.0,
+      "yaw": 140.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "Octopus"
+    },
+    {
+      "x": 2187.364,
+      "y": 2268.6348,
+      "z": -1687.4663,
+      "yaw": 145.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "Octopus"
+    },
+    {
+      "x": -576.6451,
+      "y": -445.39325,
+      "z": -700.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_CoralForest_01",
+      "file": "ShipGraveyard_CoralForest_01_D.json",
+      "version": "(D)",
+      "label": "Octopus"
+    },
+    {
+      "x": 473.3549,
+      "y": 539.60675,
+      "z": -700.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_CoralForest_01",
+      "file": "ShipGraveyard_CoralForest_01_D.json",
+      "version": "(D)",
+      "label": "Octopus"
+    },
+    {
+      "x": 914.0,
+      "y": 1009.0,
+      "z": -532.90904,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Octopus",
+      "variant_count": 3,
+      "variant_names": [
+        "乌贼",
+        "人鱼",
+        "章鱼"
+      ]
+    },
+    {
+      "x": -19.0,
+      "y": 90.0,
+      "z": -1155.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_MermaidTomb",
+      "file": "ShipGraveyard_MermaidTomb_HR_D.json",
+      "version": "",
+      "label": "Octopus",
+      "variant_count": 2,
+      "variant_names": [
+        "乌贼",
+        "章鱼"
+      ]
+    },
+    {
+      "x": -115.0,
+      "y": -275.0,
+      "z": -1335.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "Octopus"
+    },
+    {
+      "x": 504.0,
+      "y": -996.0,
+      "z": -1118.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "Octopus",
+      "variant_count": 3,
+      "variant_names": []
+    },
+    {
+      "x": 511.0,
+      "y": 1006.0,
+      "z": -1118.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "Octopus",
+      "variant_count": 3,
+      "variant_names": []
+    },
+    {
+      "x": -1010.0,
+      "y": 745.0,
+      "z": -1118.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "Octopus",
+      "variant_count": 3,
+      "variant_names": []
+    },
+    {
+      "x": -360.0,
+      "y": -3.0,
+      "z": -3098.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "Octopus",
+      "variant_count": 2,
+      "variant_names": [
+        "海胆",
+        "章鱼"
+      ]
+    },
+    {
+      "x": -1009.0,
+      "y": 75.0,
+      "z": -1637.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "Octopus",
+      "variant_count": 2,
+      "variant_names": [
+        "章鱼",
+        "乌贼"
+      ]
+    },
+    {
+      "x": 555.0,
+      "y": -709.0,
+      "z": -2413.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "Octopus",
+      "variant_count": 3,
+      "variant_names": [
+        "大白鲨",
+        "章鱼",
+        "乌贼"
+      ]
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_CoralForest_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "珊瑚密林",
+      "img_name": "ShipGraveyard_CoralForest_01",
+      "sl_base_name": "ShipGraveyard_CoralForest_01"
+    },
+    "ShipGraveyard_FlippedShip": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "倾覆之船",
+      "img_name": "ShipGraveyard_FlippedShip",
+      "sl_base_name": "ShipGraveyard_FlippedShip"
+    },
+    "ShipGraveyard_MermaidTomb": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "人鱼冢",
+      "img_name": "ShipGraveyard_MermaidTomb",
+      "sl_base_name": "ShipGraveyard_MermaidTomb"
+    },
+    "ShipGraveyard_Oceanvolcano": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海底火山",
+      "img_name": "ShipGraveyard_Oceanvolcano",
+      "sl_base_name": "ShipGraveyard_Oceanvolcano"
+    },
+    "ShipGraveyard_SpawningPool": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "孵化池",
+      "img_name": "ShipGraveyard_SpawningPool",
+      "sl_base_name": "ShipGraveyard_SpawningPool"
+    },
+    "ShipGraveyard_SunkenShip_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉没之船",
+      "img_name": "ShipGraveyard_SunkenShip_01",
+      "sl_base_name": "ShipGraveyard_SunkenShip_01"
+    },
+    "ShipGraveyard_Trench": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海沟",
+      "img_name": "ShipGraveyard_Trench",
+      "sl_base_name": "ShipGraveyard_Trench"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "章鱼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 1.875,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  }
+}

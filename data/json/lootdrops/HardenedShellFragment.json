@@ -1,0 +1,138 @@
+{
+  "name": "HardenedShellFragment",
+  "translation": "硬化龟壳碎片",
+  "monsters": [
+    {
+      "name": "LavaTurtle",
+      "entity_name": "LavaTurtle",
+      "translation": "熔岩龟",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 905.0,
+          "y": 170.0,
+          "z": -5.0,
+          "yaw": 0.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -165.0,
+          "y": 765.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -570.0,
+          "y": -930.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "map": "Firedeep_BurningCourt",
+          "file": "Firedeep_BurningCourt_D.json",
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": 350.0,
+          "y": 720.0,
+          "z": 10.0,
+          "yaw": 0.0,
+          "map": "Firedeep_CollapsedDigSite",
+          "file": "Firedeep_CollapsedDigSite_D.json",
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": -955.0,
+          "y": 5.0,
+          "z": -140.0,
+          "yaw": 0.0,
+          "map": "Firedeep_LavaCrossway",
+          "file": "Firedeep_LavaCrossway_D.json",
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        },
+        {
+          "x": 915.0,
+          "y": -70.0,
+          "z": -140.0,
+          "yaw": 0.0,
+          "map": "Firedeep_LavaCrossway",
+          "file": "Firedeep_LavaCrossway_D.json",
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "spawn_rate": 45.0,
+          "score": 2.25
+        }
+      ],
+      "max_score": 2.25
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "熔岩龟",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Firedeep_BurningCourt": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "焚庭",
+      "img_name": "BurningCourt",
+      "sl_base_name": "Firedeep_BurningCourt"
+    },
+    "Firedeep_CollapsedDigSite": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "崩陷矿场",
+      "img_name": "CollapsedDigSite",
+      "sl_base_name": "Firedeep_CollapsedDigSite"
+    },
+    "Firedeep_LavaCrossway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔岩岔路",
+      "img_name": "LavaCrossway",
+      "sl_base_name": "Firedeep_LavaCrossway"
+    }
+  }
+}

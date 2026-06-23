@@ -1,0 +1,1579 @@
+{
+  "map_base": "Firedeep_BurningCourt",
+  "entities": [
+    {
+      "name": "AshPile",
+      "translation": "灰烬堆",
+      "type": "props",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -188.63632,
+          "y": 1209.1702,
+          "z": 205.0,
+          "yaw": 205.0,
+          "version": "(D)",
+          "label": "AshPile",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": -805.4658,
+          "y": -479.74530000000004,
+          "z": 0.0,
+          "yaw": 280.0,
+          "version": "(D)",
+          "label": "AshPile",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": 493.6011,
+          "y": -784.2253900000001,
+          "z": 195.0,
+          "yaw": 205.0,
+          "version": "(D)",
+          "label": "AshPile",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": 1189.68463,
+          "y": -171.1309,
+          "z": 0.0,
+          "yaw": 205.0,
+          "version": "(D)",
+          "label": "AshPile",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": 1418.3264,
+          "y": 1426.0662000000002,
+          "z": 11.493130000000008,
+          "yaw": 205.0,
+          "version": "(D)",
+          "label": "AshPile",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": 72.3423,
+          "y": 914.4346,
+          "z": 0.0,
+          "yaw": 205.0,
+          "version": "(D)",
+          "label": "AshPile",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        },
+        {
+          "x": -1326.746,
+          "y": 1235.1080000000002,
+          "z": 0.0,
+          "yaw": 205.0,
+          "version": "(D)",
+          "label": "AshPile",
+          "group_parent": "BP_GameSpawnerGroup_C_1"
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "CofferSmall",
+      "translation": "迷你宝盒",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 330.57898,
+          "y": -1208.4093,
+          "z": 605.0,
+          "yaw": 230.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 50.0,
+          "y": 1455.0,
+          "z": 205.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 185.0,
+          "y": -710.0,
+          "z": 205.0,
+          "yaw": 320.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -335.0,
+          "y": -200.0,
+          "z": 230.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 854.82965,
+          "y": -191.2941,
+          "z": 0.0,
+          "yaw": 345.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DrippingMagma",
+      "translation": "坠落岩浆",
+      "type": "decoration",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -1293.0,
+          "y": 184.0,
+          "z": 702.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "DrippingMagma",
+          "group_parent": ""
+        },
+        {
+          "x": 1272.0,
+          "y": 1341.0,
+          "z": 382.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "DrippingMagma",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "type": "decoration",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FallenDwarf02",
+      "translation": "矮人亡骸",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 1170.0,
+          "y": 605.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "FallenDwarf_02",
+          "group_parent": ""
+        },
+        {
+          "x": -498.28,
+          "y": -92.881195,
+          "z": 205.0,
+          "yaw": 205.0,
+          "version": "(D)",
+          "label": "FallenDwarf_02",
+          "group_parent": ""
+        },
+        {
+          "x": -1305.0,
+          "y": -345.0,
+          "z": 5.0,
+          "yaw": 35.0,
+          "version": "(D)",
+          "label": "FallenDwarf_03",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "FireDeepModuleVolume",
+      "translation": "熔岩",
+      "type": "decoration",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -225.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "FireDeepModuleVolume",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FiredeepMagmaVolume",
+      "translation": "熔岩岩浆区域",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 379.0,
+          "y": 898.0,
+          "z": 282.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": 10.41257,
+          "y": 220.79,
+          "z": -101.0,
+          "yaw": 276.3,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": 388.91095,
+          "y": -248.6378,
+          "z": -60.83642,
+          "yaw": 334.2,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": 380.0,
+          "y": 897.0,
+          "z": 21.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": -318.18652,
+          "y": -39.40186,
+          "z": 391.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": -185.79292,
+          "y": 33.589706,
+          "z": -85.77943,
+          "yaw": 93.5,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": 587.0,
+          "y": -245.0,
+          "z": 260.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": 590.0,
+          "y": -254.0,
+          "z": -45.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": 131.61366,
+          "y": -134.69162,
+          "z": -95.0,
+          "yaw": 337.9,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        },
+        {
+          "x": 232.60027,
+          "y": 49.312393,
+          "z": -91.0,
+          "yaw": 0.3,
+          "version": "(A)",
+          "label": "熔岩岩浆区域",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FiredeepModuleConnector",
+      "translation": "木门",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "FiredeepModuleConnector",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FiredeepRoaster01On",
+      "translation": "灯架子",
+      "type": "decoration",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 427.0,
+          "y": -1201.0,
+          "z": 605.507,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 585.0,
+          "y": -1019.0,
+          "z": 199.50699,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1022.0,
+          "y": 444.0,
+          "z": 0.0,
+          "yaw": 280.0,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -480.0,
+          "y": 1028.0,
+          "z": 0.0,
+          "yaw": 280.3,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 947.0,
+          "y": 904.0,
+          "z": 4.1361303,
+          "yaw": 90.3,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": 320.2162,
+          "y": -478.75433,
+          "z": -35.08007,
+          "yaw": 270.3,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -391.35046,
+          "y": 110.96839,
+          "z": -23.569885,
+          "yaw": 270.3,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -139.0,
+          "y": -802.0,
+          "z": 27.219446,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -711.0,
+          "y": -424.00003,
+          "z": -0.49301067,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepRoaster01On",
+          "group_parent": ""
+        },
+        {
+          "x": -20.0,
+          "y": -1250.0,
+          "z": 204.0,
+          "yaw": 295.0,
+          "version": "(A)",
+          "label": "FiredeepRoaster02On",
+          "group_parent": ""
+        },
+        {
+          "x": -1407.0,
+          "y": -458.0,
+          "z": 3.446694,
+          "yaw": 280.0,
+          "version": "(A)",
+          "label": "FiredeepRoaster02On",
+          "group_parent": ""
+        },
+        {
+          "x": 147.67287,
+          "y": 1408.4272,
+          "z": 200.78886,
+          "yaw": 280.3,
+          "version": "(A)",
+          "label": "FiredeepRoaster02On",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "FiredeepTorch01On",
+      "translation": "火把",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 1140.7368,
+          "y": 577.00665,
+          "z": 150.0,
+          "yaw": 180.4,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -573.0,
+          "y": -1486.0,
+          "z": 181.0,
+          "yaw": 275.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 494.0,
+          "y": -1490.0,
+          "z": 352.0,
+          "yaw": 295.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -139.0,
+          "y": -1370.0,
+          "z": 804.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -3.0,
+          "y": -1123.0,
+          "z": 366.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -283.0,
+          "y": -1281.0,
+          "z": 181.0,
+          "yaw": 295.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1004.0,
+          "y": -1188.0,
+          "z": 181.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1004.8682,
+          "y": -866.076,
+          "z": 200.0,
+          "yaw": 280.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1186.0,
+          "y": -116.0,
+          "z": 200.0,
+          "yaw": 190.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1430.0,
+          "y": 106.0,
+          "z": 400.0,
+          "yaw": 190.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1494.2855,
+          "y": 660.0605,
+          "z": 210.0,
+          "yaw": 190.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1109.0,
+          "y": 1066.0,
+          "z": 200.0,
+          "yaw": 85.5,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -1262.3374,
+          "y": 1492.0543,
+          "z": 200.0,
+          "yaw": 110.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -628.0,
+          "y": 1506.0,
+          "z": 200.0,
+          "yaw": 85.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -247.0,
+          "y": 1094.0,
+          "z": 364.0,
+          "yaw": 270.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 635.0,
+          "y": 1495.0,
+          "z": 200.0,
+          "yaw": 90.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 1309.0128,
+          "y": 1497.7902,
+          "z": 200.49504,
+          "yaw": 90.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 1501.0,
+          "y": 289.0,
+          "z": 200.0,
+          "yaw": 0.4,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 1306.1753,
+          "y": -270.82727,
+          "z": 200.0,
+          "yaw": 35.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 628.1812,
+          "y": 591.6971,
+          "z": 200.0,
+          "yaw": 85.4,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 81.609314,
+          "y": -629.9836,
+          "z": 407.0,
+          "yaw": 260.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": -402.34317,
+          "y": -104.75064,
+          "z": 368.0,
+          "yaw": 65.3,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 1300.0,
+          "y": -988.0,
+          "z": 200.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        },
+        {
+          "x": 959.0,
+          "y": -1495.0,
+          "z": 200.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "FiredeepTorch01On",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FlatChestLarge",
+      "translation": "方型宝箱",
+      "type": "props",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 78.390175,
+          "y": -165.47495,
+          "z": -82.051094,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "特殊宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 320.0,
+          "y": -1005.0,
+          "z": 205.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LavaGolem",
+      "translation": "熔岩魔像",
+      "type": "monster",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 675.0,
+          "y": 120.0,
+          "z": -3.2717965,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "LavaGolem",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LavaMushroom",
+      "translation": "熔岩菇",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": -445.0,
+          "y": -195.0,
+          "z": 215.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "LavaMushroom",
+          "group_parent": ""
+        },
+        {
+          "x": -505.0,
+          "y": -170.0,
+          "z": 210.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "LavaMushroom",
+          "group_parent": ""
+        },
+        {
+          "x": -415.0,
+          "y": -210.0,
+          "z": 215.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "LavaMushroom",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LavaSlime",
+      "translation": "熔岩史莱姆",
+      "type": "monster",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 150.0,
+          "y": 1190.0,
+          "z": 205.0,
+          "yaw": 60.0,
+          "version": "(D)",
+          "label": "LavaSlime",
+          "group_parent": ""
+        },
+        {
+          "x": -1325.0,
+          "y": 175.0,
+          "z": 205.0,
+          "yaw": 60.0,
+          "version": "(D)",
+          "label": "LavaSlime",
+          "group_parent": ""
+        },
+        {
+          "x": -513.16986,
+          "y": -265.1314,
+          "z": 210.80829,
+          "yaw": 60.0,
+          "version": "(D)",
+          "label": "LavaSlime",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LavaTurtle",
+      "translation": "熔岩龟",
+      "type": "monster",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 905.0,
+          "y": 170.0,
+          "z": -5.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "group_parent": ""
+        },
+        {
+          "x": -165.0,
+          "y": 765.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "group_parent": ""
+        },
+        {
+          "x": -570.0,
+          "y": -930.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "LavaTurtle",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MagmaBurst",
+      "translation": "岩浆爆发",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": -204.0,
+          "y": 885.0,
+          "z": -1.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "MagmaBurst",
+          "group_parent": ""
+        },
+        {
+          "x": -122.0,
+          "y": -479.0,
+          "z": -40.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "MagmaBurst",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Mimic_Large_Flat",
+      "translation": "巨型宝箱怪",
+      "type": "monster",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 78.390175,
+          "y": -165.47495,
+          "z": -82.051094,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "特殊宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Mimic_Medium_Ornate",
+      "translation": "宝箱怪",
+      "type": "monster",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": 647.2873,
+          "y": 533.60364,
+          "z": 5.0,
+          "yaw": 305.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -1055.2084,
+          "y": 116.72077,
+          "z": 0.0,
+          "yaw": 335.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Mimic_Small_Ornate",
+      "translation": "小型宝箱怪",
+      "type": "monster",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 330.57898,
+          "y": -1208.4093,
+          "z": 605.0,
+          "yaw": 230.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 647.2873,
+          "y": 533.60364,
+          "z": 5.0,
+          "yaw": 305.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -1055.2084,
+          "y": 116.72077,
+          "z": 0.0,
+          "yaw": 335.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 50.0,
+          "y": 1455.0,
+          "z": 205.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 185.0,
+          "y": -710.0,
+          "z": 205.0,
+          "yaw": 320.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -335.0,
+          "y": -200.0,
+          "z": 230.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 854.82965,
+          "y": -191.2941,
+          "z": 0.0,
+          "yaw": 345.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OrnateChestLarge",
+      "translation": "狮头宝箱",
+      "type": "props",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 78.390175,
+          "y": -165.47495,
+          "z": -82.051094,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "特殊宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OrnateChestMedium",
+      "translation": "重型华丽宝箱",
+      "type": "props",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 647.2873,
+          "y": 533.60364,
+          "z": 5.0,
+          "yaw": 305.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -1055.2084,
+          "y": 116.72077,
+          "z": 0.0,
+          "yaw": 335.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱",
+      "type": "props",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 330.57898,
+          "y": -1208.4093,
+          "z": 605.0,
+          "yaw": 230.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 50.0,
+          "y": 1455.0,
+          "z": 205.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 185.0,
+          "y": -710.0,
+          "z": 205.0,
+          "yaw": 320.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -335.0,
+          "y": -200.0,
+          "z": 230.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 854.82965,
+          "y": -191.2941,
+          "z": 0.0,
+          "yaw": 345.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Pickaxe",
+      "translation": "十字镐",
+      "type": "item",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": -235.0,
+          "y": 1455.0,
+          "z": 204.50699,
+          "yaw": 265.0,
+          "version": "(D)",
+          "label": "Pickaxe",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestLarge",
+      "translation": "大型橡木宝箱",
+      "type": "props",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 78.390175,
+          "y": -165.47495,
+          "z": -82.051094,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "特殊宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestMedium",
+      "translation": "橡木宝箱",
+      "type": "props",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": 647.2873,
+          "y": 533.60364,
+          "z": 5.0,
+          "yaw": 305.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -1055.2084,
+          "y": 116.72077,
+          "z": 0.0,
+          "yaw": 335.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestSmall",
+      "translation": "小型橡木宝箱",
+      "type": "props",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 330.57898,
+          "y": -1208.4093,
+          "z": 605.0,
+          "yaw": 230.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 50.0,
+          "y": 1455.0,
+          "z": 205.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 185.0,
+          "y": -710.0,
+          "z": 205.0,
+          "yaw": 320.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -335.0,
+          "y": -200.0,
+          "z": 230.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 854.82965,
+          "y": -191.2941,
+          "z": 0.0,
+          "yaw": 345.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Statue01",
+      "translation": "生命神坛",
+      "type": "decoration",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 233.43217,
+          "y": 59.295506,
+          "z": -105.801636,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "生命神坛",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Statue_Dwarven",
+      "translation": "矮人雕像",
+      "type": "decoration",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 240.0,
+          "y": 1064.0,
+          "z": 210.0,
+          "yaw": 215.0,
+          "version": "(D)",
+          "label": "矮人雕像",
+          "group_parent": ""
+        },
+        {
+          "x": 420.0,
+          "y": -591.0,
+          "z": 179.0,
+          "yaw": 215.0,
+          "version": "(D)",
+          "label": "矮人雕像",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestLarge",
+      "translation": "大型加固宝箱",
+      "type": "props",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 78.390175,
+          "y": -165.47495,
+          "z": -82.051094,
+          "yaw": 285.0,
+          "version": "(D)",
+          "label": "特殊宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestMedium",
+      "translation": "加固宝箱",
+      "type": "props",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 647.2873,
+          "y": 533.60364,
+          "z": 5.0,
+          "yaw": 305.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -1055.2084,
+          "y": 116.72077,
+          "z": 0.0,
+          "yaw": 335.0,
+          "version": "(D)",
+          "label": "大宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "小型加固宝箱",
+      "type": "props",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 330.57898,
+          "y": -1208.4093,
+          "z": 605.0,
+          "yaw": 230.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 50.0,
+          "y": 1455.0,
+          "z": 205.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 185.0,
+          "y": -710.0,
+          "z": 205.0,
+          "yaw": 320.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": -335.0,
+          "y": -200.0,
+          "z": 230.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        },
+        {
+          "x": 854.82965,
+          "y": -191.2941,
+          "z": 0.0,
+          "yaw": 345.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenBarrel_Firedeep",
+      "translation": "矮人木桶",
+      "type": "props",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 1450.0,
+          "y": 270.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel_Firedeep",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenCrate_Firedeep_01",
+      "translation": "矮人中型木箱",
+      "type": "props",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 1440.0,
+          "y": 145.0,
+          "z": 0.0,
+          "yaw": 30.0,
+          "version": "(D)",
+          "label": "WoodenCrate_Firedeep_01",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodsmanAxe",
+      "translation": "砍柴斧",
+      "type": "item",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -610.0,
+          "y": -1445.0,
+          "z": 55.0,
+          "yaw": 70.0,
+          "version": "(D)",
+          "label": "WoodsmanAxe",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

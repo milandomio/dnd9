@@ -1,0 +1,231 @@
+{
+  "name": "Hourglass",
+  "translation": "沙漏",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -1360.0,
+      "y": 15.0,
+      "z": 135.0,
+      "yaw": 0.0,
+      "map": "Cemetery_01",
+      "file": "Cemetery_01_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": -1005.0,
+      "y": -420.0,
+      "z": 137.0,
+      "yaw": 0.0,
+      "map": "Cemetery_02",
+      "file": "Cemetery_02_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": -485.0,
+      "y": -1300.0,
+      "z": 80.0,
+      "yaw": 0.0,
+      "map": "Crypt_AltarRoomAB",
+      "file": "Crypt_AltarRoomAB_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": 135.0,
+      "y": 1451.0,
+      "z": -9.0,
+      "yaw": 0.0,
+      "map": "Crypt_Dungeon",
+      "file": "Crypt_Dungeon_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": -1175.0,
+      "y": 226.0,
+      "z": 72.0,
+      "yaw": 0.0,
+      "map": "Crypt_LargeRoomPit",
+      "file": "Crypt_LargeRoomPit_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": -1161.0,
+      "y": 216.0,
+      "z": 72.0,
+      "yaw": 0.0,
+      "map": "Crypt_LargeRoomPit",
+      "file": "Crypt_LargeRoomPit_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": -217.0,
+      "y": 768.0,
+      "z": 101.0,
+      "yaw": 0.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": 296.0,
+      "y": 1332.5,
+      "z": 58.296555,
+      "yaw": 0.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": 1420.0,
+      "y": 260.0,
+      "z": 60.0,
+      "yaw": 0.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    },
+    {
+      "x": 865.3205,
+      "y": 91.32051,
+      "z": -950.0,
+      "yaw": 150.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "Hourglass"
+    }
+  ],
+  "_modules": {
+    "Cemetery_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "双子墓地",
+      "img_name": "Cemetery_01",
+      "sl_base_name": "Cemetery_01"
+    },
+    "Cemetery_02": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "棺材房",
+      "img_name": "Cemetery_02",
+      "sl_base_name": "Cemetery_02"
+    },
+    "Crypt_AltarRoomAB": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "祭坛室",
+      "img_name": "AltarRoomAB",
+      "sl_base_name": "Crypt_AltarRoomAB"
+    },
+    "Crypt_Dungeon": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "墓穴地牢",
+      "img_name": "Crypt_Dungeon",
+      "sl_base_name": "Crypt_Dungeon"
+    },
+    "Crypt_LargeRoomPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "断桥",
+      "img_name": "Crypt_LargeRoomPit",
+      "sl_base_name": "Crypt_LargeRoomPit"
+    },
+    "DarkMagicLibrary_Center": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "黑魔法图书馆",
+      "img_name": "DarkMagicLibrary_Center",
+      "sl_base_name": "DarkMagicLibrary_Center"
+    },
+    "Ruins_Bath": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "洗澡堂",
+      "img_name": "Ruins_Bath",
+      "sl_base_name": "Ruins_Bath"
+    },
+    "Ruins_ForsakenCloister": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "寂灭回廊",
+      "img_name": "Ruins_ForsakenCloister",
+      "sl_base_name": "Ruins_ForsakenCloister"
+    }
+  },
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "沙漏",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "沙漏",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

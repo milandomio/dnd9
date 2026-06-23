@@ -1,0 +1,66 @@
+{
+  "name": "BrokenWheel",
+  "translation": "坏掉的车轮",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -1682.0,
+      "y": 1278.0,
+      "z": 43.0,
+      "yaw": 0.0,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "BrokenWheel"
+    },
+    {
+      "x": -1562.0,
+      "y": 1972.0,
+      "z": 46.0,
+      "yaw": 180.0,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "BrokenWheel"
+    },
+    {
+      "x": 58.0,
+      "y": 1135.0,
+      "z": 34.0,
+      "yaw": 265.0,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "BrokenWheel"
+    }
+  ],
+  "_modules": {
+    "CenterTower": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "巨型环厅",
+      "img_name": "CenterTower",
+      "sl_base_name": "CenterTower"
+    }
+  },
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "坏掉的车轮",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

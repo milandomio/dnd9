@@ -1,0 +1,108 @@
+{
+  "name": "BrokenBoneSpike",
+  "translation": "折断的骨刺",
+  "monsters": [
+    {
+      "name": "DreadSpine",
+      "entity_name": "DreadSpine",
+      "translation": "畸形骨魔",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -1170.0,
+          "y": 18.0,
+          "z": -400.0,
+          "yaw": 0.0,
+          "map": "DeathHall",
+          "file": "DeathHall_HR_D.json",
+          "version": "",
+          "label": "Dreadspine",
+          "variant_count": 3,
+          "variant_names": [
+            "幽鬼",
+            "畸形骨魔",
+            "骷髅冠军"
+          ],
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": -7.533883,
+          "y": 357.0118,
+          "z": -9.9999,
+          "yaw": 260.0,
+          "map": "Sanctum",
+          "file": "Sanctum_HR_D.json",
+          "version": "",
+          "label": "Dreadspine",
+          "spawn_rate": 100,
+          "score": 20.0
+        },
+        {
+          "x": 45.0,
+          "y": 160.0,
+          "z": -500.0,
+          "yaw": 90.0,
+          "map": "TheMiniWheel",
+          "file": "TheMiniWheel_HR_D.json",
+          "version": "",
+          "label": "Dreadspine",
+          "spawn_rate": 100,
+          "score": 20.0
+        }
+      ],
+      "max_score": 20.0
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "畸形骨魔",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "DeathHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "死亡厅堂",
+      "img_name": "DeathHall",
+      "sl_base_name": "DeathHall"
+    },
+    "Sanctum": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "圣所",
+      "img_name": "Sanctum",
+      "sl_base_name": "Sanctum"
+    },
+    "TheMiniWheel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "迷你环厅",
+      "img_name": "TheMiniWheel",
+      "sl_base_name": "TheMiniWheel"
+    }
+  }
+}

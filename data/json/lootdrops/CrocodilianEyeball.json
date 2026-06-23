@@ -1,0 +1,102 @@
+{
+  "name": "CrocodilianEyeball",
+  "translation": "鳄鱼人眼球",
+  "monsters": [
+    {
+      "name": "Crocodilian",
+      "entity_name": "Crocodilian",
+      "translation": "鳄鱼人",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 2174.9841,
+          "y": 230.88385,
+          "z": 25.757713,
+          "yaw": 345.0,
+          "map": "ShipGraveyard_AbandonedShip_01",
+          "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+          "version": "",
+          "label": "Crocodilian",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": 76.0,
+          "y": -7.0,
+          "z": 600.0001,
+          "yaw": 270.0,
+          "map": "ShipGraveyard_SeaFortress",
+          "file": "ShipGraveyard_SeaFortress_D.json",
+          "version": "(D)",
+          "label": "Crocodilian",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": -505.64178,
+          "y": 775.7115,
+          "z": 1190.0,
+          "yaw": 320.0,
+          "map": "ShipGraveyard_SkullIsland",
+          "file": "ShipGraveyard_SkullIsland_D.json",
+          "version": "(D)",
+          "label": "Crocodilian",
+          "spawn_rate": 45.0,
+          "score": 9.0
+        }
+      ],
+      "max_score": 9.0
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "鳄鱼人",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_SeaFortress": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海洋要塞 A",
+      "img_name": "ShipGraveyard_SeaFortress",
+      "sl_base_name": "ShipGraveyard_SeaFortress"
+    },
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    }
+  }
+}

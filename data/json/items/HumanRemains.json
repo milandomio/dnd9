@@ -1,0 +1,46 @@
+{
+  "name": "HumanRemains",
+  "translation": "类人尸骸",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -450.0,
+      "y": -390.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Skull",
+      "file": "Skull_A.json",
+      "version": "(A)",
+      "label": "HumanRemains"
+    }
+  ],
+  "_modules": {
+    "Skull": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火监牢",
+      "img_name": "Skull",
+      "sl_base_name": "Skull"
+    }
+  },
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "类人尸骸",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 60.0,
+          "普通": 70.0,
+          "豪客赛": 80.0
+        }
+      }
+    ]
+  }
+}

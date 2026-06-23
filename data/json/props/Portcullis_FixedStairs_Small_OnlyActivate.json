@@ -1,0 +1,52 @@
+{
+  "name": "Portcullis_FixedStairs_Small_OnlyActivate",
+  "translation": "小楼梯吊桥",
+  "coords": [
+    {
+      "x": 1380.0,
+      "y": -603.438314,
+      "z": -8.0,
+      "yaw": 270.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_HR_D.json",
+      "version": "",
+      "label": "小楼梯吊桥"
+    },
+    {
+      "x": 1429.99998,
+      "y": -603.577496,
+      "z": -4.0,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "小楼梯吊桥"
+    }
+  ],
+  "_modules": {
+    "Ruins_BanditCamp": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "强盗营地",
+      "img_name": "Ruins_BanditCamp",
+      "sl_base_name": "Ruins_BanditCamp"
+    },
+    "Ruins_Grave": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "坟场",
+      "img_name": "Ruins_Grave",
+      "sl_base_name": "Ruins_Grave"
+    }
+  }
+}

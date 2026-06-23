@@ -1,0 +1,30 @@
+{
+  "name": "ShipLamp01On1",
+  "translation": "船灯",
+  "coords": [
+    {
+      "x": 3560.3645,
+      "y": -806.9665,
+      "z": 202.67166,
+      "yaw": 264.3,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_A.json",
+      "version": "(A)",
+      "label": "船灯"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    }
+  }
+}

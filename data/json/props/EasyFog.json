@@ -1,0 +1,164 @@
+{
+  "name": "EasyFog",
+  "translation": "简易雾",
+  "coords": [
+    {
+      "x": -1480.0,
+      "y": -132.0,
+      "z": 220.0,
+      "yaw": 180.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": -1477.4082,
+      "y": -16.645414,
+      "z": 201.56708,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": -190.0,
+      "y": 90.0,
+      "z": 215.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": -292.0,
+      "y": -586.0,
+      "z": 170.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": -248.26547,
+      "y": 552.34326,
+      "z": 1568.9818,
+      "yaw": 30.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": -568.93866,
+      "y": -734.5056,
+      "z": 1283.1819,
+      "yaw": 180.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": 224.718,
+      "y": 732.3058,
+      "z": 1521.4272,
+      "yaw": 49.1,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": 77.82649,
+      "y": 249.82785,
+      "z": 1741.9814,
+      "yaw": 232.9,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": 960.3588,
+      "y": -735.0069,
+      "z": 1119.1819,
+      "yaw": 300.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": 940.3588,
+      "y": -748.0069,
+      "z": 1194.1819,
+      "yaw": 340.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": 6.174608,
+      "y": 37.66653,
+      "z": 1703.4303,
+      "yaw": 270.0,
+      "map": "Inferno_DemonOverseersDominion",
+      "file": "Inferno_DemonOverseersDominion_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    },
+    {
+      "x": -3.4895818,
+      "y": 8.673957,
+      "z": 2637.3677,
+      "yaw": 270.0,
+      "map": "Inferno_DemonOverseersDominion",
+      "file": "Inferno_DemonOverseersDominion_A.json",
+      "version": "(A)",
+      "label": "简易雾"
+    }
+  ],
+  "_modules": {
+    "Firedeep_BlazeTunnel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "烈火隧道",
+      "img_name": "BlazeTunnel",
+      "sl_base_name": "Firedeep_BlazeTunnel"
+    },
+    "Firedeep_MoltenPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔坑",
+      "img_name": "MoltenPit",
+      "sl_base_name": "Firedeep_MoltenPit"
+    },
+    "Inferno_DemonOverseersDominion": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔监军之殿",
+      "img_name": "RareModule_1x1",
+      "sl_base_name": "Inferno_DemonOverseersDominion"
+    }
+  }
+}

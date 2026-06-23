@@ -1,0 +1,83 @@
+{
+  "name": "SeaWalker",
+  "translation": "深海行尸",
+  "coords": [
+    {
+      "x": 805.0,
+      "y": -1790.0,
+      "z": 530.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": -945.0,
+      "y": 825.0,
+      "z": 525.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": 2755.0,
+      "y": -1210.0,
+      "z": 200.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": 1415.0,
+      "y": 795.0,
+      "z": 295.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": 1820.0,
+      "y": -2830.0,
+      "z": 100.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "深海行尸",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 0.159,
+          "豪客赛": 0.357
+        }
+      }
+    ]
+  }
+}

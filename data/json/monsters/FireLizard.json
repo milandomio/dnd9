@@ -1,0 +1,167 @@
+{
+  "name": "FireLizard",
+  "translation": "火蜥蜴",
+  "coords": [
+    {
+      "x": 1350.0,
+      "y": -200.0,
+      "z": 750.0,
+      "yaw": 90.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "FireLizard",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -1350.0,
+      "y": -200.0,
+      "z": 750.0,
+      "yaw": 90.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "FireLizard",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -70.0,
+      "y": 870.0,
+      "z": 380.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "FireLizard"
+    },
+    {
+      "x": -665.0,
+      "y": -125.0,
+      "z": 410.0,
+      "yaw": 90.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "FireLizard"
+    },
+    {
+      "x": 1100.0,
+      "y": -550.0,
+      "z": 380.0,
+      "yaw": 145.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "FireLizard"
+    },
+    {
+      "x": 0.0,
+      "y": -750.0,
+      "z": 380.0,
+      "yaw": 30.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "FireLizard"
+    },
+    {
+      "x": -675.22833,
+      "y": -403.77066,
+      "z": 450.0,
+      "yaw": 275.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "FireLizard"
+    },
+    {
+      "x": 1200.0,
+      "y": 1250.0,
+      "z": 300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireLizard",
+      "variant_count": 3,
+      "variant_names": []
+    },
+    {
+      "x": -750.0,
+      "y": 1300.0,
+      "z": 300.0,
+      "yaw": 90.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireLizard",
+      "variant_count": 3,
+      "variant_names": []
+    },
+    {
+      "x": -950.0,
+      "y": -1350.0,
+      "z": 300.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireLizard",
+      "variant_count": 3,
+      "variant_names": []
+    }
+  ],
+  "_modules": {
+    "Firedeep_AnvilOutpost": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "砧火哨站",
+      "img_name": "AnvilOutpost",
+      "sl_base_name": "Firedeep_AnvilOutpost"
+    },
+    "Firedeep_BlazeTunnel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "烈火隧道",
+      "img_name": "BlazeTunnel",
+      "sl_base_name": "Firedeep_BlazeTunnel"
+    },
+    "Firedeep_MoltenPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔坑",
+      "img_name": "MoltenPit",
+      "sl_base_name": "Firedeep_MoltenPit"
+    }
+  },
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "火蜥蜴",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

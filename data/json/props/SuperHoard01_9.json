@@ -1,0 +1,228 @@
+{
+  "name": "SuperHoard01_9",
+  "translation": "超级宝藏堆",
+  "coords": [
+    {
+      "x": -1075.0,
+      "y": -149.0,
+      "z": 0.0,
+      "yaw": 250.0,
+      "map": "Armory",
+      "file": "Armory_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": 2611.0,
+      "y": 2816.0,
+      "z": -1952.0,
+      "yaw": 270.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": -1590.0,
+      "y": 1628.0,
+      "z": 940.0,
+      "yaw": 236.8,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": 1232.0,
+      "y": -250.0,
+      "z": 5.0,
+      "yaw": 180.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": 235.00002,
+      "y": 435.0,
+      "z": -400.0,
+      "yaw": 210.0,
+      "map": "IceAbyss_CharnelHouse",
+      "file": "IceAbyss_CharnelHouse_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": 1299.0,
+      "y": 0.0,
+      "z": 201.0,
+      "yaw": 0.0,
+      "map": "InfernoGate",
+      "file": "InfernoGate_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": 5.065485,
+      "y": 3157.4036,
+      "z": -1751.5063,
+      "yaw": 235.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": 436.0,
+      "y": -1041.0,
+      "z": -898.0,
+      "yaw": 35.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": -965.0,
+      "y": -5.0,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "TreasureRoom_01",
+      "file": "TreasureRoom_01_HR_D.json",
+      "version": "",
+      "label": "超级宝藏堆"
+    },
+    {
+      "x": 926.65686,
+      "y": -311.8796,
+      "z": -984.58047,
+      "yaw": 325.7,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "超级宝藏堆"
+    }
+  ],
+  "_modules": {
+    "Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军械库",
+      "img_name": "Armory",
+      "sl_base_name": "Armory"
+    },
+    "CaveMaze": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 A",
+      "img_name": "CaveMaze",
+      "sl_base_name": "CaveMaze"
+    },
+    "CenterTower": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "巨型环厅",
+      "img_name": "CenterTower",
+      "sl_base_name": "CenterTower"
+    },
+    "Firedeep_BrokenStonebridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "断石桥",
+      "img_name": "BrokenStonebridge",
+      "sl_base_name": "Firedeep_BrokenStonebridge"
+    },
+    "IceAbyss_CharnelHouse": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "停尸房",
+      "img_name": "IceAbyss_CharnelHouse",
+      "sl_base_name": "IceAbyss_CharnelHouse"
+    },
+    "InfernoGate": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔之门",
+      "img_name": "InfernoGate",
+      "sl_base_name": "InfernoGate"
+    },
+    "Ruins_Barbican_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "瓮城",
+      "img_name": "Ruins_Barbican_01",
+      "sl_base_name": "Ruins_Barbican_01"
+    },
+    "Ruins_TowerBridge_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "塔桥",
+      "img_name": "Ruins_TowerBridge_Destroyed",
+      "sl_base_name": "Ruins_TowerBridge_Destroyed"
+    },
+    "TreasureRoom_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "宝藏间",
+      "img_name": "TreasureRoom_01",
+      "sl_base_name": "TreasureRoom_01"
+    },
+    "ShipGraveyard_ShipRest": {
+      "rotate": 180.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "沉眠之船",
+      "img_name": "ShipGraveyard_ShipRest",
+      "sl_base_name": "ShipGraveyard_ShipRest"
+    }
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "name": "OldNauticalChartFragment",
+  "translation": "旧航海图残页",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 1236.575,
+      "y": 120.601746,
+      "z": -418.3252,
+      "yaw": 325.2,
+      "map": "EmptyModule_1F_09",
+      "file": "EmptyModule_1F_09_D.json",
+      "version": "(D)",
+      "label": "OldNauticalChartFragment"
+    },
+    {
+      "x": 3837.5059,
+      "y": -382.98816,
+      "z": 823.8606,
+      "yaw": 302.8,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "OldNauticalChartFragment"
+    },
+    {
+      "x": 80.95608,
+      "y": 907.4982,
+      "z": 140.0,
+      "yaw": 278.2,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "OldNauticalChartFragment"
+    },
+    {
+      "x": -942.0,
+      "y": -2885.0,
+      "z": 643.0,
+      "yaw": 60.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "OldNauticalChartFragment"
+    },
+    {
+      "x": -159.74275,
+      "y": 1112.8832,
+      "z": 1775.02,
+      "yaw": 295.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "OldNauticalChartFragment"
+    },
+    {
+      "x": 5174.07,
+      "y": 874.0724,
+      "z": 301.0,
+      "yaw": 315.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "OldNauticalChartFragment"
+    },
+    {
+      "x": 678.0,
+      "y": -223.0,
+      "z": 2511.0,
+      "yaw": 304.9,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "OldNauticalChartFragment"
+    },
+    {
+      "x": 475.0,
+      "y": 675.0,
+      "z": 2158.0,
+      "yaw": 49.2,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "OldNauticalChartFragment"
+    }
+  ],
+  "_modules": {
+    "EmptyModule_1F_09": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "5-1模块",
+      "img_name": "EmptyModule_1F_09",
+      "sl_base_name": ""
+    },
+    "ShipGraveyard_AbandonedShip_01": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "废弃舰船",
+      "img_name": "ShipGraveyard_AbandonedShip_01",
+      "sl_base_name": "ShipGraveyard_AbandonedShip_01"
+    },
+    "ShipGraveyard_CircleIsland": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "环形岛",
+      "img_name": "ShipGraveyard_CircleIsland",
+      "sl_base_name": "ShipGraveyard_CircleIsland"
+    },
+    "ShipGraveyard_FloatingVillage": {
+      "rotate": 0.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水上村落",
+      "img_name": "ShipGraveyard_FloatingVillage",
+      "sl_base_name": "ShipGraveyard_FloatingVillage"
+    },
+    "ShipGraveyard_HangingShip": {
+      "rotate": 90.0,
+      "offset_x": 1600,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "吊船",
+      "img_name": "ShipGraveyard_HangingShip",
+      "sl_base_name": "ShipGraveyard_HangingShip"
+    },
+    "ShipGraveyard_PiratePrison": {
+      "rotate": 270.0,
+      "offset_x": -3200,
+      "offset_y": 3200,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "海盗监狱",
+      "img_name": "ShipGraveyard_PiratePrison",
+      "sl_base_name": "ShipGraveyard_PiratePrison"
+    },
+    "ShipGraveyard_RockIsland": {
+      "rotate": 90.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "岩岛",
+      "img_name": "ShipGraveyard_RockIsland",
+      "sl_base_name": "ShipGraveyard_RockIsland"
+    },
+    "ShipGraveyard_SkullIsland": {
+      "rotate": 270.0,
+      "offset_x": 1600,
+      "offset_y": 1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "骷髅岛",
+      "img_name": "ShipGraveyard_SkullIsland",
+      "sl_base_name": "ShipGraveyard_SkullIsland"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "旧航海图残页",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0
+        }
+      }
+    ]
+  }
+}

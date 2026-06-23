@@ -1,0 +1,70 @@
+{
+  "name": "CoreofCinder",
+  "translation": "灰烬之核",
+  "monsters": [
+    {
+      "name": "FireElemental",
+      "entity_name": "FireElemental",
+      "translation": "火元素",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 455.0,
+          "y": -405.0,
+          "z": -149.9999,
+          "yaw": 0.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)",
+          "label": "FireElemental",
+          "variant_count": 2,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 9.0
+        },
+        {
+          "x": -470.0,
+          "y": 480.0,
+          "z": -149.9999,
+          "yaw": 0.0,
+          "map": "Firedeep_MoltenPit",
+          "file": "Firedeep_MoltenPit_D.json",
+          "version": "(D)",
+          "label": "FireElemental",
+          "variant_count": 2,
+          "variant_names": [],
+          "spawn_rate": 45.0,
+          "score": 9.0
+        }
+      ],
+      "max_score": 9.0
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "火元素",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Firedeep_MoltenPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔坑",
+      "img_name": "MoltenPit",
+      "sl_base_name": "Firedeep_MoltenPit"
+    }
+  }
+}

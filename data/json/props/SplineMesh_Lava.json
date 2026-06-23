@@ -1,0 +1,84 @@
+{
+  "name": "SplineMesh_Lava",
+  "translation": "岩浆（样条）",
+  "coords": [
+    {
+      "x": -1089.6791,
+      "y": 369.85574,
+      "z": -39.0,
+      "yaw": 187.1,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_A.json",
+      "version": "(A)",
+      "label": "岩浆（样条）"
+    },
+    {
+      "x": 51.260525,
+      "y": -548.74646,
+      "z": -61.786236,
+      "yaw": 160.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_A.json",
+      "version": "(A)",
+      "label": "岩浆（样条）"
+    },
+    {
+      "x": -826.0,
+      "y": -757.0,
+      "z": -54.0,
+      "yaw": 90.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_A.json",
+      "version": "(A)",
+      "label": "岩浆（样条）"
+    },
+    {
+      "x": -1479.0,
+      "y": 220.0,
+      "z": 176.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_A.json",
+      "version": "(A)",
+      "label": "岩浆（样条）"
+    }
+  ],
+  "_modules": {
+    "Firedeep_BlazeTunnel": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "烈火隧道",
+      "img_name": "BlazeTunnel",
+      "sl_base_name": "Firedeep_BlazeTunnel"
+    },
+    "Firedeep_CollapsedDigSite": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "崩陷矿场",
+      "img_name": "CollapsedDigSite",
+      "sl_base_name": "Firedeep_CollapsedDigSite"
+    },
+    "Firedeep_MoltenPit": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "熔坑",
+      "img_name": "MoltenPit",
+      "sl_base_name": "Firedeep_MoltenPit"
+    }
+  }
+}

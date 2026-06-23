@@ -1,0 +1,52 @@
+{
+  "name": "StaticMeshItemHolder",
+  "translation": "物品持有器",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Catacomb",
+      "file": "Catacomb_HR_D.json",
+      "version": "",
+      "label": "物品持有器"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "TheCage",
+      "file": "TheCage_HR_D.json",
+      "version": "",
+      "label": "物品持有器"
+    }
+  ],
+  "_modules": {
+    "Catacomb": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "地下墓穴",
+      "img_name": "Catacomb",
+      "sl_base_name": "Catacomb"
+    },
+    "TheCage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "牢笼",
+      "img_name": "TheCage",
+      "sl_base_name": "TheCage"
+    }
+  }
+}

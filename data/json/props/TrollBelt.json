@@ -1,0 +1,30 @@
+{
+  "name": "TrollBelt",
+  "translation": "洞穴巨魔的大腰带",
+  "coords": [
+    {
+      "x": -801.6561,
+      "y": -409.9886,
+      "z": -1704.6898,
+      "yaw": 108.4,
+      "map": "CaveMaze",
+      "file": "CaveMaze_A.json",
+      "version": "(A)",
+      "label": "TrollBelt"
+    }
+  ],
+  "_modules": {
+    "CaveMaze": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 A",
+      "img_name": "CaveMaze",
+      "sl_base_name": "CaveMaze"
+    }
+  }
+}

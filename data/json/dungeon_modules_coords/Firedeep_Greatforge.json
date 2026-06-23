@@ -1,0 +1,662 @@
+{
+  "map_base": "Firedeep_Greatforge",
+  "entities": [
+    {
+      "name": "BossReward_DoubleStoneDoor",
+      "translation": "受诅咒的石门",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -1053.5355,
+          "y": 1054.0381,
+          "z": -3465.0,
+          "yaw": 45.0,
+          "version": "(D)",
+          "label": "BossReward_DoubleStoneDoor",
+          "group_parent": ""
+        },
+        {
+          "x": -1048.5858,
+          "y": 1049.0883,
+          "z": -3965.0,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "BossReward_DoubleStoneDoor",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Candle_A",
+      "translation": "蜡烛",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": -1435.8492,
+          "y": -1118.7717,
+          "z": -3259.581,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1381.0223,
+          "y": -1464.0206,
+          "z": -1243.009,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1116.5492,
+          "y": -1430.0366,
+          "z": -1278.3555,
+          "yaw": 55.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1172.193,
+          "y": -1040.8353,
+          "z": -2772.6729,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1006.8926,
+          "y": -1392.595,
+          "z": -2189.215,
+          "yaw": 255.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1152.6509,
+          "y": -1033.9684,
+          "z": -1810.0983,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1007.01434,
+          "y": -1226.8721,
+          "z": -1197.2638,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1111.0061,
+          "y": 1098.0305,
+          "z": -1233.3481,
+          "yaw": 210.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1420.9713,
+          "y": 1109.3473,
+          "z": -3259.581,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1444.9822,
+          "y": 1386.0032,
+          "z": -3178.3953,
+          "yaw": 210.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1364.1235,
+          "y": 1077.6372,
+          "z": -2259.581,
+          "yaw": 165.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1366.1444,
+          "y": 1454.5962,
+          "z": -1243.009,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1101.6713,
+          "y": 1420.612,
+          "z": -1278.3555,
+          "yaw": 235.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 992.0147,
+          "y": 1383.1704,
+          "z": -2189.215,
+          "yaw": 75.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1751.52,
+          "y": -1849.8584,
+          "z": -3143.0,
+          "yaw": 255.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1459.8601,
+          "y": -1395.4277,
+          "z": -3178.3953,
+          "yaw": 30.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1016.89124,
+          "y": 1234.4797,
+          "z": -1750.0419,
+          "yaw": 130.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1152.4037,
+          "y": 1085.1942,
+          "z": -2219.28,
+          "yaw": 150.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": 1011.0986,
+          "y": 1239.382,
+          "z": -2806.0525,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        },
+        {
+          "x": -1379.0015,
+          "y": -1087.0616,
+          "z": -2259.581,
+          "yaw": 345.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "type": "decoration",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FiredeepRoaster_02ON",
+      "translation": "熔岩灯架",
+      "type": "decoration",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": -2173.8452,
+          "y": 2401.3455,
+          "z": -3750.224,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        },
+        {
+          "x": -1662.2687,
+          "y": 1405.1001,
+          "z": -3747.157,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        },
+        {
+          "x": -1400.9939,
+          "y": 1640.7678,
+          "z": -3747.157,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        },
+        {
+          "x": -2400.6624,
+          "y": 2182.1655,
+          "z": -3740.1687,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        },
+        {
+          "x": -1100.4401,
+          "y": 776.22266,
+          "z": -3445.0,
+          "yaw": 44.1,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        },
+        {
+          "x": -773.89813,
+          "y": 1093.075,
+          "z": -3445.0,
+          "yaw": 44.1,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        },
+        {
+          "x": -1100.4401,
+          "y": 776.22266,
+          "z": -3445.0,
+          "yaw": 44.1,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        },
+        {
+          "x": -773.89813,
+          "y": 1093.075,
+          "z": -3445.0,
+          "yaw": 44.1,
+          "version": "(A)",
+          "label": "熔岩灯架",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FiredeepTorch_01",
+      "translation": "熔岩火把",
+      "type": "decoration",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 1144.6724,
+          "y": -916.512,
+          "z": -3280.0,
+          "yaw": 318.2,
+          "version": "(A)",
+          "label": "熔岩火把",
+          "group_parent": ""
+        },
+        {
+          "x": 873.1984,
+          "y": -1166.2683,
+          "z": -3280.0,
+          "yaw": 302.1,
+          "version": "(A)",
+          "label": "熔岩火把",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Portcullis_FixedStairs_Medium",
+      "translation": "铁闸门",
+      "type": "decoration",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 1066.4645,
+          "y": -1093.5355,
+          "z": -3225.0,
+          "yaw": 225.0,
+          "version": "(D)",
+          "label": "Portcullis_FixedStairs_Medium",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SingleStoneDoor",
+      "translation": "石门",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": -1004.18524,
+          "y": -1114.3324,
+          "z": -3455.0,
+          "yaw": 45.0,
+          "version": "(D)",
+          "label": "SingleStoneDoor",
+          "group_parent": ""
+        },
+        {
+          "x": 1115.7573,
+          "y": 1021.9706,
+          "z": -3455.0,
+          "yaw": 45.0,
+          "version": "(D)",
+          "label": "SingleStoneDoor",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "StoneLantern_On",
+      "translation": "StoneLantern_On",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -1657.1501,
+          "y": 2589.9626,
+          "z": -3557.4797,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1201.7734,
+          "y": 2134.586,
+          "z": -3549.4797,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1424.0242,
+          "y": -1050.4216,
+          "z": -2964.2107,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1429.8195,
+          "y": -1441.5529,
+          "z": -2964.2107,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1031.2072,
+          "y": -1440.623,
+          "z": -2964.2107,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1435.1187,
+          "y": 2367.9312,
+          "z": -3557.4797,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1435.3379,
+          "y": -1041.9364,
+          "z": -1140.2106,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1440.8115,
+          "y": -1451.9084,
+          "z": -1140.2106,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1022.31256,
+          "y": -1448.9163,
+          "z": -1140.2106,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -2354.3574,
+          "y": 1435.9644,
+          "z": -3557.4797,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1429.3086,
+          "y": -1050.3456,
+          "z": -2004.0023,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1426.588,
+          "y": -1444.6377,
+          "z": -2004.0023,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1024.6752,
+          "y": -1440.5626,
+          "z": -2004.0023,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -2585.5813,
+          "y": 1667.1882,
+          "z": -3557.4797,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1409.1464,
+          "y": 1040.9972,
+          "z": -2964.2107,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1414.9415,
+          "y": 1432.1284,
+          "z": -2964.2107,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1016.3292,
+          "y": 1431.1985,
+          "z": -2964.2107,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1420.4601,
+          "y": 1032.5118,
+          "z": -1140.2106,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1425.9336,
+          "y": 1442.4839,
+          "z": -1140.2106,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1007.43463,
+          "y": 1439.4917,
+          "z": -1140.2106,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1414.4307,
+          "y": 1040.9211,
+          "z": -2004.0023,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1411.7101,
+          "y": 1435.2131,
+          "z": -2004.0023,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1009.79724,
+          "y": 1431.1381,
+          "z": -2004.0023,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1367.1868,
+          "y": -1596.263,
+          "z": -2962.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1574.8551,
+          "y": -1381.3317,
+          "z": -2962.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": -1454.8003,
+          "y": -992.0225,
+          "z": -3476.6853,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1502.4229,
+          "y": -1520.3984,
+          "z": -2676.0,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1774.86,
+          "y": -1792.8356,
+          "z": -2676.0,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        },
+        {
+          "x": 1781.8306,
+          "y": -1504.7919,
+          "z": -2338.0,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "StoneLantern_On",
+          "group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

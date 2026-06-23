@@ -1,0 +1,1760 @@
+{
+  "name": "BattleAxe_8001",
+  "translation": "哀嚎回响",
+  "monsters": [
+    {
+      "name": "FireColossus",
+      "entity_name": "FireColossus",
+      "translation": "赤焰巨像",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -3450.0,
+          "yaw": 0.0,
+          "map": "Firedeep_MagmaFalls",
+          "file": "Firedeep_MagmaFalls_D.json",
+          "version": "(D)",
+          "label": "FireColossus",
+          "spawn_rate": 50.0,
+          "score": 0.1
+        }
+      ],
+      "max_score": 0.1
+    },
+    {
+      "name": "SuperHoard01_9",
+      "entity_name": "SuperHoard01_9",
+      "translation": "超级宝藏堆",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": -1075.0,
+          "y": -149.0,
+          "z": 0.0,
+          "yaw": 250.0,
+          "map": "Armory",
+          "file": "Armory_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.004
+        },
+        {
+          "x": 2611.0,
+          "y": 2816.0,
+          "z": -1952.0,
+          "yaw": 270.0,
+          "map": "CaveMaze",
+          "file": "CaveMaze_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.002
+        },
+        {
+          "x": -1590.0,
+          "y": 1628.0,
+          "z": 940.0,
+          "yaw": 236.8,
+          "map": "CenterTower",
+          "file": "CenterTower_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.004
+        },
+        {
+          "x": 1232.0,
+          "y": -250.0,
+          "z": 5.0,
+          "yaw": 180.0,
+          "map": "Firedeep_BrokenStonebridge",
+          "file": "Firedeep_BrokenStonebridge_D.json",
+          "version": "(D)",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.012
+        },
+        {
+          "x": 235.00002,
+          "y": 435.0,
+          "z": -400.0,
+          "yaw": 210.0,
+          "map": "IceAbyss_CharnelHouse",
+          "file": "IceAbyss_CharnelHouse_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.012
+        },
+        {
+          "x": 1299.0,
+          "y": 0.0,
+          "z": 201.0,
+          "yaw": 0.0,
+          "map": "InfernoGate",
+          "file": "InfernoGate_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.012
+        },
+        {
+          "x": 5.065485,
+          "y": 3157.4036,
+          "z": -1751.5063,
+          "yaw": 235.0,
+          "map": "Ruins_Barbican_01",
+          "file": "Ruins_Barbican_01_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.002
+        },
+        {
+          "x": 436.0,
+          "y": -1041.0,
+          "z": -898.0,
+          "yaw": 35.0,
+          "map": "Ruins_TowerBridge_Destroyed",
+          "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.002
+        },
+        {
+          "x": -965.0,
+          "y": -5.0,
+          "z": -400.0,
+          "yaw": 180.0,
+          "map": "TreasureRoom_01",
+          "file": "TreasureRoom_01_HR_D.json",
+          "version": "",
+          "label": "SuperHoard01_9",
+          "spawn_rate": 100.0,
+          "score": 0.004
+        }
+      ],
+      "max_score": 0.012
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "超级宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.012
+        }
+      },
+      {
+        "translation": "恶魔狂战士",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "恶魔处刑者",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "地狱猎手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "骷髅斧兵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "骷髅房-武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "FireDeep": [
+      {
+        "translation": "赤焰巨像",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.2
+        }
+      },
+      {
+        "translation": "超级宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.012
+        }
+      },
+      {
+        "translation": "矮人斧手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "矮人秘密武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "超级宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.002
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "方型宝箱(随机)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(随机)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(随机)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(随机)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "废墟魔像",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "骷髅斧兵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "双Boss-武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(随机)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(随机)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅斧手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "寒冰狗头人斧手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "超级宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.002
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "哥布林斧手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "双Boss-武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "神秘宝藏房-武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "稀有武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "独眼巨人",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "Crypt": [
+      {
+        "translation": "超级宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.004
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "方型宝箱(随机)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(随机)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(随机)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(随机)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "骷髅斧兵",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "稀有武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(随机)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(随机)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(可能上锁)",
+        "spawn_rate": 3.68,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金房-武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "稀有武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "spawn_rate": 36.84,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "超级宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.012
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "spawn_rate": 1000.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅斧手",
+        "spawn_rate": 45.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝藏堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "巨型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "小型宝箱怪(特殊)",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "冰封房-武器",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0
+        }
+      }
+    ]
+  },
+  "_modules": {
+    "Firedeep_MagmaFalls": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "岩浆瀑布",
+      "img_name": "Magmafalls",
+      "sl_base_name": "Firedeep_MagmaFalls"
+    },
+    "Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军械库",
+      "img_name": "Armory",
+      "sl_base_name": "Armory"
+    },
+    "CaveMaze": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "GoblinCave",
+      "translation": "哥布林迷宫 A",
+      "img_name": "CaveMaze",
+      "sl_base_name": "CaveMaze"
+    },
+    "CenterTower": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "巨型环厅",
+      "img_name": "CenterTower",
+      "sl_base_name": "CenterTower"
+    },
+    "Firedeep_BrokenStonebridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "FireDeep",
+      "translation": "断石桥",
+      "img_name": "BrokenStonebridge",
+      "sl_base_name": "Firedeep_BrokenStonebridge"
+    },
+    "IceAbyss_CharnelHouse": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceAbyss",
+      "translation": "停尸房",
+      "img_name": "IceAbyss_CharnelHouse",
+      "sl_base_name": "IceAbyss_CharnelHouse"
+    },
+    "InfernoGate": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔之门",
+      "img_name": "InfernoGate",
+      "sl_base_name": "InfernoGate"
+    },
+    "Ruins_Barbican_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "瓮城",
+      "img_name": "Ruins_Barbican_01",
+      "sl_base_name": "Ruins_Barbican_01"
+    },
+    "Ruins_TowerBridge_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "塔桥",
+      "img_name": "Ruins_TowerBridge_Destroyed",
+      "sl_base_name": "Ruins_TowerBridge_Destroyed"
+    },
+    "TreasureRoom_01": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "宝藏间",
+      "img_name": "TreasureRoom_01",
+      "sl_base_name": "TreasureRoom_01"
+    }
+  }
+}

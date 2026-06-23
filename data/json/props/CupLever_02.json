@@ -1,0 +1,54 @@
+{
+  "name": "CupLever_02",
+  "translation": "银酒杯",
+  "coords": [
+    {
+      "x": 35.0,
+      "y": -1200.0,
+      "z": -472.55852500000003,
+      "yaw": 0.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_A.json",
+      "version": "(A)",
+      "label": "CupLever_02",
+      "variant_count": 4,
+      "variant_names": [
+        "金圣杯",
+        "银酒杯",
+        "拉杆",
+        "生成器组"
+      ]
+    },
+    {
+      "x": -269.89655000000005,
+      "y": -471.45196999999996,
+      "z": -472.55852500000003,
+      "yaw": 280.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_A.json",
+      "version": "(A)",
+      "label": "CupLever_02",
+      "variant_count": 4,
+      "variant_names": [
+        "金圣杯",
+        "银酒杯",
+        "拉杆",
+        "生成器组"
+      ]
+    }
+  ],
+  "_modules": {
+    "IceCave_CrossRoad": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "IceCavern",
+      "translation": "十字路口",
+      "img_name": "IceCave_CrossRoad",
+      "sl_base_name": "IceCave_CrossRoad"
+    }
+  }
+}

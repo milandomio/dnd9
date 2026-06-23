@@ -1,0 +1,43 @@
+{
+  "name": "DemonOverseer",
+  "translation": "恶魔监军",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 250.0,
+      "yaw": 0.0,
+      "map": "Inferno_DemonOverseersDominion",
+      "file": "Inferno_DemonOverseersDominion_D.json",
+      "version": "(D)",
+      "label": "DemonOverseer"
+    }
+  ],
+  "_modules": {
+    "Inferno_DemonOverseersDominion": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔监军之殿",
+      "img_name": "RareModule_1x1",
+      "sl_base_name": "Inferno_DemonOverseersDominion"
+    }
+  },
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔监军",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0
+        }
+      }
+    ]
+  }
+}

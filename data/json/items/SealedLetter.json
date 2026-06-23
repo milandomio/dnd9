@@ -1,0 +1,68 @@
+{
+  "name": "SealedLetter",
+  "translation": "密封信函",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -4849.2905,
+      "y": -719.86926,
+      "z": 4308.8037,
+      "yaw": 226.9,
+      "map": "ShipGraveyard_ElephantIsland",
+      "file": "ShipGraveyard_ElephantIsland_HR_D.json",
+      "version": "",
+      "label": "SealedLetter"
+    },
+    {
+      "x": -752.4107,
+      "y": -627.0245,
+      "z": 482.02744,
+      "yaw": 360.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "SealedLetter"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_ElephantIsland": {
+      "rotate": 90.0,
+      "offset_x": -1600,
+      "offset_y": 1600,
+      "size_x": 1,
+      "size_y": 2,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "象岛",
+      "img_name": "ShipGraveyard_ElephantIsland",
+      "sl_base_name": "ShipGraveyard_ElephantIsland"
+    },
+    "ShipGraveyard_FloatingHouse_01": {
+      "rotate": 0.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "水手客栈",
+      "img_name": "ShipGraveyard_FloatingHouse_01",
+      "sl_base_name": "ShipGraveyard_FloatingHouse_01"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "密封信函",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0
+        }
+      }
+    ]
+  }
+}

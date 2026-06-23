@@ -1,0 +1,115 @@
+{
+  "name": "Bluemarlin",
+  "translation": "蓝枪鱼",
+  "coords": [
+    {
+      "x": 357.0,
+      "y": -587.0,
+      "z": -791.9999,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "蓝枪鱼"
+    },
+    {
+      "x": -665.0,
+      "y": -328.0,
+      "z": -874.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "蓝枪鱼"
+    },
+    {
+      "x": 442.0,
+      "y": 532.0,
+      "z": -871.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "蓝枪鱼"
+    },
+    {
+      "x": 3125.0,
+      "y": -115.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "蓝枪鱼"
+    },
+    {
+      "x": -3470.0,
+      "y": 335.0,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "蓝枪鱼"
+    },
+    {
+      "x": -1246.6575,
+      "y": 4585.4707,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "蓝枪鱼"
+    },
+    {
+      "x": -985.38196,
+      "y": -3041.3232,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "蓝枪鱼"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_FloatingIsland": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "ShipGraveyard",
+      "translation": "浮岛 A",
+      "img_name": "ShipGraveyard_FloatingIsland",
+      "sl_base_name": "ShipGraveyard_FloatingIsland"
+    },
+    "ShipGraveyard_Hole": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 4800,
+      "group": "ShipGraveyard",
+      "translation": "蓝洞",
+      "img_name": "ShipGraveyard_Hole",
+      "sl_base_name": "ShipGraveyard_Hole"
+    }
+  },
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "蓝枪鱼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 22.5,
+          "豪客赛": 34.0
+        }
+      }
+    ]
+  }
+}

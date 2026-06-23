@@ -1,0 +1,30 @@
+{
+  "name": "DungeonInfiniteExitBase",
+  "translation": "无限出口",
+  "coords": [
+    {
+      "x": 1381.0,
+      "y": -445.999998,
+      "z": -241.0,
+      "yaw": 90.0,
+      "map": "Cistern",
+      "file": "Cistern_HR_D.json",
+      "version": "",
+      "label": "无限出口"
+    }
+  ],
+  "_modules": {
+    "Cistern": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "蓄水池",
+      "img_name": "Cistern",
+      "sl_base_name": "Cistern"
+    }
+  }
+}

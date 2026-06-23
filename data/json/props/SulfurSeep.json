@@ -1,0 +1,158 @@
+{
+  "name": "SulfurSeep",
+  "translation": "硫磺喷口",
+  "coords": [
+    {
+      "x": 200.0,
+      "y": 550.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -250.0,
+      "y": -350.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -280.0,
+      "y": -1391.0,
+      "z": 302.0,
+      "yaw": 0.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": 1059.0,
+      "y": -190.0,
+      "z": 2.0,
+      "yaw": 0.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": -1061.0,
+      "y": 190.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": -455.0,
+      "y": 515.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": -455.0,
+      "y": -485.0,
+      "z": -589.9999,
+      "yaw": 0.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": -1140.0,
+      "y": 115.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": 1155.0,
+      "y": 25.0,
+      "z": -5.0,
+      "yaw": 0.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": -15.0,
+      "y": -1145.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    },
+    {
+      "x": -45.0,
+      "y": 1210.0,
+      "z": -5.0,
+      "yaw": 0.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "SulfurSeep"
+    }
+  ],
+  "_modules": {
+    "ConectorDoubleBridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "硫火之桥",
+      "img_name": "ConectorDoubleBridge",
+      "sl_base_name": "ConectorDoubleBridge"
+    },
+    "InfernoMouth": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "恶魔之口",
+      "img_name": "InfernoMouth",
+      "sl_base_name": "InfernoMouth"
+    },
+    "Inferno_DownStair": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Inferno",
+      "translation": "等候室",
+      "img_name": "Inferno_DownStair",
+      "sl_base_name": "Inferno_DownStair"
+    }
+  }
+}

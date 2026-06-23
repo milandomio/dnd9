@@ -1,0 +1,198 @@
+{
+  "name": "LivingArmor",
+  "translation": "铠甲傀儡",
+  "coords": [
+    {
+      "x": -1343.4712,
+      "y": -457.07578,
+      "z": 2e-06,
+      "yaw": 0.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 1467.0,
+      "y": 1105.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": -1458.0,
+      "y": -1105.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 64.3426,
+      "y": 473.3133,
+      "z": 11.051007,
+      "yaw": 0.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 66.121574,
+      "y": -1.877244,
+      "z": 11.051011,
+      "yaw": 0.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 66.68206,
+      "y": -483.15463,
+      "z": 11.051013,
+      "yaw": 0.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 752.1633,
+      "y": -482.02258,
+      "z": 11.051008,
+      "yaw": 180.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 752.1633,
+      "y": 0.32256857,
+      "z": 11.051007,
+      "yaw": 180.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 821.8643,
+      "y": 914.13367,
+      "z": 11.051007,
+      "yaw": 230.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 83.76374,
+      "y": 438.60645,
+      "z": 1.0000075,
+      "yaw": 270.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 646.2152,
+      "y": 438.60645,
+      "z": 1.0000082,
+      "yaw": 270.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 400.0,
+      "y": 770.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    },
+    {
+      "x": 815.0,
+      "y": -200.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "LivingArmor"
+    }
+  ],
+  "_modules": {
+    "Ruins_Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "城堡军械库",
+      "img_name": "Ruins_Armory",
+      "sl_base_name": "Ruins_Armory"
+    },
+    "Ruins_GreatHall_01_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "礼拜堂 A",
+      "img_name": "Ruins_GreatHall_01_Destroyed",
+      "sl_base_name": "Ruins_GreatHall_01_Destroyed"
+    },
+    "Ruins_GreatHall_03_Destroyed": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "礼拜堂 C",
+      "img_name": "Ruins_GreatHall_03_Destroyed",
+      "sl_base_name": "Ruins_GreatHall_03_Destroyed"
+    },
+    "Ruins_Keep": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "要塞",
+      "img_name": "Ruins_Keep",
+      "sl_base_name": "Ruins_Keep"
+    },
+    "Ruins_Refectory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "修道院食堂",
+      "img_name": "Ruins_Refectory",
+      "sl_base_name": "Ruins_Refectory"
+    }
+  }
+}

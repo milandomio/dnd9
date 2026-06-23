@@ -1,0 +1,206 @@
+{
+  "name": "Sack_Stack",
+  "translation": "Sack_Stack",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Armory",
+      "file": "Armory_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Barracks",
+      "file": "Barracks_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CliffBridge",
+      "file": "CliffBridge_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "FourWayConnect",
+      "file": "FourWayConnect_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "OldTomb",
+      "file": "OldTomb_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Storeroom",
+      "file": "Storeroom_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "TheCage",
+      "file": "TheCage_A.json",
+      "version": "(A)",
+      "label": "Sack_Stack"
+    }
+  ],
+  "_modules": {
+    "Armory": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军械库",
+      "img_name": "Armory",
+      "sl_base_name": "Armory"
+    },
+    "Barracks": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "军营",
+      "img_name": "Barracks",
+      "sl_base_name": "Barracks"
+    },
+    "CliffBridge": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "悬崖",
+      "img_name": "CliffBridge",
+      "sl_base_name": "CliffBridge"
+    },
+    "ComplexHall": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "门控房间",
+      "img_name": "ComplexHall",
+      "sl_base_name": "ComplexHall"
+    },
+    "Crypt_GreatWalkway": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "大长廊",
+      "img_name": "Crypt_GreatWalkway",
+      "sl_base_name": "Crypt_GreatWalkway"
+    },
+    "FourWayConnect": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "中心祭坛",
+      "img_name": "FourWayConnect",
+      "sl_base_name": "FourWayConnect"
+    },
+    "OldTomb": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "旧陵墓",
+      "img_name": "OldTomb",
+      "sl_base_name": "OldTomb"
+    },
+    "Storeroom": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "储藏室",
+      "img_name": "Storeroom",
+      "sl_base_name": "Storeroom"
+    },
+    "TheCage": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "牢笼",
+      "img_name": "TheCage",
+      "sl_base_name": "TheCage"
+    }
+  }
+}

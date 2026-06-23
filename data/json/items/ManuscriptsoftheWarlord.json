@@ -1,0 +1,46 @@
+{
+  "name": "ManuscriptsoftheWarlord",
+  "translation": "督军文献",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 1028.0,
+      "y": -1410.0,
+      "z": 681.0,
+      "yaw": 330.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_A.json",
+      "version": "(A)",
+      "label": "ManuscriptsoftheWarlord"
+    }
+  ],
+  "_modules": {
+    "Ruins_Keep": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Ruins",
+      "translation": "要塞",
+      "img_name": "Ruins_Keep",
+      "sl_base_name": "Ruins_Keep"
+    }
+  },
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "督军文献",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 25.0,
+          "豪客赛": 30.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "MapIconFixedStairEscape",
+  "translation": "地图图标-逃生楼梯",
+  "coords": [
+    {
+      "x": 1250.0,
+      "y": -447.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "Cistern",
+      "file": "Cistern_HR_D.json",
+      "version": "",
+      "label": "地图图标-逃生楼梯"
+    }
+  ],
+  "_modules": {
+    "Cistern": {
+      "rotate": 270.0,
+      "offset_x": 0,
+      "offset_y": 0,
+      "size_x": 1,
+      "size_y": 1,
+      "range": 0,
+      "group": "Crypt",
+      "translation": "蓄水池",
+      "img_name": "Cistern",
+      "sl_base_name": "Cistern"
+    }
+  }
+}

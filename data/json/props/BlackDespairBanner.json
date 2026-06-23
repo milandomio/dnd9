@@ -1,0 +1,40 @@
+{
+  "name": "BlackDespairBanner",
+  "translation": "绝厄海寇战旗",
+  "coords": [
+    {
+      "x": 281.97125,
+      "y": -197.41748,
+      "z": 571.26605,
+      "yaw": 345.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_A.json",
+      "version": "(A)",
+      "label": "黑色绝望旗帜"
+    },
+    {
+      "x": -91.45822,
+      "y": 160.07793,
+      "z": 583.2272,
+      "yaw": 280.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_A.json",
+      "version": "(A)",
+      "label": "黑色绝望旗帜"
+    }
+  ],
+  "_modules": {
+    "ShipGraveyard_BladehandRefuge": {
+      "rotate": 270.0,
+      "offset_x": -1600,
+      "offset_y": -1600,
+      "size_x": 2,
+      "size_y": 2,
+      "range": 3200,
+      "group": "ShipGraveyard",
+      "translation": "钉手的藏身处",
+      "img_name": "ShipGraveyard_BladehandRefuge",
+      "sl_base_name": ""
+    }
+  }
+}
