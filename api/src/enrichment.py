@@ -135,6 +135,11 @@ def enrich_all_entities(
             continue
         group_drop_info: dict[str, list[dict]] = {}
         sr = spawn_rate_cache.get(mname, 0.0)
+        if not sr:
+            lower = mname.lower()
+            for k, v in spawn_rate_cache.items():
+                if k.lower().startswith(lower + "_") or k.lower() == lower:
+                    sr = max(sr, v)
         for g in seen_groups:
             dr = drop_engine.compute_group_drop_rates(ldg_id, g)
             if not dr and not sr:
