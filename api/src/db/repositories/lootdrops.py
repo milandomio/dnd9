@@ -1,16 +1,30 @@
 import json
+from typing import TypedDict
+
+
+class LootdropRelation(TypedDict):
+    item_name: str
+    monster_name: str
+
+
+class SpawnerEntry(TypedDict):
+    spawner_keyword: str
+    entity_name: str
+    spawn_rate: float
+    dungeon_grades: list[int]
+    lootdrop_group_id: str
 
 
 class LootdropsRepository:
     def __init__(self, conn):
         self.conn = conn
 
-    def get_relationships(self) -> list[dict]:
+    def get_relationships(self) -> list[LootdropRelation]:
         c = self.conn.cursor()
         c.execute("SELECT item_name, monster_name FROM lootdrop_items ORDER BY item_name, monster_name")
         return [dict(r) for r in c.fetchall()]
 
-    def get_spawner_entries_for_keyword(self, keyword: str) -> list[dict]:
+    def get_spawner_entries_for_keyword(self, keyword: str) -> list[SpawnerEntry]:
         c = self.conn.cursor()
         c.execute(
             "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id "
@@ -30,7 +44,7 @@ class LootdropsRepository:
             )
         return results
 
-    def get_all_spawner_entries(self) -> list[dict]:
+    def get_all_spawner_entries(self) -> list[SpawnerEntry]:
         c = self.conn.cursor()
         c.execute(
             "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id FROM spawner_entries"
