@@ -1,13 +1,30 @@
+from typing import TypedDict
+
+
+class ItemEntity(TypedDict):
+    item_name: str
+    translation_key: str
+    category: str
+    variant_count: int
+
+
+class ItemWithMatches(TypedDict):
+    item_name: str
+    translation_key: str
+    category: str
+    monster_names: list[str]
+
+
 class ItemsRepository:
     def __init__(self, conn):
         self.conn = conn
 
-    def get_all(self) -> list[dict]:
+    def get_all(self) -> list[ItemEntity]:
         c = self.conn.cursor()
         c.execute("SELECT item_name, translation_key, category, variant_count FROM item_entities ORDER BY item_name")
         return [dict(r) for r in c.fetchall()]
 
-    def get_with_matches(self) -> list[dict]:
+    def get_with_matches(self) -> list[ItemWithMatches]:
         c = self.conn.cursor()
         c.execute("""
             SELECT e.item_name, e.translation_key, e.category,

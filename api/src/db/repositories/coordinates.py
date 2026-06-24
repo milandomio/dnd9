@@ -1,8 +1,25 @@
+from typing import TypedDict
+
+
+class SpawnerCoord(TypedDict):
+    keyword: str
+    x: float
+    y: float
+    z: float
+    yaw: float
+    json_filename: str
+    version: str
+    map_base: str
+    original_keyword: str
+    spawner_type: str
+    group_parent: str
+
+
 class CoordinatesRepository:
     def __init__(self, conn):
         self.conn = conn
 
-    def get_all(self) -> dict[str, list[dict]]:
+    def get_all(self) -> dict[str, list[SpawnerCoord]]:
         c = self.conn.cursor()
         c.execute("""
             SELECT s.keyword, s.x, s.y, s.z, s.yaw, s.json_filename,
@@ -11,7 +28,7 @@ class CoordinatesRepository:
             FROM spawners s
             ORDER BY s.keyword, s.map_base, s.json_filename
         """)
-        result: dict[str, list[dict]] = {}
+        result: dict[str, list[SpawnerCoord]] = {}
         for row in c.fetchall():
             term = row["keyword"]
             if term not in result:
