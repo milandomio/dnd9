@@ -193,6 +193,13 @@ def build_loot_index(
             if cls and cls.get("translation_key"):
                 mon_translations.append(resolve_name(m, cls["translation_key"], cls["types"][0]))
                 continue
+            # Try stripping _Locked suffix and resolving the base name
+            locked_name = m.removesuffix("_Locked")
+            if locked_name != m:
+                locked_trans = resolve_name(locked_name, None, "props")
+                if locked_trans != locked_name:
+                    mon_translations.append(locked_trans)
+                    continue
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
         variant_count = variant_override.get(item_name, item_row.get("variant_count", 1) if item_row else 1)
