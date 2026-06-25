@@ -28,7 +28,14 @@ DarkFindV5/
 │   ├── src/
 │   │   ├── collector.py          # 管道协调器（DB 导入 + 模块编排）
 │   │   ├── config.py             # 路径配置 + 常量
-│   │   ├── db_manager.py         # SQLite 建表/导入/查询
+│   │   ├── db_manager.py         # 重新导出（向后兼容，实际实现在 db/ 包）
+│   │   ├── db/                   # 数据库包
+│   │   │   ├── __init__.py       # DatabaseManager 组合类
+│   │   │   ├── schema.py         # 建表/迁移
+│   │   │   ├── _helpers.py       # 共享工具函数
+│   │   │   ├── importers/        # 数据导入（items/monsters/props/modules/lootdrops/quests/spawners）
+│   │   │   └── repositories/     # 数据查询（同上 + coordinates）
+│   │   ├── pipeline.py           # Pipeline 抽象（步骤上下文管理器）
 │   │   ├── translator.py         # NameResolver 类、regex 常量、翻译工具
 │   │   ├── entity_export.py      # items/monsters/props JSON 导出
 │   │   ├── drop_rate.py          # DropRateEngine 类（爆率预加载 + 计算）

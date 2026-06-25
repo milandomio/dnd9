@@ -14,6 +14,18 @@
 
 ---
 
+## 进度追踪
+
+| Step | 模块 | 状态 | 完成时间 | 备注 |
+|------|------|------|---------|------|
+| 1 | Pipeline 抽象 | ✅ 完成 | 2026-06-25 | `pipeline.py` 87 行，collector.py 净减 ~91 行 |
+| 2 | DatabaseManager 拆分 | ✅ 完成 | 2026-06-25 | 20 文件（schema + _helpers + 7 importers + 7 repos + re-export） |
+| 3 | TypedDict 类型模型 | ✅ 完成 | 2026-06-25 | 11 个 TypedDict 定义 |
+
+**验证：** `cd api && python main.py`（返回 0）+ `./lint.sh`（通过）
+
+---
+
 ## Step 1: Pipeline 抽象（执行顺序：第1）
 
 ### 现状
