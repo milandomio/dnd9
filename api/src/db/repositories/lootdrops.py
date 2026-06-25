@@ -49,7 +49,18 @@ class LootdropsRepository:
         c.execute(
             "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id FROM spawner_entries"
         )
-        return [dict(r) for r in c.fetchall()]
+        results = []
+        for r in c.fetchall():
+            results.append(
+                {
+                    "spawner_keyword": r["spawner_keyword"],
+                    "entity_name": r["entity_name"],
+                    "spawn_rate": r["spawn_rate"],
+                    "dungeon_grades": json.loads(r["dungeon_grades"]),
+                    "lootdrop_group_id": r["lootdrop_group_id"],
+                }
+            )
+        return results
 
     def get_item_drop_rate(self, lootdrop_group_id: str, item_name: str, full_grade: int) -> float:
         c = self.conn.cursor()
