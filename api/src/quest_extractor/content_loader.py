@@ -5,7 +5,10 @@
 """
 
 import json
+import logging
 import os
+
+log = logging.getLogger(__name__)
 
 
 class ContentLoader:
@@ -50,7 +53,7 @@ class ContentLoader:
             self._cache[content_filename] = properties
             return properties
         except Exception as e:
-            print(f"加载任务内容文件 {content_filename} 失败: {e}")
+            log.warning("failed to load quest content %s: %s", content_filename, e)
             return None
 
     def load_contents_batch(self, content_filenames):
@@ -127,7 +130,7 @@ class RewardLoader:
             self._cache[reward_filename] = reward_array
             return reward_array
         except Exception as e:
-            print(f"加载奖励文件 {reward_filename} 失败: {e}")
+            log.warning("failed to load reward file %s: %s", reward_filename, e)
             return None
 
     def clear_cache(self):
