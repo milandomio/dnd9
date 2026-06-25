@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+from config import TRANSLATION_ALIAS_MAP
 from translator import (
     HARD_SUFFIX_RE,
     QUALITY_RE,
@@ -269,8 +270,6 @@ def build_and_save_lootdrop_details(
                 if _m_base != m_name:
                     coords = all_coords.get(_m_base, [])
             if not coords:
-                from config import TRANSLATION_ALIAS_MAP
-
                 alias = TRANSLATION_ALIAS_MAP.get(m_name)
                 if alias:
                     coords = all_coords.get(alias, [])
