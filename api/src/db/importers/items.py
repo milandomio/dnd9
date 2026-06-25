@@ -37,11 +37,11 @@ class ItemsImporter:
             "INSERT OR REPLACE INTO item_entities (item_name, raw_name, translation_key, category, variant_count) VALUES (?, ?, ?, ?, ?)",
             deduped,
         )
-        self._rebuild_fts("items_fts", "item_entities")
+        self._rebuild_fts("items_fts")
         self.conn.commit()
         return len(deduped)
 
-    def _rebuild_fts(self, fts_table: str, content_table: str):
+    def _rebuild_fts(self, fts_table: str):
         c = self.conn.cursor()
         c.execute(f"INSERT INTO {fts_table}({fts_table}) VALUES('rebuild')")
         self.conn.commit()
