@@ -155,6 +155,7 @@ def run():
                 )
                 pipe.log(f"extract_all_spawners DONE -> {len(spawners)} spawners")
                 c = db.connect()
+                c.execute("BEGIN")
                 c.execute("DELETE FROM spawners")
                 spawner_rows = [
                     (
