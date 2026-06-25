@@ -463,20 +463,20 @@ class HTMLTemplate:
             text-decoration: underline;
         }
         .quest-content-section {
-            background-color: #e3f2fd;
+            background-color: #1a3040;
             padding: 8px;
             border-radius: 6px;
             margin-bottom: 8px;
         }
         .quest-reward-section {
-            background-color: #e8f5e9;
+            background-color: #1a3020;
             padding: 8px;
             border-radius: 6px;
             margin-bottom: 8px;
         }
         .quest-content-label {
             font-size: 12px;
-            color: #666;
+            color: #aaa;
             font-weight: bold;
             margin-bottom: 4px;
         }
@@ -488,15 +488,15 @@ class HTMLTemplate:
         .quest-content-table th {
             text-align: left;
             padding: 4px 8px;
-            border-bottom: 1px solid #ddd;
-            color: #666;
+            border-bottom: 1px solid #555;
+            color: #aaa;
             font-weight: bold;
             font-size: 13px;
         }
         .quest-content-table td {
             padding: 3px 8px;
-            border-bottom: 1px solid #eee;
-            color: #333;
+            border-bottom: 1px solid #444;
+            color: #ddd;
         }
         .quest-content-table tr:last-child td {
             border-bottom: none;
