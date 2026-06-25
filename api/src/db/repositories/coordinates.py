@@ -36,12 +36,12 @@ class CoordinatesRepository:
             coord = dict(row)
             dup_key = (coord["x"], coord["y"], coord["z"], coord["json_filename"])
             coord["_dup_key"] = dup_key
-            existing_keys = {c["_dup_key"] for c in result[term]}
+            existing_keys = {item["_dup_key"] for item in result[term]}
             if dup_key not in existing_keys:
                 result[term].append(coord)
         for term in result:
-            for c in result[term]:
-                c.pop("_dup_key", None)
+            for item in result[term]:
+                item.pop("_dup_key", None)
         return result
 
     def get_variant_counts(self) -> dict[tuple[str, str, str], tuple[int, list[str]]]:
