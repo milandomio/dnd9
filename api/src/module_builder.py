@@ -391,7 +391,7 @@ def build_and_save_module_coords(
             color_idx += 1
         try:
             gp = row["group_parent"] or ""
-        except KeyError:
+        except (KeyError, IndexError):
             gp = ""
         module_coords[mb]["entities"][ek]["coords"].append(
             {
