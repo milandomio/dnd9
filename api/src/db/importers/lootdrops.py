@@ -1,6 +1,6 @@
 from config import LOOTDROP_DIR, LOOTDROP_GROUP_DIR
 
-from .._helpers import load_json_dir, ue_asset_base_name
+from .._helpers import VARIANT_RE, load_json_dir, ue_asset_base_name
 
 
 class LootdropsImporter:
@@ -54,6 +54,7 @@ class LootdropsImporter:
                     continue
                 item_name = ue_asset_base_name(item_asset) or ""
                 item_name = self._strip_prefix(item_name, "Id_Item_", "Id_Props_")
+                item_name = VARIANT_RE.sub("", item_name)
                 for mon in monsters:
                     if item_name == mon:
                         continue

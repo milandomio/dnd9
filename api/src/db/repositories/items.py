@@ -30,7 +30,7 @@ class ItemsRepository:
             SELECT e.item_name, e.translation_key, e.category,
                    GROUP_CONCAT(DISTINCT l.monster_name) as monster_names
             FROM item_entities e
-            LEFT JOIN lootdrop_items l ON e.item_name = SUBSTR(l.item_name, 1, INSTR(l.item_name||'_', '_') - 1)
+            LEFT JOIN lootdrop_items l ON e.item_name = l.item_name
             GROUP BY e.item_name
             ORDER BY e.item_name
         """)
