@@ -66,3 +66,10 @@ class Pipeline:
         if self._log_file:
             self._log_file.close()
             self._log_file = None
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+        return False
