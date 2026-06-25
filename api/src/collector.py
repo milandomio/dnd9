@@ -275,7 +275,7 @@ def run():
                 elif _cls and "props" in _cls.get("types", []):
                     _vtr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
                 else:
-                    _vtr.append(_kw)
+                    _vtr.append(resolver.resolve(_kw, None, "props") or _kw)
             _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
     pipe.log("[JSON] building merged lootdrop map...")
