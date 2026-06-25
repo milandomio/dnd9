@@ -308,7 +308,7 @@ class PageBuilder:
             page_title += f" ({_esc(npc_name_en)})"
 
         html_content = HTMLTemplate.generate_header(
-            f"{page_title} - {self._get_ui_text('quest_count').rstrip('数量')}列表",
+            f"{page_title} - {self._get_ui_text('quest_count').removesuffix('数量').removesuffix('Count')}列表",
             include_back_link=True,
             language=self.language,
             ui_translations=self.ui_text,
