@@ -45,6 +45,10 @@
 
 **修复前**需要手动 `touch Game.json` 才能触发重建。**修复后**直接 `rm db && python main.py` 即可。
 
+### 部署测试
+
+**部署测试** = 删除 DB 文件后按完整流程部署：`rm api/data/darkfindv5.db && ./deploy.sh`（或单独 `python main.py && npm run build`）。确保管道从零开始重建全部数据。
+
 ### 地图文件过滤
 
 `search_engine.py` 的 `_list_map_jsons()` 遍历地图文件时需排除以下变体：
