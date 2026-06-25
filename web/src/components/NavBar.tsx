@@ -179,6 +179,7 @@ export default function NavBar() {
               <Spin indicator={<LoadingOutlined spin />} size="small" />
             ) : undefined
           }
+          className="navbar-search-input"
           placeholder={searchLoading ? '加载中...' : '搜索物品/怪物/实体...'}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -195,6 +196,11 @@ export default function NavBar() {
             borderRadius: 6,
           }}
         />
+        <style>{`
+          .navbar-search-input::placeholder {
+            color: ${dark ? '#aaa' : '#888'} !important;
+          }
+        `}</style>
         {showDropdown && (
           <div
             style={{
