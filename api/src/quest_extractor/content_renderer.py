@@ -5,6 +5,7 @@
 """
 
 import re
+from html import escape as _esc
 
 
 class ContentRenderer:
@@ -175,7 +176,7 @@ class ContentRenderer:
                 + OPEN_BRACE
                 + "td"
                 + CLOSE_BRACE
-                + type_name
+                + _esc(type_name)
                 + OPEN_BRACE
                 + SLASH
                 + "td"
@@ -186,7 +187,7 @@ class ContentRenderer:
                 + OPEN_BRACE
                 + "td"
                 + CLOSE_BRACE
-                + target_name
+                + _esc(target_name)
                 + OPEN_BRACE
                 + SLASH
                 + "td"
@@ -198,7 +199,7 @@ class ContentRenderer:
                     + OPEN_BRACE
                     + "td"
                     + CLOSE_BRACE
-                    + loot_state
+                    + _esc(loot_state)
                     + OPEN_BRACE
                     + SLASH
                     + "td"
@@ -210,7 +211,7 @@ class ContentRenderer:
                     + OPEN_BRACE
                     + "td"
                     + CLOSE_BRACE
-                    + rarity
+                    + _esc(rarity)
                     + OPEN_BRACE
                     + SLASH
                     + "td"
@@ -222,7 +223,7 @@ class ContentRenderer:
                     + OPEN_BRACE
                     + "td"
                     + CLOSE_BRACE
-                    + dungeon_type
+                    + _esc(dungeon_type)
                     + OPEN_BRACE
                     + SLASH
                     + "td"
@@ -670,7 +671,7 @@ class ContentRenderer:
                 + OPEN_BRACE
                 + "td"
                 + CLOSE_BRACE
-                + type_display
+                + _esc(type_display)
                 + OPEN_BRACE
                 + SLASH
                 + "td"
@@ -681,7 +682,7 @@ class ContentRenderer:
                 + OPEN_BRACE
                 + "td"
                 + CLOSE_BRACE
-                + (name or "")
+                + _esc(name or "")
                 + OPEN_BRACE
                 + SLASH
                 + "td"
