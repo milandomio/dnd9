@@ -28,6 +28,13 @@ class DatabaseManager:
     def close(self):
         self.conn.close()
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+        return False
+
     def _rebuild_fts(self, fts_table: str, content_table: str):
         c = self.conn.cursor()
         c.execute(f"INSERT INTO {fts_table}({fts_table}) VALUES('rebuild')")
