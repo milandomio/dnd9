@@ -24,7 +24,18 @@ def parse_grade(grade: int | str) -> dict:
     解析 DungeonGrade 数值，返回模式、地图分组、层级信息。
     所有分组数据来自 config.DUNGEON_GROUP_GRADES。
     """
-    g = int(grade)
+    try:
+        g = int(grade)
+    except (ValueError, TypeError):
+        return {
+            "grade": grade,
+            "mode": 0,
+            "mode_name": "未知",
+            "group": "",
+            "group_label": "未知",
+            "floor": 0,
+            "display": str(grade),
+        }
     mode = g // 1000
     base = g % 1000
 
