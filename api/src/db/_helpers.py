@@ -1,9 +1,12 @@
 import json
+import logging
 import re
 from pathlib import Path
 from typing import Any
 
 from config import GAME_JSON, GAME_ROOT
+
+log = logging.getLogger(__name__)
 
 
 def load_json_dir(directory: Path) -> dict[str, Any]:
@@ -14,8 +17,8 @@ def load_json_dir(directory: Path) -> dict[str, Any]:
         try:
             with open(fp, encoding="utf-8") as f:
                 result[fp.stem] = json.load(f)
-        except Exception:
-            pass
+        except Exception as e:
+            log.warning("failed to load %s: %s", fp.name, e)
     return result
 
 
@@ -30,7 +33,8 @@ def load_game_json() -> dict[str, str]:
                 if isinstance(v, dict):
                     return v
         return {}
-    except Exception:
+    except Exception as e:
+        log.warning("failed to load game JSON %s: %s", GAME_JSON, e)
         return {}
 
 
