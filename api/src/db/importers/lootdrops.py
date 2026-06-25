@@ -75,7 +75,8 @@ class LootdropsImporter:
 
     @staticmethod
     def _strip_prefix(name: str, *prefixes: str) -> str:
+        name_lower = name.lower()
         for p in sorted(prefixes, key=len, reverse=True):
-            if name.lower().startswith(p.lower()):
+            if name_lower.startswith(p.lower()):
                 return name[len(p) :]
         return name

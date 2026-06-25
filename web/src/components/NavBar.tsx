@@ -197,7 +197,7 @@ export default function NavBar() {
           }}
         />
         <style>{`
-          .navbar-search-input::placeholder {
+          .ant-input-affix-wrapper.navbar-search-input .ant-input::placeholder {
             color: ${dark ? '#aaa' : '#888'} !important;
           }
         `}</style>
