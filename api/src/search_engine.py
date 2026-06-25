@@ -317,7 +317,6 @@ def _list_map_jsons(root: str | Path) -> list[Path]:
                 continue
             if fn in ("Ruins_Passage_Outer_11_D.json",):
                 continue
-                continue
             files.append(Path(dirpath) / fn)
     return sorted(files)
 
@@ -565,7 +564,6 @@ def extract_all_spawners(
     map_files.sort(key=lambda fp: (0 if fp.stem.endswith("_HR_D") else 1 if fp.stem.endswith("_D") else 2))
 
     hr_coords: dict[str, list[tuple[float, float, float]]] = {}
-    d_coords: dict[str, list[tuple[float, float, float]]] = {}
     all_spawners: list[dict] = []
 
     if multi_entity_spawners is None:
@@ -584,10 +582,8 @@ def extract_all_spawners(
             coord = (s["x"], s["y"], s["z"])
             if is_hr:
                 hr_coords.setdefault(base, []).append(coord)
-            elif is_d:
-                if any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_coords.get(base, [])):
-                    continue
-                d_coords.setdefault(base, []).append(coord)
+            elif is_d and any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_coords.get(base, [])):
+                continue
             all_spawners.append(s)
 
     return all_spawners
