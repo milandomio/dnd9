@@ -4,13 +4,27 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from pathlib import Path
-
 from config import HARDCODED_TRANSLATIONS, OUTPUT_DIR
 from quest_extractor.quest_extractor import QuestExtractor
 from quest_extractor.translator import Translator
 
 _ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
+
+_INACTIVE_NPCS = frozenset(
+    {
+        "FortuneTeller",
+        "JackOLantern",
+        "Krampus",
+        "Miner",
+        "Navigator",
+        "Nicholas",
+        "NightmareMummy",
+        "SkeletonFootman",
+        "Surgeon",
+        "Treasurer",
+        "Valentine",
+    }
+)
 
 _ENTITY_KEY_MAP: dict[str, str] | None = None
 
@@ -327,24 +341,4 @@ def _extract_npc_list(translator, extractor, quests):
 
 
 def _is_npc_active(npc_name):
-    inactive = {
-        "FortuneTeller",
-        "JackOLantern",
-        "Krampus",
-        "Miner",
-        "Navigator",
-        "Nicholas",
-        "NightmareMummy",
-        "SkeletonFootman",
-        "Surgeon",
-        "Treasurer",
-        "Valentine",
-    }
-    return npc_name not in inactive
-
-
-def _save_json(filename, data):
-    path = Path(OUTPUT_DIR) / filename
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    return npc_name not in _INACTIVE_NPCS
