@@ -6,6 +6,7 @@
 
 import os
 import re
+from html import escape as _esc
 
 try:
     from .html_template import HTMLTemplate
@@ -88,12 +89,14 @@ class PageBuilder:
         safe_filename = re.sub(r'[<>:"/\\\\|?*]', "_", npc_en)
         search_data = f"{npc_name.lower()} {npc_en.lower()}"
 
-        npc_en_display = f'<div class="npc-en">{npc_en}</div>' if npc_name != npc_en and self.language == "en" else ""
+        npc_en_display = (
+            f'<div class="npc-en">{_esc(npc_en)}</div>' if npc_name != npc_en and self.language == "en" else ""
+        )
 
         return f"""            <div class="npc-card-wrapper" data-npc="{search_data}">
-                <input type="checkbox" class="npc-confirm-checkbox" data-npc="{npc_en}" onchange="saveNpcConfirm(this)" onclick="event.stopPropagation()" title="确认已检查">
+                <input type="checkbox" class="npc-confirm-checkbox" data-npc="{_esc(npc_en)}" onchange="saveNpcConfirm(this)" onclick="event.stopPropagation()" title="确认已检查">
                 <a href="{safe_filename}.html" class="npc-card">
-                    <div class="npc-name">{npc_name}</div>
+                    <div class="npc-name">{_esc(npc_name)}</div>
                     <div class="npc-count">{quest_count} {self._get_ui_text("quests")}</div>
                     {npc_en_display}
                 </a>
@@ -122,11 +125,11 @@ class PageBuilder:
         # 构建卡片头部
         html = f"""            <div class="quest-card" data-quest="{search_data}" id="{quest['id']}">
                 <div class="quest-id debug-section">{quest['id']}</div>
-                <div class="quest-title-main">{display_name}</div>
+                <div class="quest-title-main">{_esc(display_name)}</div>
 """
         # 副标题
         if subtitle and subtitle != display_name:
-            html += f"""                <div class="quest-title-sub">{subtitle}</div>
+            html += f"""                <div class="quest-title-sub">{_esc(subtitle)}</div>
 """
         else:
             html += """                <div class="quest-title-sub" style="border-bottom: 2px solid #4CAF50; margin-bottom: 12px; padding-bottom: 10px;"></div>
@@ -144,13 +147,13 @@ class PageBuilder:
         if greeting_display:
             html += f"""                <div class="quest-section debug-section">
                     <div class="quest-label">{self._get_ui_text("quest_description")}</div>
-                    <div class="quest-text">{greeting_display}</div>
+                    <div class="quest-text">{_esc(greeting_display)}</div>
                 </div>
 """
         if complete_display:
             html += f"""                <div class="quest-section debug-section">
                     <div class="quest-label">{self._get_ui_text("complete_description")}</div>
-                    <div class="quest-text">{complete_display}</div>
+                    <div class="quest-text">{_esc(complete_display)}</div>
                 </div>
 """
 
@@ -300,9 +303,9 @@ class PageBuilder:
         filepath = os.path.join(self.output_dir, f"{safe_filename}.html")
 
         # 页面标题
-        page_title = f"{npc_name}"
+        page_title = f"{_esc(npc_name)}"
         if npc_name != npc_name_en and self.language == "en":
-            page_title += f" ({npc_name_en})"
+            page_title += f" ({_esc(npc_name_en)})"
 
         html_content = HTMLTemplate.generate_header(
             f"{page_title} - {self._get_ui_text('quest_count').rstrip('数量')}列表",
@@ -339,7 +342,7 @@ class PageBuilder:
                 after_end = quest_card_html[insert_pos:]
                 quest_card_html = before_end + f"""                <div class="quest-section">
                     <div class="quest-label">{self._get_ui_text("required_quest")}</div>
-                    <div class="quest-text required-quest">{required_quest_display}</div>
+                    <div class="quest-text required-quest">{_esc(required_quest_display)}</div>
                 </div>
 """ + after_end
             elif quest.get("required_quest"):
@@ -348,7 +351,7 @@ class PageBuilder:
                 after_end = quest_card_html[insert_pos:]
                 quest_card_html = before_end + f"""                <div class="quest-section">
                     <div class="quest-label">{self._get_ui_text("required_quest")}</div>
-                    <div class="quest-text">{quest['required_quest']}</div>
+                    <div class="quest-text">{_esc(quest['required_quest'])}</div>
                 </div>
 """ + after_end
 
