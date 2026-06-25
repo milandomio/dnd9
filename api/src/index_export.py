@@ -6,6 +6,18 @@ from pathlib import Path
 
 from config import HARDCODED_TRANSLATIONS
 
+GROUP_LABELS = {
+    "Crypt": "废墟2层地牢",
+    "FireDeep": "哥布林洞穴2层",
+    "GoblinCave": "哥布林洞穴1层",
+    "IceAbyss": "冰图2层",
+    "IceCavern": "冰图1层",
+    "Inferno": "废墟3层炼狱",
+    "Ruins": "废墟1层",
+    "ShipGraveyard": "水图",
+    "Swamp": "沼泽",
+}
+
 
 def _save(output_dir: Path, filename: str, data: list | dict):
     path = output_dir / filename
@@ -156,17 +168,6 @@ def generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modul
                         }
                     )
 
-    GROUP_LABELS = {  # noqa: N806
-        "Crypt": "废墟2层地牢",
-        "FireDeep": "哥布林洞穴2层",
-        "GoblinCave": "哥布林洞穴1层",
-        "IceAbyss": "冰图2层",
-        "IceCavern": "冰图1层",
-        "Inferno": "废墟3层炼狱",
-        "Ruins": "废墟1层",
-        "ShipGraveyard": "水图",
-        "Swamp": "沼泽",
-    }
     groups_index = []
     for gname in sorted(groups):
         g = groups[gname]
@@ -278,17 +279,6 @@ def build_and_save_indexes(
             }
         )
     dm_groups = sorted({m.get("group") for m in modules_data if m.get("group")})
-    GROUP_LABELS = {  # noqa: N806
-        "Crypt": "废墟2层地牢",
-        "FireDeep": "哥布林洞穴2层",
-        "GoblinCave": "哥布林洞穴1层",
-        "IceAbyss": "冰图2层",
-        "IceCavern": "冰图1层",
-        "Inferno": "废墟3层炼狱",
-        "Ruins": "废墟1层",
-        "ShipGraveyard": "水图",
-        "Swamp": "沼泽",
-    }
     for g in dm_groups:
         search_index.append(
             {
