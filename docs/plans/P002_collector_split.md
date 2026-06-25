@@ -14,7 +14,7 @@
 | 8 | collector.py 最终清理 | ✅ 完成 | 2026-06-22 | 移除未用函数/变量，454 行 |
 
 **最终状态：**
-- `collector.py`: 454 行（原始 2581 行，已减少 82.4%）
+- `collector.py`: ~400 行（原始 2581 行，已减少 ~84%）
 - `enrichment.py`: 262 行
 - `module_builder.py`: 547 行
 - `lootdrop_builder.py`: 518 行
@@ -22,6 +22,7 @@
 - `translator.py`: ~250 行
 - `entity_export.py`: ~200 行
 - `index_export.py`: ~260 行
+- `lootdrop_rates.py`: 已移至 `api/src/_archived/`（死代码）
 - 验证命令：`cd api && python main.py`（返回 0）+ `./lint.sh`（通过）
 - items/monsters/lootdrops 与基线完全匹配，props 仅条目顺序不同（数据一致）
 - dungeon_modules.json、module coords 253 文件、lootdrops.json 均与基线一致
