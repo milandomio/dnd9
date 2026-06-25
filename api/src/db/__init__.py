@@ -35,7 +35,7 @@ class DatabaseManager:
         self.close()
         return False
 
-    def _rebuild_fts(self, fts_table: str, content_table: str):
+    def _rebuild_fts(self, fts_table: str):
         c = self.conn.cursor()
         c.execute(f"INSERT INTO {fts_table}({fts_table}) VALUES('rebuild')")
         self.conn.commit()

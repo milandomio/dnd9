@@ -73,11 +73,11 @@ class MonstersImporter:
             "INSERT OR REPLACE INTO monster_entities (monster_name, raw_name, translation_key) VALUES (?, ?, ?)",
             deduped,
         )
-        self._rebuild_fts("monsters_fts", "monster_entities")
+        self._rebuild_fts("monsters_fts")
         self.conn.commit()
         return len(deduped)
 
-    def _rebuild_fts(self, fts_table: str, content_table: str):
+    def _rebuild_fts(self, fts_table: str):
         c = self.conn.cursor()
         c.execute(f"INSERT INTO {fts_table}({fts_table}) VALUES('rebuild')")
         self.conn.commit()

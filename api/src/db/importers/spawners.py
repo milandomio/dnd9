@@ -73,9 +73,9 @@ class SpawnersImporter:
             added["props"] = len(props_rows)
         self.conn.commit()
         if added["item"] > 0:
-            self._rebuild_fts("items_fts", "item_entities")
+            self._rebuild_fts("items_fts")
         if added["monster"] > 0:
-            self._rebuild_fts("monsters_fts", "monster_entities")
+            self._rebuild_fts("monsters_fts")
         return added
 
     def import_spawner_entries(self) -> int:
@@ -244,7 +244,7 @@ class SpawnersImporter:
         self.conn.commit()
         return len(rows)
 
-    def _rebuild_fts(self, fts_table: str, content_table: str):
+    def _rebuild_fts(self, fts_table: str):
         c = self.conn.cursor()
         c.execute(f"INSERT INTO {fts_table}({fts_table}) VALUES('rebuild')")
         self.conn.commit()
