@@ -15,7 +15,6 @@ HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
 UNIQUE_SUFFIX_RE = re.compile(r"Unique$")
 QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
 ORE_QUALITY_RE = re.compile(r"^(?:Ore_)?(.+?)(?:_)?(?:High|Med|Low|VeryLow|Random)$")
-ORE_ITEM_STRIP_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
 ORE_ITEM_COORD_RE = re.compile(r"^(Cobalt|Copper|FrostStone|Gold|Iron|Obsidian|Rubysilver|Tidestone)Ores$")
 RESOLVE_STRIP_RE = re.compile(r"_(?:\d+|Common|Elite|Nightmare|Hard|VeryHard|Unique|VeryLow|Low|Med|High|Random)$")
 RESOLVE_FUZZY_RE = re.compile(
