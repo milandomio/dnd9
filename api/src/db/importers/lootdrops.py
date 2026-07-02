@@ -54,7 +54,8 @@ class LootdropsImporter:
                     continue
                 item_name = ue_asset_base_name(item_asset) or ""
                 item_name = self._strip_prefix(item_name, "Id_Item_", "Id_Props_")
-                item_name = VARIANT_RE.sub("", item_name)
+                if not item_name.endswith("_8001"):
+                    item_name = VARIANT_RE.sub("", item_name)
                 for mon in monsters:
                     if item_name == mon:
                         continue
