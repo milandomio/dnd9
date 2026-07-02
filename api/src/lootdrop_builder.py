@@ -151,6 +151,8 @@ def build_loot_index(
     loot_index = []
     for item_name, monster_names in merged_loot.items():
         item_row = items_lookup.get(item_name)
+        if item_row is None and item_name.endswith("_8001"):
+            item_row = items_lookup.get(item_name.removesuffix("_8001"))
         translation = (
             resolve_name(item_name, item_row["translation_key"] if item_row else None, "item")
             if item_row
