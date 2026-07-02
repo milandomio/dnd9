@@ -154,7 +154,7 @@ export default function LootdropDetailPage() {
     if (!name) return;
     if (ssrData?.item?.monsters) {
       setData(ssrData.item);
-      setHidden(defaultHidden(ssrData.item.monsters, 2.5));
+      setHidden(defaultHidden(ssrData.item.monsters, defaultThreshold));
       return;
     }
     if (lootFetchedRef.current) return;
@@ -168,7 +168,7 @@ export default function LootdropDetailPage() {
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
         setData(item);
-        setHidden(defaultHidden(item.monsters, 2.5));
+        setHidden(defaultHidden(item.monsters, defaultThreshold));
       })
       .catch(console.error);
   }, [name, ssrData, dataVersion]);
