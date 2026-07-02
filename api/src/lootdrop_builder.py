@@ -112,8 +112,27 @@ def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str], dict[str,
         skip_variants.discard(v8001)
         merged_loot[v8001] = sorted(loot_map.get(v8001, []))
         variant_override[base] = len(variants) - 1
-    if variant_override:
-        print(f"  _8001 variants split: {len(variant_override)} bases affected")
+    # Also handle _8001 items that were merged into base (other variants stripped at import)
+    _8001_split = 0
+    for item_name in list(loot_map):
+        if not item_name.endswith("_8001"):
+            continue
+        if item_name in merged_loot:
+            continue
+        base = item_name.removesuffix("_8001")
+        if base in merged_loot:
+            merged_loot[item_name] = sorted(loot_map[item_name])
+            _8001_split += 1
+            if base not in variant_override:
+                cur = (
+                    db.connect()
+                    .execute("SELECT variant_count FROM item_entities WHERE item_name = ?", (base,))
+                    .fetchone()
+                )
+                if cur:
+                    variant_override[base] = cur[0] - 1
+    if _8001_split:
+        print(f"  _8001 variants split (from loot_map): {_8001_split} bases affected")
 
     # Inject SuperHoard spawners as separate monster entries
     superhoard_map: dict[str, list[str]] = {}
@@ -154,7 +173,11 @@ def build_loot_index(
         if item_row is None and item_name.endswith("_8001"):
             item_row = items_lookup.get(item_name.removesuffix("_8001"))
         translation = (
-            resolve_name(item_name, item_row["translation_key"] if item_row else None, "item")
+            resolve_name(
+                item_name,
+                None if item_name.endswith("_8001") else item_row.get("translation_key"),
+                "item",
+            )
             if item_row
             else (resolve_name(item_name, None, "item") or item_name)
         )
@@ -455,7 +478,6 @@ def build_and_save_lootdrop_details(
                 _hk = _hk_map.get(_g, 0)
                 _score = (_c.get("spawn_rate", 0) or 0) * _hk / 100
                 _c["score"] = round(_score, 4)
-            _base_data["coords"] = [c for c in _base_data["coords"] if c["score"] > 0]
         merged = {k: v for k, v in merged.items() if v["coords"]}
         for _v in merged.values():
             _v.pop("_bases", None)
