@@ -110,10 +110,6 @@ export default function DungeonModuleDetailPage() {
   }
 
   const entities = coordsData?.entities ?? [];
-  const totalCoords = entities.reduce(
-    (s, e) => s + (hidden.has(e.name) ? 0 : e.coords.length),
-    0
-  );
 
   const toggle = (entityName: string) => {
     setHidden((prev) => {
@@ -150,6 +146,7 @@ export default function DungeonModuleDetailPage() {
       dots.push({ entity: e, x: c.x, y: c.y, z: c.z, idx: j });
     });
   }
+  const totalCoords = dots.length;
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>

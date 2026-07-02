@@ -134,13 +134,11 @@ export default function DetailPage() {
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;
 
   const coords = entity.coords ?? [];
-  // Build a lookup from coord properties to index for hidden check
-  const coordKeyToIndex = new Map<string, number>();
-  coords.forEach((c, i) => {
-    coordKeyToIndex.set(`${c.file}|${c.x}|${c.y}|${c.z}`, i);
-  });
+  const visibleCoords = coords.filter(
+    (c, i) => !hiddenRows.has(`${c.file}-${i}`)
+  );
   const grouped = new Map<string, Coord[]>();
-  for (const c of coords) {
+  for (const c of visibleCoords) {
     if (!grouped.has(c.map)) grouped.set(c.map, []);
     grouped.get(c.map)!.push(c);
   }
@@ -347,17 +345,13 @@ export default function DetailPage() {
               const range = baseRange + adj.range || 1600;
               const offX = (mod?.offset_x ?? 0) + adj.x;
               const offY = (mod?.offset_y ?? 0) + adj.y;
-              const filteredDots = mapCoords
-                .filter((c) => {
-                  const idx = coordKeyToIndex.get(
-                    `${c.file}|${c.x}|${c.y}|${c.z}`
-                  );
-                  return !(
-                    idx !== undefined && hiddenRows.has(`${c.file}-${idx}`)
-                  );
-                })
-                .map((c) => ({ x: c.x, y: c.y, z: c.z, color: '' }));
-              if (filteredDots.length === 0) return null;
+              if (mapCoords.length === 0) return null;
+              const filteredDots = mapCoords.map((c) => ({
+                x: c.x,
+                y: c.y,
+                z: c.z,
+                color: '',
+              }));
               return (
                 <div
                   key={mapName}
@@ -809,7 +803,7 @@ export default function DetailPage() {
         ></span>{' '}
         Z &lt; -299 (低于地面)
         <br />
-        <strong>位置统计：共 {coords.length} 个位置点</strong>
+        <strong>位置统计：共 {visibleCoords.length} 个位置点</strong>
         <br />
         <strong>包含地图：</strong>{' '}
         {[...grouped.keys()]
