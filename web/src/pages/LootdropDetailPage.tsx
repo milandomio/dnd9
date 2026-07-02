@@ -131,7 +131,7 @@ export default function LootdropDetailPage() {
   const modules =
     inlineModulesMap ?? ssrModulesMap ?? new Map<string, DungeonModule>();
   const isArtifact = (name ?? '').endsWith('_8001');
-  const defaultThreshold = isArtifact ? 0.02 : 2.5;
+  const defaultThreshold = isArtifact ? 0.03 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     ssrData?.item?.monsters
       ? defaultHidden(ssrData.item.monsters, defaultThreshold)
