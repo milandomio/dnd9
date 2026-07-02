@@ -215,8 +215,8 @@ export default function QuestItemGroupPage() {
     }
   );
 
-  const totalCoords = entities.reduce(
-    (s, e) => s + (hidden.has(e.name) ? 0 : e.coords.length),
+  const totalCoords = [...mapGroups.values()].reduce(
+    (s, mg) => s + mg.dots.length,
     0
   );
   const visibleCount = entities.filter((e) => !hidden.has(e.name)).length;

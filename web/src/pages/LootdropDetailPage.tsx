@@ -411,8 +411,8 @@ export default function LootdropDetailPage() {
     }
   );
 
-  const totalCoords = monsters.reduce(
-    (s, m) => s + (hidden.has(m.name) ? 0 : m.coords.length),
+  const totalCoords = [...mapGroups.values()].reduce(
+    (s, mg) => s + mg.dots.length,
     0
   );
   const visibleCount = monsters.filter((m) => !hidden.has(m.name)).length;

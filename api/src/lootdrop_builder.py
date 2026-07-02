@@ -464,6 +464,17 @@ def build_and_save_lootdrop_details(
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
 
+        # Remove groups with no non-zero drop rates and filter out their coords
+        _valid_groups: set[str] = set()
+        for _g, _entries in _group_drop_info.items():
+            if any(any(v > 0 for v in e.get("drop_rates", {}).values()) for e in _entries):
+                _valid_groups.add(_g)
+        _group_drop_info = {g: e for g, e in _group_drop_info.items() if g in _valid_groups}
+        for _base_key in list(merged.keys()):
+            merged[_base_key]["coords"] = [
+                c for c in merged[_base_key]["coords"] if map_base_to_group.get(c["map"], "") in _valid_groups
+            ]
+
         # Compute per-coord score
         _hk_lookup: dict[str, dict[str, float]] = {}
         for _g, _entries in _group_drop_info.items():
