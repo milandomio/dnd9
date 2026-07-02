@@ -102,18 +102,15 @@ def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str], dict[str,
     print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
     print(f"  unique items after merge: {len(merged_loot)}")
 
-    # split _8001 variants: keep as own entry (monsters are shared with base)
+    # split _8001 artifacts: keep as own entry (monsters are shared with base)
     variant_override: dict[str, int] = {}
-    for base, variants in list(families.items()):
+    for _, variants in list(families.items()):
         _8001 = [v for v in variants if v.endswith("_8001")]
         if not _8001:
             continue
         v8001 = _8001[0]
         skip_variants.discard(v8001)
         merged_loot[v8001] = sorted(loot_map.get(v8001, []))
-        variant_override[base] = len(variants) - 1
-    # Also handle _8001 items that were merged into base (other variants stripped at import)
-    _8001_split = 0
     for item_name in list(loot_map):
         if not item_name.endswith("_8001"):
             continue
@@ -122,17 +119,6 @@ def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str], dict[str,
         base = item_name.removesuffix("_8001")
         if base in merged_loot:
             merged_loot[item_name] = sorted(loot_map[item_name])
-            _8001_split += 1
-            if base not in variant_override:
-                cur = (
-                    db.connect()
-                    .execute("SELECT variant_count FROM item_entities WHERE item_name = ?", (base,))
-                    .fetchone()
-                )
-                if cur:
-                    variant_override[base] = cur[0] - 1
-    if _8001_split:
-        print(f"  _8001 variants split (from loot_map): {_8001_split} bases affected")
 
     # Inject SuperHoard spawners as separate monster entries
     superhoard_map: dict[str, list[str]] = {}
@@ -278,6 +264,7 @@ def build_and_save_lootdrop_details(
     entity_spawners = drop_engine.entity_spawners
 
     item_max_score: dict[str, float] = {}
+    item_valid_names: dict[str, set[str]] = {}
     detail_count = 0
     detail_total = len(loot_index)
     if log_fn:
@@ -545,6 +532,7 @@ def build_and_save_lootdrop_details(
                     detail["_modules"] = inline
             _save(output_dir, f"lootdrops/{item_name}.json", detail)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
+            item_valid_names[item_name] = {_m["name"] for _m in monsters_out}
         elif item_name == "BloodsapBlade":
             if log_fn:
                 log_fn(
@@ -566,10 +554,21 @@ def build_and_save_lootdrop_details(
     if log_fn:
         log_fn(f"[JSON] lootdrops detail files DONE -> {detail_count} items")
 
-    # Update lootdrops.json index with max_score
+    # Update lootdrops.json index with max_score and filtered monsters
     for _entry in loot_index:
         _iname = _entry["name"]
         _entry["max_score"] = item_max_score.get(_iname, 0.0)
+        _valid = item_valid_names.get(_iname)
+        if _valid:
+            _filtered = [
+                (mn, mt)
+                for mn, mt in zip(_entry["monsters"], _entry["monster_translations"], strict=False)
+                if mn in _valid
+            ]
+            if _filtered:
+                _entry["monsters"], _entry["monster_translations"] = zip(*_filtered, strict=False)
+                _entry["monsters"] = list(_entry["monsters"])
+                _entry["monster_translations"] = list(_entry["monster_translations"])
     _save(output_dir, "lootdrops.json", loot_index)
 
     return item_max_score
