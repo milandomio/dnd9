@@ -240,7 +240,7 @@ def enrich_all_entities(
     if log_fn:
         log_fn("[JSON] cleaning up zero-rate entries...")
     clean_count = 0
-    for subdir in ("items", "props", "monsters"):
+    for subdir in ("items", "props", "monsters", "lootdrops"):
         for efile in (output_dir / subdir).glob("*.json"):
             with open(efile) as f:
                 edata = json.load(f)
