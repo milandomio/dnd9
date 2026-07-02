@@ -464,15 +464,23 @@ def build_and_save_lootdrop_details(
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
 
-        # Remove groups with no non-zero drop rates and filter out their coords
-        _valid_groups: set[str] = set()
+        # Remove zero-rate entries and filter per-monster coords by valid (translation, group)
+        _valid_tg: set[tuple[str, str]] = set()
+        _drop_groups: list[str] = []
         for _g, _entries in _group_drop_info.items():
-            if any(any(v > 0 for v in e.get("drop_rates", {}).values()) for e in _entries):
-                _valid_groups.add(_g)
-        _group_drop_info = {g: e for g, e in _group_drop_info.items() if g in _valid_groups}
+            _new_entries = [e for e in _entries if any(v > 0 for v in e.get("drop_rates", {}).values())]
+            if _new_entries:
+                _group_drop_info[_g] = _new_entries
+                for e in _new_entries:
+                    _valid_tg.add((e["translation"], _g))
+            else:
+                _drop_groups.append(_g)
+        for _g in _drop_groups:
+            del _group_drop_info[_g]
         for _base_key in list(merged.keys()):
+            _trans = merged[_base_key]["translation"]
             merged[_base_key]["coords"] = [
-                c for c in merged[_base_key]["coords"] if map_base_to_group.get(c["map"], "") in _valid_groups
+                c for c in merged[_base_key]["coords"] if (_trans, map_base_to_group.get(c["map"], "")) in _valid_tg
             ]
 
         # Compute per-coord score
