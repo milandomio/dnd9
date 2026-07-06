@@ -100,6 +100,21 @@
 
 ## Bug 修复计划（Jul 7）
 
+### Bug 0: 变体按钮生成子变体 — `expanded_index` 传递 `variant_suffixes` 导致递归生成
+
+**症状**: `AdventurerBoots_6001` 等变体页面生成了子变体文件 `AdventurerBoots_6001_6001.json`
+
+**根因**: `expanded_index` 逻辑为每个变体后缀创建独立条目时，将 `variant_suffixes` 传递给了变体条目。当 `build_and_save_lootdrop_details` 处理 `AdventurerBoots_6001` 时，发现它有 `variant_suffixes`，于是再次生成变体文件 `AdventurerBoots_6001_1001.json`、`AdventurerBoots_6001_6001.json` 等。
+
+**修复**: 在 `expanded_index` 生成变体条目时，不传递 `variant_suffixes` 字段。只有基础条目（如 `AdventurerBoots`）保留 `variant_suffixes`，变体条目（如 `AdventurerBoots_6001`）不再有该字段。
+
+**修改文件**: `api/src/lootdrop_builder.py` — `build_and_save_lootdrop_details()` 的 `expanded_index` 逻辑
+
+**验证**:
+- `data/json/lootdrops/` 目录下无 `*_XXXX_XXXX.json` 子变体文件
+- `lootdrops.json` 中变体条目无 `variant_suffixes` 字段
+- 变体详情文件（如 `AdventurerBoots_6001.json`）保留 `variant_suffixes` 供前端渲染按钮
+
 ### Bug 1: 坐标过滤错误 — `get_spawners_for_luck_grade()` 返回过多 spawner
 
 **症状**: Spear_6001 显示了不相关的 311 个 spawner 坐标（如 AncientStingray、SkeletonWoodenBarrel）
@@ -149,12 +164,45 @@
 
 **修复**: expanded_index 生成时跳过已有独立条目的 _8001 后缀
 
+### Bug 5: 非 _8001 物品的 `variant_suffixes` 包含 "8001"
+
+**症状**: `HeaterShield_5001` 页面显示 _8001 按钮，点击后跳转到不存在的页面
+
+**根因**: `build_loot_index()` 的 `variant_suffixes` 算术生成全部后缀（包括 8001），但 _8001 是独立条目，不应出现在非 _8001 物品的按钮组中
+
+**修复**: 在 `build_loot_index()` 中过滤掉 "8001" 后缀：
+```python
+variant_suffixes = [s for s in variant_suffixes if s != "8001"]
+```
+
+**修改文件**: `api/src/lootdrop_builder.py` — `build_loot_index()` 第 266 行
+
+**验证**:
+- `HeaterShield_5001.json` 的 `variant_suffixes` 不包含 "8001"
+- `HeaterShield_8001.json` 的 `variant_suffixes` 为 `["8001"]`
+
+### Bug 6: 默认变体按钮硬编码为 _6001
+
+**症状**: 用户访问 `/lootdrops/HeaterShield/` 时，默认高亮 _6001 按钮，但实际应根据 `variant_suffixes` 动态选择
+
+**根因**: 前端代码 `suffix === '6001'` 硬编码了默认按钮
+
+**修复**: 改为优先选择 "6001"（如果存在），否则选择第一个变体：
+```tsx
+const defaultSuffix = data.variant_suffixes!.includes('6001') ? '6001' : data.variant_suffixes![0];
+```
+
+**修改文件**: `web/src/pages/LootdropDetailPage.tsx` — 第 557-559 行
+
 ### 修改文件清单
 
 | 文件 | 改动 |
 |------|------|
-| `api/src/drop_rate.py` | 新增 `get_variant_spawners(item_name, luck_grade)` |
-| `api/src/lootdrop_builder.py` | 替换 spawner 过滤、修复翻译、跳过空变体、去重 _8001 |
+| `api/src/drop_rate.py` | 新增 `get_variant_spawners(item_name)`、`get_base_item_spawners(base_item_name)`、`get_existing_variant_suffixes(base_item_name)`；删除 `get_spawners_for_luck_grade()` |
+| `api/src/lootdrop_builder.py` | 替换 spawner 过滤、修复翻译、跳过空变体、去重 _8001、过滤 variant_suffixes 中的 "8001"、expanded_index 不传递 variant_suffixes 给变体条目 |
+| `api/src/collector.py` | 移动 DropRateEngine 创建到 build_loot_index 之前 |
+| `web/src/pages/LootdropDetailPage.tsx` | 默认变体按钮逻辑：优先选择 "6001"，否则选择第一个变体 |
+| `web/src/pages/ListPage.tsx` | 防止为已带后缀的变体名追加 `_6001` |
 
 ### 验证
 
@@ -165,24 +213,28 @@ cd api && python main.py && cd ../web && npm run build
 # 2. /lootdrops/Spear_8001/ → 标题"冥渊三叉戟"，只含相关坐标
 # 3. /lootdrops/Spear_5001/ → 正常显示
 # 4. lootdrops.json 中无重复条目
+# 5. /lootdrops/HeaterShield_5001/ → variant_suffixes 不含 "8001"，默认高亮 _6001
+# 6. /lootdrops/HeaterShield_8001/ → 独立条目，翻译"不朽神盾"，variant_suffixes=["8001"]
+# 7. /lootdrops/AdventurerBoots_6001/ → 无子变体文件 AdventurerBoots_6001_6001.json
+# 8. data/json/lootdrops/ 目录下无 *_XXXX_XXXX.json 子变体文件
+# 9. lootdrops.json 中变体条目无 variant_suffixes 字段
 ```
 
 ## 已知问题
 
-### 1. Mitre 等物品未生成详情页
-- **症状**: `api/output/json/lootdrops/Mitre.json` 不存在，前端 404
-- **原因**: 复杂 — 可能与 `_coord_variant_count` 过滤、`original_keyword` 查找、DB 内容有关
-- **修复未完成**: 未找到根本原因，需进一步调试
-- **影响**: 所有 variant_count > 1 的物品可能受影响
-
-### 2. 部署依赖
+### 1. 部署依赖
 - 数据管道（`python main.py`）必须在 `npm run build` 前运行
 - DB 不能被 `_is_db_stale()` 跳过导入（删除 DB 后强制重建）
 - 游戏解包 JSON 文件必须存在（`ITEM_DIR/Id_Item_*.json`）
 
+### 2. 坐标过滤逻辑
+- 变体坐标过滤使用 `get_variant_spawners(variant_name)` 获取精确 spawner 集合
+- 如果变体无掉落数据，回退到 `get_base_item_spawners(base_item_name)` 获取基础坐标
+- 如果基础坐标也为空，则跳过该变体（不生成详情文件）
+
 ## 回滚前状态
-- 当前 HEAD: `e8c0cfe` (Jul 6, 4 revert commits + 2 kept commits)
-- 保留的改动: `7cb96c7` (group_drop_info 聚合) + `e525626` (_8001 suffix 隔离)
+- 当前 HEAD: 待更新 (Jul 7, Bug 0-6 修复完成)
+- 保留的改动: Bug 0-6 全部修复
 - 回滚目标: `d7b0d96` (Jun 26)
 
 ## 参考
