@@ -215,6 +215,16 @@ export default function LootdropDetailPage() {
       .catch(console.error);
   }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
 
+  // Auto-redirect to default variant when visiting base URL
+  useEffect(() => {
+    if (!data?.variant_suffixes || data.variant_suffixes.length <= 1) return;
+    if (currentSuffix) return; // already on a variant URL
+    const defaultSuffix = data.variant_suffixes.includes('6001')
+      ? '6001'
+      : data.variant_suffixes[0];
+    navigate(`/lootdrops/${itemName}_${defaultSuffix}/`, { replace: true });
+  }, [data, currentSuffix, itemName, navigate]);
+
   // 在调试模式下实时响应阈值变化
   useEffect(() => {
     if (!data?.monsters) return;
@@ -554,9 +564,12 @@ export default function LootdropDetailPage() {
           {data.variant_suffixes.map((suffix) => {
             const rarity = data.variant_rarity?.[suffix] ?? suffix;
             const color = RARITY_COLORS[rarity] ?? tokens.muted;
+            const defaultSuffix = data.variant_suffixes!.includes('6001')
+              ? '6001'
+              : data.variant_suffixes![0];
             const isActive =
               currentSuffix === suffix ||
-              (!currentSuffix && suffix === data.variant_suffixes![0]);
+              (!currentSuffix && suffix === defaultSuffix);
             return (
               <button
                 key={suffix}

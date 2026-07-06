@@ -262,6 +262,8 @@ def build_loot_index(
                 if m:
                     first_num = int(m.group(1))
                     variant_suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
+                    # Exclude _8001 — it has its own independent entry
+                    variant_suffixes = [s for s in variant_suffixes if s != "8001"]
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
@@ -659,9 +661,7 @@ def build_and_save_lootdrop_details(
             for _g_list in _group_drop_info.values():
                 for _e in _g_list:
                     _e.pop("_entity_name", None)
-            # Only save base file if no multiple variants (single variant or no variant)
-            if not vs or len(vs) <= 1:
-                _save(output_dir, f"lootdrops/{item_name}.json", detail)
+            _save(output_dir, f"lootdrops/{item_name}.json", detail)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}
         detail_count += 1
@@ -671,8 +671,6 @@ def build_and_save_lootdrop_details(
         log_fn(f"[JSON] lootdrops detail files DONE -> {detail_count} items")
 
     # Update lootdrops.json index with max_score and filtered monsters
-    # Expand variant entries: for items with multiple variants, create separate entries for each variant
-    expanded_index = []
     for _entry in loot_index:
         _iname = _entry["name"]
         _entry["max_score"] = item_max_score.get(_iname, 0.0)
@@ -687,25 +685,6 @@ def build_and_save_lootdrop_details(
                 _entry["monsters"], _entry["monster_translations"] = zip(*_filtered, strict=False)
                 _entry["monsters"] = list(_entry["monsters"])
                 _entry["monster_translations"] = list(_entry["monster_translations"])
-        # If item has multiple variants, create separate entries for each variant
-        vs = _entry.get("variant_suffixes")
-        if vs and len(vs) > 1:
-            for suffix in vs:
-                # Skip _8001 — it has its own independent entry
-                if suffix == "8001":
-                    continue
-                variant_entry = {
-                    "name": f"{_iname}_{suffix}",
-                    "translation": _entry["translation"],
-                    "variant_count": _entry["variant_count"],
-                    "monsters": _entry["monsters"],
-                    "monster_translations": _entry["monster_translations"],
-                    "max_score": _entry["max_score"],
-                    "variant_suffixes": vs,
-                }
-                expanded_index.append(variant_entry)
-        else:
-            expanded_index.append(_entry)
-    _save(output_dir, "lootdrops.json", expanded_index)
+    _save(output_dir, "lootdrops.json", loot_index)
 
     return item_max_score
