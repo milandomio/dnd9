@@ -3,10 +3,22 @@
 ## 目标
 为 lootdrop 详情页添加变体稀有度标签和导航按钮，用户可切换查看同一物品的不同品质变体。
 
+## 核心需求（必须全部满足）
+
+1. **所有变体都必须有对应的切换按钮** — 包括 Poor/Common/Uncommon/Rare/Epic/Legend/Unique/Artifact 全部 8 级稀有度
+2. **每个变体必须显示对应的爆率** — 按该变体的 `luck_grade` 计算，无掉落数据的变体爆率为 0
+3. **每个变体必须显示对应的坐标点** — 按该变体的实际 spawner 过滤，无掉落数据的变体显示基础坐标
+4. **每个变体必须有分类按钮** — 变体稀有度按钮组完整显示
+5. **`_8001` 神器变体特殊处理**：
+   - 标题翻译使用神器自身的翻译（如"冥渊三叉戟"而非"长矛"）
+   - 独立条目，不被基础条目覆盖
+   - 显示阈值专属（`0.03` 而非 `2.5`）
+
 ## 术语
 - **变体（variant）**: 同一物品的不同品质版本，后缀 `_\d{4}`（如 `_3001`, `_4001`）
 - **神器（artifact）**: 后缀 `_8001` 的特殊变体，独立于普通变体系列
 - **raw_name**: `item_entities` 表中的原始游戏资产名（如 `Id_Item_NecklaceOfPeace_3001`），首变体后缀由此确定
+- **luck_grade**: 变体后缀首位数字，决定稀有度等级（`_5001` → luck_grade=5 = Epic）
 
 ## 实现步骤
 
@@ -21,6 +33,7 @@
   - `raw_name` 末段数字决定起始后缀（如 `_3001` → `["3001","4001","5001","6001","7001"]`）
   - `_8001` 物品只保留 `["8001"]`
   - 其他条件：`variant_count > 1`
+  - **必须生成全部后缀**，不能只生成有掉落数据的后缀
 - 将 `variant_suffixes` 写入 loot_index entry
 
 ### 2. 后端：游戏数据稀有度提取
@@ -47,6 +60,7 @@
 - `useNavigate` 构建变体按钮组，点击导航到 `/lootdrops/${baseName}_${suffix}/`
 - `variant_rarity` 显示稀有度标签（游戏数据覆盖硬编码 `VARIANT_RARITY`）
 - 降序排列（8001 > 7001 > ... > 1001）
+- **默认高亮第一个变体**（非硬编码 `_6001`）
 
 ### 5. SSG：变体路由生成
 
@@ -63,13 +77,26 @@
 
 ### 爆率计算
 - `_8001` 物品：`luck_grade=8`，自己的 `lootdrop_rate_items` 条目
-- 普通变体：通过 `compute_drop_rate()` 的 `_VARIANT_SUFFIXES` fallback 链匹配
+- 普通变体：通过 `compute_variant_rate()` 按 `luck_grade` 直接计算
+- 无掉落数据的变体：爆率为 0，坐标显示基础坐标
 - 百分比格式 `.toFixed(2)`
 
 ### 变体起始后缀
 - `item_entities.raw_name`（如 `Id_Item_NecklaceOfPeace_3001`）→ 首变体 = 3001
 - `range(first_num, first_num + variant_count)` 生成完整序列
 - 约 20 个物品（NecklaceOfPeace 等）始于 `_3001` 而非 `_1001`
+
+### _8001 神器特殊处理
+- **独立条目**：`build_merged_loot_map()` 将 `_8001` 拆为独立条目
+- **翻译**：使用 `resolve_name(variant_name, None, "item")` 获取神器自身翻译
+- **不被覆盖**：基础条目生成变体文件时跳过 `_8001` 后缀
+- **显示阈值**：前端 `defaultThreshold = 0.03`（非变体/神器的 `2.5`）
+- **expanded_index**：跳过 `_8001`（已有独立条目）
+
+### 坐标过滤（spawner 匹配）
+- **精确匹配**：`get_variant_spawners(item_name)` 追踪 `item → lootdrop_id → group_id → spawner_keyword` 链
+- **非全局匹配**：禁止使用 `get_spawners_for_luck_grade(luck_grade)`（返回过多不相关 spawner）
+- **无数据变体**：`valid_spawners` 为空时显示基础坐标（不过滤）
 
 ## Bug 修复计划（Jul 7）
 
