@@ -603,27 +603,26 @@ def build_and_save_lootdrop_details(
                 if translations:
                     detail["variant_suffixes"] = vs
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
+                # Pre-compute base item spawners (union of all variants) as fallback
+                base_spawners = drop_engine.get_base_item_spawners(item_name)
                 for suffix in vs:
                     # Skip _8001 — it has its own independent entry from build_merged_loot_map
                     if suffix == "8001":
                         continue
                     variant_name = f"{item_name}_{suffix}"
                     luck_grade = int(suffix[0]) if suffix and suffix[0].isdigit() else 0
-                    # Get spawners that actually drop this specific variant
-                    valid_spawners = drop_engine.get_variant_spawners(variant_name)
-                    # Filter monsters_out by valid spawners for this variant
-                    # If no specific spawners found, show all base coords (variant has no drop data)
+                    # Get spawners for this variant; fallback to base item spawners
+                    valid_spawners = drop_engine.get_variant_spawners(variant_name) or base_spawners
+                    if not valid_spawners:
+                        continue
                     variant_monsters = []
                     for _m in monsters_out:
-                        if valid_spawners:
-                            filtered_coords = [
-                                _c
-                                for _c in _m["coords"]
-                                if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
-                                in valid_spawners
-                            ]
-                        else:
-                            filtered_coords = _m["coords"]
+                        filtered_coords = [
+                            _c
+                            for _c in _m["coords"]
+                            if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
+                            in valid_spawners
+                        ]
                         if filtered_coords:
                             _m_copy = dict(_m)
                             _m_copy["coords"] = filtered_coords
