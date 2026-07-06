@@ -306,6 +306,7 @@ def build_and_save_lootdrop_details(
     modules_map: dict | None = None,
     map_to_module: dict | None = None,
     translations: dict[str, str] | None = None,
+    entity_page_map: dict[str, str] | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
     map_base_to_group = drop_engine.map_base_to_group
@@ -328,20 +329,26 @@ def build_and_save_lootdrop_details(
             if m_name == item_name:
                 continue
             coords = all_coords.get(m_name, [])
+            _coord_key = m_name if coords else None
             if not coords:
                 _m_base = QUALITY_RE.sub("", m_name)
                 if _m_base != m_name:
                     coords = all_coords.get(_m_base, [])
+                    if coords:
+                        _coord_key = _m_base
             if not coords:
                 alias = TRANSLATION_ALIAS_MAP.get(m_name)
                 if alias:
                     coords = all_coords.get(alias, [])
+                    if coords:
+                        _coord_key = alias
             if not coords:
                 alt_keywords = og_to_keywords.get(m_name, set())
                 for _ak in sorted(alt_keywords):
                     _c = all_coords.get(_ak, [])
                     if _c:
                         coords = _c
+                        _coord_key = _ak
                         break
             _valid_sk = entity_spawners.get(m_name, set())
             if _valid_sk:
@@ -379,6 +386,7 @@ def build_and_save_lootdrop_details(
                         "coords": [],
                         "_has_locked": False,
                         "_bases": {base, m_name},
+                        "_coord_key": _coord_key,
                     }
                 if is_locked:
                     merged[_merge_key]["_has_locked"] = True
@@ -502,11 +510,11 @@ def build_and_save_lootdrop_details(
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
 
-        # Remove zero-rate entries and filter per-monster coords by valid (translation, group)
+        # Remove entries with zero豪客赛 rate (max_score = spawn_rate * 豪客赛 / 100)
         _valid_tg: set[tuple[str, str]] = set()
         _drop_groups: list[str] = []
         for _g, _entries in _group_drop_info.items():
-            _new_entries = [e for e in _entries if any(v > 0 for v in e.get("drop_rates", {}).values())]
+            _new_entries = [e for e in _entries if e.get("drop_rates", {}).get("豪客赛", 0) > 0]
             if _new_entries:
                 _group_drop_info[_g] = _new_entries
                 for e in _new_entries:
@@ -515,8 +523,14 @@ def build_and_save_lootdrop_details(
                 _drop_groups.append(_g)
         for _g in _drop_groups:
             del _group_drop_info[_g]
+        # Collect all translations that have drop rates
+        _valid_translations: set[str] = {e["translation"] for e_set in _group_drop_info.values() for e in e_set}
         for _base_key in list(merged.keys()):
             _trans = merged[_base_key]["translation"]
+            # Remove entries with no drop rates at all
+            if _trans not in _valid_translations:
+                del merged[_base_key]
+                continue
             merged[_base_key]["coords"] = [
                 c for c in merged[_base_key]["coords"] if (_trans, map_base_to_group.get(c["map"], "")) in _valid_tg
             ]
@@ -539,6 +553,23 @@ def build_and_save_lootdrop_details(
         for _v in merged.values():
             _v.pop("_bases", None)
         monsters_out = list(merged.values())
+        # P005: Collect all maps before ref optimization strips coords
+        _all_maps: set[str] = set()
+        for _m in monsters_out:
+            for _c in _m.get("coords", []):
+                _all_maps.add(_c["map"])
+        # P005: Coordinate reference optimization — always use ref
+        if entity_page_map:
+            for _m in monsters_out:
+                # Try coord_key first (resolved via alias/og_to_keywords), then entity_name
+                _ck = _m.pop("_coord_key", None)
+                ref_page = (entity_page_map.get(_ck) if _ck else None) or entity_page_map.get(
+                    _m.get("entity_name", _m["name"])
+                )
+                if ref_page:
+                    _m["ref"] = ref_page
+                    _m["coord_count"] = len(_m["coords"])
+                    del _m["coords"]
         # Pre-compute max score per monster translation
         _max_scores: dict[str, float] = {}
         for _g_list in _group_drop_info.values():
@@ -550,7 +581,8 @@ def build_and_save_lootdrop_details(
         for _m in monsters_out:
             _m["max_score"] = _max_scores.get(_m["translation"], -1)
         # Limit total coords to MAX_COORDS_PER_PAGE (sort by max_score desc)
-        _total_coords = sum(len(_m["coords"]) for _m in monsters_out)
+        # P005: Handle referenced entities (no inline coords)
+        _total_coords = sum(len(_m.get("coords", [])) for _m in monsters_out)
         if _total_coords > MAX_COORDS_PER_PAGE:
             monsters_out.sort(key=lambda x: x.get("max_score", -1), reverse=True)
             _kept = []
@@ -558,9 +590,10 @@ def build_and_save_lootdrop_details(
             for _m in monsters_out:
                 if _budget <= 0:
                     break
-                if len(_m["coords"]) <= _budget:
+                _coord_count = len(_m.get("coords", []))
+                if _coord_count <= _budget:
                     _kept.append(_m)
-                    _budget -= len(_m["coords"])
+                    _budget -= _coord_count
                 else:
                     _trimmed = dict(_m)
                     _trimmed["coords"] = _m["coords"][:_budget]
@@ -575,28 +608,27 @@ def build_and_save_lootdrop_details(
                 "group_drop_info": _group_drop_info,
             }
             # Inline module data for all referenced maps
+            # P005: Use _all_maps collected before ref optimization
             if modules_map and map_to_module:
                 inline: dict[str, dict] = {}
-                for _m in monsters_out:
-                    for _c in _m["coords"]:
-                        _mb = _c["map"]
-                        if _mb in inline:
-                            continue
-                        _mn = map_to_module.get(_mb, _mb)
-                        _mod = modules_map.get(_mn)
-                        if _mod:
-                            inline[_mb] = {
-                                "rotate": _mod["rotate"],
-                                "offset_x": _mod["offset_x"],
-                                "offset_y": _mod["offset_y"],
-                                "size_x": _mod["size_x"],
-                                "size_y": _mod["size_y"],
-                                "range": _mod["range"],
-                                "group": _mod["group"],
-                                "translation": _mod["translation"],
-                                "img_name": _mod["img_name"],
-                                "sl_base_name": _mod["sl_base_name"],
-                            }
+                for _mb in _all_maps:
+                    if _mb in inline:
+                        continue
+                    _mn = map_to_module.get(_mb, _mb)
+                    _mod = modules_map.get(_mn)
+                    if _mod:
+                        inline[_mb] = {
+                            "rotate": _mod["rotate"],
+                            "offset_x": _mod["offset_x"],
+                            "offset_y": _mod["offset_y"],
+                            "size_x": _mod["size_x"],
+                            "size_y": _mod["size_y"],
+                            "range": _mod["range"],
+                            "group": _mod["group"],
+                            "translation": _mod["translation"],
+                            "img_name": _mod["img_name"],
+                            "sl_base_name": _mod["sl_base_name"],
+                        }
                 if inline:
                     detail["_modules"] = inline
             # Generate per-variant detail files with variant-specific drop rates
@@ -617,18 +649,6 @@ def build_and_save_lootdrop_details(
                     valid_spawners = drop_engine.get_variant_spawners(variant_name) or base_spawners
                     if not valid_spawners:
                         continue
-                    variant_monsters = []
-                    for _m in monsters_out:
-                        filtered_coords = [
-                            _c
-                            for _c in _m["coords"]
-                            if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
-                            in valid_spawners
-                        ]
-                        if filtered_coords:
-                            _m_copy = dict(_m)
-                            _m_copy["coords"] = filtered_coords
-                            variant_monsters.append(_m_copy)
                     variant_gdi: dict[str, list[dict]] = {}
                     for _g, _entries in _group_drop_info.items():
                         v_entries = []
@@ -640,9 +660,40 @@ def build_and_save_lootdrop_details(
                             v_entry = {k: v for k, v in _entry.items() if not k.startswith("_")}
                             v_entry["drop_rates"] = _vdr
                             v_entries.append(v_entry)
-                        v_entries = [e for e in v_entries if any(r > 0 for r in e.get("drop_rates", {}).values())]
+                        v_entries = [e for e in v_entries if e.get("drop_rates", {}).get("豪客赛", 0) > 0]
                         if v_entries:
                             variant_gdi[_g] = v_entries
+                    # Collect translations that have variant-specific drop rates
+                    _variant_valid_trans: set[str] = {e["translation"] for _el in variant_gdi.values() for e in _el}
+                    variant_monsters = []
+                    for _m in monsters_out:
+                        # Skip monsters with no drop rates in this variant
+                        if _m["translation"] not in _variant_valid_trans:
+                            continue
+                        # P005: Handle referenced entities (no inline coords)
+                        if "ref" in _m:
+                            variant_monsters.append(dict(_m))
+                        else:
+                            filtered_coords = [
+                                _c
+                                for _c in _m.get("coords", [])
+                                if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
+                                in valid_spawners
+                            ]
+                            if filtered_coords:
+                                _m_copy = dict(_m)
+                                _m_copy["coords"] = filtered_coords
+                                variant_monsters.append(_m_copy)
+                    # Compute variant-specific max_scores from variant_gdi
+                    _v_max_scores: dict[str, float] = {}
+                    for _vg_list in variant_gdi.values():
+                        for _ve in _vg_list:
+                            _vt = _ve["translation"]
+                            _vs = round(_ve["spawn_rate"] * _ve["drop_rates"].get("豪客赛", 0) / 100, 4)
+                            if _vt not in _v_max_scores or _vs > _v_max_scores[_vt]:
+                                _v_max_scores[_vt] = _vs
+                    for _vm in variant_monsters:
+                        _vm["max_score"] = _v_max_scores.get(_vm["translation"], 0)
                     variant_translation = resolve_name(variant_name, None, "item") or entry["translation"]
                     variant_detail = {
                         "name": variant_name,

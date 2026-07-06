@@ -38,7 +38,7 @@ from module_builder import (
 from pipeline import Pipeline
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
-from translator import NameResolver
+from translator import NameResolver, build_coord_out
 
 _SOURCE_PATHS = [
     GAME_JSON,
@@ -296,6 +296,9 @@ def run():
         modules_map = build_modules_map(db, resolver.resolve)
         map_to_module, module_to_maps = build_map_mappings(modules_map)
 
+        # P005: Build ENTITY_PAGE_MAP for coord reference
+        entity_page_map: dict[str, str] = {}
+
         with pipe.step("items export") as ctx:
             items_index = export_items(
                 items,
@@ -309,6 +312,9 @@ def run():
                 modules_map,
                 map_to_module,
             )
+            # P005: Build from actual exported files, not raw DB data
+            for e in items_index:
+                entity_page_map[e["name"]] = f"items/{e['name']}"
             ctx.set_result(f"{len(items_index)} items")
 
         with pipe.step("monsters export") as ctx:
@@ -322,6 +328,8 @@ def run():
                 modules_map,
                 map_to_module,
             )
+            for e in monsters_index:
+                entity_page_map[e["name"]] = f"monsters/{e['name']}"
             ctx.set_result(f"{len(monsters_index)} monsters")
 
         with pipe.step("props export") as ctx:
@@ -336,7 +344,26 @@ def run():
                 modules_map,
                 map_to_module,
             )
+            for e in props_index:
+                entity_page_map[e["name"]] = f"props/{e['name']}"
             ctx.set_result(f"{len(props_index)} props")
+
+        # P005: Ensure all all_coords keys have ref files
+        # Covers orphan entities + case-variant keys (e.g. DwarfHandcannoneer)
+        _orphan_count = 0
+        for _entity_name, _coords in all_coords.items():
+            if _entity_name in entity_page_map:
+                continue
+            if not _coords:
+                continue
+            coord_data = [build_coord_out(c, _coord_variant_count) for c in _coords]
+            _save(f"coords/{_entity_name}.json", coord_data)
+            entity_page_map[_entity_name] = f"coords/{_entity_name}"
+            _orphan_count += 1
+        if _orphan_count:
+            pipe.log(f"[JSON] orphan coord files: {_orphan_count}")
+
+        pipe.log(f"[JSON] ENTITY_PAGE_MAP built: {len(entity_page_map)} entities")
 
         with pipe.step("dungeon_modules export") as ctx:
             merged_coords = build_and_save_module_coords(
@@ -369,6 +396,7 @@ def run():
             modules_map,
             map_to_module,
             translations,
+            entity_page_map,
         )
         pipe.log("[JSON] lootdrops detail files DONE")
 

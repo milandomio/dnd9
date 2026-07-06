@@ -29,11 +29,17 @@ interface LootdropCoord {
   variant_names?: string[];
 }
 
+// P005: Global ref coord cache — shared across all LootdropDetailPage instances
+const _globalRefCache = new Map<string, LootdropCoord[]>();
+const _globalRefPending = new Map<string, Promise<LootdropCoord[]>>();
+
 interface LootdropMonster {
   name: string;
   translation: string;
   color: string;
-  coords: LootdropCoord[];
+  coords?: LootdropCoord[];
+  ref?: string;
+  coord_count?: number;
   drop_rates?: Record<string, number>;
   max_score?: number;
 }
@@ -110,6 +116,16 @@ export default function LootdropDetailPage() {
     effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null
   );
   const dataVersion = useDataVersion();
+  // P005: Initialize refCoords from SSR data if available
+  const ssrRefCoords = (effectiveSsrData as any)?._refCoords;
+  const initialRefCoords = useMemo(() => {
+    if (!ssrRefCoords) return new Map();
+    const map = new Map<string, LootdropCoord[]>();
+    for (const [ref, coords] of Object.entries(ssrRefCoords)) {
+      map.set(ref, coords as LootdropCoord[]);
+    }
+    return map;
+  }, [ssrRefCoords]);
 
   function defaultHidden(
     monsters: LootdropMonster[],
@@ -167,7 +183,7 @@ export default function LootdropDetailPage() {
   const modules =
     inlineModulesMap ?? ssrModulesMap ?? new Map<string, DungeonModule>();
   const isArtifact = baseName.endsWith('_8001');
-  const defaultThreshold = isArtifact || isVariant ? 0.03 : 2.5;
+  const defaultThreshold = isArtifact ? 0.03 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     effectiveSsrData?.item?.monsters
       ? defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
@@ -336,13 +352,79 @@ export default function LootdropDetailPage() {
   }, [name]);
 
   const monsters = data?.monsters ?? [];
+  // P005: Load referenced entity coordinates (with global cache)
+  const [refCoords, setRefCoords] = useState<Map<string, LootdropCoord[]>>(
+    () => {
+      const map = new Map<string, LootdropCoord[]>();
+      for (const [k, v] of _globalRefCache) map.set(k, v);
+      for (const [k, v] of initialRefCoords) map.set(k, v);
+      return map;
+    }
+  );
+  useEffect(() => {
+    const refsNeeded = monsters
+      .filter((m) => m.ref && !refCoords.has(m.ref))
+      .map((m) => m.ref!);
+    if (refsNeeded.length === 0) return;
+
+    const fetchRef = (ref: string): Promise<[string, LootdropCoord[]]> => {
+      // Return from global cache if available
+      if (_globalRefCache.has(ref)) {
+        return Promise.resolve([ref, _globalRefCache.get(ref)!]);
+      }
+      // Deduplicate in-flight requests
+      if (_globalRefPending.has(ref)) {
+        return _globalRefPending.get(ref)!.then((coords) => [ref, coords]);
+      }
+      const p = fetch(
+        dataVersion
+          ? `/data/json/${ref}.json?v=${dataVersion}`
+          : `/data/json/${ref}.json`
+      )
+        .then((r) => r.json())
+        .then((entity) => {
+          const coords: LootdropCoord[] = Array.isArray(entity)
+            ? entity
+            : entity.coords || [];
+          _globalRefCache.set(ref, coords);
+          _globalRefPending.delete(ref);
+          return coords;
+        });
+      _globalRefPending.set(ref, p);
+      return p.then((coords) => [ref, coords]);
+    };
+
+    Promise.all(refsNeeded.map(fetchRef)).then((results) => {
+      setRefCoords((prev) => {
+        const next = new Map(prev);
+        for (const [ref, coords] of results) next.set(ref, coords);
+        return next;
+      });
+    });
+  }, [monsters, dataVersion]);
+
+  // P005: Merge referenced coordinates
+  const resolvedMonsters = useMemo(
+    () =>
+      monsters.map((m) => ({
+        ...m,
+        coords: m.coords ?? refCoords.get(m.ref!) ?? [],
+      })),
+    [monsters, refCoords]
+  );
+
   const orderedMonsters = useMemo(() => {
-    return [...monsters].sort(
+    return [...resolvedMonsters].sort(
       (a, b) => (b.max_score ?? -1) - (a.max_score ?? -1)
     );
-  }, [monsters]);
+  }, [resolvedMonsters]);
 
-  if (!data)
+  // P005: Show loading state while fetching referenced coords
+  const hasRefs = monsters.some((m) => m.ref);
+  const refsLoaded =
+    !hasRefs || monsters.every((m) => !m.ref || refCoords.has(m.ref!));
+
+  if (!data || !refsLoaded)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
         数据加载中...
@@ -406,7 +488,7 @@ export default function LootdropDetailPage() {
       }[];
     }
   >();
-  for (const m of monsters) {
+  for (const m of resolvedMonsters) {
     m.coords.forEach((c, j) => {
       if (hidden.has(m.name) || hiddenRows.has(`${m.name}-${j}`)) return;
       if (!mapGroups.has(c.map))
@@ -467,7 +549,9 @@ export default function LootdropDetailPage() {
     (s, mg) => s + mg.dots.length,
     0
   );
-  const visibleCount = monsters.filter((m) => !hidden.has(m.name)).length;
+  const visibleCount = resolvedMonsters.filter(
+    (m) => !hidden.has(m.name)
+  ).length;
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -531,18 +615,18 @@ export default function LootdropDetailPage() {
           </span>
         )}
         {' >> '}
-        {monsters
+        {resolvedMonsters
           .filter((m) => !hidden.has(m.name))
           .map((m) => m.translation)
           .join('、')}
-        {monsters.length - visibleCount > 0 && (
+        {resolvedMonsters.length - visibleCount > 0 && (
           <span style={{ color: tokens.muted, fontSize: 16 }}>
             {' '}
-            (+{monsters.length - visibleCount})
+            (+{resolvedMonsters.length - visibleCount})
           </span>
         )}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
-          {monsters.length}种坐标汇总
+          {resolvedMonsters.length}种坐标汇总
         </span>
       </h1>
 
@@ -608,11 +692,11 @@ export default function LootdropDetailPage() {
       >
         <button
           onClick={() => {
-            const allHidden = monsters.every((m) => hidden.has(m.name));
-            if (allHidden || hidden.size === monsters.length) {
+            const allHidden = resolvedMonsters.every((m) => hidden.has(m.name));
+            if (allHidden || hidden.size === resolvedMonsters.length) {
               setHidden(new Set());
             } else {
-              setHidden(new Set(monsters.map((m) => m.name)));
+              setHidden(new Set(resolvedMonsters.map((m) => m.name)));
             }
           }}
           style={{
@@ -646,7 +730,7 @@ export default function LootdropDetailPage() {
               transition: 'all 0.2s',
             }}
           >
-            {m.translation} ({m.coords.length})
+            {m.translation} ({m.coord_count ?? m.coords.length})
           </button>
         ))}
       </div>
@@ -764,7 +848,7 @@ export default function LootdropDetailPage() {
                     >
                       参考爆率：
                       {data.group_drop_info[groupName]!.filter((info) => {
-                        const m = monsters.find(
+                        const m = resolvedMonsters.find(
                           (x) => x.translation === info.translation
                         );
                         return m && !hidden.has(m.name);
@@ -1096,7 +1180,7 @@ export default function LootdropDetailPage() {
                     }}
                   >
                     {[...new Set(dots.map((d) => d.monster.name))].map((mn) => {
-                      const m = monsters.find((x) => x.name === mn)!;
+                      const m = resolvedMonsters.find((x) => x.name === mn)!;
                       const mDots = dots.filter((d) => d.monster.name === mn);
                       // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
                       const sr = mDots.find(
@@ -1175,7 +1259,7 @@ export default function LootdropDetailPage() {
 
       {debug &&
         (() => {
-          const rows = monsters.flatMap((m) =>
+          const rows = resolvedMonsters.flatMap((m) =>
             m.coords.map((c, j) => {
               const mod = modules.get(c.map);
               const g = mod?.group || '';

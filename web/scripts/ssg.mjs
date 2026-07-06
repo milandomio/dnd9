@@ -195,6 +195,34 @@ for (const p of PAGES) {
   }
 }
 
+// ---- step 4b: P005 — preload referenced entity coords for lootdrop detail pages ----
+if (!QUICK) {
+  console.log("[ssg] preloading referenced coords for lootdrop detail pages…");
+  let refCount = 0;
+  for (const [key, data] of Object.entries(ssrDataMap)) {
+    if (!key.startsWith("lootdrops/")) continue;
+    const item = data.item;
+    if (!item?.monsters) continue;
+
+    const refCoordsMap = {};
+    for (const m of item.monsters) {
+      if (!m.ref) continue;
+      const refFile = join(DATA, `${m.ref}.json`);
+      try {
+        const refEntity = readJSON(refFile);
+        refCoordsMap[m.ref] = Array.isArray(refEntity) ? refEntity : (refEntity.coords || []);
+        refCount++;
+      } catch {
+        // skip — ref entity file not found
+      }
+    }
+    if (Object.keys(refCoordsMap).length > 0) {
+      data._refCoords = refCoordsMap;
+    }
+  }
+  console.log(`[ssg] preloaded ${refCount} ref coords for lootdrop pages`);
+}
+
 // ---- step 5: render ----
 const template = readFileSync(join(DIST, "index.html"), "utf-8");
 console.log(`[ssg] rendering ${routes.length} routes…`);
