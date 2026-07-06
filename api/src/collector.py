@@ -371,6 +371,7 @@ def run():
             pipe.log,
             modules_map,
             map_to_module,
+            translations,
         )
         pipe.log("[JSON] lootdrops detail files DONE")
 

@@ -3,6 +3,7 @@ from typing import TypedDict
 
 class ItemEntity(TypedDict):
     item_name: str
+    raw_name: str
     translation_key: str
     category: str
     variant_count: int
@@ -21,7 +22,9 @@ class ItemsRepository:
 
     def get_all(self) -> list[ItemEntity]:
         c = self.conn.cursor()
-        c.execute("SELECT item_name, translation_key, category, variant_count FROM item_entities ORDER BY item_name")
+        c.execute(
+            "SELECT item_name, raw_name, translation_key, category, variant_count FROM item_entities ORDER BY item_name"
+        )
         return [dict(r) for r in c.fetchall()]
 
     def get_with_matches(self) -> list[ItemWithMatches]:

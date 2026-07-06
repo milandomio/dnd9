@@ -293,7 +293,14 @@ export default function ListPage() {
                       {group.items.map((entity) => (
                         <div
                           key={entity.name}
-                          onClick={() => navigate(`/lootdrops/${entity.name}/`)}
+                          onClick={() => {
+                            const vc = entity.variant_count ?? 1;
+                            const target =
+                              vc > 1 && !entity.name.endsWith('_8001')
+                                ? `${entity.name}_6001`
+                                : entity.name;
+                            navigate(`/lootdrops/${target}/`);
+                          }}
                           style={{
                             background: tokens.surface,
                             border: `1px solid ${tokens.border}`,
@@ -371,7 +378,12 @@ export default function ListPage() {
                   key={entity.name}
                   onClick={() => {
                     if (page === 'lootdrops') {
-                      navigate(`/lootdrops/${entity.name}/`);
+                      const vc = entity.variant_count ?? 1;
+                      const target =
+                        vc > 1 && !entity.name.endsWith('_8001')
+                          ? `${entity.name}_6001`
+                          : entity.name;
+                      navigate(`/lootdrops/${target}/`);
                     } else {
                       navigate(`/${page}/${entity.name}/`);
                     }

@@ -1,9 +1,10 @@
 """Lootdrop index and detail file generation, extracted from collector.py."""
 
 import json
+import re
 from pathlib import Path
 
-from config import TRANSLATION_ALIAS_MAP
+from config import ITEM_DIR, TRANSLATION_ALIAS_MAP
 from translator import (
     HARD_SUFFIX_RE,
     QUALITY_RE,
@@ -60,6 +61,43 @@ _LABEL_TYPE_SUFFIX = {
     "random": "(随机)",
     "other": "",
 }
+
+MAX_COORDS_PER_PAGE = 3000
+
+_SUFFIX_NUM_RE = re.compile(r"_(\d{4})$")
+
+_FALLBACK_RARITY = {
+    "1001": "Poor",
+    "2001": "Common",
+    "3001": "Uncommon",
+    "4001": "Rare",
+    "5001": "Epic",
+    "6001": "Legend",
+    "7001": "Unique",
+    "8001": "Artifact",
+}
+
+
+def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[str, str]) -> dict[str, str]:
+    """Read RarityType from game JSON, translate via DB translations table."""
+    result: dict[str, str] = {}
+    for suffix in suffixes:
+        rarity_name: str | None = None
+        json_path = ITEM_DIR / f"Id_Item_{item_name}_{suffix}.json"
+        if json_path.exists():
+            try:
+                data = json.loads(json_path.read_text(encoding="utf-8"))
+                if isinstance(data, list) and data:
+                    tag = data[0].get("Properties", {}).get("RarityType", {}).get("TagName", "")
+                    rarity_name = tag.split(".")[-1] if tag else None
+            except Exception:
+                pass
+        if not rarity_name:
+            rarity_name = _FALLBACK_RARITY.get(suffix)
+        if rarity_name:
+            key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{rarity_name}"
+            result[suffix] = translations.get(key, rarity_name)
+    return result
 
 
 def _save(output_dir: Path, filename: str, data: list | dict):
@@ -215,6 +253,17 @@ def build_loot_index(
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
         variant_count = variant_override.get(item_name, item_row.get("variant_count", 1) if item_row else 1)
+        # Compute variant_suffixes from raw_name
+        variant_suffixes: list[str] | None = None
+        if variant_count > 1:
+            if item_name.endswith("_8001"):
+                variant_suffixes = ["8001"]
+            else:
+                raw = item_row.get("raw_name", "") if item_row else ""
+                m = _SUFFIX_NUM_RE.search(raw)
+                if m:
+                    first_num = int(m.group(1))
+                    variant_suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
@@ -229,15 +278,16 @@ def build_loot_index(
                 seen_bases.add(b)
                 merged_names.append(mn)
                 merged_translations.append(mt)
-        loot_index.append(
-            {
-                "name": item_name,
-                "translation": translation,
-                "variant_count": variant_count,
-                "monsters": sorted(merged_names),
-                "monster_translations": merged_translations,
-            }
-        )
+        entry: dict = {
+            "name": item_name,
+            "translation": translation,
+            "variant_count": variant_count,
+            "monsters": sorted(merged_names),
+            "monster_translations": merged_translations,
+        }
+        if variant_suffixes:
+            entry["variant_suffixes"] = variant_suffixes
+        loot_index.append(entry)
     loot_index.sort(key=lambda x: x["translation"] or x["name"])
     return loot_index
 
@@ -255,6 +305,7 @@ def build_and_save_lootdrop_details(
     log_fn=None,
     modules_map: dict | None = None,
     map_to_module: dict | None = None,
+    translations: dict[str, str] | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
     map_base_to_group = drop_engine.map_base_to_group
@@ -445,7 +496,7 @@ def build_and_save_lootdrop_details(
                     _best[_trans]["_q_prio"] = _prio
             _g_list[:] = list(_best.values())
             for _entry in _g_list:
-                _entry.pop("_variant", None)
+                _entry["_entity_name"] = _entry.pop("_variant", "")
                 _entry.pop("_q_prio", None)
         # Sort by spawn_rate * drop_rate descending
         for _g_list in _group_drop_info.values():
@@ -498,6 +549,24 @@ def build_and_save_lootdrop_details(
                     _max_scores[_trans] = _score
         for _m in monsters_out:
             _m["max_score"] = _max_scores.get(_m["translation"], -1)
+        # Limit total coords to MAX_COORDS_PER_PAGE (sort by max_score desc)
+        _total_coords = sum(len(_m["coords"]) for _m in monsters_out)
+        if _total_coords > MAX_COORDS_PER_PAGE:
+            monsters_out.sort(key=lambda x: x.get("max_score", -1), reverse=True)
+            _kept = []
+            _budget = MAX_COORDS_PER_PAGE
+            for _m in monsters_out:
+                if _budget <= 0:
+                    break
+                if len(_m["coords"]) <= _budget:
+                    _kept.append(_m)
+                    _budget -= len(_m["coords"])
+                else:
+                    _trimmed = dict(_m)
+                    _trimmed["coords"] = _m["coords"][:_budget]
+                    _kept.append(_trimmed)
+                    _budget = 0
+            monsters_out = _kept
         if monsters_out:
             detail = {
                 "name": item_name,
@@ -530,6 +599,52 @@ def build_and_save_lootdrop_details(
                             }
                 if inline:
                     detail["_modules"] = inline
+            # Generate per-variant detail files with variant-specific drop rates
+            vs = entry.get("variant_suffixes")
+            if vs and len(vs) > 1:
+                if translations:
+                    detail["variant_suffixes"] = vs
+                    detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
+                for suffix in vs:
+                    variant_name = f"{item_name}_{suffix}"
+                    # Extract luck_grade from suffix (e.g., "7001" -> 7)
+                    luck_grade = int(suffix[0]) if suffix and suffix[0].isdigit() else 0
+                    variant_gdi: dict[str, list[dict]] = {}
+                    for _g, _entries in _group_drop_info.items():
+                        v_entries = []
+                        for _entry in _entries:
+                            _en = _entry.get("_entity_name", _entry["translation"])
+                            # Use get_variant_group_drop_rates for correct luck_grade
+                            _vdr = (
+                                drop_engine.get_variant_group_drop_rates(luck_grade, _en, _g, item_name=variant_name)
+                                if luck_grade > 0
+                                else {}
+                            )
+                            if not _vdr:
+                                _vdr = {"PVE": 0, "普通": 0, "豪客赛": 0}
+                            v_entry = {k: v for k, v in _entry.items() if not k.startswith("_")}
+                            v_entry["drop_rates"] = _vdr
+                            v_entries.append(v_entry)
+                        v_entries = [e for e in v_entries if any(r > 0 for r in e.get("drop_rates", {}).values())]
+                        if v_entries:
+                            variant_gdi[_g] = v_entries
+                    variant_detail = {
+                        "name": variant_name,
+                        "translation": entry["translation"],
+                        "monsters": monsters_out,
+                        "group_drop_info": variant_gdi,
+                        "variant_suffixes": vs,
+                        "variant_rarity": detail.get("variant_rarity", {}),
+                    }
+                    if inline:
+                        variant_detail["_modules"] = inline
+                    _save(output_dir, f"lootdrops/{variant_name}.json", variant_detail)
+            elif vs:
+                detail["variant_suffixes"] = vs
+            # Clean internal keys from group_drop_info before saving base detail
+            for _g_list in _group_drop_info.values():
+                for _e in _g_list:
+                    _e.pop("_entity_name", None)
             _save(output_dir, f"lootdrops/{item_name}.json", detail)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}

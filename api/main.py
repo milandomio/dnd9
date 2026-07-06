@@ -111,7 +111,20 @@ def _cleanup_old_logs(log_dir: Path, keep: int = 10):
         old_log.unlink()
 
 
+def _pre_cleanup():
+    """Remove stale data/json/ before pipeline to avoid double disk usage.
+
+    Pipeline writes to api/output/json/ first, then delivers to data/json/.
+    Cleaning data/json/ upfront frees space for the pipeline output.
+    """
+    json_dir = DATA_DELIVERY_DIR / "json"
+    if json_dir.exists():
+        shutil.rmtree(json_dir)
+        print(f"[CLEANUP] removed {json_dir}")
+
+
 if __name__ == "__main__":
+    _pre_cleanup()
     timer = run()
     _deliver(timer)
     _validate_images()
