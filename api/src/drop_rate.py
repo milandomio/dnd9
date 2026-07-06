@@ -33,12 +33,12 @@ class DropRateEngine:
         self._spawn_rate_detail: dict[tuple[str, str], float] = {}
         self._spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
         self._entity_spawners: dict[str, set[str]] = {}
-        # luck_grade → set of rate_ids that support this grade
-        self._luck_grade_rates: dict[int, set[str]] = {}
-        # rate_id → set of group_ids that use this rate
-        self._rate_to_groups: dict[str, set[str]] = {}
         # group_id → set of spawner_keywords that belong to this group
         self._group_to_spawners: dict[str, set[str]] = {}
+        # base_item_name → set of suffixes with actual drop data
+        self._existing_variant_suffixes: dict[str, set[str]] = {}
+        # lootdrop_id → set of group_ids
+        self._ld_id_to_groups: dict[str, set[str]] = {}
 
     def preload(self, db, modules_data: list[dict]) -> None:
         """Preload all drop rate data from DB."""
@@ -104,22 +104,27 @@ class DropRateEngine:
 
         for _rid, _grades in self._ld_rate_weights.items():
             self._ld_rate_totals[_rid] = sum(_w for _w in _grades.values() if _w > 0) or 10000
-            # Build luck_grade → rate_ids mapping
-            for _lg, _w in _grades.items():
-                if _w > 0:
-                    self._luck_grade_rates.setdefault(_lg, set()).add(_rid)
-
-        # Build rate_id → group_ids mapping
-        for _row in _c.execute(
-            "SELECT DISTINCT lootdrop_rate_id, group_id FROM lootdrop_groups WHERE lootdrop_rate_id != ''"
-        ):
-            self._rate_to_groups.setdefault(_row["lootdrop_rate_id"], set()).add(_row["group_id"])
 
         # Build group_id → spawner_keywords mapping
         for _row in _c.execute(
             "SELECT DISTINCT spawner_keyword, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
         ):
             self._group_to_spawners.setdefault(_row["lootdrop_group_id"], set()).add(_row["spawner_keyword"])
+
+        # Build lootdrop_id → group_ids mapping (from _ld_groups)
+        for _gid, _grades in self._ld_groups.items():
+            for _grade_data in _grades.values():
+                for _ld_id, _lr_id, _ in _grade_data:
+                    self._ld_id_to_groups.setdefault(_ld_id, set()).add(_gid)
+
+        # Build existing variant suffixes from _ld_rate_items
+        for _items in self._ld_rate_items.values():
+            for _item_name in _items:
+                _m = _VARIANT_RE.match(_item_name)
+                if _m:
+                    _base = _m.group(1)
+                    _suffix = _item_name[-4:]  # e.g. "5001" from "HeaterShield_5001"
+                    self._existing_variant_suffixes.setdefault(_base, set()).add(_suffix)
 
         # group → spawner keywords mapping (for per-group filtering in enrichment)
         for _row in _c.execute("SELECT DISTINCT keyword, map_base FROM spawners WHERE map_base != ''"):
@@ -205,18 +210,24 @@ class DropRateEngine:
     def group_spawner_keywords(self) -> dict[str, set[str]]:
         return self._group_spawner_keywords
 
-    def get_spawners_for_luck_grade(self, luck_grade: int) -> set[str]:
-        """Get all spawner_keywords that can drop items of the given luck_grade."""
+    def get_existing_variant_suffixes(self, base_item_name: str) -> set[str]:
+        """Return suffixes that actually exist in lootdrop_rate_items for a base item."""
+        return self._existing_variant_suffixes.get(base_item_name, set())
+
+    def get_variant_spawners(self, item_name: str) -> set[str]:
+        """Get spawner_keywords that actually drop the given item variant.
+
+        Traces: item_name → lootdrop_ids → group_ids → spawner_keywords.
+        """
         result: set[str] = set()
-        # Find all rate_ids that support this luck_grade (weight > 0)
-        rate_ids = self._luck_grade_rates.get(luck_grade, set())
-        for rate_id in rate_ids:
-            # Find all group_ids that use these rate_ids
-            group_ids = self._rate_to_groups.get(rate_id, set())
-            for group_id in group_ids:
-                # Find all spawner_keywords that belong to these group_ids
-                spawners = self._group_to_spawners.get(group_id, set())
-                result.update(spawners)
+        # Find all lootdrop_ids containing this item
+        for _ld_id, _items in self._ld_rate_items.items():
+            if item_name in _items:
+                # Find group_ids for this lootdrop_id
+                _groups = self._ld_id_to_groups.get(_ld_id, set())
+                for _gid in _groups:
+                    # Find spawner_keywords for this group
+                    result.update(self._group_to_spawners.get(_gid, set()))
         return result
 
     def compute_drop_rate(self, ldg_id: str, item_name: str, full_grade: int) -> float:

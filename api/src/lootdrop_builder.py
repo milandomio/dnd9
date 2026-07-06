@@ -107,11 +107,11 @@ def _save(output_dir: Path, filename: str, data: list | dict):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str], dict[str, int]]:
+def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str]]:
     """Build merged lootdrop map with variant family merging.
 
     Returns:
-        (merged_loot, skip_variants, variant_override)
+        (merged_loot, skip_variants)
     """
     loot_raw = db.get_lootdrop_relationships()
     loot_map: dict[str, set[str]] = {}
@@ -141,7 +141,6 @@ def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str], dict[str,
     print(f"  unique items after merge: {len(merged_loot)}")
 
     # split _8001 artifacts: keep as own entry (monsters are shared with base)
-    variant_override: dict[str, int] = {}
     for _, variants in list(families.items()):
         _8001 = [v for v in variants if v.endswith("_8001")]
         if not _8001:
@@ -177,7 +176,7 @@ def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str], dict[str,
                         mons.append(sk)
     merged_loot = {k: sorted(v) for k, v in merged_loot.items()}
 
-    return merged_loot, skip_variants, variant_override
+    return merged_loot, skip_variants
 
 
 def build_loot_index(
@@ -186,7 +185,7 @@ def build_loot_index(
     monsters: list[dict],
     entity_class: dict,
     resolve_name,
-    variant_override: dict[str, int],
+    drop_engine,
 ) -> list[dict]:
     """Build lootdrops.json index (grouped by item for list page)."""
     items_lookup = {r["item_name"]: r for r in items}
@@ -252,18 +251,17 @@ def build_loot_index(
                     continue
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
-        variant_count = variant_override.get(item_name, item_row.get("variant_count", 1) if item_row else 1)
-        # Compute variant_suffixes from raw_name
+        variant_count = item_row.get("variant_count", 1) if item_row else 1
+        # Compute variant_suffixes from actual drop data
         variant_suffixes: list[str] | None = None
         if variant_count > 1:
             if item_name.endswith("_8001"):
                 variant_suffixes = ["8001"]
             else:
-                raw = item_row.get("raw_name", "") if item_row else ""
-                m = _SUFFIX_NUM_RE.search(raw)
-                if m:
-                    first_num = int(m.group(1))
-                    variant_suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
+                existing = drop_engine.get_existing_variant_suffixes(item_name)
+                if existing:
+                    variant_suffixes = sorted(existing)
+                    variant_count = len(variant_suffixes)
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
@@ -323,8 +321,6 @@ def build_and_save_lootdrop_details(
 
     for entry in loot_index:
         item_name = entry["name"]
-        if item_name == "Spear_8001":
-            print(f"[DEBUG] Spear_8001 entry: name={entry['name']}, translation={entry['translation']}")
         merged: dict[str, dict] = {}
         for _i, m_name in enumerate(entry["monsters"]):
             if m_name == item_name:
@@ -608,26 +604,22 @@ def build_and_save_lootdrop_details(
                     detail["variant_suffixes"] = vs
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
                 for suffix in vs:
+                    # Skip _8001 — it has its own independent entry from build_merged_loot_map
+                    if suffix == "8001":
+                        continue
                     variant_name = f"{item_name}_{suffix}"
-                    # Extract luck_grade from suffix (e.g., "7001" -> 7)
                     luck_grade = int(suffix[0]) if suffix and suffix[0].isdigit() else 0
-                    # Get valid spawners for this luck_grade
-                    valid_spawners = drop_engine.get_spawners_for_luck_grade(luck_grade) if luck_grade > 0 else set()
-                    if item_name == "Spear":
-                        print(
-                            f"[DEBUG] {variant_name}: luck_grade={luck_grade}, valid_spawners count={len(valid_spawners)}"
-                        )
-                        if valid_spawners:
-                            print(f"[DEBUG]   sample spawners: {list(valid_spawners)[:5]}")
+                    # Get spawners that actually drop this specific variant
+                    valid_spawners = drop_engine.get_variant_spawners(variant_name)
+                    if not valid_spawners:
+                        continue
                     # Filter monsters_out by valid spawners for this variant
                     variant_monsters = []
                     for _m in monsters_out:
                         filtered_coords = []
                         for _c in _m["coords"]:
-                            # Check if this coord's spawner is valid for this luck_grade
-                            # Use label field as it contains the spawner keyword
                             _sk = _c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", "")
-                            if not valid_spawners or _sk in valid_spawners:
+                            if _sk in valid_spawners:
                                 filtered_coords.append(_c)
                         if filtered_coords:
                             _m_copy = dict(_m)
@@ -638,12 +630,7 @@ def build_and_save_lootdrop_details(
                         v_entries = []
                         for _entry in _entries:
                             _en = _entry.get("_entity_name", _entry["translation"])
-                            # Use get_variant_group_drop_rates for correct luck_grade
-                            _vdr = (
-                                drop_engine.get_variant_group_drop_rates(luck_grade, _en, _g, item_name=variant_name)
-                                if luck_grade > 0
-                                else {}
-                            )
+                            _vdr = drop_engine.get_variant_group_drop_rates(luck_grade, _en, _g, item_name=variant_name)
                             if not _vdr:
                                 _vdr = {"PVE": 0, "普通": 0, "豪客赛": 0}
                             v_entry = {k: v for k, v in _entry.items() if not k.startswith("_")}
@@ -652,9 +639,10 @@ def build_and_save_lootdrop_details(
                         v_entries = [e for e in v_entries if any(r > 0 for r in e.get("drop_rates", {}).values())]
                         if v_entries:
                             variant_gdi[_g] = v_entries
+                    variant_translation = resolve_name(variant_name, None, "item") or entry["translation"]
                     variant_detail = {
                         "name": variant_name,
-                        "translation": entry["translation"],
+                        "translation": variant_translation,
                         "monsters": variant_monsters,
                         "group_drop_info": variant_gdi,
                         "variant_suffixes": vs,
@@ -674,21 +662,6 @@ def build_and_save_lootdrop_details(
                 _save(output_dir, f"lootdrops/{item_name}.json", detail)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}
-        elif item_name == "BloodsapBlade":
-            if log_fn:
-                log_fn(
-                    f"[DEBUG] BloodsapBlade: merged={ {k: v.get('translation','?') for k, v in merged.items()} }, group_drop_info={ {g: len(v) for g, v in _group_drop_info.items()} }"
-                )
-                for _i, m_name in enumerate(entry["monsters"]):
-                    log_fn(f"[DEBUG]   monster: {m_name}, trans={entry['monster_translations'][_i]}")
-                    coords = all_coords.get(m_name, [])
-                    log_fn(f"[DEBUG]     all_coords direct: {len(coords)}")
-                    _m_base = QUALITY_RE.sub("", m_name)
-                    if _m_base != m_name:
-                        coords2 = all_coords.get(_m_base, [])
-                        log_fn(f"[DEBUG]     all_coords base '{_m_base}': {len(coords2)}")
-                    _valid_sk = entity_spawners.get(m_name, set())
-                    log_fn(f"[DEBUG]     _valid_sk: {_valid_sk}")
         detail_count += 1
         if detail_count % 100 == 0 and log_fn:
             log_fn(f"[JSON] lootdrops detail: {detail_count}/{detail_total}")
@@ -716,6 +689,9 @@ def build_and_save_lootdrop_details(
         vs = _entry.get("variant_suffixes")
         if vs and len(vs) > 1:
             for suffix in vs:
+                # Skip _8001 — it has its own independent entry
+                if suffix == "8001":
+                    continue
                 variant_entry = {
                     "name": f"{_iname}_{suffix}",
                     "translation": _entry["translation"],

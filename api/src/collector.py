@@ -289,7 +289,7 @@ def run():
                 _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
         pipe.log("[JSON] building merged lootdrop map...")
-        merged_loot, skip_variants, _variant_override = build_merged_loot_map(db)
+        merged_loot, skip_variants = build_merged_loot_map(db)
 
         pipe.log("[JSON] building modules_map...")
         modules = db.get_dungeon_modules()
@@ -345,18 +345,15 @@ def run():
             modules_data = build_and_save_modules_data(modules_map, module_to_maps, merged_coords, OUTPUT_DIR)
             ctx.set_result(f"{len(modules_data)} modules")
 
-        with pipe.step("lootdrops") as ctx:
-            loot_index = build_loot_index(
-                merged_loot, items, monsters, entity_class, resolver.resolve, _variant_override
-            )
-            _save("lootdrops.json", loot_index)
-            ctx.set_result(f"{len(loot_index)} items")
-
-        pipe.log("[JSON] lootdrops detail files START")
         pipe.log("[JSON] preloading drop rate data...")
         drop_engine = DropRateEngine()
         drop_engine.preload(db, modules_data)
         pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
+
+        with pipe.step("lootdrops") as ctx:
+            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve, drop_engine)
+            _save("lootdrops.json", loot_index)
+            ctx.set_result(f"{len(loot_index)} items")
 
         build_and_save_lootdrop_details(
             loot_index,

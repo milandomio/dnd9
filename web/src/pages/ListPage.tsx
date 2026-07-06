@@ -295,8 +295,13 @@ export default function ListPage() {
                           key={entity.name}
                           onClick={() => {
                             const vc = entity.variant_count ?? 1;
+                            const isAlreadyVariant = /_\d{4}$/.test(
+                              entity.name
+                            );
                             const target =
-                              vc > 1 && !entity.name.endsWith('_8001')
+                              vc > 1 &&
+                              !isAlreadyVariant &&
+                              !entity.name.endsWith('_8001')
                                 ? `${entity.name}_6001`
                                 : entity.name;
                             navigate(`/lootdrops/${target}/`);
@@ -379,8 +384,11 @@ export default function ListPage() {
                   onClick={() => {
                     if (page === 'lootdrops') {
                       const vc = entity.variant_count ?? 1;
+                      const isAlreadyVariant = /_\d{4}$/.test(entity.name);
                       const target =
-                        vc > 1 && !entity.name.endsWith('_8001')
+                        vc > 1 &&
+                        !isAlreadyVariant &&
+                        !entity.name.endsWith('_8001')
                           ? `${entity.name}_6001`
                           : entity.name;
                       navigate(`/lootdrops/${target}/`);

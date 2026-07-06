@@ -555,7 +555,8 @@ export default function LootdropDetailPage() {
             const rarity = data.variant_rarity?.[suffix] ?? suffix;
             const color = RARITY_COLORS[rarity] ?? tokens.muted;
             const isActive =
-              currentSuffix === suffix || (!currentSuffix && suffix === '6001');
+              currentSuffix === suffix ||
+              (!currentSuffix && suffix === data.variant_suffixes![0]);
             return (
               <button
                 key={suffix}
