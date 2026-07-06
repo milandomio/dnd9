@@ -25,9 +25,9 @@
 
 ## 目标
 
-- 掉落页坐标数据引用实体页（props/items/monsters）的坐标，不再内联
+- 掉落页坐标数据 100% 通过引用获取，不再内联任何坐标
 - 保留掉落页独有的爆率（drop_rates）、生成率（spawn_rate）等信息
-- 预估文件体积缩减 **80-90%**
+- 实际文件体积缩减 **89%**（1,725 MB → 190 MB）
 - 前端加载时按需 fetch 引用实体的坐标数据
 
 ## 设计
@@ -67,41 +67,39 @@
 
 ### 引用条件
 
-只有满足以下条件的 monster 条目才使用引用：
+**所有 monster 条目均使用引用**，无条件、无阈值。
 
-1. **实体页存在** — 该实体在 `props/`、`items/` 或 `monsters/` 下有对应的 JSON 文件
-2. **坐标完全一致** — 引用实体的坐标集合 ⊇ 掉落页当前的坐标集合（允许引用页有更多坐标）
-3. **坐标数量阈值** — `coords.length > N`（建议 N=50，小数据量内联更简单）
-
-不满足条件的条目保持内联坐标（向后兼容）。
+引用来源优先级：
+1. **实体页** — `items/`、`monsters/`、`props/` 下的 JSON 文件
+2. **坐标文件** — `coords/` 下的独立坐标文件（为没有实体页的实体创建）
+3. **别名解析** — 通过 `og_to_keywords` 解析大小写变体（如 `DwarfHandCannoneer` → `DwarfHandcannoneer`）
 
 ### 后端改动
+
+**文件**: `api/src/collector.py`
+
+构建 `ENTITY_PAGE_MAP`：
+1. 遍历 items/monsters/props 导出结果，记录 `{entity_name: "items/xxx"}` 映射
+2. 为没有实体页的实体创建 `coords/{name}.json` 坐标文件
+3. 确保 `all_coords` 中的所有 key 都在 `entity_page_map` 中（覆盖大小写变体）
 
 **文件**: `api/src/lootdrop_builder.py`
 
 在 `build_and_save_lootdrop_details()` 中，`monsters_out` 构建完成后、保存 JSON 之前：
 
 ```python
-# 引用优化：用 ref 替代内联 coords
-ENTITY_PAGE_MAP = {}  # {entity_name: "props/xxx"} — 由 collector 构建
-
-for _m in monsters_out:
-    entity_name = _m["name"]
-    ref_page = ENTITY_PAGE_MAP.get(entity_name)
-    if ref_page and len(_m["coords"]) > 50:
-        # 验证引用实体的坐标覆盖当前坐标
-        ref_coords = all_coords.get(entity_name, [])
-        ref_set = {(c["x"], c["y"], c["z"]) for c in ref_coords}
-        cur_set = {(c["x"], c["y"], c["z"]) for c in _m["coords"]}
-        if cur_set <= ref_set:
+# P005: 所有坐标都用 ref，无阈值
+if entity_page_map:
+    for _m in monsters_out:
+        _ck = _m.pop("_coord_key", None)  # 通过别名解析到的实际 coord key
+        ref_page = (entity_page_map.get(_ck) if _ck else None) or entity_page_map.get(_m["entity_name"])
+        if ref_page:
             _m["ref"] = ref_page
-            _m["coord_count"] = len(_m["coords"])  # 保留数量用于 UI 显示
+            _m["coord_count"] = len(_m["coords"])
             del _m["coords"]
 ```
 
-**文件**: `api/src/collector.py`
-
-构建 `ENTITY_PAGE_MAP`：遍历 items/monsters/props 的导出结果，记录 `{entity_name: "items/xxx"}` 映射。
+**关键**：`_coord_key` 跟踪坐标解析过程中实际使用的 key（处理大小写变体、别名等），确保 ref 路径正确。
 
 ### 前端改动
 
@@ -251,22 +249,87 @@ P005 后:
 | 坐标数据变更不同步 | 引用和被引用数据同一次管道生成，天然同步 |
 | 变体页面坐标过滤 | 引用坐标后仍需按 spawner 过滤，逻辑不变 |
 
-## 预估效果
+## 实际效果
 
-| 指标 | 当前 | P005 后 |
-|------|------|---------|
-| lootdrops 目录大小 | 1,725 MB | ~200-400 MB |
-| 单页平均大小 | ~750 KB | ~50-100 KB |
-| 首次加载带宽 | 中等 | 略增（多 fetch） |
-| 后续加载带宽 | 不变 | 显著减少 |
-| 构建时间 | 不变 | 略增（坐标验证） |
+| 指标 | P005 前 | P005 后 | 变化 |
+|------|---------|---------|------|
+| lootdrops 目录大小 | 1,725 MB | **190 MB** | **-89%** |
+| 引用率 | 0% | **100%** | 全量引用 |
+| coords/ 目录 | — | 612 KB | 22 个独立坐标文件 |
+| 管道构建时间 | ~112s | **~30s** | **-73%** |
+| 引用实体数 | 0 | 97,194 | 所有 monster 条目 |
+
+## 已修复问题
+
+### 分类按钮排序失效（阈值错误）
+
+**问题**：变体页面（如 Mitre_6001）错误地应用了神器显示阈值 0.03，导致几乎所有怪物都默认显示，排序效果不明显。
+
+**根因**：`defaultThreshold` 逻辑 `isArtifact || isVariant ? 0.03 : 2.5` 将变体和神器混为一谈。
+
+**修复**：改为 `isArtifact ? 0.03 : 2.5`，只有神器（_8001）使用低阈值，普通变体使用 2.5。
+
+## 待修复问题
+
+### 1. 变体爆率计算错误（`drop_rate.py`）
+
+**问题**：变体爆率 fallback 逻辑使用了错误的 `_shared` 除数。
+
+**现象**：
+- FrostAmulet_6001 旧锈房-饰品豪客赛=37.5%（实际应为2.895%）
+- 根因：rate table 只有 `_5001` items（luck_grade=5），grade 6 fallback 到 `_5001` 时用 luck_grade=6 查 weight（3750），但 `_shared=1`（grade 6 无 items），导致 3750/1/10000=37.5%
+- 正确值：weight=5500（grade 5），`_shared=19`（19个 items），5500/19/10000=2.895%
+
+**当前修复**：`compute_variant_rate()` 中 fallback 时始终用 `item_info[0]`（found item 的 luck_grade）覆盖 caller 的 luck_grade。这样 weight 和 `_shared` 使用同一个 grade，结果正确。
+
+**遗留问题**：基础物品（如 `FrostAmulet`，无变体后缀）不应有爆率——它不是一个具体变体，无法锁定。当前 `get_group_drop_rates()` → `compute_drop_rate()` 会 fallback 到 `FrostAmulet_5001` 并返回 2.895%，这是错误的。
+
+**修复方向**：
+- `compute_drop_rate()` 中，如果 `item_name` 无变体后缀（`_VARIANT_RE` 不匹配），不应 fallback 到 `_5001`
+- 或者在 `lootdrop_builder.py` 的 `_group_drop_info` 构建阶段过滤掉非变体的基础物品爆率
+- 需要确认：基础物品掉落页（如 `/lootdrops/FrostAmulet/`）是否应该显示爆率，还是只作为变体索引页
+
+### 2. 变体页面收录无豪客赛爆率怪物
+
+**问题**：变体页面（如 ShortSword_7001）收录了只有 PVE/普通爆率但无豪客赛爆率的怪物。
+
+**修复**：`lootdrop_builder.py` 中 `_group_drop_info` 和 `variant_gdi` 的过滤条件从 `any(rate > 0)` 改为 `豪客赛 > 0`。
+
+**状态**：已修复，但需确认是否所有页面都应只显示有豪客赛爆率的怪物。
+
+### 3. 变体 max_score 使用基础物品的值
+
+**问题**：变体页面的 `max_score` 从基础物品的 `_max_scores` 计算，而非变体-specific 的 `variant_gdi`。
+
+**修复**：在保存变体详情前，从 `variant_gdi` 重新计算 `_v_max_scores` 并赋值给 `variant_monsters`。
+
+**状态**：已修复。
+
+### 4. SSG 预加载 coords/ 纯数组文件失败
+
+**问题**：`coords/*.json` 是纯数组 `[{x,y,z,...}]`，非 `{coords:[...]}` 对象。SSG 预加载和前端 fetch 都用 `entity.coords` 读取，导致坐标为空。
+
+**修复**：`Array.isArray(entity) ? entity : (entity.coords || [])`
+
+**影响文件**：`ssg.mjs`、`LootdropDetailPage.tsx`
+
+**状态**：已修复。
+
+### 5. SSG full build OOM
+
+**问题**：预加载所有 ref coords 到 SSR 数据导致内存溢出。
+
+**修复**：`package.json` 中 `build:full` 添加 `NODE_OPTIONS='--max-old-space-size=4096'`
+
+**状态**：已修复（workaround）。
 
 ## 文件清单
 
 | 文件 | 改动 |
 |------|------|
-| `api/src/collector.py` | 构建 ENTITY_PAGE_MAP，传递给 lootdrop_builder |
-| `api/src/lootdrop_builder.py` | 保存前替换 coords 为 ref |
-| `web/src/pages/LootdropDetailPage.tsx` | 引用坐标加载 + 合并 |
+| `api/src/collector.py` | 构建 ENTITY_PAGE_MAP + 孤儿坐标文件 |
+| `api/src/lootdrop_builder.py` | 全量引用（无阈值）+ `_coord_key` 别名追踪 |
+| `web/src/pages/LootdropDetailPage.tsx` | 引用坐标加载 + 合并 + SSR 注水 |
 | `web/scripts/ssg.mjs` | SSR 预加载引用坐标 |
+| `data/json/coords/` | 22 个独立坐标文件（无实体页的实体） |
 | `docs/plans/P005_coord_reference.md` | 本计划文件 |

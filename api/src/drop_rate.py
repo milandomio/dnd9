@@ -472,9 +472,9 @@ class DropRateEngine:
                                 break
                 if item_info is None:
                     continue
-                # Use item_info luck_grade only if caller didn't specify one
-                if luck_grade <= 0:
-                    luck_grade = item_info[0]
+                # Always use the found item's luck_grade for consistent rate calculation
+                # (avoids wrong _shared divisor when falling back to a different variant)
+                luck_grade = item_info[0]
             found = True
             _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
             if _pool_weight == 0:
