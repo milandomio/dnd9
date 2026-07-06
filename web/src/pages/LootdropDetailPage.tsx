@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
@@ -51,6 +51,8 @@ interface LootdropItem {
   monsters: LootdropMonster[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
   _modules?: Record<string, InlineModuleData>;
+  variant_suffixes?: string[];
+  variant_rarity?: Record<string, string>;
 }
 
 const GROUP_LABELS: Record<string, string> = {
@@ -64,14 +66,48 @@ const GROUP_LABELS: Record<string, string> = {
   ShipGraveyard: '水图',
 };
 
+const VARIANT_RE = /^(.+?)_(\d{4})$/;
+const RARITY_COLORS: Record<string, string> = {
+  粗糙: '#9E9E9E',
+  普通: '#BDBDBD',
+  优秀: '#2ECC71',
+  罕见: '#3498DB',
+  史诗: '#9B59B6',
+  传奇: '#F39C12',
+  独特: '#FFD700',
+};
+
 export default function LootdropDetailPage() {
   const { name } = useParams<{ name: string }>();
-  const dataKey = `lootdrops/${name ? decodeURIComponent(name) : ''}`;
+  const navigate = useNavigate();
+  const decodedName = decodeURIComponent(name ?? '');
+  const variantMatch = decodedName.match(VARIANT_RE);
+  // _8001 artifacts are independent entries, not variants of a base item
+  const isVariant = variantMatch && variantMatch[2] !== '8001';
+  const baseName = isVariant ? variantMatch![1] : decodedName;
+  const currentSuffix = isVariant
+    ? variantMatch![2]
+    : variantMatch && variantMatch[2] === '8001'
+      ? '8001'
+      : null;
+  // itemName is always the base item name (without any variant suffix), used for navigation
+  const itemName = variantMatch ? variantMatch[1] : decodedName;
+  const dataKey = `lootdrops/${decodedName}`;
+  const baseDataKey = `lootdrops/${baseName}`;
   const ssrData = useSSRData<{ item: LootdropItem; modules: DungeonModule[] }>(
     dataKey
   );
+  const baseSsrData = useSSRData<{
+    item: LootdropItem;
+    modules: DungeonModule[];
+  }>(baseDataKey);
+  const effectiveSsrData = ssrData?.item?.monsters
+    ? ssrData
+    : baseSsrData?.item?.monsters
+      ? baseSsrData
+      : null;
   const [data, setData] = useState<LootdropItem | null>(
-    ssrData?.item?.monsters ? ssrData.item : null
+    effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null
   );
   const dataVersion = useDataVersion();
 
@@ -90,9 +126,9 @@ export default function LootdropDetailPage() {
   }
   // Prefer SSR-provided modules to avoid untranslated names during SSR/hydration
   const ssrModulesMap = useMemo(() => {
-    if (!ssrData?.modules) return null;
+    if (!effectiveSsrData?.modules) return null;
     const mm = new Map<string, DungeonModule>();
-    for (const m of ssrData.modules) {
+    for (const m of effectiveSsrData.modules) {
       const names = m.names || [m.name];
       names.forEach((n) => mm.set(n, m));
       mm.set(m.sl_base_name, m);
@@ -101,7 +137,7 @@ export default function LootdropDetailPage() {
       }
     }
     return mm;
-  }, [ssrData]);
+  }, [effectiveSsrData]);
   // Build local modules map from inline _modules data
   const inlineModulesMap = useMemo(() => {
     if (!data?._modules) return null;
@@ -130,11 +166,11 @@ export default function LootdropDetailPage() {
 
   const modules =
     inlineModulesMap ?? ssrModulesMap ?? new Map<string, DungeonModule>();
-  const isArtifact = (name ?? '').endsWith('_8001');
-  const defaultThreshold = isArtifact ? 0.03 : 2.5;
+  const isArtifact = baseName.endsWith('_8001');
+  const defaultThreshold = isArtifact || isVariant ? 0.03 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
-    ssrData?.item?.monsters
-      ? defaultHidden(ssrData.item.monsters, defaultThreshold)
+    effectiveSsrData?.item?.monsters
+      ? defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
@@ -151,19 +187,25 @@ export default function LootdropDetailPage() {
   }, [name]);
 
   useEffect(() => {
-    if (!name) return;
-    if (ssrData?.item?.monsters) {
-      setData(ssrData.item);
-      setHidden(defaultHidden(ssrData.item.monsters, defaultThreshold));
+    if (!baseName) return;
+    if (effectiveSsrData?.item?.monsters) {
+      setData(effectiveSsrData.item);
+      setHidden(
+        defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
+      );
       return;
     }
     if (lootFetchedRef.current) return;
     lootFetchedRef.current = true;
     setData(null);
     setHidden(new Set());
+    // Fetch variant-specific file if suffix present, otherwise base file
+    // For artifacts (_8001), baseName already includes the suffix, don't append again
+    const fetchName =
+      currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
     const lootUrl = dataVersion
-      ? `/data/json/lootdrops/${decodeURIComponent(name)}.json?v=${dataVersion}`
-      : `/data/json/lootdrops/${decodeURIComponent(name)}.json`;
+      ? `/data/json/lootdrops/${fetchName}.json?v=${dataVersion}`
+      : `/data/json/lootdrops/${fetchName}.json`;
     fetch(lootUrl)
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
@@ -171,7 +213,7 @@ export default function LootdropDetailPage() {
         setHidden(defaultHidden(item.monsters, defaultThreshold));
       })
       .catch(console.error);
-  }, [name, ssrData, dataVersion]);
+  }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
 
   // 在调试模式下实时响应阈值变化
   useEffect(() => {
@@ -465,7 +507,20 @@ export default function LootdropDetailPage() {
           margin: '0 0 8px',
         }}
       >
-        {data.translation} &gt;&gt;{' '}
+        {data.translation}
+        {currentSuffix && data.variant_rarity?.[currentSuffix] && (
+          <span
+            style={{
+              color:
+                RARITY_COLORS[data.variant_rarity[currentSuffix]] ??
+                tokens.muted,
+              marginLeft: 8,
+            }}
+          >
+            ({data.variant_rarity[currentSuffix]})
+          </span>
+        )}
+        {' >> '}
         {monsters
           .filter((m) => !hidden.has(m.name))
           .map((m) => m.translation)
@@ -482,6 +537,48 @@ export default function LootdropDetailPage() {
       </h1>
 
       <Disclaimer />
+
+      {data.variant_suffixes && data.variant_suffixes.length > 1 && (
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 8,
+            justifyContent: 'center',
+            margin: '15px 0',
+            padding: 10,
+            background: tokens.surface,
+            borderRadius: 5,
+          }}
+        >
+          {data.variant_suffixes.map((suffix) => {
+            const rarity = data.variant_rarity?.[suffix] ?? suffix;
+            const color = RARITY_COLORS[rarity] ?? tokens.muted;
+            const isActive =
+              currentSuffix === suffix || (!currentSuffix && suffix === '6001');
+            return (
+              <button
+                key={suffix}
+                onClick={() => navigate(`/lootdrops/${itemName}_${suffix}/`)}
+                style={{
+                  padding: '8px 15px',
+                  border: `2px solid ${color}`,
+                  borderRadius: 5,
+                  cursor: 'pointer',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  color: isActive ? '#000' : tokens.text,
+                  background: isActive ? color : 'transparent',
+                  opacity: isActive ? 1 : 0.5,
+                  transition: 'all 0.2s',
+                }}
+              >
+                {rarity}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div
         style={{

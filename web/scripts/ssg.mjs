@@ -91,6 +91,13 @@ for (const p of PAGES) {
   const list = readJSON(join(DATA, `${p}.json`));
   for (const e of list) {
     routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
+    // Generate variant routes for lootdrops with variant_suffixes
+    if (p === 'lootdrops' && e.variant_suffixes && e.variant_suffixes.length > 1) {
+      for (const suffix of e.variant_suffixes) {
+        const variantName = `${e.name}_${suffix}`;
+        routes.push({ path: `/lootdrops/${encodeURIComponent(variantName)}`, file: `lootdrops/${variantName}/index.html` });
+      }
+    }
   }
 }
 
@@ -152,7 +159,19 @@ for (const p of PAGES) {
         : join(DATA, p, `${name}.json`);
       try {
         if (p === "lootdrops") {
-          ssrDataMap[`lootdrops/${name}`] = { item: readJSON(filePath), modules: moduleData };
+          const itemData = { item: readJSON(filePath), modules: moduleData };
+          ssrDataMap[`lootdrops/${name}`] = itemData;
+          // Read variant-specific detail files
+          if (e.variant_suffixes && e.variant_suffixes.length > 1) {
+            for (const suffix of e.variant_suffixes) {
+              const variantFile = join(DATA, "lootdrops", `${name}_${suffix}.json`);
+              try {
+                ssrDataMap[`lootdrops/${name}_${suffix}`] = { item: readJSON(variantFile), modules: moduleData };
+              } catch {
+                ssrDataMap[`lootdrops/${name}_${suffix}`] = itemData;
+              }
+            }
+          }
         } else {
           ssrDataMap[`${p}/${name}`] = { entity: readJSON(filePath), modules: moduleData };
         }
@@ -162,7 +181,13 @@ for (const p of PAGES) {
     } else {
       // Quick mode: inject minimal metadata for SEO (name + translation only)
       if (p === "lootdrops") {
-        ssrDataMap[`lootdrops/${name}`] = { item: { name: e.name, translation: e.translation } };
+        const minimalItem = { item: { name: e.name, translation: e.translation } };
+        ssrDataMap[`lootdrops/${name}`] = minimalItem;
+        if (e.variant_suffixes && e.variant_suffixes.length > 1) {
+          for (const suffix of e.variant_suffixes) {
+            ssrDataMap[`lootdrops/${name}_${suffix}`] = minimalItem;
+          }
+        }
       } else {
         ssrDataMap[`${p}/${name}`] = { entity: { name: e.name, translation: e.translation } };
       }
@@ -185,7 +210,9 @@ const HEAD_CLOSE = "</head>";
 function routeDataKey(path) {
   if (path === "/") return "home";
   if (path.startsWith("/items/") || path.startsWith("/monsters/") || path.startsWith("/props/")) return path.slice(1);
-  if (path.startsWith("/lootdrops/")) return path.slice(1);
+  if (path.startsWith("/lootdrops/")) {
+    return `lootdrops/${decodeURIComponent(path.slice("/lootdrops/".length))}`;
+  }
   if (path.startsWith("/quest_items/")) return `quest_items_groups/${path.split("/")[2]}`;
   if (path === "/quest_items") return "quest_items";
   if (path === "/quest_npc") return "quest_npc";

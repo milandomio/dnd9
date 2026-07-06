@@ -4,9 +4,10 @@ import json
 from decimal import ROUND_HALF_UP, Decimal
 
 from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
-from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE
+from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE
 
-_VARIANT_SUFFIXES = ["_5001", "_4001", "_3001", "_2001", "_1001"]
+_VARIANT_SUFFIXES = ["_8001", "_7001", "_6001", "_5001", "_4001", "_3001", "_2001", "_1001"]
+_VARIANT_RE = VARIANT_RE
 
 
 def _round_rate(v: float) -> float:
@@ -189,6 +190,8 @@ class DropRateEngine:
             return 0.0
         total_weight = 0.0
         found = False
+        # Pre-compute base name for variant fallback (e.g. Mitre_7001 -> Mitre)
+        _base = _VARIANT_RE.sub(r"\1", item_name) if _VARIANT_RE.match(item_name) else None
         for ld_id, lr_id, _ in grade_data:
             rate_items = self._ld_rate_items.get(ld_id, {})
             item_info = rate_items.get(item_name)
@@ -197,6 +200,14 @@ class DropRateEngine:
                     item_info = rate_items.get(item_name + _suffix)
                     if item_info is not None:
                         break
+            # Fallback: strip variant suffix and try base name
+            if item_info is None and _base:
+                item_info = rate_items.get(_base)
+                if item_info is None:
+                    for _suffix in _VARIANT_SUFFIXES:
+                        item_info = rate_items.get(_base + _suffix)
+                        if item_info is not None:
+                            break
             if item_info is None:
                 continue
             found = True
@@ -243,6 +254,50 @@ class DropRateEngine:
                 full_grade = mode_id * 1000 + suffix
                 for _ldg_id in candidate_ids:
                     rate = self.compute_drop_rate(_ldg_id, item_name, full_grade)
+                    if rate > best_rate:
+                        best_rate = rate
+            mode_rates[mode_name] = _round_rate(best_rate * 100)
+        return mode_rates
+
+    def get_variant_group_drop_rates(
+        self, luck_grade: int, monster_name: str, group_key: str, item_name: str = ""
+    ) -> dict[str, float]:
+        """Compute per-mode drop rates for a specific luck_grade (variant) in a map group."""
+        candidate_ids: set[str] = set()
+        _primary = self._spawner_ldg.get(monster_name, "")
+        if _primary:
+            candidate_ids.add(_primary)
+        for _suffix in ("_Unique", "_Elite", "_Nightmare", "_Common"):
+            _v = self._spawner_ldg.get(monster_name + _suffix, "")
+            if _v:
+                candidate_ids.add(_v)
+        if not candidate_ids:
+            _lower = monster_name.lower()
+            for _k, _v in self._spawner_ldg.items():
+                if _k.lower() == _lower:
+                    candidate_ids.add(_v)
+                    break
+        _all_groups = self._entity_ldg_all.get(monster_name, set())
+        if not _all_groups:
+            _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
+        candidate_ids.update(_all_groups)
+        if not candidate_ids:
+            return {}
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        if not suffixes:
+            return {}
+        mode_rates: dict[str, float] = {}
+        _rt_cache: dict[str, int] = {}
+        for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+            if mode_id == 4:
+                continue
+            best_rate = 0.0
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                for _ldg_id in candidate_ids:
+                    rate = self.compute_variant_rate(
+                        _ldg_id, luck_grade, full_grade, item_name=item_name, _rt_cache=_rt_cache
+                    )
                     if rate > best_rate:
                         best_rate = rate
             mode_rates[mode_name] = _round_rate(best_rate * 100)
@@ -323,6 +378,7 @@ class DropRateEngine:
         ldg_id: str,
         luck_grade: int,
         full_grade: int,
+        item_name: str = "",
         target_ld_id: str = "",
         _rt_cache: dict[str, int] | None = None,
     ) -> float:
@@ -332,9 +388,30 @@ class DropRateEngine:
             return 0.0
         total_weight = 0.0
         found = False
+        _base = _VARIANT_RE.sub(r"\1", item_name) if item_name and _VARIANT_RE.match(item_name) else None
         for ld_id, lr_id, _ in grade_data:
             if target_ld_id and ld_id != target_ld_id:
                 continue
+            if item_name:
+                rate_items = self._ld_rate_items.get(ld_id, {})
+                item_info = rate_items.get(item_name)
+                if item_info is None:
+                    for _sfx in _VARIANT_SUFFIXES:
+                        item_info = rate_items.get(item_name + _sfx)
+                        if item_info is not None:
+                            break
+                if item_info is None and _base:
+                    item_info = rate_items.get(_base)
+                    if item_info is None:
+                        for _sfx in _VARIANT_SUFFIXES:
+                            item_info = rate_items.get(_base + _sfx)
+                            if item_info is not None:
+                                break
+                if item_info is None:
+                    continue
+                # Use item_info luck_grade only if caller didn't specify one
+                if luck_grade <= 0:
+                    luck_grade = item_info[0]
             found = True
             _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
             if _pool_weight == 0:
