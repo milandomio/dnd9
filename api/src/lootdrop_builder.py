@@ -185,7 +185,6 @@ def build_loot_index(
     monsters: list[dict],
     entity_class: dict,
     resolve_name,
-    drop_engine,
 ) -> list[dict]:
     """Build lootdrops.json index (grouped by item for list page)."""
     items_lookup = {r["item_name"]: r for r in items}
@@ -252,16 +251,17 @@ def build_loot_index(
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
         variant_count = item_row.get("variant_count", 1) if item_row else 1
-        # Compute variant_suffixes from actual drop data
+        # Compute variant_suffixes from raw_name
         variant_suffixes: list[str] | None = None
         if variant_count > 1:
             if item_name.endswith("_8001"):
                 variant_suffixes = ["8001"]
             else:
-                existing = drop_engine.get_existing_variant_suffixes(item_name)
-                if existing:
-                    variant_suffixes = sorted(existing)
-                    variant_count = len(variant_suffixes)
+                raw = item_row.get("raw_name", "") if item_row else ""
+                m = _SUFFIX_NUM_RE.search(raw)
+                if m:
+                    first_num = int(m.group(1))
+                    variant_suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
@@ -611,16 +611,19 @@ def build_and_save_lootdrop_details(
                     luck_grade = int(suffix[0]) if suffix and suffix[0].isdigit() else 0
                     # Get spawners that actually drop this specific variant
                     valid_spawners = drop_engine.get_variant_spawners(variant_name)
-                    if not valid_spawners:
-                        continue
                     # Filter monsters_out by valid spawners for this variant
+                    # If no specific spawners found, show all base coords (variant has no drop data)
                     variant_monsters = []
                     for _m in monsters_out:
-                        filtered_coords = []
-                        for _c in _m["coords"]:
-                            _sk = _c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", "")
-                            if _sk in valid_spawners:
-                                filtered_coords.append(_c)
+                        if valid_spawners:
+                            filtered_coords = [
+                                _c
+                                for _c in _m["coords"]
+                                if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
+                                in valid_spawners
+                            ]
+                        else:
+                            filtered_coords = _m["coords"]
                         if filtered_coords:
                             _m_copy = dict(_m)
                             _m_copy["coords"] = filtered_coords
