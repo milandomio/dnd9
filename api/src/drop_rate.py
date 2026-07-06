@@ -33,6 +33,12 @@ class DropRateEngine:
         self._spawn_rate_detail: dict[tuple[str, str], float] = {}
         self._spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
         self._entity_spawners: dict[str, set[str]] = {}
+        # luck_grade → set of rate_ids that support this grade
+        self._luck_grade_rates: dict[int, set[str]] = {}
+        # rate_id → set of group_ids that use this rate
+        self._rate_to_groups: dict[str, set[str]] = {}
+        # group_id → set of spawner_keywords that belong to this group
+        self._group_to_spawners: dict[str, set[str]] = {}
 
     def preload(self, db, modules_data: list[dict]) -> None:
         """Preload all drop rate data from DB."""
@@ -98,6 +104,22 @@ class DropRateEngine:
 
         for _rid, _grades in self._ld_rate_weights.items():
             self._ld_rate_totals[_rid] = sum(_w for _w in _grades.values() if _w > 0) or 10000
+            # Build luck_grade → rate_ids mapping
+            for _lg, _w in _grades.items():
+                if _w > 0:
+                    self._luck_grade_rates.setdefault(_lg, set()).add(_rid)
+
+        # Build rate_id → group_ids mapping
+        for _row in _c.execute(
+            "SELECT DISTINCT lootdrop_rate_id, group_id FROM lootdrop_groups WHERE lootdrop_rate_id != ''"
+        ):
+            self._rate_to_groups.setdefault(_row["lootdrop_rate_id"], set()).add(_row["group_id"])
+
+        # Build group_id → spawner_keywords mapping
+        for _row in _c.execute(
+            "SELECT DISTINCT spawner_keyword, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
+        ):
+            self._group_to_spawners.setdefault(_row["lootdrop_group_id"], set()).add(_row["spawner_keyword"])
 
         # group → spawner keywords mapping (for per-group filtering in enrichment)
         for _row in _c.execute("SELECT DISTINCT keyword, map_base FROM spawners WHERE map_base != ''"):
@@ -182,6 +204,20 @@ class DropRateEngine:
     @property
     def group_spawner_keywords(self) -> dict[str, set[str]]:
         return self._group_spawner_keywords
+
+    def get_spawners_for_luck_grade(self, luck_grade: int) -> set[str]:
+        """Get all spawner_keywords that can drop items of the given luck_grade."""
+        result: set[str] = set()
+        # Find all rate_ids that support this luck_grade (weight > 0)
+        rate_ids = self._luck_grade_rates.get(luck_grade, set())
+        for rate_id in rate_ids:
+            # Find all group_ids that use these rate_ids
+            group_ids = self._rate_to_groups.get(rate_id, set())
+            for group_id in group_ids:
+                # Find all spawner_keywords that belong to these group_ids
+                spawners = self._group_to_spawners.get(group_id, set())
+                result.update(spawners)
+        return result
 
     def compute_drop_rate(self, ldg_id: str, item_name: str, full_grade: int) -> float:
         """Compute drop rate for an item in a specific group+grade (0~1)."""

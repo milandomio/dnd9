@@ -71,6 +71,75 @@
 - `range(first_num, first_num + variant_count)` 生成完整序列
 - 约 20 个物品（NecklaceOfPeace 等）始于 `_3001` 而非 `_1001`
 
+## Bug 修复计划（Jul 7）
+
+### Bug 1: 坐标过滤错误 — `get_spawners_for_luck_grade()` 返回过多 spawner
+
+**症状**: Spear_6001 显示了不相关的 311 个 spawner 坐标（如 AncientStingray、SkeletonWoodenBarrel）
+
+**根因**: `get_spawners_for_luck_grade(6)` 按 luck_grade 全局匹配——只要某个 rate_id 支持 luck_grade=6 且 weight>0，该 rate_id 关联的所有 group 的所有 spawner 都会被返回。实际上 `lootdrop_rate_items` 中只有 `Spear_5001`(lg=5) 和 `Spear_8001`(lg=8)，`Spear_6001`/`Spear_7001` 根本不存在。
+
+**DB 证据**:
+- `lootdrop_rate_items` 中 Spear 相关只有 `Spear_5001`(luck_grade=5) 和 `Spear_8001`(luck_grade=8)
+- `ID_Droprate_Monsters_General_2001` 等 rate_id 对 luck_grade=6 weight>0，但这些 group 中并不包含 `Spear_6001`
+
+**修复**: 新增 `DropRateEngine.get_variant_spawners(item_name, luck_grade)`:
+1. 从 `_ld_rate_items` 查找包含目标物品的 `lootdrop_id` 集合
+2. 从 `_ld_groups` 映射到 `group_id` 集合
+3. 从 `_group_to_spawners` 映射到 `spawner_keyword` 集合
+4. 返回精确的 spawner 集合（而非全局 luck_grade 匹配）
+
+替代 `lootdrop_builder.py:615` 的 `get_spawners_for_luck_grade(luck_grade)` 调用。
+
+### Bug 2: Spear_8001 翻译显示"长矛"而非"冥渊三叉戟"
+
+**症状**: `http://localhost:8080/lootdrops/Spear_8001/` 标题显示"长矛"
+
+**根因**: 变体 detail 文件的 `translation` 取自 `entry["translation"]`（基础条目 "Spear" 的翻译 = "长矛"）。"Spear" 条目生成了 `Spear_8001.json`(translation="长矛")，按 sort 顺序排在 "Spear_8001" 独立条目之后，覆盖了正确文件。
+
+**DB 证据**: `Text_DesignData_Item_Item_Spear_8001` → "冥渊三叉戟" 存在于 translations 表
+
+**修复**:
+1. 变体 detail 的 translation 改用 `resolve_name(variant_name, None, "item")` 而非 `entry["translation"]`
+2. "Spear" 基础条目生成变体时，跳过已有独立条目的 `_8001` 后缀
+
+### Bug 3: 生成了不存在的变体文件
+
+**症状**: `Spear_6001.json`、`Spear_7001.json` 有完整坐标数据，但游戏掉落表中不存在这些变体
+
+**根因**: `variant_count=8` 导致 suffixes=["1001","2001",...,"8001"] 全部生成 detail 文件，但只有 5001 和 8001 在 `lootdrop_rate_items` 中有实际数据
+
+**修复**:
+1. 生成变体前调用 `get_variant_spawners()` 检查是否有实际掉落数据
+2. 如果返回空集，跳过该变体（不生成 detail 文件）
+3. 只将有数据的 suffix 写入 `variant_suffixes` 列表
+
+### Bug 4: lootdrops.json 中有重复 Spear_8001 条目
+
+**症状**: expanded_index 和独立 _8001 条目都生成了 Spear_8001
+
+**根因**: `build_and_save_lootdrop_details()` 的 expanded_index 逻辑为每个 suffix 创建条目（包括 8001），而 `build_merged_loot_map()` 已经将 _8001 拆为独立条目
+
+**修复**: expanded_index 生成时跳过已有独立条目的 _8001 后缀
+
+### 修改文件清单
+
+| 文件 | 改动 |
+|------|------|
+| `api/src/drop_rate.py` | 新增 `get_variant_spawners(item_name, luck_grade)` |
+| `api/src/lootdrop_builder.py` | 替换 spawner 过滤、修复翻译、跳过空变体、去重 _8001 |
+
+### 验证
+
+```bash
+cd api && python main.py && cd ../web && npm run build
+# 启动 web 检查:
+# 1. /lootdrops/Spear_6001/ → 无坐标或不生成
+# 2. /lootdrops/Spear_8001/ → 标题"冥渊三叉戟"，只含相关坐标
+# 3. /lootdrops/Spear_5001/ → 正常显示
+# 4. lootdrops.json 中无重复条目
+```
+
 ## 已知问题
 
 ### 1. Mitre 等物品未生成详情页
