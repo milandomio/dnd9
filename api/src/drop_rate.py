@@ -230,6 +230,22 @@ class DropRateEngine:
                     result.update(self._group_to_spawners.get(_gid, set()))
         return result
 
+    def get_base_item_spawners(self, base_item_name: str) -> set[str]:
+        """Get spawner_keywords for ALL variants of a base item (union).
+
+        Used as fallback when a specific variant has no spawner data.
+        """
+        result: set[str] = set()
+        for _ld_id, _items in self._ld_rate_items.items():
+            for _item_name in _items:
+                _m = _VARIANT_RE.match(_item_name)
+                _base = _m.group(1) if _m else _item_name
+                if _base == base_item_name:
+                    _groups = self._ld_id_to_groups.get(_ld_id, set())
+                    for _gid in _groups:
+                        result.update(self._group_to_spawners.get(_gid, set()))
+        return result
+
     def compute_drop_rate(self, ldg_id: str, item_name: str, full_grade: int) -> float:
         """Compute drop rate for an item in a specific group+grade (0~1)."""
         grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
