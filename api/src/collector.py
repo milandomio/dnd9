@@ -351,7 +351,7 @@ def run():
         pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
 
         with pipe.step("lootdrops") as ctx:
-            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve, drop_engine)
+            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve)
             _save("lootdrops.json", loot_index)
             ctx.set_result(f"{len(loot_index)} items")
 
