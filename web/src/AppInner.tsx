@@ -18,6 +18,7 @@ import DungeonModulesPage from './pages/DungeonModulesPage';
 import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
 import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
@@ -45,6 +46,7 @@ export function AppInner() {
         <Route path="/:page" element={<ListPage />} />
         <Route path="/:page/:name" element={<DetailPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
