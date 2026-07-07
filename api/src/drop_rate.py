@@ -455,6 +455,7 @@ class DropRateEngine:
         for ld_id, lr_id, _ in grade_data:
             if target_ld_id and ld_id != target_ld_id:
                 continue
+            _found_lg = None
             if item_name:
                 rate_items = self._ld_rate_items.get(ld_id, {})
                 item_info = rate_items.get(item_name)
@@ -472,14 +473,15 @@ class DropRateEngine:
                                 break
                 if item_info is None:
                     continue
-                # Always use the found item's luck_grade for consistent rate calculation
-                # (avoids wrong _shared divisor when falling back to a different variant)
-                luck_grade = item_info[0]
+                # Use caller's luck_grade for weight (higher grade = rarer pool),
+                # but found item's luck_grade for shared count (the item lives there).
+                _found_lg = item_info[0]
             found = True
             _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
             if _pool_weight == 0:
                 continue
-            _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
+            _shared_lg = _found_lg if _found_lg is not None else luck_grade
+            _shared = self._ld_luck_grade_count.get((ld_id, _shared_lg), 1)
             if _rt_cache is not None:
                 _rate_total = _rt_cache.setdefault(lr_id, self._ld_rate_totals.get(lr_id, 10000))
             else:
