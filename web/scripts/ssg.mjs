@@ -90,13 +90,22 @@ for (const m of moduleData) {
 for (const p of PAGES) {
   const list = readJSON(join(DATA, `${p}.json`));
   for (const e of list) {
-    routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
-    // Generate variant routes for lootdrops with variant_suffixes
     if (p === 'lootdrops' && e.variant_suffixes && e.variant_suffixes.length > 1) {
+      // Base lootdrop entry (e.g. "HeaterShield") redirects to default variant;
+      // generate a minimal redirect page, then create per-suffix variant pages.
+      const defaultSuffix = e.variant_suffixes.includes('5001') ? '5001' : e.variant_suffixes[0];
+      const target = `/lootdrops/${e.name}_${defaultSuffix}/`;
+      routes.push({
+        path: `/${p}/${encodeURIComponent(e.name)}`,
+        file: `${p}/${e.name}/index.html`,
+        redirect: target,
+      });
       for (const suffix of e.variant_suffixes) {
         const variantName = `${e.name}_${suffix}`;
         routes.push({ path: `/lootdrops/${encodeURIComponent(variantName)}`, file: `lootdrops/${variantName}/index.html` });
       }
+    } else {
+      routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
     }
   }
 }
@@ -276,7 +285,16 @@ for (let i = 0; i < routes.length; i++) {
   const templated = template.replace("</title>", `</title>\n    <link rel="canonical" href="${canonical}">\n    <base href="${baseHref}">`);
 
   let page;
-  if (routeData) {
+  if (r.redirect) {
+    const title = `${r.file.split("/")[1]} — DarkFind`;
+    page = `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>${title}</title>
+<link rel="canonical" href="${r.redirect}">
+<meta http-equiv="refresh" content="0;url=${r.redirect}"></head>
+<body><script>window.location.replace("${r.redirect}");</script></body>
+</html>`;
+  } else if (routeData) {
     const payload = { [dataKey]: routeData };
     try {
       const result = render(urlPath, ssrDataMap);
