@@ -24,7 +24,14 @@ import Footer from './components/Footer';
 export function AppInner() {
   const { tokens } = useTheme();
   return (
-    <div style={{ minHeight: '100vh', padding: '24px', background: tokens.bg }}>
+    <div
+      style={{
+        minHeight: '100vh',
+        padding: '16px',
+        background: tokens.bg,
+        boxSizing: 'border-box',
+      }}
+    >
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
