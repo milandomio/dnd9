@@ -269,7 +269,7 @@ P005 后:
 
 **修复**：改为 `isArtifact ? 0.03 : 2.5`，只有神器（_8001）使用低阈值，普通变体使用 2.5。
 
-## 待修复问题
+## 后续已修复问题
 
 ### 1. 变体爆率计算错误（`drop_rate.py`）
 
@@ -280,14 +280,19 @@ P005 后:
 - 根因：rate table 只有 `_5001` items（luck_grade=5），grade 6 fallback 到 `_5001` 时用 luck_grade=6 查 weight（3750），但 `_shared=1`（grade 6 无 items），导致 3750/1/10000=37.5%
 - 正确值：weight=5500（grade 5），`_shared=19`（19个 items），5500/19/10000=2.895%
 
-**当前修复**：`compute_variant_rate()` 中 fallback 时始终用 `item_info[0]`（found item 的 luck_grade）覆盖 caller 的 luck_grade。这样 weight 和 `_shared` 使用同一个 grade，结果正确。
+**修复 A**：`compute_variant_rate()` 中 fallback 时始终用 `item_info[0]`（found item 的 luck_grade）覆盖 caller 的 luck_grade。这样 weight 和 `_shared` 使用同一个 grade，结果正确。
 
-**遗留问题**：基础物品（如 `FrostAmulet`，无变体后缀）不应有爆率——它不是一个具体变体，无法锁定。当前 `get_group_drop_rates()` → `compute_drop_rate()` 会 fallback 到 `FrostAmulet_5001` 并返回 2.895%，这是错误的。
+**遗留问题**：基础物品（如 `FrostAmulet`，无变体后缀）不应有爆率——它不是一个具体变体，无法锁定。`compute_drop_rate()` fallback 到 `FrostAmulet_5001` 并返回 2.895%，这是错误的。
 
-**修复方向**：
-- `compute_drop_rate()` 中，如果 `item_name` 无变体后缀（`_VARIANT_RE` 不匹配），不应 fallback 到 `_5001`
-- 或者在 `lootdrop_builder.py` 的 `_group_drop_info` 构建阶段过滤掉非变体的基础物品爆率
-- 需要确认：基础物品掉落页（如 `/lootdrops/FrostAmulet/`）是否应该显示爆率，还是只作为变体索引页
+**决策**：基础物品页（`/lootdrops/FrostAmulet/`）直接重定向到默认变体 `_5001`，不再显示爆率。
+
+**修复 B**：`compute_drop_rate()` 和 `compute_variant_rate()` 中，当 `item_name` 无变体后缀（`_VARIANT_RE` 不匹配，即 `_base is None`）时，跳过追加后缀的 fallback 逻辑。基础物品命中 `rate_items.get(item_name)` 失败后直接 `continue`，返回 0。
+
+**状态**：已修复 → **已回退**。
+
+**回退原因**：基础物品页的 `monsters_out` 依赖 `_group_drop_info`，而 `_group_drop_info` 又依赖 `compute_drop_rate`。如果 base 返回 0，则 `_group_drop_info` 为空 → `monsters_out` 为空 → 基础物品 JSON 不生成 → 依赖 base 的合成变体（`_1001`-`_7001`）也不生成。实际上基础物品页已通过默认重定向 5001 解决了展示问题，爆率错误不会暴露给用户，而 `monsters_out` 必须有完整数据供变体页面派生。
+
+**当前行为**：`compute_drop_rate` 对 `item_name="HeaterShield"` 允许 fallback 到 `HeaterShield_8001`，返回非零值（豪客赛 0.004 等）。变体页面从 base 继承 `monsters_out`，生成正常。
 
 ### 2. 变体页面收录无豪客赛爆率怪物
 
@@ -295,7 +300,7 @@ P005 后:
 
 **修复**：`lootdrop_builder.py` 中 `_group_drop_info` 和 `variant_gdi` 的过滤条件从 `any(rate > 0)` 改为 `豪客赛 > 0`。
 
-**状态**：已修复，但需确认是否所有页面都应只显示有豪客赛爆率的怪物。
+**状态**：已修复（确认：所有页面只显示有豪客赛爆率的怪物）。
 
 ### 3. 变体 max_score 使用基础物品的值
 
@@ -323,6 +328,30 @@ P005 后:
 
 **状态**：已修复（workaround）。
 
+### 6. 默认变体重定向 6001→5001
+
+**问题**：基础物品页（`/lootdrops/FrostAmulet/`）自动跳转到变体页时默认选择 `6001`，但用户期望的默认变体是 `_5001`（史诗）。
+
+**修复**：`LootdropDetailPage.tsx` 中两处 `defaultSuffix` 逻辑从 `data.variant_suffixes.includes('6001') ? '6001' : ...` 改为 `'5001'`。
+
+**影响文件**：`web/src/pages/LootdropDetailPage.tsx`
+
+**状态**：已修复。
+
+## 验证确认：变体页引用的 spawner 过滤无差异
+
+**问题回顾**：检查中发现变体页面使用 ref 后 `coord_count` 在各变体间完全一致，怀疑 ref 跳过了变体 spawner 过滤（`lootdrop_builder.py:674-675`）。
+
+**数据验证**：
+- 以 `GoldBangle1I` 为例，游戏数据中 **只有 `_5001` 一个变体**存在 lootdrop_rate_items 中
+- 其他后缀（1001-7001）是代码根据 `variant_count` 合成的虚拟变体
+- `get_variant_spawners(item_name)` 对非实际存在的变体返回空集 → fallback 到 `base_spawners`
+- 所有变体的 `valid_spawners` 集合完全一致
+
+**结论**：同一物品的所有变体共享同一组 spawner，`coord_count` 一致是**正确的预期行为**。ref 未导致数据丢失或页面异常。
+
+> 注意：如果未来游戏数据出现某个物品的不同变体对应不同 spawner（如 `_5001` 只在宝箱、`_6001` 只在怪物掉落），则需要在此处重新评估。
+
 ## 文件清单
 
 | 文件 | 改动 |
@@ -332,4 +361,6 @@ P005 后:
 | `web/src/pages/LootdropDetailPage.tsx` | 引用坐标加载 + 合并 + SSR 注水 |
 | `web/scripts/ssg.mjs` | SSR 预加载引用坐标 |
 | `data/json/coords/` | 22 个独立坐标文件（无实体页的实体） |
+| ~~`api/src/drop_rate.py`~~ | ~~修复 B~~ 已回退（见上文"修复 B"节） |
+| `web/src/pages/LootdropDetailPage.tsx` | 默认重定向 `6001` → `5001`（2 处） |
 | `docs/plans/P005_coord_reference.md` | 本计划文件 |

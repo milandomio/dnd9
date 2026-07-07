@@ -235,8 +235,8 @@ export default function LootdropDetailPage() {
   useEffect(() => {
     if (!data?.variant_suffixes || data.variant_suffixes.length <= 1) return;
     if (currentSuffix) return; // already on a variant URL
-    const defaultSuffix = data.variant_suffixes.includes('6001')
-      ? '6001'
+    const defaultSuffix = data.variant_suffixes.includes('5001')
+      ? '5001'
       : data.variant_suffixes[0];
     navigate(`/lootdrops/${itemName}_${defaultSuffix}/`, { replace: true });
   }, [data, currentSuffix, itemName, navigate]);
@@ -648,8 +648,8 @@ export default function LootdropDetailPage() {
           {data.variant_suffixes.map((suffix) => {
             const rarity = data.variant_rarity?.[suffix] ?? suffix;
             const color = RARITY_COLORS[rarity] ?? tokens.muted;
-            const defaultSuffix = data.variant_suffixes!.includes('6001')
-              ? '6001'
+            const defaultSuffix = data.variant_suffixes!.includes('5001')
+              ? '5001'
               : data.variant_suffixes![0];
             const isActive =
               currentSuffix === suffix ||
