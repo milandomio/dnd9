@@ -203,6 +203,11 @@ def build_loot_index(
             if item_row
             else (resolve_name(item_name, None, "item") or item_name)
         )
+        if item_name == "Longsword":
+            print(
+                f"[DEBUG] build_loot_index('Longsword'): {len(monster_names)} monsters, item_row={'YES' if item_row else 'NO'}"
+            )
+            print(f"[DEBUG]   first 10: {sorted(monster_names)[:10]}")
         mon_translations = []
         for m in sorted(monster_names):
             cls = entity_class.get(m)

@@ -6,7 +6,7 @@ from decimal import ROUND_HALF_UP, Decimal
 from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
 from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE
 
-_VARIANT_SUFFIXES = ["_8001", "_7001", "_6001", "_5001", "_4001", "_3001", "_2001", "_1001"]
+_VARIANT_SUFFIXES = ["_5001", "_6001", "_7001", "_8001", "_4001", "_3001", "_2001", "_1001"]
 _VARIANT_RE = VARIANT_RE
 
 
