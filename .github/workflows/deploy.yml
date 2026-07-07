@@ -42,9 +42,6 @@ jobs:
         run: npm run build
         working-directory: web
 
-      - name: Write CNAME for custom domain
-        run: echo "dnd9.icetar.com" > web/dist/CNAME
-
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

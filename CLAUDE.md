@@ -154,7 +154,7 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 游戏 JSON → api/main.py → api/output/json/ + api/src/img/
 → 自动交付 → data/{json/, img/}
 → npm run build → web/public/data/ → dist/data/
-→ GitHub Actions → GitHub Pages → 浏览器 fetch → 注水渲染
+→ GitHub Actions → gh-pages 分支 → Cloudflare Pages → 浏览器 fetch → 注水渲染
 ```
 
 **无游戏文件部署：** DB 含全部数据，`python main.py` 可直接生成所有 JSON。
@@ -163,7 +163,7 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 
 - **GitHub**: `https://github.com/milandomio/dnd9.git`
 - **Token**: `.github_token`（`.gitignore` 中）
-- **部署**: Actions → `gh-pages` 分支 → GitHub Pages
+- **部署**: Actions → `gh-pages` 分支 → Cloudflare Pages（自定义域名在 CF Dashboard 设置，不需要 CNAME 文件）
 
 ### 推送到 dnd9（含 DB）
 
