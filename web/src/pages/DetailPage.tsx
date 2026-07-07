@@ -433,6 +433,10 @@ export default function DetailPage() {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
                     if (!gdi || gdi.length === 0) return null;
+                    const hasVariant = mapCoords.some(
+                      (c) => c.variant_count && c.variant_count > 1
+                    );
+                    if (!hasVariant) return null;
                     // Collect spawner types present in this module's coords
                     const labels = mapCoords.map((c) => c.label || '');
                     const hasType = (t: string) =>
