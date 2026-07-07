@@ -5,8 +5,8 @@ export default function Footer() {
   return (
     <footer
       style={{
-        marginTop: 48,
-        padding: '24px 0',
+        marginTop: 24,
+        padding: '12px 0 0',
         textAlign: 'center',
         fontSize: 13,
         color: tokens.muted,
@@ -14,34 +14,59 @@ export default function Footer() {
       }}
     >
       <p style={{ margin: 0 }}>
-        页面作者{' '}
+        © 2026{' '}
         <a
-          href="https://github.com/milandomio"
+          href="https://www.bilibili.com/video/BV1hoR7BzExq"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: tokens.accent }}
+          style={{ color: tokens.accent, textDecoration: 'none' }}
         >
           @milando
         </a>
         {' · '}
-        感谢{' '}
+        <a
+          href="https://discord.spellsandguns.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: tokens.accent, textDecoration: 'none' }}
+        >
+          Wiki社区
+        </a>
+        {' · '}
+        <a
+          href="https://chatglm.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: tokens.accent, textDecoration: 'none' }}
+        >
+          智谱清言
+        </a>
+        {' · '}
+        <a
+          href="https://github.com/features/actions"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: tokens.accent, textDecoration: 'none' }}
+        >
+          GitHub Actions
+        </a>
+        {' · '}
         <a
           href="https://pages.cloudflare.com/"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: tokens.accent }}
+          style={{ color: tokens.accent, textDecoration: 'none' }}
         >
           Cloudflare Pages
-        </a>{' '}
-        提供加速
+        </a>
       </p>
       <p style={{ margin: '4px 0 0' }}>
-        社区爱好者制作，数据来源及图片版权归属于{' '}
+        本应用为社区爱好者制作的非官方项目，数据来源及图片版权归属于{' '}
         <a
           href="https://darkanddarker.com/"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: tokens.accent }}
+          style={{ color: tokens.accent, textDecoration: 'none' }}
         >
           Dark and Darker
         </a>

@@ -84,7 +84,9 @@ def enrich_all_entities(
                     rate = drop_engine.compute_drop_rate(ldg_id, iname, full_grade)
                     if rate > best_rate:
                         best_rate = rate
-                mode_rates[mode_name] = _round_rate(best_rate * 100)
+                rate_pct = _round_rate(best_rate * 100)
+                if rate_pct > 0:
+                    mode_rates[mode_name] = rate_pct
             group_drop_info[g] = [
                 {
                     "translation": entity_data["translation"],
@@ -250,7 +252,11 @@ def enrich_all_entities(
             changed = False
             new_gdi: dict[str, list[dict]] = {}
             for g, entries in gdi.items():
-                filtered = [e for e in entries if any(v > 0 for v in e.get("drop_rates", {}).values())]
+                filtered = [
+                    e
+                    for e in entries
+                    if e.get("spawn_rate", 0) > 0 or any(v > 0 for v in e.get("drop_rates", {}).values())
+                ]
                 if filtered:
                     new_gdi[g] = filtered
                 if len(filtered) != len(entries):

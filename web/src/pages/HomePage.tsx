@@ -102,8 +102,8 @@ export default function HomePage() {
         style={{
           textAlign: 'center',
           color: tokens.accent,
-          fontSize: 36,
-          marginBottom: 20,
+          fontSize: 32,
+          marginBottom: 12,
         }}
       >
         DarkFindV5游戏导航
@@ -113,7 +113,7 @@ export default function HomePage() {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 20,
+          gap: 14,
         }}
       >
         {data
@@ -128,7 +128,7 @@ export default function HomePage() {
                   background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
                   border: `2px solid ${t.border}`,
                   borderRadius: 16,
-                  padding: '30px 20px',
+                  padding: '18px 16px',
                   textAlign: 'center',
                   cursor: 'pointer',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -148,8 +148,8 @@ export default function HomePage() {
               >
                 <div
                   style={{
-                    fontSize: 48,
-                    marginBottom: 8,
+                    fontSize: 50,
+                    marginBottom: 4,
                     filter: `drop-shadow(0 0 8px ${t.border})`,
                   }}
                 >
@@ -158,20 +158,20 @@ export default function HomePage() {
                 <div
                   style={{
                     color: tokens.text,
-                    fontSize: 24,
+                    fontSize: 20,
                     fontWeight: 'bold',
-                    marginBottom: 4,
+                    marginBottom: 2,
                   }}
                 >
                   【{entry.label}】
                 </div>
-                <div style={{ color: t.titleColor, fontSize: 14 }}>
+                <div style={{ color: t.titleColor, fontSize: 13 }}>
                   {entry.page === 'quest_items' || entry.page === 'quest_npc'
                     ? `任务${entry.count}个`
                     : `${entry.label}${entry.count}个`}
                 </div>
                 <div
-                  style={{ color: tokens.muted, fontSize: 14, marginTop: 4 }}
+                  style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}
                 >
                   {entry.page === 'items' && '查看物品位置'}
                   {entry.page === 'monsters' && '查看怪物位置'}
