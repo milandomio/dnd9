@@ -74,6 +74,11 @@ export default function DetailPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const fetchedRef = useRef(false);
 
+  // Reset fetch guard when navigating between entities
+  useEffect(() => {
+    fetchedRef.current = false;
+  }, [page, name]);
+
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
