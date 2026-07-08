@@ -446,13 +446,13 @@ def build_and_save_lootdrop_details(
                         _rate = _ul_sr + _l_sr
                         if _rate > _best_rate:
                             _best_rate = _rate
-                    _sr = (
-                        _best_rate
-                        if _best_rate > 0
-                        else max(spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
-                    )
+                    _sr = _best_rate if _best_rate > 0 else drop_engine.get_combined_spawn_rate(_en)
+                    if _sr <= 0:
+                        _sr = max(spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
                 else:
-                    _sr = max(spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
+                    _sr = drop_engine.get_combined_spawn_rate(_en)
+                    if _sr <= 0:
+                        _sr = max(spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
                 _en_mode_rates = spawn_rate_by_mode.get(("", _en), {})
                 _sr_by_mode: dict[str, float] = {}
                 if _en_mode_rates:

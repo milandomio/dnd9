@@ -4,10 +4,12 @@ import json
 from decimal import ROUND_HALF_UP, Decimal
 
 from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
-from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE
+from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE, base_monster_name
 
 _VARIANT_SUFFIXES = ["_5001", "_6001", "_7001", "_8001", "_4001", "_3001", "_2001", "_1001"]
 _VARIANT_RE = VARIANT_RE
+
+_QUALITY_VARIANT_SUFFIXES = ["", "_Common", "_Elite", "_Nightmare", "_Unique"]
 
 
 def _round_rate(v: float) -> float:
@@ -39,6 +41,8 @@ class DropRateEngine:
         self._existing_variant_suffixes: dict[str, set[str]] = {}
         # lootdrop_id → set of group_ids
         self._ld_id_to_groups: dict[str, set[str]] = {}
+        # base_entity_name → combined spawn rate across quality variants
+        self._combined_spawn_rate_cache: dict[str, float] = {}
 
     def preload(self, db, modules_data: list[dict]) -> None:
         """Preload all drop rate data from DB."""
@@ -174,6 +178,28 @@ class DropRateEngine:
             if en and sk:
                 self._entity_spawners.setdefault(en, set()).add(sk)
 
+        # Build combined spawn rate cache: sum quality variant rates per keyword+grade
+        _entries_by_sk: dict[str, list[tuple[str, float, str]]] = {}
+        for _row in db.get_all_spawner_entries():
+            _sk = _row["spawner_keyword"]
+            _en = _row["entity_name"]
+            _sr = _row["spawn_rate"]
+            _grades_raw = _row.get("dungeon_grades", "[]")
+            _gs = str(_grades_raw)
+            _entries_by_sk.setdefault(_sk, []).append((_en, _sr, _gs))
+        for _sk, _entries in _entries_by_sk.items():
+            _by_grades: dict[str, list[tuple[str, float]]] = {}
+            for _en, _sr, _gs in _entries:
+                _by_grades.setdefault(_gs, []).append((_en, _sr))
+            for _grade_entries in _by_grades.values():
+                _combined_by_base: dict[str, float] = {}
+                for _en, _sr in _grade_entries:
+                    _base = base_monster_name(_en)
+                    _combined_by_base[_base] = _combined_by_base.get(_base, 0.0) + _sr
+                for _base, _combined in _combined_by_base.items():
+                    if _combined > self._combined_spawn_rate_cache.get(_base, 0.0):
+                        self._combined_spawn_rate_cache[_base] = _combined
+
     @property
     def spawner_ldg(self) -> dict[str, str]:
         return self._spawner_ldg
@@ -245,6 +271,25 @@ class DropRateEngine:
                     for _gid in _groups:
                         result.update(self._group_to_spawners.get(_gid, set()))
         return result
+
+    def get_quality_variants(self, entity_name: str) -> list[str]:
+        """Generate all quality variant names for a given entity.
+        E.g. 'Wraith' -> ['Wraith', 'Wraith_Common', 'Wraith_Elite', 'Wraith_Nightmare', 'Wraith_Unique']
+        """
+        base = base_monster_name(entity_name)
+        return [base + s for s in _QUALITY_VARIANT_SUFFIXES]
+
+    def get_combined_spawn_rate(self, entity_name: str) -> float:
+        """Return pre-computed combined spawn rate across quality variants.
+
+        Uses _combined_spawn_rate_cache built during preload (sums rates
+        per keyword+grade across quality variants). Falls back to spawn_rate_cache.
+        """
+        base = base_monster_name(entity_name)
+        cached = self._combined_spawn_rate_cache.get(base, 0.0)
+        if cached > 0.0:
+            return cached
+        return self._spawn_rate_cache.get(entity_name, 0.0)
 
     def compute_drop_rate(self, ldg_id: str, item_name: str, full_grade: int) -> float:
         """Compute drop rate for an item in a specific group+grade (0~1)."""
