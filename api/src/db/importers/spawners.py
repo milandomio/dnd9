@@ -106,11 +106,14 @@ class SpawnersImporter:
             props = entry.get("Properties", {}) or {}
             items = props.get("SpawnerItemArray", []) or []
             _total_pool = max(sum(item.get("SpawnRate", 10000) for item in items), 1)
-            _suffix_totals: dict[int, int] = {}
+            _suffix_totals: dict[tuple[int, int], int] = {}
             for item in items:
                 dg_list = item.get("DungeonGrades", []) or []
                 if dg_list:
-                    suffixes = set(g % 1000 for g in dg_list)
+                    suffixes = set()
+                    for g in dg_list:
+                        mode_id = g // 1000 if g >= 1000 else 1
+                        suffixes.add((mode_id, g % 1000))
                     sr = item.get("SpawnRate", 10000)
                     for s in suffixes:
                         _suffix_totals[s] = _suffix_totals.get(s, 0) + sr
@@ -122,7 +125,10 @@ class SpawnersImporter:
                 raw_rate = item.get("SpawnRate", 10000)
                 dungeon_grades = item.get("DungeonGrades", []) or []
                 if dungeon_grades:
-                    _suffixes = set(g % 1000 for g in dungeon_grades)
+                    _suffixes = set()
+                    for g in dungeon_grades:
+                        mode_id = g // 1000 if g >= 1000 else 1
+                        _suffixes.add((mode_id, g % 1000))
                     _rates = [raw_rate / _suffix_totals[s] * 100 for s in _suffixes]
                     spawn_rate = round(min(_rates), 2)
                 elif len(items) > 1:
