@@ -197,8 +197,9 @@ class DropRateEngine:
                     _base = base_monster_name(_en)
                     _combined_by_base[_base] = _combined_by_base.get(_base, 0.0) + _sr
                 for _base, _combined in _combined_by_base.items():
-                    if _combined > self._combined_spawn_rate_cache.get(_base, 0.0):
-                        self._combined_spawn_rate_cache[_base] = _combined
+                    _capped = min(_combined, 100.0)
+                    if _capped > self._combined_spawn_rate_cache.get(_base, 0.0):
+                        self._combined_spawn_rate_cache[_base] = _capped
 
     @property
     def spawner_ldg(self) -> dict[str, str]:
