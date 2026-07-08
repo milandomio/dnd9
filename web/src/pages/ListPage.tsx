@@ -302,7 +302,7 @@ export default function ListPage() {
                               vc > 1 &&
                               !isAlreadyVariant &&
                               !entity.name.endsWith('_8001')
-                                ? `${entity.name}_6001`
+                                ? `${entity.name}_5001`
                                 : entity.name;
                             navigate(`/lootdrops/${target}/`);
                           }}
@@ -389,7 +389,7 @@ export default function ListPage() {
                         vc > 1 &&
                         !isAlreadyVariant &&
                         !entity.name.endsWith('_8001')
-                          ? `${entity.name}_6001`
+                          ? `${entity.name}_5001`
                           : entity.name;
                       navigate(`/lootdrops/${target}/`);
                     } else {

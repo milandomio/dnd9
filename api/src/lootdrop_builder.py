@@ -59,7 +59,7 @@ _LABEL_TYPE_SUFFIX = {
     "direct": "",
     "special": "(特殊)",
     "random": "(随机)",
-    "other": "",
+    "other": "组",
 }
 
 MAX_COORDS_PER_PAGE = 3000
