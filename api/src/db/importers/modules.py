@@ -36,6 +36,10 @@ class ModulesImporter:
             module_type = (props.get("ModuleType") or "").removeprefix("EDCDungeonModuleType::")
             if module_type:
                 type_map[module_name] = module_type
+        # Pre-index which module_names have their own file (for alias conflict detection)
+        own_module_names: set[str] = set()
+        for raw_name in files:
+            own_module_names.add(extract_dungeon_module_name(raw_name))
         rows = []
         inserted_names: set[str] = set()
         skipped_names: list[str] = []
@@ -75,13 +79,16 @@ class ModulesImporter:
                             break
                 found_valid = True
                 break
-            aliases = []
-            if sl_base and sl_base != module_name:
-                aliases.append(module_name)
-                module_name = sl_base
             if not found_valid:
                 skipped_names.append(module_name)
                 continue
+            aliases = []
+            if sl_base and sl_base != module_name:
+                if sl_base in own_module_names:
+                    pass  # separate modules sharing the same image; keep independent
+                else:
+                    aliases.append(module_name)
+                    module_name = sl_base
             path_group = path_group_map.get(module_name, "")
             if path_group:
                 module_type = path_group
