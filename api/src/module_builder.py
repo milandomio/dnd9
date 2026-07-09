@@ -158,30 +158,14 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
                 return resolved, status  # placeholder — don't accept
             return resolved, status
 
-        img_name, art_status = _try_resolve(sl)
-
-        # Priority logic:
-        # 1. sl_base_name (SubLevelAsset) — always primary
-        # 2. module_name — only when Art dir exists AND sl was not found
-        # 3. MapImage — last resort
-        if art_status == "no_art":
-            # No Art dir → sl is the best guess (matches webp in img/ dir)
-            # BUT if MapImage is a placeholder, the module's own image might differ from sl
-            if map_image in PLACEHOLDERS and module_name != sl:
-                candidate, c_status = _try_resolve(module_name)
-                if c_status in ("no_art", "found"):
-                    img_name = candidate
-        elif art_status == "not_found":
-            # Art dir exists but no match for sl → try module_name (may differ)
-            if module_name != sl:
-                candidate, c_status = _try_resolve(module_name)
-                if c_status == "found":
-                    img_name = candidate
-                elif c_status == "not_found":
-                    pass  # neither found; keep sl
+        # Priority: try module-name-specific image first (if name differs from sl),
+        # fall back to shared sl_base image, then MapImage.
+        if module_name != sl:
+            img_name, art_status = _try_resolve(module_name)
+            if art_status != "found":
+                img_name, art_status = _try_resolve(sl)
         else:
-            # 'found' → sl had an exact match in Art; use it
-            pass
+            img_name, art_status = _try_resolve(sl)
 
         # If result is still a placeholder, try MapImage
         if img_name in PLACEHOLDERS and map_image and map_image not in PLACEHOLDERS:
@@ -263,7 +247,8 @@ def build_map_mappings(modules_map: dict[str, dict]) -> tuple[dict[str, str], di
         if sl and sl != mn:
             if map_to_module.get(sl) != sl:
                 map_to_module[sl] = mn
-            module_to_maps.setdefault(mn, set()).add(sl)
+            if sl not in modules_map:
+                module_to_maps.setdefault(mn, set()).add(sl)
     return map_to_module, module_to_maps
 
 
