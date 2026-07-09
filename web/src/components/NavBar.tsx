@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Input, Spin } from 'antd';
 import {
   BulbOutlined,
+  ClockCircleOutlined,
   LoadingOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
@@ -31,6 +32,17 @@ const GROUP_LABEL_MAP: Record<string, string> = {
   Inferno: '废墟3层炼狱',
 };
 
+const RECENT_KEY = 'recentSearches';
+const MAX_RECENT = 5;
+
+function getRecent(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
 const PAGE_TAG: Record<string, string> = {
   items: '物品',
   monsters: '怪物',
@@ -56,6 +68,7 @@ export default function NavBar() {
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<any>(null);
+  const [recentSearches, setRecentSearches] = useState<string[]>(getRecent);
 
   // Auto-trigger search from location state (e.g. quest objective magnifier)
   useEffect(() => {
@@ -70,7 +83,7 @@ export default function NavBar() {
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
-      setShowDropdown(false);
+      setSelectedIdx(-1);
       return;
     }
     if (!searchIndex) return;
@@ -106,10 +119,26 @@ export default function NavBar() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  const saveRecent = (term: string) => {
+    if (!term.trim()) return;
+    const list = getRecent().filter((t) => t !== term);
+    list.unshift(term);
+    if (list.length > MAX_RECENT) list.length = MAX_RECENT;
+    localStorage.setItem(RECENT_KEY, JSON.stringify(list));
+    setRecentSearches(list);
+  };
+
   const handleSelect = (hit: SearchEntry) => {
+    if (query.trim()) saveRecent(query.trim());
     setQuery('');
     setShowDropdown(false);
     navigate(hit.url);
+  };
+
+  const handleRecentClick = (term: string) => {
+    setQuery(term);
+    setShowDropdown(false);
+    inputRef.current?.focus();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -184,7 +213,9 @@ export default function NavBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => {
-            if (results.length > 0) setShowDropdown(true);
+            if (query.trim() && results.length > 0) setShowDropdown(true);
+            else if (!query.trim() && recentSearches.length > 0)
+              setShowDropdown(true);
           }}
           onKeyDown={handleKeyDown}
           disabled={searchLoading}
@@ -218,54 +249,100 @@ export default function NavBar() {
               boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             }}
           >
-            {results.map((hit, i) => (
-              <div
-                key={`${hit.page}::${hit.name}`}
-                onClick={() => handleSelect(hit)}
-                onMouseEnter={() => setSelectedIdx(i)}
-                style={{
-                  padding: '8px 12px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  background:
-                    i === selectedIdx
-                      ? dark
-                        ? '#444'
-                        : '#e6f4ff'
-                      : 'transparent',
-                  transition: 'background 0.1s',
-                }}
-              >
-                <span style={{ color: tokens.text, fontSize: 14 }}>
-                  {hit.translation || hit.name}
-                  {hit.translation && hit.translation !== hit.name && (
-                    <span
-                      style={{
-                        color: tokens.muted,
-                        marginLeft: 6,
-                        fontSize: 12,
-                      }}
-                    >
-                      ({hit.name})
-                    </span>
-                  )}
-                </span>
-                <span
+            {query.trim() ? (
+              results.map((hit, i) => (
+                <div
+                  key={`${hit.page}::${hit.name}`}
+                  onClick={() => handleSelect(hit)}
+                  onMouseEnter={() => setSelectedIdx(i)}
                   style={{
-                    fontSize: 11,
-                    padding: '1px 6px',
-                    borderRadius: 3,
-                    background: dark ? '#555' : '#eee',
-                    color: tokens.muted,
-                    whiteSpace: 'nowrap',
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    background:
+                      i === selectedIdx
+                        ? dark
+                          ? '#444'
+                          : '#e6f4ff'
+                        : 'transparent',
+                    transition: 'background 0.1s',
                   }}
                 >
-                  {hit.tag || PAGE_TAG[hit.page] || hit.page}
-                </span>
+                  <span style={{ color: tokens.text, fontSize: 14 }}>
+                    {hit.translation || hit.name}
+                    {hit.translation && hit.translation !== hit.name && (
+                      <span
+                        style={{
+                          color: tokens.muted,
+                          marginLeft: 6,
+                          fontSize: 12,
+                        }}
+                      >
+                        ({hit.name})
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      padding: '1px 6px',
+                      borderRadius: 3,
+                      background: dark ? '#555' : '#eee',
+                      color: tokens.muted,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {hit.tag || PAGE_TAG[hit.page] || hit.page}
+                  </span>
+                </div>
+              ))
+            ) : recentSearches.length > 0 ? (
+              <div>
+                <div
+                  style={{
+                    padding: '6px 12px 4px',
+                    fontSize: 12,
+                    color: tokens.muted,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  <ClockCircleOutlined />
+                  最近搜索
+                </div>
+                {recentSearches.map((term) => (
+                  <div
+                    key={term}
+                    onClick={() => handleRecentClick(term)}
+                    style={{
+                      padding: '8px 12px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      color: tokens.text,
+                      fontSize: 14,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = dark
+                        ? '#444'
+                        : '#e6f4ff';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                    }}
+                  >
+                    <span>{term}</span>
+                    <span style={{ fontSize: 11, color: tokens.muted }}>
+                      搜索
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : null}
           </div>
         )}
       </div>
