@@ -43,12 +43,21 @@ export default function Footer() {
         </a>
         {' · '}
         <a
+          href="https://platform.deepseek.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: tokens.accent, textDecoration: 'none' }}
+        >
+          DeepSeek
+        </a>
+        {' · '}
+        <a
           href="https://github.com/features/actions"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: tokens.accent, textDecoration: 'none' }}
         >
-          GitHub Actions
+          GitHub
         </a>
         {' · '}
         <a
@@ -57,7 +66,7 @@ export default function Footer() {
           rel="noopener noreferrer"
           style={{ color: tokens.accent, textDecoration: 'none' }}
         >
-          Cloudflare Pages
+          Cloudflare
         </a>
       </p>
       <p style={{ margin: '4px 0 0' }}>
