@@ -43,7 +43,9 @@ export default function DetailPage() {
   const ssrData = useSSRData<{ entity: Entity; modules: DungeonModule[] }>(
     dataKey
   );
-  const [entity, setEntity] = useState<Entity | null>(ssrData?.entity || null);
+  const [entity, setEntity] = useState<Entity | null>(
+    ssrData?.entity?._modules ? ssrData.entity : null
+  );
   const dataVersion = useDataVersion();
 
   // Build local modules map from entity's inline _modules data
