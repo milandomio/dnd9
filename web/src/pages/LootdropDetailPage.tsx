@@ -1328,24 +1328,23 @@ export default function LootdropDetailPage() {
                       );
                     })}
                   </div>
-                  {debug &&
-                    (() => {
-                      const _rl2 =
-                        groupDropRateLookup.get(groupName) ?? new Map();
-                      const sc = computeModuleScore({ mod, dots }, _rl2);
-                      return sc > 0 ? (
-                        <div
-                          style={{
-                            marginTop: 4,
-                            fontSize: 12,
-                            textAlign: 'center',
-                            color: tokens.accent,
-                          }}
-                        >
-                          综合爆率 {(sc / 100).toFixed(2)}%
-                        </div>
-                      ) : null;
-                    })()}
+                  {(() => {
+                    const _rl2 =
+                      groupDropRateLookup.get(groupName) ?? new Map();
+                    const sc = computeModuleScore({ mod, dots }, _rl2);
+                    return sc > 0 ? (
+                      <div
+                        style={{
+                          marginTop: 4,
+                          fontSize: 12,
+                          textAlign: 'center',
+                          color: tokens.accent,
+                        }}
+                      >
+                        综合爆率 {(sc / 100).toFixed(2)}%
+                      </div>
+                    ) : null;
+                  })()}
                 </div>
               );
             })}
