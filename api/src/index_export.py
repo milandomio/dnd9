@@ -42,8 +42,11 @@ def save_quest_data(db, output_dir: Path) -> tuple[int, int, int, list[dict]]:
 
 def generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules, output_dir: Path):
     """Generate quest items groups with coordinates."""
+    import logging
+
     quest_items_path = output_dir / "quest_items.json"
     if not quest_items_path.exists():
+        logging.getLogger(__name__).warning("quest_items.json not found, skipping quest items groups")
         return
     with open(quest_items_path) as f:
         quest_items = json.load(f)
