@@ -30,7 +30,6 @@ class PipelineTimer:
 
     def summary(self) -> str:
         """Return a formatted timing summary table."""
-        self.end_step()  # ensure last step is recorded
         total = sum(t for _, t in self.steps)
         lines = ["", "=" * 60, "Pipeline Timing Summary", "=" * 60]
         for label, elapsed in self.steps:
@@ -45,7 +44,6 @@ class PipelineTimer:
         """Save timing log to file. Returns the log file path."""
         if not self._log_dir:
             return None
-        self.end_step()
         self._log_dir.mkdir(parents=True, exist_ok=True)
         timestamp = self._start_time.strftime("%Y%m%d_%H%M%S")
         log_file = self._log_dir / f"pipeline_{timestamp}.log"
