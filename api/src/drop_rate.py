@@ -97,6 +97,7 @@ class DropRateEngine:
             _lg_counts: dict[int, int] = {}
             for _item_name, (_lg, _) in _items.items():
                 _lg_counts[_lg] = _lg_counts.get(_lg, 0) + 1
+                self._item_to_ld_ids.setdefault(_item_name, set()).add(_ld_id)
             for _lg, _cnt in _lg_counts.items():
                 self._ld_luck_grade_count[(_ld_id, _lg)] = _cnt
 
@@ -247,14 +248,10 @@ class DropRateEngine:
         Traces: item_name → lootdrop_ids → group_ids → spawner_keywords.
         """
         result: set[str] = set()
-        # Find all lootdrop_ids containing this item
-        for _ld_id, _items in self._ld_rate_items.items():
-            if item_name in _items:
-                # Find group_ids for this lootdrop_id
-                _groups = self._ld_id_to_groups.get(_ld_id, set())
-                for _gid in _groups:
-                    # Find spawner_keywords for this group
-                    result.update(self._group_to_spawners.get(_gid, set()))
+        for _ld_id in self._item_to_ld_ids.get(item_name, set()):
+            _groups = self._ld_id_to_groups.get(_ld_id, set())
+            for _gid in _groups:
+                result.update(self._group_to_spawners.get(_gid, set()))
         return result
 
     def get_base_item_spawners(self, base_item_name: str) -> set[str]:
