@@ -1,136 +1,64 @@
-# 修复计划：Lootdrop 详情页地图模块按综合爆率排序
+# 修复记录：Lootdrop 详情页地图模块按综合爆率排序
 
-## 目标
+## 修改清单
 
-将 `LootdropDetailPage` 中模块的排列逻辑从"按尺寸+点数"改为"按综合爆率总分"降序排列，实现：
+本文件记录了 `LootdropDetailPage.tsx` 的一批关联修改。
 
-- 高价值（高 spawn_rate × 高豪客赛率 × 多坐标点）的模块排前面
-- 点击怪物分类按钮切换显隐时自动重算排序
+### 1. 模块排序改为按综合爆率总分
 
-## 总分计算公式
+组件：`LootdropDetailPage.tsx`
+
+**组内排序**：模块总分降序 → `dots.length` 降序 → `size_y → size_x`
+
+**分组间排序**：该组总模块总分降序 → 总 `dots.length` 降序 → `groupOrder`
+
+总分公式：
 
 ```
-模块总分 = Σ ( spawn_rate × 豪客赛_rate × coords_count )
+模块总分 = Σ ( spawn_rate × 豪客赛率 × effectiveCount )
           对模块上每个可见的怪物类型求和
 ```
 
 数据来源：`data.group_drop_info[groupName]` → 按 `translation` 匹配怪物 → `spawn_rate` × `drop_rates.豪客赛`
 
-### 示例（伪王座，仅显示黄金宝箱 + 狮头宝箱 + 迷你宝盒组）
+### 2. 变体坐标计分修正
 
-| 怪物 | spawn_rate | 豪客赛率 | 该模块上点数 | 贡献 |
-|------|-----------|---------|------------|------|
-| 黄金宝箱 | 100 | 25 | 1 | 2500 |
-| 狮头宝箱(特殊)(可能上锁) | 50 | 3 | 2 | 300 |
-| 迷你宝盒组 | 3 | 25 | 7 | 525 |
-| **模块总分** | | | | **3325** |
+新增 `effectiveCount(dots)` 函数，逐点计算有效坐标数：
 
-## 修改位置
+- 普通点 → +1
+- 有名变体点（`variant_names` 存在，如 `狮头宝箱、中宝箱2种选1`）→ `+1/variant_count`
+- 无名变体点（`variant_count > 1` 但无名，如 `4点选1`）→ `+1`
 
-`web/src/pages/LootdropDetailPage.tsx`
+之前错误地使用 `dots.find` 找到第一个变体点后，对所有点统一处理，导致混合普通+变体点时严重低估有效数。
 
-### 1. 新增 useMemo：构建 group_drop_info 查找表
+### 3. 变体/普通点显示分离
 
-```typescript
-const groupDropRateLookup = useMemo(() => {
-  const lookup = new Map<string, Map<string, { sr: number; dr: number }>>();
-  if (!data?.group_drop_info) return lookup;
-  for (const [g, entries] of Object.entries(data.group_drop_info)) {
-    const m = new Map<string, { sr: number; dr: number }>();
-    for (const e of entries) {
-      m.set(e.translation, { sr: e.spawn_rate, dr: e.drop_rates["豪客赛"] ?? 0 });
-    }
-    lookup.set(g, m);
-  }
-  return lookup;
-}, [data?.group_drop_info]);
-```
+模块卡片底部怪物摘要中的点数显示，原来混在一起只显示一种标签。现在分离显示：
 
-### 2. 修改组内排序（原第 525-534 行）
+- 普通点 → `(N点)`
+- 有名变体点 → `(names N种选<count>)`（`<count>` 是该类型变体点数量，不再硬编码为 `1`）
+- 无名变体点 → `(N点选1)`
 
-**当前**：`size_y → size_x → dots.length`
+### 4. hidden/toggle key 改为 translation
 
-**改为**：倒序排列，**一级 `模块总分` 降序，二级 `dots.length` 降序，三级 `size_y → size_x`**
+**根因**：同一个实体名（如 `OrnateChestMedium`）在 lootdrop 中可能出现多次（不同翻译后缀如 `(特殊)`、`(随机)`），`hidden` Set 以 `m.name` 为键导致分类按钮联动显隐。
 
-```typescript
-for (const group of groupedByType.values()) {
-  const _gName = group[0]?.mod?.group || '';
-  const _rl = groupDropRateLookup.get(_gName) ?? new Map();
-  group.sort((a, b) => {
-    const scoreA = computeModuleScore(a, _rl);
-    const scoreB = computeModuleScore(b, _rl);
-    if (scoreA !== scoreB) return scoreB - scoreA;
-    if (a.dots.length !== b.dots.length) return b.dots.length - a.dots.length;
-    const sy_a = a.mod?.size_y ?? 1;
-    const sy_b = b.mod?.size_y ?? 1;
-    if (sy_a !== sy_b) return sy_a - sy_b;
-    const sx_a = a.mod?.size_x ?? 1;
-    const sx_b = b.mod?.size_x ?? 1;
-    return sx_a - sx_b;
-  });
-}
-```
+**修复**：将组件内所有 `hidden`/`toggle`/`grouping` 的 key 从 `m.name` 改为 `m.translation`（翻译名在条目间唯一）。涉及：
 
-### 3. 修改分组间排序（原第 538-548 行）
+- `defaultHidden` 初始隐藏阈值判断
+- `mapGroups` 构建循环的显隐过滤
+- `hiddenRows` 的 rowKey
+- 分类按钮（含全显/全隐）
+- 模块卡片底部怪物标签分组 key
+- `group_drop_info` 参考爆率过滤
+- 调试表格的显隐判断/toggle
 
-**当前**：总 `dots.length` 降序
+### 5. 综合爆率显示
 
-**改为**：组内所有模块总分之和降序 → 总 dots.length 降序 → groupOrder
-
-```typescript
-const sortedGroups = [...groupedByType.entries()].sort(
-  ([a, aItems], [b, bItems]) => {
-    const _gA = aItems[0]?.mod?.group || '';
-    const _gB = bItems[0]?.mod?.group || '';
-    const _rlA = groupDropRateLookup.get(_gA) ?? new Map();
-    const _rlB = groupDropRateLookup.get(_gB) ?? new Map();
-    const totalA = aItems.reduce((s, item) => s + computeModuleScore(item, _rlA), 0);
-    const totalB = bItems.reduce((s, item) => s + computeModuleScore(item, _rlB), 0);
-    if (totalA !== totalB) return totalB - totalA;
-    const dotA = aItems.reduce((s, item) => s + item.dots.length, 0);
-    const dotB = bItems.reduce((s, item) => s + item.dots.length, 0);
-    if (dotA !== dotB) return dotB - dotA;
-    if (!a && !b) return 0;
-    if (!a) return 1;
-    if (!b) return -1;
-    return groupOrder.indexOf(a) - groupOrder.indexOf(b);
-  }
-);
-```
-
-### 4. 辅助函数
-
-```typescript
-function computeModuleScore(
-  item: { mod?: DungeonModule; dots: { monster: LootdropMonster }[] },
-  rateLookup: Map<string, { sr: number; dr: number }>
-): number {
-  const counts = new Map<string, number>();
-  for (const d of item.dots) {
-    counts.set(d.monster.translation, (counts.get(d.monster.translation) ?? 0) + 1);
-  }
-  let total = 0;
-  for (const [trans, cnt] of counts) {
-    const r = rateLookup.get(trans);
-    if (r) {
-      total += r.sr * r.dr * cnt;
-    }
-  }
-  return total;
-}
-```
-
-## 重算触发
-
-`group.sort()` 和 `sortedGroups` 位于 render 函数体（非 useMemo），每次 state 变化（如 `setHidden`）都会重新执行。`mapGroups` 已在构建时跳过隐藏怪物，排序因此自动反映当前可见状态。**无需额外触发机制**。
-
-## 验证步骤
-
-1. 打开 `/lootdrops/FrozenIronKey/`
-2. 只点击三个分类按钮：黄金宝箱、狮头宝箱(特殊)(可能上锁)、迷你宝盒组
-3. 观察伪王座（及其他模块）的排列顺序与计算出的总分一致
-4. 切换显示其他怪物，确认排序自动重算
-5. 调试模式下确认总分与人工计算一致
+- 默认可见（非调试模式）
+- 显示在模块卡片底部怪物摘要下方
+- 格式：`parseFloat((sc / 100).toFixed(4))`，去除多余尾随零
+- 示例：`综合爆率 0.03%`、`综合爆率 33.25%`
 
 ## 不涉及的修改
 
