@@ -9,6 +9,7 @@ from config import MAPS_DIR, SPAWNER_ALIAS_MAP, SPAWNER_DIR
 _VARIANT_RE = re.compile(r"_\d{4}$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
+_AP_SUFFIX_RE = re.compile(r"\.(\d+)'?$")
 
 
 def strip_variant_suffixes(name: str) -> str:
@@ -347,7 +348,6 @@ def extract_spawners(
     # Collect all scene-component-like entries for parent-chain resolution
     _sc_entries: list[tuple[int, dict]] = []  # (array_index, entry)
     _scene_comp_types = {"SphereComponent", "SceneComponent"}
-    _ap_suffix_re = re.compile(r"\.(\d+)'?$")
 
     # Build map from DefaultSceneRoot entry index → BP_GameSpawnerGroup_C name
     group_root_to_name: dict[int, str] = {}
@@ -356,7 +356,7 @@ def extract_spawners(
             props = entry.get("Properties", {}) or {}
             root = props.get("RootComponent", {}) or {}
             op = root.get("ObjectPath", "")
-            m = _ap_suffix_re.search(op) if op else None
+            m = _AP_SUFFIX_RE.search(op) if op else None
             if m:
                 group_root_to_name[int(m.group(1))] = entry.get("Name", "")
 
@@ -409,7 +409,6 @@ def extract_spawners(
             _sc_entries.append((idx, entry))
 
     # Build scene coords with AttachParent chain resolution
-    _ap_suffix_re = re.compile(r"\.(\d+)'?$")
 
     def _resolve_world_loc(start_idx: int) -> tuple[float, float, float, float, str]:
         """Walk up AttachParent chain to compute world-space x, y, z, yaw and group name."""
@@ -438,7 +437,7 @@ def extract_spawners(
             )
             ap = props.get("AttachParent", {}) or {}
             ap_path = ap.get("ObjectPath", "")
-            m = _ap_suffix_re.search(ap_path)
+            m = _AP_SUFFIX_RE.search(ap_path)
             cur = int(m.group(1)) if m else -1
         # Accumulate from root to leaf, rotating child offsets by parent rotation
         x = y = z = 0.0
