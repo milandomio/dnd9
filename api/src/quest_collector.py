@@ -26,27 +26,26 @@ _INACTIVE_NPCS = frozenset(
     }
 )
 
-_ENTITY_KEY_MAP: dict[str, str] | None = None
-
 
 def _get_entity_key_map(entity_classification: dict | None = None) -> dict[str, str]:
     """Build {name: translation_key} mapping from entity_classification or entity_index.json."""
-    global _ENTITY_KEY_MAP
-    if _ENTITY_KEY_MAP is not None:
-        return _ENTITY_KEY_MAP
-    _ENTITY_KEY_MAP = {}
+    if not hasattr(_get_entity_key_map, "_cache"):
+        _get_entity_key_map._cache = {}
+    cache = _get_entity_key_map._cache
+    if cache:
+        return cache
     if entity_classification:
         for name, info in entity_classification.items():
             tk = info.get("translation_key", "") if isinstance(info, dict) else ""
             if tk:
-                _ENTITY_KEY_MAP[name] = tk
+                cache[name] = tk
     else:
         path = OUTPUT_DIR / "entity_index.json"
         if path.exists():
             with open(path, encoding="utf-8") as f:
                 for entry in json.load(f):
-                    _ENTITY_KEY_MAP[entry["name"]] = entry.get("translation_key", "")
-    return _ENTITY_KEY_MAP
+                    cache[entry["name"]] = entry.get("translation_key", "")
+    return cache
 
 
 def _translate_item(translator, name_en: str) -> str:
@@ -80,8 +79,8 @@ def _translate_item(translator, name_en: str) -> str:
 
 def run_quest_extraction(entity_classification=None):
     print("\n--- Quest Extraction ---")
-    global _ENTITY_KEY_MAP
-    _ENTITY_KEY_MAP = None  # reset cache
+    if hasattr(_get_entity_key_map, "_cache"):
+        _get_entity_key_map._cache = {}  # reset cache
     if entity_classification:
         _get_entity_key_map(entity_classification)
 
