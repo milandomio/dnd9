@@ -29,15 +29,16 @@ class CoordinatesRepository:
             ORDER BY s.keyword, s.map_base, s.json_filename
         """)
         result: dict[str, list[SpawnerCoord]] = {}
+        seen_keys: dict[str, set[tuple]] = {}
         for row in c.fetchall():
             term = row["keyword"]
             if term not in result:
                 result[term] = []
+                seen_keys[term] = set()
             coord = dict(row)
             dup_key = (coord["x"], coord["y"], coord["z"], coord["json_filename"])
-            coord["_dup_key"] = dup_key
-            existing_keys = {item["_dup_key"] for item in result[term]}
-            if dup_key not in existing_keys:
+            if dup_key not in seen_keys[term]:
+                seen_keys[term].add(dup_key)
                 result[term].append(coord)
         for term in result:
             for item in result[term]:
