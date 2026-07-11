@@ -41,6 +41,7 @@ def load_game_json() -> dict[str, str]:
 VARIANT_RE = re.compile(r"_\d{4}$")
 QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
 MONSTER_SUBTYPE_RE = re.compile(r"_(BoneWall|BonePrison)$", re.IGNORECASE)
+DUMMY_SUFFIX_RE = re.compile(r"_Dummy$")
 
 
 def strip_ids_prefix(name: str, prefix: str) -> str:
@@ -80,7 +81,7 @@ def extract_monster_name(raw_name: str) -> str:
 
 def extract_props_name(raw_name: str) -> str:
     name = raw_name.removeprefix("Id_Props_")
-    name = re.sub(r"_Dummy$", "", name)
+    name = DUMMY_SUFFIX_RE.sub("", name)
     return name
 
 
