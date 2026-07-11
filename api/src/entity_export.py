@@ -9,6 +9,7 @@ from translator import (
     QUALITY_RE,
     build_coord_out,
     filter_coords,
+    ore_quality_key,
 )
 
 
@@ -171,8 +172,6 @@ def export_props(
     map_to_module: dict | None = None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
-    from translator import ore_quality_key
-
     props_index = []
     props_by_translation: dict[str, list[dict]] = {}
     for r in sorted(props, key=lambda r: ore_quality_key(r["asset_name"])):
