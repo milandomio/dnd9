@@ -45,6 +45,15 @@ RESOLVE_FUZZY_PASS2_RE = re.compile(
 DEBUG_VARIANT_RE = re.compile(r"_(?:Resize|Test|BossTest|DistantView)$")
 LOCKED_RE = re.compile(r"_Locked$")
 
+_TRANSLATION_PREFIXES = (
+    "Text_DesignData_Item_Item_",
+    "Text_DesignData_Monster_Monster_",
+    "Text_DesignData_Props_Props_",
+    "Text_DesignData_Dungeon_DungeonModule_",
+    "Text_DesignData_Emote_Emote_",
+    "Text_DesignData_ActionSkin_",
+)
+
 # Props 目录中的 _Dummy 实体同时也是怪物
 DUMMY_AS_MONSTER = {
     "LivingArmor",
@@ -75,14 +84,7 @@ class NameResolver:
         if translation_key and translation_key in translations:
             return translations[translation_key]
         alias_name = TRANSLATION_ALIAS_MAP.get(name, name)
-        for prefix in [
-            "Text_DesignData_Item_Item_",
-            "Text_DesignData_Monster_Monster_",
-            "Text_DesignData_Props_Props_",
-            "Text_DesignData_Dungeon_DungeonModule_",
-            "Text_DesignData_Emote_Emote_",
-            "Text_DesignData_ActionSkin_",
-        ]:
+        for prefix in _TRANSLATION_PREFIXES:
             alias_key = prefix + alias_name
             if alias_key in translations:
                 return translations[alias_key]
@@ -92,14 +94,7 @@ class NameResolver:
         fuzzy = RESOLVE_FUZZY_RE.sub("", name)
         if fuzzy != name:
             fuzzy_alias = TRANSLATION_ALIAS_MAP.get(fuzzy, fuzzy)
-            for prefix in [
-                "Text_DesignData_Item_Item_",
-                "Text_DesignData_Monster_Monster_",
-                "Text_DesignData_Props_Props_",
-                "Text_DesignData_Dungeon_DungeonModule_",
-                "Text_DesignData_Emote_Emote_",
-                "Text_DesignData_ActionSkin_",
-            ]:
+            for prefix in _TRANSLATION_PREFIXES:
                 fuzzy_key = prefix + fuzzy_alias
                 if fuzzy_key in translations:
                     return translations[fuzzy_key]
@@ -113,14 +108,7 @@ class NameResolver:
             prev = fuzzy2
         if fuzzy2 != name and fuzzy2 != fuzzy:
             fuzzy2_alias = TRANSLATION_ALIAS_MAP.get(fuzzy2, fuzzy2)
-            for prefix in [
-                "Text_DesignData_Item_Item_",
-                "Text_DesignData_Monster_Monster_",
-                "Text_DesignData_Props_Props_",
-                "Text_DesignData_Dungeon_DungeonModule_",
-                "Text_DesignData_Emote_Emote_",
-                "Text_DesignData_ActionSkin_",
-            ]:
+            for prefix in _TRANSLATION_PREFIXES:
                 fuzzy2_key = prefix + fuzzy2_alias
                 if fuzzy2_key in translations:
                     return translations[fuzzy2_key]
@@ -130,14 +118,7 @@ class NameResolver:
             if stripped in HARDCODED_TRANSLATIONS:
                 return HARDCODED_TRANSLATIONS[stripped]
             stripped_alias = TRANSLATION_ALIAS_MAP.get(stripped, stripped)
-            for prefix in [
-                "Text_DesignData_Item_Item_",
-                "Text_DesignData_Monster_Monster_",
-                "Text_DesignData_Props_Props_",
-                "Text_DesignData_Dungeon_DungeonModule_",
-                "Text_DesignData_Emote_Emote_",
-                "Text_DesignData_ActionSkin_",
-            ]:
+            for prefix in _TRANSLATION_PREFIXES:
                 stripped_key = prefix + stripped_alias
                 if stripped_key in translations:
                     return translations[stripped_key]
@@ -187,14 +168,7 @@ class NameResolver:
                 if bare in HARDCODED_TRANSLATIONS:
                     return HARDCODED_TRANSLATIONS[bare]
                 bare_alias = TRANSLATION_ALIAS_MAP.get(bare, bare)
-                for prefix in [
-                    "Text_DesignData_Item_Item_",
-                    "Text_DesignData_Monster_Monster_",
-                    "Text_DesignData_Props_Props_",
-                    "Text_DesignData_Dungeon_DungeonModule_",
-                    "Text_DesignData_Emote_Emote_",
-                    "Text_DesignData_ActionSkin_",
-                ]:
+                for prefix in _TRANSLATION_PREFIXES:
                     bare_key = prefix + bare_alias
                     if bare_key in translations:
                         return translations[bare_key]
