@@ -135,6 +135,7 @@ class SpawnersImporter:
                     spawn_rate = round(raw_rate / _total_pool * 100, 2)
                 else:
                     spawn_rate = round(raw_rate / 10000 * 100, 2)
+                spawn_rate = min(spawn_rate, 100.0)
                 ldg_id = ue_asset_base_name(ldg_path) or ""
                 entity_name = ""
                 for id_key in ("MonsterId", "PropsId"):

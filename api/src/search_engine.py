@@ -136,6 +136,7 @@ def load_all_spawner_data(
                         _grades = item.get("DungeonGrades", []) or []
                         _rates = [raw_rate / _grade_totals[_g] * 100 for _g in _grades]
                         spawn_rate_val = round(min(_rates), 2) if _rates else round(raw_rate / 10000 * 100, 2)
+                        spawn_rate_val = min(spawn_rate_val, 100.0)
                         ldg = item.get("LootDropGroupId", {}) or {}
                         ldg_path = ldg.get("AssetPathName", "")
                         ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
