@@ -461,6 +461,7 @@ def build_and_save_lootdrop_details(
                     _sr = _sr_via_label if _sr_via_label > 0 else drop_engine.get_combined_spawn_rate(_en)
                     if _sr <= 0:
                         _sr = max(spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
+                _sr = round(_sr, 4)
                 _en_mode_rates = spawn_rate_by_mode.get(("", _en), {})
                 _sr_by_mode: dict[str, float] = {}
                 if _en_mode_rates:
@@ -571,10 +572,14 @@ def build_and_save_lootdrop_details(
         for _m in monsters_out:
             for _c in _m.get("coords", []):
                 _all_maps.add(_c["map"])
-        # P005: Coordinate reference optimization — always use ref
+        # P005: Coordinate reference optimization — skip typ-split entries
+        _type_suffixes = {"(特殊)", "(随机)", "组"}
         if entity_page_map:
             for _m in monsters_out:
-                # Try coord_key first (resolved via alias/og_to_keywords), then entity_name
+                _trans = _m.get("translation", "")
+                if any(_s in _trans for _s in _type_suffixes):
+                    _m.pop("_coord_key", None)
+                    continue
                 _ck = _m.pop("_coord_key", None)
                 ref_page = (entity_page_map.get(_ck) if _ck else None) or entity_page_map.get(
                     _m.get("entity_name", _m["name"])
