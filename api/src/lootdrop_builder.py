@@ -434,11 +434,14 @@ def build_and_save_lootdrop_details(
                 if not _dr:
                     _dr = {"PVE": 0, "普通": 0, "豪客赛": 0}
                 _en = _m_data.get("entity_name", _m_data["name"])
+                _coord_labels = {_c["label"] for _c in _m_data["coords"] if _c.get("label")}
                 if _has_locked:
                     _locked_name = (
                         _en.replace("_UnderSea", "_Locked_UnderSea") if "_UnderSea" in _en else _en + "_Locked"
                     )
-                    _common_sks = entity_spawners.get(_en, set()) & entity_spawners.get(_locked_name, set())
+                    _common_sks = (
+                        _coord_labels & entity_spawners.get(_en, set()) & entity_spawners.get(_locked_name, set())
+                    )
                     _best_rate = 0
                     for _sk in _common_sks:
                         _ul_sr = spawn_rate_detail.get((_sk, _en), 0)
@@ -450,7 +453,12 @@ def build_and_save_lootdrop_details(
                     if _sr <= 0:
                         _sr = max(spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
                 else:
-                    _sr = drop_engine.get_combined_spawn_rate(_en)
+                    _sr_via_label = 0
+                    for _cl in _coord_labels:
+                        _pair_sr = spawn_rate_detail.get((_cl, _en), 0)
+                        if _pair_sr > _sr_via_label:
+                            _sr_via_label = _pair_sr
+                    _sr = _sr_via_label if _sr_via_label > 0 else drop_engine.get_combined_spawn_rate(_en)
                     if _sr <= 0:
                         _sr = max(spawn_rate_cache.get(_bn, 100) for _bn in (_m_data.get("_bases") or {_en}))
                 _en_mode_rates = spawn_rate_by_mode.get(("", _en), {})
