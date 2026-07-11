@@ -542,15 +542,20 @@ export default function LootdropDetailPage() {
   function effectiveCount(
     dots: { variant_count?: number; variant_names?: string[] }[]
   ): number {
-    const vcDot = dots.find((d) => d.variant_count && d.variant_count > 1);
-    if (vcDot) {
-      const vc = vcDot.variant_count!;
-      if (vcDot.variant_names && vcDot.variant_names.length > 0) {
-        return 1 / vc;
+    let count = 0;
+    for (const d of dots) {
+      if (d.variant_count && d.variant_count > 1) {
+        const vc = d.variant_count!;
+        if (d.variant_names && d.variant_names.length > 0) {
+          count += 1 / vc;
+        } else {
+          count += 1;
+        }
+      } else {
+        count += 1;
       }
-      return 1;
     }
-    return dots.length;
+    return count;
   }
 
   function computeModuleScore(
@@ -1308,20 +1313,28 @@ export default function LootdropDetailPage() {
                           )}
                           <span style={{ color: tokens.muted }}>
                             {(() => {
-                              const vcDot = mDots.find(
+                              const varDots = mDots.filter(
                                 (d) => d.variant_count && d.variant_count > 1
                               );
-                              if (vcDot) {
-                                const names = vcDot.variant_names ?? [];
-                                if (names.length > 0) {
-                                  return `(${names.join('、')}${vcDot.variant_count}种选1)`;
-                                }
-                                const uniquePositions = new Set(
-                                  mDots.map((d) => `${d.x},${d.y},${d.z}`)
-                                );
-                                return `(${uniquePositions.size}点选1)`;
+                              const regDots = mDots.filter(
+                                (d) => !d.variant_count || d.variant_count <= 1
+                              );
+                              const parts: string[] = [];
+                              if (regDots.length > 0) {
+                                parts.push(`(${regDots.length}点)`);
                               }
-                              return `(${mDots.length}点)`;
+                              if (varDots.length > 0) {
+                                const vc = varDots[0].variant_count!;
+                                const names = varDots[0].variant_names ?? [];
+                                if (names.length > 0) {
+                                  parts.push(
+                                    `(${names.join('、')}${vc}种选${varDots.length})`
+                                  );
+                                } else {
+                                  parts.push(`(${varDots.length}点选1)`);
+                                }
+                              }
+                              return parts.join(' ');
                             })()}
                           </span>
                         </span>
@@ -1341,7 +1354,7 @@ export default function LootdropDetailPage() {
                           color: tokens.accent,
                         }}
                       >
-                        综合爆率 {(sc / 100).toFixed(2)}%
+                        综合爆率 {parseFloat((sc / 100).toFixed(4))}%
                       </div>
                     ) : null;
                   })()}
