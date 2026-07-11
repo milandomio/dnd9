@@ -102,11 +102,14 @@ def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[
     return result
 
 
-def _save(output_dir: Path, filename: str, data: list | dict):
+def _save(output_dir: Path, filename: str, data: list | dict, compact: bool = False):
     path = output_dir / filename
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        if compact:
+            json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+        else:
+            json.dump(data, f, ensure_ascii=False, indent=2)
 
 
 def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str]]:
@@ -734,14 +737,14 @@ def build_and_save_lootdrop_details(
                     }
                     if inline:
                         variant_detail["_modules"] = inline
-                    _save(output_dir, f"lootdrops/{variant_name}.json", variant_detail)
+                    _save(output_dir, f"lootdrops/{variant_name}.json", variant_detail, compact=True)
             elif vs:
                 detail["variant_suffixes"] = vs
             # Clean internal keys from group_drop_info before saving base detail
             for _g_list in _group_drop_info.values():
                 for _e in _g_list:
                     _e.pop("_entity_name", None)
-            _save(output_dir, f"lootdrops/{item_name}.json", detail)
+            _save(output_dir, f"lootdrops/{item_name}.json", detail, compact=True)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}
         detail_count += 1
