@@ -99,8 +99,7 @@ class Translator:
         npc_translations = {}
         prefix = "Text_DesignData_Merchant_Merchant_"
         for key, value in self.translations.items():
-            if key.startswith(prefix) and not key.startswith(prefix + "Merchant"):
-                # 排除 MerchantGreeting, MerchantAffinity 等
+            if key.startswith(prefix):
                 suffix = key[len(prefix) :]
                 if "_" not in suffix:
                     npc_translations[suffix] = value
