@@ -158,7 +158,8 @@ class PageBuilder:
 """
 
         # 前置任务将在HTMLGenerator中处理（需要quest_extractor）
-        html += """            </div>
+        html += """            <!--REQUIRED_QUEST-->
+            </div>
 """
         return html, search_data
 
@@ -337,23 +338,19 @@ class PageBuilder:
 
             # 插入前置任务信息
             if required_quest_display:
-                insert_pos = quest_card_html.rfind("            </div>")
-                before_end = quest_card_html[:insert_pos]
-                after_end = quest_card_html[insert_pos:]
-                quest_card_html = before_end + f"""                <div class="quest-section">
+                required_html = f"""                <div class="quest-section">
                     <div class="quest-label">{self._get_ui_text("required_quest")}</div>
                     <div class="quest-text required-quest">{_esc(required_quest_display)}</div>
                 </div>
-""" + after_end
+"""
+                quest_card_html = quest_card_html.replace("<!--REQUIRED_QUEST-->", required_html)
             elif quest.get("required_quest"):
-                insert_pos = quest_card_html.rfind("            </div>")
-                before_end = quest_card_html[:insert_pos]
-                after_end = quest_card_html[insert_pos:]
-                quest_card_html = before_end + f"""                <div class="quest-section">
+                required_html = f"""                <div class="quest-section">
                     <div class="quest-label">{self._get_ui_text("required_quest")}</div>
                     <div class="quest-text">{_esc(quest['required_quest'])}</div>
                 </div>
-""" + after_end
+"""
+                quest_card_html = quest_card_html.replace("<!--REQUIRED_QUEST-->", required_html)
 
             html_content += quest_card_html
 
