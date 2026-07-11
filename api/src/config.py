@@ -417,7 +417,7 @@ GRADE_DISPLAY_NAMES: dict[int, str] = {
 
 # 参考项目路径（爆率数据来源）
 LOOTDROP_RATE_REFERENCE = (
-    "Output/Exports/DungeonCrawler/Content/DungeonCrawler" "/Data/Generated/V2/LootDrop/LootDropRate.py"
+    "Output/Exports/DungeonCrawler/Content/DungeonCrawler/Data/Generated/V2/LootDrop/LootDropRate.py"
 )
 
 LAYOUT_DIR = GAME_ROOT / "Maps" / "Dungeon" / "Layouts"
