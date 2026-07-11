@@ -35,6 +35,7 @@ class DropRateEngine:
         self._spawn_rate_detail: dict[tuple[str, str], float] = {}
         self._spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
         self._entity_spawners: dict[str, set[str]] = {}
+        self._item_to_ld_ids: dict[str, set[str]] = {}
         # group_id → set of spawner_keywords that belong to this group
         self._group_to_spawners: dict[str, set[str]] = {}
         # base_item_name → set of suffixes with actual drop data
