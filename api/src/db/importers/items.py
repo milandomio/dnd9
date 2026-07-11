@@ -14,6 +14,7 @@ class ItemsImporter:
         c.execute("DELETE FROM item_entities")
         files = load_json_dir(ITEM_DIR)
         variant_counts: Counter = Counter()
+        seen: set[str] = set()
         rows = []
         for raw_name, data_list in files.items():
             if not data_list:
@@ -25,14 +26,10 @@ class ItemsImporter:
                 name_key = (props["Name"] or {}).get("Key", "")
             item_name = extract_item_name(raw_name)
             variant_counts[item_name] += 1
-            rows.append((item_name, raw_name, name_key, ""))
-        seen = set()
-        deduped = []
-        for r in rows:
-            if r[0] not in seen:
-                seen.add(r[0])
-                row = r + (variant_counts.get(r[0], 1),)
-                deduped.append(row)
+            if item_name not in seen:
+                seen.add(item_name)
+                rows.append((item_name, raw_name, name_key, ""))
+        deduped = [r + (variant_counts.get(r[0], 1),) for r in rows]
         c.executemany(
             "INSERT OR REPLACE INTO item_entities (item_name, raw_name, translation_key, category, variant_count) VALUES (?, ?, ?, ?, ?)",
             deduped,
