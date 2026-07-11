@@ -86,7 +86,7 @@ class PageBuilder:
         Returns:
             HTML字符串
         """
-        safe_filename = re.sub(r'[<>:"/\\\\|?*]', "_", npc_en)
+        safe_filename = re.sub(r'[<>:"/\\|?*]', "_", npc_en)
         search_data = f"{npc_name.lower()} {npc_en.lower()}"
 
         npc_en_display = (
@@ -300,7 +300,7 @@ class PageBuilder:
         Returns:
             生成的文件路径
         """
-        safe_filename = re.sub(r'[<>:"/\\\\|?*]', "_", npc_name_en)
+        safe_filename = re.sub(r'[<>:"/\\|?*]', "_", npc_name_en)
         filepath = os.path.join(self.output_dir, f"{safe_filename}.html")
 
         # 页面标题
