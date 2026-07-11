@@ -177,7 +177,7 @@ export default function HomePage() {
                   {entry.page === 'monsters' && '查看怪物位置'}
                   {entry.page === 'props' && '查看实体位置'}
                   {entry.page === 'lootdrops' && '查看物品掉落怪物'}
-                  {entry.page === 'explore' && '地图模块预览'}
+                  {entry.page === 'explore' && '地图模块预览（暂停维护）'}
                   {entry.page === 'quest_items' &&
                     '按地图分组查看任务物品（暂停维护）'}
                   {entry.page === 'quest_npc' && '查看NPC任务详情'}
