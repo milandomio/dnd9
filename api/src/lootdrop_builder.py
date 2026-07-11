@@ -50,7 +50,7 @@ def _classify_label(label: str, entity_name: str) -> str:
         return "direct"
     if "Random" in label:
         return "random"
-    if "Special" in label or "ChestLarge" in label:
+    if "Special" in label or label == "ChestLarge" or label.startswith("ChestLarge_"):
         return "special"
     return "other"
 
