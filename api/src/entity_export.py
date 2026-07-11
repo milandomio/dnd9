@@ -108,6 +108,7 @@ def export_monsters(
     map_to_module: dict | None = None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
+    _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
     monsters_by_translation: dict[str, list[dict]] = {}
     for r in monsters:
         translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
@@ -115,15 +116,14 @@ def export_monsters(
         if translation == r["monster_name"] and QUALITY_RE.search(r["monster_name"]):
             base = QUALITY_RE.sub("", r["monster_name"])
             if base != r["monster_name"]:
-                for br in monsters:
-                    if br["monster_name"] == base:
-                        if br["translation_key"]:
-                            bt = resolve_name(br["monster_name"], br["translation_key"], "monster")
-                            if bt != br["monster_name"]:
-                                translation = bt
-                        else:
-                            translation = base
-                        break
+                br = _monsters_by_name.get(base)
+                if br:
+                    if br["translation_key"]:
+                        bt = resolve_name(br["monster_name"], br["translation_key"], "monster")
+                        if bt != br["monster_name"]:
+                            translation = bt
+                    else:
+                        translation = base
         monsters_by_translation.setdefault(translation, []).append(r)
 
     monsters_index = []
