@@ -539,22 +539,42 @@ export default function LootdropDetailPage() {
     groupedByType.get(g)!.push(item);
   }
 
+  function effectiveCount(
+    dots: { variant_count?: number; variant_names?: string[] }[]
+  ): number {
+    const vcDot = dots.find((d) => d.variant_count && d.variant_count > 1);
+    if (vcDot) {
+      const vc = vcDot.variant_count!;
+      if (vcDot.variant_names && vcDot.variant_names.length > 0) {
+        return 1 / vc;
+      }
+      return 1;
+    }
+    return dots.length;
+  }
+
   function computeModuleScore(
-    item: { mod?: DungeonModule; dots: { monster: LootdropMonster }[] },
+    item: {
+      mod?: DungeonModule;
+      dots: {
+        monster: LootdropMonster;
+        variant_count?: number;
+        variant_names?: string[];
+      }[];
+    },
     rateLookup: Map<string, { sr: number; dr: number }>
   ): number {
-    const counts = new Map<string, number>();
+    const monsterDots = new Map<string, typeof item.dots>();
     for (const d of item.dots) {
-      counts.set(
-        d.monster.translation,
-        (counts.get(d.monster.translation) ?? 0) + 1
-      );
+      const t = d.monster.translation;
+      if (!monsterDots.has(t)) monsterDots.set(t, []);
+      monsterDots.get(t)!.push(d);
     }
     let total = 0;
-    for (const [trans, cnt] of counts) {
+    for (const [trans, dots] of monsterDots) {
       const r = rateLookup.get(trans);
       if (r) {
-        total += r.sr * r.dr * cnt;
+        total += r.sr * r.dr * effectiveCount(dots);
       }
     }
     return total;
@@ -984,23 +1004,6 @@ export default function LootdropDetailPage() {
                         ({mapName})
                       </span>
                     )}
-                    {debug &&
-                      (() => {
-                        const _rl2 =
-                          groupDropRateLookup.get(groupName) ?? new Map();
-                        const sc = computeModuleScore({ mod, dots }, _rl2);
-                        return sc > 0 ? (
-                          <span
-                            style={{
-                              color: tokens.accent,
-                              fontSize: 13,
-                              marginLeft: 6,
-                            }}
-                          >
-                            ({sc})
-                          </span>
-                        ) : null;
-                      })()}
                   </h3>
                   {debug && (
                     <div
@@ -1325,6 +1328,24 @@ export default function LootdropDetailPage() {
                       );
                     })}
                   </div>
+                  {debug &&
+                    (() => {
+                      const _rl2 =
+                        groupDropRateLookup.get(groupName) ?? new Map();
+                      const sc = computeModuleScore({ mod, dots }, _rl2);
+                      return sc > 0 ? (
+                        <div
+                          style={{
+                            marginTop: 4,
+                            fontSize: 12,
+                            textAlign: 'center',
+                            color: tokens.accent,
+                          }}
+                        >
+                          综合爆率 {(sc / 100).toFixed(2)}%
+                        </div>
+                      ) : null;
+                    })()}
                 </div>
               );
             })}
