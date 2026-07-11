@@ -98,10 +98,10 @@ class NameResolver:
                 fuzzy_key = prefix + fuzzy_alias
                 if fuzzy_key in translations:
                     return translations[fuzzy_key]
-        # 第二轮模糊：On/Off+数字/中间段 组合剥离（迭代最多3次）
+        # 第二轮模糊：On/Off+数字/中间段 组合剥离（迭代直到稳定）
         prev = name
         fuzzy2 = name
-        for _ in range(3):
+        while True:
             fuzzy2 = RESOLVE_FUZZY_PASS2_RE.sub("", fuzzy2)
             if fuzzy2 == prev:
                 break
