@@ -183,6 +183,16 @@ def run():
                 pipe.log("spawners stored in DB")
                 added = db.import_spawner_fallback_entities()
                 pipe.log(f"import_spawner_fallback_entities DONE -> {added}")
+                # ╔══════════════════════════════════════════════════════════════╗
+                # ║  CRITICAL: entity_class MUST be rebuilt here!              ║
+                # ║  Do NOT move/remove this line without user confirmation.   ║
+                # ║  Moving it causes:                                         ║
+                # ║  - Spawner fallback entities (HoardChest01_3, etc.)        ║
+                # ║    missing from entity_class → translation fails           ║
+                # ║  - Lootdrop pages show wrong category buttons              ║
+                # ║  - Category merge breaks → coords lost                    ║
+                # ║  - Multiple silent data corruption cascades               ║
+                # ╚══════════════════════════════════════════════════════════════╝
                 entity_class = db.get_entity_classification()
                 cur2 = db.connect().cursor()
                 cur2.execute("DELETE FROM mutually_exclusive_groups")
