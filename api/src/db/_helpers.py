@@ -95,7 +95,7 @@ def ue_to_fs_path(ue_path: str) -> str | None:
     m = _UE_PATH_RE.search(ue_path)
     if not m:
         return None
-    return m.group(1).replace("/", "/")
+    return m.group(1)
 
 
 def ue_asset_base_name(ue_path: str) -> str | None:
