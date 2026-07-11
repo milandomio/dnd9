@@ -421,6 +421,23 @@ export default function LootdropDetailPage() {
     );
   }, [resolvedMonsters]);
 
+  // Build group_drop_info lookup for score-based module sorting
+  const groupDropRateLookup = useMemo(() => {
+    const lookup = new Map<string, Map<string, { sr: number; dr: number }>>();
+    if (!data?.group_drop_info) return lookup;
+    for (const [g, entries] of Object.entries(data.group_drop_info)) {
+      const m = new Map<string, { sr: number; dr: number }>();
+      for (const e of entries) {
+        m.set(e.translation, {
+          sr: e.spawn_rate,
+          dr: e.drop_rates['豪客赛'] ?? 0,
+        });
+      }
+      lookup.set(g, m);
+    }
+    return lookup;
+  }, [data?.group_drop_info]);
+
   // P005: Show loading state while fetching referenced coords
   const hasRefs = monsters.some((m) => m.ref);
   const refsLoaded =
@@ -522,24 +539,63 @@ export default function LootdropDetailPage() {
     groupedByType.get(g)!.push(item);
   }
 
+  function computeModuleScore(
+    item: { mod?: DungeonModule; dots: { monster: LootdropMonster }[] },
+    rateLookup: Map<string, { sr: number; dr: number }>
+  ): number {
+    const counts = new Map<string, number>();
+    for (const d of item.dots) {
+      counts.set(
+        d.monster.translation,
+        (counts.get(d.monster.translation) ?? 0) + 1
+      );
+    }
+    let total = 0;
+    for (const [trans, cnt] of counts) {
+      const r = rateLookup.get(trans);
+      if (r) {
+        total += r.sr * r.dr * cnt;
+      }
+    }
+    return total;
+  }
+
   for (const group of groupedByType.values()) {
+    const _gName = group[0]?.mod?.group || '';
+    const _rl = groupDropRateLookup.get(_gName) ?? new Map();
     group.sort((a, b) => {
+      const scoreA = computeModuleScore(a, _rl);
+      const scoreB = computeModuleScore(b, _rl);
+      if (scoreA !== scoreB) return scoreB - scoreA;
+      if (a.dots.length !== b.dots.length) return b.dots.length - a.dots.length;
       const sy_a = a.mod?.size_y ?? 1;
       const sy_b = b.mod?.size_y ?? 1;
+      if (sy_a !== sy_b) return sy_a - sy_b;
       const sx_a = a.mod?.size_x ?? 1;
       const sx_b = b.mod?.size_x ?? 1;
-      if (sy_a !== sy_b) return sy_a - sy_b;
-      if (sx_a !== sx_b) return sx_a - sx_b;
-      return b.dots.length - a.dots.length;
+      return sx_a - sx_b;
     });
   }
 
   const groupOrder = Object.keys(GROUP_LABELS);
   const sortedGroups = [...groupedByType.entries()].sort(
     ([a, aItems], [b, bItems]) => {
-      const totalA = aItems.reduce((s, item) => s + item.dots.length, 0);
-      const totalB = bItems.reduce((s, item) => s + item.dots.length, 0);
+      const _gA = aItems[0]?.mod?.group || '';
+      const _gB = bItems[0]?.mod?.group || '';
+      const _rlA = groupDropRateLookup.get(_gA) ?? new Map();
+      const _rlB = groupDropRateLookup.get(_gB) ?? new Map();
+      const totalA = aItems.reduce(
+        (s, item) => s + computeModuleScore(item, _rlA),
+        0
+      );
+      const totalB = bItems.reduce(
+        (s, item) => s + computeModuleScore(item, _rlB),
+        0
+      );
       if (totalA !== totalB) return totalB - totalA;
+      const dotA = aItems.reduce((s, item) => s + item.dots.length, 0);
+      const dotB = bItems.reduce((s, item) => s + item.dots.length, 0);
+      if (dotA !== dotB) return dotB - dotA;
       if (!a && !b) return 0;
       if (!a) return 1;
       if (!b) return -1;
