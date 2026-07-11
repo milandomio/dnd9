@@ -984,6 +984,23 @@ export default function LootdropDetailPage() {
                         ({mapName})
                       </span>
                     )}
+                    {debug &&
+                      (() => {
+                        const _rl2 =
+                          groupDropRateLookup.get(groupName) ?? new Map();
+                        const sc = computeModuleScore({ mod, dots }, _rl2);
+                        return sc > 0 ? (
+                          <span
+                            style={{
+                              color: tokens.accent,
+                              fontSize: 13,
+                              marginLeft: 6,
+                            }}
+                          >
+                            ({sc})
+                          </span>
+                        ) : null;
+                      })()}
                   </h3>
                   {debug && (
                     <div
