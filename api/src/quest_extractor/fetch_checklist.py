@@ -12,6 +12,11 @@ class FetchChecklist:
 
     ITEM_SUFFIXES = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
 
+    CATEGORY_EQUIPMENT = "装备NPC"
+    CATEGORY_PREFERRED = "优选NPC"
+    CATEGORY_NOT_RECOMMENDED = "不推荐NPC"
+    CATEGORY_ACTIVE = "可用NPC"
+
     def __init__(self, quest_extractor):
         self.extractor = quest_extractor
         self.translator = quest_extractor.translator
@@ -42,12 +47,12 @@ class FetchChecklist:
 
         def _category_name(npc_en):
             if npc_en in equipment_npcs:
-                return "装备NPC"
+                return FetchChecklist.CATEGORY_EQUIPMENT
             if npc_en in preferred_npcs:
-                return "优选NPC"
+                return FetchChecklist.CATEGORY_PREFERRED
             if npc_en in not_recommended_npcs:
-                return "不推荐NPC"
-            return "可用NPC"
+                return FetchChecklist.CATEGORY_NOT_RECOMMENDED
+            return FetchChecklist.CATEGORY_ACTIVE
 
         rows = []
         for quest in self.extractor.quests_data:
@@ -72,7 +77,7 @@ class FetchChecklist:
 
                 rows.append([npc_cn, npc_en, quest_num, target_name, count, rarity, is_loot, suggested, category])
 
-        rows = [r for r in rows if r[8] != "不推荐NPC"]
+        rows = [r for r in rows if r[8] != FetchChecklist.CATEGORY_NOT_RECOMMENDED]
         rows.sort(key=lambda r: (_category_order(r[1]), r[0], r[2]))
 
         if output_path is None:
