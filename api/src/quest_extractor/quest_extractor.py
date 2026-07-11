@@ -60,6 +60,7 @@ class QuestExtractor:
 
         self.quests_data = []
         self.quest_id_map = {}
+        self._props_tag_index: dict[str, tuple[str, str]] | None = None
 
     def load_all_quests(self):
         """
@@ -561,6 +562,41 @@ class QuestExtractor:
             pass
         return None, None
 
+    def _build_props_tag_index(self) -> dict[str, tuple[str, str]]:
+        """预建 Props IdTag → (translation_key, source_string) 索引。"""
+        index: dict[str, tuple[str, str]] = {}
+        props_path = self.DEFAULT_PROPS_PATH
+        if not os.path.exists(props_path):
+            return index
+
+        for filename in os.listdir(props_path):
+            if not filename.endswith(".json"):
+                continue
+            filepath = os.path.join(props_path, filename)
+            try:
+                with open(filepath, encoding="utf-8") as f:
+                    data_list = json.load(f)
+                data_list = data_list if isinstance(data_list, list) else [data_list]
+                for data in data_list:
+                    properties = data.get("Properties", {})
+                    id_tag = properties.get("IdTag", {})
+                    if not isinstance(id_tag, dict):
+                        continue
+                    tag_name = id_tag.get("TagName", "")
+                    if not tag_name:
+                        continue
+                    name = properties.get("Name", {})
+                    key = name.get("Key", "") if isinstance(name, dict) else ""
+                    source = name.get("LocalizedString", "") if isinstance(name, dict) else ""
+                    index[tag_name] = (key, source)
+            except Exception:
+                continue
+        return index
+
+    def _ensure_props_index(self):
+        if self._props_tag_index is None:
+            self._props_tag_index = self._build_props_tag_index()
+
     def get_props_target_translation(self, props_id_tag):
         """
         获取道具任务的翻译目标
@@ -574,42 +610,17 @@ class QuestExtractor:
         if not props_id_tag:
             return None
 
-        # 在 Props 目录中搜索包含该标签的文件
-        props_path = self.DEFAULT_PROPS_PATH
-        if not os.path.exists(props_path):
+        self._ensure_props_index()
+        entry = self._props_tag_index.get(props_id_tag)
+        if not entry:
             return None
 
-        for filename in os.listdir(props_path):
-            if not filename.endswith(".json"):
-                continue
-
-            filepath = os.path.join(props_path, filename)
-            try:
-                with open(filepath, encoding="utf-8") as f:
-                    data_list = json.load(f)
-
-                # 处理单个对象或数组
-                data_list = data_list if isinstance(data_list, list) else [data_list]
-
-                for data in data_list:
-                    properties = data.get("Properties", {})
-                    id_tag = properties.get("IdTag", {})
-                    if isinstance(id_tag, dict):
-                        tag_name = id_tag.get("TagName", "")
-                        if tag_name == props_id_tag:
-                            # 找到匹配的文件，提取翻译键
-                            name = properties.get("Name", {})
-                            if isinstance(name, dict):
-                                key = name.get("Key", "")
-                                if key and self.translator:
-                                    translated = self.translator.translate(key)
-                                    if translated:
-                                        return translated
-                            return None
-            except Exception as e:
-                print(f"读取Props文件失败 {filepath}: {e}")
-
-        return None
+        key, source = entry
+        if key and self.translator:
+            translated = self.translator.translate(key)
+            if translated:
+                return translated
+        return source or None
 
 
 def main():
