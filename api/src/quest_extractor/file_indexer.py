@@ -46,6 +46,9 @@ class FileIndexer:
 
     def _build_quest_file_map(self):
         """扫描并建立任务文件映射"""
+        import logging
+
+        log = logging.getLogger(__name__)
         if not os.path.exists(self.quest_directory):
             print(f"警告：任务目录不存在: {self.quest_directory}")
             return
@@ -54,12 +57,18 @@ class FileIndexer:
         for root, _, files in os.walk(self.quest_directory):
             for file in files:
                 if file.endswith(".json") and file.startswith(self.QUEST_FILE_PREFIX):
-                    self.quest_file_map[file] = os.path.join(root, file)
-                    count += 1
+                    if file in self.quest_file_map:
+                        log.warning("duplicate quest file: %s (keeping first)", file)
+                    else:
+                        self.quest_file_map[file] = os.path.join(root, file)
+                        count += 1
         print(f"已索引 {count} 个任务文件")
 
     def _build_content_file_map(self):
         """扫描并建立任务内容文件映射"""
+        import logging
+
+        log = logging.getLogger(__name__)
         if not os.path.exists(self.content_directory):
             print(f"警告：任务内容目录不存在: {self.content_directory}")
             return
@@ -70,8 +79,11 @@ class FileIndexer:
             if os.path.exists(content_dir):
                 for file in os.listdir(content_dir):
                     if file.endswith(".json"):
-                        self.content_file_map[file] = os.path.join(content_dir, file)
-                        count += 1
+                        if file in self.content_file_map:
+                            log.warning("duplicate content file: %s (keeping first)", file)
+                        else:
+                            self.content_file_map[file] = os.path.join(content_dir, file)
+                            count += 1
         print(f"已索引 {count} 个任务内容文件")
 
     def get_quest_file_path(self, filename):
