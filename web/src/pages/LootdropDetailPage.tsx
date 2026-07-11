@@ -27,6 +27,7 @@ interface LootdropCoord {
   spawn_rate?: number;
   variant_count?: number;
   variant_names?: string[];
+  score?: number;
 }
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
@@ -504,6 +505,7 @@ export default function LootdropDetailPage() {
         spawn_rate?: number;
         variant_count?: number;
         variant_names?: string[];
+        score?: number;
       }[];
     }
   >();
@@ -523,6 +525,7 @@ export default function LootdropDetailPage() {
         spawn_rate: c.spawn_rate,
         variant_count: c.variant_count,
         variant_names: c.variant_names,
+        score: c.score,
       });
     });
   }
@@ -540,25 +543,6 @@ export default function LootdropDetailPage() {
     groupedByType.get(g)!.push(item);
   }
 
-  function effectiveCount(
-    dots: { variant_count?: number; variant_names?: string[] }[]
-  ): number {
-    let count = 0;
-    for (const d of dots) {
-      if (d.variant_count && d.variant_count > 1) {
-        const vc = d.variant_count!;
-        if (d.variant_names && d.variant_names.length > 0) {
-          count += 1 / vc;
-        } else {
-          count += 1;
-        }
-      } else {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
   function computeModuleScore(
     item: {
       mod?: DungeonModule;
@@ -566,22 +550,14 @@ export default function LootdropDetailPage() {
         monster: LootdropMonster;
         variant_count?: number;
         variant_names?: string[];
+        score?: number;
       }[];
     },
-    rateLookup: Map<string, { sr: number; dr: number }>
+    _rateLookup: Map<string, { sr: number; dr: number }>
   ): number {
-    const monsterDots = new Map<string, typeof item.dots>();
-    for (const d of item.dots) {
-      const t = d.monster.translation;
-      if (!monsterDots.has(t)) monsterDots.set(t, []);
-      monsterDots.get(t)!.push(d);
-    }
     let total = 0;
-    for (const [trans, dots] of monsterDots) {
-      const r = rateLookup.get(trans);
-      if (r) {
-        total += r.sr * r.dr * effectiveCount(dots);
-      }
+    for (const d of item.dots) {
+      if (d.score != null) total += d.score;
     }
     return total;
   }
@@ -851,7 +827,7 @@ export default function LootdropDetailPage() {
             <label
               style={{ color: tokens.text, fontSize: 13, whiteSpace: 'nowrap' }}
             >
-              默认显示阈值（乘积%）：{threshold}%
+              默认显示阈值（单点综合爆率%）：{threshold}%
             </label>
             <input
               type="range"
@@ -1366,7 +1342,7 @@ export default function LootdropDetailPage() {
                           color: tokens.accent,
                         }}
                       >
-                        综合爆率 {parseFloat((sc / 100).toFixed(4))}%
+                        单点综合爆率 {parseFloat(sc.toFixed(4))}%
                       </div>
                     ) : null;
                   })()}
