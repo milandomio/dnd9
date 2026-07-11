@@ -403,14 +403,16 @@ export default function LootdropDetailPage() {
     });
   }, [monsters, dataVersion]);
 
-  // P005: Merge referenced coordinates
+  // P005: Merge referenced coordinates, filtered to only maps present in _modules
   const resolvedMonsters = useMemo(
     () =>
       monsters.map((m) => ({
         ...m,
-        coords: m.coords ?? refCoords.get(m.ref!) ?? [],
+        coords: (m.coords ?? refCoords.get(m.ref!) ?? []).filter(
+          (c) => !m.ref || modules.size === 0 || modules.has(c.map)
+        ),
       })),
-    [monsters, refCoords]
+    [monsters, refCoords, modules]
   );
 
   const orderedMonsters = useMemo(() => {
