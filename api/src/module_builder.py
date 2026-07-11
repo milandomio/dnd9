@@ -15,6 +15,18 @@ from config import (
 )
 from translator import DEBUG_VARIANT_RE, DUMMY_AS_MONSTER, QUALITY_RE
 
+_dir_cache: dict[Path, list[Path]] = {}
+
+
+def _list_dir_files(directory: Path) -> list[Path]:
+    """Cache directory listing for .png/.webp files."""
+    if directory not in _dir_cache:
+        try:
+            _dir_cache[directory] = [p for p in directory.iterdir() if p.suffix.lower() in (".png", ".webp")]
+        except OSError:
+            _dir_cache[directory] = []
+    return _dir_cache[directory]
+
 
 def _save(output_dir: Path, filename: str, data: list | dict):
     path = output_dir / filename
@@ -25,7 +37,7 @@ def _save(output_dir: Path, filename: str, data: list | dict):
 
 def _match_in_dir(directory: Path, sl: str):
     """Match sl against webp/png files in a flat directory using the same logic as _resolve_img."""
-    files = [p for p in directory.iterdir() if p.suffix.lower() in (".png", ".webp")]
+    files = _list_dir_files(directory)
     stems_lower = {p.stem.lower(): p.stem for p in files}
     sl_lower = sl.lower()
     # exact
@@ -81,45 +93,45 @@ def _resolve_img(art_root: Path, group: str, sl: str, webp_cache: Path | None = 
     png = group_dir / f"{sl}.png"
     if png.exists():
         return sl, "found"
-    for p in group_dir.iterdir():
-        if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl.lower():
+    for p in _list_dir_files(group_dir):
+        if p.stem.lower() == sl.lower():
             return p.stem, "found"
     # Try tail match (part after first underscore)
     tail = sl.split("_", 1)[-1] if "_" in sl else sl
     png = group_dir / f"{tail}.png"
     if png.exists():
         return tail, "found"
-    for p in group_dir.iterdir():
-        if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail.lower():
+    for p in _list_dir_files(group_dir):
+        if p.stem.lower() == tail.lower():
             return p.stem, "found"
     # Try stripping numeric suffix (_01, _02 etc.)
     sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
     if sl_stripped != sl:
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_stripped.lower():
+        for p in _list_dir_files(group_dir):
+            if p.stem.lower() == sl_stripped.lower():
                 return p.stem, "found"
         tail_stripped = re.sub(r"_\d{2,4}$", "", tail)
         if tail_stripped != tail:
-            for p in group_dir.iterdir():
-                if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == tail_stripped.lower():
+            for p in _list_dir_files(group_dir):
+                if p.stem.lower() == tail_stripped.lower():
                     return p.stem, "found"
     # Try stripping _Center / _Corner / _Passage suffix (keep trailing _NN)
     sl_center_stripped = re.sub(r"_(?:Center|Corner|Passage)(?=_\d|$)", "", sl)
     if sl_center_stripped != sl:
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_center_stripped.lower():
+        for p in _list_dir_files(group_dir):
+            if p.stem.lower() == sl_center_stripped.lower():
                 return p.stem, "found"
     # Try stripping _Resize / _Test / _BossTest / _DistantView debug suffixes
     sl_debug_stripped = re.sub(r"_(?:Resize|Test|BossTest|DistantView)$", "", sl)
     if sl_debug_stripped != sl:
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower() == sl_debug_stripped.lower():
+        for p in _list_dir_files(group_dir):
+            if p.stem.lower() == sl_debug_stripped.lower():
                 return p.stem, "found"
     # Try numeric prefix match: after stripping _\d{2,4}$, find any file starting with the stripped prefix
     if sl_stripped != sl:
         prefix = sl_stripped.lower()
-        for p in group_dir.iterdir():
-            if p.suffix.lower() in (".png", ".webp") and p.stem.lower().startswith(prefix):
+        for p in _list_dir_files(group_dir):
+            if p.stem.lower().startswith(prefix):
                 return p.stem, "found"
     return sl, "not_found"
 
