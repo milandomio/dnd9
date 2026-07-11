@@ -565,7 +565,9 @@ def build_and_save_lootdrop_details(
                 _c["score"] = round(_score, 4)
         merged = {k: v for k, v in merged.items() if v["coords"]}
         for _v in merged.values():
-            _v.pop("_bases", None)
+            _bases = _v.pop("_bases", None)
+            if _bases and len(_bases) > 1:
+                _v["_multi_base"] = True
         monsters_out = list(merged.values())
         # P005: Collect all maps before ref optimization strips coords
         _all_maps: set[str] = set()
@@ -582,6 +584,9 @@ def build_and_save_lootdrop_details(
         if entity_page_map:
             for _m in monsters_out:
                 if _m.get("entity_name", _m["name"]) in _split_entities:
+                    _m.pop("_coord_key", None)
+                    continue
+                if _m.pop("_multi_base", None):
                     _m.pop("_coord_key", None)
                     continue
                 _ck = _m.pop("_coord_key", None)
