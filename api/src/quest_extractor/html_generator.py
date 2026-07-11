@@ -56,7 +56,6 @@ class HTMLGenerator:
         equipment_npcs=None,
         preferred_npcs=None,
         not_recommended_npcs=None,
-        dark_mode=False,
     ):
         """
         生成所有页面
@@ -68,7 +67,6 @@ class HTMLGenerator:
             equipment_npcs: 装备NPC的英文名集合（可选）
             preferred_npcs: 优选NPC的英文名集合（可选）
             not_recommended_npcs: 不推荐NPC的英文名集合（可选）
-            dark_mode: 是否使用深色主题
 
         Returns:
             生成的文件路径列表
@@ -80,6 +78,6 @@ class HTMLGenerator:
             equipment_npcs=equipment_npcs,
             preferred_npcs=preferred_npcs,
             not_recommended_npcs=not_recommended_npcs,
-            dark_mode=dark_mode,
+            dark_mode=self.dark_mode,
         )
         return generated_files
