@@ -52,7 +52,7 @@ class CoordinatesRepository:
             "COUNT(DISTINCT original_keyword) as cnt, "
             "COUNT(*) as total, "
             "GROUP_CONCAT(DISTINCT original_keyword) as keywords "
-            "FROM spawners WHERE group_parent != '' "
+            "FROM spawners WHERE group_parent != '' AND has_lootdrop = 1 "
             "GROUP BY map_base, json_filename, group_parent HAVING cnt > 1"
         ):
             names = row["keywords"].split(",")
@@ -63,7 +63,7 @@ class CoordinatesRepository:
         for row in c.execute(
             "SELECT map_base, json_filename, group_parent, "
             "COUNT(*) as total "
-            "FROM spawners WHERE group_parent != '' "
+            "FROM spawners WHERE group_parent != '' AND has_lootdrop = 1 "
             "GROUP BY map_base, json_filename, group_parent "
             "HAVING COUNT(DISTINCT original_keyword) = 1 AND COUNT(*) > 1"
         ):
