@@ -572,12 +572,16 @@ def build_and_save_lootdrop_details(
         for _m in monsters_out:
             for _c in _m.get("coords", []):
                 _all_maps.add(_c["map"])
-        # P005: Coordinate reference optimization — skip typ-split entries
+        # P005: Coordinate ref optimization — inline coords for type-split entities
         _type_suffixes = {"(特殊)", "(随机)", "组"}
+        _split_entities: set[str] = set()
+        for _m in monsters_out:
+            _trans = _m.get("translation", "")
+            if any(_s in _trans for _s in _type_suffixes):
+                _split_entities.add(_m.get("entity_name", _m["name"]))
         if entity_page_map:
             for _m in monsters_out:
-                _trans = _m.get("translation", "")
-                if any(_s in _trans for _s in _type_suffixes):
+                if _m.get("entity_name", _m["name"]) in _split_entities:
                     _m.pop("_coord_key", None)
                     continue
                 _ck = _m.pop("_coord_key", None)
