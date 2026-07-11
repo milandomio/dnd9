@@ -415,16 +415,14 @@ class ContentRenderer:
 
         return target_name, loot_state, rarity, dungeon_type
 
-    def _render_fetch_target(self, content_data):
+    def _resolve_item_target(self, content_data):
         """
-        渲染 Fetch 类型目标
+        解析物品目标名称（TypeTag 或 ItemIdTag）。
 
         Returns:
-            (target_name, loot_state, rarity)
+            target_name: 物品名称
         """
         target_name = ""
-        loot_state = ""
-        rarity = ""
 
         # 优先 TypeTag（物品类型）
         type_tag = content_data.get("TypeTag", {})
@@ -459,6 +457,19 @@ class ContentRenderer:
                     target_name = translated if translated else item_name
                 else:
                     target_name = item_name
+
+        return target_name
+
+    def _render_fetch_target(self, content_data):
+        """
+        渲染 Fetch 类型目标
+
+        Returns:
+            (target_name, loot_state, rarity)
+        """
+        target_name = self._resolve_item_target(content_data)
+        loot_state = ""
+        rarity = ""
 
         # 战利品状态
         loot_state_raw = content_data.get("ItemLootState", "")
@@ -522,42 +533,8 @@ class ContentRenderer:
         Returns:
             (target_name, dungeon_type)
         """
-        target_name = ""
+        target_name = self._resolve_item_target(content_data)
         dungeon_type = ""
-
-        # 优先 TypeTag
-        type_tag = content_data.get("TypeTag", {})
-        if isinstance(type_tag, dict):
-            type_tag_name = type_tag.get("TagName", "")
-            if type_tag_name and "Type.Item." in type_tag_name:
-                item_type = type_tag_name.split("Type.Item.")[-1]
-                type_key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_{item_type}"
-                if self.translator:
-                    translated = self.translator.translate(type_key)
-                    target_name = translated if translated else item_type
-                else:
-                    target_name = item_type
-
-        # 如果没有 TypeTag，尝试 ItemIdTag
-        if not target_name:
-            item_tag = content_data.get("ItemIdTag", {}).get("TagName", "")
-            if item_tag:
-                item_name = item_tag.split(".")[-1] if "." in item_tag else item_tag
-                item_key = f"Text_DesignData_Item_Item_{item_name}"
-                props_key = f"Text_DesignData_Props_Props_{item_name}"
-                if self.translator:
-                    translated = self.translator.translate(item_key)
-                    if not translated:
-                        for suffix in self.ITEM_SUFFIXES:
-                            key_with_suffix = f"Text_DesignData_Item_Item_{item_name}{suffix}"
-                            translated = self.translator.translate(key_with_suffix)
-                            if translated:
-                                break
-                        if not translated:
-                            translated = self.translator.translate(props_key)
-                    target_name = translated if translated else item_name
-                else:
-                    target_name = item_name
 
         # 地牢类型（类似 Escape）
         if content_data.get("DungeonIdTags"):
