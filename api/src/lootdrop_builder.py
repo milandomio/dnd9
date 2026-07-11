@@ -13,6 +13,8 @@ from translator import (
     base_monster_name,
 )
 
+_NO_SCORE = -1
+
 _MONSTER_COLORS = [
     "#E74C3C",
     "#3498DB",
@@ -512,8 +514,8 @@ def build_and_save_lootdrop_details(
             for _entry in _g_list:
                 _trans = _entry["translation"]
                 _m = QUALITY_RE.search(_entry.get("_variant", ""))
-                _prio = {"Elite": 3, "Nightmare": 2, "Common": 1}.get(_m.group(1) if _m else "", -1)
-                if _trans not in _best or _prio > _best[_trans].get("_q_prio", -1):
+                _prio = {"Elite": 3, "Nightmare": 2, "Common": 1}.get(_m.group(1) if _m else "", _NO_SCORE)
+                if _trans not in _best or _prio > _best[_trans].get("_q_prio", _NO_SCORE):
                     _best[_trans] = _entry
                     _best[_trans]["_q_prio"] = _prio
             _g_list[:] = list(_best.values())
@@ -606,12 +608,12 @@ def build_and_save_lootdrop_details(
                 if _trans not in _max_scores or _score > _max_scores[_trans]:
                     _max_scores[_trans] = _score
         for _m in monsters_out:
-            _m["max_score"] = _max_scores.get(_m["translation"], -1)
+            _m["max_score"] = _max_scores.get(_m["translation"], _NO_SCORE)
         # Limit total coords to MAX_COORDS_PER_PAGE (sort by max_score desc)
         # P005: Handle referenced entities (no inline coords)
         _total_coords = sum(len(_m.get("coords", [])) for _m in monsters_out)
         if _total_coords > MAX_COORDS_PER_PAGE:
-            monsters_out.sort(key=lambda x: x.get("max_score", -1), reverse=True)
+            monsters_out.sort(key=lambda x: x.get("max_score", _NO_SCORE), reverse=True)
             _kept = []
             _budget = MAX_COORDS_PER_PAGE
             for _m in monsters_out:
