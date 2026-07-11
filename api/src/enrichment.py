@@ -22,6 +22,8 @@ def enrich_all_entities(
     spawn_rate_detail = drop_engine.spawn_rate_detail
     entity_spawners = drop_engine.entity_spawners
 
+    _spawner_ldg_lower: dict[str, str] = {k.lower(): v for k, v in spawner_ldg.items()}
+
     # ── Update item entities with group_drop_info from lootdrop files ──
     if log_fn:
         log_fn("[JSON] updating item entities with group drop info...")
@@ -118,11 +120,7 @@ def enrich_all_entities(
                 if ldg_id:
                     break
         if not ldg_id:
-            lower = mname.lower()
-            for k, v in spawner_ldg.items():
-                if k.lower() == lower:
-                    ldg_id = v
-                    break
+            ldg_id = _spawner_ldg_lower.get(mname.lower(), "")
         if not ldg_id:
             continue
         coords = edata.get("coords", [])
@@ -168,11 +166,7 @@ def enrich_all_entities(
         pname = edata["name"]
         ldg_id = spawner_ldg.get(pname, "")
         if not ldg_id:
-            lower = pname.lower()
-            for k, v in spawner_ldg.items():
-                if k.lower() == lower:
-                    ldg_id = v
-                    break
+            ldg_id = _spawner_ldg_lower.get(pname.lower(), "")
         if not ldg_id:
             ldg_id = ore_ldg.get(pname, "")
         if not ldg_id:
