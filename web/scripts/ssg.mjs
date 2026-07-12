@@ -327,5 +327,33 @@ rmSync(SSR_OUT, { recursive: true, force: true });
 try { rmSync(join(DIST, ".vite"), { recursive: true, force: true }); } catch {}
 console.log("[ssg] SSR build cleaned up");
 
+// ---- step 8: sitemap.xml ----
+const SITE = "https://dnd9.icetar.com";
+const dataDateStr = new Date(Number(dataDate) * 1000).toISOString().split("T")[0];
+
+function sitemapPriority(path) {
+  if (path === "/") return ["1.0", "daily"];
+  if (path === "/explore") return ["0.7", "weekly"];
+  if (path.startsWith("/items/") || path.startsWith("/monsters/") || path.startsWith("/props/")) return ["0.6", "weekly"];
+  if (path.startsWith("/lootdrops/")) return ["0.5", "weekly"];
+  if (path.startsWith("/dungeon_modules/")) return ["0.5", "weekly"];
+  if (path.startsWith("/quest_")) return ["0.4", "monthly"];
+  // list pages
+  if (path.split("/").length <= 2) return ["0.8", "weekly"];
+  return ["0.3", "monthly"];
+}
+
+let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+for (const r of routes) {
+  if (r.redirect) continue;
+  const loc = SITE + (r.path === "/" ? "/" : r.path.replace(/\/?$/, "/"));
+  const [prio, freq] = sitemapPriority(r.path);
+  sitemap += `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
+}
+sitemap += '</urlset>\n';
+writeFileSync(join(DIST, "sitemap.xml"), sitemap, "utf-8");
+console.log(`[ssg] sitemap.xml generated (${routes.length - routes.filter(r => r.redirect).length} URLs)`);
+
 const total = ((Date.now() - t0) / 1000).toFixed(1);
 console.log(`[ssg] done! ${routes.length} pages in ${total}s (mode=${QUICK ? "quick" : "full"})`);
