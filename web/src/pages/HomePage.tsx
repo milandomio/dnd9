@@ -86,12 +86,14 @@ export default function HomePage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>DarkFindV5游戏导航 | 道具、怪物、物品、掉落位置查询</title>
+        <title>
+          越来越黑暗光速指南 DarkFlashNav | 道具、怪物、物品、掉落位置查询
+        </title>
         <meta
           name="description"
-          content="DarkFindV5 游戏导航——查询游戏内物品、怪物、实体、掉落物的地图位置，支持坐标偏移调试。"
+          content="越来越黑暗光速指南 DarkFlashNav——查询游戏内物品、怪物、实体、掉落物的地图位置，支持坐标偏移调试。"
         />
-        <meta property="og:title" content="DarkFindV5游戏导航" />
+        <meta property="og:title" content="越来越黑暗光速指南 DarkFlashNav" />
         <meta
           property="og:description"
           content="查询游戏内物品、怪物、实体、掉落物的地图位置"
@@ -106,7 +108,7 @@ export default function HomePage() {
           marginBottom: 12,
         }}
       >
-        DarkFindV5游戏导航
+        越来越黑暗光速指南 DarkFlashNav
       </h1>
       <Disclaimer />
       <div

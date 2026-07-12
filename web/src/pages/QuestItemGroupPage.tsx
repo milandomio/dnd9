@@ -245,7 +245,9 @@ export default function QuestItemGroupPage() {
       </button>
 
       <Helmet>
-        <title>{data.group_display} 任务物品 | DarkFindV5游戏导航</title>
+        <title>
+          {data.group_display} 任务物品 | 越来越黑暗光速指南 DarkFlashNav
+        </title>
         <meta
           name="description"
           content={`${data.group_display} 任务物品位置，${visibleCount} 个实体，${totalCoords} 个位置点。`}

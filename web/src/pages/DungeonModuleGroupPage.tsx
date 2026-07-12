@@ -77,7 +77,7 @@ export default function DungeonModuleGroupPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>{groupLabel} 地图模块 | DarkFindV5游戏导航</title>
+        <title>{groupLabel} 地图模块 | 越来越黑暗光速指南 DarkFlashNav</title>
         <meta
           name="description"
           content={`${groupLabel} 地图模块，共 ${modules.length} 个模块。`}
