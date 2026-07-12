@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
@@ -557,7 +557,10 @@ export default function LootdropDetailPage() {
   ): number {
     let total = 0;
     for (const d of item.dots) {
-      if (d.score != null) total += d.score;
+      if (d.score != null) {
+        const vc = d.variant_count ?? 1;
+        total += vc > 1 ? Math.round((d.score / vc) * 10000) / 10000 : d.score;
+      }
     }
     return total;
   }
@@ -569,6 +572,9 @@ export default function LootdropDetailPage() {
       const scoreA = computeModuleScore(a, _rl);
       const scoreB = computeModuleScore(b, _rl);
       if (scoreA !== scoreB) return scoreB - scoreA;
+      const hasVariantA = a.dots.some((d) => (d.variant_count ?? 1) > 1);
+      const hasVariantB = b.dots.some((d) => (d.variant_count ?? 1) > 1);
+      if (hasVariantA !== hasVariantB) return hasVariantA ? 1 : -1;
       if (a.dots.length !== b.dots.length) return b.dots.length - a.dots.length;
       const sy_a = a.mod?.size_y ?? 1;
       const sy_b = b.mod?.size_y ?? 1;
@@ -721,9 +727,9 @@ export default function LootdropDetailPage() {
               currentSuffix === suffix ||
               (!currentSuffix && suffix === defaultSuffix);
             return (
-              <button
+              <Link
                 key={suffix}
-                onClick={() => navigate(`/lootdrops/${itemName}_${suffix}/`)}
+                to={`/lootdrops/${itemName}_${suffix}/`}
                 style={{
                   padding: '8px 15px',
                   border: `2px solid ${color}`,
@@ -735,10 +741,12 @@ export default function LootdropDetailPage() {
                   background: isActive ? color : 'transparent',
                   opacity: isActive ? 1 : 0.5,
                   transition: 'all 0.2s',
+                  textDecoration: 'none',
+                  display: 'inline-block',
                 }}
               >
                 {rarity}
-              </button>
+              </Link>
             );
           })}
         </div>
@@ -1348,7 +1356,7 @@ export default function LootdropDetailPage() {
                           color: tokens.accent,
                         }}
                       >
-                        单点综合爆率 {parseFloat(sc.toFixed(4))}%
+                        综合爆率 {parseFloat(sc.toFixed(4))}%
                       </div>
                     ) : null;
                   })()}

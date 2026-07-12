@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
 import { useSSRData } from '../context/SSRDataContext';
@@ -71,7 +71,6 @@ const DEFAULT_THEME = {
 export default function HomePage() {
   const ssrData = useSSRData<IndexEntry[]>('home');
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
-  const navigate = useNavigate();
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
 
@@ -128,16 +127,17 @@ export default function HomePage() {
           .map((entry) => {
             const t = CARD_THEME[entry.page] ?? DEFAULT_THEME;
             return (
-              <div
+              <Link
                 key={entry.page}
-                onClick={() => navigate(`/${entry.page}/`)}
+                to={`/${entry.page}/`}
                 style={{
+                  textDecoration: 'none',
+                  display: 'block',
                   background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
                   border: `2px solid ${t.border}`,
                   borderRadius: 16,
                   padding: '18px 16px',
                   textAlign: 'center',
-                  cursor: 'pointer',
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                   boxShadow: `0 4px 6px ${tokens.darkShadow}`,
                 }}
@@ -190,7 +190,7 @@ export default function HomePage() {
                   {entry.page === 'quest_npc' && '查看NPC任务详情'}
                   {entry.page === 'dungeon_modules' && '按地图分组查看所有模块'}
                 </div>
-              </div>
+              </Link>
             );
           })}
       </div>
