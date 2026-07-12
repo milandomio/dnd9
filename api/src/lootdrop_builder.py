@@ -649,7 +649,15 @@ def build_and_save_lootdrop_details(
                 if inline:
                     detail["_modules"] = inline
             # Generate per-variant detail files with variant-specific drop rates
-            vs = entry.get("variant_suffixes")
+            variant_count = entry.get("variant_count", 1)
+            vs = None
+            if variant_count > 1:
+                if item_name.endswith("_8001"):
+                    vs = ["8001"]
+                else:
+                    # Compute suffixes from variant_count: 1001, 2001, ..., N*1000+1
+                    vs = [str(1000 * i + 1).zfill(4) for i in range(1, variant_count + 1)]
+                    vs = [s for s in vs if s != "8001"]
             if vs and len(vs) > 1:
                 if translations:
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
