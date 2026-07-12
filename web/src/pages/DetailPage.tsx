@@ -191,7 +191,8 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {entity.translation || entity.name} 位置汇总 | DarkFindV5游戏导航
+          {entity.translation || entity.name} 位置汇总 | 越来越黑暗光速指南
+          DarkFlashNav
         </title>
         <meta
           name="description"

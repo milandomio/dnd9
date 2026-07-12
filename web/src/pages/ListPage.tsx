@@ -95,7 +95,8 @@ export default function ListPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          【{LABEL_MAP[page!] ?? page}】实体位置汇总 | DarkFindV5游戏导航
+          【{LABEL_MAP[page!] ?? page}】实体位置汇总 | 越来越黑暗光速指南
+          DarkFlashNav
         </title>
         <meta
           name="description"

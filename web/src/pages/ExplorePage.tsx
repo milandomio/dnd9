@@ -55,7 +55,7 @@ export default function ExplorePage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>任务探索表 | DarkFindV5游戏导航</title>
+        <title>任务探索表 | 越来越黑暗光速指南 DarkFlashNav</title>
         <meta
           name="description"
           content={`探索目标汇总——${data.length} 个探索目标，分布在 ${grouped.size} 个NPC。`}

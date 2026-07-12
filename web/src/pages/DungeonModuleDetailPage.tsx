@@ -172,7 +172,9 @@ export default function DungeonModuleDetailPage() {
       </button>
 
       <Helmet>
-        <title>{m.translation} 地图模块 | DarkFindV5游戏导航</title>
+        <title>
+          {m.translation} 地图模块 | 越来越黑暗光速指南 DarkFlashNav
+        </title>
         <meta
           name="description"
           content={`${m.translation} 地图模块详情，${sx}x${sy}，分组 ${groupLabel}，${entities.length} 个实体，${totalCoords} 个位置。`}

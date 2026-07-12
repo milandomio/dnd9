@@ -72,7 +72,7 @@ export default function QuestNPCPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>任务NPC表 | DarkFindV5游戏导航</title>
+        <title>任务NPC表 | 越来越黑暗光速指南 DarkFlashNav</title>
         <meta
           name="description"
           content="NPC任务详情查询——查看各NPC的任务、奖励、需求。"

@@ -638,7 +638,8 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {data.translation || data.name} 掉落来源 | DarkFindV5游戏导航
+          {data.translation || data.name} 掉落来源 | 越来越黑暗光速指南
+          DarkFlashNav
         </title>
         <meta
           name="description"
