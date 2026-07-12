@@ -43,8 +43,6 @@ class DropRateEngine:
         self._ld_id_to_groups: dict[str, set[str]] = {}
         # base_entity_name → combined spawn rate across quality variants
         self._combined_spawn_rate_cache: dict[str, float] = {}
-        self._candidate_ids_cache: dict[str, set[str]] = {}
-        self._variant_rate_cache: dict[tuple, float] = {}
         self._item_to_ld_ids: dict[str, set[str]] = {}
         self._variant_rate_cache: dict[tuple, float] = {}
 
@@ -499,11 +497,6 @@ class DropRateEngine:
             if _cv is not None:
                 return _cv
         grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
-        if not target_ld_id:
-            _ck = (ldg_id, luck_grade, full_grade, item_name)
-            _cv = self._variant_rate_cache.get(_ck)
-            if _cv is not None:
-                return _cv
         if not grade_data:
             if not target_ld_id:
                 self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = 0.0
@@ -549,11 +542,7 @@ class DropRateEngine:
         if found:
             if not target_ld_id:
                 self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = total_weight
-            if not target_ld_id:
-                self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = total_weight
             return total_weight
-        if not target_ld_id:
-            self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = 0.0
         if not target_ld_id:
             self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = 0.0
         return 0.0
