@@ -275,10 +275,12 @@ def build_loot_index(
                 seen_bases.add(b)
                 merged_names.append(mn)
                 merged_translations.append(mt)
+        raw_name = item_row.get("raw_name", "") if item_row else ""
         entry: dict = {
             "name": item_name,
             "translation": translation,
             "variant_count": variant_count,
+            "raw_name": raw_name,
             "monsters": sorted(merged_names),
             "monster_translations": merged_translations,
         }
@@ -655,9 +657,12 @@ def build_and_save_lootdrop_details(
                 if item_name.endswith("_8001"):
                     vs = ["8001"]
                 else:
-                    # Compute suffixes from variant_count: 1001, 2001, ..., N*1000+1
-                    vs = [str(1000 * i + 1).zfill(4) for i in range(1, variant_count + 1)]
-                    vs = [s for s in vs if s != "8001"]
+                    raw_name = entry.get("raw_name", "")
+                    m = _SUFFIX_NUM_RE.search(raw_name)
+                    if m:
+                        first_num = int(m.group(1))
+                        vs = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
+                        vs = [s for s in vs if s != "8001"]
             if vs and len(vs) > 1:
                 if translations:
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
