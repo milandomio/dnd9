@@ -60,6 +60,7 @@ export default function ExplorePage() {
           name="description"
           content={`探索目标汇总——${data.length} 个探索目标，分布在 ${grouped.size} 个NPC。`}
         />
+        <meta name="keywords" content="任务探索,探索任务,地牢探索" />
       </Helmet>
       <h1
         style={{

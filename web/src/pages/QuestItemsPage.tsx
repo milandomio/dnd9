@@ -55,6 +55,7 @@ export default function QuestItemsPage() {
           name="description"
           content="任务物品查询——按地图分组查看任务物品分布。"
         />
+        <meta name="keywords" content="任务物品,任务攻略,任务查询" />
       </Helmet>
       <h1
         style={{

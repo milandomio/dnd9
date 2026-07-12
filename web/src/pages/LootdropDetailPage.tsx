@@ -646,6 +646,10 @@ export default function LootdropDetailPage() {
           content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${totalCoords} 个位置点。`}
         />
         <meta
+          name="keywords"
+          content="掉落查询,爆率查询,怪物掉落,物品掉落,地图坐标,掉落位置"
+        />
+        <meta
           property="og:title"
           content={`${data.translation || data.name} 掉落来源 | DarkFindV5`}
         />

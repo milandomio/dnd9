@@ -103,6 +103,10 @@ export default function ListPage() {
           content={`${LABEL_MAP[page!] ?? page} 共 ${data.length} 个实体，查询地图位置分布。`}
         />
         <meta
+          name="keywords"
+          content="物品查询,怪物查询,装备查询,武器查询,防具查询,饰品查询,掉落查询,游戏攻略"
+        />
+        <meta
           property="og:title"
           content={`【${LABEL_MAP[page!] ?? page}】实体位置汇总`}
         />
