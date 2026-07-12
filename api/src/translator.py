@@ -186,7 +186,7 @@ def build_coord_out(c: dict, vc: dict) -> dict:
         "map": c["map_base"],
         "file": c["json_filename"],
         "version": c["version"],
-        "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
+        "label": c["original_keyword"],
     }
     vc_info = vc.get((c["map_base"], c["json_filename"], c.get("group_parent", "")))
     if vc_info and vc_info[0] > 1:

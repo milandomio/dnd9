@@ -48,14 +48,7 @@ def _classify_label(label: str, entity_name: str) -> str:
     if not label:
         return "direct"
     en_base = QUALITY_RE.sub("", entity_name)
-    # Handle double underscore variants (e.g., GoldChest__UnderSea)
-    label_normalized = label.replace("__", "_")
-    if (
-        label == en_base
-        or label.startswith(en_base + "_")
-        or label_normalized == en_base
-        or label_normalized.startswith(en_base + "_")
-    ):
+    if label == en_base or label.startswith(en_base + "_"):
         return "direct"
     if "Random" in label:
         return "random"
@@ -568,6 +561,31 @@ def build_and_save_lootdrop_details(
             if _bases and len(_bases) > 1:
                 _v["_multi_base"] = True
         monsters_out = list(merged.values())
+        # Add virtual entity entries for sub-category buttons
+        _existing_trans = {m["translation"] for m in monsters_out}
+        for _g_entries in _group_drop_info.values():
+            for _entry in _g_entries:
+                _trans = _entry["translation"]
+                if _trans not in _existing_trans:
+                    # Find base entity with same base translation for ref
+                    _base_name = _trans.split("(")[0] if "(" in _trans else _trans
+                    _ref_page = None
+                    for _m in monsters_out:
+                        _mt = _m.get("translation", "")
+                        if _mt == _base_name or _mt.startswith(_base_name):
+                            _ref_page = _m.get("ref") or f"monsters/{_m.get('entity_name', _m['name'])}"
+                            break
+                    _virtual = {
+                        "name": _entry.get("_entity_name", _trans),
+                        "translation": _trans,
+                        "coords": [],
+                    }
+                    if _ref_page:
+                        _virtual["ref"] = _ref_page
+                        _virtual["coord_count"] = 0
+                    monsters_out.append(_virtual)
+                    _existing_trans.add(_trans)
+
         # P005: Collect all maps before ref optimization strips coords
         _all_maps: set[str] = set()
         for _m in monsters_out:
