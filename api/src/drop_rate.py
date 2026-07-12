@@ -43,8 +43,6 @@ class DropRateEngine:
         self._ld_id_to_groups: dict[str, set[str]] = {}
         # base_entity_name → combined spawn rate across quality variants
         self._combined_spawn_rate_cache: dict[str, float] = {}
-        self._candidate_ids_cache: dict[str, set[str]] = {}
-        self._variant_gdr_cache: dict[tuple, dict[str, float]] = {}
         self._item_to_ld_ids: dict[str, set[str]] = {}
         self._variant_rate_cache: dict[tuple, float] = {}
 
@@ -369,10 +367,10 @@ class DropRateEngine:
             mode_rates[mode_name] = _round_rate(best_rate * 100)
         return mode_rates
 
-    def _get_candidate_ids(self, monster_name: str) -> set[str]:
-        """Get candidate lootdrop_group_ids for a monster (cached)."""
-        if monster_name in self._candidate_ids_cache:
-            return self._candidate_ids_cache[monster_name]
+    def get_variant_group_drop_rates(
+        self, luck_grade: int, monster_name: str, group_key: str, item_name: str = ""
+    ) -> dict[str, float]:
+        """Compute per-mode drop rates for a specific luck_grade (variant) in a map group."""
         candidate_ids: set[str] = set()
         _primary = self._spawner_ldg.get(monster_name, "")
         if _primary:
@@ -391,18 +389,6 @@ class DropRateEngine:
         if not _all_groups:
             _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
         candidate_ids.update(_all_groups)
-        self._candidate_ids_cache[monster_name] = candidate_ids
-        return candidate_ids
-
-    def get_variant_group_drop_rates(
-        self, luck_grade: int, monster_name: str, group_key: str, item_name: str = ""
-    ) -> dict[str, float]:
-        """Compute per-mode drop rates for a specific luck_grade (variant) in a map group."""
-        _cache_key = (luck_grade, monster_name, group_key, item_name)
-        _cached = self._variant_gdr_cache.get(_cache_key)
-        if _cached is not None:
-            return _cached
-        candidate_ids = self._get_candidate_ids(monster_name)
         if not candidate_ids:
             return {}
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
@@ -423,7 +409,6 @@ class DropRateEngine:
                     if rate > best_rate:
                         best_rate = rate
             mode_rates[mode_name] = _round_rate(best_rate * 100)
-        self._variant_gdr_cache[_cache_key] = mode_rates
         return mode_rates
 
     def compute_group_drop_rates(self, ldg_id: str, group_key: str) -> dict[str, float]:
