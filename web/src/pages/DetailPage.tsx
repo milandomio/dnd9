@@ -199,6 +199,10 @@ export default function DetailPage() {
           content={`${entity.translation || entity.name}（${entity.name}）在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
         />
         <meta
+          name="keywords"
+          content="物品详情,怪物详情,装备属性,武器属性,防具属性,饰品属性"
+        />
+        <meta
           property="og:title"
           content={`${entity.translation || entity.name} 位置汇总 | DarkFindV5`}
         />

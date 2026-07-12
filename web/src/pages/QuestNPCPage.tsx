@@ -77,6 +77,7 @@ export default function QuestNPCPage() {
           name="description"
           content="NPC任务详情查询——查看各NPC的任务、奖励、需求。"
         />
+        <meta name="keywords" content="任务NPC,NPC位置,任务攻略" />
       </Helmet>
       <div
         style={{

@@ -83,6 +83,7 @@ export default function DungeonModulesPage() {
           name="description"
           content="地图模块查询——按地图分组查看所有模块。"
         />
+        <meta name="keywords" content="地牢模块,地图模块,地牢坐标,地图坐标" />
       </Helmet>
       <h1
         style={{
