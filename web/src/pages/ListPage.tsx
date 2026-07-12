@@ -355,12 +355,7 @@ export default function ListPage() {
                                 lineHeight: 1.5,
                               }}
                             >
-                              {entity.variant_count &&
-                              entity.variant_count > 1 ? (
-                                <> [{entity.variant_count}变体] -目标- </>
-                              ) : (
-                                <> -目标- </>
-                              )}
+                              <> -目标- </>
                               <span style={{ color: tokens.muted }}>
                                 {entity.monster_translations &&
                                 entity.monster_translations.length <= 6
