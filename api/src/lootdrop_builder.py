@@ -655,7 +655,8 @@ def build_and_save_lootdrop_details(
             vs = None
             if variant_count > 1:
                 if item_name.endswith("_8001"):
-                    vs = ["8001"]
+                    # _8001 items: include all 8 variants (1001-7001 + 8001)
+                    vs = ["1001", "2001", "3001", "4001", "5001", "6001", "7001", "8001"]
                 else:
                     raw_name = entry.get("raw_name", "")
                     m = _SUFFIX_NUM_RE.search(raw_name)
