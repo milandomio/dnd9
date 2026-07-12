@@ -663,7 +663,9 @@ def build_and_save_lootdrop_details(
                     if m:
                         first_num = int(m.group(1))
                         vs = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
-                        vs = [s for s in vs if s != "8001"]
+                        # Include 8001 if item has artifact variant (variant_count >= 8)
+                        if variant_count >= 8 and "8001" not in vs:
+                            vs.append("8001")
             if vs and len(vs) > 1:
                 if translations:
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
