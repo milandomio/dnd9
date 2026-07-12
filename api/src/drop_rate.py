@@ -43,6 +43,8 @@ class DropRateEngine:
         self._ld_id_to_groups: dict[str, set[str]] = {}
         # base_entity_name → combined spawn rate across quality variants
         self._combined_spawn_rate_cache: dict[str, float] = {}
+        self._item_to_ld_ids: dict[str, set[str]] = {}
+        self._variant_rate_cache: dict[tuple, float] = {}
 
     def preload(self, db, modules_data: list[dict]) -> None:
         """Preload all drop rate data from DB."""
