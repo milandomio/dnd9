@@ -510,7 +510,17 @@ def extract_spawners(
         # Use the original (non-stripped) keyword for multi_entity lookup
         if multi_entity_spawners and kw_original in multi_entity_spawners:
             # Expand: one spawner entry per possible entity type
-            for entity_info in multi_entity_spawners[kw_original]:
+            # Filter: if the spawner keyword base matches any entity's base,
+            # only include entities of the same base (avoids GoblinWarrior → LavaGolem bleed)
+            entities = multi_entity_spawners[kw_original]
+            kw_base = keyword
+            entity_bases = {e["entity_name"] for e in entities}
+            has_match = any(kw_base == eb or kw_base in eb or eb in kw_base for eb in entity_bases)
+            for entity_info in entities:
+                if has_match:
+                    en = entity_info["entity_name"]
+                    if en != kw_base and kw_base not in en and en not in kw_base:
+                        continue
                 results.append(
                     {
                         "keyword": entity_info["entity_name"],
