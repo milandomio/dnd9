@@ -108,7 +108,8 @@ export default function HomePage() {
           marginBottom: 12,
         }}
       >
-        越来越黑暗光速指南 DarkFlashNav
+        越来越黑暗光速指南
+        <div style={{ fontSize: 30 }}>DarkFlashNav</div>
       </h1>
       <Disclaimer />
       <div
