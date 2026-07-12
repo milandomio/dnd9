@@ -261,19 +261,6 @@ def build_loot_index(
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
         variant_count = item_row.get("variant_count", 1) if item_row else 1
-        # Compute variant_suffixes from raw_name
-        variant_suffixes: list[str] | None = None
-        if variant_count > 1:
-            if item_name.endswith("_8001"):
-                variant_suffixes = ["8001"]
-            else:
-                raw = item_row.get("raw_name", "") if item_row else ""
-                m = _SUFFIX_NUM_RE.search(raw)
-                if m:
-                    first_num = int(m.group(1))
-                    variant_suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
-                    # Exclude _8001 — it has its own independent entry
-                    variant_suffixes = [s for s in variant_suffixes if s != "8001"]
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
@@ -295,8 +282,6 @@ def build_loot_index(
             "monsters": sorted(merged_names),
             "monster_translations": merged_translations,
         }
-        if variant_suffixes:
-            entry["variant_suffixes"] = variant_suffixes
         loot_index.append(entry)
     loot_index.sort(key=lambda x: x["translation"] or x["name"])
     return loot_index
@@ -667,7 +652,6 @@ def build_and_save_lootdrop_details(
             vs = entry.get("variant_suffixes")
             if vs and len(vs) > 1:
                 if translations:
-                    detail["variant_suffixes"] = vs
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
                 # Pre-compute base item spawners (union of all variants) as fallback
                 base_spawners = drop_engine.get_base_item_spawners(item_name)
@@ -732,14 +716,11 @@ def build_and_save_lootdrop_details(
                         "translation": variant_translation,
                         "monsters": variant_monsters,
                         "group_drop_info": variant_gdi,
-                        "variant_suffixes": vs,
                         "variant_rarity": detail.get("variant_rarity", {}),
                     }
                     if inline:
                         variant_detail["_modules"] = inline
                     _save(output_dir, f"lootdrops/{variant_name}.json", variant_detail, compact=True)
-            elif vs:
-                detail["variant_suffixes"] = vs
             # Clean internal keys from group_drop_info before saving base detail
             for _g_list in _group_drop_info.values():
                 for _e in _g_list:
