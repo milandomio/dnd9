@@ -541,19 +541,24 @@ def build_and_save_lootdrop_details(
                 c for c in merged[_base_key]["coords"] if (_trans, map_base_to_group.get(c["map"], "")) in _valid_tg
             ]
 
-        # Compute per-coord score
+        # Compute per-coord score (using entity-level spawn_rate from group_drop_info)
         _hk_lookup: dict[str, dict[str, float]] = {}
+        _sr_lookup: dict[str, dict[str, float]] = {}
         for _g, _entries in _group_drop_info.items():
             for _entry in _entries:
                 _hkl = _hk_lookup.setdefault(_entry["translation"], {})
                 _hkl[_g] = _entry["drop_rates"].get("豪客赛", 0)
+                _srl = _sr_lookup.setdefault(_entry["translation"], {})
+                _srl[_g] = _entry["spawn_rate"]
         for _base_data in merged.values():
             _trans = _base_data["translation"]
             _hk_map = _hk_lookup.get(_trans, {})
+            _sr_map = _sr_lookup.get(_trans, {})
             for _c in _base_data["coords"]:
                 _g = map_base_to_group.get(_c["map"], "")
                 _hk = _hk_map.get(_g, 0)
-                _score = (_c.get("spawn_rate", 0) or 0) * _hk / 100
+                _sr = _sr_map.get(_g, 100)
+                _score = _sr * _hk / 100
                 _c["score"] = round(_score, 4)
         merged = {k: v for k, v in merged.items() if v["coords"]}
         for _v in merged.values():

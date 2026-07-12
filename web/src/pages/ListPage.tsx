@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
@@ -66,7 +66,6 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
 
 export default function ListPage() {
   const { page } = useParams<{ page: string }>();
-  const navigate = useNavigate();
   const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const [debug, setDebug] = useState(false);
@@ -224,16 +223,17 @@ export default function ListPage() {
                     }}
                   >
                     {group.items.map((entity) => (
-                      <div
+                      <Link
                         key={entity.name}
-                        onClick={() => navigate(`/props/${entity.name}/`)}
+                        to={`/props/${entity.name}/`}
                         style={{
+                          textDecoration: 'none',
+                          display: 'block',
                           background: tokens.surface,
                           border: `1px solid ${tokens.border}`,
                           borderRadius: 8,
                           padding: 20,
                           textAlign: 'center',
-                          cursor: 'pointer',
                           transition: 'transform 0.2s, box-shadow 0.2s',
                         }}
                         onMouseEnter={(e) => {
@@ -266,7 +266,7 @@ export default function ListPage() {
                             {entity.translation}【{entity.name}】
                           </div>
                         )}
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -295,114 +295,100 @@ export default function ListPage() {
                         gap: 20,
                       }}
                     >
-                      {group.items.map((entity) => (
-                        <div
-                          key={entity.name}
-                          onClick={() => {
-                            const vc = entity.variant_count ?? 1;
-                            const isAlreadyVariant = /_\d{4}$/.test(
-                              entity.name
-                            );
-                            const target =
-                              vc > 1 &&
-                              !isAlreadyVariant &&
-                              !entity.name.endsWith('_8001')
-                                ? `${entity.name}_5001`
-                                : entity.name;
-                            navigate(`/lootdrops/${target}/`);
-                          }}
-                          style={{
-                            background: tokens.surface,
-                            border: `1px solid ${tokens.border}`,
-                            borderRadius: 8,
-                            padding: 20,
-                            textAlign: 'center',
-                            cursor: 'pointer',
-                            transition: 'transform 0.2s, box-shadow 0.2s',
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform =
-                              'translateY(-5px)';
-                            e.currentTarget.style.boxShadow =
-                              '0 5px 15px rgba(0,0,0,0.5)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'none';
-                            e.currentTarget.style.boxShadow = 'none';
-                          }}
-                        >
-                          <div
+                      {group.items.map((entity) => {
+                        const vc = entity.variant_count ?? 1;
+                        const isAlreadyVariant = /_\d{4}$/.test(entity.name);
+                        const target =
+                          vc > 1 &&
+                          !isAlreadyVariant &&
+                          !entity.name.endsWith('_8001')
+                            ? `${entity.name}_5001`
+                            : entity.name;
+                        return (
+                          <Link
+                            key={entity.name}
+                            to={`/lootdrops/${target}/`}
                             style={{
-                              color: tokens.text,
-                              fontSize: 18,
-                              fontWeight: 'bold',
+                              textDecoration: 'none',
+                              display: 'block',
+                              background: tokens.surface,
+                              border: `1px solid ${tokens.border}`,
+                              borderRadius: 8,
+                              padding: 20,
+                              textAlign: 'center',
+                              transition: 'transform 0.2s, box-shadow 0.2s',
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform =
+                                'translateY(-5px)';
+                              e.currentTarget.style.boxShadow =
+                                '0 5px 15px rgba(0,0,0,0.5)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'none';
+                              e.currentTarget.style.boxShadow = 'none';
                             }}
                           >
-                            {entity.translation || entity.name}
-                          </div>
-                          {debug && (
-                            <div
-                              style={{
-                                color: tokens.muted,
-                                fontSize: 12,
-                                marginTop: 4,
-                              }}
-                            >
-                              {entity.translation}【{entity.name}】
-                            </div>
-                          )}
-                          {entity.monsters && entity.monsters.length > 0 && (
                             <div
                               style={{
                                 color: tokens.text,
-                                fontSize: 13,
-                                marginTop: 6,
-                                lineHeight: 1.5,
+                                fontSize: 18,
+                                fontWeight: 'bold',
                               }}
                             >
-                              <> -目标- </>
-                              <span style={{ color: tokens.muted }}>
-                                {entity.monster_translations &&
-                                entity.monster_translations.length <= 6
-                                  ? entity.monster_translations.join('、')
-                                  : entity.monster_translations
-                                      ?.slice(0, 5)
-                                      .join('、') + '...'}
-                              </span>
+                              {entity.translation || entity.name}
                             </div>
-                          )}
-                        </div>
-                      ))}
+                            {debug && (
+                              <div
+                                style={{
+                                  color: tokens.muted,
+                                  fontSize: 12,
+                                  marginTop: 4,
+                                }}
+                              >
+                                {entity.translation}【{entity.name}】
+                              </div>
+                            )}
+                            {entity.monsters && entity.monsters.length > 0 && (
+                              <div
+                                style={{
+                                  color: tokens.text,
+                                  fontSize: 13,
+                                  marginTop: 6,
+                                  lineHeight: 1.5,
+                                }}
+                              >
+                                <> -目标- </>
+                                <span style={{ color: tokens.muted }}>
+                                  {entity.monster_translations &&
+                                  entity.monster_translations.length <= 6
+                                    ? entity.monster_translations.join('、')
+                                    : entity.monster_translations
+                                        ?.slice(0, 5)
+                                        .join('、') + '...'}
+                                </span>
+                              </div>
+                            )}
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
                 ));
               })()
             : // Default rendering for non-props, non-lootdrops pages
               data.map((entity) => (
-                <div
+                <Link
                   key={entity.name}
-                  onClick={() => {
-                    if (page === 'lootdrops') {
-                      const vc = entity.variant_count ?? 1;
-                      const isAlreadyVariant = /_\d{4}$/.test(entity.name);
-                      const target =
-                        vc > 1 &&
-                        !isAlreadyVariant &&
-                        !entity.name.endsWith('_8001')
-                          ? `${entity.name}_5001`
-                          : entity.name;
-                      navigate(`/lootdrops/${target}/`);
-                    } else {
-                      navigate(`/${page}/${entity.name}/`);
-                    }
-                  }}
+                  to={`/${page}/${entity.name}/`}
                   style={{
+                    textDecoration: 'none',
+                    display: 'block',
                     background: tokens.surface,
                     border: `1px solid ${tokens.border}`,
                     borderRadius: 8,
                     padding: 20,
                     textAlign: 'center',
-                    cursor: 'pointer',
                     transition: 'transform 0.2s, box-shadow 0.2s',
                   }}
                   onMouseEnter={(e) => {
@@ -461,7 +447,7 @@ export default function ListPage() {
                         </span>
                       </div>
                     )}
-                </div>
+                </Link>
               ))}
       </div>
     </div>

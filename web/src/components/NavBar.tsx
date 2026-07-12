@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Input, Spin } from 'antd';
 import {
   BulbOutlined,
@@ -382,9 +382,9 @@ export default function NavBar() {
           </button>
         </div>
         {breadcrumbs.map((crumb) => (
-          <a
+          <Link
             key={crumb.path}
-            onClick={() => navigate(crumb.path)}
+            to={crumb.path}
             style={linkStyle}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = tokens.accent;
@@ -396,10 +396,10 @@ export default function NavBar() {
             }}
           >
             {crumb.label}
-          </a>
+          </Link>
         ))}
-        <a
-          onClick={() => navigate('/')}
+        <Link
+          to="/"
           style={linkStyle}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = tokens.accent;
@@ -411,7 +411,7 @@ export default function NavBar() {
           }}
         >
           返回首页
-        </a>
+        </Link>
       </div>
     </div>
   );
