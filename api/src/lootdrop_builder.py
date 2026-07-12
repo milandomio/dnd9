@@ -48,7 +48,14 @@ def _classify_label(label: str, entity_name: str) -> str:
     if not label:
         return "direct"
     en_base = QUALITY_RE.sub("", entity_name)
-    if label == en_base or label.startswith(en_base + "_"):
+    # Handle double underscore variants (e.g., GoldChest__UnderSea)
+    label_normalized = label.replace("__", "_")
+    if (
+        label == en_base
+        or label.startswith(en_base + "_")
+        or label_normalized == en_base
+        or label_normalized.startswith(en_base + "_")
+    ):
         return "direct"
     if "Random" in label:
         return "random"
