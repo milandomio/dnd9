@@ -58,7 +58,6 @@ interface LootdropItem {
   monsters: LootdropMonster[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
   _modules?: Record<string, InlineModuleData>;
-  variant_suffixes?: string[];
   variant_rarity?: Record<string, string>;
 }
 
@@ -234,11 +233,12 @@ export default function LootdropDetailPage() {
 
   // Auto-redirect to default variant when visiting base URL
   useEffect(() => {
-    if (!data?.variant_suffixes || data.variant_suffixes.length <= 1) return;
+    const suffixes = data?.variant_rarity
+      ? Object.keys(data.variant_rarity)
+      : [];
+    if (suffixes.length <= 1) return;
     if (currentSuffix) return; // already on a variant URL
-    const defaultSuffix = data.variant_suffixes.includes('5001')
-      ? '5001'
-      : data.variant_suffixes[0];
+    const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
     navigate(`/lootdrops/${itemName}_${defaultSuffix}/`, { replace: true });
   }, [data, currentSuffix, itemName, navigate]);
 
@@ -692,7 +692,7 @@ export default function LootdropDetailPage() {
 
       <Disclaimer />
 
-      {data.variant_suffixes && data.variant_suffixes.length > 1 && (
+      {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
         <div
           style={{
             display: 'flex',
@@ -705,12 +705,13 @@ export default function LootdropDetailPage() {
             borderRadius: 5,
           }}
         >
-          {data.variant_suffixes.map((suffix) => {
+          {Object.keys(data.variant_rarity).map((suffix) => {
             const rarity = data.variant_rarity?.[suffix] ?? suffix;
             const color = RARITY_COLORS[rarity] ?? tokens.muted;
-            const defaultSuffix = data.variant_suffixes!.includes('5001')
+            const suffixes = Object.keys(data.variant_rarity!);
+            const defaultSuffix = suffixes.includes('5001')
               ? '5001'
-              : data.variant_suffixes![0];
+              : suffixes[0];
             const isActive =
               currentSuffix === suffix ||
               (!currentSuffix && suffix === defaultSuffix);
