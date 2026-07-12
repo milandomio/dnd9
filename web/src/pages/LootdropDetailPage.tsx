@@ -841,7 +841,7 @@ export default function LootdropDetailPage() {
             <label
               style={{ color: tokens.text, fontSize: 13, whiteSpace: 'nowrap' }}
             >
-              默认显示阈值（单点综合爆率%）：{threshold}%
+              默认显示阈值（综合爆率%）：{threshold}%
             </label>
             <input
               type="range"
@@ -1332,7 +1332,7 @@ export default function LootdropDetailPage() {
                                       `(${names.join('、')}${vc}种选${varDots.length})`
                                     );
                                   } else {
-                                    parts.push(`(${varDots.length}点选1)`);
+                                    parts.push(`(${varDots.length}点选${vc})`);
                                   }
                                 }
                                 return parts.join(' ');
