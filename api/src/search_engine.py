@@ -510,13 +510,20 @@ def extract_spawners(
         # Use the original (non-stripped) keyword for multi_entity lookup
         if multi_entity_spawners and kw_original in multi_entity_spawners:
             # Expand: one spawner entry per possible entity type
+            # Only include entities matching spawner_keyword base name
+            _sk_base = strip_variant_suffixes(keyword_stripped)
             for entity_info in multi_entity_spawners[kw_original]:
+                _en = entity_info["entity_name"]
+                _en_base = strip_variant_suffixes(_en)
+                # Skip entities that don't match the spawner keyword base
+                if _en_base != _sk_base and _sk_base not in _en_base and _en_base not in _sk_base:
+                    continue
                 results.append(
                     {
-                        "keyword": entity_info["entity_name"],
+                        "keyword": _en,
                         "original_keyword": kw_original,
                         "spawner_type": entity_info["spawner_type"],
-                        "preview_name": entity_info["entity_name"],
+                        "preview_name": _en,
                         "has_lootdrop": True,
                         "x": coord["x"],
                         "y": coord["y"],
