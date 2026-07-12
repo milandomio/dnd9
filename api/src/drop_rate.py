@@ -35,7 +35,6 @@ class DropRateEngine:
         self._spawn_rate_detail: dict[tuple[str, str], float] = {}
         self._spawn_rate_by_mode: dict[tuple[str, str], dict[str, float]] = {}
         self._entity_spawners: dict[str, set[str]] = {}
-        self._item_to_ld_ids: dict[str, set[str]] = {}
         # group_id → set of spawner_keywords that belong to this group
         self._group_to_spawners: dict[str, set[str]] = {}
         # base_item_name → set of suffixes with actual drop data
@@ -490,8 +489,15 @@ class DropRateEngine:
         _rt_cache: dict[str, int] | None = None,
     ) -> float:
         """Compute drop rate by luck_grade directly (for game JSON variants)."""
+        if not target_ld_id:
+            _ck = (ldg_id, luck_grade, full_grade, item_name)
+            _cv = self._variant_rate_cache.get(_ck)
+            if _cv is not None:
+                return _cv
         grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
         if not grade_data:
+            if not target_ld_id:
+                self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = 0.0
             return 0.0
         total_weight = 0.0
         found = False
@@ -532,5 +538,9 @@ class DropRateEngine:
                 _rate_total = self._ld_rate_totals.get(lr_id, 10000)
             total_weight += _pool_weight / _shared / _rate_total
         if found:
+            if not target_ld_id:
+                self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = total_weight
             return total_weight
+        if not target_ld_id:
+            self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = 0.0
         return 0.0
