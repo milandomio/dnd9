@@ -45,6 +45,8 @@ class DropRateEngine:
         self._combined_spawn_rate_cache: dict[str, float] = {}
         self._item_to_ld_ids: dict[str, set[str]] = {}
         self._variant_rate_cache: dict[tuple, float] = {}
+        self._candidate_ids_cache: dict[str, set[str]] = {}
+        self._all_groups_cache: dict[tuple, dict[str, dict[str, float]]] = {}
 
     def preload(self, db, modules_data: list[dict]) -> None:
         """Preload all drop rate data from DB."""
@@ -367,10 +369,11 @@ class DropRateEngine:
             mode_rates[mode_name] = _round_rate(best_rate * 100)
         return mode_rates
 
-    def get_variant_group_drop_rates(
-        self, luck_grade: int, monster_name: str, group_key: str, item_name: str = ""
-    ) -> dict[str, float]:
-        """Compute per-mode drop rates for a specific luck_grade (variant) in a map group."""
+    def _get_candidate_ids(self, monster_name: str) -> set[str]:
+        """Get candidate lootdrop_group_ids for a monster (cached)."""
+        cached = self._candidate_ids_cache.get(monster_name)
+        if cached is not None:
+            return cached
         candidate_ids: set[str] = set()
         _primary = self._spawner_ldg.get(monster_name, "")
         if _primary:
@@ -389,6 +392,37 @@ class DropRateEngine:
         if not _all_groups:
             _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
         candidate_ids.update(_all_groups)
+        # Fuzzy fallback: try stripping FakeDeath/FromFakeDeath suffixes
+        if not candidate_ids:
+            for _fuzzy_suffix in ("FromFakeDeath", "FakeDeath"):
+                if _fuzzy_suffix in monster_name:
+                    _fuzzy_name = monster_name.replace(_fuzzy_suffix, "")
+                    _fuzzy_groups = self._entity_ldg_all.get(_fuzzy_name, set())
+                    if _fuzzy_groups:
+                        candidate_ids.update(_fuzzy_groups)
+                        break
+        # Fuzzy fallback: try adding FakeDeath/FromFakeDeath suffixes
+        if not candidate_ids:
+            for _fuzzy_suffix in ("FakeDeath", "FromFakeDeath"):
+                _fuzzy_name = monster_name + _fuzzy_suffix
+                _fuzzy_groups = self._entity_ldg_all.get(_fuzzy_name, set())
+                if _fuzzy_groups:
+                    candidate_ids.update(_fuzzy_groups)
+                    break
+        # Fuzzy fallback: try base name without any suffix
+        if not candidate_ids:
+            _base = QUALITY_RE.sub("", HARD_SUFFIX_RE.sub("", monster_name))
+            _base_groups = self._entity_ldg_all.get(_base, set())
+            if _base_groups:
+                candidate_ids.update(_base_groups)
+        self._candidate_ids_cache[monster_name] = candidate_ids
+        return candidate_ids
+
+    def get_variant_group_drop_rates(
+        self, luck_grade: int, monster_name: str, group_key: str, item_name: str = ""
+    ) -> dict[str, float]:
+        """Compute per-mode drop rates for a specific luck_grade (variant) in a map group."""
+        candidate_ids = self._get_candidate_ids(monster_name)
         if not candidate_ids:
             return {}
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
@@ -410,6 +444,36 @@ class DropRateEngine:
                         best_rate = rate
             mode_rates[mode_name] = _round_rate(best_rate * 100)
         return mode_rates
+
+    def get_variant_rates_all_groups(
+        self, luck_grade: int, monster_name: str, group_keys: set[str], item_name: str = ""
+    ) -> dict[str, dict[str, float]]:
+        """Compute per-mode drop rates for ALL groups at once. Returns {group_key: mode_rates}."""
+        candidate_ids = self._get_candidate_ids(monster_name)
+        if not candidate_ids:
+            return {}
+        _rt_cache: dict[str, int] = {}
+        result: dict[str, dict[str, float]] = {}
+        for group_key in group_keys:
+            suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+            if not suffixes:
+                continue
+            mode_rates: dict[str, float] = {}
+            for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
+                if mode_id == 4:
+                    continue
+                best_rate = 0.0
+                for suffix in suffixes:
+                    full_grade = mode_id * 1000 + suffix
+                    for _ldg_id in candidate_ids:
+                        rate = self.compute_variant_rate(
+                            _ldg_id, luck_grade, full_grade, item_name=item_name, _rt_cache=_rt_cache
+                        )
+                        if rate > best_rate:
+                            best_rate = rate
+                mode_rates[mode_name] = _round_rate(best_rate * 100)
+            result[group_key] = mode_rates
+        return result
 
     def compute_group_drop_rates(self, ldg_id: str, group_key: str) -> dict[str, float]:
         """Compute aggregated drop rates for all items in a lootdrop group."""
