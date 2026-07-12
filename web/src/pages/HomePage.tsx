@@ -104,12 +104,12 @@ export default function HomePage() {
         style={{
           textAlign: 'center',
           color: tokens.accent,
-          fontSize: 32,
+          fontSize: 26,
           marginBottom: 12,
         }}
       >
         越来越黑暗光速指南
-        <div style={{ fontSize: 30 }}>DarkFlashNav</div>
+        <div style={{ fontSize: 16 }}>DarkFlashNav</div>
       </h1>
       <Disclaimer />
       <div
