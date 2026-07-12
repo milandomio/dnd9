@@ -46,3 +46,63 @@
 1. 运行管道生成数据
 2. 检查 `HeaterShield_8001.json` 的 `variant_rarity` 字段
 3. 构建前端并验证页面显示
+
+---
+
+## 防御规则：变体后缀拼接前检查
+
+### 问题
+
+拼接变体后缀时，如果物品名已包含 `_?001` 变体后缀，会导致重复拼接：
+
+```
+item_name = "HeaterShield_8001"
+suffix = "8001"
+拼接结果 = "HeaterShield_8001_8001"  ← 错误！
+
+item_name = "HeaterShield_8001"
+suffix = "1001"
+拼接结果 = "HeaterShield_8001_1001"  ← 错误！
+```
+
+### 规则
+
+**在拼接变体后缀前，必须检查物品名是否已包含 `_?001` 模式。**
+
+```python
+import re
+
+# 检查物品名是否已包含变体后缀
+_VARIANT_SUFFIX_RE = re.compile(r"_\d{4}$")
+
+def is_already_variant(item_name: str) -> bool:
+    """检查物品名是否已包含变体后缀（如 _8001, _5001）"""
+    return bool(_VARIANT_SUFFIX_RE.search(item_name))
+
+# 正确的拼接逻辑
+if is_already_variant(item_name):
+    # 物品名已包含变体后缀，不要再次拼接
+    # 直接使用物品名作为变体名
+    variant_name = item_name
+else:
+    # 正常拼接
+    variant_name = f"{item_name}_{suffix}"
+```
+
+### 检查位置
+
+以下函数在拼接变体后缀前必须进行检查：
+
+1. `lootdrop_builder.py` — 变体详情文件生成
+2. `drop_rate.py` — 变体爆率计算
+3. `enrichment.py` — 变体爆率注入
+
+### 验证方法
+
+运行以下命令检查是否存在重复后缀的文件：
+
+```bash
+ls data/json/lootdrops/ | grep -E "_\d{4}_\d{4}\.json"
+```
+
+如果输出不为空，说明存在重复后缀问题。
