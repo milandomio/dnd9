@@ -54,14 +54,15 @@ class CoordinatesRepository:
             "COUNT(*) as total, "
             "GROUP_CONCAT(DISTINCT original_keyword) as keywords "
             "FROM spawners WHERE group_parent != '' AND has_lootdrop = 1 "
-            "GROUP BY map_base, json_filename, group_parent HAVING cnt > 1"
+            "GROUP BY map_base, json_filename, group_parent"
         ):
-            names = row["keywords"].split(",")
+            cnt = row["cnt"]
+            total = row["total"]
+            names = []
+            if cnt > 1:
+                names = row["keywords"].split(",")
             result[(row["map_base"], row["json_filename"], row["group_parent"])] = (
-                row["cnt"],
+                cnt if cnt > 1 else total,
                 names,
             )
-        # Skip Query 2: groups with only 1 distinct entity type and multiple entries
-        # are just multiple spawn points at different positions, not actual variant
-        # entity choices. variant_count should only reflect entity type count.
         return result

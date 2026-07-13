@@ -399,9 +399,10 @@ def build_and_save_lootdrop_details(
                         "version": _c["version"],
                         "label": _raw_label,
                     }
-                    _vc_info = coord_variant_count.get(
-                        (_c["map_base"], _c["json_filename"], _c.get("group_parent", ""))
-                    )
+                    _gp = _c.get("group_parent", "")
+                    if _gp:
+                        coord_out["group_parent"] = _gp
+                    _vc_info = coord_variant_count.get((_c["map_base"], _c["json_filename"], _gp))
                     if _vc_info and _vc_info[0] > 1:
                         coord_out["variant_count"] = _vc_info[0]
                         coord_out["variant_names"] = _vc_info[1]
