@@ -28,6 +28,7 @@ interface LootdropCoord {
   variant_count?: number;
   variant_names?: string[];
   score?: number;
+  group_parent?: string;
 }
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
@@ -506,6 +507,7 @@ export default function LootdropDetailPage() {
         variant_count?: number;
         variant_names?: string[];
         score?: number;
+        group_parent?: string;
       }[];
     }
   >();
@@ -526,6 +528,7 @@ export default function LootdropDetailPage() {
         variant_count: c.variant_count,
         variant_names: c.variant_names,
         score: c.score,
+        group_parent: c.group_parent,
       });
     });
   }
@@ -1343,14 +1346,20 @@ export default function LootdropDetailPage() {
                                   parts.push(`(${regDots.length}点)`);
                                 }
                                 if (varDots.length > 0) {
-                                  const vc = varDots[0].variant_count!;
                                   const names = varDots[0].variant_names ?? [];
+                                  const groupCount = new Set(
+                                    varDots
+                                      .map((d) => d.group_parent)
+                                      .filter(Boolean)
+                                  ).size;
                                   if (names.length > 0) {
                                     parts.push(
-                                      `(${names.join('、')}${vc}种选${varDots.length})`
+                                      `(${names.join('、')}${varDots[0].variant_count}种选${groupCount})`
                                     );
                                   } else {
-                                    parts.push(`(${varDots.length}点选${vc})`);
+                                    parts.push(
+                                      `(${varDots.length}点选${groupCount})`
+                                    );
                                   }
                                 }
                                 return parts.join(' ');

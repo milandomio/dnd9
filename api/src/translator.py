@@ -178,6 +178,7 @@ class NameResolver:
 
 def build_coord_out(c: dict, vc: dict) -> dict:
     """构建坐标输出 dict，附带变体信息。"""
+    _gp = c.get("group_parent", "")
     out = {
         "x": c["x"],
         "y": c["y"],
@@ -188,7 +189,9 @@ def build_coord_out(c: dict, vc: dict) -> dict:
         "version": c["version"],
         "label": c["original_keyword"],
     }
-    vc_info = vc.get((c["map_base"], c["json_filename"], c.get("group_parent", "")))
+    if _gp:
+        out["group_parent"] = _gp
+    vc_info = vc.get((c["map_base"], c["json_filename"], _gp))
     if vc_info and vc_info[0] > 1:
         out["variant_count"] = vc_info[0]
         out["variant_names"] = vc_info[1]
