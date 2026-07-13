@@ -193,6 +193,7 @@ export default function LootdropDetailPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const [threshold, setThreshold] = useState(defaultThreshold);
   const [modeFilter, setModeFilter] = useState('');
+  const [hideZeroRate, setHideZeroRate] = useState(true);
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
@@ -754,6 +755,17 @@ export default function LootdropDetailPage() {
           <option value="豪客赛">豪客赛</option>
           <option value="逆袭赛">逆袭赛</option>
         </select>
+        <label
+          style={{ marginLeft: 10, cursor: 'pointer', userSelect: 'none' }}
+        >
+          <input
+            type="checkbox"
+            checked={hideZeroRate}
+            onChange={(e) => setHideZeroRate(e.target.checked)}
+            style={{ marginRight: 3, cursor: 'pointer' }}
+          />
+          隐藏0爆率坐标
+        </label>
       </div>
 
       {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
@@ -1323,6 +1335,7 @@ export default function LootdropDetailPage() {
                           (d) => d.monster.translation === tl
                         );
                         if (
+                          hideZeroRate &&
                           modeFilter &&
                           m.drop_rates &&
                           (m.drop_rates[modeFilter] ?? 0) === 0
