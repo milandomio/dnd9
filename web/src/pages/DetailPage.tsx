@@ -74,6 +74,7 @@ export default function DetailPage() {
     return mm;
   }, [entity?._modules]);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
+  const [modeFilter, setModeFilter] = useState('');
   const fetchedRef = useRef(false);
 
   // Reset fetch guard when navigating between entities
@@ -453,6 +454,36 @@ export default function DetailPage() {
         {debug ? '退出调试' : '显示调试信息'}
       </button>
 
+      <div
+        style={{
+          textAlign: 'center',
+          marginBottom: 8,
+          fontSize: 13,
+          color: tokens.muted,
+        }}
+      >
+        爆率模式：
+        <select
+          value={modeFilter}
+          onChange={(e) => setModeFilter(e.target.value)}
+          style={{
+            background: tokens.surface,
+            color: tokens.text,
+            border: `1px solid ${tokens.border}`,
+            borderRadius: 4,
+            padding: '2px 6px',
+            fontSize: 13,
+            cursor: 'pointer',
+          }}
+        >
+          <option value="">全部</option>
+          <option value="PVE">PVE</option>
+          <option value="普通">普通</option>
+          <option value="豪客赛">豪客赛</option>
+          <option value="逆袭赛">逆袭赛</option>
+        </select>
+      </div>
+
       <Disclaimer />
 
       <div
@@ -523,6 +554,7 @@ export default function DetailPage() {
                             {info.translation}
                             {info.spawn_rate}%
                             {Object.entries(info.drop_rates)
+                              .filter(([k]) => !modeFilter || k === modeFilter)
                               .map(([mode, rate]) => `[${mode}:${rate}%]`)
                               .join('')}
                           </span>
@@ -694,6 +726,9 @@ export default function DetailPage() {
                                 }}
                               >
                                 {Object.entries(info.drop_rates)
+                                  .filter(
+                                    ([k]) => !modeFilter || k === modeFilter
+                                  )
                                   .map(([mode, rate]) => {
                                     const sRate = info.spawn_rates![mode];
                                     return sRate != null
@@ -712,7 +747,9 @@ export default function DetailPage() {
                                 >
                                   {info.spawn_rate}%
                                 </span>
-                                {Object.keys(info.drop_rates).length > 0 && (
+                                {Object.entries(info.drop_rates).filter(
+                                  ([k]) => !modeFilter || k === modeFilter
+                                ).length > 0 && (
                                   <span
                                     style={{
                                       color: tokens.muted,
@@ -721,6 +758,9 @@ export default function DetailPage() {
                                   >
                                     (
                                     {Object.entries(info.drop_rates)
+                                      .filter(
+                                        ([k]) => !modeFilter || k === modeFilter
+                                      )
                                       .map(
                                         ([mode, rate]) => `[${mode}:${rate}%]`
                                       )
