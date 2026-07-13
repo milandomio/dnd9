@@ -248,8 +248,8 @@ export default function DetailPage() {
     for (const item of items) {
       const regCoords = item.coords.filter(
         (c) =>
-          !labelMatch(c.label || '', '特殊') &&
-          !labelMatch(c.label || '', '海底')
+          !(c.label || '').includes('Special') &&
+          !(c.label || '').includes('特殊')
       );
       if (regCoords.length > 0) {
         regularItems.push({ ...item, coords: regCoords });
