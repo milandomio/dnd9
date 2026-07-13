@@ -591,6 +591,20 @@ def build_and_save_lootdrop_details(
                     monsters_out.append(_virtual)
                     _existing_trans.add(_trans)
 
+        # MERGE: Merge "组" suffix entries into their base translations
+        # e.g. "黄金宝箱组" (5 coords) → merge into "黄金宝箱" (2 coords) → "黄金宝箱" (7 coords)
+        for _m in list(monsters_out):
+            _trans = _m.get("translation", "")
+            if _trans.endswith("组") and _m.get("coords"):
+                _base_trans = _trans[:-1]
+                for _base in monsters_out:
+                    if _base is not _m and _base.get("translation") == _base_trans:
+                        _base["coords"].extend(_m["coords"])
+                        if _m.get("_coord_key") and not _base.get("_coord_key"):
+                            _base["_coord_key"] = _m["_coord_key"]
+                        monsters_out.remove(_m)
+                        break
+
         # P005: Collect all maps before ref optimization strips coords
         _all_maps: set[str] = set()
         for _m in monsters_out:
