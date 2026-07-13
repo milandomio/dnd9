@@ -402,7 +402,7 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {entity.translation || entity.name} 位置汇总 | 越来越黑暗光速指南
+          {entity.translation || entity.name} 位置汇总 | 越来越黑暗闪电指南
           DarkFlashNav
         </title>
         <meta
@@ -415,7 +415,7 @@ export default function DetailPage() {
         />
         <meta
           property="og:title"
-          content={`${entity.translation || entity.name} 位置汇总 | DarkFindV5`}
+          content={`${entity.translation || entity.name} 位置汇总 | DarkFlashNav`}
         />
         <meta
           property="og:description"
