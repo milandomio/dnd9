@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { useSSRData } from '../context/SSRDataContext';
@@ -69,7 +68,6 @@ export default function QuestItemGroupPage() {
   );
   const [loading, setLoading] = useState(!hasFullData);
   const { modules } = useDungeonModules();
-  const dataVersion = useDataVersion();
   const [hidden, setHidden] = useState<Set<string>>(() => {
     if (ssrData?.entities) {
       return new Set(ssrData.entities.map((e) => e.name));
@@ -83,7 +81,7 @@ export default function QuestItemGroupPage() {
   const ctrlInput = useCtrlInput();
 
   useEffect(() => {
-    if (!group || !dataVersion) return;
+    if (!group) return;
     if (ssrData?.entities?.length) {
       setLoading(false);
       return;

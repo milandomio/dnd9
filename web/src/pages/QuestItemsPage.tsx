@@ -32,7 +32,7 @@ export default function QuestItemsPage() {
   const { tokens } = useTheme();
 
   useEffect(() => {
-    if (ssrData || !dataVersion) return;
+    if (ssrData) return;
     fetch('/data/json/quest_items_groups.json')
       .then((r) => r.json())
       .then(setGroups)

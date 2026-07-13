@@ -38,7 +38,7 @@ export default function ExplorePage() {
   const { tokens, dark } = useTheme();
 
   useEffect(() => {
-    if (ssrData || !dataVersion) return;
+    if (ssrData) return;
     fetch('/data/json/explore.json')
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)

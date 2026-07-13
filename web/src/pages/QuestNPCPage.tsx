@@ -42,7 +42,7 @@ export default function QuestNPCPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ssrData || !dataVersion) return;
+    if (ssrData) return;
     fetch('/data/json/quest_npc.json')
       .then<NPCEntry[]>((r) => r.json())
       .then(setData)
