@@ -18,7 +18,7 @@ function fetchIndex(version: string): Promise<SearchEntry[]> {
     return Promise.resolve(cachedIndex);
   if (cachedPromise && cachedVersion === version) return cachedPromise;
   cachedVersion = version;
-  cachedPromise = fetch(`/data/json/search_index.json?v=${version}`)
+  cachedPromise = fetch('/data/json/search_index.json')
     .then((r) => r.json())
     .then((data: SearchEntry[]) => {
       cachedIndex = data;
@@ -50,7 +50,6 @@ export function useSearchIndex() {
   const [loading, setLoading] = useState(!cachedIndex);
 
   useEffect(() => {
-    if (!dataVersion) return;
     if (cachedIndex && cachedVersion === dataVersion) {
       setIndex(cachedIndex);
       setLoading(false);

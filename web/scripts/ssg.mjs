@@ -65,7 +65,7 @@ function scanDir(dir) {
 }
 scanDir(DATA);
 const dataDate = String(Math.floor(latestMtime / 1000));
-writeFileSync(join(DATA, "meta.json"), JSON.stringify({ dataDate }));
+writeFileSync(join(DATA, "meta.json"), JSON.stringify({ dataDate, seasonVersion: 9 }));
 cpSync(join(DATA, "meta.json"), join(DIST, "data", "json", "meta.json"));
 console.log(`[ssg] data version: ${dataDate}`);
 

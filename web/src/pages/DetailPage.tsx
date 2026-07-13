@@ -129,9 +129,7 @@ export default function DetailPage() {
     if (fetchedRef.current) return;
     fetchedRef.current = true;
     const decoded = decodeURIComponent(name!);
-    const url = dataVersion
-      ? `/data/json/${page}/${decoded}.json?v=${dataVersion}`
-      : `/data/json/${page}/${decoded}.json`;
+    const url = `/data/json/${page}/${decoded}.json`;
     fetch(url)
       .then<Entity>((r) => r.json())
       .then((entityData) => {

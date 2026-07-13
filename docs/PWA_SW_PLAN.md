@@ -4,6 +4,8 @@
 
 为静态网站添加离线缓存和运行时网络策略，提升加载速度和离线可用性。
 
+> **缓存策略**: SW 运行时缓存无时间过期（`refreshNow()` 版本变化时主动清除 `df5-*` 缓存）；CDN/HTTP 层 asset 永久、JSON 短缓存。
+
 ## 改动清单
 
 ### 1. 安装依赖
@@ -25,34 +27,26 @@ cd web && npm install vite-plugin-pwa
 VitePWA({
   registerType: 'autoUpdate',     // SW 更新后自动接管
   workbox: {
-    globPatterns: ['**/*.{js,css,webp,png}'],
+    // 不包含 index.html — 避免 Workbox 自动添加 NavigationRoute 覆盖 SSG 路由
+    globPatterns: ['assets/**/*.{js,css}'],
     runtimeCaching: [
-      // JSON 数据：版本变化时取新
+      // 版本变化由 refreshNow() 清除 df5-* 缓存，无需 maxAgeSeconds
       {
         urlPattern: /^\/data\/json\//,
         handler: 'StaleWhileRevalidate',
-        options: {
-          cacheName: 'df5-data-json',
-          expiration: { maxEntries: 500, maxAgeSeconds: 86400 * 7 },
-        },
+        options: { cacheName: 'df5-data-json', expiration: { maxEntries: 500 } },
       },
       // 地图图片：大文件，优先缓存
       {
         urlPattern: /^\/data\/img\//,
         handler: 'CacheFirst',
-        options: {
-          cacheName: 'df5-data-img',
-          expiration: { maxEntries: 200, maxAgeSeconds: 86400 * 30 },
-        },
+        options: { cacheName: 'df5-data-img', expiration: { maxEntries: 200 } },
       },
-      // SSG HTML 页面：保证新内容
+      // SSG HTML 页面：NetworkFirst（导航请求，不包含 .html 后缀）
       {
-        urlPattern: /\.html$/,
+        urlPattern: ({ request }) => request.mode === 'navigate',
         handler: 'NetworkFirst',
-        options: {
-          cacheName: 'df5-html',
-          expiration: { maxEntries: 100, maxAgeSeconds: 86400 },
-        },
+        options: { cacheName: 'df5-html', expiration: { maxEntries: 200 } },
       },
     ],
   },
@@ -106,14 +100,11 @@ convert -size 512x512 xc:'#1677ff' -font Sans -pointsize 180 \
 
 ### 6. 数据版本联动
 
-当前 `useDataVersion.ts` 通过 `location.reload()` 处理数据版本变化。引入 SW 后需要调整：
+`location.reload()` 已在 Fix 1 中替换为 `useRefreshNotice` 通知横幅（查看 `docs/CACHE_FIXES.md`）。引入 SW 后：
 
-SW 注册 `autoUpdate` 模式（`registerType: 'autoUpdate'`）：
-- SW 检测到新版本 → 自动安装并激活
-- 旧 SW 控制的页面会被新 SW 接管
-- `StaleWhileRevalidate` 策略会自动拉取最新 JSON
-
-可以移除 `location.reload()`，改为 SW 的 `update` 事件触发提示。
+- SW 的 `autoUpdate` 模式（`registerType: 'autoUpdate'`）检测到新 SW → 自动安装并激活
+- `refreshNow()` 清除所有 `df5-*` 前缀的 SW 缓存后执行 `location.reload()`，实现版本变化时全量刷新
+- JSON 的 `?v=${dataVersion}` query param 确保跨版本的请求 URL 不同，SW 自然走网络
 
 ## 不需要改动的部分
 

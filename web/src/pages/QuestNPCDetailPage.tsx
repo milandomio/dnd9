@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
-import { useDataVersion } from '../hooks/useDataVersion';
+import { useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
@@ -109,33 +109,33 @@ export default function QuestNPCDetailPage() {
   const [search, setSearch] = useState('');
   const [onlyFetch, setOnlyFetch] = useState(false);
   const [onlySuggested, setOnlySuggested] = useState(false);
-  const dataVersion = useDataVersion();
+  const seasonVersion = useSeasonVersion();
 
   const highlightQuestNum = (location.state as { questNumber?: number })
     ?.questNumber;
 
   useEffect(() => {
     if (ssrData) return;
-    fetch(`/data/json/quest_npc.json?v=${dataVersion}`)
+    fetch('/data/json/quest_npc.json')
       .then<NPCEntry[]>((r) => r.json())
       .then(setAllNpcs)
       .catch(console.error);
   }, [ssrData]);
 
-  // Clean stale quest_npc_* localStorage keys when data version changes
+  // Only clear quest_npc_* localStorage keys when season version changes
   useEffect(() => {
-    if (!dataVersion) return;
-    const storedVer = localStorage.getItem('quest_npc_version');
-    if (storedVer !== dataVersion) {
+    if (!seasonVersion) return;
+    const storedVer = localStorage.getItem('quest_npc_season');
+    if (storedVer !== String(seasonVersion)) {
       const toRemove: string[] = [];
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key?.startsWith('quest_npc_')) toRemove.push(key);
       }
       toRemove.forEach((k) => localStorage.removeItem(k));
-      localStorage.setItem('quest_npc_version', dataVersion);
+      localStorage.setItem('quest_npc_season', String(seasonVersion));
     }
-  }, [dataVersion]);
+  }, [seasonVersion]);
 
   const npc = allNpcs.find((n) => n.npc_name === npc_name);
 
