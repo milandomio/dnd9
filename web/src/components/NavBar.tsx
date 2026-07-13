@@ -101,7 +101,9 @@ export default function NavBar() {
         const bt = b.translation.toLowerCase();
         const score = (n: string, t: string) =>
           n === q || t === q ? 0 : n.startsWith(q) || t.startsWith(q) ? 1 : 2;
-        return score(an, at) - score(bn, bt);
+        const diff = score(an, at) - score(bn, bt);
+        if (diff !== 0) return diff;
+        return a.page === 'lootdrops' ? -1 : b.page === 'lootdrops' ? 1 : 0;
       })
       .slice(0, 50);
     setResults(filtered);
