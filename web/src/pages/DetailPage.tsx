@@ -294,14 +294,17 @@ export default function DetailPage() {
                     );
                     const hasType = (t: string) =>
                       allLabels.some((l) => l.includes(t));
-                    const hasUndersea = hasType('海底');
-                    const hasSpecial = hasType('特殊') || hasType('华丽');
+                    const hasUndersea = hasType('海底') || hasType('UnderSea');
+                    const hasSpecial =
+                      hasType('特殊') || hasType('华丽') || hasType('Special');
                     const hasRandom = hasType('随机') || hasType('Random');
                     const hasRegular = allLabels.some(
                       (l) =>
                         l &&
                         !l.includes('海底') &&
+                        !l.includes('UnderSea') &&
                         !l.includes('特殊') &&
+                        !l.includes('Special') &&
                         !l.includes('华丽') &&
                         !l.includes('随机') &&
                         !l.includes('Random')
@@ -453,16 +456,20 @@ export default function DetailPage() {
                     const labels = mapCoords.map((c) => c.label || '');
                     const hasType = (t: string) =>
                       labels.some((l) => l.includes(t));
-                    const hasUndersea = hasType('海底');
-                    const hasSpecial = hasType('特殊') || hasType('华丽');
+                    const hasUndersea = hasType('海底') || hasType('UnderSea');
+                    const hasSpecial =
+                      hasType('特殊') || hasType('华丽') || hasType('Special');
                     const hasRandom = hasType('随机') || hasType('Random');
                     const hasRegular = labels.some(
                       (l) =>
                         l &&
                         !l.includes('海底') &&
+                        !l.includes('UnderSea') &&
                         !l.includes('特殊') &&
+                        !l.includes('Special') &&
                         !l.includes('华丽') &&
-                        !l.includes('随机')
+                        !l.includes('随机') &&
+                        !l.includes('Random')
                     );
                     const filteredGdi = gdi.filter((info) => {
                       const t = info.translation;
