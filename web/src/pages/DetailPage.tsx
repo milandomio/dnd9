@@ -373,9 +373,9 @@ export default function DetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {`${GROUP_LABELS[sec.groupName] || sec.groupName}${sec.subLabel}`}
+                    {GROUP_LABELS[sec.groupName] || sec.groupName}
                   </span>
-                  {sec.subLabel === '' && sec.gdi.length > 0 && (
+                  {sec.subLabel ? (
                     <span
                       style={{
                         fontSize: 13,
@@ -383,23 +383,35 @@ export default function DetailPage() {
                         color: tokens.muted,
                       }}
                     >
-                      参考爆率：
-                      {sec.gdi.map((info, gi) => (
-                        <span
-                          key={gi}
-                          style={{
-                            display: 'inline-block',
-                            marginRight: 8,
-                          }}
-                        >
-                          {info.translation}
-                          {info.spawn_rate}%
-                          {Object.entries(info.drop_rates)
-                            .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                            .join('')}
-                        </span>
-                      ))}
+                      {sec.subLabel}
                     </span>
+                  ) : (
+                    sec.gdi.length > 0 && (
+                      <span
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 'normal',
+                          color: tokens.muted,
+                        }}
+                      >
+                        参考爆率：
+                        {sec.gdi.map((info, gi) => (
+                          <span
+                            key={gi}
+                            style={{
+                              display: 'inline-block',
+                              marginRight: 8,
+                            }}
+                          >
+                            {info.translation}
+                            {info.spawn_rate}%
+                            {Object.entries(info.drop_rates)
+                              .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                              .join('')}
+                          </span>
+                        ))}
+                      </span>
+                    )
                   )}
                 </div>
               </div>
