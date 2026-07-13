@@ -61,14 +61,7 @@ class CoordinatesRepository:
                 row["cnt"],
                 names,
             )
-        for row in c.execute(
-            "SELECT map_base, json_filename, group_parent, "
-            "COUNT(*) as total "
-            "FROM spawners WHERE group_parent != '' AND has_lootdrop = 1 "
-            "GROUP BY map_base, json_filename, group_parent "
-            "HAVING COUNT(DISTINCT original_keyword) = 1 AND COUNT(*) > 1"
-        ):
-            key = (row["map_base"], row["json_filename"], row["group_parent"])
-            if key not in result:
-                result[key] = (row["total"], [])
+        # Skip Query 2: groups with only 1 distinct entity type and multiple entries
+        # are just multiple spawn points at different positions, not actual variant
+        # entity choices. variant_count should only reflect entity type count.
         return result
