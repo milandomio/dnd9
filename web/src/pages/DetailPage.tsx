@@ -280,6 +280,64 @@ export default function DetailPage() {
     }
   }
 
+  // Score each item by spawn_rate × 豪客赛 drop_rate, same as lootdrop pages
+  function itemScore(
+    item: (typeof sections)[number]['items'][number],
+    gdi: GroupDropInfo[]
+  ): number {
+    let total = 0;
+    const varGroups = new Map<string, boolean>();
+    for (const c of item.coords) {
+      const label = c.label || '';
+      const vc = c.variant_count ?? 1;
+      const match = gdi.find((e) => {
+        const t = e.translation;
+        if (t.includes('特殊'))
+          return label.includes('Special') || label.includes('特殊');
+        if (t.includes('海底'))
+          return label.includes('UnderSea') && !label.includes('Special');
+        return (
+          !label.includes('Special') &&
+          !label.includes('特殊') &&
+          !label.includes('UnderSea')
+        );
+      });
+      if (!match) continue;
+      const sr = match.spawn_rate;
+      const dr = match.drop_rates['豪客赛'] ?? 0;
+      const s = (sr * dr) / 100;
+      if (vc > 1) {
+        const key = c.group_parent || `${c.file}::${vc}`;
+        if (!varGroups.has(key)) {
+          varGroups.set(key, true);
+          total += s;
+        }
+      } else {
+        total += s;
+      }
+    }
+    return Math.round(total * 10000) / 10000;
+  }
+  // Sort items within each section by score desc, then non-variant first, then coord count desc
+  for (const sec of sections) {
+    sec.items.sort((a, b) => {
+      const sa = itemScore(a, sec.gdi);
+      const sb = itemScore(b, sec.gdi);
+      if (sa !== sb) return sb - sa;
+      const vA = a.coords.some((c) => (c.variant_count ?? 1) > 1);
+      const vB = b.coords.some((c) => (c.variant_count ?? 1) > 1);
+      if (vA !== vB) return vA ? 1 : -1;
+      if (a.coords.length !== b.coords.length)
+        return b.coords.length - a.coords.length;
+      const syA = a.mod?.size_y ?? 1;
+      const syB = b.mod?.size_y ?? 1;
+      if (syA !== syB) return syA - syB;
+      const sxA = a.mod?.size_x ?? 1;
+      const sxB = b.mod?.size_x ?? 1;
+      return sxA - sxB;
+    });
+  }
+
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
