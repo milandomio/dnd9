@@ -220,13 +220,16 @@ export default function DetailPage() {
   for (const [groupName, items] of sortedGroups) {
     const gdi = (entity.group_drop_info?.[groupName] ?? []) as GroupDropInfo[];
     const specialEntries = gdi.filter((e) => e.translation.includes('特殊'));
+    const randomEntries = gdi.filter(
+      (e) => e.translation.includes('随机') && !e.translation.includes('特殊')
+    );
     const regularEntries = gdi.filter(
       (e) =>
         !e.translation.includes('特殊') &&
         !e.translation.includes('随机') &&
         !e.translation.includes('海底')
     );
-    if (specialEntries.length === 0) {
+    if (specialEntries.length === 0 && randomEntries.length === 0) {
       sections.push({
         sectionKey: groupName,
         groupName,
@@ -236,20 +239,28 @@ export default function DetailPage() {
       });
       continue;
     }
-    // Build regular items (coords not labeled Special)
     const regularItems: typeof items = [];
     const specialItemBuckets = new Map<
+      string,
+      { items: typeof items; entry: GroupDropInfo }
+    >();
+    const randomItemBuckets = new Map<
       string,
       { items: typeof items; entry: GroupDropInfo }
     >();
     for (const se of specialEntries) {
       specialItemBuckets.set(se.translation, { items: [], entry: se });
     }
+    for (const re of randomEntries) {
+      randomItemBuckets.set(re.translation, { items: [], entry: re });
+    }
     for (const item of items) {
       const regCoords = item.coords.filter(
         (c) =>
           !(c.label || '').includes('Special') &&
-          !(c.label || '').includes('特殊')
+          !(c.label || '').includes('特殊') &&
+          !(c.label || '').includes('Random') &&
+          !(c.label || '').includes('随机')
       );
       if (regCoords.length > 0) {
         regularItems.push({ ...item, coords: regCoords });
@@ -265,8 +276,18 @@ export default function DetailPage() {
           });
         }
       }
+      for (const re of randomEntries) {
+        const randCoords = item.coords.filter((c) =>
+          labelMatch(c.label || '', re.translation)
+        );
+        if (randCoords.length > 0) {
+          randomItemBuckets.get(re.translation)!.items.push({
+            ...item,
+            coords: randCoords,
+          });
+        }
+      }
     }
-    // Regular section
     if (regularItems.length > 0) {
       sections.push({
         sectionKey: groupName,
@@ -276,23 +297,28 @@ export default function DetailPage() {
         gdi: regularEntries,
       });
     }
-    // Special sections, sorted by spawn_rate ascending
-    const sortedSpecials = [...specialItemBuckets.entries()]
-      .filter(([, b]) => b.items.length > 0)
-      .sort(([, a], [, b]) => a.entry.spawn_rate - b.entry.spawn_rate);
-    for (const [, { items: specItems, entry }] of sortedSpecials) {
-      const rateStr = `${entry.spawn_rate}%`;
-      const dropStr = Object.entries(entry.drop_rates)
-        .map(([m, r]) => `[${m}:${r}%]`)
-        .join('');
-      sections.push({
-        sectionKey: `${groupName}__${entry.translation}`,
-        groupName,
-        subLabel: ` ${entry.translation}${rateStr}${dropStr}`,
-        items: specItems,
-        gdi: [entry],
-      });
+    function pushVariantSections(
+      buckets: Map<string, { items: typeof items; entry: GroupDropInfo }>
+    ) {
+      const sorted = [...buckets.entries()]
+        .filter(([, b]) => b.items.length > 0)
+        .sort(([, a], [, b]) => a.entry.spawn_rate - b.entry.spawn_rate);
+      for (const [, { items, entry }] of sorted) {
+        const rateStr = `${entry.spawn_rate}%`;
+        const dropStr = Object.entries(entry.drop_rates)
+          .map(([m, r]) => `[${m}:${r}%]`)
+          .join('');
+        sections.push({
+          sectionKey: `${groupName}__${entry.translation}`,
+          groupName,
+          subLabel: ` ${entry.translation}${rateStr}${dropStr}`,
+          items,
+          gdi: [entry],
+        });
+      }
     }
+    pushVariantSections(specialItemBuckets);
+    pushVariantSections(randomItemBuckets);
   }
 
   // Score each item by spawn_rate × 豪客赛 drop_rate, same as lootdrop pages
