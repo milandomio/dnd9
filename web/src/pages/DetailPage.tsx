@@ -563,7 +563,8 @@ export default function DetailPage() {
                     range={range}
                     singleCategory
                   />
-                  {sec.gdi.length > 0 &&
+                  {debug &&
+                    sec.gdi.length > 0 &&
                     (() => {
                       const sc = itemScore({ coords: mapCoords }, sec.gdi);
                       return sc > 0 ? (
