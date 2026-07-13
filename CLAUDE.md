@@ -330,3 +330,15 @@ const [data, setData] = useState(
 - 占位图 `RareModule_1x1` / `UnderConstruction_1x1` 被跳过
 - `modules_map` 必须在实体导出（items/monsters/props）**之前**构建，供 `_modules` 内联注入
 - 实体 JSON（items/monsters/props/lootdrops）均包含 `_modules` 字段，内联引用模块的旋转/偏移/尺寸/分组/翻译/图片数据
+
+## PWA / Service Worker 缓存规则
+
+SW 通过 `vite-plugin-pwa` + Workbox 生成（`web/vite.config.ts`），配置要点：
+
+- **`registerType: 'autoUpdate'`** — 新版本静默更新，不弹用户提示条
+- **`maxEntries` 必须等于实际资源数量**，由 `vite.config.ts` 中 hardcode：
+  - `df5-html`：`1300`（约 1235 个 SSG 页面）
+  - `df5-data-json`：`3300`（约 3273 个 JSON 文件）
+  - `df5-data-img`：`250`（约 239 张地图图片）
+  - `df5-meta`：`1`（仅 `meta.json`，5 分钟 TTL）
+- **更新自动覆盖**：新部署后 `StaleWhileRevalidate` / `NetworkFirst` 策略自动用新数据更新同名缓存，`maxEntries` 够大不会被 LRU 驱逐
