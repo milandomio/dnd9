@@ -30,12 +30,11 @@ export default defineConfig(({ mode }) => {
         },
       },
       VitePWA({
-        registerType: 'autoUpdate',
+        registerType: 'prompt',
         workbox: {
-          // Empty string disables VitePWA's default navigateFallback:'index.html',
-          // which would create a NavigationRoute serving root index.html for all
-          // SSG routes, breaking SSR data injection.
-          navigateFallback: '',
+          // SSG 已生成所有路由的独立 HTML（含 SSR 数据）；NetworkFirst 负责已访问页面的缓存。
+          // navigateFallback 作为离线兜底，未访问过的深度链接也显示 shell 页面（CSR 从 SW 缓存放数据）。
+          navigateFallback: 'index.html',
           globPatterns: ['assets/**/*.{js,css}'],
           runtimeCaching: [
             {

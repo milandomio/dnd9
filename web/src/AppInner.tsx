@@ -19,6 +19,7 @@ import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import SWUpdateBanner from './components/SWUpdateBanner';
 
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
@@ -32,6 +33,7 @@ export function AppInner() {
         boxSizing: 'border-box',
       }}
     >
+      <SWUpdateBanner />
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
