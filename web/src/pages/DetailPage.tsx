@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Typography } from 'antd';
@@ -187,6 +187,99 @@ export default function DetailPage() {
     }
   );
 
+  // Build flat sections list, splitting groups by spawn type
+  interface DetailSection {
+    sectionKey: string;
+    groupName: string;
+    subLabel: string;
+    items: Array<{
+      mapName: string;
+      mod: DungeonModule | undefined;
+      coords: Coord[];
+    }>;
+    gdi: GroupDropInfo[];
+  }
+  const sections: DetailSection[] = [];
+  for (const [groupName, items] of sortedGroups) {
+    const gdi = (entity.group_drop_info?.[groupName] ?? []) as GroupDropInfo[];
+    const specialEntries = gdi.filter((e) => e.translation.includes('特殊'));
+    const regularEntries = gdi.filter(
+      (e) =>
+        !e.translation.includes('特殊') &&
+        !e.translation.includes('随机') &&
+        !e.translation.includes('海底')
+    );
+    if (specialEntries.length === 0) {
+      sections.push({
+        sectionKey: groupName,
+        groupName,
+        subLabel: '',
+        items,
+        gdi,
+      });
+      continue;
+    }
+    // Build regular items (coords not labeled Special)
+    const regularItems: typeof items = [];
+    const specialItemBuckets = new Map<
+      string,
+      { items: typeof items; entry: GroupDropInfo }
+    >();
+    for (const se of specialEntries) {
+      specialItemBuckets.set(se.translation, { items: [], entry: se });
+    }
+    for (const item of items) {
+      const regCoords = item.coords.filter(
+        (c) =>
+          !(c.label || '').includes('Special') &&
+          !(c.label || '').includes('特殊')
+      );
+      if (regCoords.length > 0) {
+        regularItems.push({ ...item, coords: regCoords });
+      }
+      for (const se of specialEntries) {
+        const specCoords = item.coords.filter(
+          (c) =>
+            (c.label || '').includes('Special') ||
+            (c.label || '').includes('特殊')
+        );
+        if (specCoords.length > 0) {
+          specialItemBuckets.get(se.translation)!.items.push({
+            ...item,
+            coords: specCoords,
+          });
+        }
+      }
+    }
+    // Regular section
+    if (regularItems.length > 0) {
+      sections.push({
+        sectionKey: groupName,
+        groupName,
+        subLabel: '',
+        items: regularItems,
+        gdi: regularEntries,
+      });
+    }
+    // Special sections, sorted by spawn_rate ascending
+    const sortedSpecials = [...specialItemBuckets.entries()]
+      .filter(([, b]) => b.items.length > 0)
+      .sort(([, a], [, b]) => a.entry.spawn_rate - b.entry.spawn_rate);
+    for (const [, { items: specItems, entry }] of sortedSpecials) {
+      const rateStr = `${entry.spawn_rate}%`;
+      const dropStr = Object.entries(entry.drop_rates)
+        .map(([m, r]) => `[${m}:${r}%]`)
+        .join('');
+      sections.push({
+        sectionKey: `${groupName}__${entry.translation}`,
+        groupName,
+        subLabel: ` ${entry.translation}${rateStr}${dropStr}`,
+        items: specItems,
+        gdi: [entry],
+      });
+    }
+  }
+
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
@@ -252,11 +345,10 @@ export default function DetailPage() {
           gridTemplateColumns: 'repeat(4, 1fr)',
         }}
       >
-        {sortedGroups.map(([groupName, items]) => (
-          <>
-            {groupName && (
+        {sections.map((sec) => (
+          <React.Fragment key={sec.sectionKey}>
+            {sec.groupName && (
               <div
-                key={`h-${groupName}`}
                 style={{
                   gridColumn: '1 / -1',
                   padding: '5px 0',
@@ -281,74 +373,38 @@ export default function DetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {GROUP_LABELS[groupName] || groupName}
+                    {`${GROUP_LABELS[sec.groupName] || sec.groupName}${sec.subLabel}`}
                   </span>
-                  {(() => {
-                    const gdi = entity.group_drop_info?.[groupName] as
-                      | GroupDropInfo[]
-                      | undefined;
-                    if (!gdi || gdi.length === 0) return null;
-                    // Collect all coord labels across the group
-                    const allLabels = items.flatMap((it) =>
-                      it.coords.map((c) => c.label || '')
-                    );
-                    const hasType = (t: string) =>
-                      allLabels.some((l) => l.includes(t));
-                    const hasSpecial =
-                      hasType('特殊') || hasType('华丽') || hasType('Special');
-                    const hasRandom = hasType('随机') || hasType('Random');
-                    const hasRegular = allLabels.some(
-                      (l) =>
-                        l &&
-                        !l.includes('特殊') &&
-                        !l.includes('Special') &&
-                        !l.includes('华丽') &&
-                        !l.includes('随机') &&
-                        !l.includes('Random')
-                    );
-                    const filtered = gdi.filter((info) => {
-                      const t = info.translation;
-                      const isUndersea = t.includes('海底');
-                      const isSpecial = t.includes('特殊');
-                      const isRandom = t.includes('随机');
-                      if (!isUndersea && !isSpecial && !isRandom)
-                        return hasRegular;
-                      if (isSpecial) return hasSpecial;
-                      if (isRandom) return hasRandom;
-                      return false;
-                    });
-                    if (filtered.length === 0) return null;
-                    return (
-                      <span
-                        style={{
-                          fontSize: 13,
-                          fontWeight: 'normal',
-                          color: tokens.muted,
-                        }}
-                      >
-                        参考爆率：
-                        {filtered.map((info, gi) => (
-                          <span
-                            key={gi}
-                            style={{
-                              display: 'inline-block',
-                              marginRight: 8,
-                            }}
-                          >
-                            {info.translation}
-                            {info.spawn_rate}%
-                            {Object.entries(info.drop_rates)
-                              .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                              .join('')}
-                          </span>
-                        ))}
-                      </span>
-                    );
-                  })()}
+                  {sec.subLabel === '' && sec.gdi.length > 0 && (
+                    <span
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 'normal',
+                        color: tokens.muted,
+                      }}
+                    >
+                      参考爆率：
+                      {sec.gdi.map((info, gi) => (
+                        <span
+                          key={gi}
+                          style={{
+                            display: 'inline-block',
+                            marginRight: 8,
+                          }}
+                        >
+                          {info.translation}
+                          {info.spawn_rate}%
+                          {Object.entries(info.drop_rates)
+                            .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                            .join('')}
+                        </span>
+                      ))}
+                    </span>
+                  )}
                 </div>
               </div>
             )}
-            {items.map(({ mapName, mod, coords: mapCoords }) => {
+            {sec.items.map(({ mapName, mod, coords: mapCoords }) => {
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600;
@@ -365,7 +421,7 @@ export default function DetailPage() {
               }));
               return (
                 <div
-                  key={mapName}
+                  key={`${sec.sectionKey}-${mapName}`}
                   style={{
                     minWidth: 0,
                     gridColumn: sx >= 2 ? `span ${sx}` : undefined,
@@ -762,7 +818,7 @@ export default function DetailPage() {
                 </div>
               );
             })}
-          </>
+          </React.Fragment>
         ))}
       </div>
 
