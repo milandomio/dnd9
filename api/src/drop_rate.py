@@ -357,8 +357,6 @@ class DropRateEngine:
             return {}
         mode_rates: dict[str, float] = {}
         for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-            if mode_id == 4:
-                continue
             best_rate = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
@@ -431,8 +429,6 @@ class DropRateEngine:
         mode_rates: dict[str, float] = {}
         _rt_cache: dict[str, int] = {}
         for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-            if mode_id == 4:
-                continue
             best_rate = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
@@ -460,8 +456,6 @@ class DropRateEngine:
                 continue
             mode_rates: dict[str, float] = {}
             for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-                if mode_id == 4:
-                    continue
                 best_rate = 0.0
                 for suffix in suffixes:
                     full_grade = mode_id * 1000 + suffix
@@ -482,8 +476,6 @@ class DropRateEngine:
             return {}
         mode_rates: dict[str, float] = {}
         for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-            if mode_id == 4:
-                continue
             best_rate = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
@@ -515,8 +507,6 @@ class DropRateEngine:
             return {}
         mode_rates: dict[str, float] = {}
         for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
-            if mode_id == 4:
-                continue
             best_total = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
