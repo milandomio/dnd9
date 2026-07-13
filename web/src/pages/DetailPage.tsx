@@ -215,7 +215,7 @@ export default function DetailPage() {
         groupName,
         subLabel: '',
         items,
-        gdi,
+        gdi: regularEntries,
       });
       continue;
     }
