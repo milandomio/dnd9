@@ -387,6 +387,19 @@ Total = sum(所有 DropRate)
   - **阈值调节**：开启调试模式后，可通过滑块实时调整 threshold 值（0~10，步长 0.1）
   - **默认变体**：当怪物同时存在 `_Common`/`_Elite`/`_Nightmare` 等多个质量变体时，默认显示 **Elite 变体**的爆率（即 Elite 按钮初始为可见，Common/Nightmare 受 threshold 控制）
 
+**地图模块排序规则（`LootdropDetailPage.tsx` `computeModuleScore`）：**
+
+每个模块的排序分 = 所有坐标点的贡献之和，计算方式：
+
+1. **regular 点**（`variant_count` 为空或 ≤1）：每个点贡献该怪物在此分组的 `baseScore`
+   - `baseScore = spawn_rate × 豪客赛 / 100`（来自 `group_drop_info`，如骷髅法师 sr=100 dr=25 → 25）
+2. **variant 点**（`variant_count > 1`）：按 `文件 + variant_count` 分组，每组代表 1 个有效刷怪组。每组贡献 1 份 `baseScore`（不论组内有多少个坐标点）
+   - 例：CorridorofDarkPriests 有 6 个 variant 点（vc=2 组 2 点 + vc=4 组 4 点），共 2 个分组 → 贡献 2 × 25 = 50
+   - 显示标签 `(6点选2)`：6 个坐标点分布在 2 个 variant group，共 2 个有效刷怪位
+3. **分数相等时**：无 variant 点的模块排在前面（regular 优先）
+
+排序链：得分降序 → 有 variant 标记 → 坐标点数降序 → size_y 升序 → size_x 升序
+
 **已修改文件清单：**
 - `api/src/config.py` — `LOOTDROP_RATE_DIR`、`DUNGEON_GROUP_GRADES`（8组）、`MODULE_GROUP_FLOOR_SUFFIXES`
 - `api/src/db_manager.py` — 4 张表 + 导入/查询方法
