@@ -334,6 +334,38 @@ export default function DetailPage() {
       return sxA - sxB;
     });
   }
+  // Sort sections by group total comprehensive score (matching lootdrop page behavior)
+  const groupTotalScore = new Map<string, number>();
+  for (const sec of sections) {
+    const total = sec.items.reduce(
+      (s, item) => s + itemScore(item, sec.gdi),
+      0
+    );
+    groupTotalScore.set(
+      sec.groupName,
+      (groupTotalScore.get(sec.groupName) ?? 0) + total
+    );
+  }
+  sections.sort((a, b) => {
+    if (a.groupName === b.groupName) {
+      const aIsSpecial = !!a.subLabel;
+      const bIsSpecial = !!b.subLabel;
+      if (aIsSpecial !== bIsSpecial) return aIsSpecial ? 1 : -1;
+      if (aIsSpecial && bIsSpecial) {
+        const sa = a.items.reduce((s, item) => s + itemScore(item, a.gdi), 0);
+        const sb = b.items.reduce((s, item) => s + itemScore(item, b.gdi), 0);
+        return sb - sa;
+      }
+      return 0;
+    }
+    const ga = groupTotalScore.get(a.groupName) ?? 0;
+    const gb = groupTotalScore.get(b.groupName) ?? 0;
+    if (ga !== gb) return gb - ga;
+    const ca = a.items.reduce((s, item) => s + item.coords.length, 0);
+    const cb = b.items.reduce((s, item) => s + item.coords.length, 0);
+    if (ca !== cb) return cb - ca;
+    return groupOrder.indexOf(a.groupName) - groupOrder.indexOf(b.groupName);
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
