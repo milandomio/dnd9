@@ -75,7 +75,7 @@ export default function DetailPage() {
   }, [entity?._modules]);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const [modeFilter, setModeFilter] = useState('');
-  const [hideZeroRate, setHideZeroRate] = useState(true);
+
   const fetchedRef = useRef(false);
 
   // Reset fetch guard when navigating between entities
@@ -483,18 +483,6 @@ export default function DetailPage() {
           <option value="豪客赛">豪客赛</option>
           <option value="逆袭赛">逆袭赛</option>
         </select>
-        <label
-          style={{ marginLeft: 10, cursor: 'pointer', userSelect: 'none' }}
-        >
-          <input
-            type="checkbox"
-            checked={hideZeroRate}
-            disabled={!modeFilter}
-            onChange={(e) => setHideZeroRate(e.target.checked)}
-            style={{ marginRight: 3, cursor: 'pointer' }}
-          />
-          隐藏0爆率坐标
-        </label>
       </div>
 
       <Disclaimer />
@@ -579,15 +567,14 @@ export default function DetailPage() {
               </div>
             )}
             {sec.items.map(({ mapName, mod, coords: rawCoords }) => {
-              const mapCoords =
-                hideZeroRate && modeFilter
-                  ? rawCoords.filter((c) => {
-                      const match = sec.gdi.find((e) =>
-                        labelMatch(c.label || '', e.translation)
-                      );
-                      return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
-                    })
-                  : rawCoords;
+              const mapCoords = modeFilter
+                ? rawCoords.filter((c) => {
+                    const match = sec.gdi.find((e) =>
+                      labelMatch(c.label || '', e.translation)
+                    );
+                    return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
+                  })
+                : rawCoords;
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600;
