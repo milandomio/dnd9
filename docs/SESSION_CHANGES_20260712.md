@@ -58,13 +58,26 @@
 - **commit**: `2da772a`, `52d9a2f`
 - **关键词**: 越来越黑暗, 越来越黑暗玩家指南, 越来越黑暗光速指南, DarkFlashNav, Dark and Darker, 暗黑地牢, ...
 
-## 待处理问题
+## 2026-07-13 会话修改记录
 
-### GoblinWarrior/LavaGolem 坐标混入问题
-- **问题**: GoblinWarrior 生成器包含 LavaGolem_Nightmare 条目，导致坐标被关联到错误的实体
-- **当前状态**: 已回滚尝试的修复（影响 197 个 spawner/entity 组合）
-- **根因**: 游戏数据中 GoblinWarrior spawner 有 2 个 LavaGolem_Nightmare 条目（稀有生成）
-- **待分析**: 需要更精确的解决方案
+### 多实体刷怪器坐标误扩展修复
+- **commit**: `dfffe3d`
+- **问题**: GoblinWarrior 的 DCSpawnerDataAsset 包含 LavaGolem_Nightmare 条目，`load_all_spawner_data` 剥离后缀后得到 2 个不同实体名（GoblinWarrior、LavaGolem），触发多实体展开。所有 GoblinWarrior 地图刷怪点都生成了 keyword="LavaGolem" 的坐标，导致 LavaGolem 页面多了 104 个虚假坐标
+- **修复**: `search_engine.py:extract_spawners` 中，展开前判断 spawner 基名是否匹配任一实体基名。若匹配，只保留基名一致的实体；若不匹配（如 Random/Special 生成器），保留全部
+- **效果**: LavaGolem 坐标从 105 降为 1（真实坐标）；GoblinMelee_Random、ChestSpecial 等不受影响
+
+### lootdrop score 未乘实体生成概率修复
+- **commit**: `7703899`
+- **问题**: `lootdrop_builder.py:556` 中 per-coord score 使用 `coord.spawn_rate`（未命中 cache 时默认回退 100），未使用实体级 `entity.spawn_rate`。如迷你宝盒组 group_drop_info 中 spawn_rate=3.0，但每个 coord score = 100×25/100=25.0，模块合计 512.5%。实际应为 3.0×25/100=0.75 per coord
+- **修复**: 新增 `_sr_lookup` 从 `_group_drop_info` 提取实体级 spawn_rate，score 公式改为 `entity_spawn_rate × 豪客赛 / 100`
+- **效果**: 迷你宝盒组 per-coord score 从 25.0 → 0.75，模块合计 ≈15.375%（512.5%×3%）
+
+### 文案修正
+- **commit**: `7703899`, `a5afb3e`
+- **问题**: 模块卡片显示"单点综合爆率"，应为"综合爆率"
+- **修复**: `LootdropDetailPage.tsx:1359` 模块卡片 + `:844` 调试面板标签，去掉了"单点"前缀
+
+## 待处理问题
 
 ### 黄金宝箱(特殊) 缺失
 - **问题**: "黄金宝箱(特殊)" 在 group_drop_info 中但不在 monsters 列表中
