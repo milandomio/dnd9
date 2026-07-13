@@ -555,6 +555,7 @@ export default function LootdropDetailPage() {
         variant_names?: string[];
         score?: number;
         file: string;
+        group_parent?: string;
       }[];
     },
     _rateLookup: Map<string, { sr: number; dr: number }>
@@ -563,12 +564,12 @@ export default function LootdropDetailPage() {
     const varGroups = new Map<string, { translation: string }>();
     for (const d of item.dots) {
       const vc = d.variant_count ?? 1;
-      if (d.score != null) {
-        total += d.score;
-      } else if (vc > 1) {
-        const key = `${d.file}::${vc}`;
+      if (vc > 1) {
+        const key = d.group_parent || `${d.file}::${vc}`;
         if (!varGroups.has(key))
           varGroups.set(key, { translation: d.monster.translation });
+      } else if (d.score != null) {
+        total += d.score;
       } else {
         const rate = _rateLookup.get(d.monster.translation);
         if (rate) {
