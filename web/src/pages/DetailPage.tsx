@@ -294,10 +294,14 @@ export default function DetailPage() {
                     );
                     const hasType = (t: string) =>
                       allLabels.some((l) => l.includes(t));
-                    const hasUndersea = hasType('海底') || hasType('UnderSea');
                     const hasSpecial =
                       hasType('特殊') || hasType('华丽') || hasType('Special');
                     const hasRandom = hasType('随机') || hasType('Random');
+                    const hasPlainUndersea = allLabels.some(
+                      (l) =>
+                        (l.includes('UnderSea') && !l.includes('Special')) ||
+                        (l.includes('海底') && !l.includes('特殊'))
+                    );
                     const hasRegular = allLabels.some(
                       (l) =>
                         l &&
@@ -314,12 +318,12 @@ export default function DetailPage() {
                       const isUndersea = t.includes('海底');
                       const isSpecial = t.includes('特殊');
                       const isRandom = t.includes('随机');
-                      if (isUndersea && !hasUndersea) return false;
-                      if (isSpecial && !hasSpecial) return false;
-                      if (isRandom && !hasRandom) return false;
-                      if (!isUndersea && !isSpecial && !isRandom && !hasRegular)
-                        return false;
-                      return true;
+                      if (!isUndersea && !isSpecial && !isRandom)
+                        return hasRegular;
+                      if (isSpecial) return hasSpecial;
+                      if (isRandom) return hasRandom;
+                      if (isUndersea) return hasPlainUndersea;
+                      return false;
                     });
                     if (filtered.length === 0) return null;
                     return (
@@ -456,10 +460,14 @@ export default function DetailPage() {
                     const labels = mapCoords.map((c) => c.label || '');
                     const hasType = (t: string) =>
                       labels.some((l) => l.includes(t));
-                    const hasUndersea = hasType('海底') || hasType('UnderSea');
                     const hasSpecial =
                       hasType('特殊') || hasType('华丽') || hasType('Special');
                     const hasRandom = hasType('随机') || hasType('Random');
+                    const hasPlainUndersea = labels.some(
+                      (l) =>
+                        (l.includes('UnderSea') && !l.includes('Special')) ||
+                        (l.includes('海底') && !l.includes('特殊'))
+                    );
                     const hasRegular = labels.some(
                       (l) =>
                         l &&
@@ -476,12 +484,12 @@ export default function DetailPage() {
                       const isUndersea = t.includes('海底');
                       const isSpecial = t.includes('特殊');
                       const isRandom = t.includes('随机');
-                      if (isUndersea && !hasUndersea) return false;
-                      if (isSpecial && !hasSpecial) return false;
-                      if (isRandom && !hasRandom) return false;
-                      if (!isUndersea && !isSpecial && !isRandom && !hasRegular)
-                        return false;
-                      return true;
+                      if (!isUndersea && !isSpecial && !isRandom)
+                        return hasRegular;
+                      if (isSpecial) return hasSpecial;
+                      if (isRandom) return hasRandom;
+                      if (isUndersea) return hasPlainUndersea;
+                      return false;
                     });
                     if (filteredGdi.length === 0) return null;
                     return (
