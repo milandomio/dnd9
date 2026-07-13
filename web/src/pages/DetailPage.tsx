@@ -297,16 +297,9 @@ export default function DetailPage() {
                     const hasSpecial =
                       hasType('特殊') || hasType('华丽') || hasType('Special');
                     const hasRandom = hasType('随机') || hasType('Random');
-                    const hasPlainUndersea = allLabels.some(
-                      (l) =>
-                        (l.includes('UnderSea') && !l.includes('Special')) ||
-                        (l.includes('海底') && !l.includes('特殊'))
-                    );
                     const hasRegular = allLabels.some(
                       (l) =>
                         l &&
-                        !l.includes('海底') &&
-                        !l.includes('UnderSea') &&
                         !l.includes('特殊') &&
                         !l.includes('Special') &&
                         !l.includes('华丽') &&
@@ -322,7 +315,6 @@ export default function DetailPage() {
                         return hasRegular;
                       if (isSpecial) return hasSpecial;
                       if (isRandom) return hasRandom;
-                      if (isUndersea) return hasPlainUndersea;
                       return false;
                     });
                     if (filtered.length === 0) return null;
@@ -463,16 +455,9 @@ export default function DetailPage() {
                     const hasSpecial =
                       hasType('特殊') || hasType('华丽') || hasType('Special');
                     const hasRandom = hasType('随机') || hasType('Random');
-                    const hasPlainUndersea = labels.some(
-                      (l) =>
-                        (l.includes('UnderSea') && !l.includes('Special')) ||
-                        (l.includes('海底') && !l.includes('特殊'))
-                    );
                     const hasRegular = labels.some(
                       (l) =>
                         l &&
-                        !l.includes('海底') &&
-                        !l.includes('UnderSea') &&
                         !l.includes('特殊') &&
                         !l.includes('Special') &&
                         !l.includes('华丽') &&
@@ -488,7 +473,6 @@ export default function DetailPage() {
                         return hasRegular;
                       if (isSpecial) return hasSpecial;
                       if (isRandom) return hasRandom;
-                      if (isUndersea) return hasPlainUndersea;
                       return false;
                     });
                     if (filteredGdi.length === 0) return null;
