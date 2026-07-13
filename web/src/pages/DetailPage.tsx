@@ -531,12 +531,6 @@ export default function DetailPage() {
                     >
                       {mod?.img_name || mod?.sl_base_name || mapName}.webp |
                       找到 {mapCoords.length} 个位置 | 范围: ±{range}
-                      {sec.gdi.length > 0 && (
-                        <>
-                          {' | '}综合爆率{' '}
-                          {itemScore({ coords: mapCoords }, sec.gdi)}%
-                        </>
-                      )}
                     </div>
                   )}
                   {debug && (
@@ -569,6 +563,22 @@ export default function DetailPage() {
                     range={range}
                     singleCategory
                   />
+                  {sec.gdi.length > 0 &&
+                    (() => {
+                      const sc = itemScore({ coords: mapCoords }, sec.gdi);
+                      return sc > 0 ? (
+                        <div
+                          style={{
+                            marginTop: 4,
+                            fontSize: 12,
+                            textAlign: 'center',
+                            color: tokens.accent,
+                          }}
+                        >
+                          综合爆率 {parseFloat(sc.toFixed(4))}%
+                        </div>
+                      ) : null;
+                    })()}
                   {(() => {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
