@@ -6,15 +6,13 @@
 
 ## 修复列表
 
-### Fix 1: `location.reload()` 硬刷新 → 通知横幅
+### Fix 1: `location.reload()` 硬刷新 → 移除横幅，SW 自动接管
 
 **问题：** `useDataVersion.ts` 检测到数据版本变化时执行 `location.reload()`，丢失用户输入、折叠面板、调试模式等 UI 状态。
 
-**方案：** 新增 `useRefreshNotice()` hook，模块级 `refreshListeners` 集合。版本变化时设置 `_needsRefresh = true`，`AppInner` 订阅该状态，渲染顶部蓝色通知横幅"数据已更新，点击刷新页面"，手动点击才 reload。
+**方案（已回退）：** 曾新增 `useRefreshNotice()` hook 和横幅组件，后因 SW 集成而移除。SW 的 StaleWhileRevalidate 自动管理数据缓存，不再需要用户手动刷新。
 
-**文件：**
-- `web/src/hooks/useDataVersion.ts` — 新增 `useRefreshNotice` 导出
-- `web/src/AppInner.tsx` — 横幅渲染，z-index 9999 置顶
+**当前状态：** `useRefreshNotice` hook 及相关死代码已删除，`meta.json` 通过 SW 运行时缓存（`df5-meta`，5 分钟 TTL）提供服务。
 
 ### Fix 2: `_headers` 缺乏 JSON/图片/HTML 缓存规则
 
@@ -90,7 +88,7 @@ sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 | HTML 页面 | NetworkFirst | ✅ | 访问过即缓存 |
 | JSON 数据 | StaleWhileRevalidate | ✅ | 稳定缓存键 |
 | 图片 | StaleWhileRevalidate | ✅ | 同上 |
-| meta.json | 裸 fetch + `.catch(∅)` | ❌ | 刻意的 — 仅版本检测用，静默失败不影响其他 |
+| meta.json | SW StaleWhileRevalidate (5min TTL) | ✅ | 版本检测 + 离线日期显示 |
 
 ## 冗余分析：SW 接管后的 `dataVersion`
 

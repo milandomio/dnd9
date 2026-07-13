@@ -49,6 +49,15 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
+              // meta.json: 5-minute TTL so version change is detected within reasonable time
+              urlPattern: /\/meta\.json$/,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'df5-meta',
+                expiration: { maxEntries: 1, maxAgeSeconds: 300 },
+              },
+            },
+            {
               urlPattern: /^\/data\/json\//,
               handler: 'StaleWhileRevalidate',
               options: {
