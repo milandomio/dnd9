@@ -616,9 +616,18 @@ def build_and_save_lootdrop_details(
                     _m.get("entity_name", _m["name"])
                 )
                 if ref_page:
-                    _m["ref"] = ref_page
-                    _m["coord_count"] = len(_m["coords"])
-                    del _m["coords"]
+                    _filtered_count = len(_m["coords"])
+                    _total_count = len(all_coords.get(_ck, [])) if _ck else 0
+                    # Keep filtered coords inline when they are a small fraction of
+                    # the full entity coord set (severe reduction like 2/87 or 10/112).
+                    # This avoids showing irrelevant spawn points from the shared ref file.
+                    # The threshold (50%) ensures common cases like 50/87 still use ref.
+                    if _total_count > 0 and _filtered_count < _total_count * 0.5:
+                        pass  # keep filtered coords inline
+                    else:
+                        _m["ref"] = ref_page
+                        _m["coord_count"] = _filtered_count
+                        del _m["coords"]
         # Pre-compute max score per monster translation
         _max_scores: dict[str, float] = {}
         for _g_list in _group_drop_info.values():
