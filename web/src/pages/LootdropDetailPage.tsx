@@ -1030,7 +1030,15 @@ export default function LootdropDetailPage() {
                 </div>
               </div>
             )}
-            {groupItems.map(({ mapName, mod, dots }) => {
+            {groupItems.map(({ mapName, mod, dots: rawDots }) => {
+              const dots =
+                hideZeroRate && modeFilter
+                  ? rawDots.filter(
+                      (d) =>
+                        d.monster.drop_rates == null ||
+                        (d.monster.drop_rates[modeFilter] ?? 0) > 0
+                    )
+                  : rawDots;
               if (dots.length === 0) return null;
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
