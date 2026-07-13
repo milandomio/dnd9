@@ -199,6 +199,23 @@ export default function DetailPage() {
     }>;
     gdi: GroupDropInfo[];
   }
+  function labelMatch(label: string, t: string): boolean {
+    const lUndersea = label.includes('UnderSea') || label.includes('海底');
+    const lSpecial = label.includes('Special') || label.includes('特殊');
+    const lRandom = label.includes('Random') || label.includes('随机');
+    const eUndersea = t.includes('海底');
+    const eSpecial = t.includes('特殊');
+    const eRandom = t.includes('随机');
+    for (const { eF, lF } of [
+      { eF: eUndersea, lF: lUndersea },
+      { eF: eSpecial, lF: lSpecial },
+      { eF: eRandom, lF: lRandom },
+    ]) {
+      if (eF && !lF) return false;
+      if (!eF && lF) return false;
+    }
+    return true;
+  }
   const sections: DetailSection[] = [];
   for (const [groupName, items] of sortedGroups) {
     const gdi = (entity.group_drop_info?.[groupName] ?? []) as GroupDropInfo[];
@@ -231,17 +248,15 @@ export default function DetailPage() {
     for (const item of items) {
       const regCoords = item.coords.filter(
         (c) =>
-          !(c.label || '').includes('Special') &&
-          !(c.label || '').includes('特殊')
+          !labelMatch(c.label || '', '特殊') &&
+          !labelMatch(c.label || '', '海底')
       );
       if (regCoords.length > 0) {
         regularItems.push({ ...item, coords: regCoords });
       }
       for (const se of specialEntries) {
-        const specCoords = item.coords.filter(
-          (c) =>
-            (c.label || '').includes('Special') ||
-            (c.label || '').includes('特殊')
+        const specCoords = item.coords.filter((c) =>
+          labelMatch(c.label || '', se.translation)
         );
         if (specCoords.length > 0) {
           specialItemBuckets.get(se.translation)!.items.push({
@@ -287,18 +302,7 @@ export default function DetailPage() {
     for (const c of item.coords) {
       const label = c.label || '';
       const vc = c.variant_count ?? 1;
-      const match = gdi.find((e) => {
-        const t = e.translation;
-        if (t.includes('特殊'))
-          return label.includes('Special') || label.includes('特殊');
-        if (t.includes('海底'))
-          return label.includes('UnderSea') && !label.includes('Special');
-        return (
-          !label.includes('Special') &&
-          !label.includes('特殊') &&
-          !label.includes('UnderSea')
-        );
-      });
+      const match = gdi.find((e) => labelMatch(label, e.translation));
       if (!match) continue;
       const sr = match.spawn_rate;
       const dr = match.drop_rates['豪客赛'] ?? 0;
