@@ -19,10 +19,12 @@ import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import { useRefreshNotice } from './hooks/useDataVersion';
 
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
   const { tokens } = useTheme();
+  const { needsRefresh, refreshNow } = useRefreshNotice();
   return (
     <div
       style={{
@@ -32,6 +34,26 @@ export function AppInner() {
         boxSizing: 'border-box',
       }}
     >
+      {needsRefresh && (
+        <div
+          onClick={refreshNow}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            background: '#1677ff',
+            color: '#fff',
+            textAlign: 'center',
+            padding: '8px 16px',
+            zIndex: 9999,
+            cursor: 'pointer',
+            fontSize: 14,
+          }}
+        >
+          数据已更新，点击刷新页面
+        </div>
+      )}
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
