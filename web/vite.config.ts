@@ -34,8 +34,11 @@ export default defineConfig(({ mode }) => {
         workbox: {
           // SSG 已生成所有路由的独立 HTML（含 SSR 数据）；NetworkFirst 负责已访问页面的缓存。
           // navigateFallback 作为离线兜底，未访问过的深度链接也显示 shell 页面（CSR 从 SW 缓存放数据）。
+          // registerSW.js 预缓存确保 SW 注册脚本离线可用；
+          // manifest.webmanifest 和 icons/ 由 VitePWA 自动处理，不重复声明；
+          // index.html/404.html 在 SSG 阶段才生成，构建时不存在，不走预缓存。
           navigateFallback: 'index.html',
-          globPatterns: ['assets/**/*.{js,css}'],
+          globPatterns: ['assets/**/*.{js,css}', 'registerSW.js'],
           runtimeCaching: [
             {
               // Version-based invalidation via refreshNow() clears df5-* caches;
