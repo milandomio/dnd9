@@ -1,2 +1,11 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
+/data/json/*
+  Cache-Control: public, max-age=300
+
+/data/img/*
+  Cache-Control: public, max-age=86400
+
+/*.html
+  Cache-Control: public, max-age=3600

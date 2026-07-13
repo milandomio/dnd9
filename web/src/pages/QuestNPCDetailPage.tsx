@@ -122,6 +122,21 @@ export default function QuestNPCDetailPage() {
       .catch(console.error);
   }, [ssrData]);
 
+  // Clean stale quest_npc_* localStorage keys when data version changes
+  useEffect(() => {
+    if (!dataVersion) return;
+    const storedVer = localStorage.getItem('quest_npc_version');
+    if (storedVer !== dataVersion) {
+      const toRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key?.startsWith('quest_npc_')) toRemove.push(key);
+      }
+      toRemove.forEach((k) => localStorage.removeItem(k));
+      localStorage.setItem('quest_npc_version', dataVersion);
+    }
+  }, [dataVersion]);
+
   const npc = allNpcs.find((n) => n.npc_name === npc_name);
 
   const refresh = () => setAllNpcs((prev) => [...prev]);

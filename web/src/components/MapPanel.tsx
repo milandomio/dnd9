@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { applyTransform, computePixel } from './MapDebug';
 import { useTheme } from '../hooks/useTheme';
 
@@ -33,7 +34,7 @@ function zColor(z: number): string {
 
 const GLOW = '0 0 4px #fff, 0 0 2px #000';
 
-export default function MapPanel({
+function MapPanel({
   imgName,
   sx,
   sy,
@@ -114,3 +115,5 @@ export default function MapPanel({
     </div>
   );
 }
+
+export default memo(MapPanel);

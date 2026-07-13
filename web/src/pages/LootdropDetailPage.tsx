@@ -34,6 +34,7 @@ interface LootdropCoord {
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
 const _globalRefPending = new Map<string, Promise<LootdropCoord[]>>();
+let _globalCacheVersion = '';
 
 interface LootdropMonster {
   name: string;
@@ -366,6 +367,11 @@ export default function LootdropDetailPage() {
     }
   );
   useEffect(() => {
+    if (dataVersion && dataVersion !== _globalCacheVersion) {
+      _globalRefCache.clear();
+      _globalRefPending.clear();
+      _globalCacheVersion = dataVersion;
+    }
     const refsNeeded = monsters
       .filter((m) => m.ref && !refCoords.has(m.ref))
       .map((m) => m.ref!);

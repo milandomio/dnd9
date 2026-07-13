@@ -48,6 +48,21 @@ export default function QuestNPCPage() {
       .catch(console.error);
   }, [ssrData, dataVersion]);
 
+  // Clean stale quest_npc_* localStorage keys when data version changes
+  useEffect(() => {
+    if (!dataVersion) return;
+    const storedVer = localStorage.getItem('quest_npc_version');
+    if (storedVer !== dataVersion) {
+      const toRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key?.startsWith('quest_npc_')) toRemove.push(key);
+      }
+      toRemove.forEach((k) => localStorage.removeItem(k));
+      localStorage.setItem('quest_npc_version', dataVersion);
+    }
+  }, [dataVersion]);
+
   const grouped = new Map<string, NPCEntry[]>();
   for (const npc of data) {
     const cat = npc.category || '可用NPC';
