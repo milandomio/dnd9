@@ -650,33 +650,11 @@ export default function DetailPage() {
                       (c) => c.variant_count && c.variant_count > 1
                     );
                     if (!hasVariant) return null;
-                    // Collect spawner types present in this module's coords
-                    const labels = mapCoords.map((c) => c.label || '');
-                    const hasType = (t: string) =>
-                      labels.some((l) => l.includes(t));
-                    const hasSpecial =
-                      hasType('特殊') || hasType('华丽') || hasType('Special');
-                    const hasRandom = hasType('随机') || hasType('Random');
-                    const hasRegular = labels.some(
-                      (l) =>
-                        l &&
-                        !l.includes('特殊') &&
-                        !l.includes('Special') &&
-                        !l.includes('华丽') &&
-                        !l.includes('随机') &&
-                        !l.includes('Random')
+                    const filteredGdi = gdi.filter((info) =>
+                      mapCoords.some(
+                        (c) => c.label && labelMatch(c.label, info.translation)
+                      )
                     );
-                    const filteredGdi = gdi.filter((info) => {
-                      const t = info.translation;
-                      const isUndersea = t.includes('海底');
-                      const isSpecial = t.includes('特殊');
-                      const isRandom = t.includes('随机');
-                      if (!isUndersea && !isSpecial && !isRandom)
-                        return hasRegular;
-                      if (isSpecial) return hasSpecial;
-                      if (isRandom) return hasRandom;
-                      return false;
-                    });
                     if (filteredGdi.length === 0) return null;
                     return (
                       <div
