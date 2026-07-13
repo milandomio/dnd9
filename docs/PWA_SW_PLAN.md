@@ -1,12 +1,12 @@
-# Service Worker 集成计划
+# Service Worker 集成记录
 
-## 目标
+## 状态：已完成 (2026-07-14)
 
-为静态网站添加离线缓存和运行时网络策略，提升加载速度和离线可用性。
+为静态网站添加了离线缓存和运行时网络策略，同时修复了缓存机制中的若干问题（详见 `CACHE_FIXES.md`）。
 
-> **缓存策略**: SW 运行时缓存无时间过期（`refreshNow()` 版本变化时主动清除 `df5-*` 缓存）；CDN/HTTP 层 asset 永久、JSON 短缓存。
+> **缓存策略**: SW 运行时缓存无时间过期（`?v=` 版本参数自然绕过旧缓存键）；CDN/HTTP 层 asset 永久、JSON `no-cache`。
 
-## 改动清单
+## 实施步骤
 
 ### 1. 安装依赖
 
@@ -14,14 +14,14 @@
 cd web && npm install vite-plugin-pwa
 ```
 
-`vite-plugin-pwa` 会：
+`vite-plugin-pwa` 已安装，作用：
 - 构建时自动生成 Service Worker 脚本（基于 Workbox）
 - 通过 Vite HTML transform 注入注册代码到 index.html
 - 生成 `manifest.json`
 
 ### 2. vite.config.ts 配置
 
-在 client build plugin 列表中添加 `VitePWA` 插件：
+在 client build plugin 列表中已添加 `VitePWA` 插件：
 
 ```ts
 VitePWA({
@@ -67,32 +67,25 @@ VitePWA({
 
 ### 3. 生成 PWA 图标
 
-项目无现成 app 图标，需要生成最小 192×192 和 512×512 PNG。
-
-方案 A：用 Canvas/ImageMagick 生成纯色带文字图标
-方案 B：用项目内某张地图缩略图裁剪
-方案 C：使用在线工具生成后放入 `web/public/icons/`
-
-推荐方案 A（不依赖外部工具）：
+已用 Pillow 生成最小 192×192 和 512×512 PNG 图标，存放在 `web/public/icons/`。
 
 ```bash
 cd web && mkdir -p public/icons
-# 用 ImageMagick 生成纯色图标（服务器通常已安装）
-convert -size 192x192 xc:'#1677ff' -font Sans -pointsize 72 \
-  -fill white -gravity center -annotate +0+0 "DF" public/icons/icon-192.png
-convert -size 512x512 xc:'#1677ff' -font Sans -pointsize 180 \
-  -fill white -gravity center -annotate +0+0 "DF" public/icons/icon-512.png
-```
+python3 -c "
+from PIL import Image, ImageDraw, ImageFont
+for size, path in [(192,'public/icons/icon-192.png'),(512,'public/icons/icon-512.png')]:
+  img = Image.new('RGBA', (size,size), '#1677ff')
+  draw = ImageDraw.Draw(img)
+  font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', size//3)
+  bbox = draw.textbbox((0,0), 'DF', font=font)
+  tw, th = bbox[2]-bbox[0], bbox[3]-bbox[1]
+  draw.text(((size-tw)/2-bbox[0], (size-th)/2-bbox[1]), 'DF', fill='white', font=font)
+  img.save(path, 'PNG')
+"
 
-### 4. 修改 main.tsx
+### 4. 注册 Service Worker
 
-需要在 `main.tsx` 中调用 `registerSW()` 注册 Service Worker。
-
-`vite-plugin-pwa` 提供了两种方式：
-- **auto**（推荐）：设置 `injectRegister: 'auto'`，插件自动在 index.html 插入注册脚本，`main.tsx` 无需修改
-- **manual**：手动调用 `registerSW()` 获取更新控制
-
-推荐 auto 模式，默认行为。
+`vite-plugin-pwa` 使用 auto 模式：`registerType: 'autoUpdate'`，自动在 index.html 注入注册脚本 `registerSW.js`，`main.tsx` 无需修改。
 
 ### 5. 更新 _headers
 
@@ -100,13 +93,9 @@ convert -size 512x512 xc:'#1677ff' -font Sans -pointsize 180 \
 
 ### 6. 数据版本联动
 
-`location.reload()` 已在 Fix 1 中替换为 `useRefreshNotice` 通知横幅（查看 `docs/CACHE_FIXES.md`）。引入 SW 后：
+横幅已移除（缓存由 SW 自动管理），`useDataVersion` 仅用于 `Disclaimer` 显示日期和 `seasonVersion` 用于 localStorage 赛季清理。详见 `docs/CACHE_FIXES.md`。
 
-- SW 的 `autoUpdate` 模式（`registerType: 'autoUpdate'`）检测到新 SW → 自动安装并激活
-- `refreshNow()` 清除所有 `df5-*` 前缀的 SW 缓存后执行 `location.reload()`，实现版本变化时全量刷新
-- JSON 的 `?v=${dataVersion}` query param 确保跨版本的请求 URL 不同，SW 自然走网络
-
-## 不需要改动的部分
+## 无改动的部分
 
 | 文件 | 原因 |
 |------|------|
