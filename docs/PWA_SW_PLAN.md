@@ -4,7 +4,7 @@
 
 为静态网站添加了离线缓存和运行时网络策略，同时修复了缓存机制中的若干问题（详见 `CACHE_FIXES.md`）。
 
-> **缓存策略**: SW 运行时缓存无时间过期（`?v=` 版本参数自然绕过旧缓存键）；CDN/HTTP 层 asset 永久、JSON `no-cache`。
+> **缓存策略**: SW 运行时缓存无时间过期；SSG 路由由 NetworkFirst 访问后缓存（含 SSR 数据）；`navigateFallback` 未启用（否则会覆盖 SSG 路由缓存）；`registerSW.js` 已预缓存保障离线注册。
 
 ## 实施步骤
 
@@ -25,28 +25,34 @@ cd web && npm install vite-plugin-pwa
 
 ```ts
 VitePWA({
-  registerType: 'autoUpdate',     // SW 更新后自动接管
+  registerType: 'autoUpdate',
   workbox: {
-    // 不包含 index.html — 避免 Workbox 自动添加 NavigationRoute 覆盖 SSG 路由
-    globPatterns: ['assets/**/*.{js,css}'],
+    // navigateFallback 未启用：SSG 路由 HTML（含 SSR 数据）由 NetworkFirst 访问后缓存，
+    // 离线重复访问正常显示。预缓存 registerSW.js 确保 SW 注册脚本离线可用。
+    navigateFallback: undefined,
+    globPatterns: ['assets/**/*.{js,css}', 'registerSW.js'],
     runtimeCaching: [
-      // 版本变化由 refreshNow() 清除 df5-* 缓存，无需 maxAgeSeconds
+      {
+        // SSG HTML 页面：NetworkFirst，访问后缓存，离线重复访问正常显示
+        urlPattern: ({ request }) => request.mode === 'navigate',
+        handler: 'NetworkFirst',
+        options: { cacheName: 'df5-html', expiration: { maxEntries: 1300 } },
+      },
+      {
+        // meta.json：5 分钟 TTL
+        urlPattern: /\/meta\.json$/,
+        handler: 'StaleWhileRevalidate',
+        options: { cacheName: 'df5-meta', expiration: { maxEntries: 1, maxAgeSeconds: 300 } },
+      },
       {
         urlPattern: /^\/data\/json\//,
         handler: 'StaleWhileRevalidate',
         options: { cacheName: 'df5-data-json', expiration: { maxEntries: 500 } },
       },
-      // 地图图片：大文件，优先缓存
       {
         urlPattern: /^\/data\/img\//,
-        handler: 'CacheFirst',
+        handler: 'StaleWhileRevalidate',
         options: { cacheName: 'df5-data-img', expiration: { maxEntries: 200 } },
-      },
-      // SSG HTML 页面：NetworkFirst（导航请求，不包含 .html 后缀）
-      {
-        urlPattern: ({ request }) => request.mode === 'navigate',
-        handler: 'NetworkFirst',
-        options: { cacheName: 'df5-html', expiration: { maxEntries: 200 } },
       },
     ],
   },

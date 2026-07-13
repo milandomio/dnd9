@@ -55,6 +55,14 @@
 
 **文件：** `web/src/pages/LootdropDetailPage.tsx`
 
+### Fix 6: `navigateFallback` 覆盖 NetworkFirst 路由
+
+**问题：** `navigateFallback: 'index.html'` 生成的 `NavigationRoute` 在 `NetworkFirst` 之前注册，拦截所有导航请求返回 precached `index.html`（无 SSR 数据），SSG 页面 HTML 永不缓存。
+
+**方案：** 移除 `navigateFallback`，让 `NetworkFirst` 正常接管 SSG 路由。访问过的页面离线可正常显示（含 SSR 数据）。
+
+**文件：** `web/vite.config.ts`
+
 ## 验证
 
 ```bash
@@ -72,10 +80,11 @@ sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 
 | 层级 | 内容 | 策略 | 失效机制 |
 |------|------|------|---------|
-| **SW 预缓存** | JS/CSS chunk | Precache | content-hash 变化 → 新 URL |
-| **SW 运行时** | HTML 导航 | NetworkFirst | 稳定键，离线回退缓存 |
+| **SW 预缓存** | JS/CSS chunk + `registerSW.js` | Precache | content-hash 变化 → 新 URL |
+| **SW 运行时** | HTML 导航 | NetworkFirst | 访问后稳定缓存（无 navigateFallback 覆盖） |
+| **SW 运行时** | `/meta.json` | StaleWhileRevalidate | 5 分钟 TTL |
 | **SW 运行时** | `/data/json/*` | StaleWhileRevalidate | 稳定键，ETag 条件请求判断更新 |
-| **SW 运行时** | `/data/img/*` | StaleWhileRevalidate | 同上（原 CacheFirst 已改为 SWR） |
+| **SW 运行时** | `/data/img/*` | StaleWhileRevalidate | 同上 |
 | **CDN/HTTP** | `/assets/*` | `max-age=31536000, immutable` | content-hash |
 | **CDN/HTTP** | `/data/json/*` | `no-cache` | 每次条件请求（ETag 304/200）|
 | **CDN/HTTP** | `/data/img/*`, `/*.html` | 7 天 | 非 SW 场景兜底 |
@@ -85,10 +94,12 @@ sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 | 资源 | 策略 | 离线可用 | 说明 |
 |------|------|---------|------|
 | JS/CSS | Precached | ✅ | 安装即永远可用 |
-| HTML 页面 | NetworkFirst | ✅ | 访问过即缓存 |
+| `registerSW.js` | Precached | ✅ | 确保 SW 注册脚本离线可用 |
+| HTML 页面 | NetworkFirst | ✅ | 访问过即缓存（含 SSR 数据）|
 | JSON 数据 | StaleWhileRevalidate | ✅ | 稳定缓存键 |
 | 图片 | StaleWhileRevalidate | ✅ | 同上 |
-| meta.json | SW StaleWhileRevalidate (5min TTL) | ✅ | 版本检测 + 离线日期显示 |
+| meta.json | StaleWhileRevalidate (5min) | ✅ | 版本检测 + 离线日期显示 |
+| 未访问 SSG 页面 | — | ❌ | 首次离线深度链接无缓存时报错 |
 
 ## 冗余分析：SW 接管后的 `dataVersion`
 
@@ -137,11 +148,16 @@ meta.json
 - `useDataVersion()` 内部触发模块级 fetch 已在 import 时由模块级 `if (typeof window !== 'undefined')` 块处理
 - 可以删除而不影响任何功能
 
-### 清理建议（暂未实施）
+### 已实施的清理
 
-如果未来清理，步骤：
-1. 删除所有 `[dataVersion]` useEffect dep（约 9 个文件），改为 `[]` 或保持现有 dep 不变
+1. ✅ 删除 `useRefreshNotice` 死代码及横幅相关逻辑（SW 接管了版本管理）
+2. ✅ 删除 5 个页面的 `!dataVersion` 守卫（ExplorePage, DungeonModuleDetailPage, QuestItemsPage, QuestItemGroupPage, QuestNPCPage）
+3. ✅ 删除 `HomePage.tsx` 的 `dataVersion` 调用
+4. ✅ 删除 `QuestItemGroupPage.tsx` 的 `dataVersion` 依赖
+
+### 剩余可清理（低优先）
+
+如果未来清理：
+1. 删除 `[dataVersion]` useEffect dep（约 7 个文件，不影响功能但增加代码复杂度）
 2. 删除 `useDungeonModules.ts` / `useSearchIndex.ts` 中的 `dataVersion` 缓存版本判断
-3. 删除 `HomePage.tsx` 的 `const dataVersion = useDataVersion();`
-4. 可选：删除 `_globalCacheVersion` 机制（LootdropDetailPage.tsx），因为 SW 自动处理
-5. 保留 `Disclaimer.tsx` 的 `useDataVersion()` 调用用于日期显示
+3. 可选：删除 `_globalCacheVersion` 机制（LootdropDetailPage.tsx），SW 自动处理
