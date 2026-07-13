@@ -94,7 +94,7 @@ export default function QuestItemsPage() {
                     borderRadius: 12,
                     textAlign: 'center',
                   }}
-                  bodyStyle={{ padding: '20px 16px' }}
+                  styles={{ body: { padding: '20px 16px' } }}
                 >
                   <div style={{ fontSize: 36, marginBottom: 8 }}>
                     {theme.icon}

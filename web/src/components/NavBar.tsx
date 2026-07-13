@@ -177,7 +177,7 @@ export default function NavBar() {
     for (let i = 0; i < parts.length - 1; i++) {
       const key = parts[i];
       let label = LABEL_MAP[key] || key;
-      let path = '/' + parts.slice(0, i + 1).join('/');
+      const path = '/' + parts.slice(0, i + 1).join('/');
 
       if (i === 1 && parts[0] === 'dungeon_modules') {
         label = GROUP_LABEL_MAP[parts[1]] || parts[1];
