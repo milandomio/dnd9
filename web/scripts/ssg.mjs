@@ -286,7 +286,7 @@ for (let i = 0; i < routes.length; i++) {
 
   let page;
   if (r.redirect) {
-    const title = `${r.file.split("/")[1]} — DarkFind`;
+    const title = `${r.file.split("/")[1]} — DarkFlashNav`;
     page = `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>${title}</title>

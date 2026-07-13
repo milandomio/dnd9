@@ -668,7 +668,7 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {data.translation || data.name} 掉落来源 | 越来越黑暗光速指南
+          {data.translation || data.name} 掉落来源 | 越来越黑暗闪电指南
           DarkFlashNav
         </title>
         <meta
@@ -681,7 +681,7 @@ export default function LootdropDetailPage() {
         />
         <meta
           property="og:title"
-          content={`${data.translation || data.name} 掉落来源 | DarkFindV5`}
+          content={`${data.translation || data.name} 掉落来源 | DarkFlashNav`}
         />
         <meta
           property="og:description"

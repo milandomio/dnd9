@@ -242,7 +242,7 @@ export default function QuestItemGroupPage() {
 
       <Helmet>
         <title>
-          {data.group_display} 任务物品 | 越来越黑暗光速指南 DarkFlashNav
+          {data.group_display} 任务物品 | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
