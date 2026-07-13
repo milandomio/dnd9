@@ -1033,11 +1033,14 @@ export default function LootdropDetailPage() {
             {groupItems.map(({ mapName, mod, dots: rawDots }) => {
               const dots =
                 hideZeroRate && modeFilter
-                  ? rawDots.filter(
-                      (d) =>
-                        d.monster.drop_rates == null ||
-                        (d.monster.drop_rates[modeFilter] ?? 0) > 0
-                    )
+                  ? rawDots.filter((d) => {
+                      const gdi = data?.group_drop_info?.[groupName];
+                      const entry = gdi?.find(
+                        (e) => e.translation === d.monster.translation
+                      );
+                      if (!entry) return true;
+                      return (entry.drop_rates[modeFilter] ?? 0) > 0;
+                    })
                   : rawDots;
               if (dots.length === 0) return null;
               const sx = mod?.size_x ?? 1;
@@ -1342,13 +1345,15 @@ export default function LootdropDetailPage() {
                         const mDots = dots.filter(
                           (d) => d.monster.translation === tl
                         );
-                        if (
-                          hideZeroRate &&
-                          modeFilter &&
-                          m.drop_rates &&
-                          (m.drop_rates[modeFilter] ?? 0) === 0
-                        )
-                          return null;
+                        if (hideZeroRate && modeFilter) {
+                          const gdi = data?.group_drop_info?.[groupName];
+                          const entry = gdi?.find((e) => e.translation === tl);
+                          if (
+                            entry &&
+                            (entry.drop_rates[modeFilter] ?? 0) === 0
+                          )
+                            return null;
+                        }
                         // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
                         const sr = mDots.find(
                           (d) => d.spawn_rate != null
