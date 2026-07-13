@@ -58,9 +58,7 @@ export default function DungeonModuleDetailPage() {
 
   useEffect(() => {
     if (!group || !name || !dataVersion) return;
-    fetch(
-      `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json?v=${dataVersion}`
-    )
+    fetch(`/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`)
       .then<ModuleCoordsData>((r) => r.json())
       .then((coords) => {
         setCoordsData(coords);

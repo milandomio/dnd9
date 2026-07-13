@@ -76,13 +76,12 @@ export default function ListPage() {
     if (!page || !['items', 'monsters', 'props', 'lootdrops'].includes(page))
       return;
     if (ssrData) return;
-    if (!dataVersion) return;
     getPageEntries(dataVersion, page).then((entries) => {
       if (entries.length > 0) {
         setData(entries as IndexEntry[]);
       } else {
         // fallback: search_index has no data for this page
-        fetch(`/data/json/${page}.json?v=${dataVersion}`)
+        fetch(`/data/json/${page}.json`)
           .then((r) => r.json())
           .then(setData)
           .catch(console.error);

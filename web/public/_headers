@@ -2,10 +2,10 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /data/json/*
-  Cache-Control: public, max-age=300
+  Cache-Control: no-cache
 
 /data/img/*
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=604800
 
 /*.html
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=604800

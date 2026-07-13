@@ -7,7 +7,7 @@ let cachedModules: Map<string, DungeonModule> | null = null;
 let cachedPromise: Promise<Map<string, DungeonModule>> | null = null;
 
 function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
-  // 版本变化时清除旧缓存，确保带正确的 ?v= 参数
+  // 版本变化时清除旧缓存
   if (cachedVersion !== version) {
     cachedModules = null;
     cachedPromise = null;
@@ -16,7 +16,7 @@ function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
   if (cachedPromise) return cachedPromise;
 
   cachedVersion = version;
-  cachedPromise = fetch(`/data/json/dungeon_modules.json?v=${version}`)
+  cachedPromise = fetch('/data/json/dungeon_modules.json')
     .then<DungeonModule[]>((r) => r.json())
     .then((mods) => {
       const mm = new Map<string, DungeonModule>();
@@ -46,7 +46,6 @@ export function useDungeonModules() {
   const [loading, setLoading] = useState(!cachedModules);
 
   useEffect(() => {
-    if (!dataVersion) return; // 等版本号就绪
     if (cachedModules && cachedVersion === dataVersion) {
       setModules(cachedModules);
       setLoading(false);

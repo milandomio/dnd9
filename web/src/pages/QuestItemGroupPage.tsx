@@ -88,9 +88,7 @@ export default function QuestItemGroupPage() {
       setLoading(false);
       return;
     }
-    fetch(
-      `/data/json/quest_items_groups/${encodeURIComponent(group)}.json?v=${dataVersion}`
-    )
+    fetch(`/data/json/quest_items_groups/${encodeURIComponent(group)}.json`)
       .then<GroupData>((r) => r.json())
       .then((gd) => {
         setData(gd);

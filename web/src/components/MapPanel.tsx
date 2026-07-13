@@ -10,7 +10,7 @@ export interface MapDot {
   title?: string;
 }
 
-interface MapPanelProps {
+export interface MapPanelProps {
   imgName: string;
   sx: number;
   sy: number;
@@ -48,6 +48,7 @@ function MapPanel({
   imageSrc,
 }: MapPanelProps) {
   const { tokens } = useTheme();
+  const imgUrl = imageSrc || `/data/img/${imgName}.webp`;
 
   return (
     <div
@@ -58,7 +59,7 @@ function MapPanel({
         borderRadius: 4,
         position: 'relative',
         overflow: 'hidden',
-        backgroundImage: `url(${imageSrc || `/data/img/${imgName}.webp`})`,
+        backgroundImage: `url(${imgUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

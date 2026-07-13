@@ -1,6 +1,7 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 import { existsSync, statSync } from 'fs';
 
 export default defineConfig(({ mode }) => {
@@ -28,6 +29,64 @@ export default defineConfig(({ mode }) => {
           return html.replaceAll(' crossorigin', '');
         },
       },
+      VitePWA({
+        registerType: 'autoUpdate',
+        workbox: {
+          // Empty string disables VitePWA's default navigateFallback:'index.html',
+          // which would create a NavigationRoute serving root index.html for all
+          // SSG routes, breaking SSR data injection.
+          navigateFallback: '',
+          globPatterns: ['assets/**/*.{js,css}'],
+          runtimeCaching: [
+            {
+              // Version-based invalidation via refreshNow() clears df5-* caches;
+              // no maxAgeSeconds needed — cache lives until user triggers refresh.
+              urlPattern: ({ request }) => request.mode === 'navigate',
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'df5-html',
+                expiration: { maxEntries: 200 },
+              },
+            },
+            {
+              urlPattern: /^\/data\/json\//,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'df5-data-json',
+                expiration: { maxEntries: 500 },
+              },
+            },
+            {
+              urlPattern: /^\/data\/img\//,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'df5-data-img',
+                expiration: { maxEntries: 200 },
+              },
+            },
+          ],
+        },
+        manifest: {
+          name: 'DarkFindV5',
+          short_name: 'DarkFind',
+          start_url: '/',
+          display: 'standalone',
+          background_color: '#141414',
+          theme_color: '#1677ff',
+          icons: [
+            {
+              src: '/icons/icon-192.png',
+              sizes: '192x192',
+              type: 'image/png',
+            },
+            {
+              src: '/icons/icon-512.png',
+              sizes: '512x512',
+              type: 'image/png',
+            },
+          ],
+        },
+      }),
       {
         name: 'preview-directory-index',
         configurePreviewServer(server) {

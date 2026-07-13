@@ -223,9 +223,7 @@ export default function LootdropDetailPage() {
     // For artifacts (_8001), baseName already includes the suffix, don't append again
     const fetchName =
       currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
-    const lootUrl = dataVersion
-      ? `/data/json/lootdrops/${fetchName}.json?v=${dataVersion}`
-      : `/data/json/lootdrops/${fetchName}.json`;
+    const lootUrl = `/data/json/lootdrops/${fetchName}.json`;
     fetch(lootUrl)
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
@@ -386,11 +384,7 @@ export default function LootdropDetailPage() {
       if (_globalRefPending.has(ref)) {
         return _globalRefPending.get(ref)!.then((coords) => [ref, coords]);
       }
-      const p = fetch(
-        dataVersion
-          ? `/data/json/${ref}.json?v=${dataVersion}`
-          : `/data/json/${ref}.json`
-      )
+      const p = fetch(`/data/json/${ref}.json`)
         .then((r) => r.json())
         .then((entity) => {
           const coords: LootdropCoord[] = Array.isArray(entity)
