@@ -727,46 +727,53 @@ export default function LootdropDetailPage() {
 
       <Disclaimer />
 
-      <div
-        style={{
-          textAlign: 'center',
-          marginBottom: 8,
-          fontSize: 13,
-          color: tokens.muted,
-        }}
-      >
-        爆率显示：
-        <select
-          value={modeFilter}
-          onChange={(e) => setModeFilter(e.target.value)}
+      {debug && (
+        <div
           style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 8,
+            justifyContent: 'center',
+            margin: '15px 0',
+            padding: 10,
             background: tokens.surface,
-            color: tokens.text,
-            border: `1px solid ${tokens.border}`,
-            borderRadius: 4,
-            padding: '2px 6px',
+            borderRadius: 5,
             fontSize: 13,
-            cursor: 'pointer',
+            color: tokens.text,
+            alignItems: 'center',
           }}
         >
-          <option value="">全部</option>
-          <option value="PVE">PVE</option>
-          <option value="普通">普通</option>
-          <option value="豪客赛">豪客赛</option>
-          <option value="逆袭赛">逆袭赛</option>
-        </select>
-        <label
-          style={{ marginLeft: 10, cursor: 'pointer', userSelect: 'none' }}
-        >
-          <input
-            type="checkbox"
-            checked={hideZeroRate}
-            onChange={(e) => setHideZeroRate(e.target.checked)}
-            style={{ marginRight: 3, cursor: 'pointer' }}
-          />
-          隐藏0爆率坐标
-        </label>
-      </div>
+          <span style={{ color: tokens.muted }}>爆率显示：</span>
+          <select
+            value={modeFilter}
+            onChange={(e) => setModeFilter(e.target.value)}
+            style={{
+              background: tokens.bg,
+              color: tokens.text,
+              border: `1px solid ${tokens.border}`,
+              borderRadius: 4,
+              padding: '2px 6px',
+              fontSize: 13,
+              cursor: 'pointer',
+            }}
+          >
+            <option value="">全部</option>
+            <option value="PVE">PVE</option>
+            <option value="普通">普通</option>
+            <option value="豪客赛">豪客赛</option>
+            <option value="逆袭赛">逆袭赛</option>
+          </select>
+          <label style={{ cursor: 'pointer', userSelect: 'none' }}>
+            <input
+              type="checkbox"
+              checked={hideZeroRate}
+              onChange={(e) => setHideZeroRate(e.target.checked)}
+              style={{ marginRight: 3, cursor: 'pointer' }}
+            />
+            隐藏0爆率坐标
+          </label>
+        </div>
+      )}
 
       {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
         <div
