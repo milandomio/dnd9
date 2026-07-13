@@ -393,10 +393,29 @@ Total = sum(所有 DropRate)
 
 1. **regular 点**（`variant_count` 为空或 ≤1）：每个点贡献该怪物在此分组的 `baseScore`
    - `baseScore = spawn_rate × 豪客赛 / 100`（来自 `group_drop_info`，如骷髅法师 sr=100 dr=25 → 25）
-2. **variant 点**（`variant_count > 1`）：按 `文件 + variant_count` 分组，每组代表 1 个有效刷怪组。每组贡献 1 份 `baseScore`（不论组内有多少个坐标点）
-   - 例：CorridorofDarkPriests 有 6 个 variant 点（vc=2 组 2 点 + vc=4 组 4 点），共 2 个分组 → 贡献 2 × 25 = 50
+2. **variant 点**（`variant_count > 1`）：按 `group_parent` 分组，每组代表 1 个有效刷怪位。每组贡献 1 份 `baseScore`（不论组内有多少个坐标点）
+   - 例：CorridorofDarkPriests 有 6 个 variant 点（2 组各 3 点），共 2 个分组 → 贡献 2 × 25 = 50
    - 显示标签 `(6点选2)`：6 个坐标点分布在 2 个 variant group，共 2 个有效刷怪位
 3. **分数相等时**：无 variant 点的模块排在前面（regular 优先）
+
+**坐标 variant 标签显示规则（`LootdropDetailPage.tsx` `mDots` 渲染逻辑）：**
+
+地图模块卡片下的坐标统计标签格式如下：
+
+- **regular 点**（无 `group_parent` 或 `variant_count ≤ 1`）：`(N点)`
+- **variant 点**（`variant_count > 1`，有 `group_parent`）：
+  - 单实体多位置（`variant_names` 为空）：`(N点选M)` — M = 该地图上该实体的互斥组数（`group_parent` 去重）
+  - 多实体组（`variant_names` 有值）：`(A、BN种选M)` — A/B 为实体名，N 为实体种数，M 为组数
+
+**数据来源（`coordinates.py:get_variant_counts()`）：**
+- Query 1（多实体组，`COUNT(DISTINCT original_keyword) > 1`）：`variant_count` = 实体种数，`variant_names` = 实体名列表
+- Query 2（单实体多位置，`COUNT(DISTINCT original_keyword) = 1`）：`variant_count` = `COUNT(*)`（组内 spawner 总数），`variant_names` = 空
+
+**group_parent 传递链路：**
+1. `search_engine.py` 提取地图 JSON 时检测 `BP_GameSpawnerGroup_C` → 写入 `spawners.group_parent`
+2. `coordinates.py` 的 `get_variant_counts()` 按 `(map_base, json_filename, group_parent)` 分组统计
+3. `lootdrop_builder.py` / `translator.py:build_coord_out()` 将 `group_parent` 写入坐标 JSON
+4. 前端 `LootdropDetailPage.tsx` 用 `group_parent` 去重计算组数 M；`DetailPage.tsx` 用 `variant_count > 1` 触发 `(N点选1)`
 
 排序链：得分降序 → 有 variant 标记 → 坐标点数降序 → size_y 升序 → size_x 升序
 
