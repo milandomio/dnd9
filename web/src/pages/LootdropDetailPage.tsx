@@ -192,6 +192,7 @@ export default function LootdropDetailPage() {
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const [threshold, setThreshold] = useState(defaultThreshold);
+  const [modeFilter, setModeFilter] = useState('');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
@@ -725,6 +726,36 @@ export default function LootdropDetailPage() {
 
       <Disclaimer />
 
+      <div
+        style={{
+          textAlign: 'center',
+          marginBottom: 8,
+          fontSize: 13,
+          color: tokens.muted,
+        }}
+      >
+        爆率模式：
+        <select
+          value={modeFilter}
+          onChange={(e) => setModeFilter(e.target.value)}
+          style={{
+            background: tokens.surface,
+            color: tokens.text,
+            border: `1px solid ${tokens.border}`,
+            borderRadius: 4,
+            padding: '2px 6px',
+            fontSize: 13,
+            cursor: 'pointer',
+          }}
+        >
+          <option value="">全部</option>
+          <option value="PVE">PVE</option>
+          <option value="普通">普通</option>
+          <option value="豪客赛">豪客赛</option>
+          <option value="逆袭赛">逆袭赛</option>
+        </select>
+      </div>
+
       {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
         <div
           style={{
@@ -962,6 +993,9 @@ export default function LootdropDetailPage() {
                           {info.spawn_rates &&
                           Object.keys(info.spawn_rates).length > 1
                             ? Object.entries(info.drop_rates)
+                                .filter(
+                                  ([k]) => !modeFilter || k === modeFilter
+                                )
                                 .map(([mode, rate]) => {
                                   const sRate = info.spawn_rates![mode];
                                   return sRate != null
@@ -972,6 +1006,9 @@ export default function LootdropDetailPage() {
                             : `${info.spawn_rate}%${Object.entries(
                                 info.drop_rates
                               )
+                                .filter(
+                                  ([k]) => !modeFilter || k === modeFilter
+                                )
                                 .map(([mode, rate]) => `[${mode}:${rate}%]`)
                                 .join('')}`}
                         </span>
@@ -1290,7 +1327,12 @@ export default function LootdropDetailPage() {
                           (d) => d.spawn_rate != null
                         )?.spawn_rate;
                         const dr = m.drop_rates;
-                        const hasRates = dr && Object.keys(dr).length > 0;
+                        const filteredDr =
+                          dr && modeFilter && dr[modeFilter] != null
+                            ? { [modeFilter]: dr[modeFilter] }
+                            : dr;
+                        const hasRates =
+                          filteredDr && Object.keys(filteredDr).length > 0;
                         return (
                           <span
                             key={tl}
@@ -1327,7 +1369,7 @@ export default function LootdropDetailPage() {
                                 style={{ color: tokens.muted, fontSize: 12 }}
                               >
                                 (
-                                {Object.entries(dr!)
+                                {Object.entries(filteredDr!)
                                   .map(([mode, rate]) => `[${mode}:${rate}%]`)
                                   .join('')}
                                 )
