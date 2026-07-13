@@ -281,10 +281,7 @@ export default function DetailPage() {
   }
 
   // Score each item by spawn_rate × 豪客赛 drop_rate, same as lootdrop pages
-  function itemScore(
-    item: (typeof sections)[number]['items'][number],
-    gdi: GroupDropInfo[]
-  ): number {
+  function itemScore(item: { coords: Coord[] }, gdi: GroupDropInfo[]): number {
     let total = 0;
     const varGroups = new Map<string, boolean>();
     for (const c of item.coords) {
@@ -534,6 +531,12 @@ export default function DetailPage() {
                     >
                       {mod?.img_name || mod?.sl_base_name || mapName}.webp |
                       找到 {mapCoords.length} 个位置 | 范围: ±{range}
+                      {sec.gdi.length > 0 && (
+                        <>
+                          {' | '}综合爆率{' '}
+                          {itemScore({ coords: mapCoords }, sec.gdi)}%
+                        </>
+                      )}
                     </div>
                   )}
                   {debug && (
