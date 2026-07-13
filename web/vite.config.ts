@@ -44,7 +44,7 @@ export default defineConfig(({ mode }) => {
               handler: 'NetworkFirst',
               options: {
                 cacheName: 'df5-html',
-                expiration: { maxEntries: 200 },
+                expiration: { maxEntries: 1300 },
               },
             },
             {
@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => {
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-json',
-                expiration: { maxEntries: 500 },
+                expiration: { maxEntries: 3300 },
               },
             },
             {
@@ -69,7 +69,7 @@ export default defineConfig(({ mode }) => {
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-img',
-                expiration: { maxEntries: 200 },
+                expiration: { maxEntries: 250 },
               },
             },
           ],
