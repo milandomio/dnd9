@@ -324,7 +324,6 @@ def run():
                 _coord_variant_count,
                 _item_names,
                 OUTPUT_DIR,
-                modules_map,
                 map_to_module,
             )
             # P005: Build from actual exported files, not raw DB data
@@ -340,7 +339,6 @@ def run():
                 _coord_variant_count,
                 _monster_names,
                 OUTPUT_DIR,
-                modules_map,
                 map_to_module,
             )
             for e in monsters_index:
@@ -356,7 +354,6 @@ def run():
                 _coord_variant_count,
                 _prop_names,
                 OUTPUT_DIR,
-                modules_map,
                 map_to_module,
             )
             for e in props_index:
@@ -371,7 +368,7 @@ def run():
                 continue
             if not _coords:
                 continue
-            coord_data = [build_coord_out(c, _coord_variant_count) for c in _coords]
+            coord_data = [build_coord_out(c, _coord_variant_count, map_to_module) for c in _coords]
             _save(f"coords/{_entity_name}.json", coord_data)
             entity_page_map[_entity_name] = f"coords/{_entity_name}"
             _orphan_count += 1
@@ -408,7 +405,6 @@ def run():
             monsters,
             OUTPUT_DIR,
             pipe.log,
-            modules_map,
             map_to_module,
             translations,
             entity_page_map,

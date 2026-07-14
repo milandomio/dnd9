@@ -66,9 +66,7 @@ export default function InstallPrompt() {
     >
       <span style={{ fontSize: 20 }}>📱</span>
       <div style={{ flex: 1 }}>
-        <div style={{ fontWeight: 600, marginBottom: 2 }}>
-          安装 DarkFlashNav
-        </div>
+        <div style={{ fontWeight: 600, marginBottom: 2 }}>安装 DND闪电指南</div>
         <div style={{ fontSize: 12, color: '#999' }}>
           添加到主屏幕，随时访问
         </div>

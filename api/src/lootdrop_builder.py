@@ -305,7 +305,6 @@ def build_and_save_lootdrop_details(
     monsters: list[dict],
     output_dir: Path,
     log_fn=None,
-    modules_map: dict | None = None,
     map_to_module: dict | None = None,
     translations: dict[str, str] | None = None,
     entity_page_map: dict[str, str] | None = None,
@@ -611,11 +610,6 @@ def build_and_save_lootdrop_details(
                         monsters_out.remove(_m)
                         break
 
-        # P005: Collect all maps before ref optimization strips coords
-        _all_maps: set[str] = set()
-        for _m in monsters_out:
-            for _c in _m.get("coords", []):
-                _all_maps.add(_c["map"])
         # P005: Coordinate ref optimization — inline coords for type-split entities
         _type_suffixes = {"(特殊)", "(随机)", "组"}
         _split_entities: set[str] = set()
@@ -685,31 +679,6 @@ def build_and_save_lootdrop_details(
                 "monsters": monsters_out,
                 "group_drop_info": _group_drop_info,
             }
-            # Inline module data for all referenced maps
-            # P005: Use _all_maps collected before ref optimization
-            if modules_map and map_to_module:
-                inline: dict[str, dict] = {}
-                for _mb in _all_maps:
-                    if _mb in inline:
-                        continue
-                    _mn = map_to_module.get(_mb, _mb)
-                    _mod = modules_map.get(_mn)
-                    if _mod:
-                        inline[_mb] = {
-                            "rotate": _mod["rotate"],
-                            "offset_x": _mod["offset_x"],
-                            "offset_y": _mod["offset_y"],
-                            "size_x": _mod["size_x"],
-                            "size_y": _mod["size_y"],
-                            "range": _mod["range"],
-                            "group": _mod["group"],
-                            "group_display": _mod.get("group_display", ""),
-                            "translation": _mod["translation"],
-                            "img_name": _mod["img_name"],
-                            "sl_base_name": _mod["sl_base_name"],
-                        }
-                if inline:
-                    detail["_modules"] = inline
             # Generate per-variant detail files with variant-specific drop rates
             variant_count = entry.get("variant_count", 1)
             vs = None
@@ -794,8 +763,6 @@ def build_and_save_lootdrop_details(
                         "group_drop_info": variant_gdi,
                         "variant_rarity": detail.get("variant_rarity", {}),
                     }
-                    if inline:
-                        variant_detail["_modules"] = inline
                     _save(output_dir, f"lootdrops/{variant_name}.json", variant_detail, compact=True)
             # Clean internal keys from group_drop_info before saving base detail
             for _g_list in _group_drop_info.values():

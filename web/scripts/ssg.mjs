@@ -32,11 +32,11 @@ function readJSON(p) {
 
 // ---- step 1: build client ----
 console.log("[ssg] building client SPA…");
-execSync("npx vite build", { cwd: WEB, stdio: "pipe" });
+execSync("node node_modules/.bin/vite build", { cwd: WEB, stdio: "pipe" });
 
 // ---- step 2: build SSR bundle ----
 console.log("[ssg] building SSR bundle…");
-execSync("npx vite build --mode ssr", { cwd: WEB, stdio: "pipe" });
+execSync("node node_modules/.bin/vite build --mode ssr", { cwd: WEB, stdio: "pipe" });
 
 // ---- step 3: load SSR renderer ----
 const ssrMod = await import(join(SSR_OUT, "ssr.cjs"));

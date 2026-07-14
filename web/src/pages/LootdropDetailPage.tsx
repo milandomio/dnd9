@@ -2,12 +2,13 @@ import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import SectionHeader from '../components/SectionHeader';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
-import type { DungeonModule, InlineModuleData } from '../types/data';
+import type { DungeonModule } from '../types/data';
 import {
   getAdj,
   useCtrlBtn,
@@ -61,7 +62,6 @@ interface LootdropItem {
   translation: string;
   monsters: LootdropMonster[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
-  _modules?: Record<string, InlineModuleData>;
   variant_rarity?: Record<string, string>;
 }
 
@@ -120,6 +120,7 @@ export default function LootdropDetailPage() {
     effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null
   );
   const dataVersion = useDataVersion();
+  const { modules: globalModules } = useDungeonModules();
   // P005: Initialize refCoords from SSR data if available
   const ssrRefCoords = (effectiveSsrData as any)?._refCoords;
   const initialRefCoords = useMemo(() => {
@@ -144,49 +145,7 @@ export default function LootdropDetailPage() {
     }
     return init;
   }
-  // Prefer SSR-provided modules to avoid untranslated names during SSR/hydration
-  const ssrModulesMap = useMemo(() => {
-    if (!effectiveSsrData?.modules) return null;
-    const mm = new Map<string, DungeonModule>();
-    for (const m of effectiveSsrData.modules) {
-      const names = m.names || [m.name];
-      names.forEach((n) => mm.set(n, m));
-      mm.set(m.sl_base_name, m);
-      if (m.all_sl_base_names) {
-        m.all_sl_base_names.forEach((sl) => mm.set(sl, m));
-      }
-    }
-    return mm;
-  }, [effectiveSsrData]);
-  // Build local modules map from inline _modules data
-  const inlineModulesMap = useMemo(() => {
-    if (!data?._modules) return null;
-    const mm = new Map<string, DungeonModule>();
-    for (const [mapName, modData] of Object.entries(data._modules)) {
-      const mod: DungeonModule = {
-        name: mapName,
-        names: [mapName],
-        translation: modData.translation,
-        group: modData.group,
-        group_display: modData.group_display,
-        size_x: modData.size_x,
-        size_y: modData.size_y,
-        sl_base_name: modData.sl_base_name,
-        img_name: modData.img_name,
-        has_img: true,
-        has_useful_entities: true,
-        offset_x: modData.offset_x,
-        offset_y: modData.offset_y,
-        rotate: modData.rotate,
-        range: modData.range,
-      };
-      mm.set(mapName, mod);
-    }
-    return mm;
-  }, [data?._modules]);
-
-  const modules =
-    inlineModulesMap ?? ssrModulesMap ?? new Map<string, DungeonModule>();
+  const modules = globalModules;
   const isArtifact = baseName.endsWith('_8001');
   const defaultThreshold = isArtifact ? 0.03 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
@@ -410,7 +369,7 @@ export default function LootdropDetailPage() {
     });
   }, [monsters, dataVersion]);
 
-  // P005: Merge referenced coordinates, filtered to only maps present in _modules
+  // P005: Merge referenced coordinates, filtered to only maps present in entity
   const resolvedMonsters = useMemo(
     () =>
       monsters.map((m) => ({
