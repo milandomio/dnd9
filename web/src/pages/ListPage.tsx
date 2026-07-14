@@ -6,7 +6,6 @@ import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
 import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
-import { dataUrl } from '../utils/dataUrl';
 
 type IndexEntry = SearchEntry & {
   category?: string;
@@ -17,7 +16,6 @@ type IndexEntry = SearchEntry & {
   monsters?: string[];
   monster_translations?: string[];
   max_score?: number;
-  hr100?: boolean;
 };
 
 type LootGroup = {
@@ -38,15 +36,10 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   const accessory: IndexEntry[] = [];
   const rare: IndexEntry[] = [];
   const artifact: IndexEntry[] = [];
-  const hr100: IndexEntry[] = [];
   const misc: IndexEntry[] = [];
   for (const item of items) {
     if (item.name.endsWith('_8001')) {
       artifact.push(item);
-      continue;
-    }
-    if (item.hr100) {
-      hr100.push(item);
       continue;
     }
     const vc = item.variant_count ?? 1;
@@ -54,7 +47,7 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
       weapon.push(item);
     } else if (vc === 5) {
       accessory.push(item);
-    } else if ((item.max_score ?? 0) < 1.5) {
+    } else if ((item.max_score ?? 0) < 2.5) {
       rare.push(item);
     } else {
       misc.push(item);
@@ -63,8 +56,6 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   const groups: LootGroup[] = [];
   if (artifact.length)
     groups.push({ label: '神器', icon: '🏺', items: artifact });
-  if (hr100.length)
-    groups.push({ label: '小型神器', icon: '🪙', items: hr100 });
   if (rare.length) groups.push({ label: '稀有掉落', icon: '✨', items: rare });
   if (misc.length) groups.push({ label: '物品', icon: '📦', items: misc });
   if (accessory.length)
@@ -91,7 +82,7 @@ export default function ListPage() {
         setData(entries as IndexEntry[]);
       } else {
         // fallback: search_index has no data for this page
-        fetch(dataUrl(`/data/json/${page}.json`))
+        fetch(`/data/json/${page}.json`)
           .then((r) => r.json())
           .then(setData)
           .catch(console.error);
@@ -103,7 +94,8 @@ export default function ListPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          【{LABEL_MAP[page!] ?? page}】点位 | 越来越黑暗闪电指南 DarkFlashNav
+          【{LABEL_MAP[page!] ?? page}】实体位置汇总 | 越来越黑暗闪电指南
+          DarkFlashNav
         </title>
         <meta
           name="description"
@@ -115,7 +107,7 @@ export default function ListPage() {
         />
         <meta
           property="og:title"
-          content={`【${LABEL_MAP[page!] ?? page}】点位`}
+          content={`【${LABEL_MAP[page!] ?? page}】实体位置汇总`}
         />
         <meta property="og:description" content={`共 ${data.length} 个实体`} />
       </Helmet>
@@ -127,7 +119,7 @@ export default function ListPage() {
           marginBottom: 20,
         }}
       >
-        【{LABEL_MAP[page!] ?? page}】点位
+        【{LABEL_MAP[page!] ?? page}】实体位置汇总
       </h1>
       <div
         style={{

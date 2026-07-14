@@ -30,7 +30,7 @@ function readJSON(p) {
   return JSON.parse(readFileSync(p, "utf-8"));
 }
 
-// ---- step 0: compute data version before building ----
+// ---- step 0: compute data version ----
 let latestMtime = 0;
 function scanDir(dir) {
   for (const f of readdirSync(dir)) {
@@ -42,18 +42,17 @@ function scanDir(dir) {
 }
 scanDir(DATA);
 const dataDate = String(Math.floor(latestMtime / 1000));
-const shortVer = Number(dataDate).toString(36);
 process.env.VITE_DATA_VERSION = dataDate;
+console.log(`[ssg] data version: ${dataDate}`);
 
-// ---- step 1: build client (__DATA_VERSION__ injected via define) ----
+// ---- step 1: build client ----
 console.log("[ssg] building client SPA…");
 execSync("node node_modules/.bin/vite build", { cwd: WEB, stdio: "pipe" });
 
 // ---- step 1.5: create versioned data copies for CDN cache busting ----
-console.log(`[ssg] creating versioned data copies at data/${shortVer}/…`);
-const vJsonDir = join(DIST, 'data', `${shortVer}`, 'json');
+const shortVer = Number(dataDate).toString(36);
+const vJsonDir = join(DIST, 'data', shortVer, 'json');
 mkdirSync(vJsonDir, { recursive: true });
-const distDataJson = join(DIST, 'data', 'json');
 function copyDeep(src, dest) {
   for (const f of readdirSync(src)) {
     const sp = join(src, f);
@@ -67,8 +66,7 @@ function copyDeep(src, dest) {
     }
   }
 }
-copyDeep(distDataJson, vJsonDir);
-// meta.json stays at fixed path for version detection
+copyDeep(join(DIST, 'data', 'json'), vJsonDir);
 try { rmSync(join(vJsonDir, 'meta.json'), { force: true }); } catch {}
 
 // ---- step 2: build SSR bundle ----
@@ -90,10 +88,9 @@ const SINGLE = ["explore", "quest_items", "quest_npc", "dungeon_modules"];
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
 
-// ---- step 4.5: write meta.json to dist ----
+// Write meta.json
 writeFileSync(join(DATA, "meta.json"), JSON.stringify({ dataDate, seasonVersion: 9 }));
 cpSync(join(DATA, "meta.json"), join(DIST, "data", "json", "meta.json"));
-console.log(`[ssg] data version: ${dataDate}`);
 
 // Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: "/", file: "index.html" }];

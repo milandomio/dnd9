@@ -21,15 +21,17 @@ export default defineConfig(({ mode }) => {
 
   // Client build
   return {
-    define: {
-      __DATA_VERSION__: JSON.stringify(process.env.VITE_DATA_VERSION || ''),
-    },
     plugins: [
       react(),
       {
-        name: 'remove-crossorigin',
+        name: 'inject-versioned-preload',
         transformIndexHtml(html) {
-          return html.replaceAll(' crossorigin', '');
+          const ver = process.env.VITE_DATA_VERSION;
+          let out = html.replaceAll(' crossorigin', '');
+          if (!ver) return out;
+          const short = Number(ver).toString(36);
+          const preload = `<link rel="preload" href="/data/${short}/json/dungeon_modules.json" as="fetch" crossorigin="anonymous">`;
+          return out.replace('</title>', `</title>\n    ${preload}`);
         },
       },
       VitePWA({
@@ -67,10 +69,7 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              // Match both /data/json/* and /data/v<version>/json/* for versioned cache busting
-              urlPattern: ({ url }) =>
-                url.pathname.startsWith('/data/json/') ||
-                /^\/data\/\w+\/json\//.test(url.pathname),
+              urlPattern: ({ url }) => url.pathname.startsWith('/data/json/'),
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-json',

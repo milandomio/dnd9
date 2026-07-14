@@ -13,7 +13,6 @@ import {
   type AdjState,
 } from '../components/MapDebug';
 import DebugCoordTable from '../components/DebugCoordTable';
-import { dataUrl } from '../utils/dataUrl';
 import MapPanel from '../components/MapPanel';
 
 interface CoordEntity {
@@ -49,11 +48,7 @@ export default function DungeonModuleDetailPage() {
 
   useEffect(() => {
     if (!group || !name) return;
-    fetch(
-      dataUrl(
-        `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
-      )
-    )
+    fetch(`/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`)
       .then<ModuleCoordsData>((r) => r.json())
       .then((coords) => {
         setCoordsData(coords);

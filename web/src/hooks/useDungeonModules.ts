@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { DungeonModule } from '../types/data';
 import { useDataVersion } from './useDataVersion';
-import { dataUrl } from '../utils/dataUrl';
 
 let cachedVersion: string | null = null;
 let cachedModules: Map<string, DungeonModule> | null = null;
@@ -17,7 +16,7 @@ function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
   if (cachedPromise) return cachedPromise;
 
   cachedVersion = version;
-  cachedPromise = fetch(dataUrl('/data/json/dungeon_modules.json'))
+  cachedPromise = fetch('/data/json/dungeon_modules.json')
     .then<DungeonModule[]>((r) => r.json())
     .then((mods) => {
       const mm = new Map<string, DungeonModule>();

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 
 export default function OfflineDetector() {
-  const [offline, setOffline] = useState(
-    typeof navigator !== 'undefined' && !navigator.onLine
-  );
+  const [offline, setOffline] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    setOffline(!navigator.onLine);
     const onOffline = () => setOffline(true);
     const onOnline = () => setOffline(false);
     window.addEventListener('offline', onOffline);

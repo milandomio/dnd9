@@ -14,7 +14,6 @@ import {
   type AdjState,
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
-import { dataUrl } from '../utils/dataUrl';
 import DebugCoordTable from '../components/DebugCoordTable';
 import MapPanel from '../components/MapPanel';
 
@@ -88,9 +87,7 @@ export default function QuestItemGroupPage() {
       setLoading(false);
       return;
     }
-    fetch(
-      dataUrl(`/data/json/quest_items_groups/${encodeURIComponent(group)}.json`)
-    )
+    fetch(`/data/json/quest_items_groups/${encodeURIComponent(group)}.json`)
       .then<GroupData>((r) => r.json())
       .then((gd) => {
         setData(gd);

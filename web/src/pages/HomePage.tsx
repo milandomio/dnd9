@@ -5,7 +5,6 @@ import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
 import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
-import { dataUrl } from '../utils/dataUrl';
 
 type CardTheme = {
   border: string;
@@ -99,7 +98,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch(dataUrl('/data/json/index.json'))
+    fetch('/data/json/index.json')
       .then((r) => r.json())
       .then(setData)
       .catch(console.error);
@@ -212,8 +211,8 @@ export default function HomePage() {
                 </div>
                 <div style={{ color: t.titleColor, fontSize: 13 }}>
                   {entry.page === 'quest_items' || entry.page === 'quest_npc'
-                    ? `${entry.count}个任务`
-                    : `${entry.count}个${entry.label}`}
+                    ? `任务${entry.count}个`
+                    : `${entry.label}${entry.count}个`}
                 </div>
                 <div
                   style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}

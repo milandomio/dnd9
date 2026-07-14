@@ -5,7 +5,6 @@ import { Spin, Card, Row, Col } from 'antd';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useSSRData } from '../context/SSRDataContext';
-import { dataUrl } from '../utils/dataUrl';
 
 interface GroupEntry {
   group: string;
@@ -34,7 +33,7 @@ export default function QuestItemsPage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch(dataUrl('/data/json/quest_items_groups.json'))
+    fetch('/data/json/quest_items_groups.json')
       .then((r) => r.json())
       .then(setGroups)
       .catch(console.error)
