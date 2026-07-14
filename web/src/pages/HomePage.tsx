@@ -93,7 +93,7 @@ export default function HomePage() {
         />
         <meta
           name="keywords"
-          content="越来越黑暗,越来越黑暗玩家指南,越来越黑暗闪电指南,DarkFlashNav,Dark and Darker,暗黑地牢,地牢探索,DND,游戏攻略,物品查询,怪物位置,掉落查询,地图坐标,装备属性,武器查询,防具查询,饰品查询,任务攻略,NPC位置,宝箱位置,地牢模块"
+          content="越来越黑暗,越来越黑暗玩家指南,越来越黑暗闪电指南,DarkFlashNav,Dark and Darker,darkanddarker,暗黑地牢,地牢探索,DND,游戏攻略,物品查询,怪物位置,掉落查询,地图坐标,装备属性,武器查询,防具查询,饰品查询,任务攻略,NPC位置,宝箱位置,地牢模块"
         />
         <meta
           property="og:title"
