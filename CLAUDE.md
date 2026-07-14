@@ -1,9 +1,9 @@
 # DarkFindV5 Agent Instructions
 
-游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) → 静态部署。
+游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
 > **参考项目**：「v4」「findItemV4」均指 `/home/mio/fmod/findItemV4/`
-> **技术参考**：数据管道、数据库、地图模块详细规范见 `docs/REFERENCE.md`
+> **技术参考**：数据管道、数据库、地图模块详细规范见 `docs/REFERENCE.md`；PWA 架构见 `docs/PWA_ROADMAP.md`
 
 ## 强制停止规则
 
