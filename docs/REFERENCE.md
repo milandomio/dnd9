@@ -251,6 +251,8 @@ info = parse_grade(3001)
 
 ### 生成概率与物品爆率
 
+> **精度要求：** 所有生成概率和爆率的计算必须使用 `decimal.Decimal`，最终输出四舍五入到小数点后 4 位（`quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)`）。已在 `drop_rate._round_rate` 中实现，`enrichment.py` 等调用方统一使用此函数。
+
 物品掉落涉及两层概率：**生成概率**（Spawner 是否出现）和**物品爆率**（出现后掉落什么）。
 
 #### 生成概率（SpawnRate）

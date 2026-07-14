@@ -720,7 +720,7 @@ export default function DetailPage() {
                     const forcedVc = mapCoords.find(
                       (c) => c.variant_count && c.variant_count > 1
                     );
-                    const forcedVcN = forcedVc
+                    const forcedVcN = forcedVc?.variant_names?.length
                       ? (forcedVc.variant_count as number)
                       : 1;
                     const adjRate = (v: number) => +(v / forcedVcN).toFixed(4);
