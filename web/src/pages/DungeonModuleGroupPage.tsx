@@ -169,17 +169,28 @@ export default function DungeonModuleGroupPage() {
                 </h3>
                 <div
                   style={{
-                    aspectRatio: `${sx} / ${sy}`,
+                    position: 'relative',
+                    width: '100%',
+                    paddingBottom: `${(sy / sx) * 100}%`,
                     backgroundColor: tokens.bg,
                     border: `1px solid ${tokens.border}`,
                     borderRadius: 4,
-                    position: 'relative',
                     overflow: 'hidden',
-                    backgroundImage: `url(/data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
                   }}
-                />
+                >
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundImage: `url(/data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                </div>
               </div>
             </Link>
           );
