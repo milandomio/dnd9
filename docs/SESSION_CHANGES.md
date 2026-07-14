@@ -347,3 +347,11 @@
 - **版本更新机制**：`useDataVersion` 从 `/data/json/meta.json` 获取最新时间戳 → `setDataVersion()` 数值仅升不降，长会话能自动切到新版本 URL
 - **`_headers` 最终状态**：仅 `meta.json` 设 10 分钟缓存（`/data/json/* → max-age=600`），其他全走 Cloudflare Pages 默认缓存策略
 - **变更文件**：`dataUrl.ts`（新建）、`vite.config.ts`、`ssg.mjs`、`vite-env.d.ts`、`_headers`、`index.html`、`useDataVersion.ts`、`useDungeonModules.ts`、`useSearchIndex.ts`、`MapPanel.tsx`、所有 11 个页面
+
+## 删除 SWUpdateBanner — SW 更新静默化，不再打扰用户
+
+- **原因**：`SWUpdateBanner.tsx` 用 `workbox-window` 额外注册 SW，弹横幅让用户点"刷新以应用"。但 vite.config.ts 已设 `registerType: 'autoUpdate'`，Workbox 生成的 SW 自带 `skipWaiting()`，新 SW 安装后自动激活，完全不需要用户干预。且双注册（`registerSW.js` + `workbox-window`）竞争，用户要点两次才生效
+- **教训**：此文件上次被删后又因"用户会看到旧内容"的理由被加回。错。`autoUpdate` + `skipWaiting()` 激活后，`StaleWhileRevalidate` / `NetworkFirst` 策略自动用新数据更新缓存，用户不刷新也会在后台同步。**客户不需要知道 SW 更新了，更不需要手动确认**
+- **变更文件**：
+  - 删除 `web/src/components/SWUpdateBanner.tsx`
+  - `web/src/AppInner.tsx` — 移除 import 和 `<SWUpdateBanner />` 标签

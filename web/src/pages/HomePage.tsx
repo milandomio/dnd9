@@ -212,8 +212,8 @@ export default function HomePage() {
                 </div>
                 <div style={{ color: t.titleColor, fontSize: 13 }}>
                   {entry.page === 'quest_items' || entry.page === 'quest_npc'
-                    ? `任务${entry.count}个`
-                    : `${entry.label}${entry.count}个`}
+                    ? `${entry.count}个任务`
+                    : `${entry.count}个${entry.label}`}
                 </div>
                 <div
                   style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}
