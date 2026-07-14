@@ -522,24 +522,14 @@ def build_and_save_lootdrop_details(
         for _g_list in _group_drop_info.values():
             _g_list.sort(key=lambda x: x["spawn_rate"] * x["drop_rates"].get("豪客赛", 0), reverse=True)
 
-        # Remove entries with zero豪客赛 rate (max_score = spawn_rate * 豪客赛 / 100)
+        # Build valid translation-group pairs from all entries (keep even if 豪客赛=0)
         _valid_tg: set[tuple[str, str]] = set()
-        _drop_groups: list[str] = []
         for _g, _entries in _group_drop_info.items():
-            _new_entries = [e for e in _entries if e.get("drop_rates", {}).get("豪客赛", 0) > 0]
-            if _new_entries:
-                _group_drop_info[_g] = _new_entries
-                for e in _new_entries:
-                    _valid_tg.add((e["translation"], _g))
-            else:
-                _drop_groups.append(_g)
-        for _g in _drop_groups:
-            del _group_drop_info[_g]
-        # Collect all translations that have drop rates
+            for e in _entries:
+                _valid_tg.add((e["translation"], _g))
         _valid_translations: set[str] = {e["translation"] for e_set in _group_drop_info.values() for e in e_set}
         for _base_key in list(merged.keys()):
             _trans = merged[_base_key]["translation"]
-            # Remove entries with no drop rates at all
             if _trans not in _valid_translations:
                 del merged[_base_key]
                 continue

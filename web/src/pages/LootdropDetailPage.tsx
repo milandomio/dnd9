@@ -148,7 +148,7 @@ export default function LootdropDetailPage() {
   }
   const modules = globalModules;
   const isArtifact = baseName.endsWith('_8001');
-  const defaultThreshold = isArtifact ? 0.03 : 1.5;
+  const defaultThreshold = isArtifact ? 0.03 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     effectiveSsrData?.item?.monsters
       ? defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
