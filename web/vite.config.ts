@@ -56,7 +56,7 @@ export default defineConfig(({ mode }) => {
             },
             {
               // meta.json: 5-minute TTL so version change is detected within reasonable time
-              urlPattern: /\/meta\.json$/,
+              urlPattern: ({ url }) => url.pathname === '/data/json/meta.json',
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-meta',
@@ -64,7 +64,7 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              urlPattern: /^\/data\/json\//,
+              urlPattern: ({ url }) => url.pathname.startsWith('/data/json/'),
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-json',
@@ -72,7 +72,7 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              urlPattern: /^\/data\/img\//,
+              urlPattern: ({ url }) => url.pathname.startsWith('/data/img/'),
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-img',
