@@ -698,6 +698,7 @@ def build_and_save_lootdrop_details(
                             "size_y": _mod["size_y"],
                             "range": _mod["range"],
                             "group": _mod["group"],
+                            "group_display": _mod.get("group_display", ""),
                             "translation": _mod["translation"],
                             "img_name": _mod["img_name"],
                             "sl_base_name": _mod["sl_base_name"],

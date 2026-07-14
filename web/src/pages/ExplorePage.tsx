@@ -15,17 +15,6 @@ interface ExploreTarget {
   quest_number: number;
 }
 
-const GROUP_LABELS: Record<string, string> = {
-  Crypt: '废墟2层地牢',
-  FireDeep: '哥布林洞穴2层',
-  GoblinCave: '哥布林洞穴1层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-};
-
 function modKey(module_name: string): string {
   return module_name.replace(/^Id_DungeonModule_/, '');
 }
@@ -113,7 +102,7 @@ export default function ExplorePage() {
                 const mod = modules.get(mk);
                 const sx = mod?.size_x ?? 1;
                 const sy = mod?.size_y ?? 1;
-                const groupLabel = mod?.group ? GROUP_LABELS[mod.group] : '';
+                const groupLabel = mod?.group_display || '';
                 return (
                   <div
                     key={i}

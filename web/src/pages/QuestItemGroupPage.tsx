@@ -48,16 +48,16 @@ interface GroupData {
   entities: Entity[];
 }
 
-const GROUP_LABELS: Record<string, string> = {
-  Crypt: '废墟2层地牢',
-  FireDeep: '哥布林洞穴2层',
-  GoblinCave: '哥布林洞穴1层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-};
+const GROUP_ORDER = [
+  'GoblinCave',
+  'FireDeep',
+  'IceCavern',
+  'IceAbyss',
+  'Ruins',
+  'Crypt',
+  'Inferno',
+  'ShipGraveyard',
+];
 
 export default function QuestItemGroupPage() {
   const { group } = useParams<{ group: string }>();
@@ -202,7 +202,7 @@ export default function QuestItemGroupPage() {
     });
   }
 
-  const groupOrder = Object.keys(GROUP_LABELS);
+  const groupOrder = GROUP_ORDER;
   const sortedGroups = [...groupedByType.entries()].sort(
     ([a, aItems], [b, bItems]) => {
       const totalA = aItems.reduce((s, item) => s + item.dots.length, 0);
@@ -380,7 +380,7 @@ export default function QuestItemGroupPage() {
                     : '2px solid #F57F17',
                 }}
               >
-                {GROUP_LABELS[groupName] || groupName}
+                {groupItems[0]?.mod?.group_display || groupName}
               </div>
             )}
             {groupItems.map(({ mapName, mod, dots }) => {
@@ -716,7 +716,7 @@ export default function QuestItemGroupPage() {
               const rowKey = `${e.name}-${j}`;
               return {
                 key: rowKey,
-                group: GROUP_LABELS[g] || g,
+                group: mod?.group_display || g,
                 monster: {
                   name: e.name,
                   translation: e.translation,
