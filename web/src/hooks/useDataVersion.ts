@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { setDataVersion } from '../utils/dataUrl';
 
 const STORAGE_KEY = 'df5_data_version';
 let cachedDate = '';
@@ -63,6 +64,7 @@ if (typeof window !== 'undefined') {
 
       if (remote) {
         cachedDate = remote;
+        setDataVersion(remote);
         notify();
         localStorage.setItem(STORAGE_KEY, remote);
       }

@@ -7,6 +7,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import type { DungeonModule } from '../types/data';
+import { dataUrl } from '../utils/dataUrl';
 
 export default function DungeonModuleGroupPage() {
   const { group } = useParams<{ group: string }>();
@@ -185,7 +186,7 @@ export default function DungeonModuleGroupPage() {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      backgroundImage: `url(/data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
+                      backgroundImage: `url(${dataUrl(`/data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp`)})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}

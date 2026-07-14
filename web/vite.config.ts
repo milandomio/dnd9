@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
 
   // Client build
   return {
+    define: {
+      __DATA_VERSION__: JSON.stringify(process.env.VITE_DATA_VERSION || ''),
+    },
     plugins: [
       react(),
       {
@@ -64,7 +67,10 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              urlPattern: ({ url }) => url.pathname.startsWith('/data/json/'),
+              // Match both /data/json/* and /data/v<version>/json/* for versioned cache busting
+              urlPattern: ({ url }) =>
+                url.pathname.startsWith('/data/json/') ||
+                /^\/data\/\w+\/json\//.test(url.pathname),
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-json',

@@ -8,6 +8,7 @@ import { useTheme } from '../hooks/useTheme';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
+import { dataUrl } from '../utils/dataUrl';
 
 const RARITY_COLORS_LIGHT: Record<string, string> = {
   粗糙: '#757575',
@@ -116,7 +117,7 @@ export default function QuestNPCDetailPage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('/data/json/quest_npc.json')
+    fetch(dataUrl('/data/json/quest_npc.json'))
       .then<NPCEntry[]>((r) => r.json())
       .then(setAllNpcs)
       .catch(console.error);

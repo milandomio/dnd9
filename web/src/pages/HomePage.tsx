@@ -5,6 +5,7 @@ import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
 import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
+import { dataUrl } from '../utils/dataUrl';
 
 type CardTheme = {
   border: string;
@@ -98,7 +99,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('/data/json/index.json')
+    fetch(dataUrl('/data/json/index.json'))
       .then((r) => r.json())
       .then(setData)
       .catch(console.error);

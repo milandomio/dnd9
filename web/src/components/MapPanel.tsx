@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { applyTransform, computePixel } from './MapDebug';
 import { useTheme } from '../hooks/useTheme';
+import { dataUrl } from '../utils/dataUrl';
 
 export interface MapDot {
   x: number;
@@ -48,7 +49,7 @@ function MapPanel({
   imageSrc,
 }: MapPanelProps) {
   const { tokens } = useTheme();
-  const imgUrl = imageSrc || `/data/img/${imgName}.webp`;
+  const imgUrl = dataUrl(imageSrc || `/data/img/${imgName}.webp`);
 
   return (
     <div

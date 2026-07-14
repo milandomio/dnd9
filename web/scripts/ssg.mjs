@@ -30,9 +30,46 @@ function readJSON(p) {
   return JSON.parse(readFileSync(p, "utf-8"));
 }
 
-// ---- step 1: build client ----
+// ---- step 0: compute data version before building ----
+let latestMtime = 0;
+function scanDir(dir) {
+  for (const f of readdirSync(dir)) {
+    const fp = join(dir, f);
+    const st = statSync(fp);
+    if (st.isDirectory()) scanDir(fp);
+    else if (f.endsWith(".json")) latestMtime = Math.max(latestMtime, st.mtimeMs);
+  }
+}
+scanDir(DATA);
+const dataDate = String(Math.floor(latestMtime / 1000));
+const shortVer = Number(dataDate).toString(36);
+process.env.VITE_DATA_VERSION = dataDate;
+
+// ---- step 1: build client (__DATA_VERSION__ injected via define) ----
 console.log("[ssg] building client SPA…");
 execSync("node node_modules/.bin/vite build", { cwd: WEB, stdio: "pipe" });
+
+// ---- step 1.5: create versioned data copies for CDN cache busting ----
+console.log(`[ssg] creating versioned data copies at data/${shortVer}/…`);
+const vJsonDir = join(DIST, 'data', `${shortVer}`, 'json');
+mkdirSync(vJsonDir, { recursive: true });
+const distDataJson = join(DIST, 'data', 'json');
+function copyDeep(src, dest) {
+  for (const f of readdirSync(src)) {
+    const sp = join(src, f);
+    const dp = join(dest, f);
+    const st = statSync(sp);
+    if (st.isDirectory()) {
+      mkdirSync(dp, { recursive: true });
+      copyDeep(sp, dp);
+    } else {
+      cpSync(sp, dp);
+    }
+  }
+}
+copyDeep(distDataJson, vJsonDir);
+// meta.json stays at fixed path for version detection
+try { rmSync(join(vJsonDir, 'meta.json'), { force: true }); } catch {}
 
 // ---- step 2: build SSR bundle ----
 console.log("[ssg] building SSR bundle…");
@@ -53,18 +90,7 @@ const SINGLE = ["explore", "quest_items", "quest_npc", "dungeon_modules"];
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
 
-// ---- step 4: generate meta.json with latest data date ----
-let latestMtime = 0;
-function scanDir(dir) {
-  for (const f of readdirSync(dir)) {
-    const fp = join(dir, f);
-    const st = statSync(fp);
-    if (st.isDirectory()) scanDir(fp);
-    else if (f.endsWith(".json")) latestMtime = Math.max(latestMtime, st.mtimeMs);
-  }
-}
-scanDir(DATA);
-const dataDate = String(Math.floor(latestMtime / 1000));
+// ---- step 4.5: write meta.json to dist ----
 writeFileSync(join(DATA, "meta.json"), JSON.stringify({ dataDate, seasonVersion: 9 }));
 cpSync(join(DATA, "meta.json"), join(DIST, "data", "json", "meta.json"));
 console.log(`[ssg] data version: ${dataDate}`);
