@@ -76,13 +76,7 @@ export default function NavBar() {
     if (state?.searchQuery) {
       setQuery(state.searchQuery);
       navigate(location.pathname, { replace: true, state: {} });
-      requestAnimationFrame(() => {
-        inputRef.current?.focus();
-        inputRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
-      });
+      requestAnimationFrame(() => inputRef.current?.focus());
     }
   }, [location.state]);
 
@@ -211,7 +205,7 @@ export default function NavBar() {
     >
       <div
         ref={searchRef}
-        style={{ position: 'relative', flex: '0 0 360px', minWidth: 0 }}
+        style={{ position: 'relative', flex: '1 1 280px', minWidth: 0 }}
       >
         <Input
           ref={inputRef}

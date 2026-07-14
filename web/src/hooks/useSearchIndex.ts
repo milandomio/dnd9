@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useDataVersion } from './useDataVersion';
-import { dataUrl } from '../utils/dataUrl';
 
 export interface SearchEntry {
   name: string;
@@ -19,7 +18,7 @@ function fetchIndex(version: string): Promise<SearchEntry[]> {
     return Promise.resolve(cachedIndex);
   if (cachedPromise && cachedVersion === version) return cachedPromise;
   cachedVersion = version;
-  cachedPromise = fetch(dataUrl('/data/json/search_index.json'))
+  cachedPromise = fetch('/data/json/search_index.json')
     .then((r) => r.json())
     .then((data: SearchEntry[]) => {
       cachedIndex = data;

@@ -9,7 +9,6 @@ import SectionHeader from '../components/SectionHeader';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
 import type { DungeonModule } from '../types/data';
-import { dataUrl } from '../utils/dataUrl';
 import {
   getAdj,
   useCtrlBtn,
@@ -186,7 +185,7 @@ export default function LootdropDetailPage() {
     // For artifacts (_8001), baseName already includes the suffix, don't append again
     const fetchName =
       currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
-    const lootUrl = dataUrl(`/data/json/lootdrops/${fetchName}.json`);
+    const lootUrl = `/data/json/lootdrops/${fetchName}.json`;
     fetch(lootUrl)
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
@@ -235,7 +234,7 @@ export default function LootdropDetailPage() {
         const imgName = mod?.img_name || mod?.sl_base_name || 'RareModule_1x1';
         const ctrl = new AbortController();
         controllersRef.current.set(mn, ctrl);
-        fetch(dataUrl(`/data/img/${imgName}.webp`), { signal: ctrl.signal })
+        fetch(`/data/img/${imgName}.webp`, { signal: ctrl.signal })
           .then((r) => r.blob())
           .then((blob) => {
             const url = URL.createObjectURL(blob);
@@ -347,7 +346,7 @@ export default function LootdropDetailPage() {
       if (_globalRefPending.has(ref)) {
         return _globalRefPending.get(ref)!.then((coords) => [ref, coords]);
       }
-      const p = fetch(dataUrl(`/data/json/${ref}.json`))
+      const p = fetch(`/data/json/${ref}.json`)
         .then((r) => r.json())
         .then((entity) => {
           const coords: LootdropCoord[] = Array.isArray(entity)

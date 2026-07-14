@@ -7,7 +7,6 @@ import { useTheme } from '../hooks/useTheme';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
-import { dataUrl } from '../utils/dataUrl';
 
 function lsGet(key: string): boolean {
   try {
@@ -44,7 +43,7 @@ export default function QuestNPCPage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch(dataUrl('/data/json/quest_npc.json'))
+    fetch('/data/json/quest_npc.json')
       .then<NPCEntry[]>((r) => r.json())
       .then(setData)
       .catch(console.error);
