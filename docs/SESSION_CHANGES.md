@@ -1,5 +1,16 @@
 # 2026-07-14 会话修改记录
 
+## 导航栏搜索框点击放大镜后滚动到可视区域
+
+- **原因**：手机端任务详情页底部点击放大镜搜索后，`inputRef.current?.focus()` 不会自动滚动页面，用户看不到搜索框被填充
+- **变更文件**：`web/src/components/NavBar.tsx:79-85`
+- **改动**：`NavBar.useEffect`（消费 `searchQuery`）中在 `focus()` 后添加 `scrollIntoView({ behavior: 'smooth', block: 'center' })`
+
+## 导航栏搜索框宽度改为 8 字符
+
+- **原因**：搜索框默认 `flex: 1 1 280px` 过长，改为 `flex: 0 0 160px` 约 8 字符宽度
+- **变更文件**：`web/src/components/NavBar.tsx:208`
+
 ## 修复 apple-touch-icon 指向旧图标
 
 - **原因**：`index.html` 中 `<link rel="apple-touch-icon">` 仍指向 `/icons/icon-192.png`（旧版无圆角），iOS 添加到主屏幕时显示方形图标
@@ -324,14 +335,15 @@
 ## CDN 缓存破坏 — 数据路径版本化
 
 - **原因**：Cloudflare Pages CDN 和 SW 缓存无法在游戏更新时自动失效，用户看到旧版本数据。查询参数（`?_v=`）不可靠（CF 默认忽略 query string 作为缓存键）
-- **方案**：构建时将数据版本通过 Vite `define` 注入为全局常量 `__DATA_VERSION__`，`dataUrl()` 将请求路径从 `/data/json/foo` 变换为 `/data/v<版本>/json/foo` → 版本变化时路径完全不同 → CDN 无歧义地视为新资源
+- **方案**：构建时将数据版本（Unix 时间戳）通过 Vite `define` 注入为全局常量 `__DATA_VERSION__`，`dataUrl()` 将请求路径从 `/data/json/foo` 变换为 `/data/<base36>/json/foo`（base36 缩短时间戳，如 `1784008247` → `ti5hp2`）→ 版本变化时路径完全不同 → CDN 无歧义视为新资源
+- **不版本化的资源**：图片（很少变化）、meta.json（固定路径用于版本检测）
 - **构建流程**：
   1. `ssg.mjs` 在 `vite build` **之前**扫描所有 JSON 文件 mtime 计算 `dataDate`，设置 `VITE_DATA_VERSION` 环境变量
-  2. `vite build` 时 Vite `define` 将 `__DATA_VERSION__` 替换为实际版本字符串（如 `"1784008247"`），嵌入 JS bundle
-  3. `vite build` 后 `ssg.mjs` 复制 `dist/data/{json,img}` → `dist/data/v<版本>/{json,img}`（移除 versioned 副本中的 `meta.json`）
-  4. 清理 `dist/data/img/`（仅版本化路径保留图片，节省 ~600MB）
-  5. `meta.json` 保持固定路径 `dist/data/json/meta.json` 用于版本检测
-- **SW 兼容**：`vite.config.ts` 中 SW 运行时缓存路由使用正则同时匹配 `/data/json/*` 和 `/data/v\d+/json/*`，确保新旧路径均可缓存
-- **关键函数** `dataUrl()`：`/data/json/foo` → `path.slice(5)` 截断 `/data` 后插入版本 → `/data/v${v}/json/foo`
-- **版本更新机制**：`useDataVersion` 从 `/data/json/meta.json` 获取最新版本 → `setDataVersion()` 仅升不降 → 长会话也能自动切到新版本 URL
+  2. `vite build` 时 Vite `define` 将 `__DATA_VERSION__` 替换为时间戳字符串，嵌入 JS bundle
+  3. `vite build` 后 `ssg.mjs` 复制 `dist/data/json/` → `dist/data/<base36>/json/`（移除 versioned 副本中的 `meta.json`）
+  4. `meta.json` 保持固定路径 `dist/data/json/meta.json`
+- **SW 兼容**：`vite.config.ts` 中 SW 路由正则 `/^\/data\/\w+\/json\//` 匹配 base36 版本化路径
+- **关键函数** `dataUrl()`：`/data/json/foo` → `path.slice(5)` 截断 `/data` 后插入 `/data/<base36>` → `/data/ti5hp2/json/foo`
+- **版本更新机制**：`useDataVersion` 从 `/data/json/meta.json` 获取最新时间戳 → `setDataVersion()` 数值仅升不降，长会话能自动切到新版本 URL
+- **`_headers` 最终状态**：仅 `meta.json` 设 10 分钟缓存（`/data/json/* → max-age=600`），其他全走 Cloudflare Pages 默认缓存策略
 - **变更文件**：`dataUrl.ts`（新建）、`vite.config.ts`、`ssg.mjs`、`vite-env.d.ts`、`_headers`、`index.html`、`useDataVersion.ts`、`useDungeonModules.ts`、`useSearchIndex.ts`、`MapPanel.tsx`、所有 11 个页面
