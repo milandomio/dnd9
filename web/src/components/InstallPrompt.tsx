@@ -9,6 +9,7 @@ export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -32,7 +33,7 @@ export default function InstallPrompt() {
     };
   }, []);
 
-  if (!deferredPrompt || installed) return null;
+  if (!deferredPrompt || installed || dismissed) return null;
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
@@ -64,6 +65,23 @@ export default function InstallPrompt() {
         maxWidth: 280,
       }}
     >
+      <button
+        onClick={() => setDismissed(true)}
+        style={{
+          position: 'absolute',
+          top: 2,
+          right: 6,
+          background: 'none',
+          border: 'none',
+          color: '#666',
+          cursor: 'pointer',
+          fontSize: 14,
+          lineHeight: 1,
+          padding: 0,
+        }}
+      >
+        ✕
+      </button>
       <span style={{ fontSize: 20 }}>📱</span>
       <div style={{ flex: 1 }}>
         <div style={{ fontWeight: 600, marginBottom: 2 }}>安装 DND闪电指南</div>
