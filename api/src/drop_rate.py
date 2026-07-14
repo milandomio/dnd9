@@ -13,7 +13,7 @@ _QUALITY_VARIANT_SUFFIXES = ["", "_Common", "_Elite", "_Nightmare", "_Unique"]
 
 
 def _round_rate(v: float) -> float:
-    d = Decimal(str(v)).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP)
+    d = Decimal(str(v)).quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)
     return float(d)
 
 
