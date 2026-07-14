@@ -399,20 +399,6 @@ export default function DetailPage() {
     return groupOrder.indexOf(a.groupName) - groupOrder.indexOf(b.groupName);
   });
 
-  const visibleSections =
-    hideZeroRate && modeFilter
-      ? sections.filter((sec) =>
-          sec.items.some(({ coords }) =>
-            coords.some((c) => {
-              const match = sec.gdi.find((e) =>
-                labelMatch(c.label || '', e.translation)
-              );
-              return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
-            })
-          )
-        )
-      : sections;
-
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
@@ -516,48 +502,50 @@ export default function DetailPage() {
           gridTemplateColumns: 'repeat(4, 1fr)',
         }}
       >
-        {visibleSections.map((sec) => (
-          <React.Fragment key={sec.sectionKey}>
-            {sec.groupName && (
-              <div
-                style={{
-                  gridColumn: '1 / -1',
-                  padding: '5px 0',
-                  marginTop: 10,
-                  borderBottom: dark
-                    ? '2px solid #FFC107'
-                    : '2px solid #F57F17',
-                }}
-              >
+        {sections.map((sec) => {
+          const zeroFiltered =
+            hideZeroRate && modeFilter
+              ? !sec.items.some(({ coords }) =>
+                  coords.some((c) => {
+                    const match = sec.gdi.find((e) =>
+                      labelMatch(c.label || '', e.translation)
+                    );
+                    return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
+                  })
+                )
+              : false;
+          if (zeroFiltered) return null;
+          return (
+            <React.Fragment key={sec.sectionKey}>
+              {sec.groupName && (
                 <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'baseline',
-                    gap: 10,
-                    color: dark ? '#FFC107' : '#F57F17',
+                    gridColumn: '1 / -1',
+                    padding: '5px 0',
+                    marginTop: 10,
+                    borderBottom: dark
+                      ? '2px solid #FFC107'
+                      : '2px solid #F57F17',
                   }}
                 >
-                  <span
+                  <div
                     style={{
-                      fontSize: 22,
-                      fontWeight: 'bold',
-                      whiteSpace: 'nowrap',
+                      display: 'flex',
+                      alignItems: 'baseline',
+                      gap: 10,
+                      color: dark ? '#FFC107' : '#F57F17',
                     }}
                   >
-                    {GROUP_LABELS[sec.groupName] || sec.groupName}
-                  </span>
-                  {sec.subLabel ? (
                     <span
                       style={{
-                        fontSize: 13,
-                        fontWeight: 'normal',
-                        color: tokens.muted,
+                        fontSize: 22,
+                        fontWeight: 'bold',
+                        whiteSpace: 'nowrap',
                       }}
                     >
-                      {sec.subLabel}
+                      {GROUP_LABELS[sec.groupName] || sec.groupName}
                     </span>
-                  ) : (
-                    sec.gdi.length > 0 && (
+                    {sec.subLabel ? (
                       <span
                         style={{
                           fontSize: 13,
@@ -565,457 +553,475 @@ export default function DetailPage() {
                           color: tokens.muted,
                         }}
                       >
-                        参考爆率：
-                        {sec.gdi.map((info, gi) => (
-                          <span
-                            key={gi}
-                            style={{
-                              display: 'inline-block',
-                              marginRight: 8,
-                            }}
-                          >
-                            {info.translation}
-                            {info.spawn_rate}%
-                            {Object.entries(info.drop_rates)
-                              .filter(([k]) => !modeFilter || k === modeFilter)
-                              .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                              .join('')}
-                          </span>
-                        ))}
+                        {sec.subLabel}
                       </span>
-                    )
-                  )}
-                </div>
-              </div>
-            )}
-            {sec.items.map(({ mapName, mod, coords: rawCoords }) => {
-              const mapCoords =
-                hideZeroRate && modeFilter
-                  ? rawCoords.filter((c) => {
-                      const match = sec.gdi.find((e) =>
-                        labelMatch(c.label || '', e.translation)
-                      );
-                      return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
-                    })
-                  : rawCoords;
-              const sx = mod?.size_x ?? 1;
-              const sy = mod?.size_y ?? 1;
-              const baseRange = mod?.range || Math.max(sx, sy) * 1600;
-              const adj = myGetAdj(mapName, mod);
-              const range = baseRange + adj.range || 1600;
-              const offX = (mod?.offset_x ?? 0) + adj.x;
-              const offY = (mod?.offset_y ?? 0) + adj.y;
-              if (mapCoords.length === 0) return null;
-              const filteredDots = mapCoords.map((c) => ({
-                x: c.x,
-                y: c.y,
-                z: c.z,
-                color: '',
-              }));
-              return (
-                <div
-                  key={`${sec.sectionKey}-${mapName}`}
-                  style={{
-                    minWidth: 0,
-                    gridColumn: sx >= 2 ? `span ${sx}` : undefined,
-                    gridRow: sy >= 2 ? `span ${sy}` : undefined,
-                    background: tokens.surface,
-                    border: `1px solid ${tokens.border}`,
-                    borderRadius: 5,
-                    padding: 8,
-                  }}
-                >
-                  <h3
-                    style={{
-                      margin: '0 0 6px 0',
-                      fontSize: 22,
-                      color: tokens.accent,
-                      textAlign: 'center',
-                      width: '100%',
-                      lineHeight: 1.3,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {mod?.translation || mapName}
-                    {debug && (
-                      <span style={{ color: tokens.muted, fontSize: 11 }}>
-                        {' '}
-                        ({mapName})
-                      </span>
-                    )}
-                  </h3>
-                  {debug && (
-                    <div
-                      style={{
-                        fontSize: 10,
-                        color: tokens.muted,
-                        textAlign: 'center',
-                        marginBottom: 4,
-                      }}
-                    >
-                      {mod?.img_name || mod?.sl_base_name || mapName}.webp |
-                      找到 {mapCoords.length} 个位置 | 范围: ±{range}
-                    </div>
-                  )}
-                  {debug && (
-                    <div
-                      style={{
-                        fontSize: 10,
-                        color: tokens.muted,
-                        textAlign: 'center',
-                        marginBottom: 4,
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {mapCoords[0].file}
-                      <br />
-                      旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},
-                      {mod?.offset_y ?? 0}) 大小:{sx}x{sy}
-                    </div>
-                  )}
-
-                  <MapPanel
-                    imgName={
-                      mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
-                    }
-                    sx={sx}
-                    sy={sy}
-                    dots={filteredDots}
-                    offX={offX}
-                    offY={offY}
-                    adj={adj}
-                    range={range}
-                    singleCategory
-                  />
-                  {debug &&
-                    sec.gdi.length > 0 &&
-                    (() => {
-                      const sc = itemScore({ coords: mapCoords }, sec.gdi);
-                      return sc > 0 ? (
-                        <div
+                    ) : (
+                      sec.gdi.length > 0 && (
+                        <span
                           style={{
-                            marginTop: 4,
-                            fontSize: 12,
-                            textAlign: 'center',
-                            color: tokens.accent,
+                            fontSize: 13,
+                            fontWeight: 'normal',
+                            color: tokens.muted,
                           }}
                         >
-                          综合爆率 {parseFloat(sc.toFixed(4))}%
-                        </div>
-                      ) : null;
-                    })()}
-                  {(() => {
-                    const g = mod?.group || '';
-                    const gdi = entity.group_drop_info?.[g];
-                    if (!gdi || gdi.length === 0) return null;
-                    const hasVariant = mapCoords.some(
-                      (c) => c.variant_count && c.variant_count > 1
-                    );
-                    if (!hasVariant) return null;
-                    const filteredGdi = gdi.filter((info) =>
-                      mapCoords.some(
-                        (c) => c.label && labelMatch(c.label, info.translation)
-                      )
-                    );
-                    if (filteredGdi.length === 0) return null;
-                    return (
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: '4px 10px',
-                          justifyContent: 'center',
-                          marginTop: 5,
-                          fontSize: 13,
-                          color: tokens.text,
-                          alignItems: 'center',
-                        }}
-                      >
-                        {filteredGdi.map((info, i) => (
-                          <span
-                            key={i}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 3,
-                            }}
-                          >
+                          参考爆率：
+                          {sec.gdi.map((info, gi) => (
                             <span
+                              key={gi}
                               style={{
-                                cursor: 'default',
+                                display: 'inline-block',
+                                marginRight: 8,
                               }}
                             >
                               {info.translation}
+                              {info.spawn_rate}%
+                              {Object.entries(info.drop_rates)
+                                .filter(
+                                  ([k]) => !modeFilter || k === modeFilter
+                                )
+                                .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                                .join('')}
                             </span>
-                            {info.spawn_rates &&
-                            Object.keys(info.spawn_rates).length > 1 ? (
+                          ))}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
+              {sec.items.map(({ mapName, mod, coords: rawCoords }) => {
+                const mapCoords =
+                  hideZeroRate && modeFilter
+                    ? rawCoords.filter((c) => {
+                        const match = sec.gdi.find((e) =>
+                          labelMatch(c.label || '', e.translation)
+                        );
+                        return (
+                          !match || (match.drop_rates[modeFilter] ?? 0) > 0
+                        );
+                      })
+                    : rawCoords;
+                const sx = mod?.size_x ?? 1;
+                const sy = mod?.size_y ?? 1;
+                const baseRange = mod?.range || Math.max(sx, sy) * 1600;
+                const adj = myGetAdj(mapName, mod);
+                const range = baseRange + adj.range || 1600;
+                const offX = (mod?.offset_x ?? 0) + adj.x;
+                const offY = (mod?.offset_y ?? 0) + adj.y;
+                if (mapCoords.length === 0) return null;
+                const filteredDots = mapCoords.map((c) => ({
+                  x: c.x,
+                  y: c.y,
+                  z: c.z,
+                  color: '',
+                }));
+                return (
+                  <div
+                    key={`${sec.sectionKey}-${mapName}`}
+                    style={{
+                      minWidth: 0,
+                      gridColumn: sx >= 2 ? `span ${sx}` : undefined,
+                      gridRow: sy >= 2 ? `span ${sy}` : undefined,
+                      background: tokens.surface,
+                      border: `1px solid ${tokens.border}`,
+                      borderRadius: 5,
+                      padding: 8,
+                    }}
+                  >
+                    <h3
+                      style={{
+                        margin: '0 0 6px 0',
+                        fontSize: 22,
+                        color: tokens.accent,
+                        textAlign: 'center',
+                        width: '100%',
+                        lineHeight: 1.3,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {mod?.translation || mapName}
+                      {debug && (
+                        <span style={{ color: tokens.muted, fontSize: 11 }}>
+                          {' '}
+                          ({mapName})
+                        </span>
+                      )}
+                    </h3>
+                    {debug && (
+                      <div
+                        style={{
+                          fontSize: 10,
+                          color: tokens.muted,
+                          textAlign: 'center',
+                          marginBottom: 4,
+                        }}
+                      >
+                        {mod?.img_name || mod?.sl_base_name || mapName}.webp |
+                        找到 {mapCoords.length} 个位置 | 范围: ±{range}
+                      </div>
+                    )}
+                    {debug && (
+                      <div
+                        style={{
+                          fontSize: 10,
+                          color: tokens.muted,
+                          textAlign: 'center',
+                          marginBottom: 4,
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {mapCoords[0].file}
+                        <br />
+                        旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},
+                        {mod?.offset_y ?? 0}) 大小:{sx}x{sy}
+                      </div>
+                    )}
+
+                    <MapPanel
+                      imgName={
+                        mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
+                      }
+                      sx={sx}
+                      sy={sy}
+                      dots={filteredDots}
+                      offX={offX}
+                      offY={offY}
+                      adj={adj}
+                      range={range}
+                      singleCategory
+                    />
+                    {debug &&
+                      sec.gdi.length > 0 &&
+                      (() => {
+                        const sc = itemScore({ coords: mapCoords }, sec.gdi);
+                        return sc > 0 ? (
+                          <div
+                            style={{
+                              marginTop: 4,
+                              fontSize: 12,
+                              textAlign: 'center',
+                              color: tokens.accent,
+                            }}
+                          >
+                            综合爆率 {parseFloat(sc.toFixed(4))}%
+                          </div>
+                        ) : null;
+                      })()}
+                    {(() => {
+                      const g = mod?.group || '';
+                      const gdi = entity.group_drop_info?.[g];
+                      if (!gdi || gdi.length === 0) return null;
+                      const hasVariant = mapCoords.some(
+                        (c) => c.variant_count && c.variant_count > 1
+                      );
+                      if (!hasVariant) return null;
+                      const filteredGdi = gdi.filter((info) =>
+                        mapCoords.some(
+                          (c) =>
+                            c.label && labelMatch(c.label, info.translation)
+                        )
+                      );
+                      if (filteredGdi.length === 0) return null;
+                      return (
+                        <div
+                          style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '4px 10px',
+                            justifyContent: 'center',
+                            marginTop: 5,
+                            fontSize: 13,
+                            color: tokens.text,
+                            alignItems: 'center',
+                          }}
+                        >
+                          {filteredGdi.map((info, i) => (
+                            <span
+                              key={i}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 3,
+                              }}
+                            >
                               <span
                                 style={{
-                                  color: tokens.muted,
-                                  fontSize: 12,
+                                  cursor: 'default',
                                 }}
                               >
-                                {Object.entries(info.drop_rates)
-                                  .filter(
-                                    ([k]) => !modeFilter || k === modeFilter
-                                  )
-                                  .map(([mode, rate]) => {
-                                    const sRate = info.spawn_rates![mode];
-                                    return sRate != null
-                                      ? `[${mode}:${sRate}%×${rate}%]`
-                                      : `[${mode}:${rate}%]`;
-                                  })
-                                  .join('')}
+                                {info.translation}
                               </span>
-                            ) : (
-                              <>
+                              {info.spawn_rates &&
+                              Object.keys(info.spawn_rates).length > 1 ? (
                                 <span
                                   style={{
-                                    color: tokens.accent,
+                                    color: tokens.muted,
                                     fontSize: 12,
                                   }}
                                 >
-                                  {info.spawn_rate}%
+                                  {Object.entries(info.drop_rates)
+                                    .filter(
+                                      ([k]) => !modeFilter || k === modeFilter
+                                    )
+                                    .map(([mode, rate]) => {
+                                      const sRate = info.spawn_rates![mode];
+                                      return sRate != null
+                                        ? `[${mode}:${sRate}%×${rate}%]`
+                                        : `[${mode}:${rate}%]`;
+                                    })
+                                    .join('')}
                                 </span>
-                                {Object.entries(info.drop_rates).filter(
-                                  ([k]) => !modeFilter || k === modeFilter
-                                ).length > 0 && (
+                              ) : (
+                                <>
                                   <span
                                     style={{
-                                      color: tokens.muted,
+                                      color: tokens.accent,
                                       fontSize: 12,
                                     }}
                                   >
-                                    (
-                                    {Object.entries(info.drop_rates)
-                                      .filter(
-                                        ([k]) => !modeFilter || k === modeFilter
-                                      )
-                                      .map(
-                                        ([mode, rate]) => `[${mode}:${rate}%]`
-                                      )
-                                      .join('')}
-                                    )
+                                    {info.spawn_rate}%
                                   </span>
-                                )}
-                              </>
-                            )}
-                          </span>
-                        ))}
-                        {(() => {
-                          const vc = mapCoords.find(
-                            (c) => c.variant_count && c.variant_count > 1
-                          );
-                          if (!vc) return null;
-                          const names = vc.variant_names ?? [];
-                          if (names.length > 0) {
+                                  {Object.entries(info.drop_rates).filter(
+                                    ([k]) => !modeFilter || k === modeFilter
+                                  ).length > 0 && (
+                                    <span
+                                      style={{
+                                        color: tokens.muted,
+                                        fontSize: 12,
+                                      }}
+                                    >
+                                      (
+                                      {Object.entries(info.drop_rates)
+                                        .filter(
+                                          ([k]) =>
+                                            !modeFilter || k === modeFilter
+                                        )
+                                        .map(
+                                          ([mode, rate]) => `[${mode}:${rate}%]`
+                                        )
+                                        .join('')}
+                                      )
+                                    </span>
+                                  )}
+                                </>
+                              )}
+                            </span>
+                          ))}
+                          {(() => {
+                            const vc = mapCoords.find(
+                              (c) => c.variant_count && c.variant_count > 1
+                            );
+                            if (!vc) return null;
+                            const names = vc.variant_names ?? [];
+                            if (names.length > 0) {
+                              return (
+                                <span style={{ color: tokens.muted }}>
+                                  ({names.join('、')}
+                                  {vc.variant_count}种选1)
+                                </span>
+                              );
+                            }
+                            const uniquePositions = new Set(
+                              mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
+                            );
                             return (
                               <span style={{ color: tokens.muted }}>
-                                ({names.join('、')}
-                                {vc.variant_count}种选1)
+                                ({uniquePositions.size}点选1)
                               </span>
                             );
-                          }
-                          const uniquePositions = new Set(
-                            mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
-                          );
-                          return (
-                            <span style={{ color: tokens.muted }}>
-                              ({uniquePositions.size}点选1)
-                            </span>
-                          );
-                        })()}
-                      </div>
-                    );
-                  })()}
-                  {debug && (
-                    <div
-                      style={{
-                        fontSize: 11,
-                        color: tokens.muted,
-                        marginTop: 4,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 3,
-                      }}
-                    >
+                          })()}
+                        </div>
+                      );
+                    })()}
+                    {debug && (
                       <div
                         style={{
+                          fontSize: 11,
+                          color: tokens.muted,
+                          marginTop: 4,
                           display: 'flex',
-                          gap: 4,
-                          alignItems: 'center',
+                          flexDirection: 'column',
+                          gap: 3,
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>范围:</span>
-                        <button
-                          onClick={() =>
-                            setAdj(
-                              mapName,
-                              'range',
-                              Math.round(range / 2) - baseRange
-                            )
-                          }
-                          style={ctrlBtn}
-                        >
-                          ÷2
-                        </button>
-                        <input
-                          type="number"
-                          value={range}
-                          onChange={(e) =>
-                            setAdj(
-                              mapName,
-                              'range',
-                              Number(e.target.value) - baseRange
-                            )
-                          }
-                          style={ctrlInput}
-                          step={100}
-                        />
-                        <button
-                          onClick={() =>
-                            setAdj(mapName, 'range', range * 2 - baseRange)
-                          }
-                          style={ctrlBtn}
-                        >
-                          x2
-                        </button>
-                        <span
+                        <div
                           style={{
-                            color: tokens.muted,
-                            fontSize: 12,
-                            marginLeft: 4,
+                            display: 'flex',
+                            gap: 4,
+                            alignItems: 'center',
                           }}
                         >
-                          ↻{adj.rotate}
-                        </span>
-                      </div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          gap: 4,
-                          alignItems: 'center',
-                        }}
-                      >
-                        <span style={{ color: tokens.muted }}>偏移:</span>
-                        <button
-                          onClick={() => setAdj(mapName, 'y', adj.y - 50)}
-                          style={ctrlBtn}
-                        >
-                          ↑
-                        </button>
-                        <button
-                          onClick={() => setAdj(mapName, 'y', adj.y + 50)}
-                          style={ctrlBtn}
-                        >
-                          ↓
-                        </button>
-                        <button
-                          onClick={() => setAdj(mapName, 'x', adj.x - 50)}
-                          style={ctrlBtn}
-                        >
-                          ←
-                        </button>
-                        <button
-                          onClick={() => setAdj(mapName, 'x', adj.x + 50)}
-                          style={ctrlBtn}
-                        >
-                          →
-                        </button>
-                        <span style={{ color: tokens.muted, marginLeft: 8 }}>
-                          X:
-                        </span>
-                        <input
-                          type="number"
-                          value={offX}
-                          onChange={(e) =>
-                            setAdj(
-                              mapName,
-                              'x',
-                              Number(e.target.value) - (mod?.offset_x ?? 0)
-                            )
-                          }
-                          style={ctrlInput}
-                          step={10}
-                        />
-                        <span style={{ color: tokens.muted }}>Y:</span>
-                        <input
-                          type="number"
-                          value={offY}
-                          onChange={(e) =>
-                            setAdj(
-                              mapName,
-                              'y',
-                              Number(e.target.value) - (mod?.offset_y ?? 0)
-                            )
-                          }
-                          style={ctrlInput}
-                          step={10}
-                        />
-                      </div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          gap: 4,
-                          alignItems: 'center',
-                        }}
-                      >
-                        <button
-                          onClick={() =>
-                            setAdj(
-                              mapName,
-                              'rotate',
-                              ((adj.rotate ?? 0) + 90) % 360
-                            )
-                          }
-                          style={ctrlBtn}
-                        >
-                          ↻ 旋转
-                        </button>
-                        <button
-                          onClick={() =>
-                            setAdj(mapName, 'mirrorX', !adj.mirrorX)
-                          }
+                          <span style={{ color: tokens.muted }}>范围:</span>
+                          <button
+                            onClick={() =>
+                              setAdj(
+                                mapName,
+                                'range',
+                                Math.round(range / 2) - baseRange
+                              )
+                            }
+                            style={ctrlBtn}
+                          >
+                            ÷2
+                          </button>
+                          <input
+                            type="number"
+                            value={range}
+                            onChange={(e) =>
+                              setAdj(
+                                mapName,
+                                'range',
+                                Number(e.target.value) - baseRange
+                              )
+                            }
+                            style={ctrlInput}
+                            step={100}
+                          />
+                          <button
+                            onClick={() =>
+                              setAdj(mapName, 'range', range * 2 - baseRange)
+                            }
+                            style={ctrlBtn}
+                          >
+                            x2
+                          </button>
+                          <span
+                            style={{
+                              color: tokens.muted,
+                              fontSize: 12,
+                              marginLeft: 4,
+                            }}
+                          >
+                            ↻{adj.rotate}
+                          </span>
+                        </div>
+                        <div
                           style={{
-                            ...ctrlBtn,
-                            background: adj.mirrorX ? '#4CAF50' : '#555',
+                            display: 'flex',
+                            gap: 4,
+                            alignItems: 'center',
                           }}
                         >
-                          ⇄ 左右
-                        </button>
-                        <button
-                          onClick={() =>
-                            setAdj(mapName, 'mirrorY', !adj.mirrorY)
-                          }
+                          <span style={{ color: tokens.muted }}>偏移:</span>
+                          <button
+                            onClick={() => setAdj(mapName, 'y', adj.y - 50)}
+                            style={ctrlBtn}
+                          >
+                            ↑
+                          </button>
+                          <button
+                            onClick={() => setAdj(mapName, 'y', adj.y + 50)}
+                            style={ctrlBtn}
+                          >
+                            ↓
+                          </button>
+                          <button
+                            onClick={() => setAdj(mapName, 'x', adj.x - 50)}
+                            style={ctrlBtn}
+                          >
+                            ←
+                          </button>
+                          <button
+                            onClick={() => setAdj(mapName, 'x', adj.x + 50)}
+                            style={ctrlBtn}
+                          >
+                            →
+                          </button>
+                          <span style={{ color: tokens.muted, marginLeft: 8 }}>
+                            X:
+                          </span>
+                          <input
+                            type="number"
+                            value={offX}
+                            onChange={(e) =>
+                              setAdj(
+                                mapName,
+                                'x',
+                                Number(e.target.value) - (mod?.offset_x ?? 0)
+                              )
+                            }
+                            style={ctrlInput}
+                            step={10}
+                          />
+                          <span style={{ color: tokens.muted }}>Y:</span>
+                          <input
+                            type="number"
+                            value={offY}
+                            onChange={(e) =>
+                              setAdj(
+                                mapName,
+                                'y',
+                                Number(e.target.value) - (mod?.offset_y ?? 0)
+                              )
+                            }
+                            style={ctrlInput}
+                            step={10}
+                          />
+                        </div>
+                        <div
                           style={{
-                            ...ctrlBtn,
-                            background: adj.mirrorY ? '#4CAF50' : '#555',
+                            display: 'flex',
+                            gap: 4,
+                            alignItems: 'center',
                           }}
                         >
-                          ⇅ 上下
-                        </button>
-                        <button
-                          onClick={() =>
-                            setAdjOffsets((prev) => {
-                              const n = { ...prev };
-                              delete n[mapName];
-                              return n;
-                            })
-                          }
-                          style={ctrlBtn}
-                        >
-                          ↺ 重置
-                        </button>
+                          <button
+                            onClick={() =>
+                              setAdj(
+                                mapName,
+                                'rotate',
+                                ((adj.rotate ?? 0) + 90) % 360
+                              )
+                            }
+                            style={ctrlBtn}
+                          >
+                            ↻ 旋转
+                          </button>
+                          <button
+                            onClick={() =>
+                              setAdj(mapName, 'mirrorX', !adj.mirrorX)
+                            }
+                            style={{
+                              ...ctrlBtn,
+                              background: adj.mirrorX ? '#4CAF50' : '#555',
+                            }}
+                          >
+                            ⇄ 左右
+                          </button>
+                          <button
+                            onClick={() =>
+                              setAdj(mapName, 'mirrorY', !adj.mirrorY)
+                            }
+                            style={{
+                              ...ctrlBtn,
+                              background: adj.mirrorY ? '#4CAF50' : '#555',
+                            }}
+                          >
+                            ⇅ 上下
+                          </button>
+                          <button
+                            onClick={() =>
+                              setAdjOffsets((prev) => {
+                                const n = { ...prev };
+                                delete n[mapName];
+                                return n;
+                              })
+                            }
+                            style={ctrlBtn}
+                          >
+                            ↺ 重置
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </React.Fragment>
-        ))}
+                    )}
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          );
+        })}
       </div>
 
       <div
