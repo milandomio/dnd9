@@ -289,3 +289,9 @@
 - **原因**：安装 DND闪电指南 提示无法关闭，用户不需要时只能等待浏览器自动隐藏
 - **变更文件**：`web/src/components/InstallPrompt.tsx`
 - **改动**：新增 `dismissed` 状态 + ✕ 关闭按钮，点击后隐藏 prompt；关闭按钮绝对定位在卡片右上角
+
+## MapPanel 兼容 iOS 14（不支持 aspect-ratio）
+
+- **原因**：iOS 14.6 不支持 CSS `aspect-ratio` 属性（iOS 15+ 才支持），MapPanel div 高度为 0 导致背景地图图片不可见
+- **变更文件**：`web/src/components/MapPanel.tsx`
+- **改动**：将 `aspectRatio` 改为 `padding-bottom` 百分比 hack + 内层 `position: absolute` 容器，兼容所有浏览器；现代浏览器性能无差异
