@@ -20,6 +20,8 @@ import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import SWUpdateBanner from './components/SWUpdateBanner';
+import OfflineDetector from './components/OfflineDetector';
+import InstallPrompt from './components/InstallPrompt';
 
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
@@ -34,6 +36,8 @@ export function AppInner() {
       }}
     >
       <SWUpdateBanner />
+      <OfflineDetector />
+      <InstallPrompt />
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />

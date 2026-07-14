@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
           // navigateFallback 未启用：SSG 路由的独立 HTML（含 SSR 数据）由 NetworkFirst 接管，
           // 访问后缓存，离线重复访问正常显示（含 SSR 数据）；首次离线深度链接无缓存时浏览器报错。
           navigateFallback: undefined,
-          globPatterns: ['assets/**/*.{js,css}', 'registerSW.js'],
+          globPatterns: ['assets/**/*.{js,css}', 'registerSW.js', 'offline.html'],
           runtimeCaching: [
             {
               // Version-based invalidation via refreshNow() clears df5-* caches;
@@ -80,20 +80,26 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: 'DarkFlashNav',
           short_name: 'DarkFlashNav',
+          description: 'Dark and Darker 游戏数据导航 - 物品/怪物/道具/掉落查询',
+          lang: 'zh-Hans',
           start_url: '/',
           display: 'standalone',
           background_color: '#141414',
           theme_color: '#1677ff',
+          categories: ['games', 'utilities'],
+          orientation: 'any',
           icons: [
             {
               src: '/icons/icon-192.png',
               sizes: '192x192',
               type: 'image/png',
+              purpose: 'any maskable',
             },
             {
               src: '/icons/icon-512.png',
               sizes: '512x512',
               type: 'image/png',
+              purpose: 'any maskable',
             },
           ],
         },
