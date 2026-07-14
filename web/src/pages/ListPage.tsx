@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import DebugPanel from '../components/DebugPanel';
 import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
 
 type IndexEntry = SearchEntry & {
@@ -130,50 +131,16 @@ export default function ListPage() {
       >
         有效实体{data.length}个
       </div>
-      {debug && (
-        <button
-          onClick={() => setDebug(false)}
-          style={{
-            position: 'fixed',
-            top: 20,
-            right: 20,
-            padding: '10px 20px',
-            background: '#4CAF50',
-            color: '#fff',
-            border: '2px solid #388E3C',
-            borderRadius: 8,
-            cursor: 'pointer',
-            fontSize: 14,
-            fontWeight: 'bold',
-            zIndex: 9999,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-          }}
-        >
-          退出调试
-        </button>
-      )}
-      {!debug && (
-        <button
-          onClick={() => setDebug(true)}
-          style={{
-            position: 'fixed',
-            top: 20,
-            right: 20,
-            padding: '10px 20px',
-            background: '#FFC107',
-            color: '#000',
-            border: '2px solid #FF9800',
-            borderRadius: 8,
-            cursor: 'pointer',
-            fontSize: 14,
-            fontWeight: 'bold',
-            zIndex: 9999,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-          }}
-        >
-          显示全部
-        </button>
-      )}
+      <DebugPanel
+        buttons={[
+          {
+            label: '显示全部',
+            activeLabel: '退出调试',
+            active: debug,
+            onClick: () => setDebug(!debug),
+          },
+        ]}
+      />
       <div
         className="section-content"
         style={{
