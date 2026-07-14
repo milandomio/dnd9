@@ -317,7 +317,7 @@ export default function QuestNPCDetailPage() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
           gap: 12,
           marginBottom: 40,
         }}
