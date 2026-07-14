@@ -152,16 +152,16 @@ class DropRateEngine:
             except (json.JSONDecodeError, TypeError):
                 _grades = []
             for _key in (sk, en):
-                if _key and sr > self._spawn_rate_cache.get(_key, 0):
+                if _key and sr > self._spawn_rate_cache.get(_key, -1):
                     self._spawn_rate_cache[_key] = sr
             _om = ORE_QUALITY_RE.match(en)
             if _om:
                 _oname = _om.group(1)
-                if _oname and sr > self._spawn_rate_cache.get(_oname, 0):
+                if _oname and sr > self._spawn_rate_cache.get(_oname, -1):
                     self._spawn_rate_cache[_oname] = sr
             if sk and en:
                 _pair = (sk, en)
-                if sr > self._spawn_rate_detail.get(_pair, 0):
+                if sr > self._spawn_rate_detail.get(_pair, -1):
                     self._spawn_rate_detail[_pair] = sr
                 _mode_rates: dict[str, float] = {}
                 for _g in _grades:
