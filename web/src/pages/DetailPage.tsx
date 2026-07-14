@@ -399,6 +399,20 @@ export default function DetailPage() {
     return groupOrder.indexOf(a.groupName) - groupOrder.indexOf(b.groupName);
   });
 
+  const visibleSections =
+    hideZeroRate && modeFilter
+      ? sections.filter((sec) =>
+          sec.items.some(({ coords }) =>
+            coords.some((c) => {
+              const match = sec.gdi.find((e) =>
+                labelMatch(c.label || '', e.translation)
+              );
+              return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
+            })
+          )
+        )
+      : sections;
+
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
@@ -502,7 +516,7 @@ export default function DetailPage() {
           gridTemplateColumns: 'repeat(4, 1fr)',
         }}
       >
-        {sections.map((sec) => (
+        {visibleSections.map((sec) => (
           <React.Fragment key={sec.sectionKey}>
             {sec.groupName && (
               <div
