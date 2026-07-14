@@ -89,6 +89,12 @@
 - **当前状态**: 未修复
 - **计划**: 在 `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md` 中记录
 
+## 2026-07-14 会话修改记录
+
+### PWA 图标改为 DND + 圆角
+- **修改**: PWA 图标从纯蓝正方形改为圆角蓝底白字 "DND"
+- **favicon**: 新增 `web/public/favicon.ico`（16/32/48 三尺寸），`index.html` 添加 `<link rel="icon">`
+
 ## 文档更新
 
 - `docs/FIX_ARTIFACT_VARIANT_SWITCH.md` - 神器变体切换修复文档
