@@ -1,5 +1,28 @@
 # 2026-07-15 会话修改记录
 
+## 稀有掉落阈值调整 2.5→1.5 + 零豪客赛掉落显示修复
+
+- **原因**：用户反馈列表页「稀有掉落」分组过严（2.5 阈值），且 Billet（小木块）等只有 PVE 爆率的掉落详情页无数据
+- **阈值修改**：`web/src/pages/ListPage.tsx:57` 列表页稀有掉落分组阈值 2.5 → 1.5
+- **零豪客赛修复**：`api/src/lootdrop_builder.py:525-548` 移除对 `豪客赛=0` 条目的过滤。原逻辑只保留豪客赛爆率 > 0 的怪物，但 Billet（木材掉落）的 AshTree 在 PVE 模式有爆率（65%）而豪客赛权重为 0，导致所有怪物被过滤、JSON 文件未生成。修改后所有有坐标的怪物均保留
+- **变更文件**：
+  - `web/src/pages/ListPage.tsx` — `2.5 → 1.5`
+  - `web/src/pages/LootdropDetailPage.tsx` — 阈值回滚（用户要求只改列表页）
+
+## 掉落详情页 spawn_rate 修正：使用原始生成器关键词 + 允许 0 值入缓存
+
+- **原因**：用户反馈 `WanderlightLantern` 掉落页面中「中型诡污(特殊)」显示 100% 生成概率，实际应为 0%（该实体在 ChestLarge 中的权值为 0）。错误地使用了容器实体（ChestLarge=100%）的生成概率
+- **根因**：
+  1. `lootdrop_builder.py:414-416` 在 `keyword != original_keyword` 时使用 `_c["keyword"]`（如 "Mimic_Medium_MidLevel"）查 `spawn_rate_detail`，但 `spawner_entries` 表的 key 是 `original_keyword`（如 "ChestLarge"），导致查不到时返回默认值 100
+  2. `drop_rate.py:155,161,164` 中缓存条件 `sr > 0` 排除了 spawn_rate=0.0 的合法值，该条目根本未入缓存
+- **变更**：
+  - `api/src/lootdrop_builder.py:415` — 查 `spawn_rate_detail` 时用 `original_keyword` 替代 `keyword`
+  - `api/src/lootdrop_builder.py:416,418` — `.get()` 默认值 100 → 0
+  - `api/src/drop_rate.py:155,161` — `spawn_rate_cache` 条件 `sr > 0` → `sr > -1`（允许 0 值存储）
+  - `api/src/drop_rate.py:164` — `spawn_rate_detail` 条件 `sr > 0` → `sr > -1`（允许 0 值存储）
+- **验证**：WanderlightLantern 掉落详情中「中型诡污(特殊)」spawn_rate 100% → 0.0%，「巨型诡污(特殊)」保持 0.01%
+  - `api/src/lootdrop_builder.py` — 移除豪客赛=0 过滤
+
 ## 彻底修复 React #418/#423 hydration 错误（全站 1235 页面 0 错误）
 
 - **原因**：React 18 `hydrateRoot` 对无 SSR 内容的空容器会导致双重渲染（hydration → CSR fallback），期间模块级 `meta.json` fetch 可能完成并突变 `cachedDate`，造成 hook 数量不匹配。受影响页面为所有无 SSR 渲染的页面（`dungeon_modules` 列表页 + 详情页，共 244 个）。

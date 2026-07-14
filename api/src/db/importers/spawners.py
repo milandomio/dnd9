@@ -2,6 +2,7 @@ import json
 import re
 
 from config import LOOTDROP_DIR, LOOTDROP_GROUP_DIR, LOOTDROP_RATE_DIR, SPAWNER_DIR
+from drop_rate import _round_rate
 
 from .._helpers import load_json_dir, ue_asset_base_name
 
@@ -129,12 +130,12 @@ class SpawnersImporter:
                     for g in dungeon_grades:
                         mode_id = g // 1000 if g >= 1000 else 1
                         _suffixes.add((mode_id, g % 1000))
-                    _rates = [raw_rate / _suffix_totals[s] * 100 for s in _suffixes]
-                    spawn_rate = round(min(_rates), 2)
+                    _rates = [100 * raw_rate / _suffix_totals[s] for s in _suffixes]
+                    spawn_rate = _round_rate(min(_rates))
                 elif len(items) > 1:
-                    spawn_rate = round(raw_rate / _total_pool * 100, 2)
+                    spawn_rate = _round_rate(100 * raw_rate / _total_pool)
                 else:
-                    spawn_rate = round(raw_rate / 10000 * 100, 2)
+                    spawn_rate = _round_rate(100 * raw_rate / 10000)
                 spawn_rate = min(spawn_rate, 100.0)
                 ldg_id = ue_asset_base_name(ldg_path) or ""
                 entity_name = ""
