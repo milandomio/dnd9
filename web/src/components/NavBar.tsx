@@ -211,7 +211,7 @@ export default function NavBar() {
     >
       <div
         ref={searchRef}
-        style={{ position: 'relative', flex: '0 0 160px', minWidth: 0 }}
+        style={{ position: 'relative', flex: '0 0 360px', minWidth: 0 }}
       >
         <Input
           ref={inputRef}

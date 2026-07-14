@@ -8,7 +8,7 @@
 
 ## 导航栏搜索框宽度改为 8 字符
 
-- **原因**：搜索框默认 `flex: 1 1 280px` 过长，改为 `flex: 0 0 160px` 约 8 字符宽度
+- **原因**：搜索框默认 `flex: 1 1 280px` 过长，经尝试后改为 `flex: 0 0 360px`
 - **变更文件**：`web/src/components/NavBar.tsx:208`
 
 ## 修复 apple-touch-icon 指向旧图标
