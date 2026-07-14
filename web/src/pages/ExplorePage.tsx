@@ -5,6 +5,7 @@ import Disclaimer from '../components/Disclaimer';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { dataUrl } from '../utils/dataUrl';
 
 interface ExploreTarget {
   name: string;
@@ -28,7 +29,7 @@ export default function ExplorePage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('/data/json/explore.json')
+    fetch(dataUrl('/data/json/explore.json'))
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)
       .catch(console.error);
@@ -170,7 +171,7 @@ export default function ExplorePage() {
                           left: 0,
                           right: 0,
                           bottom: 0,
-                          backgroundImage: `url(/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp)`,
+                          backgroundImage: `url(${dataUrl(`/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`)})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                         }}

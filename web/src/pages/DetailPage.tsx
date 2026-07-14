@@ -26,6 +26,7 @@ import {
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import MapPanel from '../components/MapPanel';
+import { dataUrl } from '../utils/dataUrl';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -119,7 +120,7 @@ export default function DetailPage() {
     if (fetchedRef.current) return;
     fetchedRef.current = true;
     const decoded = decodeURIComponent(name!);
-    const url = `/data/json/${page}/${decoded}.json`;
+    const url = dataUrl(`/data/json/${page}/${decoded}.json`);
     fetch(url)
       .then<Entity>((r) => r.json())
       .then((entityData) => {

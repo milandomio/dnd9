@@ -320,3 +320,18 @@
 - **原因**：iOS 14.6 不支持 CSS `aspect-ratio` 属性（iOS 15+ 才支持），MapPanel div 高度为 0 导致背景地图图片不可见
 - **变更文件**：`web/src/components/MapPanel.tsx`
 - **改动**：将 `aspectRatio` 改为 `padding-bottom` 百分比 hack + 内层 `position: absolute` 容器，兼容所有浏览器；现代浏览器性能无差异
+
+## CDN 缓存破坏 — 数据路径版本化
+
+- **原因**：Cloudflare Pages CDN 和 SW 缓存无法在游戏更新时自动失效，用户看到旧版本数据。查询参数（`?_v=`）不可靠（CF 默认忽略 query string 作为缓存键）
+- **方案**：构建时将数据版本通过 Vite `define` 注入为全局常量 `__DATA_VERSION__`，`dataUrl()` 将请求路径从 `/data/json/foo` 变换为 `/data/v<版本>/json/foo` → 版本变化时路径完全不同 → CDN 无歧义地视为新资源
+- **构建流程**：
+  1. `ssg.mjs` 在 `vite build` **之前**扫描所有 JSON 文件 mtime 计算 `dataDate`，设置 `VITE_DATA_VERSION` 环境变量
+  2. `vite build` 时 Vite `define` 将 `__DATA_VERSION__` 替换为实际版本字符串（如 `"1784008247"`），嵌入 JS bundle
+  3. `vite build` 后 `ssg.mjs` 复制 `dist/data/{json,img}` → `dist/data/v<版本>/{json,img}`（移除 versioned 副本中的 `meta.json`）
+  4. 清理 `dist/data/img/`（仅版本化路径保留图片，节省 ~600MB）
+  5. `meta.json` 保持固定路径 `dist/data/json/meta.json` 用于版本检测
+- **SW 兼容**：`vite.config.ts` 中 SW 运行时缓存路由使用正则同时匹配 `/data/json/*` 和 `/data/v\d+/json/*`，确保新旧路径均可缓存
+- **关键函数** `dataUrl()`：`/data/json/foo` → `path.slice(5)` 截断 `/data` 后插入版本 → `/data/v${v}/json/foo`
+- **版本更新机制**：`useDataVersion` 从 `/data/json/meta.json` 获取最新版本 → `setDataVersion()` 仅升不降 → 长会话也能自动切到新版本 URL
+- **变更文件**：`dataUrl.ts`（新建）、`vite.config.ts`、`ssg.mjs`、`vite-env.d.ts`、`_headers`、`index.html`、`useDataVersion.ts`、`useDungeonModules.ts`、`useSearchIndex.ts`、`MapPanel.tsx`、所有 11 个页面
