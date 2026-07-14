@@ -20,7 +20,6 @@ import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
-import SWUpdateBanner from './components/SWUpdateBanner';
 import OfflineDetector from './components/OfflineDetector';
 import InstallPrompt from './components/InstallPrompt';
 
@@ -39,7 +38,6 @@ export function AppInner() {
         margin: '0 auto',
       }}
     >
-      <SWUpdateBanner />
       <OfflineDetector />
       <InstallPrompt />
       <NavBar />
