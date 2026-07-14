@@ -318,6 +318,7 @@ def build_and_save_lootdrop_details(
 
     item_max_score: dict[str, float] = {}
     item_valid_names: dict[str, set[str]] = {}
+    item_hr100: dict[str, bool] = {}
     detail_count = 0
     detail_total = len(loot_index)
     if log_fn:
@@ -771,16 +772,22 @@ def build_and_save_lootdrop_details(
             _save(output_dir, f"lootdrops/{item_name}.json", detail, compact=True)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}
+            _has_hr100 = any(
+                e.get("drop_rates", {}).get("豪客赛", 0) >= 100.0 for _gl in _group_drop_info.values() for e in _gl
+            )
+            item_hr100[item_name] = _has_hr100
         detail_count += 1
         if detail_count % 100 == 0 and log_fn:
             log_fn(f"[JSON] lootdrops detail: {detail_count}/{detail_total}")
     if log_fn:
         log_fn(f"[JSON] lootdrops detail files DONE -> {detail_count} items")
 
-    # Update lootdrops.json index with max_score and filtered monsters
+    # Update lootdrops.json index with max_score, hr100 and filtered monsters
     for _entry in loot_index:
         _iname = _entry["name"]
         _entry["max_score"] = item_max_score.get(_iname, 0.0)
+        if item_hr100.get(_iname):
+            _entry["hr100"] = True
         _valid = item_valid_names.get(_iname)
         if _valid:
             _filtered = [
