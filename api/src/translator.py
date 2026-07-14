@@ -54,6 +54,55 @@ _TRANSLATION_PREFIXES = (
     "Text_DesignData_ActionSkin_",
 )
 
+# ── 地牢分组显示名解析 ──
+# 映射 module_group → 该 dungeon 的 1 层 Slot 键
+DUNGEON_GROUP_SLOT_KEY: dict[str, str] = {
+    "GoblinCave": "Text_UI_WB_DungeonSlot_GoblinCave_1stFloor",
+    "FireDeep": "Text_UI_WB_DungeonSlot_GoblinCave_1stFloor",
+    "IceCavern": "Text_UI_WB_DungeonSlot_IceCavern_1stFloor",
+    "IceAbyss": "Text_UI_WB_DungeonSlot_IceCavern_1stFloor",
+    "Ruins": "Text_UI_WB_DungeonSlot_TheCrypts_1stFloor",
+    "Crypt": "Text_UI_WB_DungeonSlot_TheCrypts_1stFloor",
+    "Inferno": "Text_UI_WB_DungeonSlot_TheCrypts_1stFloor",
+    "ShipGraveyard": "Text_WB_DungeonSlot_ShipGraveyard_1stFloor",
+}
+# 子楼层组 → 该楼层的 Slot 键（括号内原名）
+DUNGEON_SUBFLOOR_SLOT_KEY: dict[str, str] = {
+    "FireDeep": "Text_UI_WB_DungeonSlot_GoblinCave_2ndFloor",
+    "IceAbyss": "Text_UI_WB_DungeonSlot_IceCavern_2ndFloor",
+    "Crypt": "Text_UI_WB_DungeonSlot_TheCrypts_2ndFloor",
+    "Inferno": "Text_UI_WB_DungeonSlot_TheCrypts_3rdFloor",
+}
+DUNGEON_FLOOR_NUMBER: dict[str, int] = {
+    "GoblinCave": 1,
+    "FireDeep": 2,
+    "IceCavern": 1,
+    "IceAbyss": 2,
+    "Ruins": 1,
+    "Crypt": 2,
+    "Inferno": 3,
+    "ShipGraveyard": 1,
+}
+
+
+def resolve_group_label(group: str, translations: dict[str, str]) -> str:
+    """从 Game.json 翻译键推导分组显示名。
+
+    主组（如 GoblinCave）格式："{1层名}{层数}层"
+    子楼层组（如 FireDeep）格式："{1层名}{层数}层（{该层原名}）"
+    """
+    slot_key = DUNGEON_GROUP_SLOT_KEY.get(group)
+    if not slot_key:
+        return group
+    base = translations.get(slot_key, group)
+    floor = DUNGEON_FLOOR_NUMBER.get(group, 1)
+    if group in DUNGEON_SUBFLOOR_SLOT_KEY:
+        sub_key = DUNGEON_SUBFLOOR_SLOT_KEY[group]
+        sub_name = translations.get(sub_key, "")
+        return f"{base}{floor}层（{sub_name}）"
+    return f"{base}{floor}层"
+
+
 # Props 目录中的 _Dummy 实体同时也是怪物
 DUMMY_AS_MONSTER = {
     "LivingArmor",

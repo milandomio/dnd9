@@ -350,15 +350,15 @@ GROUP_TO_ART_DIR = {
 # 每个 group key 对应 base_code（去掉模式位的后3位）和楼层数。
 # 通过 base_code + mode*1000 可计算出完整 DungeonGrade。
 DUNGEON_GROUP_GRADES = {
-    # group_key        base_code  floors  中文名
+    # group_key        base_code  floors  基础名（不含层数，display 由 parse_grade 拼装）
     "GoblinCave": {"base": 1, "floors": 2, "label": "哥布林洞穴"},
-    "FireDeep": {"base": 1, "floors": 2, "label": "哥布林洞穴2层"},
-    "IceCavern": {"base": 11, "floors": 2, "label": "冰图"},
-    "IceAbyss": {"base": 11, "floors": 2, "label": "冰图2层"},
+    "FireDeep": {"base": 1, "floors": 2, "label": "哥布林洞穴"},
+    "IceCavern": {"base": 11, "floors": 2, "label": "寒冰洞穴"},
+    "IceAbyss": {"base": 11, "floors": 2, "label": "寒冰洞穴"},
     "Ruins": {"base": 21, "floors": 3, "label": "废墟"},
-    "Crypt": {"base": 21, "floors": 3, "label": "废墟2层"},
-    "Inferno": {"base": 21, "floors": 3, "label": "废墟3层"},
-    "ShipGraveyard": {"base": 31, "floors": 2, "label": "水图"},
+    "Crypt": {"base": 21, "floors": 3, "label": "废墟"},
+    "Inferno": {"base": 21, "floors": 3, "label": "废墟"},
+    "ShipGraveyard": {"base": 31, "floors": 2, "label": "沉船墓场"},
 }
 
 # module_group → 楼层后缀列表（用于爆率查询）

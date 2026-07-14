@@ -36,6 +36,17 @@
 
 > **状态：已修复**（2026-06-21：参见 `docs/SUPERHOARD_FIX.md`）
 
+### ~~零爆率过滤时分组标题残留~~ [已修复]
+
+**背景**：详情页（`DetailPage.tsx`）的"隐藏0爆率坐标"功能只过滤了单个坐标点的显示，
+分组标题始终渲染，导致选模式后组内全部坐标被隐藏时标题依然可见。
+
+**修复**（2026-07-14）：将 `visibleSections` 预过滤改为 `sections.map` 内联判断。
+每个 section 用与渲染 items **完全相同的 `labelMatch` + `gdi` + `modeFilter`** 检查是否有可见坐标，
+无则 `return null`，标题和坐标一起隐藏。
+
+**关键文件**：`web/src/pages/DetailPage.tsx`
+
 ## 数据管道
 
 ### DB 过期判断时序
