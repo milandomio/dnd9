@@ -6,6 +6,14 @@
 - **修复**：改为 `/icons/icon-192-v2.png`（圆角版）
 - **变更文件**：`web/index.html:12`
 
+## 修复 webp 图片在 iOS 14 不显示
+
+- **原因**：上次修复只改了 `MapPanel.tsx` 的 `aspect-ratio` → `paddingBottom`，但 `DungeonModuleGroupPage.tsx` 和 `ExplorePage.tsx` 仍直接使用 CSS `aspect-ratio` 属性。iOS Safari < 15 不支持 `aspect-ratio`，div 高度为 0 → `backgroundImage` 不可见
+- **修复**：两个页面改为 `paddingBottom` 占位 + `position: absolute` 内层 div 渲染背景图（与 MapPanel 相同模式）
+- **变更文件**：
+  - `web/src/pages/DungeonModuleGroupPage.tsx:172` — 模块卡片缩略图
+  - `web/src/pages/ExplorePage.tsx:157` — 探索页模块缩略图
+
 ## 移动端排版换行修复
 
 - **原因**：手机屏幕窄，多处 flex 容器未设置 `flexWrap: 'wrap'`，导致内容溢出或强制同行显示
