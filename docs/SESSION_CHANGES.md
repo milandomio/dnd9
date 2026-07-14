@@ -283,3 +283,9 @@
 - `api/src/drop_rate.py`（`_round_rate` 3 位→4 位）
 - `api/src/enrichment.py`（`round(x,2)` → `_round_rate(x)`）
 - `docs/REFERENCE.md`（Decimal 精度规范说明）
+
+## InstallPrompt 增加关闭按钮
+
+- **原因**：安装 DND闪电指南 提示无法关闭，用户不需要时只能等待浏览器自动隐藏
+- **变更文件**：`web/src/components/InstallPrompt.tsx`
+- **改动**：新增 `dismissed` 状态 + ✕ 关闭按钮，点击后隐藏 prompt；关闭按钮绝对定位在卡片右上角
