@@ -91,6 +91,22 @@
 
 ## 2026-07-14 会话修改记录（2）
 
+### Bug 修复：内联 `_modules` 未提取 `group_display`
+
+**问题**：`DetailPage.tsx` 和 `LootdropDetailPage.tsx` 从实体 JSON 内联 `_modules` 构建模块 Map 时，漏掉了 `group_display` 字段。导致 `mod?.group_display` 始终为 `undefined`，fallback 显示英文字段名（"Crypt"）。
+
+**修复**：两文件在构造 `DungeonModule` 对象时添加 `group_display: data.group_display`。
+
+**涉及文件**：
+- `web/src/pages/DetailPage.tsx:63` — 新增 `group_display: data.group_display`
+- `web/src/pages/LootdropDetailPage.tsx:171` — 新增 `group_display: modData.group_display`
+
+**不受影响**：`QuestItemGroupPage` / `DungeonModulesPage` / `DungeonModuleGroupPage` / `DungeonModuleDetailPage` 使用 `useDungeonModules()`（直接从 `dungeon_modules.json` 加载 Map），`group_display` 正常。
+
+---
+
+## 2026-07-14 会话修改记录（先前）
+
 ### 修复：地图分组翻译不显示（data/ 交付遗漏）
 
 **问题**：上一次管道运行时 `_deliver()` 可能被中断，`data/json/` 为空。前端 fetch 不到 `dungeon_modules.json`，fallback 显示英文 `group` 名（如 "Crypt"）。
@@ -176,3 +192,18 @@
 **修复**：在 `api/src/lootdrop_builder.py:_classify_label` 中添加兜底匹配——当实体名含尾部数字后缀（如 `Coffin_06`）时，剥离后缀为 `Coffin`，检查标签是否以 `Coffin_` 开头。`Coffin_R` → `"direct"`，正确合并到唯一入口。
 
 **变更文件**：`api/src/lootdrop_builder.py`（`_classify_label` 函数）
+
+### Coffin_06 变体系数导致 spawn_rate 虚高
+
+**问题**：`Ruins_ForsakenCloister` 模块的坐标 `variant_count=3`（3 种选 1），但 group_drop_info 中 spawn_rate=100% 未除以 3，页面显示 `100% (3种选1)` 应为 `33.3333%`。
+
+**修复**：
+1. **前端** `DetailPage.tsx:720-724` — 变体模块显示区域新增 `adjRate()`，将 `info.spawn_rate` 除以 `forcedVc.variant_count`，保留 4 位小数。
+2. **精度规范** — `drop_rate.py:_round_rate` 从 3 位改为 4 位小数；`enrichment.py` 中 `round(x, 2)` 替换为 `_round_rate(x)`。
+3. **文档** — `docs/REFERENCE.md` 添加精度要求说明。
+
+**变更文件**：
+- `web/src/pages/DetailPage.tsx`（变体 spawn_rate 除以 variant_count）
+- `api/src/drop_rate.py`（`_round_rate` 3 位→4 位）
+- `api/src/enrichment.py`（`round(x,2)` → `_round_rate(x)`）
+- `docs/REFERENCE.md`（Decimal 精度规范说明）
