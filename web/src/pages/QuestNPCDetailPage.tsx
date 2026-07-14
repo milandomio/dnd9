@@ -211,28 +211,41 @@ export default function QuestNPCDetailPage() {
           borderBottom: `3px solid ${tokens.accent}`,
           paddingBottom: 15,
           marginBottom: 30,
+          flexWrap: 'wrap',
         }}
       >
-        <QuestSearchBar
-          allNpcs={allNpcs}
-          onSelect={(r: QuestSearchResult) => {
-            if (r.npc.npc_name === npc_name) {
-              setSearch(r.quest.title);
-              requestAnimationFrame(() => {
-                const el = document.querySelector(
-                  `[data-quest-num="${r.quest.quest_number}"]`
-                );
-                el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              });
-            } else {
-              navigate(`/quest_npc/${r.npc.npc_name}`, {
-                state: { questNumber: r.quest.quest_number },
-              });
-            }
-          }}
-        />
+        <div style={{ width: '100%' }}>
+          <QuestSearchBar
+            allNpcs={allNpcs}
+            onSelect={(r: QuestSearchResult) => {
+              if (r.npc.npc_name === npc_name) {
+                setSearch(r.quest.title);
+                requestAnimationFrame(() => {
+                  const el = document.querySelector(
+                    `[data-quest-num="${r.quest.quest_number}"]`
+                  );
+                  el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+              } else {
+                navigate(`/quest_npc/${r.npc.npc_name}`, {
+                  state: { questNumber: r.quest.quest_number },
+                });
+              }
+            }}
+          />
+        </div>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <h1 style={{ color: tokens.accent, margin: 0 }}>
+          <h1
+            style={{
+              color: tokens.accent,
+              margin: 0,
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'baseline',
+              gap: 4,
+              justifyContent: 'center',
+            }}
+          >
             <input
               type="checkbox"
               checked={npcDone}
@@ -248,7 +261,7 @@ export default function QuestNPCDetailPage() {
               }}
             />
             {npc.npc_name_display} - 任务列表
-            <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 8 }}>
+            <span style={{ color: tokens.muted, fontSize: 14 }}>
               {quests.length}个任务
             </span>
           </h1>
