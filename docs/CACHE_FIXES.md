@@ -2,7 +2,7 @@
 
 ## 背景
 
-前端缓存审查发现 5 个问题，涉及数据版本通知、HTTP 缓存头、localStorage 泄漏、组件渲染性能、全局缓存版本一致性。
+前端缓存审查发现多个问题，涉及数据版本通知、HTTP 缓存头、localStorage 泄漏、组件渲染性能、全局缓存版本一致性、SW 路由冲突、PWA 基础设施预缓存。
 
 ## 修复列表
 
@@ -18,14 +18,14 @@
 
 **问题：** `public/_headers` 仅覆盖 `/assets/*`（`max-age=31536000, immutable`），`/data/json/*`、`/data/img/*`、SSG HTML 页面无缓存控制。
 
-**方案：** 新增缓存规则：
+**方案：** 新增缓存规则（与 SW 策略配合，非 SW 环境兜底）：
 
-| 路径 | 策略 |
-|------|------|
-| `/assets/*` | `max-age=604800, immutable`（7 天，content-hash 保证变更即新 URL）|
-| `/data/json/*` | `max-age=604800`（7 天）|
-| `/data/img/*` | `max-age=604800`（7 天）|
-| `/*.html` | `max-age=604800`（7 天）|
+| 路径 | 策略 | 说明 |
+|------|------|------|
+| `/assets/*` | `max-age=31536000, immutable` | 365 天，content-hash 保证变更即新 URL |
+| `/data/json/*` | `no-cache` | 每次 ETag 条件请求，SW 层 StaleWhileRevalidate 缓存 |
+| `/data/img/*` | `max-age=604800` | 7 天 |
+| `/*.html` | `max-age=604800` | 7 天 |
 
 **文件：** `web/public/_headers`
 
@@ -62,6 +62,35 @@
 **方案：** 移除 `navigateFallback`，让 `NetworkFirst` 正常接管 SSG 路由。访问过的页面离线可正常显示（含 SSR 数据）。
 
 **文件：** `web/vite.config.ts`
+
+### Fix 7: `registerSW.js` 未预缓存
+
+**问题：** SW 注册脚本 `registerSW.js` 仅由 HTML 的 `<script>` 标签加载，SW 不拦截自身加载请求（SW 在其安装期才生效），离线首次访问时注册脚本加载失败 → SW 根本不注册。
+
+**方案：** 将 `registerSW.js` 加入 `globPatterns` 预缓存清单。`manifest.webmanifest` 和 `icons/*` 由 `vite-plugin-pwa` 自动处理，不重复声明。
+
+**文件：** `web/vite.config.ts`
+
+### Fix 8: 清理 SW 相关死代码
+
+**问题：** SW 集成后，以下代码变为遗留死代码：
+- `useDataVersion.ts` 中的 `useRefreshNotice` hook（横幅已移除）
+- 5 个页面的 `if (!dataVersion) return;` 守卫（meta.json 已进 SW 缓存，守卫多余）
+- `SWUpdateBanner.tsx` 中的 `waiting` 事件监听（`autoUpdate` + `self.skipWaiting()` 下永不触发）
+
+**方案：**
+- 删除 `useRefreshNotice` hook 及相关模块变量（`_needsRefresh`、`refreshListeners`、`notifyRefresh`）
+- 删除 5 个页面的 `!dataVersion` 守卫
+- 简化 `SWUpdateBanner`：移除 `needRefresh`/`handleRefresh`，仅保留首次安装"离线模式已就绪"提示（5 秒自动消失）
+
+**文件：**
+- `web/src/hooks/useDataVersion.ts`
+- `web/src/pages/ExplorePage.tsx`
+- `web/src/pages/DungeonModuleDetailPage.tsx`
+- `web/src/pages/QuestItemsPage.tsx`
+- `web/src/pages/QuestItemGroupPage.tsx`
+- `web/src/pages/QuestNPCPage.tsx`
+- `web/src/components/SWUpdateBanner.tsx`
 
 ## 验证
 
