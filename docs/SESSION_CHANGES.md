@@ -1,13 +1,20 @@
 # 2026-07-14 会话修改记录
 
-## 新增"小型神器"分类 — 豪客赛 100% 爆率物品
+## fix: variant 详情页综合爆率使用 variant_gdi 重算
 
-- **原因**：用户需要从掉落表页面快速筛选豪客赛模式下必定掉落的装备
+- **原因**：variant 详情页（如 LargeScroll_7001）的 `coords[].score` 继承自 base 物品的 `_hk_lookup`（`get_group_drop_rates`），而 `group_drop_info` 用 `get_variant_group_drop_rates(luck_grade=7)` 计算，两者不一致。表现为 group_drop_info 显示 0.1111% 但综合爆率显示 2.4815%。
+- **变更文件**：`api/src/lootdrop_builder.py` — variant 分支新增 per-coord score 从 `variant_gdi` 重算
+- **关键映射**：variant 分支的 `coords[].score` 现在用 variant_gdi 的 `豪客赛` 值重算，score = `spawn_rate * 豪客赛 / 100`，与 group_drop_info 对齐
+
+## 新增"小型神器"分类 — 豪客赛 100% 爆率 + 低生成率装备
+
+- **原因**：用户需要从掉落表页面快速筛选豪客赛模式下必定掉落但生成率低的稀有装备
+- **筛选条件**：`drop_rates.豪客赛 >= 100`（怪物必定掉落）AND `spawn_rate < 5`（生成率低于 5%）
 - **变更文件**：
-  - `api/src/lootdrop_builder.py` — 构建索引时扫描 `group_drop_info` 中 `drop_rates.豪客赛 >= 100` 的条目，标记 `hr100: true` 写入 `lootdrops.json`
+  - `api/src/lootdrop_builder.py` — 构建索引时扫描 `group_drop_info` 中两个条件同时满足的条目，标记 `hr100: true` 写入 `lootdrops.json`
   - `web/src/pages/ListPage.tsx` — `groupLootdrops()` 增加 `hr100` 分类逻辑，新增"🪙 小型神器"分类（位于"🏺 神器"之后）
 - **数据流**：后端管道计算 → lootdrops.json 索引含 `hr100` 字段 → 前端 CSR 加载后按分类渲染
-- **共 20 个物品**被标记（BloodsapBlade、HazeBlade、ThornShield 等各类矿石和装备）
+- **共 7 个物品**被标记：吸血之刃、迷乱之刃、荆棘之盾、缠丝长裤、静谧长靴、流光灯笼、盗法者权杖
 
 ## 导航栏搜索框点击放大镜后滚动到可视区域
 
