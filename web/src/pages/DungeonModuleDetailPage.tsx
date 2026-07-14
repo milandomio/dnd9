@@ -15,17 +15,6 @@ import {
 import DebugCoordTable from '../components/DebugCoordTable';
 import MapPanel from '../components/MapPanel';
 
-const GROUP_LABELS: Record<string, string> = {
-  Crypt: '废墟2层地牢',
-  FireDeep: '哥布林洞穴2层',
-  GoblinCave: '哥布林洞穴1层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-};
-
 interface CoordEntity {
   name: string;
   translation?: string;
@@ -85,7 +74,7 @@ export default function DungeonModuleDetailPage() {
     );
 
   const m = mod;
-  const groupLabel = GROUP_LABELS[m.group] || m.group || '未分组';
+  const groupLabel = m.group_display || m.group || '未分组';
   const sx = m.size_x || 1;
   const sy = m.size_y || 1;
   const baseRange = m.range || Math.max(sx, sy) * 1600 || 1600;

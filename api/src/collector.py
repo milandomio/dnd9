@@ -38,7 +38,7 @@ from module_builder import (
 from pipeline import Pipeline
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
-from translator import NameResolver, build_coord_out
+from translator import NameResolver, build_coord_out, resolve_group_label
 
 _SOURCE_PATHS = [
     GAME_JSON,
@@ -306,6 +306,10 @@ def run():
         modules = db.get_dungeon_modules()
         modules_map = build_modules_map(db, resolver.resolve)
         map_to_module, module_to_maps = build_map_mappings(modules_map)
+        # 注入分组显示名
+        for _mod in modules_map.values():
+            _g = _mod.get("group", "")
+            _mod["group_display"] = resolve_group_label(_g, translations)
 
         # P005: Build ENTITY_PAGE_MAP for coord reference
         entity_page_map: dict[str, str] = {}
@@ -420,7 +424,15 @@ def run():
             ctx.set_result(f"explore={explore_count}, items={quest_items_count}, npcs={quest_npc_count}")
 
         with pipe.step("quest_items_groups"):
-            generate_quest_items_groups(db, merged_loot, resolver.resolve, all_coords, modules, OUTPUT_DIR)
+            generate_quest_items_groups(
+                db,
+                merged_loot,
+                resolver.resolve,
+                all_coords,
+                modules,
+                OUTPUT_DIR,
+                group_label_resolver=lambda g: resolve_group_label(g, translations),
+            )
 
         with pipe.step("search_index") as ctx:
             index_data = build_and_save_indexes(
@@ -434,6 +446,7 @@ def run():
                 quest_npc_count,
                 quest_npcs_data,
                 OUTPUT_DIR,
+                group_label_resolver=lambda g: resolve_group_label(g, translations),
             )
             ctx.set_result("DONE")
 

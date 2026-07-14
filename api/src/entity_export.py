@@ -38,6 +38,7 @@ def _build_inline_modules(coords: list[dict], modules_map: dict, map_to_module: 
                 "size_y": mod["size_y"],
                 "range": mod["range"],
                 "group": mod["group"],
+                "group_display": mod.get("group_display", ""),
                 "translation": mod["translation"],
                 "img_name": mod["img_name"],
                 "sl_base_name": mod["sl_base_name"],

@@ -11,17 +11,6 @@ interface GroupSummary {
   module_count: number;
 }
 
-const GROUP_LABELS: Record<string, string> = {
-  Crypt: '废墟2层地牢',
-  FireDeep: '哥布林洞穴2层',
-  GoblinCave: '哥布林洞穴1层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-};
-
 const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
   Crypt: { border: '#E91E63', icon: '💀' },
   FireDeep: { border: '#FF5722', icon: '🔥' },
@@ -34,13 +23,13 @@ const GROUP_THEMES: Record<string, { border: string; icon: string }> = {
 };
 
 const GROUP_ORDER = [
-  'Crypt',
-  'FireDeep',
   'GoblinCave',
-  'IceAbyss',
+  'FireDeep',
   'IceCavern',
-  'Inferno',
+  'IceAbyss',
   'Ruins',
+  'Crypt',
+  'Inferno',
   'ShipGraveyard',
 ];
 
@@ -52,17 +41,20 @@ export default function DungeonModulesPage() {
 
   useEffect(() => {
     if (modules.size === 0) return;
-    const map = new Map<string, number>();
+    const map = new Map<string, { count: number; display: string }>();
     for (const m of new Set(modules.values())) {
       const g = m.group || '';
-      map.set(g, (map.get(g) || 0) + 1);
+      if (!map.has(g)) {
+        map.set(g, { count: 0, display: m.group_display || g || '未分组' });
+      }
+      map.get(g)!.count++;
     }
     const sorted = [...map.entries()]
       .sort(([a], [b]) => GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b))
-      .map(([group, count]) => ({
+      .map(([group, info]) => ({
         group,
-        group_display: GROUP_LABELS[group] || group || '未分组',
-        module_count: count,
+        group_display: info.display,
+        module_count: info.count,
       }));
     setGroups(sorted);
     setLoading(false);

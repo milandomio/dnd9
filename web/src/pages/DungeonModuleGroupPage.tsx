@@ -8,17 +8,6 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import type { DungeonModule } from '../types/data';
 
-const GROUP_LABELS: Record<string, string> = {
-  Crypt: '废墟2层地牢',
-  FireDeep: '哥布林洞穴2层',
-  GoblinCave: '哥布林洞穴1层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-};
-
 export default function DungeonModuleGroupPage() {
   const { group } = useParams<{ group: string }>();
   const { debug, toggle } = useDebug();
@@ -72,7 +61,7 @@ export default function DungeonModuleGroupPage() {
       </div>
     );
 
-  const groupLabel = GROUP_LABELS[group || ''] || group || '未分组';
+  const groupLabel = modules[0]?.group_display || group || '未分组';
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>

@@ -57,6 +57,7 @@ export interface DungeonModule {
   names: string[];
   translation: string;
   group: string;
+  group_display?: string;
   size_x: number;
   size_y: number;
   sl_base_name: string;
@@ -79,6 +80,7 @@ export interface InlineModuleData {
   size_y: number;
   range: number;
   group: string;
+  group_display?: string;
   translation: string;
   img_name: string;
   sl_base_name: string;

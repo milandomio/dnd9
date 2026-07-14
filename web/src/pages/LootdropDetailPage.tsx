@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
+import SectionHeader from '../components/SectionHeader';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
 import type { DungeonModule, InlineModuleData } from '../types/data';
@@ -64,16 +65,16 @@ interface LootdropItem {
   variant_rarity?: Record<string, string>;
 }
 
-const GROUP_LABELS: Record<string, string> = {
-  Crypt: '废墟2层地牢',
-  FireDeep: '哥布林洞穴2层',
-  GoblinCave: '哥布林洞穴1层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-};
+const GROUP_ORDER = [
+  'GoblinCave',
+  'FireDeep',
+  'IceCavern',
+  'IceAbyss',
+  'Ruins',
+  'Crypt',
+  'Inferno',
+  'ShipGraveyard',
+];
 
 const VARIANT_RE = /^(.+?)_(\d{4})$/;
 const RARITY_COLORS: Record<string, string> = {
@@ -610,7 +611,7 @@ export default function LootdropDetailPage() {
     });
   }
 
-  const groupOrder = Object.keys(GROUP_LABELS);
+  const groupOrder = GROUP_ORDER;
   const sortedGroups = [...groupedByType.entries()].sort(
     ([a, aItems], [b, bItems]) => {
       const _gA = aItems[0]?.mod?.group || '';
@@ -947,7 +948,23 @@ export default function LootdropDetailPage() {
         }}
       >
         {sortedGroups.map(([groupName, groupItems]) => (
-          <>
+          <SectionHeader
+            key={groupName}
+            groupName={groupName}
+            hasVisible={
+              hideZeroRate && modeFilter
+                ? groupItems.some(({ dots }) =>
+                    dots.some((d) => {
+                      const gdi = data?.group_drop_info?.[groupName];
+                      const entry = gdi?.find(
+                        (e) => e.translation === d.monster.translation
+                      );
+                      return !entry || (entry.drop_rates[modeFilter] ?? 0) > 0;
+                    })
+                  )
+                : groupItems.length > 0
+            }
+          >
             {groupName && (
               <div
                 key={`h-${groupName}`}
@@ -975,7 +992,7 @@ export default function LootdropDetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {GROUP_LABELS[groupName] || groupName}
+                    {groupItems[0]?.mod?.group_display || groupName}
                   </span>
                   {data?.group_drop_info?.[groupName] && (
                     <span
@@ -1463,7 +1480,7 @@ export default function LootdropDetailPage() {
                 </div>
               );
             })}
-          </>
+          </SectionHeader>
         ))}
       </div>
 
@@ -1476,7 +1493,7 @@ export default function LootdropDetailPage() {
               const rowKey = `${m.translation}-${j}`;
               return {
                 key: rowKey,
-                group: GROUP_LABELS[g] || g,
+                group: mod?.group_display || g,
                 monster: {
                   name: m.name,
                   translation: m.translation,

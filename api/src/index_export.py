@@ -6,18 +6,6 @@ from pathlib import Path
 
 from config import HARDCODED_TRANSLATIONS
 
-GROUP_LABELS = {
-    "Crypt": "废墟2层地牢",
-    "FireDeep": "哥布林洞穴2层",
-    "GoblinCave": "哥布林洞穴1层",
-    "IceAbyss": "冰图2层",
-    "IceCavern": "冰图1层",
-    "Inferno": "废墟3层炼狱",
-    "Ruins": "废墟1层",
-    "ShipGraveyard": "水图",
-    "Swamp": "沼泽",
-}
-
 
 def _save(output_dir: Path, filename: str, data: list | dict):
     path = output_dir / filename
@@ -40,7 +28,9 @@ def save_quest_data(db, output_dir: Path) -> tuple[int, int, int, list[dict]]:
     return explore_count, quest_items_count, quest_npc_count, quest_npcs_data
 
 
-def generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modules, output_dir: Path):
+def generate_quest_items_groups(
+    db, merged_loot, resolve_name, all_coords, modules, output_dir: Path, group_label_resolver=None
+):
     """Generate quest items groups with coordinates."""
     import logging
 
@@ -174,7 +164,7 @@ def generate_quest_items_groups(db, merged_loot, resolve_name, all_coords, modul
     groups_index = []
     for gname in sorted(groups):
         g = groups[gname]
-        g["group_display"] = GROUP_LABELS.get(gname, gname)
+        g["group_display"] = group_label_resolver(gname) if group_label_resolver else gname
         entities = list(g["entities"].values())
         for e in entities:
             e.pop("_seen_coords", None)
@@ -210,6 +200,7 @@ def build_and_save_indexes(
     quest_npc_count: int,
     quest_npcs_data: list[dict],
     output_dir: Path,
+    group_label_resolver=None,
 ):
     """Build and save index.json + search_index.json."""
     index_data = [
@@ -286,7 +277,7 @@ def build_and_save_indexes(
         search_index.append(
             {
                 "name": g,
-                "translation": GROUP_LABELS.get(g, g),
+                "translation": group_label_resolver(g) if group_label_resolver else g,
                 "page": "dungeon_modules",
                 "url": f"/dungeon_modules/{urllib.parse.quote(g, safe='')}/",
             }
@@ -297,7 +288,9 @@ def build_and_save_indexes(
                 "name": m["name"],
                 "translation": m.get("translation", m["name"]),
                 "page": "dungeon_modules",
-                "tag": GROUP_LABELS.get(m.get("group", ""), m.get("group", "模块")),
+                "tag": (
+                    group_label_resolver(m.get("group", "")) if group_label_resolver else (m.get("group", "") or "模块")
+                ),
                 "url": f"/dungeon_modules/{urllib.parse.quote(m.get('group', '') or '', safe='')}/{urllib.parse.quote(m['name'], safe='')}/",
             }
         )
