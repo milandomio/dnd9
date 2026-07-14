@@ -790,7 +790,9 @@ def build_and_save_lootdrop_details(
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}
             _has_hr100 = any(
-                e.get("drop_rates", {}).get("豪客赛", 0) >= 100.0 for _gl in _group_drop_info.values() for e in _gl
+                e.get("drop_rates", {}).get("豪客赛", 0) >= 100.0 and e.get("spawn_rate", 0) < 5.0
+                for _gl in _group_drop_info.values()
+                for e in _gl
             )
             item_hr100[item_name] = _has_hr100
         detail_count += 1
