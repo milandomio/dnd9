@@ -524,6 +524,7 @@ export default function DetailPage() {
                     display: 'flex',
                     alignItems: 'baseline',
                     gap: 10,
+                    flexWrap: 'wrap',
                     color: dark ? '#FFC107' : '#F57F17',
                   }}
                 >
@@ -740,6 +741,7 @@ export default function DetailPage() {
                               display: 'flex',
                               alignItems: 'center',
                               gap: 3,
+                              flexWrap: 'wrap',
                             }}
                           >
                             <span

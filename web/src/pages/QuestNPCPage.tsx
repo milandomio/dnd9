@@ -101,16 +101,19 @@ export default function QuestNPCPage() {
           alignItems: 'center',
           gap: 16,
           marginBottom: 20,
+          flexWrap: 'wrap',
         }}
       >
-        <QuestSearchBar
-          allNpcs={data}
-          onSelect={(r: QuestSearchResult) =>
-            navigate(`/quest_npc/${r.npc.npc_name}`, {
-              state: { questNumber: r.quest.quest_number },
-            })
-          }
-        />
+        <div style={{ width: '100%' }}>
+          <QuestSearchBar
+            allNpcs={data}
+            onSelect={(r: QuestSearchResult) =>
+              navigate(`/quest_npc/${r.npc.npc_name}`, {
+                state: { questNumber: r.quest.quest_number },
+              })
+            }
+          />
+        </div>
         <div style={{ flex: 1, textAlign: 'center' }}>
           <h1
             style={{
@@ -203,13 +206,14 @@ export default function QuestNPCPage() {
                     >
                       <div
                         style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          alignItems: 'baseline',
+                          gap: 4,
                           fontSize: 18,
                           fontWeight: 'bold',
                           color: tokens.accent,
                           textDecoration: npcDone ? 'line-through' : 'none',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
                         }}
                       >
                         {npc.npc_name_display}
@@ -218,7 +222,6 @@ export default function QuestNPCPage() {
                             fontSize: 13,
                             color: tokens.muted,
                             fontWeight: 'normal',
-                            marginLeft: 8,
                           }}
                         >
                           {npc.quest_count} 个任务

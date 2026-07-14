@@ -199,9 +199,14 @@ export default function NavBar() {
         padding: '8px 20px',
         background: tokens.surface,
         borderRadius: 5,
+        flexWrap: 'wrap',
+        rowGap: 8,
       }}
     >
-      <div ref={searchRef} style={{ position: 'relative', flex: '0 1 320px' }}>
+      <div
+        ref={searchRef}
+        style={{ position: 'relative', flex: '1 1 280px', minWidth: 0 }}
+      >
         <Input
           ref={inputRef}
           prefix={<SearchOutlined style={{ color: tokens.muted }} />}
@@ -349,7 +354,15 @@ export default function NavBar() {
         )}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          flexWrap: 'wrap',
+          rowGap: 6,
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <BulbOutlined
             style={{ color: dark ? '#ffd700' : '#333', fontSize: 16 }}
