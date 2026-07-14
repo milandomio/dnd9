@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 
 from config import MAPS_DIR, SPAWNER_ALIAS_MAP, SPAWNER_DIR
+from drop_rate import _round_rate
 
 _VARIANT_RE = re.compile(r"_\d{4}$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
@@ -135,8 +136,8 @@ def load_all_spawner_data(
                             continue
                         raw_rate = item.get("SpawnRate", 10000)
                         _grades = item.get("DungeonGrades", []) or []
-                        _rates = [raw_rate / _grade_totals[_g] * 100 for _g in _grades]
-                        spawn_rate_val = round(min(_rates), 2) if _rates else round(raw_rate / 10000 * 100, 2)
+                        _rates = [100 * raw_rate / _grade_totals[_g] for _g in _grades]
+                        spawn_rate_val = _round_rate(min(_rates)) if _rates else _round_rate(100 * raw_rate / 10000)
                         spawn_rate_val = min(spawn_rate_val, 100.0)
                         ldg = item.get("LootDropGroupId", {}) or {}
                         ldg_path = ldg.get("AssetPathName", "")

@@ -260,8 +260,8 @@ info = parse_grade(3001)
 坐标点数据中关联的 `SpawnerDataAsset`（如 `Id_Spawner_New_Props_GoldChest`）对应
 `Spawner/Spawner/Id_Spawner_New_Props_GoldChest.json`，其中 `SpawnRate` 字段为原始生成权重。
 
-**DB 存储格式：** `spawner_entries.spawn_rate` 存储为百分比（0~100），按同 `SpawnerItemArray` 内的比例计算：
-`round(entry_rate / sum(all_rates_in_array) * 100)`
+**DB 存储格式：** `spawner_entries.spawn_rate` 存储为百分比（0~100），按同 `SpawnerItemArray` 内的比例计算，四舍五入到小数点后 4 位（使用 `drop_rate._round_rate`）：
+`_round_rate(100 * entry_rate / sum(all_rates_in_array))`
 
 - 单条目 spawner：`SpawnRate=10000` → 100%
 - 多条目 spawner（如 ChestLarge 含 9 个实体）：各条目按权重占比计算百分比
