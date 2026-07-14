@@ -6,6 +6,16 @@
 - **修复**：改为 `/icons/icon-192-v2.png`（圆角版）
 - **变更文件**：`web/index.html:12`
 
+## 移动端排版换行修复
+
+- **原因**：手机屏幕窄，多处 flex 容器未设置 `flexWrap: 'wrap'`，导致内容溢出或强制同行显示
+- **变更文件**：
+  - `web/src/components/NavBar.tsx` — 导航栏容器 + 右侧按钮区加 `flexWrap: 'wrap'`，搜索框 `flex: '1 1 280px'`
+  - `web/src/pages/DetailPage.tsx` — "参考爆率" 容器 + 变体图例内层 flex 加 `flexWrap: 'wrap'`
+  - `web/src/pages/LootdropDetailPage.tsx` — "参考爆率" 容器 + 怪物图例内层 flex 加 `flexWrap: 'wrap'`
+  - `web/src/pages/QuestNPCPage.tsx` — 搜索框包装为 `width: 100%` 独立一行；NPC 卡片名+任务数改用 `display: flex; flexWrap: wrap`
+  - `web/src/pages/QuestNPCDetailPage.tsx` — 搜索框 `width: 100%` 独立一行；h1 标题加 `flexWrap: 'wrap'`
+
 ## 修复 SW runtime caching urlPattern 正则不匹配问题
 
 - **原因**：`vite.config.ts` 中 Workbox runtime caching 的 `urlPattern` 使用了 `^` 锚定正则（`/^\/data\/json\//`），Workbox 用 `regex.test(request.url)` 匹配完整 URL（含协议/域名），导致 `df5-data-json` 和 `df5-data-img` 缓存池**永远不会被写入**
