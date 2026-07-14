@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
+import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import {
   getAdj,
@@ -148,26 +149,16 @@ export default function DungeonModuleDetailPage() {
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-      <button
-        onClick={toggleDebug}
-        style={{
-          position: 'fixed',
-          top: 20,
-          right: 20,
-          padding: '4px 16px',
-          background: debug ? '#4CAF50' : '#FFC107',
-          color: debug ? '#fff' : '#000',
-          border: debug ? '2px solid #388E3C' : '2px solid #FF9800',
-          borderRadius: 6,
-          cursor: 'pointer',
-          fontSize: 13,
-          fontWeight: 'bold',
-          zIndex: 9999,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-        }}
-      >
-        {debug ? '退出调试' : '显示调试信息'}
-      </button>
+      <DebugPanel
+        buttons={[
+          {
+            label: '显示调试信息',
+            activeLabel: '退出调试',
+            active: debug,
+            onClick: toggleDebug,
+          },
+        ]}
+      />
 
       <Helmet>
         <title>
