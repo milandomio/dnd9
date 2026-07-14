@@ -50,6 +50,11 @@ def _classify_label(label: str, entity_name: str) -> str:
     en_base = QUALITY_RE.sub("", entity_name)
     if label == en_base or label.startswith(en_base + "_"):
         return "direct"
+    # Fallback: if entity_name has a trailing numeric suffix (e.g. Coffin_06),
+    # strip it and match label root (handles Coffin_R → Coffin_06).
+    en_root = re.sub(r"_\d+$", "", en_base)
+    if en_root != en_base and label.startswith(en_root + "_"):
+        return "direct"
     if "Random" in label:
         return "random"
     if "Special" in label or label == "ChestLarge" or label.startswith("ChestLarge_"):

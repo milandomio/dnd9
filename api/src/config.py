@@ -340,84 +340,25 @@ GROUP_TO_ART_DIR = {
     "ShipGraveyard": "ShipGraveyard",
 }
 
-# ── 地图分组代码表 ────────────────────────────────────────────
-# 编码规则（参考 LootDropRate.py 的 DUNGEON_GRADE_MAP）：
-#   第1位 = 模式（1=PVE, 2=普通, 3=豪客赛, 4=逆袭赛）
-#   第2位 = 地图（0=哥布林, 1=冰图, 2=废墟, 3=水图）
-#   第3-4位 = 层（01=1层, 02=2层, 03=3层）
-# 示例：3001 → 豪客赛+哥布林+1层
-#
-# 每个 group key 对应 base_code（去掉模式位的后3位）和楼层数。
-# 通过 base_code + mode*1000 可计算出完整 DungeonGrade。
-DUNGEON_GROUP_GRADES = {
-    # group_key        base_code  floors  基础名（不含层数，display 由 parse_grade 拼装）
-    "GoblinCave": {"base": 1, "floors": 2, "label": "哥布林洞穴"},
-    "FireDeep": {"base": 1, "floors": 2, "label": "哥布林洞穴"},
-    "IceCavern": {"base": 11, "floors": 2, "label": "寒冰洞穴"},
-    "IceAbyss": {"base": 11, "floors": 2, "label": "寒冰洞穴"},
-    "Ruins": {"base": 21, "floors": 3, "label": "废墟"},
-    "Crypt": {"base": 21, "floors": 3, "label": "废墟"},
-    "Inferno": {"base": 21, "floors": 3, "label": "废墟"},
-    "ShipGraveyard": {"base": 31, "floors": 2, "label": "沉船墓场"},
-}
-
 # module_group → 楼层后缀列表（用于爆率查询）
-# 后缀 = base_code + floor - 1，如 IceAbyss 的 base=11, floor=2 → 后缀=12
+# 后缀 = base_code + floor - 1，如 FireDeep 的 base_code=1, floor=2 → 后缀=2
+# base_code 编码规则参见 _archived/dungeon_grades.py
 MODULE_GROUP_FLOOR_SUFFIXES: dict[str, list[int]] = {
-    # suffix = base_code + floor - 1
-    # 哥布林洞穴 base=00 → 1层=1, 2层=2
     "GoblinCave": [1],
     "FireDeep": [2],
-    # 冰图 base=01 → 1层=11, 2层=12
     "IceCavern": [11],
     "IceAbyss": [12],
-    # 废墟 base=02 → 1层=21, 2层=22, 3层=23
     "Ruins": [21],
     "Crypt": [22],
     "Inferno": [23],
-    # 水图 base=03 → 1层=31, 2层=32
     "ShipGraveyard": [31, 32],
 }
 
-# 模式常量
-DUNGEON_MODE_PVE = 1
-DUNGEON_MODE_NORMAL = 2
-DUNGEON_MODE_HIGHROLLER = 3
-DUNGEON_MODE_REVERSAL = 4  # 逆袭赛（大部分情况下不使用）
-
 DUNGEON_MODE_NAMES = {
-    DUNGEON_MODE_PVE: "PVE",
-    DUNGEON_MODE_NORMAL: "普通",
-    DUNGEON_MODE_HIGHROLLER: "豪客赛",
-    DUNGEON_MODE_REVERSAL: "逆袭赛",
+    1: "PVE",
+    2: "普通",
+    3: "豪客赛",
+    4: "逆袭赛",
 }
-
-# 反向映射：base_code → group_key（用于从 grade 快速查找分组）
-# 每个 group 的 base_code ~ base_code+floors-1 都映射到该 group
-_BASE_TO_GROUP: dict[int, str] = {}
-for _gk, _gv in DUNGEON_GROUP_GRADES.items():
-    for _f in range(_gv["floors"]):
-        _BASE_TO_GROUP[_gv["base"] + _f] = _gk
-
-# 已知 grade → 中文名（来自参考项目 LootDropRate.py）
-GRADE_DISPLAY_NAMES: dict[int, str] = {
-    3001: "豪客哥布林1层",
-    3002: "豪客哥布林2层",
-    3011: "豪客冰图1层",
-    3012: "豪客冰图2层",
-    3021: "豪客废墟1层",
-    3022: "豪客废墟2层",
-    3023: "豪客废墟3层",
-    3031: "豪客水图1层",
-    3032: "豪客水图2层",
-    4002: "逆袭哥布林2层",
-    4012: "逆袭冰图2层",
-    4023: "逆袭废墟3层",
-}
-
-# 参考项目路径（爆率数据来源）
-LOOTDROP_RATE_REFERENCE = (
-    "Output/Exports/DungeonCrawler/Content/DungeonCrawler/Data/Generated/V2/LootDrop/LootDropRate.py"
-)
 
 LAYOUT_DIR = GAME_ROOT / "Maps" / "Dungeon" / "Layouts"
