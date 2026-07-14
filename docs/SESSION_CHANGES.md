@@ -6,6 +6,13 @@
 - **修复**：改为 `/icons/icon-192-v2.png`（圆角版）
 - **变更文件**：`web/index.html:12`
 
+## 修复 SW runtime caching urlPattern 正则不匹配问题
+
+- **原因**：`vite.config.ts` 中 Workbox runtime caching 的 `urlPattern` 使用了 `^` 锚定正则（`/^\/data\/json\//`），Workbox 用 `regex.test(request.url)` 匹配完整 URL（含协议/域名），导致 `df5-data-json` 和 `df5-data-img` 缓存池**永远不会被写入**
+- **后果**：离线时 HTML（NetworkFirst）可正常加载，但数据 JSON fetch 全部失败 → 详情页显示"数据加载中"
+- **修复**：改为函数式 `({ url }) => url.pathname.startsWith(...)` 匹配 pathname
+- **变更文件**：`web/vite.config.ts`（data-json、data-img、meta 三个缓存规则）
+
 ## 站点描述全面更新
 
 - **原因：** 原描述"游戏数据导航"不够明确，用户要求改为功能标签式描述
