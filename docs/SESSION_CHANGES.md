@@ -1,3 +1,25 @@
+# 2026-07-15 会话修改记录
+
+## 彻底修复 React #418/#423 hydration 错误（全站 1235 页面 0 错误）
+
+- **原因**：React 18 `hydrateRoot` 对无 SSR 内容的空容器会导致双重渲染（hydration → CSR fallback），期间模块级 `meta.json` fetch 可能完成并突变 `cachedDate`，造成 hook 数量不匹配。受影响页面为所有无 SSR 渲染的页面（`dungeon_modules` 列表页 + 详情页，共 244 个）。
+- **变更文件**：`web/src/main.tsx`
+- **改动**：检查 `root.hasChildNodes()` — 有 SSR 内容时用 `hydrateRoot`，无 SSR 内容时用 `createRoot` 避免 hydration 失败
+- **验证**：Playwright 全站 1235 页测试，0 个 #418/#423 错误；剩余的 `Timeout` 是测试 100 并发造成的性能问题，非应用错误
+
+## OfflineDetector SSR 不匹配修复
+
+- **原因**：OfflineDetector 在 SSR 时 `useState(typeof navigator !== 'undefined' && !navigator.onLine)` 返回 `false`，但客户端 hydrate 时 `navigator.onLine` 为 `true`，导致返回 `null`，引发 #418
+- **变更文件**：`web/src/components/OfflineDetector.tsx`
+- **改动**：`useState(false)` 固定初始值，`useEffect` 在客户端才设置正确状态
+
+## 数据版本预加载修复 + Playwright 调试文档
+
+- **原因**：SSG 构建时序问题 — 版本号在 Vite 构建后才计算，导致 `VITE_DATA_VERSION` 为空
+- **变更文件**：`web/scripts/ssg.mjs`、`web/vite.config.ts`
+- **改动**：版本号计算移至构建前（step 0），`process.env.VITE_DATA_VERSION` 提前设置
+- **文档**：新增 `docs/DEBUG_HYDRATION_WITH_PLAYWRIGHT.md`（调试指南）
+
 # 2026-07-14 会话修改记录
 
 ## fix: variant 详情页综合爆率使用 variant_gdi 重算
