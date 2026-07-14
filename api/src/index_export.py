@@ -211,9 +211,9 @@ def build_and_save_indexes(
         {"page": "props", "label": "实体表", "count": len(props_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "lootdrops", "label": "掉落表", "count": len(loot_index)},
+        {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
         {"page": "explore", "label": "任务探索表", "count": explore_count},
         {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
-        {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
         {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
     ]
     _save(output_dir, "index.json", index_data)
