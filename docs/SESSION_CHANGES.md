@@ -95,6 +95,58 @@
 - **修改**: PWA 图标从纯蓝正方形改为圆角蓝底白字 "DND"
 - **favicon**: 新增 `web/public/favicon.ico`（16/32/48 三尺寸），`index.html` 添加 `<link rel="icon">`
 
+---
+
+# 2026-07-14 会话修改记录
+
+## 分组名动态化：移除全部硬编码 GROUP_LABELS
+
+**目标**：用 Game.json 的 `Text_UI_WB_DungeonSlot_*_NthFloor` / `Text_WB_DungeonSlot_*_1stFloor` 翻译键动态推导分组显示名，替换后端和前端共 8 处硬编码。
+
+### 映射规则
+
+| 代码库 group | 基础键 | 公式 | 结果示例 |
+|---|---|---|---|
+| GoblinCave | `Slot_GoblinCave_1stFloor` | base + "1层" | 哥布林洞穴1层 |
+| FireDeep | `Slot_GoblinCave_1stFloor` | base + "2层（`_2ndFloor`）" | 哥布林洞穴2层（赤焰深窟） |
+| IceCavern | `Slot_IceCavern_1stFloor` | base + "1层" | 寒冰洞穴1层 |
+| IceAbyss | `Slot_IceCavern_1stFloor` | base + "2层（`_2ndFloor`）" | 寒冰洞穴2层（寒冰深渊） |
+| Ruins | `Slot_TheCrypts_1stFloor` | base + "1层" | 废墟1层 |
+| Crypt | `Slot_TheCrypts_1stFloor` | base + "2层（`_2ndFloor`）" | 废墟2层（地穴） |
+| Inferno | `Slot_TheCrypts_1stFloor` | base + "3层（`_3rdFloor`）" | 废墟3层（炼狱） |
+| ShipGraveyard | `Text_WB_DungeonSlot_ShipGraveyard_1stFloor` | base + "1层" | 沉船墓场1层 |
+
+### 后端改动
+
+- `translator.py` — 新增 `resolve_group_label()` + `DUNGEON_SLOT_KEY_MAP` / `DUNGEON_SUBFLOOR_SLOT_KEY` / `DUNGEON_FLOOR_NUMBER`
+- `config.py` — `DUNGEON_GROUP_GRADES` label 改为 1stFloor slot 基础值
+- `collector.py` — `modules_map` 注入 `group_display`；传给 `generate_quest_items_groups` 和 `build_and_save_indexes`
+- `entity_export.py` / `lootdrop_builder.py` — inline `_modules` 包含 `group_display`
+- `index_export.py` — 移除全局 `GROUP_LABELS`，改用 `group_label_resolver` 回调
+
+### 前端改动
+
+7 个页面移除硬编码 `GROUP_LABELS`，改用 `mod.group_display`：
+- `DetailPage.tsx`、`LootdropDetailPage.tsx`、`DungeonModuleDetailPage.tsx`
+- `DungeonModulesPage.tsx`、`DungeonModuleGroupPage.tsx`
+- `QuestItemGroupPage.tsx`、`ExplorePage.tsx`
+
+`types/data.ts` — `DungeonModule` + `InlineModuleData` 添加 `group_display?: string`
+
+### 验证
+
+- 后端 pipeline 输出全部 8 个分组名正确
+- `search_index.json` 中 tag 字段已更新为新格式
+- 前端 tsc + SSG 构建全通过
+
+## 清理死代码：DungeonGrade 分组代码表归档
+
+**问题**：`dungeon_mode.py`（`parse_grade` 等 7 个函数）、`GRADE_DISPLAY_NAMES`、`_BASE_TO_GROUP`、`DUNGEON_GROUP_GRADES`、`DUNGEON_MODE_PVE~REVERSAL` 常量、`LOOTDROP_RATE_REFERENCE` 均无外部调用，属于 v4 参考项目遗留死代码。
+
+**处理**：移入 `api/src/_archived/dungeon_grades.py`，从 `config.py` 中删除。
+
+**保留**：`MODULE_GROUP_FLOOR_SUFFIXES`（仍被 `drop_rate.py`、`enrichment.py` 使用）、`DUNGEON_MODE_NAMES`（改为内联整数键 `{1: "PVE", 2: "普通", ...}`）。
+
 ## 文档更新
 
 - `docs/FIX_ARTIFACT_VARIANT_SWITCH.md` - 神器变体切换修复文档
