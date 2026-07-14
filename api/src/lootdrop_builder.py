@@ -412,7 +412,7 @@ def build_and_save_lootdrop_details(
                         coord_out["variant_count"] = _vc_info[0]
                         coord_out["variant_names"] = _vc_info[1]
                     if _c.get("keyword") != _c.get("original_keyword", ""):
-                        _pair = (_c["keyword"], m_name)
+                        _pair = (_c["original_keyword"], m_name)
                         _sr = spawn_rate_detail.get(_pair, 100) if _pair else spawn_rate_cache.get(m_name, 100)
                     else:
                         _sr = spawn_rate_cache.get(m_name, 100)
