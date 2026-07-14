@@ -1,5 +1,14 @@
 # 2026-07-14 会话修改记录
 
+## 新增"小型神器"分类 — 豪客赛 100% 爆率物品
+
+- **原因**：用户需要从掉落表页面快速筛选豪客赛模式下必定掉落的装备
+- **变更文件**：
+  - `api/src/lootdrop_builder.py` — 构建索引时扫描 `group_drop_info` 中 `drop_rates.豪客赛 >= 100` 的条目，标记 `hr100: true` 写入 `lootdrops.json`
+  - `web/src/pages/ListPage.tsx` — `groupLootdrops()` 增加 `hr100` 分类逻辑，新增"🪙 小型神器"分类（位于"🏺 神器"之后）
+- **数据流**：后端管道计算 → lootdrops.json 索引含 `hr100` 字段 → 前端 CSR 加载后按分类渲染
+- **共 20 个物品**被标记（BloodsapBlade、HazeBlade、ThornShield 等各类矿石和装备）
+
 ## 导航栏搜索框点击放大镜后滚动到可视区域
 
 - **原因**：手机端任务详情页底部点击放大镜搜索后，`inputRef.current?.focus()` 不会自动滚动页面，用户看不到搜索框被填充
