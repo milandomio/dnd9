@@ -9,6 +9,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <style>
+      @media (max-width: 950px) { [style*="repeat(4, 1fr)"] { grid-template-columns: repeat(3, 1fr) !important; } }
+      @media (max-width: 750px) { [style*="repeat(4, 1fr)"],[style*="repeat(3, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; } }
+    </style>
     <title>DarkFlashNav游戏导航</title>
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e6b67148ae564d73a2e02b4d199da387"}'></script>

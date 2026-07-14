@@ -33,6 +33,8 @@ export function AppInner() {
         padding: '16px',
         background: tokens.bg,
         boxSizing: 'border-box',
+        maxWidth: 1200,
+        margin: '0 auto',
       }}
     >
       <SWUpdateBanner />
