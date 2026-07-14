@@ -746,6 +746,23 @@ def build_and_save_lootdrop_details(
                                 _m_copy = dict(_m)
                                 _m_copy["coords"] = filtered_coords
                                 variant_monsters.append(_m_copy)
+                    # Recalculate per-coord scores from variant_gdi
+                    _hk_map_v: dict[str, dict[str, float]] = {}
+                    _sr_map_v: dict[str, dict[str, float]] = {}
+                    for _g, _entries in variant_gdi.items():
+                        for _e in _entries:
+                            _t = _e["translation"]
+                            _hk_map_v.setdefault(_t, {})[_g] = _e["drop_rates"].get("豪客赛", 0)
+                            _sr_map_v.setdefault(_t, {})[_g] = _e["spawn_rate"]
+                    for _vm in variant_monsters:
+                        _trans = _vm.get("translation", "")
+                        _hk_t = _hk_map_v.get(_trans, {})
+                        _sr_t = _sr_map_v.get(_trans, {})
+                        for _c in _vm.get("coords", []):
+                            _g = map_base_to_group.get(_c["map"], "")
+                            _hk = _hk_t.get(_g, 0)
+                            _sr = _sr_t.get(_g, 100)
+                            _c["score"] = round(_sr * _hk / 100, 4)
                     # Compute variant-specific max_scores from variant_gdi
                     _v_max_scores: dict[str, float] = {}
                     for _vg_list in variant_gdi.values():
