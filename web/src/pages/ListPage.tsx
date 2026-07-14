@@ -54,7 +54,7 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
       weapon.push(item);
     } else if (vc === 5) {
       accessory.push(item);
-    } else if ((item.max_score ?? 0) < 2.5) {
+    } else if ((item.max_score ?? 0) < 1.5) {
       rare.push(item);
     } else {
       misc.push(item);
