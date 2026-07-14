@@ -1,3 +1,41 @@
+# 2026-07-14 会话修改记录
+
+## 修复 apple-touch-icon 指向旧图标
+
+- **原因**：`index.html` 中 `<link rel="apple-touch-icon">` 仍指向 `/icons/icon-192.png`（旧版无圆角），iOS 添加到主屏幕时显示方形图标
+- **修复**：改为 `/icons/icon-192-v2.png`（圆角版）
+- **变更文件**：`web/index.html:12`
+
+## 站点描述全面更新
+
+- **原因：** 原描述"游戏数据导航"不够明确，用户要求改为功能标签式描述
+- **新描述：** `游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱`
+- **变更文件：**
+  - `web/vite.config.ts` — manifest.description
+  - `web/src/pages/HomePage.tsx` — title/meta description/heading 标签栏
+  - `web/src/pages/ListPage.tsx` — title
+  - `web/src/pages/DetailPage.tsx` — title/og:title
+  - `web/src/pages/LootdropDetailPage.tsx` — title/og:title
+  - `web/src/pages/DungeonModulesPage.tsx` — title
+  - `web/src/pages/DungeonModuleGroupPage.tsx` — title
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — title
+  - `web/src/pages/QuestItemsPage.tsx` — title
+  - `web/src/pages/QuestItemGroupPage.tsx` — title
+  - `web/src/pages/QuestNPCPage.tsx` — title
+  - `web/src/pages/QuestNPCDetailPage.tsx` — title
+  - `web/src/pages/ExplorePage.tsx` — title
+- **bili.bi/map 对比：** 该站是多游戏地图导航门户（链接到采蘑菇/游民星空等第三方地图），我们聚焦 Dark and Darker 单一游戏，功能标签已覆盖其核心维度
+
+## PWA 图标优化
+
+- **原因：** PWA 图标上 "dnd" 文字过大，小尺寸看不清；新版图标缺少圆角
+- **变更文件：**
+  - `web/public/icons/icon-192-v2.png` — 新图标（文字缩小，增加蓝光效果，圆角矩形）
+  - `web/public/icons/icon-512-v2.png` — 新图标（同上）
+  - `web/public/favicon.ico` — 同步更新
+  - `web/vite.config.ts` — manifest 图标引用改为 `-v2` 版本
+- **缓存策略：** 文件名带 `v2` 后缀绕过浏览器/OS 图标缓存
+
 # 2026-07-12 会话修改记录
 
 ## 性能优化
@@ -90,6 +128,44 @@
 - **计划**: 在 `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md` 中记录
 
 ## 2026-07-14 会话修改记录（2）
+
+### 重构：完全移除内联 `_modules`，统一走 `dungeon_modules.json`
+
+**问题**：`_modules` 包含全部模块字段（rotate/offset/size/group/img_name/sl_base_name），与 `dungeon_modules.json` 完全重复。上次只去掉了翻译字段，剩余字段仍是冗余。
+
+**方案**：
+1. `build_coord_out` 通过 `map_to_module` 将 coords 的 `map` 字段解析为模块名，前端直接 `globalModules.get(c.map)` 查模块数据
+2. 后端 `_build_inline_modules` 整个删除，实体 JSON 不再有 `_modules`
+3. 前端 `DetailPage` / `LootdropDetailPage` 改直接使用 `useDungeonModules()` 的 `globalModules`
+4. 类型 `InlineModuleData` 删除，实体接口删除 `_modules` 字段
+
+**涉及文件**：
+- `api/src/translator.py:build_coord_out` — 新增 `map_to_module` 参数，解析 map 字段
+- `api/src/entity_export.py` — 删除 `_build_inline_modules` 及所有 `_modules` 注入，签名简化去掉 `modules_map`
+- `api/src/lootdrop_builder.py` — 删除 `_modules` 注入及 `modules_map` 参数
+- `api/src/collector.py` — 更新函数调用签名
+- `web/src/types/data.ts` — 删除 `InlineModuleData`，实体接口删除 `_modules`
+- `web/src/pages/DetailPage.tsx` — 模块 Map 直接来自 `globalModules.get(c.map)`
+- `web/src/pages/LootdropDetailPage.tsx` — 同上
+
+### 重构：移除内联 `_modules` 中的翻译数据，改由共享文件提供
+
+**问题**：每个实体 JSON 的 `_modules` 内联了 `translation`/`group_display`，全站重复存储这些字段（1000+ 实体 × 5-15 模块），浪费带宽。
+
+**改动**：
+1. **后端**：`entity_export.py` / `lootdrop_builder.py` — 从内联 `_modules` 移除 `translation`、`group_display`
+2. **类型**：`InlineModuleData` 移除这两个字段
+3. **前端**：`DetailPage.tsx` / `LootdropDetailPage.tsx` — `translation`/`group_display` 改为从 `useDungeonModules()` 查询共享的 `dungeon_modules.json`
+4. **预加载**：`index.html` 加 `<link rel="preload">`，`AppInner.tsx` 调用 `useDungeonModules()` 主动提前 fetch，确保模块数据优先于实体 JSON 加载
+
+**涉及文件**：
+- `api/src/entity_export.py:33-45` — 移除 `translation`/`group_display`
+- `api/src/lootdrop_builder.py:698-710` — 同上
+- `web/src/types/data.ts:75-87` — `InlineModuleData` 移除两个字段
+- `web/src/pages/DetailPage.tsx:53-78` — `globalModules.get(mapName)` 获取翻译
+- `web/src/pages/LootdropDetailPage.tsx:162-187` — 同上
+- `web/index.html:12` — `<link rel="preload">`
+- `web/src/AppInner.tsx:24,30` — 主动预取模块数据
 
 ### Bug 修复：内联 `_modules` 未提取 `group_display`
 
