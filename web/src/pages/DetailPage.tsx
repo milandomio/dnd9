@@ -12,6 +12,7 @@ import type {
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
@@ -46,36 +47,22 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(
-    ssrData?.entity?._modules ? ssrData.entity : null
+    ssrData?.entity?.coords ? ssrData.entity : null
   );
   const dataVersion = useDataVersion();
 
-  // Build local modules map from entity's inline _modules data
+  const { modules: globalModules } = useDungeonModules();
+  // Resolve module by coord's map field (now resolved module name)
   const modules = useMemo(() => {
-    if (!entity?._modules) return new Map<string, DungeonModule>();
     const mm = new Map<string, DungeonModule>();
-    for (const [mapName, data] of Object.entries(entity._modules)) {
-      const mod: DungeonModule = {
-        name: mapName,
-        names: [mapName],
-        translation: data.translation,
-        group: data.group,
-        group_display: data.group_display,
-        size_x: data.size_x,
-        size_y: data.size_y,
-        sl_base_name: data.sl_base_name,
-        img_name: data.img_name,
-        has_img: true,
-        has_useful_entities: true,
-        offset_x: data.offset_x,
-        offset_y: data.offset_y,
-        rotate: data.rotate,
-        range: data.range,
-      };
-      mm.set(mapName, mod);
+    if (!entity?.coords) return mm;
+    for (const c of entity.coords) {
+      if (mm.has(c.map)) continue;
+      const mod = globalModules.get(c.map);
+      if (mod) mm.set(c.map, mod);
     }
     return mm;
-  }, [entity?._modules]);
+  }, [entity?.coords, globalModules]);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
@@ -341,7 +328,7 @@ export default function DetailPage() {
         const key = c.group_parent || `${c.file}::${vc}`;
         if (!varGroups.has(key)) {
           varGroups.set(key, true);
-          total += s;
+          total += s / vc;
         }
       } else {
         total += s;
@@ -720,9 +707,12 @@ export default function DetailPage() {
                     const forcedVc = mapCoords.find(
                       (c) => c.variant_count && c.variant_count > 1
                     );
+                    const posCount = new Set(
+                      mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
+                    ).size;
                     const forcedVcN = forcedVc?.variant_names?.length
                       ? (forcedVc.variant_count as number)
-                      : 1;
+                      : posCount;
                     const adjRate = (v: number) => +(v / forcedVcN).toFixed(4);
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
@@ -826,12 +816,9 @@ export default function DetailPage() {
                               </span>
                             );
                           }
-                          const uniquePositions = new Set(
-                            mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
-                          );
                           return (
                             <span style={{ color: tokens.muted }}>
-                              ({uniquePositions.size}点选1)
+                              ({posCount}点选1)
                             </span>
                           );
                         })()}

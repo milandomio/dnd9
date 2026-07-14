@@ -20,32 +20,6 @@ def _save(output_dir: Path, filename: str, data: list | dict):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def _build_inline_modules(coords: list[dict], modules_map: dict, map_to_module: dict) -> dict:
-    """Build inline module data for entity JSON coords."""
-    inline: dict[str, dict] = {}
-    for c in coords:
-        map_base = c["map_base"]
-        if map_base in inline:
-            continue
-        module_name = map_to_module.get(map_base, map_base)
-        mod = modules_map.get(module_name)
-        if mod:
-            inline[map_base] = {
-                "rotate": mod["rotate"],
-                "offset_x": mod["offset_x"],
-                "offset_y": mod["offset_y"],
-                "size_x": mod["size_x"],
-                "size_y": mod["size_y"],
-                "range": mod["range"],
-                "group": mod["group"],
-                "group_display": mod.get("group_display", ""),
-                "translation": mod["translation"],
-                "img_name": mod["img_name"],
-                "sl_base_name": mod["sl_base_name"],
-            }
-    return inline
-
-
 def export_items(
     items: list[dict],
     merged_loot: dict[str, list[str]],
@@ -55,7 +29,6 @@ def export_items(
     coord_variant_count: dict,
     item_names: set[str],
     output_dir: Path,
-    modules_map: dict | None = None,
     map_to_module: dict | None = None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
@@ -90,10 +63,8 @@ def export_items(
             "category": r["category"],
             "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
-            "coords": [build_coord_out(c, coord_variant_count) for c in coords],
+            "coords": [build_coord_out(c, coord_variant_count, map_to_module) for c in coords],
         }
-        if modules_map and map_to_module:
-            entity_data["_modules"] = _build_inline_modules(coords, modules_map, map_to_module)
         _save(output_dir, f"items/{name}.json", entity_data)
     _save(output_dir, "items.json", items_index)
     return items_index
@@ -106,7 +77,6 @@ def export_monsters(
     coord_variant_count: dict,
     monster_names: set[str],
     output_dir: Path,
-    modules_map: dict | None = None,
     map_to_module: dict | None = None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
@@ -152,10 +122,8 @@ def export_monsters(
         entity_data = {
             "name": canonical["monster_name"],
             "translation": translation,
-            "coords": [build_coord_out(c, coord_variant_count) for c in merged_coords_list],
+            "coords": [build_coord_out(c, coord_variant_count, map_to_module) for c in merged_coords_list],
         }
-        if modules_map and map_to_module:
-            entity_data["_modules"] = _build_inline_modules(merged_coords_list, modules_map, map_to_module)
         _save(output_dir, f"monsters/{canonical['monster_name']}.json", entity_data)
     _save(output_dir, "monsters.json", monsters_index)
     return monsters_index
@@ -169,7 +137,6 @@ def export_props(
     coord_variant_count: dict,
     prop_names: set[str],
     output_dir: Path,
-    modules_map: dict | None = None,
     map_to_module: dict | None = None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
@@ -235,10 +202,8 @@ def export_props(
         entity_data = {
             "name": name_key,
             "translation": translation,
-            "coords": [build_coord_out(c, coord_variant_count) for c in merged_coords],
+            "coords": [build_coord_out(c, coord_variant_count, map_to_module) for c in merged_coords],
         }
-        if modules_map and map_to_module:
-            entity_data["_modules"] = _build_inline_modules(merged_coords, modules_map, map_to_module)
         _save(output_dir, f"props/{name_key}.json", entity_data)
     _save(output_dir, "props.json", props_index)
     return props_index

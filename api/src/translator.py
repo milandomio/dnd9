@@ -225,15 +225,20 @@ class NameResolver:
         return name
 
 
-def build_coord_out(c: dict, vc: dict) -> dict:
-    """构建坐标输出 dict，附带变体信息。"""
+def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None) -> dict:
+    """构建坐标输出 dict，附带变体信息。
+    map 字段解析为 dungeon_modules.json 中的模块名（通过 map_to_module 映射）。
+    """
     _gp = c.get("group_parent", "")
+    _mb = c["map_base"]
+    if map_to_module:
+        _mb = map_to_module.get(_mb, _mb)
     out = {
         "x": c["x"],
         "y": c["y"],
         "z": c["z"],
         "yaw": c.get("yaw", 0),
-        "map": c["map_base"],
+        "map": _mb,
         "file": c["json_filename"],
         "version": c["version"],
         "label": c["original_keyword"],

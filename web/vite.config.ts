@@ -38,7 +38,11 @@ export default defineConfig(({ mode }) => {
           // navigateFallback 未启用：SSG 路由的独立 HTML（含 SSR 数据）由 NetworkFirst 接管，
           // 访问后缓存，离线重复访问正常显示（含 SSR 数据）；首次离线深度链接无缓存时浏览器报错。
           navigateFallback: undefined,
-          globPatterns: ['assets/**/*.{js,css}', 'registerSW.js', 'offline.html'],
+          globPatterns: [
+            'assets/**/*.{js,css}',
+            'registerSW.js',
+            'offline.html',
+          ],
           runtimeCaching: [
             {
               // Version-based invalidation via refreshNow() clears df5-* caches;
@@ -78,9 +82,9 @@ export default defineConfig(({ mode }) => {
           ],
         },
         manifest: {
-          name: 'DarkFlashNav',
-          short_name: 'DarkFlashNav',
-          description: 'Dark and Darker 游戏数据导航 - 物品/怪物/道具/掉落查询',
+          name: 'DND闪电指南',
+          short_name: 'DND闪电指南',
+          description: '闪电指南-游戏地图-任务攻略-BOSS掉落-资源点位-寻找宝箱',
           lang: 'zh-Hans',
           start_url: '/',
           display: 'standalone',
@@ -90,13 +94,13 @@ export default defineConfig(({ mode }) => {
           orientation: 'any',
           icons: [
             {
-              src: '/icons/icon-192.png',
+              src: '/icons/icon-192-v2.png',
               sizes: '192x192',
               type: 'image/png',
               purpose: 'any maskable',
             },
             {
-              src: '/icons/icon-512.png',
+              src: '/icons/icon-512-v2.png',
               sizes: '512x512',
               type: 'image/png',
               purpose: 'any maskable',

@@ -5,6 +5,7 @@
  */
 import { Routes, Route } from 'react-router-dom';
 import { useTheme } from './hooks/useTheme';
+import { useDungeonModules } from './hooks/useDungeonModules';
 import HomePage from './pages/HomePage';
 import ListPage from './pages/ListPage';
 import DetailPage from './pages/DetailPage';
@@ -26,6 +27,7 @@ import InstallPrompt from './components/InstallPrompt';
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
   const { tokens } = useTheme();
+  useDungeonModules(); // preload module data eagerly
   return (
     <div
       style={{
