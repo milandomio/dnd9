@@ -89,6 +89,18 @@
 - **当前状态**: 未修复
 - **计划**: 在 `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md` 中记录
 
+## 2026-07-14 会话修改记录（2）
+
+### 修复：地图分组翻译不显示（data/ 交付遗漏）
+
+**问题**：上一次管道运行时 `_deliver()` 可能被中断，`data/json/` 为空。前端 fetch 不到 `dungeon_modules.json`，fallback 显示英文 `group` 名（如 "Crypt"）。
+
+**修复**：重新运行 `python main.py`，确保完整交付到 `data/json/`。
+
+**涉及文件**：无代码改动，仅重新执行管道 + 前端构建
+
+---
+
 ## 2026-07-14 会话修改记录
 
 ### PWA 图标改为 DND + 圆角
@@ -152,3 +164,15 @@
 - `docs/FIX_ARTIFACT_VARIANT_SWITCH.md` - 神器变体切换修复文档
 - `docs/PERF_LOOTDROPS_OPTIMIZATION.md` - lootdrops 性能优化记录
 - `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md` - 容器生成器实体页计划
+
+# 2026-07-14 会话修改记录
+
+## Bug 修复
+
+### Coffin_06 爆率重复显示（"皇家棺材" + "皇家棺材组"）
+
+**原因**：`_classify_label('Coffin_R', 'Coffin_06')` 返回 `"other"`，因为 `Coffin_R` 不以 `Coffin_06_` 开头，错误归类为"组"，导致同一个实体产生两种标签（`皇家棺材` + `皇家棺材组`）。
+
+**修复**：在 `api/src/lootdrop_builder.py:_classify_label` 中添加兜底匹配——当实体名含尾部数字后缀（如 `Coffin_06`）时，剥离后缀为 `Coffin`，检查标签是否以 `Coffin_` 开头。`Coffin_R` → `"direct"`，正确合并到唯一入口。
+
+**变更文件**：`api/src/lootdrop_builder.py`（`_classify_label` 函数）

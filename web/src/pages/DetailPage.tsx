@@ -60,6 +60,7 @@ export default function DetailPage() {
         names: [mapName],
         translation: data.translation,
         group: data.group,
+        group_display: data.group_display,
         size_x: data.size_x,
         size_y: data.size_y,
         sl_base_name: data.sl_base_name,
@@ -716,6 +717,13 @@ export default function DetailPage() {
                       (c) => c.variant_count && c.variant_count > 1
                     );
                     if (!hasVariant) return null;
+                    const forcedVc = mapCoords.find(
+                      (c) => c.variant_count && c.variant_count > 1
+                    );
+                    const forcedVcN = forcedVc
+                      ? (forcedVc.variant_count as number)
+                      : 1;
+                    const adjRate = (v: number) => +(v / forcedVcN).toFixed(4);
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
                         (c) => c.label && labelMatch(c.label, info.translation)
@@ -766,7 +774,7 @@ export default function DetailPage() {
                                   .map(([mode, rate]) => {
                                     const sRate = info.spawn_rates![mode];
                                     return sRate != null
-                                      ? `[${mode}:${sRate}%×${rate}%]`
+                                      ? `[${mode}:${adjRate(sRate)}%×${rate}%]`
                                       : `[${mode}:${rate}%]`;
                                   })
                                   .join('')}
@@ -779,7 +787,7 @@ export default function DetailPage() {
                                     fontSize: 12,
                                   }}
                                 >
-                                  {info.spawn_rate}%
+                                  {adjRate(info.spawn_rate)}%
                                 </span>
                                 {Object.entries(info.drop_rates).filter(
                                   ([k]) => !modeFilter || k === modeFilter
@@ -807,10 +815,8 @@ export default function DetailPage() {
                           </span>
                         ))}
                         {(() => {
-                          const vc = mapCoords.find(
-                            (c) => c.variant_count && c.variant_count > 1
-                          );
-                          if (!vc) return null;
+                          if (!forcedVc) return null;
+                          const vc = forcedVc;
                           const names = vc.variant_names ?? [];
                           if (names.length > 0) {
                             return (

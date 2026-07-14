@@ -168,6 +168,7 @@ export default function LootdropDetailPage() {
         names: [mapName],
         translation: modData.translation,
         group: modData.group,
+        group_display: modData.group_display,
         size_x: modData.size_x,
         size_y: modData.size_y,
         sl_base_name: modData.sl_base_name,
