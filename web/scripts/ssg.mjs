@@ -145,8 +145,11 @@ const ssrDataMap = {};
 // Homepage
 ssrDataMap["home"] = index;
 
-// List pages
-for (const p of PAGES) ssrDataMap[`list-${p}`] = readJSON(join(DATA, `${p}.json`));
+// List pages — use search_index.json as single source of truth
+const searchIndex = readJSON(join(DATA, "search_index.json"));
+for (const p of PAGES) {
+  ssrDataMap[`list-${p}`] = searchIndex.filter((e) => e.page === p);
+}
 for (const p of SINGLE) {
   // dungeon_modules: page uses useDungeonModules() hook, SSR data not consumed
   if (p === "dungeon_modules") continue;

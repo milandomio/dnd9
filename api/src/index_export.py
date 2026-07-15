@@ -262,6 +262,8 @@ def build_and_save_indexes(
         if entry.get("monster_translations"):
             si_entry["monster_translations"] = entry["monster_translations"]
         si_entry["max_score"] = entry.get("max_score", 0.0)
+        if entry.get("hr100"):
+            si_entry["hr100"] = True
         search_index.append(si_entry)
     for entry in quest_npcs_data:
         search_index.append(
