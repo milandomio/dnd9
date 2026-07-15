@@ -52,7 +52,7 @@ def get_drop_rates_for_item(
                 if rate > best_rate:
                     best_rate = rate
         if best_rate > 0:
-            mode_rates[mode_name] = round(best_rate * 100, 1)
+            mode_rates[mode_name] = round(best_rate * 100, 4)
     return mode_rates
 
 
@@ -102,5 +102,5 @@ def get_drop_rates_for_item_with_coords(
                 if rate > best_rate:
                     best_rate = rate
         if best_rate > 0:
-            mode_rates[mode_name] = round(best_rate * 100, 1)
+            mode_rates[mode_name] = round(best_rate * 100, 4)
     return mode_rates

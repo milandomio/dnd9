@@ -21,6 +21,15 @@
   - `api/src/drop_rate.py:155,161` — `spawn_rate_cache` 条件 `sr > 0` → `sr > -1`（允许 0 值存储）
   - `api/src/drop_rate.py:164` — `spawn_rate_detail` 条件 `sr > 0` → `sr > -1`（允许 0 值存储）
 - **验证**：WanderlightLantern 掉落详情中「中型诡污(特殊)」spawn_rate 100% → 0.0%，「巨型诡污(特殊)」保持 0.01%
+
+## spawn_rate 精度 2→4 位 + 公式 100 前置
+
+- **原因**：`round(40/1000040*100, 2)` = 0.0，0.004%被吞掉。文档要求 4 位精度但实际代码用 `round(x, 2)`
+- **变更**：
+  - `api/src/db/importers/spawners.py` — `round(x, 2)` → `_round_rate(x)`，公式 `x/总池*100` → `100*x/总池`
+  - `api/src/search_engine.py` — 同上
+  - `docs/REFERENCE.md:264` — 更新公式示例
+- **验证**：ChestLarge 中 Unique 宝箱怪 `40/1000040*100` 从 0.0 → 0.004%
   - `api/src/lootdrop_builder.py` — 移除豪客赛=0 过滤
 
 ## 彻底修复 React #418/#423 hydration 错误（全站 1235 页面 0 错误）
