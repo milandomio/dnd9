@@ -23,6 +23,13 @@
   - `NavBar.tsx` 搜索框宽度恢复 `flex: 0 0 360px`（被改为 `flex: 1 1 280px`）
   - 删除死代码 `web/src/utils/dataUrl.ts`（无人引用的残留文件）
 
+### 列表页数据源统一 + search_index 补 hr100
+
+- **原因**：列表页有两个数据源——SSR 用 `{page}.json`、运行时用 `search_index.json`，加 `hr100` 时只改了前者，导致客户端导航无小型神器分组。详情页只有一个数据源没有此问题
+- **变更**：
+  - `api/src/index_export.py:264` — `search_index` 的 lootdrop 条目补上 `hr100` 字段
+  - `web/scripts/ssg.mjs:149` — 列表页 SSR 数据改为从 `search_index.json` 提取（过滤 `page`），不再读 `{page}.json`，消除两套数据源不一致的隐患
+
 ## 掉落详情页 spawn_rate 修正：使用原始生成器关键词 + 允许 0 值入缓存
 
 - **原因**：用户反馈 `WanderlightLantern` 掉落页面中「中型诡污(特殊)」显示 100% 生成概率，实际应为 0%（该实体在 ChestLarge 中的权值为 0）。错误地使用了容器实体（ChestLarge=100%）的生成概率
