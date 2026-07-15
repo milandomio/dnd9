@@ -16,6 +16,7 @@ type IndexEntry = SearchEntry & {
   monsters?: string[];
   monster_translations?: string[];
   max_score?: number;
+  hr100?: boolean;
 };
 
 type LootGroup = {
@@ -36,10 +37,15 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   const accessory: IndexEntry[] = [];
   const rare: IndexEntry[] = [];
   const artifact: IndexEntry[] = [];
+  const hr100: IndexEntry[] = [];
   const misc: IndexEntry[] = [];
   for (const item of items) {
     if (item.name.endsWith('_8001')) {
       artifact.push(item);
+      continue;
+    }
+    if (item.hr100) {
+      hr100.push(item);
       continue;
     }
     const vc = item.variant_count ?? 1;
@@ -56,6 +62,8 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   const groups: LootGroup[] = [];
   if (artifact.length)
     groups.push({ label: '神器', icon: '🏺', items: artifact });
+  if (hr100.length)
+    groups.push({ label: '小型神器', icon: '🪙', items: hr100 });
   if (rare.length) groups.push({ label: '稀有掉落', icon: '✨', items: rare });
   if (misc.length) groups.push({ label: '物品', icon: '📦', items: misc });
   if (accessory.length)

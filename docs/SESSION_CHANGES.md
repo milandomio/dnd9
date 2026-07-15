@@ -9,6 +9,11 @@
   - `web/src/pages/ListPage.tsx` — `2.5 → 1.5`
   - `web/src/pages/LootdropDetailPage.tsx` — 阈值回滚（用户要求只改列表页）
 
+### 小型神器分类恢复
+
+- **原因**：提交 `0f29744` 修复水合错误时重构 `groupLootdrops()`，无意中移除了 `hr100`（小型神器）分类逻辑。后端一直正常生成 `hr100` 标记，仅前端不消费
+- **变更**：`web/src/pages/ListPage.tsx` — `IndexEntry` 补回 `hr100?: boolean` 类型定义，`groupLootdrops()` 恢复 `hr100` 数组、分类判断、和"🪙 小型神器"分组
+
 ## 掉落详情页 spawn_rate 修正：使用原始生成器关键词 + 允许 0 值入缓存
 
 - **原因**：用户反馈 `WanderlightLantern` 掉落页面中「中型诡污(特殊)」显示 100% 生成概率，实际应为 0%（该实体在 ChestLarge 中的权值为 0）。错误地使用了容器实体（ChestLarge=100%）的生成概率
