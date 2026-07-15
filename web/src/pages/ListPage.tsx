@@ -49,11 +49,12 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
       continue;
     }
     const vc = item.variant_count ?? 1;
+    const ms = item.max_score ?? 0;
     if (vc === 7 || vc === 8) {
       weapon.push(item);
     } else if (vc === 5) {
       accessory.push(item);
-    } else if ((item.max_score ?? 0) < 1) {
+    } else if (ms > 0 && ms < 1) {
       rare.push(item);
     } else {
       misc.push(item);
