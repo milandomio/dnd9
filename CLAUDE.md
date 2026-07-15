@@ -3,6 +3,10 @@
 游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
 > **参考项目**：「v4」「findItemV4」均指 `/home/mio/fmod/findItemV4/`
+
+## 存档文件夹规则
+
+`api/src/_archived/` 中的代码已废弃，**严禁修改**。任何改动都应针对活跃代码。搜索时跳过此目录。
 > **技术参考**：数据管道、数据库、地图模块详细规范见 `docs/REFERENCE.md`；PWA 架构见 `docs/PWA_ROADMAP.md`
 
 ## 强制停止规则
