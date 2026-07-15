@@ -628,13 +628,23 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 | 页面 | SSR Key | 客户端 Fetch | SSR 跳过条件 |
 |------|---------|-------------|-------------|
 | 主页 `/` | `"home"` | `index.json` | SSR 存在即跳过 |
-| 物品/怪物/实体/掉落 `/:page` | `"list-{page}"` | `{page}.json` | SSR 存在即跳过 |
+| 物品/怪物/实体/掉落 `/:page` | `"list-{page}"` | 见下文"SSR 数据源统一" | SSR 存在即跳过 |
 | 任务探索 `/explore` | `"explore"` | `explore.json` | SSR 存在即跳过 |
 | 任务物品 `/quest_items` | `"quest_items"` | `quest_items_groups.json` | SSR 存在即跳过 |
 | 任务物品分组 `/quest_items/:group` | `"quest_items_groups/{group}"` | `quest_items_groups/{group}.json` | SSR 有 entities 时跳过 |
 | 任务NPC `/quest_npc` | `"quest_npc"` | `quest_npc.json` | SSR 存在即跳过 |
 | 地图模块 `/dungeon_modules` | 无 | `useDungeonModules()` hook | 始终客户端 fetch |
 | 地图模块分组 `/dungeon_modules/:group` | `"dungeon_modules/{group}"` | `useDungeonModules()` hook（filter） | 优先 SSR，否则回退 hook |
+
+### SSR 数据源统一（列表页）
+
+列表页的 SSR 数据统一使用 `search_index.json`（按 `page` 字段过滤），而非独立的 `{page}.json`。
+
+**原因（历史问题）：** 列表页有两个数据源——SSR 注入用 `{page}.json`、客户端运行时后备用 `search_index.json`。字段需同步维护，新增字段（如 `hr100`）容易只改一处，导致客户端导航（非 F5）到列表页时缺少该字段。
+
+**修复：** `ssg.mjs` 中列表页 SSR 数据改为从 `search_index.json` 过滤提取。`search_index.json` 成为列表页的单一数据源，同时服务于搜索和列表渲染。
+
+**为什么详情页没有此问题：** 详情页的 SSR 数据和客户端 fetch 指向同一个文件（`{page}/{name}.json`），不存在两套数据源，因此不会出现字段不一致。
 
 ### 详情页
 
@@ -657,7 +667,7 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 ### 共享 Hook
 
 - `useDungeonModules()` — 全局缓存 `dungeon_modules.json`，地图模块列表页/分组页/详情页复用同一份数据（实体详情页已改用 `_modules` 内联数据，不再依赖此 hook）
-- `useSearchIndex()` — 全局缓存 `search_index.json`，供 NavBar 搜索使用
+- `useSearchIndex()` / `getPageEntries()` — 全局缓存 `search_index.json`，供 NavBar 搜索使用，同时也是列表页客户端的**主数据源**（列表页 SSR 数据也来自同一文件）。`{page}.json` 仅作为客户端取数失败时的最终回退
 
 ### search_term_matches 精确度问题 [已被 AC 自动机移除替代]
 
