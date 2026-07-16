@@ -87,6 +87,10 @@ const RARITY_COLORS: Record<string, string> = {
   独特: '#FFD700',
 };
 
+function hasAnyRate(dr: Record<string, number>): boolean {
+  return Object.values(dr).some((v) => v > 0);
+}
+
 export default function LootdropDetailPage() {
   const { name } = useParams<{ name: string }>();
   const navigate = useNavigate();
@@ -912,14 +916,17 @@ export default function LootdropDetailPage() {
             key={groupName}
             groupName={groupName}
             hasVisible={
-              hideZeroRate && modeFilter
+              hideZeroRate
                 ? groupItems.some(({ dots }) =>
                     dots.some((d) => {
                       const gdi = data?.group_drop_info?.[groupName];
                       const entry = gdi?.find(
                         (e) => e.translation === d.monster.translation
                       );
-                      return !entry || (entry.drop_rates[modeFilter] ?? 0) > 0;
+                      if (!entry) return true;
+                      if (modeFilter)
+                        return (entry.drop_rates[modeFilter] ?? 0) > 0;
+                      return hasAnyRate(entry.drop_rates);
                     })
                   )
                 : groupItems.length > 0
@@ -1007,17 +1014,18 @@ export default function LootdropDetailPage() {
               </div>
             )}
             {groupItems.map(({ mapName, mod, dots: rawDots }) => {
-              const dots =
-                hideZeroRate && modeFilter
-                  ? rawDots.filter((d) => {
-                      const gdi = data?.group_drop_info?.[groupName];
-                      const entry = gdi?.find(
-                        (e) => e.translation === d.monster.translation
-                      );
-                      if (!entry) return true;
+              const dots = hideZeroRate
+                ? rawDots.filter((d) => {
+                    const gdi = data?.group_drop_info?.[groupName];
+                    const entry = gdi?.find(
+                      (e) => e.translation === d.monster.translation
+                    );
+                    if (!entry) return true;
+                    if (modeFilter)
                       return (entry.drop_rates[modeFilter] ?? 0) > 0;
-                    })
-                  : rawDots;
+                    return hasAnyRate(entry.drop_rates);
+                  })
+                : rawDots;
               if (dots.length === 0) return null;
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
@@ -1321,14 +1329,18 @@ export default function LootdropDetailPage() {
                         const mDots = dots.filter(
                           (d) => d.monster.translation === tl
                         );
-                        if (hideZeroRate && modeFilter) {
+                        if (hideZeroRate) {
                           const gdi = data?.group_drop_info?.[groupName];
                           const entry = gdi?.find((e) => e.translation === tl);
-                          if (
-                            entry &&
-                            (entry.drop_rates[modeFilter] ?? 0) === 0
-                          )
-                            return null;
+                          if (entry) {
+                            if (
+                              modeFilter &&
+                              (entry.drop_rates[modeFilter] ?? 0) === 0
+                            )
+                              return null;
+                            if (!modeFilter && !hasAnyRate(entry.drop_rates))
+                              return null;
+                          }
                         }
                         // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
                         const sr = mDots.find(
