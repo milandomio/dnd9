@@ -1,5 +1,12 @@
 # 2026-07-16 会话修改记录
 
+## 零爆率坐标过滤修复：modeFilter=全部时检测所有模式
+
+- **原因**：`hideZeroRate` 在 `modeFilter=""`（全部）时跳过过滤，导致 OldRustyKey 等全模式爆率为 0 的坐标/地图分组错误显示
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`、`web/src/pages/DetailPage.tsx`
+- **核心逻辑**：新增 `hasAnyRate()` 辅助函数；当 `hideZeroRate=true` 且 `modeFilter=""` 时，检查 `drop_rates` 中 PVE/普通/豪客赛/逆袭赛 是否任一 > 0，全 0 才隐藏。选中具体模式时保持原行为（只检查该模式）
+- **效果**：Billet（PVE=65%、豪客赛=0%）选"全部"时 AshTree 坐标保留；OldRustyKey 沉船墓场1层（全模式=0%）在"全部"时也被隐藏
+
 ## PWA 图标内容改为 "DND" + 去掉白色边框 + iPhone 风格圆角
 
 - **原因**：原图标仅显示字母"D"，用户要求改为"DND"；边缘有白色半透明环状边框需移除
