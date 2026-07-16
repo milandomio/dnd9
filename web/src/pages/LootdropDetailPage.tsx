@@ -17,6 +17,7 @@ import {
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
+import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 
 interface LootdropCoord {
@@ -602,6 +603,29 @@ export default function LootdropDetailPage() {
   );
 
   const visibleCountByMonster = new Map<string, number>();
+  for (const m of resolvedMonsters) {
+    for (const c of m.coords) {
+      if (hideZeroRate) {
+        const mod = modules.get(c.map);
+        const groupName = mod?.group || '';
+        const gdi = data?.group_drop_info?.[groupName];
+        const entry = gdi?.find((e) => e.translation === m.translation);
+        if (entry) {
+          if (modeFilter) {
+            if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
+          } else {
+            if (!hasAnyRate(entry.drop_rates)) continue;
+          }
+        }
+      }
+      visibleCountByMonster.set(
+        m.translation,
+        (visibleCountByMonster.get(m.translation) ?? 0) + 1
+      );
+    }
+  }
+  let bottomCount = 0;
+  const visibleMapsSet = new Set<string>();
   for (const [groupName, groupItems] of sortedGroups) {
     for (const item of groupItems) {
       for (const d of item.dots) {
@@ -618,17 +642,11 @@ export default function LootdropDetailPage() {
             }
           }
         }
-        visibleCountByMonster.set(
-          d.monster.translation,
-          (visibleCountByMonster.get(d.monster.translation) ?? 0) + 1
-        );
+        bottomCount++;
+        visibleMapsSet.add(item.mapName);
       }
     }
   }
-  const filteredTotalCoords = [...visibleCountByMonster.values()].reduce(
-    (s, c) => s + c,
-    0
-  );
   const visibleCount = resolvedMonsters.filter(
     (m) => !hidden.has(m.translation)
   ).length;
@@ -653,7 +671,7 @@ export default function LootdropDetailPage() {
         </title>
         <meta
           name="description"
-          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${filteredTotalCoords} 个位置点。`}
+          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${bottomCount} 个位置点。`}
         />
         <meta
           name="keywords"
@@ -858,11 +876,7 @@ export default function LootdropDetailPage() {
               transition: 'all 0.2s',
             }}
           >
-            {m.translation} (
-            {visibleCountByMonster.get(m.translation) ??
-              m.coord_count ??
-              m.coords.length}
-            )
+            {m.translation} ({visibleCountByMonster.get(m.translation) ?? 0})
           </button>
         ))}
       </div>
@@ -1556,12 +1570,12 @@ export default function LootdropDetailPage() {
           color: tokens.muted,
         }}
       >
-        <strong>位置统计：共 {filteredTotalCoords} 个位置点</strong>
-        <br />
-        <strong>包含地图：</strong>{' '}
-        {[...new Set([...mapGroups.keys()])]
-          .map((k) => modules.get(k)?.translation || k)
-          .join('、')}
+        <LocationStats
+          count={bottomCount}
+          mapTranslations={[...visibleMapsSet].map(
+            (k) => modules.get(k)?.translation || k
+          )}
+        />
       </div>
     </div>
   );
