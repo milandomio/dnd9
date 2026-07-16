@@ -190,6 +190,9 @@ export default function DetailPage() {
     }>;
     gdi: GroupDropInfo[];
   }
+  function hasAnyRate(dr: Record<string, number>): boolean {
+    return Object.values(dr).some((v) => v > 0);
+  }
   function labelMatch(label: string, t: string): boolean {
     const lUndersea = label.includes('UnderSea') || label.includes('海底');
     const lSpecial = label.includes('Special') || label.includes('特殊');
@@ -496,14 +499,17 @@ export default function DetailPage() {
             key={sec.sectionKey}
             groupName={sec.groupName}
             hasVisible={
-              !hideZeroRate || !modeFilter
+              !hideZeroRate
                 ? sec.items.length > 0
                 : sec.items.some(({ coords }) =>
                     coords.some((c) => {
                       const match = sec.gdi.find((e) =>
                         labelMatch(c.label || '', e.translation)
                       );
-                      return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
+                      if (!match) return true;
+                      if (modeFilter)
+                        return (match.drop_rates[modeFilter] ?? 0) > 0;
+                      return hasAnyRate(match.drop_rates);
                     })
                   )
             }
@@ -580,15 +586,17 @@ export default function DetailPage() {
               </div>
             )}
             {sec.items.map(({ mapName, mod, coords: rawCoords }) => {
-              const mapCoords =
-                hideZeroRate && modeFilter
-                  ? rawCoords.filter((c) => {
-                      const match = sec.gdi.find((e) =>
-                        labelMatch(c.label || '', e.translation)
-                      );
-                      return !match || (match.drop_rates[modeFilter] ?? 0) > 0;
-                    })
-                  : rawCoords;
+              const mapCoords = hideZeroRate
+                ? rawCoords.filter((c) => {
+                    const match = sec.gdi.find((e) =>
+                      labelMatch(c.label || '', e.translation)
+                    );
+                    if (!match) return true;
+                    if (modeFilter)
+                      return (match.drop_rates[modeFilter] ?? 0) > 0;
+                    return hasAnyRate(match.drop_rates);
+                  })
+                : rawCoords;
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600;
