@@ -1,5 +1,14 @@
 # 2026-07-16 会话修改记录
 
+## computeModuleScore 变体组综合爆率改用 selected_count / variant_count
+
+- **原因**：骷髅双手剑士在沼泽等的综合爆率计算中，变体组（如 3种选1）贡献错误地加了完整 baseScore，应为 baseScore × 组内点数 / 变体总数
+- **公式**：变体组贡献 = baseScore × count_in_group / variant_count（count_in_group 为同 group_parent 的坐标点数）
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx` 的 `computeModuleScore()` 函数
+  - `varGroups` 记录从 `{ translation }` 改为 `{ translation, count, vc }`
+  - 遍历 dots 时递增 `existing.count` 而非去重后置 1
+  - 最终累加时：`Math.round(baseScore)` → `Math.round(baseScore * g.count / g.vc)`
+
 ## 分类按钮数字 + 底部统计同步 hideZeroRate 过滤；抽离 LocationStats 组件
 
 - **原因**：按钮数字（1080→163）在按钮熄灭时未更新（回退 `m.coords.length`）；底部"包含地图"列表未过滤已隐藏坐标
