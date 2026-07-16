@@ -7,6 +7,7 @@
 - **变更文件**：
   - `web/public/icons/icon-192-v2.png`
   - `web/public/icons/icon-512-v2.png`
+  - `web/public/favicon.ico` — 同步更新为 "DND" 图标（含 16/32/48/64 多尺寸）
 
 # 2026-07-15 会话修改记录
 
