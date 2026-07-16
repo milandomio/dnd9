@@ -643,6 +643,15 @@ def build_and_save_lootdrop_details(
                     _max_scores[_trans] = _score
         for _m in monsters_out:
             _m["max_score"] = _max_scores.get(_m["translation"], _NO_SCORE)
+        # Remove monsters whose group_drop_info entries all have zero rates
+        _trans_with_any_rate: set[str] = {
+            _e["translation"]
+            for _g_entries in _group_drop_info.values()
+            for _e in _g_entries
+            if any(v > 0 for v in _e["drop_rates"].values())
+        }
+        if _trans_with_any_rate:
+            monsters_out = [_m for _m in monsters_out if _m["translation"] in _trans_with_any_rate]
         # Limit total coords to MAX_COORDS_PER_PAGE (sort by max_score desc)
         # P005: Handle referenced entities (no inline coords)
         _total_coords = sum(len(_m.get("coords", [])) for _m in monsters_out)
