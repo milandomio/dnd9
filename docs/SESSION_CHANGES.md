@@ -1,5 +1,13 @@
 # 2026-07-16 会话修改记录
 
+## 分类按钮数字 + 底部统计同步 hideZeroRate 过滤；抽离 LocationStats 组件
+
+- **原因**：按钮数字（1080→163）在按钮熄灭时未更新（回退 `m.coords.length`）；底部"包含地图"列表未过滤已隐藏坐标
+- **变更文件**：
+  - `web/src/components/LocationStats.tsx` — 新建（共享底部统计行组件）
+  - `web/src/pages/LootdropDetailPage.tsx` — `visibleCountByMonster` 从 `resolvedMonsters` 直接计算（不排除 hidden），按钮始终显示过滤数；底部用 `bottomCount`/`visibleMapsSet`（hidden + hideZeroRate 双重过滤）替换旧 `totalCoords`/`mapGroups.keys()`
+  - `web/src/pages/DetailPage.tsx` — 底部统计同步覆盖 hideZeroRate 过滤；使用 LocationStats
+
 ## 坐标计数同步 hideZeroRate 过滤：迷你宝盒组 1080 不再显示错误数字
 
 - **原因**：`hideZeroRate` 过滤后，怪物切换按钮和底部统计仍显示原始未过滤的坐标总数（如迷你宝盒组 1080），未反映过滤后的实际可见坐标数
