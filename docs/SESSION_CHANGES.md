@@ -1,5 +1,12 @@
 # 2026-07-16 会话修改记录
 
+## 坐标计数同步 hideZeroRate 过滤：迷你宝盒组 1080 不再显示错误数字
+
+- **原因**：`hideZeroRate` 过滤后，怪物切换按钮和底部统计仍显示原始未过滤的坐标总数（如迷你宝盒组 1080），未反映过滤后的实际可见坐标数
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`
+- **变更逻辑**：新增 `visibleCountByMonster` 遍历 `sortedGroups` 同步应用 `hideZeroRate`/`modeFilter` 过滤逻辑，统计每个怪物翻译的实际可见坐标数；`filteredTotalCoords` 汇总为底部统计总数；切换按钮和 `Helmet` meta 描述均使用过滤后的数字
+- **注意**：此功能是核心筛选机制，除非用户要求否则不能移除
+
 ## 零爆率坐标过滤修复：modeFilter=全部时检测所有模式
 
 - **原因**：`hideZeroRate` 在 `modeFilter=""`（全部）时跳过过滤，导致 OldRustyKey 等全模式爆率为 0 的坐标/地图分组错误显示
