@@ -1,3 +1,13 @@
+# 2026-07-16 会话修改记录
+
+## PWA 图标去掉白色边框 + iPhone 风格圆角
+
+- **原因**：PWA 图标边缘有白色半透明环状边框，视觉效果不美观
+- **变更**：`web/public/icons/icon-192-v2.png`、`web/public/icons/icon-512-v2.png` — 移除白色边框像素（RGBA(255,255,255,180)），替换为深色背景 #141414；重新应用 iPhone 风格 squircle 圆角（半径 ≈ 尺寸 × 22%）
+- **变更文件**：
+  - `web/public/icons/icon-192-v2.png`
+  - `web/public/icons/icon-512-v2.png`
+
 # 2026-07-15 会话修改记录
 
 ## 稀有掉落阈值调整 2.5→1.5 + 零豪客赛掉落显示修复
