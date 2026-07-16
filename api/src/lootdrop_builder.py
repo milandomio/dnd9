@@ -416,6 +416,11 @@ def build_and_save_lootdrop_details(
                         _sr = spawn_rate_detail.get(_pair, 0) if _pair else spawn_rate_cache.get(m_name, 0)
                     else:
                         _sr = spawn_rate_cache.get(m_name, 0)
+                    _qm = re.search(r"_(VeryLow|Low|Med|High)$", _c.get("keyword", "")) or re.search(
+                        r"_(VeryLow|Low|Med|High)$", _c.get("original_keyword", "")
+                    )
+                    if _qm:
+                        coord_out["quality"] = _qm.group(1)
                     coord_out["spawn_rate"] = _sr
                     merged[_merge_key]["coords"].append(coord_out)
         # Compute per-group drop rates

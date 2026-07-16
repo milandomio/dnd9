@@ -249,6 +249,11 @@ def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None) -> dic
     if vc_info and vc_info[0] > 1:
         out["variant_count"] = vc_info[0]
         out["variant_names"] = vc_info[1]
+    _qm = re.search(r"_(VeryLow|Low|Med|High)$", c.get("keyword", "")) or re.search(
+        r"_(VeryLow|Low|Med|High)$", c.get("original_keyword", "")
+    )
+    if _qm:
+        out["quality"] = _qm.group(1)
     return out
 
 

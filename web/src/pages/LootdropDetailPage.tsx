@@ -33,6 +33,7 @@ interface LootdropCoord {
   variant_names?: string[];
   score?: number;
   group_parent?: string;
+  quality?: string;
 }
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
@@ -162,6 +163,7 @@ export default function LootdropDetailPage() {
   const [threshold, setThreshold] = useState(defaultThreshold);
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
+  const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
@@ -464,7 +466,7 @@ export default function LootdropDetailPage() {
   const mapGroups = new Map<
     string,
     {
-      mod: DungeonModule | undefined;
+      mod?: DungeonModule;
       dots: {
         monster: LootdropMonster;
         x: number;
@@ -477,6 +479,7 @@ export default function LootdropDetailPage() {
         variant_names?: string[];
         score?: number;
         group_parent?: string;
+        quality?: string;
       }[];
     }
   >();
@@ -484,6 +487,7 @@ export default function LootdropDetailPage() {
     m.coords.forEach((c, j) => {
       if (hidden.has(m.translation) || hiddenRows.has(`${m.translation}-${j}`))
         return;
+      if (qualityFilter && c.quality && c.quality !== qualityFilter) return;
       if (!mapGroups.has(c.map))
         mapGroups.set(c.map, { mod: modules.get(c.map), dots: [] });
       mapGroups.get(c.map)!.dots.push({
@@ -498,6 +502,7 @@ export default function LootdropDetailPage() {
         variant_names: c.variant_names,
         score: c.score,
         group_parent: c.group_parent,
+        quality: c.quality,
       });
     });
   }
@@ -520,11 +525,15 @@ export default function LootdropDetailPage() {
       mod?: DungeonModule;
       dots: {
         monster: LootdropMonster;
+        x: number;
+        y: number;
+        z: number;
         variant_count?: number;
         variant_names?: string[];
         score?: number;
         file: string;
         group_parent?: string;
+        quality?: string;
       }[];
     },
     _rateLookup: Map<string, { sr: number; dr: number }>
@@ -532,36 +541,38 @@ export default function LootdropDetailPage() {
     let total = 0;
     const varGroups = new Map<
       string,
-      { translation: string; count: number; vc: number }
+      { translation: string; positions: Set<string>; vc: number }
     >();
+    const regPositions = new Map<string, number>();
     for (const d of item.dots) {
       const vc = d.variant_count ?? 1;
+      const posKey = `${d.x},${d.y},${d.z}`;
       if (vc > 1) {
         const key = d.group_parent || `${d.file}::${vc}`;
         const existing = varGroups.get(key);
         if (existing) {
-          existing.count++;
+          existing.positions.add(posKey);
         } else {
           varGroups.set(key, {
             translation: d.monster.translation,
-            count: 1,
+            positions: new Set([posKey]),
             vc,
           });
         }
-      } else if (d.score != null) {
-        total += d.score;
       } else {
-        const rate = _rateLookup.get(d.monster.translation);
-        if (rate) {
-          total += Math.round(((rate.sr * rate.dr) / 100) * 10000) / 10000;
-        }
+        const mKey = `${d.monster.translation}::${posKey}`;
+        const s = d.score ?? 0;
+        const prev = regPositions.get(mKey) ?? 0;
+        if (s > prev) regPositions.set(mKey, s);
       }
     }
+    for (const s of regPositions.values()) total += s;
     for (const [, g] of varGroups) {
       const rate = _rateLookup.get(g.translation);
       if (rate) {
         const baseScore = (rate.sr * rate.dr) / 100;
-        total += Math.round(((baseScore * g.count) / g.vc) * 10000) / 10000;
+        total +=
+          Math.round(((baseScore * g.positions.size) / g.vc) * 10000) / 10000;
       }
     }
     return total;
@@ -615,6 +626,7 @@ export default function LootdropDetailPage() {
 
   const visibleCountByMonster = new Map<string, number>();
   for (const m of resolvedMonsters) {
+    const seenPos = new Set<string>();
     for (const c of m.coords) {
       if (hideZeroRate) {
         const mod = modules.get(c.map);
@@ -629,6 +641,9 @@ export default function LootdropDetailPage() {
           }
         }
       }
+      const posKey = `${c.x},${c.y},${c.z}`;
+      if (seenPos.has(posKey)) continue;
+      seenPos.add(posKey);
       visibleCountByMonster.set(
         m.translation,
         (visibleCountByMonster.get(m.translation) ?? 0) + 1
@@ -640,6 +655,7 @@ export default function LootdropDetailPage() {
   );
   let bottomCount = 0;
   const visibleMapsSet = new Set<string>();
+  const bottomPosSet = new Set<string>();
   for (const [groupName, groupItems] of sortedGroups) {
     for (const item of groupItems) {
       for (const d of item.dots) {
@@ -656,6 +672,9 @@ export default function LootdropDetailPage() {
             }
           }
         }
+        const posKey = `${d.monster.translation}::${d.x},${d.y},${d.z}`;
+        if (bottomPosSet.has(posKey)) continue;
+        bottomPosSet.add(posKey);
         bottomCount++;
         visibleMapsSet.add(item.mapName);
       }
@@ -786,6 +805,66 @@ export default function LootdropDetailPage() {
           </label>
         </div>
       )}
+
+      {(() => {
+        const qualitySet = new Set<string>();
+        for (const m of resolvedMonsters) {
+          for (const c of m.coords) {
+            if (c.quality) qualitySet.add(c.quality);
+          }
+        }
+        const hasQuality = qualitySet.size > 0;
+        if (!hasQuality) return null;
+        const QUALITY_CONFIG: Record<string, { label: string; color: string }> =
+          {
+            VeryLow: { label: '极低(PVE100%)', color: '#9E9E9E' },
+            Low: { label: '低(普通90%)', color: '#BDBDBD' },
+            Med: { label: '中(普通10%)', color: '#2ECC71' },
+            High: { label: '高品质(豪客赛100%)', color: '#3498DB' },
+          };
+        return (
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 8,
+              justifyContent: 'center',
+              margin: '10px 0',
+              padding: 10,
+              background: tokens.surface,
+              borderRadius: 5,
+            }}
+          >
+            {[...qualitySet].sort().map((q) => {
+              const cfg = QUALITY_CONFIG[q] ?? {
+                label: q,
+                color: tokens.muted,
+              };
+              const isActive = qualityFilter === q;
+              return (
+                <span
+                  key={q}
+                  onClick={() => setQualityFilter(isActive ? '' : q)}
+                  style={{
+                    padding: '6px 14px',
+                    border: `2px solid ${cfg.color}`,
+                    borderRadius: 5,
+                    cursor: 'pointer',
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    color: isActive ? '#000' : tokens.text,
+                    background: isActive ? cfg.color : 'transparent',
+                    opacity: isActive ? 1 : 0.5,
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {cfg.label}
+                </span>
+              );
+            })}
+          </div>
+        );
+      })()}
 
       {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
         <div
@@ -1461,24 +1540,52 @@ export default function LootdropDetailPage() {
                                   (d) =>
                                     !d.variant_count || d.variant_count <= 1
                                 );
+                                const dedupPos = (
+                                  arr: typeof regDots,
+                                  gp?: string
+                                ) => {
+                                  const seen = new Set<string>();
+                                  return arr.filter((d) => {
+                                    if (gp && d.group_parent !== gp)
+                                      return false;
+                                    const k = `${d.x},${d.y},${d.z}`;
+                                    if (seen.has(k)) return false;
+                                    seen.add(k);
+                                    return true;
+                                  });
+                                };
                                 const parts: string[] = [];
-                                if (regDots.length > 0) {
-                                  parts.push(`(${regDots.length}点)`);
+                                const dedupedReg = dedupPos(regDots);
+                                if (dedupedReg.length > 0) {
+                                  parts.push(`(${dedupedReg.length}点)`);
                                 }
                                 if (varDots.length > 0) {
                                   const names = varDots[0].variant_names ?? [];
-                                  const groupCount = new Set(
-                                    varDots
-                                      .map((d) => d.group_parent)
-                                      .filter(Boolean)
-                                  ).size;
+                                  const varGps = [
+                                    ...new Set(
+                                      varDots
+                                        .map((d) => d.group_parent)
+                                        .filter(Boolean)
+                                    ),
+                                  ];
+                                  const varPosCounts = varGps.map((gp) => ({
+                                    gp,
+                                    count: dedupPos(varDots, gp).length,
+                                  }));
+                                  const totalVarPos = varPosCounts.reduce(
+                                    (s, v) => s + v.count,
+                                    0
+                                  );
+                                  const groupCount = varPosCounts.filter(
+                                    (v) => v.count > 0
+                                  ).length;
                                   if (names.length > 0) {
                                     parts.push(
                                       `(${names.join('、')}${varDots[0].variant_count}种选${groupCount})`
                                     );
                                   } else {
                                     parts.push(
-                                      `(${varDots.length}点选${groupCount})`
+                                      `(${totalVarPos}点选${groupCount})`
                                     );
                                   }
                                 }
