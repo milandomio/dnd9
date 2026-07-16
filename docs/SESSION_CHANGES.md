@@ -1,9 +1,9 @@
 # 2026-07-16 会话修改记录
 
-## PWA 图标去掉白色边框 + iPhone 风格圆角
+## PWA 图标内容改为 "DND" + 去掉白色边框 + iPhone 风格圆角
 
-- **原因**：PWA 图标边缘有白色半透明环状边框，视觉效果不美观
-- **变更**：`web/public/icons/icon-192-v2.png`、`web/public/icons/icon-512-v2.png` — 移除白色边框像素（RGBA(255,255,255,180)），替换为深色背景 #141414；重新应用 iPhone 风格 squircle 圆角（半径 ≈ 尺寸 × 22%）
+- **原因**：原图标仅显示字母"D"，用户要求改为"DND"；边缘有白色半透明环状边框需移除
+- **变更**：`web/public/icons/icon-192-v2.png`、`web/public/icons/icon-512-v2.png` — 内容从蓝色字母"D"改为粗体"DND"（DejaVuSans-Bold，字号 ≈ 尺寸 × 30%，RGB(200,220,255)）；移除白色边框像素；应用 iPhone 风格 squircle 圆角（半径 ≈ 尺寸 × 22%）
 - **变更文件**：
   - `web/public/icons/icon-192-v2.png`
   - `web/public/icons/icon-512-v2.png`
