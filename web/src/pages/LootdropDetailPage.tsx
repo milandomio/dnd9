@@ -601,8 +601,32 @@ export default function LootdropDetailPage() {
     }
   );
 
-  const totalCoords = [...mapGroups.values()].reduce(
-    (s, mg) => s + mg.dots.length,
+  const visibleCountByMonster = new Map<string, number>();
+  for (const [groupName, groupItems] of sortedGroups) {
+    for (const item of groupItems) {
+      for (const d of item.dots) {
+        if (hideZeroRate) {
+          const gdi = data?.group_drop_info?.[groupName];
+          const entry = gdi?.find(
+            (e) => e.translation === d.monster.translation
+          );
+          if (entry) {
+            if (modeFilter) {
+              if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
+            } else {
+              if (!hasAnyRate(entry.drop_rates)) continue;
+            }
+          }
+        }
+        visibleCountByMonster.set(
+          d.monster.translation,
+          (visibleCountByMonster.get(d.monster.translation) ?? 0) + 1
+        );
+      }
+    }
+  }
+  const filteredTotalCoords = [...visibleCountByMonster.values()].reduce(
+    (s, c) => s + c,
     0
   );
   const visibleCount = resolvedMonsters.filter(
@@ -629,7 +653,7 @@ export default function LootdropDetailPage() {
         </title>
         <meta
           name="description"
-          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${totalCoords} 个位置点。`}
+          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${filteredTotalCoords} 个位置点。`}
         />
         <meta
           name="keywords"
@@ -834,7 +858,11 @@ export default function LootdropDetailPage() {
               transition: 'all 0.2s',
             }}
           >
-            {m.translation} ({m.coord_count ?? m.coords.length})
+            {m.translation} (
+            {visibleCountByMonster.get(m.translation) ??
+              m.coord_count ??
+              m.coords.length}
+            )
           </button>
         ))}
       </div>
@@ -1528,7 +1556,7 @@ export default function LootdropDetailPage() {
           color: tokens.muted,
         }}
       >
-        <strong>位置统计：共 {totalCoords} 个位置点</strong>
+        <strong>位置统计：共 {filteredTotalCoords} 个位置点</strong>
         <br />
         <strong>包含地图：</strong>{' '}
         {[...new Set([...mapGroups.keys()])]
