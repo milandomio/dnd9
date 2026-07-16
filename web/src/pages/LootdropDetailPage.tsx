@@ -624,6 +624,9 @@ export default function LootdropDetailPage() {
       );
     }
   }
+  const visibleMonsters = orderedMonsters.filter(
+    (m) => (visibleCountByMonster.get(m.translation) ?? 0) > 0
+  );
   let bottomCount = 0;
   const visibleMapsSet = new Set<string>();
   for (const [groupName, groupItems] of sortedGroups) {
@@ -836,13 +839,13 @@ export default function LootdropDetailPage() {
       >
         <button
           onClick={() => {
-            const allHidden = resolvedMonsters.every((m) =>
+            const allHidden = visibleMonsters.every((m) =>
               hidden.has(m.translation)
             );
-            if (allHidden || hidden.size === resolvedMonsters.length) {
+            if (allHidden || hidden.size === visibleMonsters.length) {
               setHidden(new Set());
             } else {
-              setHidden(new Set(resolvedMonsters.map((m) => m.translation)));
+              setHidden(new Set(visibleMonsters.map((m) => m.translation)));
             }
           }}
           style={{
@@ -859,7 +862,7 @@ export default function LootdropDetailPage() {
         >
           {hidden.size === 0 ? '隐藏全部' : '全部显示'}
         </button>
-        {orderedMonsters.map((m) => (
+        {visibleMonsters.map((m) => (
           <button
             key={m.translation}
             onClick={() => toggle(m.translation)}
