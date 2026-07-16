@@ -25,6 +25,7 @@ import {
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
+import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 
 const GROUP_ORDER = [
@@ -390,6 +391,36 @@ export default function DetailPage() {
     if (ca !== cb) return cb - ca;
     return groupOrder.indexOf(a.groupName) - groupOrder.indexOf(b.groupName);
   });
+
+  let bottomCount = 0;
+  const bottomMapsSet = new Set<string>();
+  if (!hideZeroRate) {
+    for (const sec of sections) {
+      for (const item of sec.items) {
+        bottomCount += item.coords.length;
+        bottomMapsSet.add(item.mapName);
+      }
+    }
+  } else {
+    for (const sec of sections) {
+      for (const item of sec.items) {
+        for (const c of item.coords) {
+          const match = sec.gdi.find((e) =>
+            labelMatch(c.label || '', e.translation)
+          );
+          if (match) {
+            if (modeFilter) {
+              if ((match.drop_rates[modeFilter] ?? 0) === 0) continue;
+            } else {
+              if (!hasAnyRate(match.drop_rates)) continue;
+            }
+          }
+          bottomCount++;
+          bottomMapsSet.add(item.mapName);
+        }
+      }
+    }
+  }
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -1069,12 +1100,12 @@ export default function DetailPage() {
         ></span>{' '}
         Z &lt; -299 (低于地面)
         <br />
-        <strong>位置统计：共 {visibleCoords.length} 个位置点</strong>
-        <br />
-        <strong>包含地图：</strong>{' '}
-        {[...grouped.keys()]
-          .map((k) => modules.get(k)?.translation || k)
-          .join(', ')}
+        <LocationStats
+          count={bottomCount}
+          mapTranslations={[...bottomMapsSet].map(
+            (k) => modules.get(k)?.translation || k
+          )}
+        />
       </div>
 
       {debug &&
