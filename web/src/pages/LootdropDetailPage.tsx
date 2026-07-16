@@ -530,13 +530,24 @@ export default function LootdropDetailPage() {
     _rateLookup: Map<string, { sr: number; dr: number }>
   ): number {
     let total = 0;
-    const varGroups = new Map<string, { translation: string }>();
+    const varGroups = new Map<
+      string,
+      { translation: string; count: number; vc: number }
+    >();
     for (const d of item.dots) {
       const vc = d.variant_count ?? 1;
       if (vc > 1) {
         const key = d.group_parent || `${d.file}::${vc}`;
-        if (!varGroups.has(key))
-          varGroups.set(key, { translation: d.monster.translation });
+        const existing = varGroups.get(key);
+        if (existing) {
+          existing.count++;
+        } else {
+          varGroups.set(key, {
+            translation: d.monster.translation,
+            count: 1,
+            vc,
+          });
+        }
       } else if (d.score != null) {
         total += d.score;
       } else {
@@ -550,7 +561,7 @@ export default function LootdropDetailPage() {
       const rate = _rateLookup.get(g.translation);
       if (rate) {
         const baseScore = (rate.sr * rate.dr) / 100;
-        total += Math.round(baseScore * 10000) / 10000;
+        total += Math.round(((baseScore * g.count) / g.vc) * 10000) / 10000;
       }
     }
     return total;
