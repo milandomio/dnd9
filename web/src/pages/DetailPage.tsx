@@ -11,7 +11,6 @@ import type {
   GroupDropInfo,
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
-import { useDataVersion } from '../hooks/useDataVersion';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
@@ -27,6 +26,23 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
+
+let _preloadedEntityUrl = '';
+let _preloadedEntity: Entity | null = null;
+if (typeof window !== 'undefined') {
+  const _m = window.location.pathname.match(
+    /^\/(items|monsters|props)\/([^/]+)/
+  );
+  if (_m) {
+    _preloadedEntityUrl = `/data/json/${_m[1]}/${_m[2]}.json`;
+    fetch(_preloadedEntityUrl)
+      .then((r) => r.json())
+      .then((d) => {
+        _preloadedEntity = d as Entity;
+      })
+      .catch(() => {});
+  }
+}
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -48,10 +64,8 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(
-    ssrData?.entity?.coords ? ssrData.entity : null
+    _preloadedEntity ?? (ssrData?.entity?.coords ? ssrData.entity : null)
   );
-  const dataVersion = useDataVersion();
-
   const { modules: globalModules } = useDungeonModules();
   // Resolve module by coord's map field (now resolved module name)
   const modules = useMemo(() => {
@@ -117,17 +131,18 @@ export default function DetailPage() {
       setEntity(ssrData.entity);
       return;
     }
-    if (fetchedRef.current) return;
-    fetchedRef.current = true;
     const decoded = decodeURIComponent(name!);
     const url = `/data/json/${page}/${decoded}.json`;
+    if (_preloadedEntity?.coords && _preloadedEntityUrl === url) return;
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
     fetch(url)
       .then<Entity>((r) => r.json())
       .then((entityData) => {
         setEntity(entityData);
       })
       .catch(console.error);
-  }, [page, name, ssrData, dataVersion]);
+  }, [page, name, ssrData]);
 
   if (!entity)
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;

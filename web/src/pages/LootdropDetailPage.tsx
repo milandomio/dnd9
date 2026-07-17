@@ -67,6 +67,21 @@ interface LootdropItem {
   variant_rarity?: Record<string, string>;
 }
 
+let _preloadedLootdropUrl = '';
+let _preloadedLootdrop: LootdropItem | null = null;
+if (typeof window !== 'undefined') {
+  const _m = window.location.pathname.match(/^\/lootdrops\/([^/]+)/);
+  if (_m) {
+    _preloadedLootdropUrl = `/data/json/lootdrops/${_m[1]}.json`;
+    fetch(_preloadedLootdropUrl)
+      .then((r) => r.json())
+      .then((d) => {
+        _preloadedLootdrop = d as LootdropItem;
+      })
+      .catch(() => {});
+  }
+}
+
 const GROUP_ORDER = [
   'GoblinCave',
   'FireDeep',
@@ -123,7 +138,8 @@ export default function LootdropDetailPage() {
       ? baseSsrData
       : null;
   const [data, setData] = useState<LootdropItem | null>(
-    effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null
+    _preloadedLootdrop ??
+      (effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null)
   );
   const dataVersion = useDataVersion();
   const { modules: globalModules } = useDungeonModules();
@@ -184,15 +200,15 @@ export default function LootdropDetailPage() {
       );
       return;
     }
+    const fetchName =
+      currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
+    const lootUrl = `/data/json/lootdrops/${fetchName}.json`;
+    if (_preloadedLootdrop?.monsters && _preloadedLootdropUrl === lootUrl)
+      return;
     if (lootFetchedRef.current) return;
     lootFetchedRef.current = true;
     setData(null);
     setHidden(new Set());
-    // Fetch variant-specific file if suffix present, otherwise base file
-    // For artifacts (_8001), baseName already includes the suffix, don't append again
-    const fetchName =
-      currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
-    const lootUrl = `/data/json/lootdrops/${fetchName}.json`;
     fetch(lootUrl)
       .then<LootdropItem>((r) => r.json())
       .then((item) => {
@@ -200,7 +216,7 @@ export default function LootdropDetailPage() {
         setHidden(defaultHidden(item.monsters, defaultThreshold));
       })
       .catch(console.error);
-  }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
+  }, [baseName, currentSuffix, effectiveSsrData]);
 
   // Auto-redirect to default variant when visiting base URL
   useEffect(() => {
