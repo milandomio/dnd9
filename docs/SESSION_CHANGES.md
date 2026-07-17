@@ -776,3 +776,17 @@ if (typeof window !== 'undefined') {
   - `docs/REFERENCE.md` — 新增"物品坐标链式反查"章节
 - **关键映射**：`TearofHrimthurs` → 链式反查到 spawner `TearofHrithurs` → 坐标 `IceAbyss_HoundVale` (x=-40, y=1430, z=-1187.73)
 - **影响**：物品索引从 94 增至 517 个（新增 423 个 lootdrop 容器坐标物品）
+
+## 2025-07-17 会话修改记录
+
+### 变体切换组件提取 + 导航刷新修复
+
+**原因：** `/lootdrops/WarMaul_6001/` 导航到 `/lootdrops/WarMaul_8001/` 时页面不刷新，需 F5 才能显示正确标题和分类按钮。
+
+**变更文件：**
+- `web/src/components/VariantSwitch.tsx` — 新建变体稀有度切换组件，从 LootdropDetailPage 提取
+- `web/src/pages/LootdropDetailPage.tsx` — 内联变体按钮替换为 `<VariantSwitch>`；导航时清除 `_preloadedLootdrop` 缓存
+
+**关键修复：**
+- 模块级 `_preloadedLootdrop` 缓存在客户端导航后仍保留旧页面数据，干扰 useEffect 数据拉取逻辑
+- 在 `name` 变化的 useEffect 中同时清除 `_preloadedLootdrop` 和 `_preloadedLootdropUrl`，确保下次 fetch 不被跳过

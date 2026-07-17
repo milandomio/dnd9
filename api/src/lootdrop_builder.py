@@ -648,6 +648,19 @@ def build_and_save_lootdrop_details(
                     _max_scores[_trans] = _score
         for _m in monsters_out:
             _m["max_score"] = _max_scores.get(_m["translation"], _NO_SCORE)
+        # Pre-compute aggregate drop_rates per monster (max across all groups)
+        _agg_drop_rates: dict[str, dict[str, float]] = {}
+        for _g_list in _group_drop_info.values():
+            for _entry in _g_list:
+                _trans = _entry["translation"]
+                for _mode, _rate in _entry["drop_rates"].items():
+                    _prev = _agg_drop_rates.setdefault(_trans, {}).get(_mode, 0)
+                    if _rate > _prev:
+                        _agg_drop_rates[_trans][_mode] = _rate
+        for _m in monsters_out:
+            _trans = _m.get("translation", "")
+            if _trans in _agg_drop_rates:
+                _m["drop_rates"] = _agg_drop_rates[_trans]
         # Remove monsters whose group_drop_info entries all have zero rates
         _trans_with_any_rate: set[str] = {
             _e["translation"]
