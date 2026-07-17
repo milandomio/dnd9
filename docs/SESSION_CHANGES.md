@@ -8,6 +8,14 @@
   - `docs/CROSS_VARIANT_FALLBACK_ISSUE.md` — 问题文档（待解决）
 - **操作**：回滚到 checkpoint `e7623d8`，恢复原始状态，问题延期处理
 
+## 修复翻译全部丢失 — `load_game_json` 缺少 DC 命名空间检查
+
+- **原因**：FModel 新导出 `Game.json` 结构为 `{"": {...3条hash键}, "DC": {...12718条翻译}}`。`load_game_json()` 未检查 `"DC"` 键，直接返回第一个 dict（`""` 命名空间仅 3 条），导致 `translations` 表只有 3 条记录，所有物品/怪物/道具/掉落翻译回退为英文。
+- **quest 页面正常**：`quest_extractor/translator.py` 独立读取 `Game.json` 并正确提取 `data["DC"]`，不受影响。
+- **变更文件**：
+  - `api/src/db/_helpers.py` — `load_game_json()` 增加 `"DC"` 命名空间优先检查
+- **远程推送**：`a4b15942`（force push，含 DB + DC 修复）
+
 ## 修复重复请求 + preload URL 对齐 + 空版本跳过
 
 - **原因**：Playwright 网络追踪发现 `/lootdrops/EmberGem/` 页面打开时 `dungeon_modules.json` 被请求 3 次、`search_index.json` 被请求 2 次，页面卡顿约 1 秒。根因：
