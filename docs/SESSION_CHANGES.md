@@ -1,5 +1,13 @@
 # 2026-07-17 会话修改记录
 
+## 新增 PNG→WebP 自动转换流水线
+
+- **原因**：V5 项目原本没有任何 PNG→WebP 转换代码，`api/src/img/` 中的 webp 文件被视为预存静态资产。新增游戏 PNG 时无法自动生成 webp。
+- **变更文件**：
+  - `api/src/image_utils.py` — 新增，导出 `sync_webp_images()` 和 `compress_and_save_image()`
+  - `api/src/collector.py` — 在 JSON 导出阶段前调用 `sync_webp_images()`
+- **⚠️ 重要规则**：`api/src/img/` 下的 .webp 文件是**不可再生资源**，禁止删除。这些文件从游戏解包 PNG 转换而来，一旦丢失无法从游戏重新提取。
+
 ## 新增 DwarvenLockWay.webp 地图图片
 
 - **原因**：FireDeep 组模块 `DwarvenLockWay`（矮人闸道）的源 PNG 文件存在，但项目中无 PNG→WebP 自动转换流水线，webp 文件缺失，前端始终显示占位图 `RareModule_1x1`
