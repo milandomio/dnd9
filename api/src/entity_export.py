@@ -45,11 +45,13 @@ def export_items(
             if m:
                 coords = filter_coords(all_coords.get(m.group(1) + "Ore", []), item_names)
         # Fallback: trace lootdrop chain item → lootdrop_group → spawner → coords
+        # Skip filter_coords here because the coord's keyword is the spawner name,
+        # not the item name, so the entity_names check would reject it.
         if not coords and item_coord_chain_map:
             for spawner_kw in item_coord_chain_map.get(name, []):
-                _c = filter_coords(all_coords.get(spawner_kw, []), item_names)
-                if _c:
-                    coords = _c
+                _raw = all_coords.get(spawner_kw, [])
+                if _raw:
+                    coords = _raw
                     break
         if not coords:
             continue

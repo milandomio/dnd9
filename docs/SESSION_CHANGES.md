@@ -766,3 +766,13 @@ if (typeof window !== 'undefined') {
     - `visibleCountByMonster` / `bottomCount` 按 (translation,x,y,z) 去重计数
     - 新增品质切换 UI（默认 High，点击切换品质/显示全部）
 - **CobaltOres 数据**：重新运行管道后每组品质各 5 坐标（钴矿组）/ 13 坐标（钴矿随机）
+
+## 新增物品坐标链式反查（lootdrop chain）
+
+- **原因**：`TearofHrimthurs`（霜巨人之泪）虽然存在于 DB 中，但因 spawner 文件名缺 m（`TearofHrithurs` vs `TearofHrimthurs`）导致坐标匹配失败，物品表不显示。更深层问题是管道缺少 lootdrop 容器→坐标→物品的链式反查机制
+- **变更文件**：
+  - `api/src/collector.py` — 通过 `lootdrop_rate_items→lootdrop_groups→spawner_entries` 三表 JOIN 构建 `item_coord_chain_map`（529 个物品 → spawner keyword 映射）
+  - `api/src/entity_export.py` — `export_items()` 新增 `item_coord_chain_map` 参数，直接坐标查找失败时作为回退（跳过 `filter_coords`，因为 spawner keyword 不是物品名）
+  - `docs/REFERENCE.md` — 新增"物品坐标链式反查"章节
+- **关键映射**：`TearofHrimthurs` → 链式反查到 spawner `TearofHrithurs` → 坐标 `IceAbyss_HoundVale` (x=-40, y=1430, z=-1187.73)
+- **影响**：物品索引从 94 增至 517 个（新增 423 个 lootdrop 容器坐标物品）
