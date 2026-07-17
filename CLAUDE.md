@@ -16,6 +16,16 @@
 3. **无话可说时**：只输出 `DONE`，绝对不要用废话填充。没有明确指令、或收到空白/无意义输入时同样直接 `DONE` 结束。
 4. **禁止擅自推送**：除非用户明确要求"推送远程""提交并推送""push"，否则严禁执行任何 git push 操作。仅做本地提交留作 checkpoint。
 
+## 文档强制规则
+
+**每次改动（包括回退和修复）必须在其完成后的最后一步将摘要追加到 `docs/SESSION_CHANGES.md`。** 这是不可跳过的步骤，优先级与构建验证相同。
+
+要求：
+- 按日期分区（`# YYYY-MM-DD 会话修改记录`），当天已有则追加
+- 每条记录至少包含：**改动原因、变更文件、关键逻辑/映射关系**
+- 回退操作必须注明被回退的内容和原因
+- 必须在 commit 之前完成文档追加
+
 ## 术语约定
 
 - "我看到" — 部署后 http://localhost:8080/ 上的内容
@@ -164,10 +174,6 @@ cd web && npm run build          # 3. 前端构建
 # 4. 启动web + 强制验证
 cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
-
-### 会话日志规则
-
-每次任务的最后一步，必须将本次改动的摘要追加到 `docs/SESSION_CHANGES.md`，按日期分区，含：改动原因、变更文件、关键映射关系。如果当天已有分区则追加，否则新建 `# YYYY-MM-DD 会话修改记录`。
 
 **⚠️ 强制规则：构建完成后必须验证 web 服务可用（执行上述 curl 命令检查 HTTP 200），不可跳过。** 若返回非 200，必须排查错误并修复至返回 200 为止。`vite preview` 失败常见原因：端口被占用（检查 `lsof -t -i:8080`）、构建产物损坏（`rm -rf dist && npm run build`）、数据文件缺失（运行 `python main.py`）。
 
