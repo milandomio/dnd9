@@ -50,6 +50,7 @@ export function useSearchIndex() {
   const [loading, setLoading] = useState(!cachedIndex);
 
   useEffect(() => {
+    if (!dataVersion) return;
     if (cachedIndex && cachedVersion === dataVersion) {
       setIndex(cachedIndex);
       setLoading(false);

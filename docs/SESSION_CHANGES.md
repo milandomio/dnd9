@@ -1,5 +1,23 @@
 # 2026-07-17 会话修改记录
 
+## 修复重复请求 + preload URL 对齐 + 空版本跳过
+
+- **原因**：Playwright 网络追踪发现 `/lootdrops/EmberGem/` 页面打开时 `dungeon_modules.json` 被请求 3 次、`search_index.json` 被请求 2 次，页面卡顿约 1 秒。根因：
+  1. `useDataVersion()` 初始返回空字符串 `''`，`useEffect` 在 meta.json 加载前就用空版本发起 fetch
+  2. meta.json 到达后 `dataVersion` 更新，`cachedVersion !== dataVersion` 清空 in-flight 的 `cachedPromise`，触发第二次 fetch（真正的重复）
+  3. preload URL 使用 base36 编码（`/data/{short}/json/`），但 fetch URL 使用原始十进制时间戳 `/data/{dataVersion}/json/` — 总是不匹配，preload 缓存浪费
+- **变更文件**：
+  - `web/src/hooks/useDungeonModules.ts`
+    - `useEffect` 开头加 `if (!dataVersion) return;`，空版本时跳过，等待 meta.json 到达
+    - fetch URL 改为 `/data/${Number(version).toString(36)}/json/dungeon_modules.json`，与 preload 的 base36 格式对齐
+  - `web/src/hooks/useSearchIndex.ts` — `useEffect` 开头加 `if (!dataVersion) return;`
+  - `web/src/pages/ListPage.tsx` — `useEffect` 开头加 `if (!dataVersion) return;`
+  - `docs/REFERENCE.md` — 更新详情页 `_modules` 描述为当前共享 Map 架构，新增 preload 策略说明（版本化 URL、AppInner 主动预取、防重复机制）
+- **效果验证**（Playwright 实测 localhost:8080）：
+  - BEFORE：`dungeon_modules.json` 3 次（preload + 2 fetch，总计 1.1s），`search_index.json` 2 次（629ms）
+  - AFTER：`dungeon_modules.json` **1 次**（preload cache hit，20ms），`search_index.json` **1 次**（19ms）
+  - 重复请求完全消除，preload 缓存被正确复用
+
 ## Decimal-化 spawners.py 生成概率浮点除法
 
 - **原因**：lootdrops/SkullKey 页 CofferSmall(迷你宝盒组) spawn_rate=3.0001 应 3.0，根因是 ChestMedium spawner 中 ∑SpawnRate=999960（非 100万），`100*30000/999960` 产生 3.00012% 尾数

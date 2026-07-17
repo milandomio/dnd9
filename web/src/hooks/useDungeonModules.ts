@@ -16,7 +16,8 @@ function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
   if (cachedPromise) return cachedPromise;
 
   cachedVersion = version;
-  cachedPromise = fetch('/data/json/dungeon_modules.json')
+  const verShort = Number(version).toString(36);
+  cachedPromise = fetch(`/data/${verShort}/json/dungeon_modules.json`)
     .then<DungeonModule[]>((r) => r.json())
     .then((mods) => {
       const mm = new Map<string, DungeonModule>();
@@ -46,6 +47,7 @@ export function useDungeonModules() {
   const [loading, setLoading] = useState(!cachedModules);
 
   useEffect(() => {
+    if (!dataVersion) return;
     if (cachedModules && cachedVersion === dataVersion) {
       setModules(cachedModules);
       setLoading(false);

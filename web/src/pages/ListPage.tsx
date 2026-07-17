@@ -83,6 +83,7 @@ export default function ListPage() {
   const { tokens } = useTheme();
 
   useEffect(() => {
+    if (!dataVersion) return;
     if (!page || !['items', 'monsters', 'props', 'lootdrops'].includes(page))
       return;
     if (ssrData) return;
