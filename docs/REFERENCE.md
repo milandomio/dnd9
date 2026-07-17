@@ -650,23 +650,35 @@ SSG 构建时，`ssg.mjs` 将路由数据注入 `<script>window.__SSR_DATA__={..
 
 | 页面 | SSR Key | 客户端 Fetch | SSR 跳过条件 |
 |------|---------|-------------|-------------|
-| 物品/怪物/实体详情 `/:page/:name` | `"{page}/{name}"` | `{page}/{name}.json`（含 `_modules`） | quick 模式仍 fetch（SSR 无 coords） |
-| 掉落详情 `/lootdrops/:name` | `"lootdrops/{name}"` | `lootdrops/{name}.json`（含 `_modules`） | quick 模式仍 fetch（SSR 无 monsters） |
+| 物品/怪物/实体详情 `/:page/:name` | `"{page}/{name}"` | `{page}/{name}.json` | quick 模式仍 fetch（SSR 无 coords） |
+| 掉落详情 `/lootdrops/:name` | `"lootdrops/{name}"` | `lootdrops/{name}.json` | quick 模式仍 fetch（SSR 无 monsters） |
 | 任务NPC详情 `/quest_npc/:npc_name` | `"quest_npc"`（共享） | `quest_npc.json` | SSR 存在即跳过 |
 | 地图模块详情 `/dungeon_modules/:group/:name` | 无 | `dungeon_modules_coords/{name}.json` | 始终客户端 fetch |
-
-**详情页 `_modules` 字段：** 2026-06-22 起，items/monsters/props/lootdrops 的详情 JSON 均包含 `_modules` 字段，
-内联了该实体引用的所有地图模块的旋转/偏移/尺寸/分组/翻译/图片数据。详情页不再依赖 `dungeon_modules.json` 的单独 fetch，
-从 `_modules` 构建本地 modules Map，消除了远程部署时 `dungeon_modules.json` 加载失败导致地图不显示旋转的问题。
 
 ### `--quick` 模式行为
 
 列表页：完整 SSR 数据注入，客户端跳过 fetch。
 详情页：仅注入 `{name, translation}` 用于 SEO，客户端仍需 fetch 完整数据。
 
+### 详情页模块数据获取
+
+items/monsters/props/lootdrops 的详情页通过 `useDungeonModules()` hook 获取模块数据（包括翻译、分组、旋转/偏移/尺寸等）。每个坐标点的 `c.map` 字段存储模块名称，详情页用 `globalModules.get(c.map)` 在共享 Map 中查找对应模块信息。
+
+为了保证模块数据在详情页渲染前就绪，设计了两层预加载：
+
+1. **`AppInner.tsx:30` 主动预取** — `useDungeonModules()` 在顶层路由组件中调用，在所有详情页挂载之前就开始加载 `dungeon_modules.json`
+2. **`<link rel="preload">`** — Vite 构建时注入版本化 preload tag（`/data/{shortVer}/json/dungeon_modules.json`），让浏览器在解析 HTML 后立即开始下载
+
+**版本化 preload URL：** preload 路径中的 `{shortVer}` 是 `dataDate` 的 base36 编码（如 `ti9oey`），每次数据更新时自动变化。使用版本化路径的原因：
+- 与客户端的 fetch URL 一致（`useDungeonModules.ts` 使用相同版本化路径）
+- 避免浏览器缓存旧版本数据
+- 与 CDN 缓存破坏策略配合（`ssg.mjs` 构建时将 `data/json/` 复制到 `dist/data/{shortVer}/json/`）
+
+**防重复请求：** hooks 内置模块级缓存（`cachedModules`/`cachedIndex` + `cachedPromise` + `cachedVersion`），同名 Map 引用始终共享，不产生重复请求。`dataVersion` 为空时跳过 fetch，等待 `meta.json` 版本信息到达后再发起请求。
+
 ### 共享 Hook
 
-- `useDungeonModules()` — 全局缓存 `dungeon_modules.json`，地图模块列表页/分组页/详情页复用同一份数据（实体详情页已改用 `_modules` 内联数据，不再依赖此 hook）
+- `useDungeonModules()` — 全局缓存 `dungeon_modules.json`，所有页面（详情页、地图模块列表/分组/详情页、探索页）复用同一份模块 Map。URL 使用版本化路径 `/data/{dataVersion}/json/dungeon_modules.json`。
 - `useSearchIndex()` / `getPageEntries()` — 全局缓存 `search_index.json`，供 NavBar 搜索使用，同时也是列表页客户端的**主数据源**（列表页 SSR 数据也来自同一文件）。`{page}.json` 仅作为客户端取数失败时的最终回退
 
 ### search_term_matches 精确度问题 [已被 AC 自动机移除替代]
