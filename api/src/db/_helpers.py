@@ -29,6 +29,8 @@ def load_game_json() -> dict[str, str]:
         with open(GAME_JSON, encoding="utf-8") as f:
             raw = json.load(f)
         if isinstance(raw, dict):
+            if "DC" in raw and isinstance(raw["DC"], dict):
+                return raw["DC"]
             for v in raw.values():
                 if isinstance(v, dict):
                     return v
