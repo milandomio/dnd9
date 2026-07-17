@@ -1,5 +1,11 @@
 # 2026-07-17 会话修改记录
 
+## 回滚 _8001 变体继承基底怪物列表
+
+- **原因**：`9ef1a483` 修复让 _8001 变体继承基底全量怪物列表，但 RondelDagger 跨越 8 个地图（Inferno/FireDeep/GoblinCave/Ruins/IceAbyss/ShipGraveyard/Crypt/IceCavern），`group_drop_info` 中继承这 8 个地图是正确的行为，无需变更
+- **操作**：回滚 `e87446e2` + `9ef1a483`，`api/src/lootdrop_builder.py` 第 160/168 行回到 `loot_map.get(v8001, [])`
+- **遗留问题**：ShipGraveyard 参考爆率缺失是前端渲染问题，非数据问题
+
 ## SW 图片缓存 maxEntries 250→300
 
 - **原因**：游戏模块图片增加，`api/src/img/` 现已有 255 个 webp，原 250 上限不够用
