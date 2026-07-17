@@ -356,6 +356,10 @@ class DropRateEngine:
         if not _all_groups:
             _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
         candidate_ids.update(_all_groups)
+        # Also include LDGs from base name without trailing numeric suffix
+        _no_num = re.sub(r"_\d+$", "", monster_name)
+        if _no_num != monster_name:
+            candidate_ids.update(self._entity_ldg_all.get(_no_num, set()))
         if not candidate_ids:
             return {}
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
@@ -396,6 +400,11 @@ class DropRateEngine:
         if not _all_groups:
             _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
         candidate_ids.update(_all_groups)
+        # Also include LDGs from base name without trailing numeric suffix
+        # (e.g., Hoard01_3 gets SuperHoard LDG from Hoard01 → Hoard01_9 chain)
+        _no_num = re.sub(r"_\d+$", "", monster_name)
+        if _no_num != monster_name:
+            candidate_ids.update(self._entity_ldg_all.get(_no_num, set()))
         # Fuzzy fallback: try stripping FakeDeath/FromFakeDeath suffixes
         if not candidate_ids:
             for _fuzzy_suffix in ("FromFakeDeath", "FakeDeath"):
