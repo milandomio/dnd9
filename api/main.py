@@ -42,7 +42,7 @@ def _deliver(timer: PipelineTimer | None = None):
                 if dest.exists():
                     shutil.rmtree(dest)
                 shutil.copytree(item, dest)
-                shutil.rmtree(item)
+                shutil.rmtree(item, ignore_errors=True)
             else:
                 shutil.move(str(item), str(dest))
 
