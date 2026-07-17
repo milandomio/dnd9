@@ -39,6 +39,147 @@
   - 全页面总耗时从 **~4.6s → ~1.6s**（-3s）
   - 用户感知的"数据加载中→内容出现"从 ~2.8s 降到 ~1.2s
 
+## 模块级数据预加载 — 消除详情页首条数据 fetch 的串行等待
+
+### 原因
+
+Chrome DevTools 网络面板追踪 `/lootdrops/GoldenKey/` 发现首条数据 fetch 到 +1041ms 才启动：
+
+```
++0ms     HTML 到达 (18ms TTFB)
++38ms    meta.json / dungeon_modules.json preload 完成
++44ms    JS bundle 开始下载 (antd 415KB + react 180KB + index 119KB)
++130ms   JS 下载完毕
++130~400ms  浏览器解析 JS (~270ms，含 ESM 模块求值)
++400~1041ms React hydrateRoot 执行 (~640ms，含组件树对齐 SSR + Ant Design 复杂 DOM)
++1041ms  useEffect 中 fetch 启动
++1059ms  fetch 完成 (18ms，SW 缓存命中)
+```
+
+核心问题：**数据 fetch 被 React 水合串行阻塞**。虽然 `meta.json` 在模块级 fetch（ESM 求值时发起，数据在 hydration 前已就绪），但详情页的实体数据 fetch 放在 `useEffect` 里，必须等 React 水合完 → 组件 mount → effect 调度 → 才发出请求。这导致：
+
+1. **无用串行等待**：数据请求不需要 `dataVersion`（URL 不含版本号），却放在 `useEffect` 里等组件 mount
+2. **缓存利用不足**：SW 已经缓存了数据，但请求发得晚，缓存命中的 18ms 也被串行在后
+3. **首次渲染缺数据**：`useState(null)` 先渲染空状态 → fetch 完成 → `setData` 再渲染；两次渲染浪费 CPU
+
+### 方案
+
+在 **ESM 模块求值阶段**（JS 解析时，比 hydrateRoot 早 ~300ms）就直接解析 URL 发起数据 fetch，结果存模块级变量。组件从模块级变量读取数据作为 `useState` 初始值，`useEffect` 只作为导航切换的兜底。
+
+```
+BEFORE (串行):
+  ESM求值 → JS执行 → hydrateRoot → 组件mount → useEffect → fetch → setData → 渲染
+                                                       └── wait 1041ms ──┘
+
+AFTER (并行):
+  ESM求值 → fetch ─┬─ 完成 ────┐
+                    │           ↓
+  JS执行 → hydrateRoot → 组件mount → useState(预加载数据) → 渲染
+                                    └── useEffect: 命中跳过
+```
+
+### 变更文件
+
+#### `web/src/pages/LootdropDetailPage.tsx`
+
+**① 模块级变量 + 预加载 fetch**（行 70–83，组件函数之前）
+
+```ts
+let _preloadedLootdropUrl = '';
+let _preloadedLootdrop: LootdropItem | null = null;
+if (typeof window !== 'undefined') {
+  const _m = window.location.pathname.match(/^\/lootdrops\/([^/]+)/);
+  if (_m) {
+    _preloadedLootdropUrl = `/data/json/lootdrops/${_m[1]}.json`;
+    fetch(_preloadedLootdropUrl)
+      .then((r) => r.json())
+      .then((d) => { _preloadedLootdrop = d as LootdropItem; })
+      .catch(() => {});
+  }
+}
+```
+
+- `typeof window !== 'undefined'`：SSR 构建时跳过（Node.js 无 window）
+- URL 从 `location.pathname` 提取，与 React Router 的 `useParams` 同步
+- fetch 结果异步写入 `_preloadedLootdrop`，组件 mount 时可能已就绪
+
+**② useState 初始值优先使用预加载数据**（行 140–143）
+
+```ts
+const [data, setData] = useState<LootdropItem | null>(
+  _preloadedLootdrop ??
+    (effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null)
+);
+```
+
+数据优先级：**模块预加载 > SSR 内联数据 > null**
+
+**③ useEffect URL 对齐检查 + 移除 dataVersion 依赖**（行 194–219）
+
+```ts
+useEffect(() => {
+  if (!baseName) return;
+  if (effectiveSsrData?.item?.monsters) { ... return; }
+  const fetchName = currentSuffix && !isArtifact
+    ? `${baseName}_${currentSuffix}` : baseName;
+  const lootUrl = `/data/json/lootdrops/${fetchName}.json`;
+  if (_preloadedLootdrop?.monsters && _preloadedLootdropUrl === lootUrl) return;
+  if (lootFetchedRef.current) return;
+  lootFetchedRef.current = true;
+  // ...fallback fetch...
+}, [baseName, currentSuffix, effectiveSsrData]); // ← 移除 dataVersion
+```
+
+关键变更：
+- **`_preloadedLootdropUrl === lootUrl`**：精确比对预加载 URL 和当前组件需要的 URL，防止导航切换后误用旧预加载数据跳过新 fetch
+- **移除 `dataVersion` 依赖**：因为 URL 不含版本号，不需要等 meta.json 信号
+- **不变**：`lootFetchedRef.current` 兜底机制保留，导航切换时 `name` 的 effect 重置该 flag，确保新页面走 fallback fetch
+
+#### `web/src/pages/DetailPage.tsx`
+
+**① 模块级预加载**（行 30–45）
+
+```ts
+let _preloadedEntityUrl = '';
+let _preloadedEntity: Entity | null = null;
+if (typeof window !== 'undefined') {
+  const _m = window.location.pathname.match(/^\/(items|monsters|props)\/([^/]+)/);
+  if (_m) {
+    _preloadedEntityUrl = `/data/json/${_m[1]}/${_m[2]}.json`;
+    fetch(_preloadedEntityUrl)
+      .then((r) => r.json())
+      .then((d) => { _preloadedEntity = d as Entity; })
+      .catch(() => {});
+  }
+}
+```
+
+正则 `/(items|monsters|props)/:name` 覆盖所有实体详情页。
+
+**② useState + useEffect** 与 LootdropDetailPage 相同模式：
+
+- `useState` 初始值：`_preloadedEntity ?? (ssrData?.entity?.coords ? ssrData.entity : null)`
+- `useEffect` 开头：`if (_preloadedEntity?.coords && _preloadedEntityUrl === url) return;`
+- `useEffect` deps：移除 `dataVersion`，改为 `[page, name, ssrData]`
+- **删除 `useDataVersion()` 调用**（已无引用，`dataVersion` 在 DetailPage 无其他用途）
+
+### 正确性保证
+
+| 场景 | 预加载行为 | 预期结果 |
+|------|-----------|---------|
+| 首次加载（SSG 页面） | 模块级 fetch 在 hydration 前发起，可能已返回 | useState 带数据，useEffect 命中跳过 |
+| 导航切换（同页不同 name） | 模块级变量未更新（ESM cache），URL 比对不匹配 | useEffect fallback fetch 接手 |
+| SSR data 已注入（Quick mode 有数据） | 预加载数据覆盖 SSR（优先级更高） | ✅ 数据正确 |
+| 预加载失败（网络错误） | `_preloadedLootdrop` 保持 null | useEffect fallback fetch 兜底 |
+| 变体跳转（`/lootdrops/GoldenKey/` → `GoldenKey_5001/`） | 初始预加载 `GoldenKey.json` 与跳转后 `GoldenKey_5001.json` URL 不匹配 | fallback fetch 获取变体数据 |
+
+### 效果
+
+- 数据 fetch 从 +1041ms → **约 +200ms（ESM 求值阶段）**，提前 ~840ms 发起
+- 首次渲染带数据（`useState` 预填充），减少一次因 `setData` 触发的重渲染
+- 与 React 水合并行，消除无用的串行等待
+- 剩余 ~800ms 瓶颈为 JS 解析 + React 水合 CPU 时间，属架构限制（Quick mode SSG）
+
 ## Decimal-化 spawners.py 生成概率浮点除法
 
 - **原因**：lootdrops/SkullKey 页 CofferSmall(迷你宝盒组) spawn_rate=3.0001 应 3.0，根因是 ChestMedium spawner 中 ∑SpawnRate=999960（非 100万），`100*30000/999960` 产生 3.00012% 尾数
