@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import SectionHeader from '../components/SectionHeader';
+import VariantSwitch from '../components/VariantSwitch';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
 import type { DungeonModule } from '../types/data';
@@ -189,6 +190,8 @@ export default function LootdropDetailPage() {
   // Reset fetch guard when name changes (e.g. navigation between lootdrops)
   useEffect(() => {
     lootFetchedRef.current = false;
+    _preloadedLootdrop = null;
+    _preloadedLootdropUrl = '';
   }, [name]);
 
   useEffect(() => {
@@ -816,52 +819,11 @@ export default function LootdropDetailPage() {
       })()}
 
       {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 8,
-            justifyContent: 'center',
-            margin: '15px 0',
-            padding: 10,
-            background: tokens.surface,
-            borderRadius: 5,
-          }}
-        >
-          {Object.keys(data.variant_rarity).map((suffix) => {
-            const rarity = data.variant_rarity?.[suffix] ?? suffix;
-            const color = RARITY_COLORS[rarity] ?? tokens.muted;
-            const suffixes = Object.keys(data.variant_rarity!);
-            const defaultSuffix = suffixes.includes('5001')
-              ? '5001'
-              : suffixes[0];
-            const isActive =
-              currentSuffix === suffix ||
-              (!currentSuffix && suffix === defaultSuffix);
-            return (
-              <Link
-                key={suffix}
-                to={`/lootdrops/${itemName}_${suffix}/`}
-                style={{
-                  padding: '8px 15px',
-                  border: `2px solid ${color}`,
-                  borderRadius: 5,
-                  cursor: 'pointer',
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  color: isActive ? '#000' : tokens.text,
-                  background: isActive ? color : 'transparent',
-                  opacity: isActive ? 1 : 0.5,
-                  transition: 'all 0.2s',
-                  textDecoration: 'none',
-                  display: 'inline-block',
-                }}
-              >
-                {rarity}
-              </Link>
-            );
-          })}
-        </div>
+        <VariantSwitch
+          variantRarity={data.variant_rarity}
+          itemName={itemName}
+          currentSuffix={currentSuffix}
+        />
       )}
 
       <div
