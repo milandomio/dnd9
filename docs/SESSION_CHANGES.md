@@ -1,5 +1,13 @@
 # 2026-07-17 会话修改记录
 
+## 跨变体 Fallback 爆率 Bug（未修复，已记录暂存）
+
+- **原因**：`compute_drop_rate` 和 `compute_variant_rate` 的 `_base` 跨变体 fallback 允许未注册变体借用同物品其他变体的爆率，产生虚假数据
+- **关键发现**：`lootdrop_rate_items` 中仅注册了部分变体（如 `SurgicalKit_4001`、`HeaterShield_5001`/`8001`），其余变体均无直接绑定。fallback 通过 `_base` + `_VARIANT_SUFFIXES` 循环命中错误变体，算出不应存在的爆率
+- **变更文件**：
+  - `docs/CROSS_VARIANT_FALLBACK_ISSUE.md` — 问题文档（待解决）
+- **操作**：回滚到 checkpoint `e7623d8`，恢复原始状态，问题延期处理
+
 ## 修复重复请求 + preload URL 对齐 + 空版本跳过
 
 - **原因**：Playwright 网络追踪发现 `/lootdrops/EmberGem/` 页面打开时 `dungeon_modules.json` 被请求 3 次、`search_index.json` 被请求 2 次，页面卡顿约 1 秒。根因：
