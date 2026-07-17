@@ -1,5 +1,18 @@
 # 2026-07-17 会话修改记录
 
+## 诊断：ShipGraveyard_BladehandRefuge 模块翻译丢失原因
+
+**原因：** `ShipGraveyard_BladehandRefuge` 没有对应的 DungeonModule JSON 文件（`Data/Generated/V2/Dungeon/DungeonModule/` 下不存在），仅作为地图文件存在（`Maps/.../ShipGraveyard_BladehandRefuge_A.json`）。`ModulesImporter` 通过 `_build_path_group_map()` 将其添加为"extra row"，但：
+- `translation_key` = `""`（没有源 DungeonModule JSON 继承 Name.Key）
+- `sl_base_name` = `""`（没有 SubLevelAsset 引用）
+- `NameResolver` 所有翻译策略均失败（无 Game.json key `Text_DesignData_Dungeon_DungeonModule_BladehandRefuge`、无 HARDCODED 条目、模糊匹配无效）
+
+**影响：** 前端显示英文名 `ShipGraveyard_BladehandRefuge`，无中文翻译。
+
+**修复方式：** 在 `config.py` 的 `HARDCODED_TRANSLATIONS` 中添加 `"ShipGraveyard_BladehandRefuge": "刃手避难所"`（沿用 HARDCODED 中 `Bladehand_` 前缀的"刃手"译法），确保第 140 行 `name in HARDCODED_TRANSLATIONS` 命中。
+
+**变更文件：** `api/src/config.py`
+
 ## 修复：TearofHrimthurs 不显示爆率
 
 **原因：** spawner keyword `TearofHrithurs` 比物品名 `TearofHrimthurs` 少一个 m，导致 `_spawner_ldg` 无 item_name 映射，enrichment 无法注入 `group_drop_info`。前端 `variant_count > 1` 条件又过滤了非变体物品。
