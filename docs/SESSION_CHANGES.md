@@ -19,7 +19,7 @@
 - **变更文件**：
   - `api/src/lootdrop_builder.py` — `build_merged_loot_map()` 中 `_8001` 使用 `merged_loot[base]` 代替 `loot_map.get(v8001, [])`
 - **验证**：RondelDagger_8001 group_drop_info.ShipGraveyard 从 1 条（宝藏堆 0%）恢复到 29 条完整参考爆率
-- **剩余操作**：见 `docs/FIX_8001_VARIANT_GROUP_DROP_INFO.md`
+- **完成状态**：前端构建 + 启动验证均通过，HTTP 200
 
 ## 新增 DwarvenLockWay.webp 地图图片
 
