@@ -23,6 +23,7 @@ from db_manager import DatabaseManager
 from drop_rate import DropRateEngine
 from enrichment import enrich_all_entities
 from entity_export import export_items, export_monsters, export_props
+from image_utils import sync_webp_images
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
 from lootdrop_builder import (
     build_and_save_lootdrop_details,
@@ -280,6 +281,11 @@ def run():
 
         print("\nExporting JSON files...")
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+        if GAME_ROOT.exists():
+            pipe.log("[JSON] syncing webp images...")
+            sync_webp_images(pipe.log)
+
         translations = db.get_translations_map()
 
         resolver = NameResolver(translations)
