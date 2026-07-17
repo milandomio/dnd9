@@ -30,8 +30,14 @@ export default defineConfig(({ mode }) => {
           let out = html.replaceAll(' crossorigin', '');
           if (!ver) return out;
           const short = Number(ver).toString(36);
-          const preload = `<link rel="preload" href="/data/${short}/json/dungeon_modules.json" as="fetch" crossorigin="anonymous">`;
-          return out.replace('</title>', `</title>\n    ${preload}`);
+          const preloads = [
+            `<link rel="preload" href="/data/json/meta.json" as="fetch" crossorigin="anonymous">`,
+            `<link rel="preload" href="/data/${short}/json/dungeon_modules.json" as="fetch" crossorigin="anonymous">`,
+          ];
+          return out.replace(
+            '</title>',
+            `</title>\n    ${preloads.join('\n    ')}`
+          );
         },
       },
       VitePWA({
