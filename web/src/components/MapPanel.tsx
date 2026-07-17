@@ -11,7 +11,6 @@ export interface MapDot {
 }
 
 export interface MapPanelProps {
-  imgName: string;
   sx: number;
   sy: number;
   dots: MapDot[];
@@ -22,8 +21,8 @@ export interface MapPanelProps {
   /** true = 单分类，用 zColor 着色圆点；false = 多分类，用 dot.color */
   singleCategory?: boolean;
   children?: React.ReactNode;
-  /** blob URL from externally managed fetch (supports AbortController cancellation) */
-  imageSrc?: string;
+  /** Image URL (direct or blob) managed by the parent */
+  imageSrc: string;
 }
 
 function zColor(z: number): string {
@@ -35,7 +34,6 @@ function zColor(z: number): string {
 const GLOW = '0 0 4px #fff, 0 0 2px #000';
 
 function MapPanel({
-  imgName,
   sx,
   sy,
   dots,
@@ -48,7 +46,7 @@ function MapPanel({
   imageSrc,
 }: MapPanelProps) {
   const { tokens } = useTheme();
-  const imgUrl = imageSrc || `/data/img/${imgName}.webp`;
+  const imgUrl = imageSrc;
 
   return (
     <div

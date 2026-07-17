@@ -707,9 +707,7 @@ export default function DetailPage() {
                   )}
 
                   <MapPanel
-                    imgName={
-                      mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
-                    }
+                    imageSrc={`/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
                     sx={sx}
                     sy={sy}
                     dots={filteredDots}

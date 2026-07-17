@@ -637,9 +637,7 @@ export default function QuestItemGroupPage() {
                     </div>
                   )}
                   <MapPanel
-                    imgName={
-                      mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'
-                    }
+                    imageSrc={`/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
                     sx={sx}
                     sy={sy}
                     dots={dots.map((d) => ({
