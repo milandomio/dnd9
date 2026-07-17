@@ -20,10 +20,10 @@
 
 - [x] 代码修复已提交（`9ef1a483`）
 - [x] 管道已运行（数据已验证：RondelDagger_8001 ShipGraveyard 29 条参考爆率，正常）
-- [x] 构建前端：`cd web && npm run build`
-- [x] 启动验证：`kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; cd web && npx vite preview --port 8080 --host 0.0.0.0 &`
-- [x] 验证：`curl -s http://localhost:8080/lootdrops/RondelDagger_8001/ | grep 沉船`
-- [x] 本地提交 + 更新 SESSION_CHANGES.md
+- [ ] 构建前端：`cd web && npm run build`
+- [ ] 启动验证：`kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; cd web && npx vite preview --port 8080 --host 0.0.0.0 &`
+- [ ] 验证：`curl -s http://localhost:8080/lootdrops/RondelDagger_8001/ | grep 沉船`
+- [ ] 本地提交 + 更新 SESSION_CHANGES.md
 
 ## 验证方法
 

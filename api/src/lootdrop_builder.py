@@ -150,14 +150,14 @@ def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str]]:
     print(f"  variant families merged: {len(families)} ({len(skip_variants)} variants skipped)")
     print(f"  unique items after merge: {len(merged_loot)}")
 
-    # split _8001 artifacts: keep as own entry, inherit base item's full monster list
+    # split _8001 artifacts: keep as own entry (monsters are shared with base)
     for _, variants in list(families.items()):
         _8001 = [v for v in variants if v.endswith("_8001")]
         if not _8001:
             continue
         v8001 = _8001[0]
         skip_variants.discard(v8001)
-        merged_loot[v8001] = sorted(merged_loot.get(_, loot_map.get(v8001, [])))
+        merged_loot[v8001] = sorted(loot_map.get(v8001, []))
     for item_name in list(loot_map):
         if not item_name.endswith("_8001"):
             continue
@@ -165,7 +165,7 @@ def build_merged_loot_map(db) -> tuple[dict[str, list[str]], set[str]]:
             continue
         base = item_name.removesuffix("_8001")
         if base in merged_loot:
-            merged_loot[item_name] = sorted(merged_loot[base])
+            merged_loot[item_name] = sorted(loot_map[item_name])
 
     # Inject SuperHoard spawners as separate monster entries
     superhoard_map: dict[str, list[str]] = {}
