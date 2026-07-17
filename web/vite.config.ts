@@ -87,7 +87,7 @@ export default defineConfig(({ mode }) => {
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-img',
-                expiration: { maxEntries: 250 },
+                expiration: { maxEntries: 300 },
               },
             },
           ],
