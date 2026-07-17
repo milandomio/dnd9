@@ -790,3 +790,15 @@ if (typeof window !== 'undefined') {
 **关键修复：**
 - 模块级 `_preloadedLootdrop` 缓存在客户端导航后仍保留旧页面数据，干扰 useEffect 数据拉取逻辑
 - 在 `name` 变化的 useEffect 中同时清除 `_preloadedLootdrop` 和 `_preloadedLootdropUrl`，确保下次 fetch 不被跳过
+
+### 宝藏堆神器爆率缺失修复
+
+**原因：** `build_and_save_lootdrop_details` 中 `monsters_out` 的每个怪物条目未填充 `drop_rates` 字段，导致前端地图卡片中不显示爆率。此问题在 _8001 神器变体页面（继承基础物品的完整怪物列表后）尤为明显。
+
+**变更文件：**
+- `api/src/lootdrop_builder.py` — 在 `max_score` 计算后，聚合 `group_drop_info` 中各模式的最高爆率，注入到每个怪物条目的 `drop_rates` 字段
+
+**修复效果：**
+- 所有 lootdrop 详情页的怪物现在都有 `drop_rates`（各模式下跨组取最大值）
+- 前端地图卡片中怪物名称旁正确显示 `[豪客赛:X%]` 等爆率信息
+- WarMaul_8001 页面：宝藏堆 显示 `[豪客赛:0.0107%][逆袭赛:0.0107%]`

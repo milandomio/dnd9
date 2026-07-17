@@ -308,6 +308,9 @@ class DropRateEngine:
         found = False
         # Pre-compute base name for variant fallback (e.g. Mitre_7001 -> Mitre)
         _base = _VARIANT_RE.sub(r"\1", item_name) if _VARIANT_RE.match(item_name) else None
+        # Extract variant luck_grade from item_name suffix (e.g. _8001 -> 8)
+        _vluck_m = re.search(r"_(\d)\d{3}$", item_name) if item_name else None
+        _variant_luck_grade = int(_vluck_m.group(1)) if _vluck_m else None
         for ld_id, lr_id, _ in grade_data:
             rate_items = self._ld_rate_items.get(ld_id, {})
             item_info = rate_items.get(item_name)
@@ -328,7 +331,10 @@ class DropRateEngine:
                 continue
             found = True
             luck_grade, item_count = item_info
-            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+            # Use variant's luck_grade for pool weight (artifact=8, legendary=6, etc.)
+            # but base item's luck_grade for shared count (item lives at base grade)
+            _pool_lg = _variant_luck_grade if _variant_luck_grade is not None else luck_grade
+            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(_pool_lg, 0)
             _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
             _rate_total = self._ld_rate_totals.get(lr_id, 10000)
             total_weight += _pool_weight / _shared / _rate_total
