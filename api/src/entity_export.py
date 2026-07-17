@@ -38,6 +38,11 @@ def export_items(
         name = r["item_name"]
         if name in skip_variants:
             continue
+        # Only keep ground loot items (have "Ground" in lootdrop relationships
+        # or no lootdrop relationships at all for decoration/quest items)
+        _mons = merged_loot.get(name, [])
+        if _mons and "Ground" not in _mons:
+            continue
         coords = filter_coords(all_coords.get(name, []), item_names)
         # Try ore name cleaning: GoldOres → GoldOre
         if not coords:
