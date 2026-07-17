@@ -8,6 +8,14 @@
   - `api/src/collector.py` — 在 JSON 导出阶段前调用 `sync_webp_images()`
 - **⚠️ 重要规则**：`api/src/img/` 下的 .webp 文件是**不可再生资源**，禁止删除。这些文件从游戏解包 PNG 转换而来，一旦丢失无法从游戏重新提取。
 
+## 修复 _8001 变体 group_drop_info 缺少参考爆率
+
+- **原因**：`build_merged_loot_map()` 中 `_8001` 变体只使用自己的怪物列表（RondelDagger_8001 仅 3 个怪物），而非继承基底 RondelDagger 的合并全量列表（40 个怪物），导致 ShipGraveyard 参考爆率丢失。
+- **变更文件**：
+  - `api/src/lootdrop_builder.py` — `build_merged_loot_map()` 中 `_8001` 使用 `merged_loot[base]` 代替 `loot_map.get(v8001, [])`
+- **验证**：RondelDagger_8001 group_drop_info.ShipGraveyard 从 1 条（宝藏堆 0%）恢复到 29 条完整参考爆率
+- **剩余操作**：见 `docs/FIX_8001_VARIANT_GROUP_DROP_INFO.md`
+
 ## 新增 DwarvenLockWay.webp 地图图片
 
 - **原因**：FireDeep 组模块 `DwarvenLockWay`（矮人闸道）的源 PNG 文件存在，但项目中无 PNG→WebP 自动转换流水线，webp 文件缺失，前端始终显示占位图 `RareModule_1x1`
