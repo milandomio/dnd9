@@ -1,6 +1,7 @@
 """Drop rate computation engine extracted from collector.py."""
 
 import json
+import re
 from decimal import ROUND_HALF_UP, Decimal
 
 from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
@@ -76,6 +77,11 @@ class DropRateEngine:
                     _base = HARD_SUFFIX_RE.sub("", _key)
                     _base = QUALITY_RE.sub("", _base)
                     self._entity_ldg_all.setdefault(_base, set()).add(_row["lootdrop_group_id"])
+                    # Also associate with base name without trailing numeric suffix
+                    # (e.g., HoardChest01_9 → HoardChest01 gets SuperHoard LDG)
+                    _num_base = re.sub(r"_\d+$", "", _base)
+                    if _num_base != _base:
+                        self._entity_ldg_all.setdefault(_num_base, set()).add(_row["lootdrop_group_id"])
             for _key in (_row["spawner_keyword"], _row["entity_name"]):
                 _m = ORE_QUALITY_RE.match(_key)
                 if _m:

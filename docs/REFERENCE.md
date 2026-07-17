@@ -73,6 +73,30 @@
 返回 `dict[str, list[dict]]`（search_term → 坐标列表）。后续所有导出段（items、monsters、props、
 dungeon_modules_coords、lootdrops）通过 `all_coords.get(name, [])` 查询，消除了逐实体 N+1 查询。
 
+### 物品坐标链式反查（lootdrop chain reverse lookup）
+
+部分物品（如武器、护甲）没有直接的地面摆放坐标，只存在于 lootdrop 容器（宝箱/地表掉落）中。
+管道在 `collector.py` 中通过以下 SQL JOIN 链预计算 `item_name → spawner_keywords` 映射：
+
+```
+lootdrop_rate_items.item_name
+  → lootdrop_rate_items.lootdrop_id
+  → lootdrop_groups.lootdrop_id
+  → lootdrop_groups.group_id
+  → spawner_entries.lootdrop_group_id
+  → spawner_entries.spawner_keyword
+  → spawners.keyword → 坐标
+```
+
+**实现位置**：
+- `collector.py:312-323`：`item_coord_chain_map` 的构建（`VARIANT_RE` 剥离 `_\d{4}` 后缀匹配基名）
+- `entity_export.py:46-51`：`export_items()` 中直接坐标查找失败后的链式回退
+
+**注意事项**：
+- 链式坐标的 `keyword` / `search_term` 是 spawner 容器名，不是物品名，因此不能经 `filter_coords()` 过滤（会因 `keyword not in item_names` 被误杀）
+- 链式坐标仅在 `all_coords.get(name, [])` 返回空且矿石名匹配也失败后才触发，不影响已有直接坐标的物品
+- 返回的坐标数据中 `label` 字段仍为 spawner 原名（如 `TearofHrithurs`），便于区分坐标来源
+
 ### Spawner 坐标提取与 AttachParent 链
 
 `search_engine.py` 的 `extract_spawners()` 从地图 JSON 提取 spawner 坐标。地图中每个 `BP_GameSpawner_C`
