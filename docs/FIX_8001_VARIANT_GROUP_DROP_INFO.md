@@ -2,11 +2,11 @@
 
 ## 问题
 
-`/lootdrops/RondelDagger_8001/` 的"沉船墓场1层"参考爆率缺失。基底 `RondelDagger` 有 40 个怪物/容器，而变体 `RondelDagger_8001` 只有 3 个。
+`/lootdrops/RondelDagger_8001/` 的"沉船墓场1层"参考爆率缺失。基底 `RondelDagger` 有 40 个怪物/容器跨越 8 个地图（Inferno/FireDeep/GoblinCave/Ruins/IceAbyss/ShipGraveyard/Crypt/IceCavern），而变体 `RondelDagger_8001` 只有 3 个。
 
 ## 根因
 
-`api/src/lootdrop_builder.py:build_merged_loot_map()` 中，`_8001` 变体只分配了自己的怪物列表（`loot_map.get(v8001, [])`），而非继承基底的合并全量列表。代码注释写着"monsters are shared with base"但未实现。
+`api/src/lootdrop_builder.py:build_merged_loot_map()` 中，`_8001` 变体只分配了自己的怪物列表（`loot_map.get(v8001, [])`），而非继承基底的合并全量列表。代码注释写着"monsters are shared with base"但未实现。**注意：8 个地图是正确的**，RondelDagger（影刃）本身就分布在这些地图中，变体理应继承基底的完整地图分布。
 
 ## 修复
 
@@ -19,11 +19,10 @@
 ## 状态
 
 - [x] 代码修复已提交（`9ef1a483`）
-- [x] 管道已运行（数据已验证：RondelDagger_8001 ShipGraveyard 29 条参考爆率，正常）
-- [ ] 构建前端：`cd web && npm run build`
-- [ ] 启动验证：`kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; cd web && npx vite preview --port 8080 --host 0.0.0.0 &`
-- [ ] 验证：`curl -s http://localhost:8080/lootdrops/RondelDagger_8001/ | grep 沉船`
-- [ ] 本地提交 + 更新 SESSION_CHANGES.md
+- [x] 管道已验证：ShipGraveyard 1 条 → 29 条参考爆率
+- [x] **已回滚**（`f3c56bdd`）：_8001 变体回到 `loot_map.get(v8001, [])`（只用自己 spawners）
+- [x] 8 个地图分类是**正确的**——RondelDagger（影刃）在游戏数据中就分布于这 8 个地图模块
+- [ ] 实际问题是 ShipGraveyard 显示 29 条但前端渲染缺失参考爆率，需另找根因
 
 ## 验证方法
 
