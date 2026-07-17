@@ -1,5 +1,17 @@
 # 2026-07-17 会话修改记录
 
+## 修复：TearofHrimthurs 不显示爆率
+
+**原因：** spawner keyword `TearofHrithurs` 比物品名 `TearofHrimthurs` 少一个 m，导致 `_spawner_ldg` 无 item_name 映射，enrichment 无法注入 `group_drop_info`。前端 `variant_count > 1` 条件又过滤了非变体物品。
+
+**变更：**
+- `api/src/drop_rate.py` — 预加载时从 `lootdrop_rate_items` 反向取 item base name → lootdrop_group_id 映射，处理 keyword 与 item_name 不一致的情况
+- `web/src/pages/DetailPage.tsx` — 移除 `variant_count > 1` 条件，有 `group_drop_info` 就显示；variant 仅作爆率分摊和 "(N种选1)" 文字
+
+**关键逻辑：**
+- `TearofHrimthurs_5001`(lootdrop_rate_items) → 去后缀 `_5001` → `TearofHrimthurs` → 通过 `_ld_id_to_groups` 关联 `ID_LootdropGroup_TearofHrimthurs`
+- 综合爆率：PVE 0.1%, 普通 0.35%, 豪客赛 0.5%, 逆袭赛 0.5%
+
 ## 回滚 _8001 变体继承基底怪物列表
 
 - **原因**：`9ef1a483` 修复让 _8001 变体继承基底全量怪物列表，但 RondelDagger 跨越 8 个地图（Inferno/FireDeep/GoblinCave/Ruins/IceAbyss/ShipGraveyard/Crypt/IceCavern），`group_drop_info` 中继承这 8 个地图是正确的行为，无需变更
