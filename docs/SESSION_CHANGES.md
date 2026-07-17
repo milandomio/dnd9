@@ -1,5 +1,10 @@
 # 2026-07-17 会话修改记录
 
+## SW 图片缓存 maxEntries 250→300
+
+- **原因**：游戏模块图片增加，`api/src/img/` 现已有 255 个 webp，原 250 上限不够用
+- **变更文件**：`web/vite.config.ts` — `df5-data-img` 缓存上限 250 → 300
+
 ## 新增 PNG→WebP 自动转换流水线
 
 - **原因**：V5 项目原本没有任何 PNG→WebP 转换代码，`api/src/img/` 中的 webp 文件被视为预存静态资产。新增游戏 PNG 时无法自动生成 webp。
