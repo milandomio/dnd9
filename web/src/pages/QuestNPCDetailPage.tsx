@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SearchOutlined } from '@ant-design/icons';
@@ -102,7 +102,6 @@ export default function QuestNPCDetailPage() {
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const scrollToRef = useRef<HTMLDivElement>(null);
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
@@ -113,6 +112,8 @@ export default function QuestNPCDetailPage() {
 
   const highlightQuestNum = (location.state as { questNumber?: number })
     ?.questNumber;
+  const highlightSearchText = (location.state as { searchText?: string })
+    ?.searchText;
 
   useEffect(() => {
     if (ssrData) return;
@@ -141,15 +142,21 @@ export default function QuestNPCDetailPage() {
 
   const refresh = () => setAllNpcs((prev) => [...prev]);
 
+  // Set search text from navigation state
+  useEffect(() => {
+    if (highlightSearchText) setSearch(highlightSearchText);
+  }, [highlightSearchText]);
+
   // Scroll to highlighted quest after data loads
   useEffect(() => {
-    if (highlightQuestNum && scrollToRef.current) {
-      scrollToRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }
-  }, [highlightQuestNum, allNpcs]);
+    if (!highlightQuestNum) return;
+    const timer = setTimeout(() => {
+      document
+        .querySelector(`[data-quest-num="${highlightQuestNum}"]`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [highlightQuestNum, npc?.npc_name]);
 
   if (!npc) {
     return (
@@ -180,14 +187,20 @@ export default function QuestNPCDetailPage() {
       q.quest_number > lastAffinityQuest.quest_number
     )
       return false;
-    if (!search) return true;
-    const s = search.toLowerCase();
-    return (
-      q.title.toLowerCase().includes(s) ||
-      q.id.toLowerCase().includes(s) ||
-      q.contents.some((c) => c.target.toLowerCase().includes(s))
-    );
+    return true;
   });
+
+  const matchedQuestNum = (() => {
+    if (!search) return null;
+    const s = search.toLowerCase();
+    const found = npc.quests.find(
+      (q) =>
+        q.title.toLowerCase().includes(s) ||
+        q.id.toLowerCase().includes(s) ||
+        q.contents.some((c) => c.target.toLowerCase().includes(s))
+    );
+    return found?.quest_number ?? null;
+  })();
 
   const npcDone = lsGet(`quest_npc_npc_${npc.npc_name}`);
 
@@ -228,7 +241,10 @@ export default function QuestNPCDetailPage() {
                 });
               } else {
                 navigate(`/quest_npc/${r.npc.npc_name}`, {
-                  state: { questNumber: r.quest.quest_number },
+                  state: {
+                    questNumber: r.quest.quest_number,
+                    searchText: r.quest.title,
+                  },
                 });
               }
             }}
@@ -330,18 +346,26 @@ export default function QuestNPCDetailPage() {
           return (
             <div
               key={q.id}
-              ref={
-                q.quest_number === highlightQuestNum ? scrollToRef : undefined
-              }
               data-quest-num={q.quest_number}
               style={{
-                background: tokens.card,
-                border: questDone
-                  ? '1px solid #388E3C'
-                  : `1px solid ${tokens.border}`,
+                background:
+                  q.quest_number === matchedQuestNum
+                    ? dark
+                      ? '#555'
+                      : '#e8e8e8'
+                    : tokens.card,
+                border:
+                  q.quest_number === matchedQuestNum
+                    ? `2px solid ${tokens.accent}`
+                    : questDone
+                      ? '1px solid #388E3C'
+                      : `1px solid ${tokens.border}`,
                 borderRadius: 8,
                 padding: questDone ? '4px 14px' : 14,
-                boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                boxShadow:
+                  q.quest_number === matchedQuestNum
+                    ? '0 0 12px rgba(100,180,255,0.4)'
+                    : '0 2px 8px rgba(0,0,0,0.3)',
                 transition: 'box-shadow 0.3s, transform 0.3s, opacity 0.2s',
                 opacity: questDone ? 0.5 : 1,
                 overflow: 'hidden',
