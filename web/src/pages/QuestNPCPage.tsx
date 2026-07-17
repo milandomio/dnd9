@@ -109,7 +109,10 @@ export default function QuestNPCPage() {
             allNpcs={data}
             onSelect={(r: QuestSearchResult) =>
               navigate(`/quest_npc/${r.npc.npc_name}`, {
-                state: { questNumber: r.quest.quest_number },
+                state: {
+                  questNumber: r.quest.quest_number,
+                  searchText: r.quest.title,
+                },
               })
             }
           />

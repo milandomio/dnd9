@@ -487,4 +487,21 @@
 - **教训**：此文件上次被删后又因"用户会看到旧内容"的理由被加回。错。`autoUpdate` + `skipWaiting()` 激活后，`StaleWhileRevalidate` / `NetworkFirst` 策略自动用新数据更新缓存，用户不刷新也会在后台同步。**客户不需要知道 SW 更新了，更不需要手动确认**
 - **变更文件**：
   - 删除 `web/src/components/SWUpdateBanner.tsx`
-  - `web/src/AppInner.tsx` — 移除 import 和 `<SWUpdateBanner />` 标签
+   - `web/src/AppInner.tsx` — 移除 import 和 `<SWUpdateBanner />` 标签
+
+## 坐标位置去重 + 矿石品质提取与前端的品质切换
+
+- **原因**：钴矿类掉落数据中同一物理点位因品质等级（VeryLow/Low/Med/High）被导出为多条记录，导致计数膨胀（5点位 × 4品质 = 20条）。前端按 (x,y,z) 去重后显示正确点位；同时提取品质字段支持切换查看
+- **公式**：
+  - 品质概率：豪客赛→High 100%，普通赛→Low 90%+Med 10%，PVE→VeryLow 100%
+  - 钴矿组在洞坑大厅展现：默认"高品质(豪客赛100%)"去重后 5 点位
+- **变更文件**：
+  - `api/src/translator.py` — `build_coord_out()` 从 keyword/original_keyword 提取品质后缀
+  - `api/src/lootdrop_builder.py` — inline coord 生成同样提取 quality 字段
+  - `web/src/pages/LootdropDetailPage.tsx`：
+    - `LootdropCoord` 接口新增 `quality?: string`
+    - mapGroups 循环中按 `qualityFilter` 过滤坐标
+    - `computeModuleScore` 支持 `quality` 字段
+    - `visibleCountByMonster` / `bottomCount` 按 (translation,x,y,z) 去重计数
+    - 新增品质切换 UI（默认 High，点击切换品质/显示全部）
+- **CobaltOres 数据**：重新运行管道后每组品质各 5 坐标（钴矿组）/ 13 坐标（钴矿随机）
