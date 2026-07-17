@@ -802,3 +802,46 @@ if (typeof window !== 'undefined') {
 - 所有 lootdrop 详情页的怪物现在都有 `drop_rates`（各模式下跨组取最大值）
 - 前端地图卡片中怪物名称旁正确显示 `[豪客赛:X%]` 等爆率信息
 - WarMaul_8001 页面：宝藏堆 显示 `[豪客赛:0.0107%][逆袭赛:0.0107%]`
+
+### 宝藏堆神器爆率调查与 compute_drop_rate 修复
+
+**调查结论：** 宝藏堆在 RondelDagger_8001 页面显示的神器爆率 `[豪客赛:0.0107%]` 是**正确的**。
+
+**数据链路：**
+- `Hoard01_3` 的候选 LDG 包含 `ID_LootDropGroup_SuperHoard`
+- SuperHoard 在 mode=3(豪客赛) floor=23 绑定 `ID_Lootdrop_Drop_HoardWeaponArmor`
+- 该 LootDrop 直接包含 `WarMaul_8001` 条目（LuckGrade=8）
+- 对应的 `ID_Droprate_Hoard_WeaponArmor_3023` 有 LuckGrade 8 weight=30（非零）
+
+用户检查的 `ID_Droprate_Hoard_Treasure_*` 的 LG8=0，但 **SuperHoard 走的是 WeaponArmor 通道**，该通道的 droprate 文件有 LG8 数据。
+
+**bug：** `compute_drop_rate` 在 item fallback 时使用基础物品的 luck_grade（如 WarMaul→5）计算 pool weight，而非使用变体后缀的 luck_grade（如 8001→8）。导致某些场景下神器爆率使用了非神器的权重。
+
+**修复：** 从 item_name 的 `_\d{4}` 后缀提取 luck_grade，用于 pool weight 查询；shared count 仍使用物品本身的 luck_grade（与 `compute_variant_rate` 的行为一致）。
+
+**变更文件：**
+- `api/src/drop_rate.py` — `compute_drop_rate` 新增 `_variant_luck_grade` 提取逻辑
+
+### get_group_drop_rates 分离主/备 LDG 修复
+
+**原因：** `_get_candidate_ids` 的 `_no_num` fallback（去尾数后缀）导致 `Hoard01_3`（宝藏堆）继承 `Hoard01_9`（超级宝藏堆）的 `ID_LootDropGroup_SuperHoard` LDG，进而拿到非法的 LuckGrade 8 神器爆率。
+
+**修复：** `get_group_drop_rates` 将候选 LDG 分为 `_primary_set`（spawner_ldg 直连）和 `_fallback_set`（entity_ldg_all + 去尾数聚合）。对于 `luck_grade >= 8` 的变体物品，仅使用 `_primary_set` 计算爆率，不使用 fallback LDGs。
+
+**影响：**
+- 宝藏堆（Hoard01_3）→ 神器爆率 = 0 ✓
+- 超级宝藏堆（SuperHoard01_9）→ 神器爆率正确（Primary 直连 SuperHoard LDG）✓
+- 其他实体（AncientStingray 等）→ 不变 ✓
+- 基础物品爆率（非变体）→ 不变（走原有 primary+fallback 逻辑）
+
+**变更文件：**
+- `api/src/drop_rate.py` — `get_group_drop_rates` 分离 primary/fallback LDGs，LG≥8 仅用 primary
+
+### 回退怪物级 drop_rates 注入
+
+**原因：** 前端地图分组头部"参考爆率"已展示完整爆率信息，无需在每个地图卡片怪物名旁重复显示 `[豪客赛:X%]`。`N种选M`/`N点选1` 等变体展示不受影响（数据在 coords 的 variant_count 字段）。
+
+**操作：** 删除 `lootdrop_builder.py` 中 `max_score` 计算后聚合 `group_drop_info` 注入 `monsters[]` 每个条目的 `drop_rates` 字段的代码块。
+
+**变更文件：**
+- `api/src/lootdrop_builder.py` — 移除 `_agg_drop_rates` 聚合与注入逻辑

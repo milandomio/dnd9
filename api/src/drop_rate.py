@@ -141,6 +141,22 @@ class DropRateEngine:
                     _suffix = _item_name[-4:]  # e.g. "5001" from "HeaterShield_5001"
                     self._existing_variant_suffixes.setdefault(_base, set()).add(_suffix)
 
+        # Map item base names from lootdrop_rate_items to lootdrop_group_id.
+        # Handles spawners with empty entity_name where keyword != item_name
+        # (e.g. keyword "TearofHrithurs" vs item "TearofHrimthurs").
+        _base_to_group: dict[str, str] = {}
+        for _ld_id, _items in self._ld_rate_items.items():
+            _gids = self._ld_id_to_groups.get(_ld_id, set())
+            if not _gids:
+                continue
+            for _item_name in _items:
+                _base = re.sub(r"_\d{4}$", "", _item_name)
+                if _base and _base != _item_name and _base not in self._spawner_ldg:
+                    for _gid in _gids:
+                        _base_to_group.setdefault(_base, _gid)
+        for _base, _gid in _base_to_group.items():
+            self._spawner_ldg[_base] = _gid
+
         # group → spawner keywords mapping (for per-group filtering in enrichment)
         for _row in _c.execute("SELECT DISTINCT keyword, map_base FROM spawners WHERE map_base != ''"):
             _g = self._map_base_to_group.get(_row["map_base"], "")
@@ -344,30 +360,33 @@ class DropRateEngine:
 
     def get_group_drop_rates(self, item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
         """Compute per-mode drop rates for an item/monster in a map group."""
-        candidate_ids: set[str] = set()
         _primary = self._spawner_ldg.get(monster_name, "")
+        _primary_set: set[str] = set()
         if _primary:
-            candidate_ids.add(_primary)
+            _primary_set.add(_primary)
         for _suffix in ("_Unique", "_Elite", "_Nightmare", "_Common"):
             _v = self._spawner_ldg.get(monster_name + _suffix, "")
             if _v:
-                candidate_ids.add(_v)
-        if not candidate_ids:
+                _primary_set.add(_v)
+        if not _primary_set:
             _lower = monster_name.lower()
             for _k, _v in self._spawner_ldg.items():
                 if _k.lower() == _lower:
-                    candidate_ids.add(_v)
+                    _primary_set.add(_v)
                     break
         _all_groups = self._entity_ldg_all.get(monster_name, set())
         if not _all_groups:
             _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
-        candidate_ids.update(_all_groups)
+        _fallback_set: set[str] = set(_all_groups)
         # Also include LDGs from base name without trailing numeric suffix
         _no_num = re.sub(r"_\d+$", "", monster_name)
         if _no_num != monster_name:
-            candidate_ids.update(self._entity_ldg_all.get(_no_num, set()))
-        if not candidate_ids:
-            return {}
+            _fallback_set.update(self._entity_ldg_all.get(_no_num, set()))
+        # Detect variant item (e.g. WarMaul_8001) — use primary LDG only for artifact rates
+        _variant_luck = None
+        _vluck_m = re.search(r"_(\d)\d{3}$", item_name) if item_name else None
+        if _vluck_m:
+            _variant_luck = int(_vluck_m.group(1))
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
         if not suffixes:
             return {}
@@ -376,10 +395,19 @@ class DropRateEngine:
             best_rate = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
-                for _ldg_id in candidate_ids:
+                # Try primary LDGs first
+                for _ldg_id in _primary_set:
                     rate = self.compute_drop_rate(_ldg_id, item_name, full_grade)
                     if rate > best_rate:
                         best_rate = rate
+                # For high-luck variant items (LG>=8), only use primary LDGs
+                if _variant_luck is None or _variant_luck < 8:
+                    for _ldg_id in _fallback_set:
+                        if _ldg_id in _primary_set:
+                            continue
+                        rate = self.compute_drop_rate(_ldg_id, item_name, full_grade)
+                        if rate > best_rate:
+                            best_rate = rate
             mode_rates[mode_name] = _round_rate(best_rate * 100)
         return mode_rates
 

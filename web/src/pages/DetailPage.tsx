@@ -753,20 +753,20 @@ export default function DetailPage() {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
                     if (!gdi || gdi.length === 0) return null;
-                    const hasVariant = mapCoords.some(
-                      (c) => c.variant_count && c.variant_count > 1
-                    );
-                    if (!hasVariant) return null;
                     const forcedVc = mapCoords.find(
                       (c) => c.variant_count && c.variant_count > 1
                     );
+                    const hasVariant = !!forcedVc;
                     const posCount = new Set(
                       mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
                     ).size;
-                    const forcedVcN = forcedVc?.variant_names?.length
-                      ? (forcedVc.variant_count as number)
-                      : posCount;
-                    const adjRate = (v: number) => +(v / forcedVcN).toFixed(4);
+                    const forcedVcN = hasVariant
+                      ? forcedVc!.variant_names?.length
+                        ? (forcedVc!.variant_count as number)
+                        : posCount
+                      : 1;
+                    const adjRate = (v: number) =>
+                      hasVariant ? +(v / forcedVcN).toFixed(4) : v;
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
                         (c) => c.label && labelMatch(c.label, info.translation)
@@ -858,24 +858,24 @@ export default function DetailPage() {
                             )}
                           </span>
                         ))}
-                        {(() => {
-                          if (!forcedVc) return null;
-                          const vc = forcedVc;
-                          const names = vc.variant_names ?? [];
-                          if (names.length > 0) {
+                        {hasVariant &&
+                          (() => {
+                            const vc = forcedVc!;
+                            const names = vc.variant_names ?? [];
+                            if (names.length > 0) {
+                              return (
+                                <span style={{ color: tokens.muted }}>
+                                  ({names.join('、')}
+                                  {vc.variant_count}种选1)
+                                </span>
+                              );
+                            }
                             return (
                               <span style={{ color: tokens.muted }}>
-                                ({names.join('、')}
-                                {vc.variant_count}种选1)
+                                ({posCount}点选1)
                               </span>
                             );
-                          }
-                          return (
-                            <span style={{ color: tokens.muted }}>
-                              ({posCount}点选1)
-                            </span>
-                          );
-                        })()}
+                          })()}
                       </div>
                     );
                   })()}
