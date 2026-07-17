@@ -1,5 +1,18 @@
 # 2026-07-17 会话修改记录
 
+## 新增 DwarvenLockWay.webp 地图图片
+
+- **原因**：FireDeep 组模块 `DwarvenLockWay`（矮人闸道）的源 PNG 文件存在，但项目中无 PNG→WebP 自动转换流水线，webp 文件缺失，前端始终显示占位图 `RareModule_1x1`
+- **操作**：
+  - 使用 Pillow 将 `DwarvenLockway.png`（小写 w）转换为 `DwarvenLockway.webp`（quality=85, 50KB）
+  - 存入 `api/src/img/DwarvenLockway.webp`
+  - 重新运行管道 → `dungeon_modules.json` 中 `img_name` 从 `RareModule_1x1` 变为 `DwarvenLockway`，`has_img=true`
+  - 前端构建 + 预览验证通过（HTTP 200, 图片可访问）
+- **变更文件**：
+  - `api/src/img/DwarvenLockway.webp` — 新增（50218 bytes）
+  - `docs/SESSION_CHANGES.md` — 本记录
+- **备注**：项目中不存在自动 PNG→WebP 转换机制，新增模块图片需手动转换后放入 `api/src/img/`
+
 ## 跨变体 Fallback 爆率 Bug（未修复，已记录暂存）
 
 - **原因**：`compute_drop_rate` 和 `compute_variant_rate` 的 `_base` 跨变体 fallback 允许未注册变体借用同物品其他变体的爆率，产生虚假数据
