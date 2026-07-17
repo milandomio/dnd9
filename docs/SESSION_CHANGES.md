@@ -1,3 +1,14 @@
+# 2026-07-17 会话修改记录
+
+## Decimal-化 spawners.py 生成概率浮点除法
+
+- **原因**：lootdrops/SkullKey 页 CofferSmall(迷你宝盒组) spawn_rate=3.0001 应 3.0，根因是 ChestMedium spawner 中 ∑SpawnRate=999960（非 100万），`100*30000/999960` 产生 3.00012% 尾数
+- **变更文件**：`api/src/db/importers/spawners.py`
+  - 添加 `from decimal import Decimal` 导入
+  - 三处除法 `100*raw_rate/X` 全部改用 `Decimal(str(100*raw_rate))/Decimal(str(X))` 后转 float，消除中间浮点精度损失
+  - 排序：lint-fix 自动调整 import 顺序 + black 格式化
+- **现状**：3.0001 仍存在（因游戏数据 SimpleChestSmall SpawnRate=519960 而非 520000 导致 pool=999960），但当游戏数据分母为整万时 Decimal 化会确保结果精确
+
 # 2026-07-16 会话修改记录
 
 ## computeModuleScore 变体组综合爆率改用 selected_count / variant_count
