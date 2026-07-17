@@ -30,6 +30,7 @@ def export_items(
     item_names: set[str],
     output_dir: Path,
     map_to_module: dict | None = None,
+    item_coord_chain_map: dict[str, set[str]] | None = None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
     items_index = []
@@ -43,6 +44,13 @@ def export_items(
             m = ORE_ITEM_COORD_RE.match(name)
             if m:
                 coords = filter_coords(all_coords.get(m.group(1) + "Ore", []), item_names)
+        # Fallback: trace lootdrop chain item → lootdrop_group → spawner → coords
+        if not coords and item_coord_chain_map:
+            for spawner_kw in item_coord_chain_map.get(name, []):
+                _c = filter_coords(all_coords.get(spawner_kw, []), item_names)
+                if _c:
+                    coords = _c
+                    break
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
