@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from pathlib import Path
 
 from config import (
@@ -308,6 +309,19 @@ def run():
         pipe.log("[JSON] building merged lootdrop map...")
         merged_loot, skip_variants = build_merged_loot_map(db)
 
+        pipe.log("[JSON] building item→spawner coord chain map...")
+        _variant_re = re.compile(r"_\d{4}$")
+        item_coord_chain_map: dict[str, set[str]] = {}
+        for _row in db.connect().execute(
+            "SELECT DISTINCT lri.item_name, se.spawner_keyword "
+            "FROM lootdrop_rate_items lri "
+            "JOIN lootdrop_groups lg ON lri.lootdrop_id = lg.lootdrop_id "
+            "JOIN spawner_entries se ON lg.group_id = se.lootdrop_group_id"
+        ).fetchall():
+            _base = _variant_re.sub("", _row["item_name"])
+            item_coord_chain_map.setdefault(_base, set()).add(_row["spawner_keyword"])
+        pipe.log(f"[JSON] item_coord_chain_map DONE -> {len(item_coord_chain_map)} item keys")
+
         pipe.log("[JSON] building modules_map...")
         modules = db.get_dungeon_modules()
         modules_map = build_modules_map(db, resolver.resolve)
@@ -331,6 +345,7 @@ def run():
                 _item_names,
                 OUTPUT_DIR,
                 map_to_module,
+                item_coord_chain_map,
             )
             # P005: Build from actual exported files, not raw DB data
             for e in items_index:
