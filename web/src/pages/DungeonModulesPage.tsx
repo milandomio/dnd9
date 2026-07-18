@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Spin, Card, Row, Col } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { useSSRData } from '../context/SSRDataContext';
 
 interface GroupSummary {
   group: string;
@@ -34,12 +35,14 @@ const GROUP_ORDER = [
 ];
 
 export default function DungeonModulesPage() {
-  const [groups, setGroups] = useState<GroupSummary[]>([]);
-  const [loading, setLoading] = useState(true);
+  const ssrGroups = useSSRData<GroupSummary[]>('dungeon_modules');
+  const [groups, setGroups] = useState<GroupSummary[]>(ssrGroups ?? []);
+  const [loading, setLoading] = useState(!ssrGroups);
   const { tokens } = useTheme();
   const { modules } = useDungeonModules();
 
   useEffect(() => {
+    if (ssrGroups) return;
     if (modules.size === 0) return;
     const map = new Map<string, { count: number; display: string }>();
     for (const m of new Set(modules.values())) {
@@ -58,7 +61,7 @@ export default function DungeonModulesPage() {
       }));
     setGroups(sorted);
     setLoading(false);
-  }, [modules]);
+  }, [modules, ssrGroups]);
 
   if (loading)
     return (

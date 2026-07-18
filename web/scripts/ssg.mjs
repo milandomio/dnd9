@@ -151,8 +151,21 @@ for (const p of PAGES) {
   ssrDataMap[`list-${p}`] = searchIndex.filter((e) => e.page === p);
 }
 for (const p of SINGLE) {
-  // dungeon_modules: page uses useDungeonModules() hook, SSR data not consumed
-  if (p === "dungeon_modules") continue;
+  if (p === "dungeon_modules") {
+    const groupOrder = ['GoblinCave', 'FireDeep', 'IceCavern', 'IceAbyss', 'Ruins', 'Crypt', 'Inferno', 'ShipGraveyard'];
+    const groupMap = new Map();
+    for (const m of moduleData) {
+      const g = m.group || '';
+      if (!groupMap.has(g)) {
+        groupMap.set(g, { group: g, group_display: m.group_display || g || '未分组', module_count: 0 });
+      }
+      groupMap.get(g).module_count++;
+    }
+    ssrDataMap["dungeon_modules"] = [...groupMap.values()].sort(
+      (a, b) => groupOrder.indexOf(a.group) - groupOrder.indexOf(b.group)
+    );
+    continue;
+  }
   // quest_items: pipeline-internal file, use quest_items_groups.json instead
   if (p === "quest_items") {
     ssrDataMap[p] = readJSON(join(DATA, "quest_items_groups.json"));
@@ -230,6 +243,23 @@ for (const p of PAGES) {
   }
 }
 
+// Dungeon module detail pages — SSR data injection (coords + module info)
+for (const m of moduleData) {
+  const group = m.group || "";
+  const key = `dungeon_modules_detail/${group}/${m.name}`;
+  if (!QUICK) {
+    try {
+      const coordsFile = join(DATA, "dungeon_modules_coords", `${m.name}.json`);
+      const coords = readJSON(coordsFile);
+      ssrDataMap[key] = { module: m, coords };
+    } catch {
+      ssrDataMap[key] = { module: m, coords: null };
+    }
+  } else {
+    ssrDataMap[key] = { module: { name: m.name, translation: m.translation }, coords: null };
+  }
+}
+
 // ---- step 4b: P005 — preload referenced entity coords for lootdrop detail pages ----
 if (!QUICK) {
   console.log("[ssg] preloading referenced coords for lootdrop detail pages…");
@@ -284,7 +314,8 @@ function routeDataKey(path) {
   if (path.startsWith("/dungeon_modules/")) {
     const parts = path.split("/");
     if (parts.length === 3) return `dungeon_modules/${parts[2]}`;
-    return ""; // detail pages: no SSR data needed
+    if (parts.length >= 4) return `dungeon_modules_detail/${parts[2]}/${parts[3]}`;
+    return "";
   }
   if (path === "/explore") return "explore";
   return `list-${path.slice(1)}`;

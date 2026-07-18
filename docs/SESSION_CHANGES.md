@@ -1,5 +1,31 @@
 # 2026-07-18 会话修改记录
 
+## Dungeon Module 页面 SSR 改造
+
+**原因：** `/dungeon_modules/`（列表页）和 `/dungeon_modules/:group/:name`（详情页）是纯 CSR Shell，HTML 中 `<div id="root">` 为空，用户需等 JS 全量下载→执行→fetch 才能看到内容。参照 lootdrop 页面模式加入 SSR。
+
+**变更文件：**
+- `web/scripts/ssg.mjs` — 3 处修改
+  - `routeDataKey()`: 详情页从 `return ""` 改为 `return \`dungeon_modules_detail/${group}/${name}\``
+  - `SINGLE` 循环: 替换 `continue`，注入预计算的分组 summary 到 `ssrDataMap["dungeon_modules"]`
+  - 新增 detail SSR 数据填充块: 完整模式注入 `{ module: DungeonModule, coords: ModuleCoordsData }`，quick 模式注入 `{ module: { name, translation }, coords: null }`
+- `web/src/pages/DungeonModuleDetailPage.tsx` — SSR 数据消费
+  - 添加模块级预加载 `_preloadedCoords`（同 lootdrop 的 `_preloadedLootdrop`）
+  - 添加 `useSSRData`，guard 验证 `ssrData?.coords?.entities`
+  - `useState` 初始值链: `_preloadedCoords ?? effectiveCoords ?? null`
+  - `mod` 增加 SSR fallback: `modFromHook || effectiveModSsr`
+  - `useEffect` 中若 SSR 数据齐全则跳过 fetch
+- `web/src/pages/DungeonModulesPage.tsx` — SSR 数据消费
+  - 添加 `useSSRData("dungeon_modules")`，初始 `groups` 状态使用 SSR 数据
+  - `useEffect` 中若 SSR 数据已存在则跳过分组构建
+
+**逻辑/映射关系：**
+- 路由数据键：详情页 → `dungeon_modules_detail/:group/:name`（区别于 group 页的 `dungeon_modules/:group`）
+- SSR 数据守卫：`ssrData?.coords?.entities`（同 lootdrop 的 `ssrData?.item?.monsters`）
+- Quick 模式：`coords: null` → guard 失败 → 自动降级 CSR
+- 列表页数据结构：`[{ group, group_display, module_count }, ...]`（8 个分组）
+- 详情页 coords 数据：完整模式下 ~100KB 内联，含 37 个实体坐标
+
 ## /items 页面只显示地面掉落物
 
 **原因：** 用户要求物品列表页只展示地面掉落物（从地面直接拾取的物品），从箱子或怪物爆出的物品应归类到掉落表（/lootdrops）。
@@ -12,6 +38,29 @@
 - 排除条件：`monsters` 列表存在但不含 `"Ground"`（仅从怪物/箱子产出）
 - 效果：items 从 517 降为 96 个物品
 - 被排除的物品仍可在 /lootdrops 页面按怪物/箱子查询
+
+## 超级金堆命名神器爆率计算验证
+
+**验证结论：** 计算正确，`0.0018%` 即 `5/28/10000`。
+
+**爆率公式：** `pool_weight / shared_count / rate_total`
+- `pool_weight` = 该 luck_grade 的权重
+- `shared_count` = 同 luck_grade 的物品数
+- `rate_total` = 所有 luck_grade 正权重之和
+
+**超级金堆 Inferno Lv1 (`ID_Droprate_Hoard_WeaponArmor_3001`)：**
+| LuckGrade | 权重 | 物品数 | 说明 |
+|:---:|---:|---:|---|
+| 5 (魔法) | 7190 | 191 | 白色/蓝色武器 |
+| 6 (稀有) | 2500 | 0 | 无 LG6 物品，权重闲置 |
+| 7 (史诗) | 305 | 0 | 无 LG7 物品，权重闲置 |
+| 8 (神器) | 5 | **28** | 28 件命名神器平分 LG8 权重 |
+
+**关键点：**
+- `5/10000 = 0.05%` — 超级金堆产出**任意**神器的概率
+- `5/28/10000 = 0.0018%` — 超级金堆产出**某件特定**神器的概率
+- 游戏机制：先按权重 roll 运气等级，再在同级内均匀随机挑选
+- LG6(2500) 和 LG7(305) 无对应物品，相关权重闲置不参与分配
 
 # 2026-07-17 会话修改记录
 
