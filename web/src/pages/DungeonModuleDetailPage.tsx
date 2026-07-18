@@ -6,6 +6,8 @@ import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { useSSRData } from '../context/SSRDataContext';
+import type { DungeonModule } from '../types/data';
 import {
   getAdj,
   useCtrlBtn,
@@ -30,11 +32,40 @@ interface ModuleCoordsData {
   entities: CoordEntity[];
 }
 
+let _preloadedCoordsUrl = '';
+let _preloadedCoords: ModuleCoordsData | null = null;
+if (typeof window !== 'undefined') {
+  const _m = window.location.pathname.match(
+    /^\/dungeon_modules\/[^/]+\/([^/]+)/
+  );
+  if (_m) {
+    _preloadedCoordsUrl = `/data/json/dungeon_modules_coords/${_m[1]}.json`;
+    fetch(_preloadedCoordsUrl)
+      .then((r) => r.json())
+      .then((d) => {
+        _preloadedCoords = d as ModuleCoordsData;
+      })
+      .catch(() => {});
+  }
+}
+
 export default function DungeonModuleDetailPage() {
   const { group, name } = useParams<{ group: string; name: string }>();
   const { modules } = useDungeonModules();
-  const [coordsData, setCoordsData] = useState<ModuleCoordsData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const dataKey =
+    group && name ? `dungeon_modules_detail/${group}/${name}` : '';
+  const ssrData = useSSRData<{
+    module: DungeonModule;
+    coords: ModuleCoordsData | null;
+  }>(dataKey);
+  const effectiveCoords = ssrData?.coords?.entities ? ssrData.coords : null;
+  const effectiveModSsr = ssrData?.module?.size_x ? ssrData.module : null;
+  const [coordsData, setCoordsData] = useState<ModuleCoordsData | null>(
+    _preloadedCoords ?? effectiveCoords
+  );
+  const [loading, setLoading] = useState(
+    !(_preloadedCoords ?? effectiveCoords)
+  );
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
@@ -44,10 +75,23 @@ export default function DungeonModuleDetailPage() {
 
   const dataVersion = useDataVersion();
 
-  const mod = (name && modules.get(name)) || null;
+  const modFromHook = (name && modules.get(name)) || null;
+  const mod = modFromHook || effectiveModSsr;
 
   useEffect(() => {
     if (!group || !name) return;
+    if (effectiveCoords) {
+      setCoordsData(effectiveCoords);
+      setHidden(new Set(effectiveCoords.entities.map((e) => e.name)));
+      return;
+    }
+    if (
+      _preloadedCoords &&
+      _preloadedCoordsUrl ===
+        `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
+    ) {
+      return;
+    }
     fetch(`/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`)
       .then<ModuleCoordsData>((r) => r.json())
       .then((coords) => {
@@ -58,7 +102,7 @@ export default function DungeonModuleDetailPage() {
       })
       .catch(() => null)
       .finally(() => setLoading(false));
-  }, [group, name, dataVersion]);
+  }, [group, name, dataVersion, effectiveCoords]);
 
   if (loading)
     return (
