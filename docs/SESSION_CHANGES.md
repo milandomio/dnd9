@@ -1,5 +1,11 @@
 # 2026-07-22 会话修改记录
 
+## ShipGraveyard_BladehandRefuge 旋转值修复
+- **原因**：`ShipGraveyard_BladehandRefuge` 无 DungeonModule JSON 文件，通过 `extra_rows` 分支插入 DB 时旋转值硬编码为 270，而布局文件计算值为 0
+- **变更文件**：`api/src/db/importers/modules.py`
+- **关键逻辑**：`extra_rows.append` 第 9 个参数从 `270` 改为 `module_rotations.get(base_name, 270)`，使无 DungeonModule 文件的模块也能从布局文件中获取正确的旋转值
+- **验证结果**：DB 中 `rotation` 从 `270.0` → `0.0`，`dungeon_modules.json` 中 `rotate` 同步为 `0.0`
+
 ## SW 更新检测修复
 - **原因**：原有 `workbox-window` 库未安装导致动态 import 失败被 `.catch()` 吞掉 + `autoUpdate` 使 SW 跳过 waiting 状态，页面无法感知 SW 更新
 - **变更文件**：`web/vite.config.ts`、`web/src/components/SWUpdateBanner.tsx`
