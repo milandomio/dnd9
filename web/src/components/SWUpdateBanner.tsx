@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type BannerState = null | 'offline' | 'update';
 
 export default function SWUpdateBanner() {
   const [state, setState] = useState<BannerState>(null);
+  const refreshing = useRef(false);
 
   const handleRefresh = useCallback(() => {
+    navigator.serviceWorker.ready.then((reg) => {
+      reg.waiting?.postMessage({ type: 'SKIP_WAITING' });
+    });
     window.location.reload();
   }, []);
 
@@ -13,20 +17,30 @@ export default function SWUpdateBanner() {
     if (typeof window === 'undefined') return;
     if (!('serviceWorker' in navigator)) return;
 
-    import('workbox-window')
-      .then(({ Workbox }) => {
-        const wb = new Workbox('/sw.js', { scope: '/' });
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing.current) return;
+      refreshing.current = true;
+      window.location.reload();
+    });
 
-        wb.addEventListener('installed', (event) => {
-          if (event.isUpdate) {
-            setState('update');
-          } else {
-            setState('offline');
-            setTimeout(() => setState(null), 5000);
-          }
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((reg) => {
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          if (!newWorker) return;
+
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state !== 'installed') return;
+
+            if (navigator.serviceWorker.controller) {
+              setState('update');
+            } else {
+              setState('offline');
+              setTimeout(() => setState(null), 5000);
+            }
+          });
         });
-
-        wb.register({ immediate: true });
       })
       .catch(() => {});
   }, []);
