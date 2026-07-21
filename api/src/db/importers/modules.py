@@ -147,7 +147,7 @@ class ModulesImporter:
                     stripped = _variant_suffix_re.sub("", base_name)
                     if stripped != base_name:
                         tk = sl_base_to_key.get(stripped, "") or module_name_to_key.get(stripped, "")
-                extra_rows.append((base_name, tk, group, 1, 1, "", "", "[]", 270))
+                extra_rows.append((base_name, tk, group, 1, 1, "", "", "[]", module_rotations.get(base_name, 270)))
                 inserted_names.add(base_name)
         if extra_rows:
             c.executemany(

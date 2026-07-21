@@ -41,7 +41,7 @@ export default defineConfig(({ mode }) => {
         },
       },
       VitePWA({
-        registerType: 'autoUpdate',
+        registerType: 'prompt',
         workbox: {
           // registerSW.js 预缓存确保 SW 注册脚本离线可用；
           // manifest.webmanifest 和 icons/ 由 VitePWA 自动处理，不重复声明；

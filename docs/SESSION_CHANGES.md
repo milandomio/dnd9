@@ -1,3 +1,15 @@
+# 2026-07-22 会话修改记录
+
+## SW 更新检测修复
+- **原因**：原有 `workbox-window` 库未安装导致动态 import 失败被 `.catch()` 吞掉 + `autoUpdate` 使 SW 跳过 waiting 状态，页面无法感知 SW 更新
+- **变更文件**：`web/vite.config.ts`、`web/src/components/SWUpdateBanner.tsx`
+- **关键逻辑**：
+  - `registerType: 'autoUpdate'` → `'prompt'`：新 SW 安装后进入 waiting 状态等待用户确认，不再自动 skipWaiting
+  - `SWUpdateBanner.tsx` 重写为原生 `navigator.serviceWorker` API（移除未安装的 `workbox-window` 依赖）
+  - 监听 `updatefound` → `statechange` = `'installed'` 时弹出 banner（带有 controller 为更新，无 controller 为首次安装）
+  - 点击"刷新以应用"→ `postMessage({ type: 'SKIP_WAITING' })` 激活等待中的新 SW
+  - `controllerchange` 监听 + `refreshing` 引用防死循环
+
 # 2026-07-18 会话修改记录
 
 ## Dungeon Module 页面 SSR 改造
