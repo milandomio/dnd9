@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Spin, Card, Row, Col } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
@@ -65,7 +64,9 @@ export default function DungeonModulesPage() {
 
   if (loading)
     return (
-      <Spin size="large" style={{ display: 'block', margin: '100px auto' }} />
+      <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
+        加载中...
+      </div>
     );
 
   const totalMods = groups.reduce((s, g) => s + g.module_count, 0);
@@ -100,53 +101,70 @@ export default function DungeonModulesPage() {
       >
         共 {groups.length} 个地图分组 | {totalMods} 个模块
       </div>
-      <Row gutter={[16, 16]} justify="center">
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: 16,
+          maxWidth: 900,
+          margin: '0 auto',
+        }}
+      >
         {groups.map((g) => {
           const theme = GROUP_THEMES[g.group] || { border: '#888', icon: '📦' };
           return (
-            <Col key={g.group} xs={24} sm={12} md={8} lg={6}>
-              <Link
-                to={`/dungeon_modules/${g.group}`}
-                style={{ textDecoration: 'none' }}
+            <Link
+              key={g.group}
+              to={`/dungeon_modules/${g.group}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <div
+                style={{
+                  background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
+                  border: `2px solid ${theme.border}`,
+                  borderRadius: 12,
+                  textAlign: 'center',
+                  padding: '20px 16px',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 6px 16px rgba(0,0,0,0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
-                <Card
-                  hoverable
+                <div style={{ fontSize: 36, marginBottom: 8 }}>
+                  {theme.icon}
+                </div>
+                <div
                   style={{
-                    background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
-                    border: `2px solid ${theme.border}`,
-                    borderRadius: 12,
-                    textAlign: 'center',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color: tokens.text,
+                    marginBottom: 8,
                   }}
-                  styles={{ body: { padding: '20px 16px' } }}
                 >
-                  <div style={{ fontSize: 36, marginBottom: 8 }}>
-                    {theme.icon}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      color: tokens.text,
-                      marginBottom: 8,
-                    }}
-                  >
-                    {g.group_display}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 13,
-                      color: tokens.muted,
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {g.module_count} 个模块
-                  </div>
-                </Card>
-              </Link>
-            </Col>
+                  {g.group_display}
+                </div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    color: tokens.muted,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {g.module_count} 个模块
+                </div>
+              </div>
+            </Link>
           );
         })}
-      </Row>
+      </div>
     </div>
   );
 }
