@@ -30,15 +30,18 @@ export default function Disclaimer() {
       ⚠️ 数据有误差，以实际游戏内为准
       <span style={{ color: tokens.muted, marginLeft: 15 }}>
         地图生成日期：{formattedDate}
-        <span
-          style={{ fontSize: 10, cursor: 'pointer' }}
-          onClick={() =>
-            window.open('https://www.bilibili.com/video/BV1hoR7BzExq', '_blank')
-          }
+        <a
+          href="https://www.bilibili.com/video/BV1isKE68EP5"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: tokens.accent,
+            textDecoration: 'none',
+            fontSize: 'inherit',
+          }}
         >
-          {' '}
-          地图页面设计-雪鸡Official
-        </span>
+          【意见或建议】
+        </a>
       </span>
     </div>
   );
