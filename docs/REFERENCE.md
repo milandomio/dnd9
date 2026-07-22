@@ -487,7 +487,64 @@ Total = sum(所有 DropRate)
 
 ### 旋转值
 
-从 Layout JSON 文件计算，优先级：`module_name` → `sl_base_name`，默认 1（90°）。
+地图模块的旋转值决定了前端 MapPanel 中坐标点的旋转变换。旋转值来源于两个路径：
+
+#### 数据来源
+
+| 地图组 | 来源 |
+|--------|------|
+| ShipGraveyard | Layout JSON 文件（`Maps/Dungeon/Layouts/ShipGraveyard_*.json`） |
+| 其他（GoblinCave, FireDeep, IceCavern 等） | DB `dungeon_modules.rotation` 字段（schema 默认 270） |
+
+#### ShipGraveyard 旋转计算（`layout_utils.py`）
+
+从 Layout 文件中 `LevelStreamingAlwaysLoaded` 条目的 `LevelTransform.Rotation`（四元数 {X,Y,Z,W}）计算：
+
+```
+yaw_rad = 2 × atan2(Z, W)          // 四元数 → UE4 yaw 弧度
+yaw_deg = degrees(yaw_rad)           // 转角度
+js_rotate = (yaw_deg - 90) % 360    // UE4 → 前端坐标系
+```
+
+**`-90` 偏移量**：UE4 坐标系（0° = 东）与前端 `applyTransform` 坐标系（0° = 北）的差异补偿。
+
+**常见映射：**
+
+| Z | W | yaw_deg | js_rotate | 含义 |
+|---|---|---|---|---|
+| 0 | 1 | 0° | 270 | UE4 无旋转（identity）|
+| 0.70710677 | 0.70710677 | 90° | 0 | UE4 顺时针 90° |
+| 1.0 | ≈0 | 180° | 90 | UE4 顺时针 180° |
+| 0.70710677 | -0.70710677 | 270° | 180 | UE4 顺时针 270° |
+
+#### 模块插入路径
+
+| 路径 | 条件 | 旋转值来源 | 代码位置 |
+|------|------|------------|----------|
+| 主循环 | 有 DungeonModule JSON 文件 | `module_rotations[module_name]` → `module_rotations[sl_base]` → `270` | `modules.py:126-130` |
+| extra_rows | 无 DungeonModule JSON，但存在于 `path_group_map` | `module_rotations[base_name]` → `270` | `modules.py:150` |
+| MODULE_NAME_OVERRIDE | 仅当模块不在 `modules_map` 中 | 硬编码 `270` | `module_builder.py:238` |
+| DB NULL 回退 | DB `rotation` 字段为 NULL | `270` | `module_builder.py:160` |
+
+**优先级链**：`module_name` 精确匹配 → `sl_base_name` 匹配 → `270` 默认。
+
+`load_all_layout_rotations()` 只处理 ShipGraveyard 布局文件（`if not fn.startswith("ShipGraveyard_"): continue`）。其他地图组的模块在 UE4 源文件中已直接定义了旋转值，通过 DungeonModule JSON 导入时写入 DB `rotation` 字段。
+
+#### 前端消费链路
+
+```
+DB dungeon_modules.rotation
+  → build_modules_map()  → modules_map[name]["rotate"]
+  → dungeon_modules.json  → globalModules Map (useDungeonModules)
+  → DetailPage.tsx:76     → globalModules.get(c.map)?.rotate
+  → getAdj()              → adj.rotate ?? modRotate
+  → applyTransform()      → (x,y) 绕原点旋转 r 度
+
+applyTransform 公式：
+  rad = (rotate % 360) × π / 180
+  x' = x × cos(rad) - y × sin(rad)
+  y' = x × sin(rad) + y × cos(rad)
+```
 
 ## 地图模块表 V2
 
