@@ -546,6 +546,88 @@ applyTransform 公式：
   y' = x × sin(rad) + y × cos(rad)
 ```
 
+### 无 DungeonModule JSON 的模块（extra_rows）
+
+部分模块在游戏中仅有地图文件（`Maps/Dungeon/Modules/` 下的子关卡），没有对应的 `DungeonModule` 数据资产 JSON。这些模块通过 `ModulesImporter._build_path_group_map()` 扫描地图目录发现，在 `extra_rows` 路径中以**默认值**插入 DB。
+
+#### 发现流程（`modules.py:162-183`）
+
+```
+Dungeon/Maps/Dungeon/Modules/{Group}/
+  └── {ModuleName}/
+       ├── {ModuleName}_D.json        ← _D(死亡), _A(冒险), _HR_D(豪客赛) 文件触发
+       ├── {ModuleName}_A.json
+       └── {ModuleName}_HR_D.json
+            → sl_base_name() 提取模块名
+            → path_group_map[base_name] = group
+```
+
+如某个模块名出现在 `path_group_map` 但不在已导入的主循环集合中，则走 `extra_rows` 插入（`modules.py:143-151`）。
+
+#### extra_rows 默认值限制
+
+```python
+extra_rows.append((base_name, tk, group, 1, 1, "", "", "[]", module_rotations.get(base_name, 270)))
+```
+
+| 字段 | 默认值 | 问题 |
+|------|:-----:|------|
+| size_x, size_y | **1, 1** | 无 SubLevelAsset，无法获知实际大小 |
+| sl_base_name | `""` | 无 SubLevelAsset 引用，图片关联可能失败 |
+| map_image_name | `""` | 无 MapImage 字段，图片只能从文件名匹配 |
+| rotation | `module_rotations[base_name]` → `270` | ShipGraveyard 模块可通过布局文件正确计算 |
+
+#### 修复机制：`MODULE_DISPLAY_OVERRIDE`
+
+`module_builder.py:155` 在生成 `dungeon_modules.json` 时用此覆写表修正默认值：
+
+```python
+override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
+sx = override.get("size_x", r["size_x"])
+sy = override.get("size_y", r["size_y"])
+```
+
+当前覆写条目（`config.py:311`）：
+
+| 模块名 | 覆写大小 | 实际大小 | 原因 |
+|--------|:-------:|:-------:|------|
+| ShipGraveyard_BladehandRefuge | 2x2 | 2x2 | 无 JSON，地图为 2 岛结构 |
+| ShipGraveyard_ElephantIsland | 1x2 | 1x2 | 无 JSON，竖长岛屿 |
+| ShipGraveyard_Hole | 2x2 | 2x2 | 洞窟区域 |
+| ShipGraveyard_HangingShip | 2x1 | 2x1 | 横长船只 |
+
+#### 当前 extra_rows 完整列表（10 个）
+
+| 模块名 | DB 大小 | Override | 旋转 | 图片 |
+|--------|:------:|:--------:|:---:|:----:|
+| EmptyModule_1F_02 | 1x1 | — | 270 | — |
+| EmptyModule_1F_09 | 1x1 | — | 270 | — |
+| EmptyModule_1F_13 | 1x1 | — | 270 | — |
+| EmptyModule_1F_14 | 1x1 | — | 270 | — |
+| EmptyModule_1F_15 | 1x1 | — | 270 | — |
+| IceAbyss_WyvernLair_DistantView | 1x1 | — | 270 | — |
+| Ruins_Chapel | 1x1 | — | 270 | — |
+| Ruins_DualBossTreasureRoom | 1x1 | — | 270 | — |
+| ShipGraveyard_BladehandRefuge | 1x1 | **2x2** | 0° 布局计算 | 有 webp |
+| ShipGraveyard_ElephantIsland | 1x1 | **1x2** | 90° 布局计算 | 有 webp |
+
+> `EmptyModule_*` 等模块为占位模块（无实际游戏内容），保持 1x1 默认值即可。Ruins 系列暂无图片文件。
+
+#### 旋转值修正说明
+
+ShipGraveyard 的 extra_rows 模块从布局文件 `ShipGraveyard_7x7_*.json` 中的 `LevelStreamingAlwaysLoaded` 条目提取四元数计算旋转值（见上方"ShipGraveyard 旋转计算"）。布局文件同时记录子关卡的 `LevelTransform.Translation` 作为偏移量（记录在 `MODULE_OFFSET_MAP`）。
+
+#### 共用布局文件的 ShipGraveyard 偏移量（`config.py:317`）
+
+```python
+"ShipGraveyard_BladehandRefuge": (-1600, -1600),  # 2x2
+"ShipGraveyard_ElephantIsland": (-1600, 1600),      # 1x2
+"ShipGraveyard_FloatingVillage": (-1600, 1600),     # 1x2
+"ShipGraveyard_HangingShip": (1600, 0),             # 2x1
+```
+
+> 注意：BladehandRefuge 和 ElephantIsland 的 `MODULE_OFFSET_MAP` 偏移量（-1600, -1600 和 -1600, 1600）是人工设定的布局偏移，**不是**布局文件中 `LevelTransform.Translation` 的直接值（布局中实际为 9600,-9600 和 0,6400），因为模块坐标从布局文件的世界坐标转换到前端像素坐标时经过了换算。
+
 ## 地图模块表 V2
 
 ### 数据来源
