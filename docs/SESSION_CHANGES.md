@@ -1,5 +1,14 @@
 # 2026-07-22 会话修改记录
 
+## Crypt_BlindfallPit 出现概率分析文档
+
+- **原因**：用户需推算 Crypt 5x5 地图中 BlindfallPit 模块的出现概率
+- **变更文件**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` — 新增
+- **关键结论**：所有 Crypt 5x5 模式（N/HR/A/AHR）共用 40 个布局，仅 2 个含 Rare 槽；5 个稀有模块等概率选择。综合概率约 **1%**（2/40 × 1/5）。S2R 为 4x4 地图，无 Rare 槽，概率为 0%
+- **数据来源**：`Data/Generated/V2/Dungeon/DungeonLayout/`、`Dungeon/`、`DungeonModule/`
+
+# 2026-07-22 会话修改记录
+
 ## ShipGraveyard_BladehandRefuge 旋转值修复
 - **原因**：`ShipGraveyard_BladehandRefuge` 无 DungeonModule JSON 文件，通过 `extra_rows` 分支插入 DB 时旋转值硬编码为 270，而布局文件计算值为 0
 - **变更文件**：`api/src/db/importers/modules.py`
