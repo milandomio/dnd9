@@ -1,5 +1,11 @@
 # 2026-07-22 会话修改记录
 
+## 新增 ShipGraveyard_ElephantIsland 硬编码翻译"象岛"
+
+- **原因**：`ShipGraveyard_ElephantIsland` 无 DungeonModule JSON 文件，`translation_key` 为空，前端显示英文名
+- **变更文件**：`api/src/config.py` — HARDCODED_TRANSLATIONS 新增 `"ShipGraveyard_ElephantIsland": "象岛"`
+- **生效条件**：需重新运行 `python main.py` 后前端才显示中文
+
 ## Crypt_BlindfallPit 出现概率分析文档（创建 + 补充阴森帷幕披风完整掉落链路）
 
 - **原因**：用户需推算 Crypt 5x5 地图中盲坑（Crypt_BlindfallPit）模块的出现概率，以及该模块内阴森帷幕披风（GrimveilCloak）的完整掉落概率
