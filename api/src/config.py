@@ -310,6 +310,7 @@ MODULE_NAME_OVERRIDE = {
 
 MODULE_DISPLAY_OVERRIDE = {
     "ShipGraveyard_BladehandRefuge": {"size_x": 2, "size_y": 2, "range": 3200},
+    "ShipGraveyard_ElephantIsland": {"size_x": 1, "size_y": 2},
     "ShipGraveyard_Hole": {"size_x": 2, "size_y": 2, "range": 4800},
     "ShipGraveyard_HangingShip": {"size_x": 2, "size_y": 1},
 }
