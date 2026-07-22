@@ -1,5 +1,13 @@
 # 2026-07-22 会话修改记录
 
+## 修复 ShipGraveyard_ElephantIsland 大小错误 + 补充硬编码翻译
+
+- **原因**：`ShipGraveyard_ElephantIsland` 无 DungeonModule JSON，`extra_rows` 路径将 size 硬编码为 1x1，但实际为 1x2 模块，导致前端显示异常
+- **变更文件**：
+  - `api/src/config.py` — HARDCODED_TRANSLATIONS 新增 `"ShipGraveyard_ElephantIsland": "象岛"`；MODULE_DISPLAY_OVERRIDE 新增 `{"size_x": 1, "size_y": 2}`
+- **验证结果**：管道重跑后 `dungeon_modules.json` 中 size 从 1x1→**1x2**，translation 从英文→**象岛**，rotate=90.0 布局计算正确，has_img=true 图片正常
+- **关联**：与 BladehandRefuge 同一类问题（无 DungeonModule JSON 的模块）
+
 ## 新增 ShipGraveyard_ElephantIsland 硬编码翻译"象岛"
 
 - **原因**：`ShipGraveyard_ElephantIsland` 无 DungeonModule JSON 文件，`translation_key` 为空，前端显示英文名
