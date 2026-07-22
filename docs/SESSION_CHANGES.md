@@ -1,11 +1,16 @@
 # 2026-07-22 会话修改记录
 
-## Crypt_BlindfallPit 出现概率分析文档
+## Crypt_BlindfallPit 出现概率分析文档（创建 + 补充阴森帷幕披风完整掉落链路）
 
-- **原因**：用户需推算 Crypt 5x5 地图中 BlindfallPit 模块的出现概率
-- **变更文件**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` — 新增
-- **关键结论**：所有 Crypt 5x5 模式（N/HR/A/AHR）共用 40 个布局，仅 2 个含 Rare 槽；5 个稀有模块等概率选择。综合概率约 **1%**（2/40 × 1/5）。S2R 为 4x4 地图，无 Rare 槽，概率为 0%
-- **数据来源**：`Data/Generated/V2/Dungeon/DungeonLayout/`、`Dungeon/`、`DungeonModule/`
+- **原因**：用户需推算 Crypt 5x5 地图中盲坑（Crypt_BlindfallPit）模块的出现概率，以及该模块内阴森帷幕披风（GrimveilCloak）的完整掉落概率
+- **变更文件**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md`
+- **关键结论**：
+  - 模块级：**1%**（40 布局 × 5 稀有模块，确认无双 Rare 槽布局）
+  - 冲突级：**1/11**（11 种生成物互斥，披风仅 1 个唯一坐标 810,-10,-1600）
+  - 掉落级：**2.5%**（豪客赛，仅披风 1 件物品，97.5% 概率空手）
+  - 综合：**1/44,000**（豪客赛），约每 4.4 万局出一个
+  - S2R 无 Rare 槽，概率为 0%
+- **数据来源**：`spawners`/`mutually_exclusive_groups`/`lootdrop_groups`/`lootdrop_rate_weights` DB 表 + 布局文件
 
 # 2026-07-22 会话修改记录
 
