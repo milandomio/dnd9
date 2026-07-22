@@ -104,8 +104,7 @@ export default function ListPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          【{LABEL_MAP[page!] ?? page}】实体位置汇总 | 越来越黑暗闪电指南
-          DarkFlashNav
+          【{LABEL_MAP[page!] ?? page}】点位 | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -117,7 +116,7 @@ export default function ListPage() {
         />
         <meta
           property="og:title"
-          content={`【${LABEL_MAP[page!] ?? page}】实体位置汇总`}
+          content={`【${LABEL_MAP[page!] ?? page}】点位`}
         />
         <meta property="og:description" content={`共 ${data.length} 个实体`} />
       </Helmet>
@@ -129,7 +128,7 @@ export default function ListPage() {
           marginBottom: 20,
         }}
       >
-        【{LABEL_MAP[page!] ?? page}】实体位置汇总
+        【{LABEL_MAP[page!] ?? page}】点位
       </h1>
       <div
         style={{
