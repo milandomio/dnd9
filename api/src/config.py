@@ -298,6 +298,7 @@ HARDCODED_TRANSLATIONS = {
     "DungeonInfiniteExitBase": "无限出口",
     "Ruins_DualBossTreasureRoom": "双boss宝藏室",
     "ShipGraveyard_BladehandRefuge": "钉手岛",
+    "ShipGraveyard_ElephantIsland": "象岛",
 }
 
 MODULE_NAME_OVERRIDE = {
