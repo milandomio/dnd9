@@ -167,3 +167,5 @@ class SchemaManager:
             c.execute("ALTER TABLE spawners ADD COLUMN has_lootdrop INTEGER NOT NULL DEFAULT 0")
         if "group_parent" not in columns:
             c.execute("ALTER TABLE spawners ADD COLUMN group_parent TEXT NOT NULL DEFAULT ''")
+        if "sub_group_parent" not in columns:
+            c.execute("ALTER TABLE spawners ADD COLUMN sub_group_parent TEXT NOT NULL DEFAULT ''")

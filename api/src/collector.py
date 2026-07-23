@@ -174,11 +174,12 @@ def run():
                         s.get("version", ""),
                         s.get("map_base", ""),
                         s.get("group_parent", ""),
+                        s.get("sub_group_parent", ""),
                     )
                     for idx, s in enumerate(spawners)
                 ]
                 c.executemany(
-                    "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base, group_parent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base, group_parent, sub_group_parent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     spawner_rows,
                 )
                 db.connect().commit()
@@ -312,12 +313,16 @@ def run():
         pipe.log("[JSON] building item→spawner coord chain map...")
         _variant_re = re.compile(r"_\d{4}$")
         item_coord_chain_map: dict[str, set[str]] = {}
-        for _row in db.connect().execute(
-            "SELECT DISTINCT lri.item_name, se.spawner_keyword "
-            "FROM lootdrop_rate_items lri "
-            "JOIN lootdrop_groups lg ON lri.lootdrop_id = lg.lootdrop_id "
-            "JOIN spawner_entries se ON lg.group_id = se.lootdrop_group_id"
-        ).fetchall():
+        for _row in (
+            db.connect()
+            .execute(
+                "SELECT DISTINCT lri.item_name, se.spawner_keyword "
+                "FROM lootdrop_rate_items lri "
+                "JOIN lootdrop_groups lg ON lri.lootdrop_id = lg.lootdrop_id "
+                "JOIN spawner_entries se ON lg.group_id = se.lootdrop_group_id"
+            )
+            .fetchall()
+        ):
             _base = _variant_re.sub("", _row["item_name"])
             item_coord_chain_map.setdefault(_base, set()).add(_row["spawner_keyword"])
         pipe.log(f"[JSON] item_coord_chain_map DONE -> {len(item_coord_chain_map)} item keys")

@@ -344,7 +344,7 @@ def build_and_save_module_coords(
     rows = (
         db.connect()
         .execute(
-            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base, group_parent FROM spawners ORDER BY map_base, keyword"
+            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base, group_parent, sub_group_parent FROM spawners ORDER BY map_base, keyword"
         )
         .fetchall()
     )
@@ -390,6 +390,10 @@ def build_and_save_module_coords(
             gp = row["group_parent"] or ""
         except (KeyError, IndexError):
             gp = ""
+        try:
+            sgp = row["sub_group_parent"] or ""
+        except (KeyError, IndexError):
+            sgp = ""
         module_coords[mb]["entities"][ek]["coords"].append(
             {
                 "x": row["x"],
@@ -399,6 +403,7 @@ def build_and_save_module_coords(
                 "version": row["version"] or "",
                 "label": HARDCODED_TRANSLATIONS.get(row["original_keyword"], row["original_keyword"]),
                 "group_parent": gp,
+                "sub_group_parent": sgp,
             }
         )
     # 按模块名合并坐标并保存（处理多个 map_base 映射到同一模块的情况）

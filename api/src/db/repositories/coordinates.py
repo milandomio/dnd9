@@ -13,6 +13,7 @@ class SpawnerCoord(TypedDict):
     original_keyword: str
     spawner_type: str
     group_parent: str
+    sub_group_parent: str
 
 
 class CoordinatesRepository:
@@ -24,7 +25,7 @@ class CoordinatesRepository:
         c.execute("""
             SELECT s.keyword, s.x, s.y, s.z, s.yaw, s.json_filename,
                    s.version, s.map_base, s.original_keyword, s.spawner_type,
-                   s.group_parent
+                   s.group_parent, s.sub_group_parent
             FROM spawners s
             ORDER BY s.keyword, s.map_base, s.json_filename
         """)
@@ -36,7 +37,14 @@ class CoordinatesRepository:
                 result[term] = []
                 seen_keys[term] = set()
             coord = dict(row)
-            dup_key = (coord["x"], coord["y"], coord["z"], coord["json_filename"])
+            dup_key = (
+                coord["x"],
+                coord["y"],
+                coord["z"],
+                coord["json_filename"],
+                coord["group_parent"],
+                coord["sub_group_parent"],
+            )
             if dup_key not in seen_keys[term]:
                 seen_keys[term].add(dup_key)
                 result[term].append(coord)

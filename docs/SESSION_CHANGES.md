@@ -1,3 +1,22 @@
+# 2026-07-23 会话修改记录
+
+## sub_group_parent 追踪 + 坐标去重修复（GrimveilCloak 从 1 点恢复为 6 点）
+
+- **原因**：BP_GameSpawnerGroup_C_8 内含 6 个 BP_GameObjectLinker_C 子组，每个独立从 11 种变体池中选 1，但坐标去重 key 只有 (x, y, z, json_filename)，导致同一个位置 6 个 ObjectLinker 的 spawn 被合并为 1 点，GrimveilCloak 显示 1 点而非 6 点
+- **变更文件**：
+  - `api/src/search_engine.py` — `_resolve_world_loc` 收集 `sub_group_name`；`sub_group_root_to_name` 映射 BP_GameObjectLinker_C / BP_ObjectLinkWithTriggerBox_C → parent；scene dict + results 包含 `sub_group_parent`
+  - `api/src/db/schema.py` — 迁移添加 spawners 表 `sub_group_parent` 列
+  - `api/src/collector.py` — INSERT 语句第 14 个参数加入 `sub_group_parent`
+  - `api/src/db/repositories/coordinates.py` — SpawnerCoord 新增 `sub_group_parent` 字段；SQl 查询 select sub_group_parent；dedup key 改为 `(x, y, z, json_filename, group_parent, sub_group_parent)`
+  - `api/src/translator.py` — `build_coord_out` 输出 `sub_group_parent`
+  - `api/src/module_builder.py` — SQL 查询 + coord 构建包含 `sub_group_parent`
+  - `web/src/types/data.ts` — Coord 接口新增 `sub_group_parent?: string`
+  - `web/src/pages/DetailPage.tsx` — groupCount 计算从仅 `group_parent` 去重改为 `(group_parent, sub_group_parent)` 联合去重，确保"11种选6"正确显示
+- **关键映射**：
+  - 同 group_parent + 不同 sub_group_parent → 多个独立 ObjectLinker 子组 → 算多次选
+  - 同 group_parent + 同 sub_group_parent + 不同位置 → 同一 ObjectLinker 内的多个刷怪点
+- **验证**：GrimveilCloak JSON 从 1 coord 变为 6 coords；DB 有 6 行 GrimveilCloak 分别对应 BP_GameObjectLinker_C_1~C_11；HTTP 200
+
 # 2026-07-22 会话修改记录
 
 ## 修复 ElephantIsland 硬编码未生效问题（前端构建过时）
