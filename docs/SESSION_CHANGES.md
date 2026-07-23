@@ -17,6 +17,14 @@
   - 同 group_parent + 同 sub_group_parent + 不同位置 → 同一 ObjectLinker 内的多个刷怪点
 - **验证**：GrimveilCloak JSON 从 1 coord 变为 6 coords；DB 有 6 行 GrimveilCloak 分别对应 BP_GameObjectLinker_C_1~C_11；HTTP 200
 
+## adjRate 改为 exact 公式（反映 6 次独立抽选）
+
+- **原因**：adjRate 仍用 `v / N`（假设 11 种互斥选 1），但实际是 6 次独立抽选，概率应为 `v × (1 − (1 − 1/N)^groupCount)`
+- **变更文件**：
+  - `web/src/pages/DetailPage.tsx` — 删除重复 groupCount 计算，提前计算 groupCount 供 adjRate 使用；公式改为 `v * (1 - (1 - 1/variant_count) ** groupCount)`
+- **效果**：GrimveilCloak 豪客赛爆率从 `0.2273%` → `1.0888%`（↑4.8×）
+- **文档**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` 新增概率修正章节，区分怪物直接生成（43.5%）和物品掉落（≈1/9,200）
+
 # 2026-07-22 会话修改记录
 
 ## 修复 ElephantIsland 硬编码未生效问题（前端构建过时）
