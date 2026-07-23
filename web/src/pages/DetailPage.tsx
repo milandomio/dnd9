@@ -765,8 +765,25 @@ export default function DetailPage() {
                         ? (forcedVc!.variant_count as number)
                         : posCount
                       : 1;
+                    const varGpKeys = [
+                      ...new Set(
+                        mapCoords
+                          .map((c) =>
+                            c.group_parent && c.sub_group_parent
+                              ? `${c.group_parent}::${c.sub_group_parent}`
+                              : (c.group_parent ?? '')
+                          )
+                          .filter(Boolean)
+                      ),
+                    ];
+                    const groupCount = varGpKeys.length || 1;
                     const adjRate = (v: number) =>
-                      hasVariant ? +(v / forcedVcN).toFixed(4) : v;
+                      hasVariant
+                        ? +(
+                            v *
+                            (1 - (1 - 1 / forcedVcN) ** groupCount)
+                          ).toFixed(4)
+                        : v;
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
                         (c) => c.label && labelMatch(c.label, info.translation)
@@ -862,18 +879,6 @@ export default function DetailPage() {
                           (() => {
                             const vc = forcedVc!;
                             const names = vc.variant_names ?? [];
-                            const varGps = [
-                              ...new Set(
-                                mapCoords
-                                  .map((c) =>
-                                    c.group_parent && c.sub_group_parent
-                                      ? `${c.group_parent}::${c.sub_group_parent}`
-                                      : (c.group_parent ?? '')
-                                  )
-                                  .filter(Boolean)
-                              ),
-                            ];
-                            const groupCount = varGps.length || 1;
                             if (names.length > 0) {
                               return (
                                 <span style={{ color: tokens.muted }}>
