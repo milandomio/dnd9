@@ -49,7 +49,11 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(
-    ssrData?.entity?.coords ? ssrData.entity : null
+    ssrData?.entity?.coords
+      ? ssrData.entity
+      : ssrData?.entity?.name
+        ? (ssrData.entity as Entity)
+        : null
   );
   const { modules: globalModules } = useDungeonModules();
   // Resolve module by coord's map field (now resolved module name)
@@ -426,8 +430,8 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {entity.translation || entity.name} 位置汇总 | 越来越黑暗闪电指南
-          DarkFlashNav
+          {entity.translation}
+          {entity.name} 位置汇总Location | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -439,7 +443,7 @@ export default function DetailPage() {
         />
         <meta
           property="og:title"
-          content={`${entity.translation || entity.name} 位置汇总 | DarkFlashNav`}
+          content={`${entity.translation}${entity.name} 位置汇总Location | DarkFlashNav`}
         />
         <meta
           property="og:description"
