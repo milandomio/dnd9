@@ -136,7 +136,7 @@ def _resolve_img(art_root: Path, group: str, sl: str, webp_cache: Path | None = 
     return sl, "not_found"
 
 
-def build_modules_map(db, resolve_name, module_rotations: dict | None = None) -> dict[str, dict]:
+def build_modules_map(db, resolve_name, module_rotations: dict | None = None, resolve_en_name=None) -> dict[str, dict]:
     """Build modules_map from DB dungeon modules. Rotation is read from DB."""
     modules = db.get_dungeon_modules()
     art_root = (
@@ -209,6 +209,11 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
             "name": r["module_name"],
             "translation_key": r["translation_key"],
             "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
+            "translation_EN": (
+                resolve_en_name(r["module_name"], r["translation_key"], "module")
+                if resolve_en_name
+                else r["module_name"]
+            ),
             "group": r["module_group"],
             "size_x": sx,
             "size_y": sy,
@@ -273,6 +278,7 @@ def build_and_save_module_coords(
     monsters: list[dict],
     props: list[dict],
     output_dir: Path,
+    resolve_en_name=None,
 ) -> dict[str, dict]:
     """Build and save module coordinates. Returns merged_coords."""
     # Build entity classification index from DB (ground truth type)
@@ -313,6 +319,15 @@ def build_and_save_module_coords(
         trans_lookup[r["monster_name"]] = resolve_name(r["monster_name"], r["translation_key"], "monster")
     for r in props:
         trans_lookup[r["asset_name"]] = resolve_name(r["asset_name"], r["translation_key"], "props")
+
+    trans_lookup_en: dict[str, str] = {}
+    if resolve_en_name:
+        for r in items:
+            trans_lookup_en[r["item_name"]] = resolve_en_name(r["item_name"], r["translation_key"], "item")
+        for r in monsters:
+            trans_lookup_en[r["monster_name"]] = resolve_en_name(r["monster_name"], r["translation_key"], "monster")
+        for r in props:
+            trans_lookup_en[r["asset_name"]] = resolve_en_name(r["asset_name"], r["translation_key"], "props")
 
     _MODULE_COLORS = [  # noqa: N806
         "#E74C3C",
@@ -378,9 +393,13 @@ def build_and_save_module_coords(
             else:
                 entity_type = mapped_st
             translation = trans_lookup.get(ek) or resolve_name(ek, None, entity_type)
+            translation_en = trans_lookup_en.get(ek) or (
+                resolve_en_name(ek, None, entity_type) if resolve_en_name else ek
+            )
             module_coords[mb]["entities"][ek] = {
                 "name": ek,
                 "translation": translation,
+                "translation_EN": translation_en,
                 "type": entity_type,
                 "color": _MODULE_COLORS[color_idx % len(_MODULE_COLORS)],
                 "coords": [],

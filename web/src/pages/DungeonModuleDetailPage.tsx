@@ -47,7 +47,7 @@ export default function DungeonModuleDetailPage() {
   const [coordsData, setCoordsData] = useState<ModuleCoordsData | null>(
     effectiveCoords
   );
-  const [loading, setLoading] = useState(!effectiveCoords);
+  const [loading, setLoading] = useState(!effectiveCoords && !effectiveModSsr);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
@@ -175,7 +175,8 @@ export default function DungeonModuleDetailPage() {
       <Helmet>
         <title>
           {m.translation}
-          {m.name} 地图模块Module | 越来越黑暗闪电指南 DarkFlashNav
+          {m.translation_EN ?? m.name} 地图模块Module | 越来越黑暗闪电指南
+          DarkFlashNav
         </title>
         <meta
           name="description"

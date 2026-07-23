@@ -32,6 +32,7 @@ def export_items(
     map_to_module: dict | None = None,
     item_coord_chain_map: dict[str, set[str]] | None = None,
     sub_pool_info: dict | None = None,
+    resolve_en_name=None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
     items_index = []
@@ -62,11 +63,13 @@ def export_items(
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
+        translation_en = resolve_en_name(name, r["translation_key"], "item") if resolve_en_name else name
         variant_count = r.get("variant_count", 1)
         items_index.append(
             {
                 "name": name,
                 "translation": translation,
+                "translation_EN": translation_en,
                 "category": r["category"],
                 "variant_count": variant_count,
                 "monsters": merged_loot.get(name, []),
@@ -76,6 +79,7 @@ def export_items(
         entity_data = {
             "name": name,
             "translation": translation,
+            "translation_EN": translation_en,
             "category": r["category"],
             "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
@@ -95,6 +99,7 @@ def export_monsters(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
+    resolve_en_name=None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
     _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
@@ -129,16 +134,23 @@ def export_monsters(
                     merged_coords_list.append(c)
         if not merged_coords_list:
             continue
+        translation_en = (
+            resolve_en_name(canonical["monster_name"], canonical["translation_key"], "monster")
+            if resolve_en_name
+            else canonical["monster_name"]
+        )
         monsters_index.append(
             {
                 "name": canonical["monster_name"],
                 "translation": translation,
+                "translation_EN": translation_en,
                 "coordCount": len(merged_coords_list),
             }
         )
         entity_data = {
             "name": canonical["monster_name"],
             "translation": translation,
+            "translation_EN": translation_en,
             "coords": [
                 build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
             ],
@@ -158,6 +170,7 @@ def export_props(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
+    resolve_en_name=None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
     props_index = []
@@ -211,10 +224,17 @@ def export_props(
                 entity_type = "decoration"
                 break
 
+        canonical_prop = group[0]
+        translation_en = (
+            resolve_en_name(canonical_prop["asset_name"], canonical_prop["translation_key"], "props")
+            if resolve_en_name
+            else name_key
+        )
         props_index.append(
             {
                 "name": name_key,
                 "translation": translation,
+                "translation_EN": translation_en,
                 "coordCount": len(merged_coords),
                 "type": entity_type,
             }
@@ -222,6 +242,7 @@ def export_props(
         entity_data = {
             "name": name_key,
             "translation": translation,
+            "translation_EN": translation_en,
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
         _save(output_dir, f"props/{name_key}.json", entity_data)

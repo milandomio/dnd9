@@ -431,7 +431,8 @@ export default function DetailPage() {
       <Helmet>
         <title>
           {entity.translation}
-          {entity.name} 位置汇总Location | 越来越黑暗闪电指南 DarkFlashNav
+          {entity.translation_EN ?? entity.name} 位置汇总Location |
+          越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -443,7 +444,7 @@ export default function DetailPage() {
         />
         <meta
           property="og:title"
-          content={`${entity.translation}${entity.name} 位置汇总Location | DarkFlashNav`}
+          content={`${entity.translation}${entity.translation_EN ?? entity.name} 位置汇总Location | DarkFlashNav`}
         />
         <meta
           property="og:description"
