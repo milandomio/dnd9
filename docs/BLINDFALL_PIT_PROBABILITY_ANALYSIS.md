@@ -206,6 +206,54 @@ DB (spawners 表) → api/src/db/repositories/coordinates.py
 | C_9 | 骷髅弓箭手, 骷髅弩手, 阴森帷幕披风 | 3 | 9 |
 | C_11 | 骷髅弓箭手, 骷髅冠军, 骷髅弩手, 骷髅长枪兵, 骷髅双手剑士, 幽鬼, 阴森帷幕披风 | 7 | 7 |
 
+## 共生池 vs 冲突池（互斥与共存）
+
+### 区分标准
+
+ObjectLinker（BP_GameObjectLinker_C）在游戏中有两种语义，通过 `group_parent` 字段区分：
+
+| 类型 | 条件 | 含义 | 显示 |
+|------|------|------|------|
+| **冲突池（互斥）** | `group_parent != ''` | Linker 是 BP_GameSpawnerGroup_C 的子级，多个实体竞争同一刷怪槽，N 种中选 M 种 | `(名1、名2、...N种选M)` |
+| **共生池（共存）** | `group_parent == ''` 且 `sub_group_parent != ''` | Linker 直接挂在场景中，所含实体全部同时存在，无互斥关系 | 不标注，同普通坐标点 |
+
+### 代码三层过滤
+
+共生池在数据管线和前端的**三层检查**中均被正确过滤，不会产生子池标注文字：
+
+1. **SQL 查询**（`coordinates.py:get_sub_group_pool_info`）：
+   ```sql
+   WHERE group_parent != '' AND sub_group_parent != '' AND has_lootdrop = 1
+   ```
+   共生池 `group_parent` 为空 → 不会被聚合统计
+
+2. **JSON 注入**（`translator.py:build_coord_out`）：
+   ```python
+   if sub_pool_info and _sgp:
+       key = (c["map_base"], c["json_filename"], _gp, _sgp)
+       spi = sub_pool_info.get(key)
+       if spi and spi[0] > 0:
+           out["sub_pool_size"] = spi[0]
+           out["sub_pool_names"] = spi[1]
+   ```
+   共生池未进入 `sub_pool_info` → `spi = None` → `sub_pool_size`/`sub_pool_names` 不注入
+
+3. **前端条件**（`DetailPage.tsx`）：
+   ```tsx
+   const sgp = c.sub_group_parent, gp = c.group_parent;
+   if (!sgp || !gp) continue;
+   ```
+   共生池 `gp` 为空字符串 → `!gp` 为 `true` → continue 跳过渲染
+
+### 分布统计
+
+| 类型 | JSON 文件数 | 示例 |
+|------|-----------|------|
+| 冲突池（有 `group_parent`） | 11 | `Crypt_BlindfallPit_D.json` |
+| 共生池（无 `group_parent`） | 41 | `Firedeep_MagmaFalls_D.json` |
+
+共生池的典型场景是 Boss 房（如 Firedeep_MagmaFalls 的赤焰巨像 + 地面宝箱+矿石+药水共存）、宝藏房（CaveMaze 的独眼巨人+卓越宝箱+饰品等）、以及各类固定布局的特殊模块。
+
 ## 对比
 
 | 版本 | GrimveilCloak 点数 | 标签 | 说明 |

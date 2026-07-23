@@ -1,5 +1,14 @@
 # 2026-07-23 会话修改记录
 
+## 共生池 vs 冲突池逻辑文档补充
+
+- **原因**：分析 Firedeep_MagmaFalls 赤焰巨像的子池问题时，发现 BP_GameObjectLinker_C 有两种语义——有 `group_parent` 时为冲突池（互斥 N 种选 M），无 `group_parent` 时为共生池（所有实体共存）。当前代码三层过滤（SQL WHERE、build_coord_out、前端 `!gp continue`）已正确排除共生池，无需代码修改。
+- **变更文件**：
+  - `docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` — 新增"共生池 vs 冲突池"章节，包含区分标准、三层过滤机制、分布统计
+- **关键逻辑**：
+  - 冲突池（11 个文件）：`group_parent != ''` → `sub_pool_size`/`sub_pool_names` 注入 → 前端显示 `(N种选M)`
+  - 共生池（41 个文件）：`group_parent == ''` → 不注入子池字段 → 普通坐标点，无特殊标注
+
 ## sub_group_parent 追踪 + 坐标去重修复（GrimveilCloak 从 1 点恢复为 6 点）
 
 - **原因**：BP_GameSpawnerGroup_C_8 内含 6 个 BP_GameObjectLinker_C 子组，每个独立从 11 种变体池中选 1，但坐标去重 key 只有 (x, y, z, json_filename)，导致同一个位置 6 个 ObjectLinker 的 spawn 被合并为 1 点，GrimveilCloak 显示 1 点而非 6 点
