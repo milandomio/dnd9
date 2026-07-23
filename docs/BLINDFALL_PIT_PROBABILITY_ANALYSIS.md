@@ -1,178 +1,135 @@
-# Crypt_BlindfallPit Module Appearance Probability Analysis
+# Crypt_BlindfallPit_D 变体组概率分析
 
-> Analysis Date: 2026-07-22
-> Updated: 2026-07-22 (GrimveilCloak full drop chain added)
-> Data Source: `DungeonCrawler/Content/DungeonCrawler/Data/Generated/V2/Dungeon/` game unpacked JSON + `spawners`/`lootdrop_groups`/`mutually_exclusive_groups` DB tables
+## 组结构
 
-## Background
+| 元素 | 数量 |
+|------|------|
+| BP_GameSpawnerGroup_C | 1（BP_GameSpawnerGroup_C_8） |
+| BP_GameObjectLinker_C | 6（C_1, C_3, C_5, C_7, C_9, C_11） |
+| BP_ObjectLinkWithTriggerBox_C | 6（C_0~C_5） |
+| 变体池（variant_count） | 11 种实体 |
+| BP_GameSpawner_C（组内） | 43 |
 
-Calculate the probability of encountering the **Blindfall Pit (Crypt_BlindfallPit)** rare module in the Crypt 5x5 map (Ruins Floor 2 · Crypt), and the full drop probability of **GrimveilCloak** within that module.
+## 算法验证
 
-## Name Reference
+### sub_group_parent 追踪
 
-| English | Notes |
-|---------|-------|
-| Crypt | Ruins Floor 2 (Crypt) |
-| Crypt_BlindfallPit | Blindfall Pit |
-| Crypt_LightlessChamber_01 | Lightless Chamber |
-| Crypt_LightlessTomb_01 | Lightless Tomb |
-| Crypt_MadCorridors | Mad Corridors |
-| Crypt_TorchboundVault | Torchbound Vault |
-| GrimveilCloak | Grimveil Cloak |
+`search_engine.py::sub_group_root_to_name` 正确识别两种 ObjectLinker 作为子组根：
 
-## Data Source Structure
+- `BP_GameObjectLinker_C` → 传给 spawner
+- `BP_ObjectLinkWithTriggerBox_C` → 传给 spawner
 
-```
-Dungeon (Id_Dungeon_RandomCrypt_*)
-  ├── Layouts[] → DungeonLayout (Id_DungeonLayout_Crypt_5x5_*)
-  │     └── Slots[].SlotTypes[].SlotType (Escape/Boss/Rare/Key/Altar/...)
-  └── ModuleType: Crypt → DungeonModule (Id_DungeonModule_Crypt_*)
-        └── bIsRare: true/false
-```
+每个 spawner 的 `_resolve_world_loc` 结果中正确携带 `sub_group_name`，最终存入 DB 的 `sub_group_parent` 字段。
 
-**Key point:** Layout files only define slot types; module assignment is handled in game compiled code (JSON contains `"Module": null`, `"Rotation": "None"`). Probabilities are derived from the number of available rare modules.
+### 坐标去重 key
 
-## Layer 1: Blindfall Pit Module Appearance Probability (~1%)
+原：`(x, y, z, json_filename)` → 6 个同位置 ObjectLinker 被合并为 1 点
 
-### Layout Verification
+现：`(x, y, z, json_filename, group_parent, sub_group_parent)` → 正确区分
 
-After checking all slots across 40 5x5 layout files:
+**验证**：GrimveilCloak x=810,y=-10,z=-1600:
+- 旧去重：6 条 → 1 条
+- 新去重：6 条（各 ObjectLinker 分别保留）
 
-| Dimension | Value |
-|-----------|-------|
-| Total 5x5 layouts | **40** (`Id_DungeonLayout_Crypt_5x5_01` ~ `_40`) |
-| Layouts with Rare slot(s) | **2** (01: slot 20, 02: slot 18) |
-| Layouts with multiple Rare slots | **0** (no dual-Rare-slot layout exists) |
-| Total Rare slots | **2** (2 layouts, 1 each) |
-| Layouts with Rare slot ratio | **2/40 = 5% |
+### groupCount 前端计算
 
-**The dual-Rare-slot scenario mentioned by users does not exist in Crypt 5x5** — at most 1 rare module draw per run.
-
-### Rare Module Pool
-
-| Dimension | Value |
-|-----------|-------|
-| Total rare modules | **5** (all 1x1) |
-| Rare module list | Blindfall Pit, Lightless Chamber, Lightless Tomb, Mad Corridors, Torchbound Vault |
-| Max rare modules per run | **1** (`NumMaxRares: 1`) |
-| Probability of Blindfall Pit being selected | **1/5 = 20%** |
-
-### Blindfall Pit Appearance Probability
-
-```
-P(Blindfall Pit appears) = P(Layout with Rare slot) × P(Rare pool selects Blindfall Pit)
-                         = (2/40) × (1/5)
-                         = 1%
+```tsx
+// DetailPage.tsx
+const varGps = [...new Set(
+  mapCoords.map((c) =>
+    c.group_parent && c.sub_group_parent
+      ? `${c.group_parent}::${c.sub_group_parent}`
+      : (c.group_parent ?? '')
+  ).filter(Boolean)
+)];
+const groupCount = varGps.length || 1;
 ```
 
-## Layer 2: Mutually Exclusive Spawns Inside Blindfall Pit (1 of 11)
+**等价于**：统计该变体组中 unique `(group_parent, sub_group_parent)` 对数。
 
-The Blindfall Pit module map file `Crypt_BlindfallPit_D.json` contains a mutually exclusive spawn group `BP_GameSpawnerGroup_C_8`. 11 entities compete at coordinate (810, -10, -1600), only 1 selected per run.
+## 变体机制
 
-| # | Entity | Type | DB rows |
-|:-:|--------|:----:|:-------:|
-| 1 | GrimveilCloak | lootdrop | 6 |
-| 2 | Hoard01_3 | props | 3 |
-| 3 | Ore_GoldOre (4 rarities merged) | props | 8 |
-| 4 | SkeletonArcher | monster | 5 |
-| 5 | SkeletonAxeman | monster | 2 |
-| 6 | SkeletonChampion | monster | 4 |
-| 7 | SkeletonCrossbowman | monster | 5 |
-| 8 | SkeletonGuardmanFromFakeDeath | monster | 56 |
-| 9 | SkeletonSpearman | monster | 4 |
-| 10 | SkeletonSwordman | monster | 4 |
-| 11 | Wraith | monster | 4 |
+当玩家进入触发区域时，每个 `BP_GameObjectLinker_C` 独立从变体池中选择 1 种实体并召唤。
 
-**Coordinate verification:** GrimveilCloak has 6 spawner records in DB, but all point to **the same coordinate** (810, -10, -1600, z=-1600). The notion of "6 coordinates" mistakenly interprets 6 DB rows as 6 distinct coordinates.
+### 11 种实体分布（Crypt_BlindfallPit_D）
 
-**Selection probability:** **1/11 ≈ 9.09%**
+| 实体 | 出现 ObjectLinker | 总刷怪点数 |
+|------|-------------------|-----------|
+| GrimveilCloak | C_1, C_3, C_5, C_7, C_9, C_11（全 6） | 6×1 |
+| SkeletonChampion | C_3(×3), C_11(×1) | 4 |
+| Hoard01_3 | C_1(×3) | 3 |
+| Ore_GoldOre | C_1(×8) | 8 |
+| SkeletonArcher | C_9(×4), C_11(×1) | 5 |
+| SkeletonCrossbowman | C_9(×4), C_11(×1) | 5 |
+| SkeletonSpearman | C_7(×3), C_11(×1) | 4 |
+| SkeletonSwordman | C_7(×3), C_11(×1) | 4 |
+| SkeletonAxeman | C_7(×2) | 2 |
+| SkeletonGuardsmanFromFakeDeath | C_7(×56) | 56 |
+| Wraith | C_5(×3), C_11(×1) | 4 |
 
-## Layer 3: GrimveilCloak Drop Rate (2.5%)
+### ObjectLinker 主题分区
 
-### Drop Group
+| ObjectLinker | 标签 | 关联实体 |
+|-------------|------|---------|
+| C_1 | Hoard | 宝箱/金矿类（3 种） |
+| C_3 | MonsterA | 精英近战 |
+| C_5 | MonsterB | 幽鬼 |
+| C_7 | MonsterC | 杂兵近战群（56 装死卫兵） |
+| C_9 | MonsterD | 远程兵 |
+| C_11 | MonsterE | 混合全品种 |
 
-`spawner_entries` with `keyword='GrimveilCloak'` links to a single drop group:
+### 爆率计算
 
-```
-spawner_entries.GrimveilCloak → lootdrop_group_id = ID_LootdropGroup_GrimveilCloak
-  → lootdrop_id = ID_Lootdrop_GrimveilCloak
-    → item_name = GrimveilCloak_5001 (luck_grade=5, drop_count=1)
-```
+由于 `BP_GameObjectLinker_C` 是互斥、独立、均匀的选择，没有额外权重信息时假设每 ObjectLinker 从完整 11 种池中均匀选择：
 
-**No other item shares this drop group.** If the drop roll fails, no special item drops at this location.
+| 指标 | 公式 | 值 |
+|------|------|-----|
+| 单次选择特定实体的概率 | 1/11 | 9.09% |
+| 至少出现一次的概率 | 1 - (10/11)^6 | 43.53% |
+| 恰好出现 k 次的概率 | C(6,k) × (1/11)^k × (10/11)^(6-k) | k=0: 56.47%, k=1: 33.86%, k=2: 8.47%, k=3: 1.13% |
+| 期望出现次数 | 6/11 | 0.545 |
 
-### Drop Weights (Crypt HR, dungeon_grade 3022)
+**限制**：此计算假设每 ObjectLinker 从全部 11 种中等概率选取。实际游戏中各 ObjectLinker 的权重由 `DCGameObjectLink` 决定，受蓝图逻辑影响，未暴露在导出 JSON 中。前端显示的"11种选M"使用的 M = 该实体出现的 unique `(group_parent, sub_group_parent)` 对数，并非总 ObjectLinker 数 6。
 
-| luck_grade | Weight | Share | Result |
-|:----------:|------:|:----:|--------|
-| 0 | 9750 | **97.5%** | No special drop (basic junk/gold) |
-| 5 | 250 | **2.5%** | GrimveilCloak |
-| 1-4, 6-8 | 0 | 0% | None |
+## 概率修正：GrimveilCloak 物品 vs 怪物实体
 
-**Drop probability:** 250/10000 = **2.5%**
+旧分析把两个东西混在一起了，需要区分：
 
-## Combined Probability
+### 场景 A：GrimveilCloak 怪物直接生成（变体池中的实体）
 
-### Formula
+GrimveilCloak 本身就是 11 种变体之一。当某个 ObjectLinker 选中它时，直接在其坐标点生成 GrimveilCloak 怪物。
 
-```
-P(obtain cloak) = P(Blindfall Pit appears) × P(cloak container selected) × P(container drops cloak)
-```
+| 版本 | 点数 | 单次选中的概率 | P(至少出 1 只) |
+|------|------|--------------|---------------|
+| 修复前 | 1（6 Linker 被合并） | 1/11 = 9.09% | 9.09% |
+| 修复后 | 6（各 Linker 独立） | 每 Linker 1/11，6 次独立 | **1 - (10/11)^6 = 43.53%** ⬆ 4.8× |
 
-### Comparison Across Modes
+**结论**：修复后 GrimveilCloak 怪物出现概率从 9% 暴涨到 43.5%，每次进 BlindfallPit 有近一半概率见到它。
 
-| Layer | Normal | PVE | Normal | HR | S2R |
-|:------|:------:|:---:|:------:|:--:|:---:|
-| ① Blindfall Pit appears | 1% | Same | Same | Same | **0%** (S2R has no Rare) |
-| ② 1 of 11 selected | 1/11 | Same | Same | Same | — |
-| ③ Drop rate | — | 0.25% | 1.25% | **2.5%** | 2.5% |
-| **Combined probability** | — | **1/440,000** | **1/88,000** | **1/44,000** | **0** |
-| ≈ | — | 1 per 440K runs | 1 per 88K runs | **1 per 44K runs** | None |
+### 场景 B：GrimveilCloak 物品直接生成（修正后的 1/9,200 分析）
 
-HR detailed calculation:
+GrimveilCloak **物品本身**就是变体池中的直接生成物（`group_drop_info` 实体名 = "阴森帷幕披风"），不是通过容器间接掉落。它有 6 个坐标点（对应 6 个 ObjectLinker），`spawn_rate=100`（选中即生成），`drop_rates` 控制物品的品质/模式系数。
 
-```
-P(Blindfall Pit appears) × P(cloak selected) × P(drop)
-= 1/100 × 1/11 × 2.5%
-= 1/100 × 1/11 × 25/1000
-= 25 / 1,100,000
-= 1 / 44,000
-≈ 0.00227%
-```
+| 阶段 | 旧理解（1 次抽选） | 新理解（6 次独立） | 变化 |
+|------|-------------------|-------------------|------|
+| 模块概率 | 1/100 | 1/100 | 不变 |
+| 实体选中 | 11 选 1 → 1/11 = 9.09% | 6 次独立，P(至少 1 中) = 1−(10/11)^6 = **43.53%** | ⬆ 4.8× |
+| 物品品质系数 | 2.5%（豪客赛） | 2.5%（豪客赛） | 不变 |
+| **总计（豪客赛）** | **1/44,000** | **1/9,191** | **⬆ 4.8×** |
 
-### Complete Spawn Flow
+若模块概率为 1/200（5x5 层 × 稀有模块比例未精确验证）：**1/18,382**。
 
-```
-Enter Crypt (Ruins Floor 2) 5x5
-  └→ 1 of 40 layouts drawn
-       └→ 2/40 = 5% → Layout with Rare slot
-            └→ 1 of 5 rare modules drawn
-                 └→ 1/5 = 20% → Blindfall Pit (otherwise, run ends)
-                      └→ 11 mutually exclusive spawns
-                           └→ 1/11 ≈ 9% → GrimveilCloak container
-                                └→ Container drop roll
-                                     ├─ 2.5% → Cloak drops ✓
-                                     └─ 97.5% → No special drop ✗
-```
+### 关键映射总结
 
-## Mode Comparison
+| 你要的东西 | 对应的变体实体 | 修复影响 | 新概率（豪客赛） |
+|-----------|--------------|---------|----------------|
+| GrimveilCloak **物品**（直接拾取） | 变体池 GrimveilCloak | ⬆ 涨 4.8× | **≈1/9,200** 每次进 BlindfallPit |
+| GrimveilCloak **怪物**（可见实体，同实体） | 变体池 GrimveilCloak | ⬆ 涨 4.8× | **43.5%** 可见 |
 
-| Mode | LayoutSize | Layouts | NumMaxRares | Layouts with Rare slot | Blindfall Pit probability |
-|------|-----------|---------|:-----------:|:---------------------:|:------------------------:|
-| N (Normal) Solo/Duo/Trio | 5 | 40 | 1 | 2 | **1%** |
-| HR (High Roller) Solo/Duo/Trio | 5 | 40 | 1 | 2 | **1%** |
-| A (Adventurer) | 5 | 40 | 1 | 2 | **1%** |
-| AHR | 5 | 40 | 1 | 2 | **1%** |
-| S2R (Starter to Ritual) | **4** | **10** | **None** | **0** | **0%** |
+## 对比
 
-> All Crypt 5x5 modes (N/HR/A/AHR) share the same layout list and map file (`Crypt_5x5_R_P`), with identical probabilities.
-
-## S2R Specifics
-
-S2R uses its own `Crypt_4x4_HR_R_P` map file and 10 4x4 layouts. 4x4 layouts **have no Rare slots**, making both Blindfall Pit and GrimveilCloak impossible.
-
-## Limitations
-
-1. **Module allocation algorithm unknown:** Rare module and layout selection logic is implemented in Unreal Engine C++ and not exported to JSON. The analysis assumes uniform random distribution.
-2. **No weight data:** Neither layout selection nor module selection has weight/priority fields.
-3. **Game version:** Data is based on the current game unpacked version. Future updates may alter layout configuration or drop weights.
+| 版本 | GrimveilCloak 点数 | 标签 | 说明 |
+|------|-------------------|------|------|
+| 修复前 | 1 | 11种选1 | 6 个 ObjectLinker 被去重合并，groupCount=1 |
+| 修复后 | 6 | 11种选6 | 使用 sub_group_parent 去重，groupCount=6 |
+| 实际游戏 | 1 物理点 | 11种各 ObjectLinker 独立选 | 6 次独立抽选，可重复，GrimveilCloak 会重叠 |
