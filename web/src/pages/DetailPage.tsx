@@ -29,23 +29,6 @@ import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
 
-let _preloadedEntityUrl = '';
-let _preloadedEntity: Entity | null = null;
-if (typeof window !== 'undefined') {
-  const _m = window.location.pathname.match(
-    /^\/(items|monsters|props)\/([^/]+)/
-  );
-  if (_m) {
-    _preloadedEntityUrl = `/data/json/${_m[1]}/${_m[2]}.json`;
-    fetch(_preloadedEntityUrl)
-      .then((r) => r.json())
-      .then((d) => {
-        _preloadedEntity = d as Entity;
-      })
-      .catch(() => {});
-  }
-}
-
 const GROUP_ORDER = [
   'GoblinCave',
   'FireDeep',
@@ -66,7 +49,7 @@ export default function DetailPage() {
     dataKey
   );
   const [entity, setEntity] = useState<Entity | null>(
-    _preloadedEntity ?? (ssrData?.entity?.coords ? ssrData.entity : null)
+    ssrData?.entity?.coords ? ssrData.entity : null
   );
   const { modules: globalModules } = useDungeonModules();
   // Resolve module by coord's map field (now resolved module name)
@@ -136,7 +119,6 @@ export default function DetailPage() {
     }
     const decoded = decodeURIComponent(name!);
     const url = dataUrl(dataVersion, `/data/json/${page}/${decoded}.json`);
-    if (_preloadedEntity?.coords && _preloadedEntityUrl === url) return;
     if (fetchedRef.current) return;
     fetchedRef.current = true;
     fetch(url)

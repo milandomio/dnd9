@@ -69,21 +69,6 @@ interface LootdropItem {
   variant_rarity?: Record<string, string>;
 }
 
-let _preloadedLootdropUrl = '';
-let _preloadedLootdrop: LootdropItem | null = null;
-if (typeof window !== 'undefined') {
-  const _m = window.location.pathname.match(/^\/lootdrops\/([^/]+)/);
-  if (_m) {
-    _preloadedLootdropUrl = `/data/json/lootdrops/${_m[1]}.json`;
-    fetch(_preloadedLootdropUrl)
-      .then((r) => r.json())
-      .then((d) => {
-        _preloadedLootdrop = d as LootdropItem;
-      })
-      .catch(() => {});
-  }
-}
-
 const GROUP_ORDER = [
   'GoblinCave',
   'FireDeep',
@@ -140,8 +125,7 @@ export default function LootdropDetailPage() {
       ? baseSsrData
       : null;
   const [data, setData] = useState<LootdropItem | null>(
-    _preloadedLootdrop ??
-      (effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null)
+    effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null
   );
   const dataVersion = useDataVersion();
   const { modules: globalModules } = useDungeonModules();
@@ -191,8 +175,6 @@ export default function LootdropDetailPage() {
   // Reset fetch guard when name changes (e.g. navigation between lootdrops)
   useEffect(() => {
     lootFetchedRef.current = false;
-    _preloadedLootdrop = null;
-    _preloadedLootdropUrl = '';
   }, [name]);
 
   useEffect(() => {
@@ -210,8 +192,6 @@ export default function LootdropDetailPage() {
       dataVersion,
       `/data/json/lootdrops/${fetchName}.json`
     );
-    if (_preloadedLootdrop?.monsters && _preloadedLootdropUrl === lootUrl)
-      return;
     if (lootFetchedRef.current) return;
     lootFetchedRef.current = true;
     setData(null);

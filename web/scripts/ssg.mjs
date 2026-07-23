@@ -341,6 +341,29 @@ for (let i = 0; i < routes.length; i++) {
   const canonical = urlPath === "/" ? "/" : urlPath.replace(/\/?$/, "/");
   const templated = template.replace("</title>", `</title>\n    <link rel="canonical" href="${canonical}">\n    <base href="${baseHref}">`);
 
+  // Detail-specific preload links (versioned paths)
+  const detailPreloads = [];
+  const entityMatch = urlPath.match(/^\/(items|monsters|props)\/(.+)$/);
+  if (entityMatch) {
+    detailPreloads.push(
+      `<link rel="preload" href="/data/${shortVer}/json/${entityMatch[1]}/${entityMatch[2]}.json" as="fetch" crossorigin="anonymous">`
+    );
+  }
+  const lootdropMatch = urlPath.match(/^\/lootdrops\/(.+)$/);
+  if (lootdropMatch) {
+    detailPreloads.push(
+      `<link rel="preload" href="/data/${shortVer}/json/lootdrops/${lootdropMatch[1]}.json" as="fetch" crossorigin="anonymous">`
+    );
+  }
+  const moduleMatch = urlPath.match(/^\/dungeon_modules\/[^/]+\/(.+)$/);
+  if (moduleMatch) {
+    detailPreloads.push(
+      `<link rel="preload" href="/data/${shortVer}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">`,
+      `<link rel="preload" href="/data/img/${moduleMatch[1]}.webp" as="fetch" crossorigin="anonymous">`
+    );
+  }
+  const preloadHtml = detailPreloads.length > 0 ? `    ${detailPreloads.join('\n    ')}\n` : '';
+
   let page;
   if (r.redirect) {
     const title = `${r.file.split("/")[1]} — DarkFlashNav`;
@@ -358,13 +381,13 @@ for (let i = 0; i < routes.length; i++) {
       const headlessTemplate = templated.replace(/<title>[^<]*<\/title>\s*/, "");
       page = headlessTemplate
         .replace(ROOT_MARKER, `<div id="root">${result.html}`)
-        .replace(HEAD_CLOSE, `${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`);
+        .replace(HEAD_CLOSE, `${preloadHtml}${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`);
     } catch (err) {
       console.error(`  [err]  ${urlPath}: ${err.message}`);
-      page = templated.replace(HEAD_CLOSE, `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`);
+      page = templated.replace(HEAD_CLOSE, `${preloadHtml}<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`);
     }
   } else {
-    page = templated.replace(HEAD_CLOSE, `\n</head>`);
+    page = templated.replace(HEAD_CLOSE, `${preloadHtml}\n</head>`);
   }
 
   mkdirSync(dirname(outPath), { recursive: true });
