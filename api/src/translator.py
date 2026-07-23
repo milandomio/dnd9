@@ -245,6 +245,9 @@ def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None) -> dic
     }
     if _gp:
         out["group_parent"] = _gp
+    _sgp = c.get("sub_group_parent", "")
+    if _sgp:
+        out["sub_group_parent"] = _sgp
     vc_info = vc.get((c["map_base"], c["json_filename"], _gp))
     if vc_info and vc_info[0] > 1:
         out["variant_count"] = vc_info[0]

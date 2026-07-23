@@ -17,6 +17,7 @@ export interface Coord {
   variant_count?: number;
   variant_names?: string[];
   group_parent?: string;
+  sub_group_parent?: string;
 }
 
 export interface GroupDropInfo {

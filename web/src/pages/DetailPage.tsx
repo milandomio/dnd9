@@ -865,7 +865,11 @@ export default function DetailPage() {
                             const varGps = [
                               ...new Set(
                                 mapCoords
-                                  .map((c) => c.group_parent)
+                                  .map((c) =>
+                                    c.group_parent && c.sub_group_parent
+                                      ? `${c.group_parent}::${c.sub_group_parent}`
+                                      : (c.group_parent ?? '')
+                                  )
                                   .filter(Boolean)
                               ),
                             ];
