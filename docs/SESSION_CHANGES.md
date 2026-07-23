@@ -1037,3 +1037,11 @@ if (typeof window !== 'undefined') {
   - `web/src/pages/DetailPage.tsx` — 变体标签显示 `(骷髅冠军、GrimveilCloak2种选3)` 格式
 - **效果**：SkeletonChampion 地穴模块：`(骷髅冠军、GrimveilCloak2种选3)(骷髅冠军、幽鬼、骷髅弩手...7种选1)`
 - **验证**：HTTP 200 ✓
+
+## 修复子池实体名翻译（GrimveilCloak→阴森帷幕披风）
+
+- **原因**：GrimveilCloak 是 item 类型实体（翻译键 `Text_DesignData_Item_Item_GrimveilCloak_5001`），但子池名称解析代码只处理 monster 和 props，未处理 item 类型，导致回退为英文名
+- **变更文件**：
+  - `api/src/collector.py` — 子池名翻译新增 `elif "item" in _cls_types` 分支，传入正确的 translation_key 和 scope
+- **效果**：C_3 子池显示 `(骷髅冠军、阴森帷幕披风2种选3)`，C_11 显示 `(骷髅冠军、幽鬼、骷髅弩手、骷髅弓箭手、骷髅长枪兵、骷髅双手剑士、阴森帷幕披风7种选1)`
+- **验证**：HTTP 200 ✓
