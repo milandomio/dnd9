@@ -1141,3 +1141,15 @@ if (typeof window !== "undefined") {
   - `api/src/collector.py` — 子池名翻译新增 `elif "item" in _cls_types` 分支，传入正确的 translation_key 和 scope
 - **效果**：C_3 子池显示 `(骷髅冠军、阴森帷幕披风2种选3)`，C_11 显示 `(骷髅冠军、幽鬼、骷髅弩手、骷髅弓箭手、骷髅长枪兵、骷髅双手剑士、阴森帷幕披风7种选1)`
 - **验证**：HTTP 200 ✓
+
+## SSG 页面标题修复（英文名 + 中文名）
+
+- **原因**：Quick 模式 SSR 注入数据不全（只有 `name`/`translation`），组件提前 return 导致 `<Helmet>` 不渲染，title 为空；详情页标题缺少英文名
+- **变更文件**：
+  - `web/src/pages/DetailPage.tsx` — SSR state init 接受无 coords 的 entity
+  - `web/src/pages/LootdropDetailPage.tsx` — SSR state init 接受无 monsters 的 item
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — SSR state init 接受仅有 name 的 module
+  - `web/src/pages/QuestItemGroupPage.tsx` — SSR loading 状态修复（不再因 entities 为空阻塞 Helmet）
+  - 所有详情页标题格式统一为 `{translation}{name} {typeChinese}{typeEnglish}`（如 `献魂册SoulDevotedFolio 掉落来源Source`）
+- **效果**：3096 个 SSG 页面全部有正确 SEO 标题（含英文名 + 中文分类）
+- **验证**：curl 检查 items/monsters/props/lootdrops/quest_items/quest_npc/dungeon_modules 各类型页面 title 均正确 ✓
