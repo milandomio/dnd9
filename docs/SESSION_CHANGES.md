@@ -1,5 +1,12 @@
 # 2026-07-22 会话修改记录
 
+## 修复 ElephantIsland 硬编码未生效问题（前端构建过时）
+
+- **原因**：`data/json/dungeon_modules.json` 已在 `api/src/config.py` 中正确写入 "象岛"/1x2/偏移，但 `web/dist/` 构建时间（06:05）早于数据更新时间（12:21），前端仍加载旧 JSON 数据
+- **变更文件**：
+  - `web/src/pages/ListPage.tsx` — prettier 自动格式化（无逻辑变更）
+- **验证**：`npm run build` 后 `curl http://localhost:8080/` 返回 HTTP 200；SSG 产物的 SSR 数据中 ElephantIsland 的 translation="象岛"/size=(1,2)/offset=(-1600,1600) 均正确
+
 ## 修复 ShipGraveyard_ElephantIsland 大小错误 + 补充硬编码翻译
 
 - **原因**：`ShipGraveyard_ElephantIsland` 无 DungeonModule JSON，`extra_rows` 路径将 size 硬编码为 1x1，但实际为 1x2 模块，导致前端显示异常

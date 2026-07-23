@@ -862,17 +862,29 @@ export default function DetailPage() {
                           (() => {
                             const vc = forcedVc!;
                             const names = vc.variant_names ?? [];
+                            const varGps = [
+                              ...new Set(
+                                mapCoords
+                                  .map((c) => c.group_parent)
+                                  .filter(Boolean)
+                              ),
+                            ];
+                            const groupCount = varGps.length || 1;
                             if (names.length > 0) {
                               return (
                                 <span style={{ color: tokens.muted }}>
                                   ({names.join('、')}
-                                  {vc.variant_count}种选1)
+                                  {vc.variant_count}种选{groupCount}
+                                  {posCount > 1
+                                    ? ` · ${posCount}点选${groupCount}`
+                                    : ''}
+                                  )
                                 </span>
                               );
                             }
                             return (
                               <span style={{ color: tokens.muted }}>
-                                ({posCount}点选1)
+                                ({posCount}点选{groupCount})
                               </span>
                             );
                           })()}
