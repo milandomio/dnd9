@@ -877,6 +877,44 @@ export default function DetailPage() {
                         ))}
                         {hasVariant &&
                           (() => {
+                            const linkerGroups = new Map<
+                              string,
+                              { coords: Coord[]; poolSize: number }
+                            >();
+                            for (const c of mapCoords) {
+                              const sgp = c.sub_group_parent;
+                              const gp = c.group_parent;
+                              if (!sgp || !gp) continue;
+                              const key = `${gp}::${sgp}`;
+                              if (!linkerGroups.has(key)) {
+                                linkerGroups.set(key, {
+                                  coords: [],
+                                  poolSize: c.sub_pool_size ?? 0,
+                                });
+                              }
+                              linkerGroups.get(key)!.coords.push(c);
+                            }
+                            if (linkerGroups.size > 0) {
+                              return [...linkerGroups.entries()].map(
+                                ([key, g]) => {
+                                  const linkerLabel = key
+                                    .split('::')[1]
+                                    .replace('C_', 'c');
+                                  const uniquePos = new Set(
+                                    g.coords.map((c) => `${c.x},${c.y},${c.z}`)
+                                  ).size;
+                                  return (
+                                    <span
+                                      key={key}
+                                      style={{ color: tokens.muted }}
+                                    >
+                                      ({linkerLabel}子池{g.poolSize}种选
+                                      {uniquePos})
+                                    </span>
+                                  );
+                                }
+                              );
+                            }
                             const vc = forcedVc!;
                             const names = vc.variant_names ?? [];
                             if (names.length > 0) {
