@@ -780,8 +780,8 @@ export default function DetailPage() {
                     const adjRate = (v: number) =>
                       hasVariant
                         ? +(
-                            100 *
-                            (1 - (1 - v / (100 * forcedVcN)) ** groupCount)
+                            v *
+                            (1 - (1 - 1 / forcedVcN) ** groupCount)
                           ).toFixed(4)
                         : v;
                     const filteredGdi = gdi.filter((info) =>
