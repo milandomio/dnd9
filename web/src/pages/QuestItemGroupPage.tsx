@@ -67,9 +67,9 @@ export default function QuestItemGroupPage() {
   const ssrData = useSSRData<GroupData>(dataKey);
   const hasFullData = !!ssrData?.entities?.length;
   const [data, setData] = useState<GroupData | null>(
-    hasFullData ? ssrData : null
+    hasFullData ? ssrData : ssrData?.group ? (ssrData as GroupData) : null
   );
-  const [loading, setLoading] = useState(!hasFullData);
+  const [loading, setLoading] = useState(!hasFullData && !ssrData?.group);
   const { modules } = useDungeonModules();
   const [hidden, setHidden] = useState<Set<string>>(() => {
     if (ssrData?.entities) {
