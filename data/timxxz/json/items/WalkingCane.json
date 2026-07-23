@@ -1,0 +1,84 @@
+{
+  "name": "WalkingCane",
+  "translation": "手杖",
+  "translation_EN": "手杖",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -1007.0,
+      "y": 1041.0,
+      "z": -627.0,
+      "yaw": 290.0,
+      "map": "Ruins_Cemetery_01",
+      "file": "Ruins_Cemetery_01_HR_D.json",
+      "version": "",
+      "label": "WalkingCane"
+    },
+    {
+      "x": -285.0,
+      "y": -690.0,
+      "z": -515.0,
+      "yaw": 260.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "WalkingCane"
+    },
+    {
+      "x": -109.0,
+      "y": 936.0,
+      "z": 104.578156,
+      "yaw": 261.8,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "WalkingCane"
+    },
+    {
+      "x": 392.97812,
+      "y": -61.46791,
+      "z": 49.420033,
+      "yaw": 30.9,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "WalkingCane"
+    },
+    {
+      "x": -2014.5621,
+      "y": -107.464294,
+      "z": -842.6859,
+      "yaw": 205.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "WalkingCane"
+    },
+    {
+      "x": -30.303844,
+      "y": 251.52704,
+      "z": -550.0,
+      "yaw": 260.0,
+      "map": "Ruins_UndergroundAltar_01",
+      "file": "Ruins_UndergroundAltar_01_HR_D.json",
+      "version": "",
+      "label": "WalkingCane"
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "手杖",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

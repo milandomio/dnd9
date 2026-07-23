@@ -1,0 +1,32 @@
+{
+  "name": "SpectralKnight",
+  "translation": "鬼灵骑士",
+  "translation_EN": "鬼灵骑士",
+  "coords": [
+    {
+      "x": 2.2906150000000025,
+      "y": -170.85586,
+      "z": -899.9999991037588,
+      "yaw": 270.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "SpectralKnight",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "鬼灵骑士",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "name": "FrostSkeletonCrossbowman",
+  "translation": "冰霜骷髅弩手",
+  "translation_EN": "冰霜骷髅弩手",
+  "coords": [
+    {
+      "x": -170.0,
+      "y": 465.0,
+      "z": 0.0001,
+      "yaw": 0.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_D.json",
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 805.0,
+      "y": 735.0,
+      "z": 500.0,
+      "yaw": 230.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_D.json",
+      "version": "(D)",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 1100.0,
+      "y": -30.0,
+      "z": 300.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_Monoliths",
+      "file": "IceAbyss_Monoliths_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": -839.5526,
+      "y": -556.3894,
+      "z": 575.1587,
+      "yaw": 0.0,
+      "map": "IceAbyss_Monoliths",
+      "file": "IceAbyss_Monoliths_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 12.0,
+      "y": -614.0,
+      "z": 425.0001,
+      "yaw": 90.0,
+      "map": "IceAbyss_StaircaseHill",
+      "file": "IceAbyss_StaircaseHill_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 41.0,
+      "y": 641.0,
+      "z": 425.0001,
+      "yaw": 90.0,
+      "map": "IceAbyss_StaircaseHill",
+      "file": "IceAbyss_StaircaseHill_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 535.0,
+      "y": 1018.0,
+      "z": -599.99994,
+      "yaw": 205.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": -21.0,
+      "y": 167.0,
+      "z": -84.840065,
+      "yaw": 0.0,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 26.438984,
+      "y": 828.28894,
+      "z": -599.99994,
+      "yaw": 29.9,
+      "map": "IceCave_Hut_01",
+      "file": "IceCave_Hut_01_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 157.43898,
+      "y": 208.28893,
+      "z": -6.1085205,
+      "yaw": 29.9,
+      "map": "IceCave_Hut_01",
+      "file": "IceCave_Hut_01_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 736.85333,
+      "y": -734.3839,
+      "z": -584.9999,
+      "yaw": 140.0,
+      "map": "IceCave_Hut_03",
+      "file": "IceCave_Hut_03_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman"
+    },
+    {
+      "x": 437.0,
+      "y": -4.0,
+      "z": -399.999895,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman",
+      "group_parent": "BP_GameSpawner_C_29",
+      "variant_count": 3,
+      "variant_names": [
+        "冰霜骷髅弩手",
+        "冰霜巨人狂战士",
+        "冰霜持盾巨人"
+      ]
+    },
+    {
+      "x": 437.0,
+      "y": -409.0,
+      "z": -399.999895,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "FrostSkeletonCrossbowman",
+      "group_parent": "BP_GameSpawner_C_29",
+      "variant_count": 3,
+      "variant_names": [
+        "冰霜骷髅弩手",
+        "冰霜巨人狂战士",
+        "冰霜持盾巨人"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceAbyss": [
+      {
+        "translation": "冰霜骷髅弩手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 27.5,
+          "豪客赛": 28.0,
+          "逆袭赛": 30.5
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "冰霜骷髅弩手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 23.75,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

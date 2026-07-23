@@ -1,0 +1,175 @@
+{
+  "name": "Wendigo",
+  "translation": "温迪戈",
+  "translation_EN": "温迪戈",
+  "coords": [
+    {
+      "x": -14.0,
+      "y": 15.0,
+      "z": 1.0000973,
+      "yaw": 90.0,
+      "map": "IceAbyss_DeathPit",
+      "file": "IceAbyss_DeathPit_HR_D.json",
+      "version": "",
+      "label": "Wendigo"
+    },
+    {
+      "x": -90.0,
+      "y": 87.0,
+      "z": 200.00061,
+      "yaw": 120.0,
+      "map": "IceAbyss_DemonicDen",
+      "file": "IceAbyss_DemonicDen_D.json",
+      "version": "(D)",
+      "label": "Wendigo"
+    },
+    {
+      "x": -649.0,
+      "y": 625.0,
+      "z": 0.000110083,
+      "yaw": 90.0,
+      "map": "IceAbyss_DividingHill",
+      "file": "IceAbyss_DividingHill_HR_D.json",
+      "version": "",
+      "label": "Wendigo"
+    },
+    {
+      "x": 200.0,
+      "y": -1200.0,
+      "z": -50.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_D.json",
+      "version": "(D)",
+      "label": "Wendigo"
+    },
+    {
+      "x": 535.0,
+      "y": -150.0,
+      "z": -599.9999,
+      "yaw": 270.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "Wendigo",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": [
+        "温迪戈",
+        "冰霜恶魔大君"
+      ]
+    },
+    {
+      "x": -14.0,
+      "y": 15.0,
+      "z": 800.00006,
+      "yaw": 90.0,
+      "map": "IceAbyss_ReversedPyramid",
+      "file": "IceAbyss_ReversedPyramid_HR_D.json",
+      "version": "",
+      "label": "Wendigo"
+    },
+    {
+      "x": 206.0,
+      "y": 30.0,
+      "z": -299.9999,
+      "yaw": 270.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_HR_D.json",
+      "version": "",
+      "label": "Wendigo"
+    },
+    {
+      "x": 642.0,
+      "y": 3851.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_D.json",
+      "version": "(D)",
+      "label": "Wendigo",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -3916.0,
+      "y": 3903.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_D.json",
+      "version": "(D)",
+      "label": "Wendigo",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 444.0,
+      "y": 3720.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "Wendigo",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -3916.0,
+      "y": 3720.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "Wendigo",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -3916.0,
+      "y": -680.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "Wendigo",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": 710.0,
+      "y": -680.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "Wendigo",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": []
+    }
+  ],
+  "group_drop_info": {
+    "IceAbyss": [
+      {
+        "translation": "温迪戈",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

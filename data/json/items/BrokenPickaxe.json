@@ -1,0 +1,76 @@
+{
+  "name": "BrokenPickaxe",
+  "translation": "坏掉的镐",
+  "translation_EN": "坏掉的镐",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 1135.0,
+      "y": -935.0,
+      "z": 65.0,
+      "yaw": 295.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "BrokenPickaxe"
+    },
+    {
+      "x": 1295.0,
+      "y": 15.0,
+      "z": 60.72742,
+      "yaw": 335.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "BrokenPickaxe"
+    },
+    {
+      "x": -1495.0,
+      "y": -190.0,
+      "z": 475.0,
+      "yaw": 315.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "BrokenPickaxe"
+    },
+    {
+      "x": 578.0,
+      "y": -943.54865,
+      "z": -1003.1447,
+      "yaw": 252.4,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "BrokenPickaxe"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "坏掉的镐",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "坏掉的镐",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "name": "FrostDemon",
+  "translation": "冰霜恶魔大君",
+  "translation_EN": "冰霜恶魔大君",
+  "coords": [
+    {
+      "x": 84.0,
+      "y": -88.0,
+      "z": 200.00044,
+      "yaw": 310.0,
+      "map": "IceAbyss_DemonicDen",
+      "file": "IceAbyss_DemonicDen_D.json",
+      "version": "(D)",
+      "label": "FrostDemon"
+    },
+    {
+      "x": -9.999999992515995e-07,
+      "y": -790.0,
+      "z": -950.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    },
+    {
+      "x": 70.0,
+      "y": 210.0,
+      "z": 0.0,
+      "yaw": 245.0,
+      "map": "IceAbyss_Glacivia",
+      "file": "IceAbyss_Glacivia_D.json",
+      "version": "(D)",
+      "label": "FrostDemon"
+    },
+    {
+      "x": 0.0,
+      "y": 955.0,
+      "z": -1300.0,
+      "yaw": 270.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 3.000000000952241e-05,
+      "y": -955.0,
+      "z": -1300.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 525.0,
+      "y": -115.0,
+      "z": -599.9999,
+      "yaw": 180.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": [
+        "温迪戈",
+        "冰霜恶魔大君"
+      ]
+    },
+    {
+      "x": 317.0,
+      "y": 171.0,
+      "z": 5.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_HR_D.json",
+      "version": "",
+      "label": "FrostDemon"
+    },
+    {
+      "x": 678.0,
+      "y": -37.000004,
+      "z": 602.0001,
+      "yaw": 180.0,
+      "map": "IceAbyss_StaircaseHill",
+      "file": "IceAbyss_StaircaseHill_HR_D.json",
+      "version": "",
+      "label": "FrostDemon"
+    }
+  ],
+  "group_drop_info": {
+    "IceAbyss": [
+      {
+        "translation": "冰霜恶魔大君",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4688,
+          "普通": 3.75,
+          "豪客赛": 4.6875,
+          "逆袭赛": 4.375
+        }
+      }
+    ]
+  }
+}

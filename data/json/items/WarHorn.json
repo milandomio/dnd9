@@ -1,0 +1,44 @@
+{
+  "name": "WarHorn",
+  "translation": "战争号角",
+  "translation_EN": "战争号角",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 1461.0,
+      "y": 3446.0,
+      "z": 522.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "WarHorn"
+    },
+    {
+      "x": -411.67966,
+      "y": 559.1226,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "WarHorn"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "战争号角",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

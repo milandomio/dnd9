@@ -1,0 +1,415 @@
+{
+  "map_base": "Ruins_Passage_Outer_11",
+  "entities": [
+    {
+      "name": "AshTree01",
+      "translation": "白蜡树",
+      "translation_EN": "白蜡树",
+      "type": "props",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": -915.0,
+          "y": 5.6e-05,
+          "z": 0.0,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "AshTree01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 675.0,
+          "y": -339.99994,
+          "z": 0.0,
+          "yaw": 35.0,
+          "version": "(A)",
+          "label": "AshTree01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 310.00003,
+          "y": 5.6e-05,
+          "z": 0.0,
+          "yaw": 265.0,
+          "version": "(A)",
+          "label": "AshTree01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Fireflies",
+      "translation": "萤火虫",
+      "translation_EN": "萤火虫",
+      "type": "decoration",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "translation_EN": "传送门",
+      "type": "decoration",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 1054.0,
+          "y": 326.0,
+          "z": 1.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Lamp01On",
+      "translation": "灯",
+      "translation_EN": "灯",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -152.22789,
+          "y": 244.3953,
+          "z": 0.0,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "Lamp01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 247.77211,
+          "y": -1125.6047,
+          "z": 0.0,
+          "yaw": 64.2,
+          "version": "(A)",
+          "label": "Lamp01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 557.7721,
+          "y": 799.39526,
+          "z": 0.0,
+          "yaw": 275.0,
+          "version": "(A)",
+          "label": "Lamp01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -733.3274,
+          "y": -189.67264,
+          "z": 0.0,
+          "yaw": 5.0,
+          "version": "(A)",
+          "label": "Lamp01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -62.227894,
+          "y": -625.60474,
+          "z": 0.0,
+          "yaw": 240.0,
+          "version": "(A)",
+          "label": "Lamp01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 947.7721,
+          "y": -995.60474,
+          "z": 0.0,
+          "yaw": 115.0,
+          "version": "(A)",
+          "label": "Lamp01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Path_01",
+      "translation": "小径",
+      "translation_EN": "小径",
+      "type": "decoration",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 1.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "RuinsModuleConnector",
+      "translation": "木门",
+      "translation_EN": "木门",
+      "type": "decoration",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Torch05On",
+      "translation": "火把",
+      "translation_EN": "火把",
+      "type": "decoration",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 1105.0,
+          "y": -259.55255,
+          "z": 14.751096,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1365.0,
+          "y": -945.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 955.0,
+          "y": 1360.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -605.0,
+          "y": -1325.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 60.00003,
+          "y": 1225.4475,
+          "z": 14.751096,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 855.0,
+          "y": 465.44745,
+          "z": 14.751096,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1380.0,
+          "y": -610.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1435.0,
+          "y": 655.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1370.0,
+          "y": 605.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

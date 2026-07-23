@@ -1,0 +1,525 @@
+{
+  "map_base": "DarkRitualRoom_04",
+  "entities": [
+    {
+      "name": "BlackRose",
+      "translation": "黑玫瑰",
+      "translation_EN": "黑玫瑰",
+      "type": "props",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": 1425.0,
+          "y": -235.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "黑玫瑰",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -75.0,
+          "y": 1125.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "黑玫瑰",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 20.0,
+          "y": -1170.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "黑玫瑰",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BossRewardDoor",
+      "translation": "被诅咒的宝藏之门",
+      "translation_EN": "被诅咒的宝藏之门",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 1057.0,
+          "y": -69.0,
+          "z": 5.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "BossRewardDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "translation_EN": "对象链接器",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -150.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_EN": "生成器组",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GhostKing",
+      "translation": "鬼王",
+      "translation_EN": "鬼王",
+      "type": "monster",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "GhostKing",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Hoard01_9",
+      "translation": "宝藏堆",
+      "translation_EN": "宝藏堆",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 1302.301,
+          "y": 16.693111,
+          "z": 0.0,
+          "yaw": 280.0,
+          "version": "",
+          "label": "Hoard01_9",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "InfernoModuleConnector",
+      "translation": "木门",
+      "translation_EN": "木门",
+      "type": "decoration",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "InfernoRoaster01_On",
+      "translation": "灯架子",
+      "translation_EN": "灯架子",
+      "type": "decoration",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -530.0,
+          "y": 950.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -950.0,
+          "y": -530.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -950.0,
+          "y": 530.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1310.0,
+          "y": -270.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1310.0,
+          "y": 270.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 530.0,
+          "y": 950.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 950.0,
+          "y": 530.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 950.0,
+          "y": -530.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 530.0,
+          "y": -950.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -530.0,
+          "y": -950.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "InfernoTorch_01_On",
+      "translation": "火把",
+      "translation_EN": "火把",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 1020.0,
+          "y": 180.0,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoTorch_01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1020.0,
+          "y": -180.0,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoTorch_01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LightBeam",
+      "translation": "光束",
+      "translation_EN": "光束",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "光束",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MarvelousChest",
+      "translation": "卓越宝箱",
+      "translation_EN": "卓越宝箱",
+      "type": "props",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 1396.301,
+          "y": -1.306888,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MarvelousChest",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Trinkets",
+      "translation": "小饰品",
+      "translation_EN": "小饰品",
+      "type": "item",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 1298.0,
+          "y": 197.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1370.0,
+          "y": 230.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1359.0,
+          "y": -131.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1293.0,
+          "y": -176.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1219.0,
+          "y": -200.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1305.0,
+          "y": -64.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1305.0,
+          "y": 47.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1214.0,
+          "y": 234.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": "Yeti",
+  "translation": "冰雪巨猿",
+  "translation_EN": "冰雪巨猿",
+  "coords": [
+    {
+      "x": -14.99999,
+      "y": 279.0,
+      "z": 8.5e-05,
+      "yaw": 90.0,
+      "map": "IceCave_Altar",
+      "file": "IceCave_Altar_HR_D.json",
+      "version": "",
+      "label": "Yeti"
+    },
+    {
+      "x": -783.0,
+      "y": 9.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "IceCave_FourRoute",
+      "file": "IceCave_FourRoute_HR_D.json",
+      "version": "",
+      "label": "Yeti"
+    },
+    {
+      "x": 215.46568,
+      "y": -331.4847,
+      "z": 0.0,
+      "yaw": 60.0,
+      "map": "IceCave_IcicleCave",
+      "file": "IceCave_IcicleCave_HR_D.json",
+      "version": "",
+      "label": "Yeti"
+    },
+    {
+      "x": -1040.72147,
+      "y": -1093.3187,
+      "z": 605.21774,
+      "yaw": 45.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "Yeti",
+      "sub_group_parent": "BP_GameObjectLinker_C_2"
+    },
+    {
+      "x": -486.0,
+      "y": 661.0,
+      "z": -415.68594,
+      "yaw": 270.0,
+      "map": "IceCave_Turnnel_01",
+      "file": "IceCave_Turnnel_01_HR_D.json",
+      "version": "",
+      "label": "Yeti"
+    }
+  ],
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰雪巨猿",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 25.0
+        }
+      }
+    ]
+  }
+}

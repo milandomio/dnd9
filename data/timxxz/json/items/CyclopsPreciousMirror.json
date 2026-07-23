@@ -1,0 +1,34 @@
+{
+  "name": "CyclopsPreciousMirror",
+  "translation": "独眼巨人的珍贵手镜",
+  "translation_EN": "独眼巨人的珍贵手镜",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -890.0,
+      "y": -170.0,
+      "z": -1570.0,
+      "yaw": 0.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_A.json",
+      "version": "(A)",
+      "label": "CyclopsPreciousMirror"
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "独眼巨人的珍贵手镜",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 40.0,
+          "普通": 50.0,
+          "豪客赛": 60.0,
+          "逆袭赛": 60.0
+        }
+      }
+    ]
+  }
+}

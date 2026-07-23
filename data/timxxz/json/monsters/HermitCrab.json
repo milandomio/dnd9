@@ -1,0 +1,51 @@
+{
+  "name": "HermitCrab",
+  "translation": "寄居蟹",
+  "translation_EN": "寄居蟹",
+  "coords": [
+    {
+      "x": -122.0,
+      "y": 69.0,
+      "z": 566.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "HermitCrab"
+    },
+    {
+      "x": -482.0,
+      "y": 769.0,
+      "z": 106.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "HermitCrab"
+    },
+    {
+      "x": 525.0,
+      "y": 666.0,
+      "z": 148.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "HermitCrab"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "寄居蟹",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.1875,
+          "普通": 2.5,
+          "豪客赛": 5.0,
+          "逆袭赛": 5.0
+        }
+      }
+    ]
+  }
+}

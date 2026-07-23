@@ -1,0 +1,44 @@
+{
+  "name": "GoatHideRug",
+  "translation": "山羊皮毯",
+  "translation_EN": "山羊皮毯",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 214.57504,
+      "y": 650.2557,
+      "z": 138.18785,
+      "yaw": 205.3,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "GoatHideRug"
+    },
+    {
+      "x": -859.297,
+      "y": 804.80786,
+      "z": 1663.2518,
+      "yaw": 220.8,
+      "map": "ShipGraveyard_ElephantIsland",
+      "file": "ShipGraveyard_ElephantIsland_HR_D.json",
+      "version": "",
+      "label": "GoatHideRug"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "山羊皮毯",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

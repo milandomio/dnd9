@@ -1,0 +1,475 @@
+{
+  "map_base": "Ruins_Passage_Inner_05",
+  "entities": [
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Fireflies",
+      "translation": "萤火虫",
+      "translation_EN": "萤火虫",
+      "type": "decoration",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_EN": "生成器组",
+      "type": "decoration",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 8.822947,
+          "y": -563.319,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Lamp02On",
+      "translation": "灯",
+      "translation_EN": "灯",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -324.9222,
+          "y": 1013.9968,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1285.0778,
+          "y": 1013.9968,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 590.0,
+          "y": 335.0,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1010.0,
+          "y": 1295.0,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1010.0,
+          "y": 1301.3505,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1053.0,
+          "y": -1430.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1271.0,
+          "y": 56.0,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -590.0,
+          "y": 306.35043,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1265.0,
+          "y": 70.00001,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 298.0,
+          "y": -1447.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1451.0,
+          "y": -1014.0,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1290.0,
+          "y": 586.3504,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1002.0,
+          "y": -1440.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 325.0,
+          "y": 586.3504,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MurderofCrowsVolume",
+      "translation": "鸦群",
+      "translation_EN": "鸦群",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": -1600.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Roaster03On",
+      "translation": "灯架子",
+      "type": "decoration",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 735.0,
+          "y": -970.0,
+          "z": 0.0001,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -215.0,
+          "y": -930.0,
+          "z": 0.0001,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -595.0,
+          "y": 685.0,
+          "z": 0.0001,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 155.0,
+          "y": -570.0,
+          "z": 0.0001,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -795.0,
+          "y": -610.0,
+          "z": 0.0001,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -540.0,
+          "y": -70.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1350.0,
+          "y": -1020.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 500.0,
+          "y": -50.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "RuinsModuleConnector",
+      "translation": "木门",
+      "translation_EN": "木门",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Statue04",
+      "translation": "速度之泉",
+      "translation_EN": "速度之泉",
+      "type": "decoration",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": -133.822943,
+          "y": -26.680999999999926,
+          "z": 0.0,
+          "yaw": 145.0,
+          "version": "(D)",
+          "label": "速度之泉",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SubGroup",
+      "translation": "子组",
+      "translation_EN": "子组",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "子组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

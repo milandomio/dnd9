@@ -1,0 +1,93 @@
+{
+  "name": "DwarfKnight",
+  "translation": "矮人骑士",
+  "translation_EN": "矮人骑士",
+  "coords": [
+    {
+      "x": -132.0,
+      "y": 1216.0,
+      "z": 6.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        "火元素",
+        "矮人骑士"
+      ]
+    },
+    {
+      "x": 660.0,
+      "y": -0.9999945,
+      "z": 1202.0,
+      "yaw": 180.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight"
+    },
+    {
+      "x": 5.0,
+      "y": 0.0,
+      "z": 465.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight"
+    },
+    {
+      "x": -5.0,
+      "y": 52.0,
+      "z": -8.0,
+      "yaw": 85.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight"
+    },
+    {
+      "x": -1212.0,
+      "y": -9.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 1162.0,
+      "y": -92.0,
+      "z": 8.9236765,
+      "yaw": 180.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "矮人骑士",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

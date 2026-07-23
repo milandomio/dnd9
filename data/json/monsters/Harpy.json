@@ -1,0 +1,93 @@
+{
+  "name": "Harpy",
+  "translation": "鹰身女妖",
+  "translation_EN": "鹰身女妖",
+  "coords": [
+    {
+      "x": -183.00000000000006,
+      "y": -1204.0,
+      "z": -443.99887,
+      "yaw": 95.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 667.0000000000001,
+      "y": 891.0,
+      "z": -518.99887,
+      "yaw": 95.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -185.99998,
+      "y": -160.99997,
+      "z": 600.0,
+      "yaw": 180.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "Harpy"
+    },
+    {
+      "x": 189.0,
+      "y": 197.00003,
+      "z": 487.0001,
+      "yaw": 180.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "Harpy"
+    },
+    {
+      "x": 860.0,
+      "y": 589.99998,
+      "z": -434.9999,
+      "yaw": 180.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 684.9999999999999,
+      "y": -785.00002,
+      "z": -336.902,
+      "yaw": 235.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "鹰身女妖",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 33.4,
+          "普通": 40.0,
+          "豪客赛": 71.5,
+          "逆袭赛": 71.5
+        }
+      }
+    ]
+  }
+}

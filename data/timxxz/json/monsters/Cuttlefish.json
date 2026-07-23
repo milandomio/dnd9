@@ -1,0 +1,137 @@
+{
+  "name": "Cuttlefish",
+  "translation": "乌贼",
+  "translation_EN": "乌贼",
+  "coords": [
+    {
+      "x": 914.0,
+      "y": 1009.0,
+      "z": -556.90904,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 3,
+      "variant_names": [
+        "乌贼",
+        "人鱼",
+        "章鱼"
+      ]
+    },
+    {
+      "x": -700.0,
+      "y": -100.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": 2800.0,
+      "y": 1100.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": -3800.0,
+      "y": 3700.0,
+      "z": -700.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": -19.0,
+      "y": 111.0,
+      "z": -1155.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_MermaidTomb",
+      "file": "ShipGraveyard_MermaidTomb_HR_D.json",
+      "version": "",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        "乌贼",
+        "章鱼"
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 400.0,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": -1009.0,
+      "y": 38.0,
+      "z": -1637.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_9",
+      "variant_count": 2,
+      "variant_names": [
+        "章鱼",
+        "乌贼"
+      ]
+    },
+    {
+      "x": 555.0,
+      "y": -746.0,
+      "z": -2413.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_10",
+      "variant_count": 3,
+      "variant_names": [
+        "大白鲨",
+        "章鱼",
+        "乌贼"
+      ]
+    },
+    {
+      "x": 400.0,
+      "y": -200.0,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "乌贼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 26.25,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

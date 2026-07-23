@@ -1,0 +1,105 @@
+{
+  "name": "Cockatrice",
+  "translation": "蛇尾鸡",
+  "translation_EN": "蛇尾鸡",
+  "coords": [
+    {
+      "x": 467.0,
+      "y": -1108.0,
+      "z": 0.0,
+      "yaw": 65.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -491.0,
+      "y": 1125.0,
+      "z": 0.0,
+      "yaw": 235.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 170.0,
+      "y": -110.0,
+      "z": 0.0001,
+      "yaw": 0.0,
+      "map": "Ruins_Passage_Outer_04",
+      "file": "Ruins_Passage_Outer_04_D.json",
+      "version": "(D)",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        "蛇尾鸡",
+        "大宝箱"
+      ]
+    },
+    {
+      "x": -1016.0,
+      "y": -43.999979999999994,
+      "z": 0.0,
+      "yaw": 15.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 1062.0,
+      "y": 47.00001999999989,
+      "z": 0.0,
+      "yaw": 15.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 374.000003,
+      "y": 671.0,
+      "z": -899.999898,
+      "yaw": 270.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        "废墟魔像",
+        "蛇尾鸡"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "蛇尾鸡",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 5.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 5.0
+        }
+      }
+    ]
+  }
+}

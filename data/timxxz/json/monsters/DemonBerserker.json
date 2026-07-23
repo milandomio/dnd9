@@ -1,0 +1,61 @@
+{
+  "name": "DemonBerserker",
+  "translation": "恶魔狂战士",
+  "translation_EN": "恶魔狂战士",
+  "coords": [
+    {
+      "x": -73.0,
+      "y": -19.0,
+      "z": 100.0,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": -1046.0,
+      "y": -1029.0,
+      "z": 2.000101,
+      "yaw": 270.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": -749.443,
+      "y": -809.5673,
+      "z": -100.0,
+      "yaw": 210.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": 0.0,
+      "y": 480.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔狂战士",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

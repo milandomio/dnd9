@@ -1,0 +1,74 @@
+{
+  "name": "LongPipe",
+  "translation": "长烟斗",
+  "translation_EN": "长烟斗",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 3894.1228,
+      "y": 690.1872,
+      "z": 373.18924,
+      "yaw": 196.9,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    },
+    {
+      "x": 1347.1262,
+      "y": -2095.2,
+      "z": 163.4525,
+      "yaw": 286.9,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    },
+    {
+      "x": 181.0,
+      "y": -1040.0,
+      "z": 740.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    },
+    {
+      "x": 4593.6904,
+      "y": 4814.9478,
+      "z": -600.5672,
+      "yaw": 116.4,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "LongPipe"
+    },
+    {
+      "x": 23.406246,
+      "y": 218.59364,
+      "z": -1000.0,
+      "yaw": 70.3,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "LongPipe"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "长烟斗",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

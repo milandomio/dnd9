@@ -1,0 +1,45 @@
+{
+  "name": "SkeletonWarlord",
+  "translation": "骷髅督军",
+  "translation_EN": "骷髅督军",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -25.0,
+      "yaw": 180.0,
+      "map": "Crypt_DarkRitualRoom_01",
+      "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+      "version": "",
+      "label": "SkeletonWarlord",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "sub_group_parent": "BP_GameObjectLinker_C_0",
+      "sub_pool_size": 3,
+      "sub_pool_names": [
+        "鬼王",
+        "骷髅督军",
+        "巫妖"
+      ],
+      "variant_count": 3,
+      "variant_names": [
+        "鬼王",
+        "骷髅督军",
+        "巫妖"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "骷髅督军",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

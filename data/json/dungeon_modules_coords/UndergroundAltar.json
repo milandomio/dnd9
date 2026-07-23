@@ -1,0 +1,2845 @@
+{
+  "map_base": "UndergroundAltar",
+  "entities": [
+    {
+      "name": "AltarOfSacrifice",
+      "translation": "献祭神坛",
+      "translation_EN": "献祭神坛",
+      "type": "decoration",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 1293.4672,
+          "y": -1307.7817,
+          "z": -300.0,
+          "yaw": 130.0,
+          "version": "",
+          "label": "献祭神坛",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Candle_A",
+      "translation": "蜡烛",
+      "type": "decoration",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 68.0,
+          "y": -1000.0,
+          "z": -84.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "CandleWallOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 68.0,
+          "y": -599.0,
+          "z": -84.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "CandleWallOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 865.0,
+          "y": 781.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -630.0,
+          "y": -378.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "CofferSmall",
+      "translation": "迷你宝盒",
+      "translation_EN": "迷你宝盒",
+      "type": "props",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 1209.7952,
+          "y": 1056.0558,
+          "z": 0.0,
+          "yaw": 265.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 412.0,
+          "y": 423.0,
+          "z": 0.0,
+          "yaw": 5.5,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1149.2666,
+          "y": 414.87103,
+          "z": 0.0,
+          "yaw": 78.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -413.72327,
+          "y": 1188.5072,
+          "z": 0.0,
+          "yaw": 192.4,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Coffin_02",
+      "translation": "旧棺材",
+      "translation_EN": "旧棺材",
+      "type": "props",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 1274.0,
+          "y": -455.0,
+          "z": -400.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "Coffin_02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 421.0,
+          "y": -457.0,
+          "z": -400.0,
+          "yaw": 189.1,
+          "version": "",
+          "label": "Coffin_02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Coffin_04",
+      "translation": "棺材",
+      "translation_EN": "棺材",
+      "type": "props",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 482.0,
+          "y": -1244.0,
+          "z": -400.0,
+          "yaw": 95.0,
+          "version": "",
+          "label": "Coffin_04_R",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenDoorWithLock",
+      "translation": "木门",
+      "type": "decoration",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 730.0,
+          "y": 290.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "带锁木门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1180.0,
+          "y": 300.0,
+          "z": 2.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "带锁木门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -290.0,
+          "y": -870.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "带锁木门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "CryptSecretWallDoor",
+      "translation": "隐秘墙体",
+      "translation_EN": "隐秘墙体",
+      "type": "decoration",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": -798.0,
+          "y": -290.06624,
+          "z": 4.4773458e-08,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "CryptSecretWallDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -798.0,
+          "y": 295.17243,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "CryptSecretWallDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -294.0,
+          "y": 798.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "CryptSecretWallDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_2"
+        },
+        {
+          "x": 300.0,
+          "y": 798.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "CryptSecretWallDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_3"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DeathSkull",
+      "translation": "飞行骷髅头",
+      "translation_EN": "飞行骷髅头",
+      "type": "monster",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": 1150.4163,
+          "y": -549.87805,
+          "z": -50.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "DeathSkull",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 613.01514,
+          "y": -1087.2792,
+          "z": -50.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "DeathSkull",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 740.2944,
+          "y": -719.5837,
+          "z": 190.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "DeathSkull",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -929.0,
+          "y": -38.0,
+          "z": 462.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "DeathSkull",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WallLever",
+      "translation": "拉杆",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": -1203.0,
+          "y": -371.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -422.0,
+          "y": 345.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": 348.0,
+          "y": 621.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_3"
+        },
+        {
+          "x": -668.62448,
+          "y": -258.77978,
+          "z": 117.14279,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -991.0,
+          "y": 270.0,
+          "z": 165.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -268.0,
+          "y": 671.0,
+          "z": 122.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_2"
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "translation_EN": "传送门",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "translation_EN": "对象链接器",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": -790.0,
+          "y": -383.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -773.0,
+          "y": 384.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -371.0,
+          "y": 794.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 421.0,
+          "y": 814.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_EN": "生成器组",
+      "type": "decoration",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 35.0,
+          "y": -112.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -514.0,
+          "y": 476.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -799.0,
+          "y": 378.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 814.0,
+          "y": 623.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 741.0,
+          "y": 914.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 569.0,
+          "y": -490.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 378.0,
+          "y": -865.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -949.0,
+          "y": -1139.0,
+          "z": 9.3e-05,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoldChest",
+      "translation": "黄金宝箱",
+      "translation_EN": "黄金宝箱",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 170.0,
+          "y": -1.0,
+          "z": 6.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "GoldChest",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Mimic_Small_Ornate",
+      "translation": "小型宝箱怪",
+      "type": "monster",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 1209.7952,
+          "y": 1056.0558,
+          "z": 0.0,
+          "yaw": 265.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 412.0,
+          "y": 423.0,
+          "z": 0.0,
+          "yaw": 5.5,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1149.2666,
+          "y": 414.87103,
+          "z": 0.0,
+          "yaw": 78.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -413.72327,
+          "y": 1188.5072,
+          "z": 0.0,
+          "yaw": 192.4,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Mummy",
+      "translation": "木乃伊",
+      "translation_EN": "木乃伊",
+      "type": "monster",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 28.0,
+          "y": -45.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Mummy",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱",
+      "type": "props",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 1209.7952,
+          "y": 1056.0558,
+          "z": 0.0,
+          "yaw": 265.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 412.0,
+          "y": 423.0,
+          "z": 0.0,
+          "yaw": 5.5,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1149.2666,
+          "y": 414.87103,
+          "z": 0.0,
+          "yaw": 78.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -413.72327,
+          "y": 1188.5072,
+          "z": 0.0,
+          "yaw": 192.4,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "PhantomFlower",
+      "translation": "幻影花",
+      "translation_EN": "幻影花",
+      "type": "props",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 630.0,
+          "y": -1150.0,
+          "z": -400.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "幻影花",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1190.0,
+          "y": -1050.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "幻影花",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 260.0,
+          "y": -120.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "幻影花",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Pot01",
+      "translation": "罐子",
+      "type": "props",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -1076.0,
+          "y": -590.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -949.0,
+          "y": -544.0,
+          "z": 1.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1164.0,
+          "y": -1215.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1137.0,
+          "y": -568.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1229.0,
+          "y": -1240.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1019.0,
+          "y": -559.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot03",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1095.0,
+          "y": -508.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot04",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1201.0,
+          "y": -574.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot04",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1194.0,
+          "y": -468.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot04",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Roaster01On",
+      "translation": "灯架子",
+      "translation_EN": "灯架子",
+      "type": "decoration",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 296.0,
+          "y": -102.0,
+          "z": -2.6668618,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 472.80197,
+          "y": -413.0,
+          "z": -400.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1208.0,
+          "y": -1202.0,
+          "z": -285.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "TorchOn",
+      "translation": "火把",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -51.0,
+          "y": 695.0,
+          "z": 9.077523,
+          "yaw": 178.2,
+          "version": "(A)",
+          "label": "Roaster10_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1388.0,
+          "y": 1080.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster10_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 808.0,
+          "y": -1090.0,
+          "z": -283.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster10_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1093.0,
+          "y": -811.0,
+          "z": -281.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster10_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -940.0,
+          "y": -1459.0,
+          "z": 175.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1423.0,
+          "y": 565.0,
+          "z": 175.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1459.0,
+          "y": -663.0,
+          "z": 175.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 602.0,
+          "y": 1231.0,
+          "z": 175.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -672.0,
+          "y": 1249.0,
+          "z": 175.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -340.0,
+          "y": 988.0,
+          "z": 175.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 342.0,
+          "y": 623.0,
+          "z": 200.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -940.0,
+          "y": 1433.0,
+          "z": 175.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1432.0,
+          "y": 939.0,
+          "z": 175.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -222.0,
+          "y": -708.0,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 707.0,
+          "y": 216.0,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1040.0,
+          "y": -388.8962,
+          "z": 285.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1231.0,
+          "y": -982.0,
+          "z": 175.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -655.0,
+          "y": 345.0,
+          "z": 175.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1096.0,
+          "y": -26.0,
+          "z": 200.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1000.0,
+          "y": -377.0,
+          "z": -200.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 365.0,
+          "y": -1050.0,
+          "z": -200.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1300.0,
+          "y": -250.0,
+          "z": 200.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1248.0,
+          "y": 673.0,
+          "z": 175.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -366.0,
+          "y": -707.0,
+          "z": 175.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 981.0,
+          "y": 395.0,
+          "z": 175.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 939.0,
+          "y": 1458.0,
+          "z": 175.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -587.0,
+          "y": -1231.0,
+          "z": 175.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -806.0,
+          "y": 896.0,
+          "z": 175.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -509.0,
+          "y": 117.0,
+          "z": 200.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "TorchOn",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "SimpleChestSmall",
+      "translation": "小型橡木宝箱",
+      "translation_EN": "小型橡木宝箱",
+      "type": "props",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 1209.7952,
+          "y": 1056.0558,
+          "z": 0.0,
+          "yaw": 265.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 412.0,
+          "y": 423.0,
+          "z": 0.0,
+          "yaw": 5.5,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1149.2666,
+          "y": 414.87103,
+          "z": 0.0,
+          "yaw": 78.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -413.72327,
+          "y": 1188.5072,
+          "z": 0.0,
+          "yaw": 192.4,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonAxeman",
+      "translation": "骷髅斧兵",
+      "translation_EN": "骷髅斧兵",
+      "type": "monster",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -448.00001,
+          "y": 517.000004,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonAxeman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 879.99999,
+          "y": 664.000004,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonAxeman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 806.99999,
+          "y": 955.000004,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonAxeman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 634.99999,
+          "y": -448.999996,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonAxeman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -733.00001,
+          "y": 419.000004,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonAxeman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 443.99999,
+          "y": -823.999996,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonAxeman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -883.00001,
+          "y": -1097.999996,
+          "z": 24.000193,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonAxeman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonFootmanFromFakeDeath",
+      "translation": "骷髅步兵",
+      "translation_EN": "骷髅步兵",
+      "type": "monster",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -679.0,
+          "y": 447.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -829.0,
+          "y": -1070.0,
+          "z": 9.3e-05,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 934.0,
+          "y": 692.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 861.0,
+          "y": 983.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -394.0,
+          "y": 545.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 689.0,
+          "y": -421.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 498.0,
+          "y": -796.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonGuardmanFromFakeDeath",
+      "translation": "骷髅卫士",
+      "translation_EN": "骷髅卫士",
+      "type": "monster",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -869.00001,
+          "y": -1082.999996,
+          "z": 15.000193,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 893.99999,
+          "y": 679.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -434.00001,
+          "y": 532.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 820.99999,
+          "y": 970.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 648.99999,
+          "y": -433.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -719.00001,
+          "y": 434.000004,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 457.99999,
+          "y": -808.999996,
+          "z": -409.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonMage",
+      "translation": "骷髅法师",
+      "translation_EN": "骷髅法师",
+      "type": "monster",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 1019.0,
+          "y": -1020.0,
+          "z": -285.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "SkeletonMage",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonSpearman",
+      "translation": "骷髅长枪兵",
+      "translation_EN": "骷髅长枪兵",
+      "type": "monster",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": -857.0,
+          "y": -1125.0,
+          "z": 9.3e-05,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSpearman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -422.0,
+          "y": 490.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSpearman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 906.0,
+          "y": 637.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSpearman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 833.0,
+          "y": 928.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSpearman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 661.0,
+          "y": -476.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSpearman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -707.0,
+          "y": 392.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSpearman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 470.0,
+          "y": -851.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSpearman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonSwordman",
+      "translation": "骷髅双手剑士",
+      "translation_EN": "骷髅双手剑士",
+      "type": "monster",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": -852.0,
+          "y": -1111.0,
+          "z": 9.3e-05,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 911.0,
+          "y": 651.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -417.0,
+          "y": 504.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 838.0,
+          "y": 942.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 666.0,
+          "y": -462.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 475.0,
+          "y": -837.0,
+          "z": -409.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -702.0,
+          "y": 406.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SpiderPot",
+      "translation": "蜘蛛罐子",
+      "translation_EN": "蜘蛛罐子",
+      "type": "props",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": -1169.0,
+          "y": -369.0,
+          "z": 0.0,
+          "yaw": 345.0,
+          "version": "",
+          "label": "SpiderPot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "小型加固宝箱",
+      "translation_EN": "小型加固宝箱",
+      "type": "props",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 1209.7952,
+          "y": 1056.0558,
+          "z": 0.0,
+          "yaw": 265.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 412.0,
+          "y": 423.0,
+          "z": 0.0,
+          "yaw": 5.5,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1149.2666,
+          "y": 414.87103,
+          "z": 0.0,
+          "yaw": 78.2,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -413.72327,
+          "y": 1188.5072,
+          "z": 0.0,
+          "yaw": 192.4,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenBarrel01",
+      "translation": "木桶",
+      "translation_EN": "木桶",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 774.5791,
+          "y": 780.0049,
+          "z": 0.0,
+          "yaw": 50.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 873.5791,
+          "y": 875.0049,
+          "z": 0.0,
+          "yaw": 50.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Zombie",
+      "translation": "殭尸",
+      "translation_EN": "殭尸",
+      "type": "monster",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 28.0,
+          "y": 64.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Zombie",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

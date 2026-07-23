@@ -1,0 +1,34 @@
+{
+  "name": "HumanRemains",
+  "translation": "类人尸骸",
+  "translation_EN": "类人尸骸",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -450.0,
+      "y": -390.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Skull",
+      "file": "Skull_A.json",
+      "version": "(A)",
+      "label": "HumanRemains"
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "类人尸骸",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 60.0,
+          "普通": 70.0,
+          "豪客赛": 80.0,
+          "逆袭赛": 80.0
+        }
+      }
+    ]
+  }
+}

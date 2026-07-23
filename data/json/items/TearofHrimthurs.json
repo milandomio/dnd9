@@ -1,0 +1,35 @@
+{
+  "name": "TearofHrimthurs",
+  "translation": "霜巨人之泪",
+  "translation_EN": "霜巨人之泪",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -40.0,
+      "y": 1430.0,
+      "z": -1187.73421,
+      "yaw": 235.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "TearofHrithurs",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "group_drop_info": {
+    "IceAbyss": [
+      {
+        "translation": "霜巨人之泪",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 0.1,
+          "普通": 0.35,
+          "豪客赛": 0.5,
+          "逆袭赛": 0.5
+        }
+      }
+    ]
+  }
+}

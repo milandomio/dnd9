@@ -1,0 +1,1833 @@
+{
+  "name": "OilLantern",
+  "translation": "油灯笼",
+  "translation_EN": "油灯笼",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "AshPile",
+    "BlazeToad",
+    "Bookshelf",
+    "Crocodilian",
+    "Cuttlefish",
+    "DeathSkull",
+    "DemonBat",
+    "DemonDog",
+    "DemonScout",
+    "FallenDwarf01",
+    "FallenDwarf02",
+    "FallenDwarf03",
+    "FireSpirit",
+    "FlameButterfly",
+    "FlatChestLarge",
+    "FlatChestLarge_UnderSea",
+    "FrostImp",
+    "FrostImp_Unique",
+    "FrozenGhost",
+    "GoblinBolaslinger",
+    "Ground",
+    "Harpy",
+    "HellMaggot",
+    "IceHarpy",
+    "IceHound",
+    "Ifrit",
+    "LittleToad",
+    "LivingStatue",
+    "MoltenBat",
+    "PirateAxeThrower",
+    "Pot01",
+    "Pot01_UnderSea",
+    "Pot02",
+    "Pot02_UnderSea",
+    "Pot03",
+    "Pot03_UnderSea",
+    "Pot04",
+    "Pot04_UnderSea",
+    "SeaHarpy",
+    "SeaPiranha",
+    "Seaurchin",
+    "SimpleChestLarge",
+    "SimpleChestLarge_UnderSea",
+    "SkeletonCorpse01",
+    "SkeletonCorpse01_UnderSea",
+    "SkeletonCorpse02",
+    "SkeletonCorpse02_UnderSea",
+    "SkeletonCorpse03",
+    "SkeletonCorpse03_UnderSea",
+    "SpiderPot",
+    "SpiderPot_Elite",
+    "SpiderPot_Nightmare",
+    "TidewalkerSlinger",
+    "WhiteShark",
+    "Wisp",
+    "WoodChestLarge",
+    "WoodChestLarge_UnderSea",
+    "WoodChestMedium",
+    "WoodChestMedium_UnderSea",
+    "WoodChestSmall",
+    "WoodenBarrel",
+    "WoodenBarrel01",
+    "WoodenBarrel02",
+    "WoodenBarrel04",
+    "WoodenBarrel_Firedeep",
+    "WoodenCrateMedium01",
+    "WoodenCrateMedium_UnderSea",
+    "WoodenCrateSmall",
+    "WoodenCrateSmall_UnderSea",
+    "WoodenCrate_Firedeep_01",
+    "WoodenCrate_Firedeep_02"
+  ],
+  "coords": [
+    {
+      "x": 1200.0,
+      "y": 0.0,
+      "z": 1350.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -400.0,
+      "y": -50.0,
+      "z": 450.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -200.0,
+      "y": 1350.0,
+      "z": 1050.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -1350.0,
+      "y": 100.0,
+      "z": 1600.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -925.0,
+      "y": 560.0,
+      "z": 250.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -68.0,
+      "y": 1168.0,
+      "z": -238.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -85.0,
+      "y": 185.0,
+      "z": 810.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -10.0,
+      "y": 385.0,
+      "z": 510.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": 380.0,
+      "y": -15.0,
+      "z": 515.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -400.0,
+      "y": -15.0,
+      "z": 515.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -10.0,
+      "y": -450.0,
+      "z": 345.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": 861.0,
+      "y": -507.0,
+      "z": -198.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -751.0,
+      "y": 13.0,
+      "z": -234.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "灰烬堆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.75,
+          "普通": 54.0,
+          "豪客赛": 45.5,
+          "逆袭赛": 45.5
+        }
+      },
+      {
+        "translation": "矮人亡骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.75,
+          "普通": 54.0,
+          "豪客赛": 45.5,
+          "逆袭赛": 45.5
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "矮人木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "矮人中型木箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "矮人小型木箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "书架",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.5,
+          "普通": 5.0,
+          "豪客赛": 7.2,
+          "逆袭赛": 7.2
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 42.0,
+          "豪客赛": 51.0,
+          "逆袭赛": 51.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "烈焰蛤蟆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "火灵",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "赤焰蝶",
+        "spawn_rate": 0.05,
+        "drop_rates": {
+          "PVE": 22.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        },
+        "spawn_rates": {
+          "PVE": 0.01,
+          "普通": 0.05,
+          "豪客赛": 0.05
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "炎魔组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "熔岩蝙蝠",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "遗骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 50.5,
+          "豪客赛": 71.75,
+          "逆袭赛": 71.75
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 50.5,
+          "豪客赛": 71.75,
+          "逆袭赛": 71.75
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 22.5,
+          "普通": 31.0,
+          "豪客赛": 47.5,
+          "逆袭赛": 47.5
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 22.5,
+          "普通": 31.0,
+          "豪客赛": 47.5,
+          "逆袭赛": 47.5
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.125,
+          "普通": 4.375,
+          "豪客赛": 11.125,
+          "逆袭赛": 11.125
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 7.5,
+          "普通": 8.75,
+          "豪客赛": 12.0,
+          "逆袭赛": 12.0
+        }
+      },
+      {
+        "translation": "书架",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 3.5,
+          "豪客赛": 8.9,
+          "逆袭赛": 8.9
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 33.75,
+          "普通": 46.5,
+          "豪客赛": 71.25,
+          "逆袭赛": 71.25
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 66.8,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 18.5,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "鹰身女妖",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 33.4,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "石像鬼",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 66.8,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "幻灵",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 33.4,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 37.5,
+          "普通": 45.0,
+          "豪客赛": 63.0,
+          "逆袭赛": 63.0
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 47.5,
+          "普通": 52.5,
+          "豪客赛": 60.5,
+          "逆袭赛": 60.5
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 47.5,
+          "普通": 52.5,
+          "豪客赛": 60.5,
+          "逆袭赛": 60.5
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.75,
+          "普通": 5.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 8.75,
+          "普通": 9.375,
+          "豪客赛": 9.875,
+          "逆袭赛": 9.875
+        }
+      },
+      {
+        "translation": "书架",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.0,
+          "普通": 4.0,
+          "豪客赛": 8.0,
+          "逆袭赛": 8.0
+        }
+      },
+      {
+        "translation": "木桶(随机)",
+        "spawn_rate": 35.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 37.5,
+          "普通": 45.0,
+          "豪客赛": 63.0,
+          "逆袭赛": 63.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 16.875,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "寒冰鹰身女妖",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ],
+    "Crypt": [
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 37.5,
+          "普通": 45.0,
+          "豪客赛": 63.0,
+          "逆袭赛": 63.0
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 47.5,
+          "普通": 52.5,
+          "豪客赛": 60.5,
+          "逆袭赛": 60.5
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.75,
+          "普通": 5.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 8.75,
+          "普通": 9.375,
+          "豪客赛": 9.875,
+          "逆袭赛": 9.875
+        }
+      },
+      {
+        "translation": "书架",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.0,
+          "普通": 4.0,
+          "豪客赛": 8.0,
+          "逆袭赛": 8.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 37.5,
+          "普通": 45.0,
+          "豪客赛": 63.0,
+          "逆袭赛": 63.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 16.875,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "遗骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 47.5,
+          "普通": 52.5,
+          "豪客赛": 60.5,
+          "逆袭赛": 60.5
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 47.5,
+          "普通": 52.5,
+          "豪客赛": 60.5,
+          "逆袭赛": 60.5
+        }
+      },
+      {
+        "translation": "加固宝箱组",
+        "spawn_rate": 36.8437,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 30.0,
+          "豪客赛": 42.0,
+          "逆袭赛": 42.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.75,
+          "普通": 5.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 37.5,
+          "普通": 45.0,
+          "豪客赛": 63.0,
+          "逆袭赛": 63.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 12.5,
+          "普通": 15.0,
+          "豪客赛": 21.0,
+          "逆袭赛": 21.0
+        }
+      },
+      {
+        "translation": "鳄鱼人",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "乌贼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 16.875,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "海盗掷斧手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "海洋鹰身女妖",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "深海食人鱼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "海胆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "踏潮者飞镖投手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.4,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "大白鲨",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.0,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 42.0,
+          "豪客赛": 51.0,
+          "逆袭赛": 51.0
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.75,
+          "普通": 54.0,
+          "豪客赛": 45.5,
+          "逆袭赛": 45.5
+        }
+      },
+      {
+        "translation": "冰霜怨灵",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 40.0,
+          "普通": 40.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 53.75,
+          "普通": 54.0,
+          "豪客赛": 45.5,
+          "逆袭赛": 45.5
+        }
+      },
+      {
+        "translation": "冰霜鬼童",
+        "spawn_rate": 99.891,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 14.25,
+          "逆袭赛": 14.25
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 4.375,
+          "普通": 6.25,
+          "豪客赛": 9.0,
+          "逆袭赛": 9.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 42.0,
+          "豪客赛": 51.0,
+          "逆袭赛": 51.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "寒冰鹰身女妖",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "寒冰猎犬",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "遗骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 50.5,
+          "豪客赛": 71.75,
+          "逆袭赛": 71.75
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.5,
+          "普通": 31.0,
+          "豪客赛": 47.5,
+          "逆袭赛": 47.5
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.5,
+          "普通": 31.0,
+          "豪客赛": 47.5,
+          "逆袭赛": 47.5
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 22.5,
+          "普通": 31.0,
+          "豪客赛": 47.5,
+          "逆袭赛": 47.5
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 22.5,
+          "普通": 31.0,
+          "豪客赛": 47.5,
+          "逆袭赛": 47.5
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.125,
+          "普通": 4.375,
+          "豪客赛": 11.125,
+          "逆袭赛": 11.125
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 7.5,
+          "普通": 8.75,
+          "豪客赛": 12.0,
+          "逆袭赛": 12.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 33.75,
+          "普通": 46.5,
+          "豪客赛": 71.25,
+          "逆袭赛": 71.25
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 11.25,
+          "普通": 15.5,
+          "豪客赛": 23.75,
+          "逆袭赛": 23.75
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 66.8,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "哥布林投石手组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.2667,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "哥布林投石手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.2667,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 18.5,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "大型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 42.0,
+          "豪客赛": 51.0,
+          "逆袭赛": 51.0
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.75,
+          "普通": 54.0,
+          "豪客赛": 45.5,
+          "逆袭赛": 45.5
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 53.75,
+          "普通": 54.0,
+          "豪客赛": 45.5,
+          "逆袭赛": 45.5
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 27.5,
+          "普通": 28.0,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 4.375,
+          "普通": 6.25,
+          "豪客赛": 9.0,
+          "逆袭赛": 9.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 7.125,
+          "逆袭赛": 7.125
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 41.25,
+          "普通": 42.0,
+          "豪客赛": 51.0,
+          "逆袭赛": 51.0
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 14.0,
+          "豪客赛": 17.0,
+          "逆袭赛": 17.0
+        }
+      },
+      {
+        "translation": "恶魔蝙蝠",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "恶魔犬",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "恶魔斥候",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.6,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "地面",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.75,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "魔蛆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0667,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      },
+      {
+        "translation": "石像鬼",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 0.0,
+          "豪客赛": 0.0,
+          "逆袭赛": 0.0
+        }
+      }
+    ]
+  }
+}

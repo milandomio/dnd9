@@ -1,0 +1,160 @@
+{
+  "name": "TidewalkerSlinger",
+  "translation": "踏潮者飞镖投手",
+  "translation_EN": "踏潮者飞镖投手",
+  "coords": [
+    {
+      "x": -340.0,
+      "y": -410.0,
+      "z": -755.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_09",
+      "file": "EmptyModule_1F_09_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 3,
+      "variant_names": [
+        "踏潮者棍战士",
+        "踏潮者飞镖投手",
+        "踏潮者矛兵"
+      ]
+    },
+    {
+      "x": -950.0,
+      "y": -520.0,
+      "z": -955.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_13",
+      "file": "EmptyModule_1F_13_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 3,
+      "variant_names": [
+        "踏潮者棍战士",
+        "踏潮者飞镖投手",
+        "踏潮者矛兵"
+      ]
+    },
+    {
+      "x": -689.0,
+      "y": 431.0,
+      "z": -999.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger"
+    },
+    {
+      "x": -218.0,
+      "y": -697.0,
+      "z": 397.0,
+      "yaw": 190.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger"
+    },
+    {
+      "x": -3005.0,
+      "y": -165.0,
+      "z": -905.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "TidewalkerSlinger",
+      "group_parent": "BP_GameSpawnerGroup_C_15",
+      "variant_count": 3,
+      "variant_names": [
+        "踏潮者棍战士",
+        "踏潮者飞镖投手",
+        "踏潮者矛兵"
+      ]
+    },
+    {
+      "x": -220.0,
+      "y": 4085.0,
+      "z": -880.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "TidewalkerSlinger",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 3,
+      "variant_names": [
+        "踏潮者棍战士",
+        "踏潮者飞镖投手",
+        "踏潮者矛兵"
+      ]
+    },
+    {
+      "x": -18.0,
+      "y": 365.0,
+      "z": -2630.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 3,
+      "variant_names": [
+        "踏潮者飞镖投手",
+        "踏潮者棍战士",
+        "深海食人鱼"
+      ]
+    },
+    {
+      "x": -585.0,
+      "y": 560.0,
+      "z": -1895.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "variant_count": 3,
+      "variant_names": [
+        "踏潮者棍战士",
+        "踏潮者飞镖投手",
+        "踏潮者矛兵"
+      ]
+    },
+    {
+      "x": 598.6364969704582,
+      "y": -572.1141424577584,
+      "z": -1925.0,
+      "yaw": 40.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "TidewalkerSlinger",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "variant_count": 3,
+      "variant_names": [
+        "踏潮者棍战士",
+        "踏潮者飞镖投手",
+        "踏潮者矛兵"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "踏潮者飞镖投手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 13.4,
+          "普通": 26.25,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

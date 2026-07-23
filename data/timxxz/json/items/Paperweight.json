@@ -1,0 +1,44 @@
+{
+  "name": "Paperweight",
+  "translation": "镇纸",
+  "translation_EN": "镇纸",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 4758.6523,
+      "y": 2925.5537,
+      "z": -956.97235,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Paperweight"
+    },
+    {
+      "x": -290.52225,
+      "y": 263.37952,
+      "z": -997.7438,
+      "yaw": 357.6,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "Paperweight"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "镇纸",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

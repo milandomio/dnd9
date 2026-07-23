@@ -1,0 +1,54 @@
+{
+  "name": "LuxuryBootRack",
+  "translation": "高档靴撑子",
+  "translation_EN": "高档靴撑子",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 3710.9426,
+      "y": 329.4809,
+      "z": 720.54736,
+      "yaw": 196.9,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "LuxuryBootRack"
+    },
+    {
+      "x": 3660.7544,
+      "y": 340.48566,
+      "z": 605.54736,
+      "yaw": 81.6,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "LuxuryBootRack"
+    },
+    {
+      "x": -351.21667,
+      "y": 21.586227,
+      "z": 160.81316,
+      "yaw": 178.7,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "LuxuryBootRack"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "高档靴撑子",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

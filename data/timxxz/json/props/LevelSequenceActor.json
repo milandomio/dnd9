@@ -1,0 +1,687 @@
+{
+  "name": "LevelSequenceActor",
+  "translation": "过场动画",
+  "translation_EN": "过场动画",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveMaze_Center_02",
+      "file": "CaveMaze_Center_02_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveTown",
+      "file": "CaveTown_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_Tomb_Center",
+      "file": "Cave_Tomb_Center_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cistern",
+      "file": "Cistern_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Crypt_MadCorridors",
+      "file": "Crypt_MadCorridors_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Crypt_TorchboundVault",
+      "file": "Crypt_TorchboundVault_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Crypt_TorchboundVault",
+      "file": "Crypt_TorchboundVault_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_FlameTerrace",
+      "file": "Firedeep_FlameTerrace_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center_02",
+      "file": "GoblinJail_Center_02_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_AbyssTooth",
+      "file": "IceAbyss_AbyssTooth_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_DemonicDen",
+      "file": "IceAbyss_DemonicDen_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_DividingHill",
+      "file": "IceAbyss_DividingHill_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_FrostwovenPillars",
+      "file": "IceAbyss_FrostwovenPillars_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_GrandHollow",
+      "file": "IceAbyss_GrandHollow_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_Monoliths",
+      "file": "IceAbyss_Monoliths_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_Pillars",
+      "file": "IceAbyss_Pillars_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_ReversedPyramid",
+      "file": "IceAbyss_ReversedPyramid_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_SinkingPillars",
+      "file": "IceAbyss_SinkingPillars_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Bridge",
+      "file": "IceCave_Bridge_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Cabin_Raft",
+      "file": "IceCave_Cabin_Raft_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_FourRoute",
+      "file": "IceCave_FourRoute_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Maze",
+      "file": "IceCave_Maze_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "InfernoGate",
+      "file": "InfernoGate_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_DemonOverseersDominion",
+      "file": "Inferno_DemonOverseersDominion_D.json",
+      "version": "(D)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_EndWall",
+      "file": "Ruins_EndWall_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Tower_01_Destroyed",
+      "file": "Ruins_Tower_01_Destroyed_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_UndergroundAltar_01",
+      "file": "Ruins_UndergroundAltar_01_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_A.json",
+      "version": "(A)",
+      "label": "LevelSequenceActor"
+    }
+  ]
+}

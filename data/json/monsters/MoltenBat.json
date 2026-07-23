@@ -1,0 +1,169 @@
+{
+  "name": "MoltenBat",
+  "translation": "熔岩蝙蝠",
+  "translation_EN": "熔岩蝙蝠",
+  "coords": [
+    {
+      "x": 1200.0,
+      "y": 0.0,
+      "z": 1350.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -400.0,
+      "y": -50.0,
+      "z": 450.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -200.0,
+      "y": 1350.0,
+      "z": 1050.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -1350.0,
+      "y": 100.0,
+      "z": 1600.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -925.0,
+      "y": 560.0,
+      "z": 250.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -68.0,
+      "y": 1168.0,
+      "z": -238.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -85.0,
+      "y": 185.0,
+      "z": 810.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "MoltenBat"
+    },
+    {
+      "x": -10.0,
+      "y": 385.0,
+      "z": 510.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": 380.0,
+      "y": -15.0,
+      "z": 515.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -400.0,
+      "y": -15.0,
+      "z": 515.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -10.0,
+      "y": -450.0,
+      "z": 345.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": 861.0,
+      "y": -507.0,
+      "z": -198.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -751.0,
+      "y": 13.0,
+      "z": -234.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "MoltenBat",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "熔岩蝙蝠",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 55.0,
+          "豪客赛": 56.0,
+          "逆袭赛": 61.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ChroniclesoftheCursedCrown",
+  "translation": "诅咒皇冠的编年史",
+  "translation_EN": "诅咒皇冠的编年史",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -136.0,
+      "y": 805.0,
+      "z": 76.0,
+      "yaw": 0.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_A.json",
+      "version": "(A)",
+      "label": "ChroniclesoftheCursedCrown"
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "诅咒皇冠的编年史",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 25.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

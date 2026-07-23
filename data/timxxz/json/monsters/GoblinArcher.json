@@ -1,0 +1,376 @@
+{
+  "name": "GoblinArcher",
+  "translation": "哥布林弓手",
+  "translation_EN": "哥布林弓手",
+  "coords": [
+    {
+      "x": 304.0,
+      "y": -50.0,
+      "z": 10.0,
+      "yaw": 0.0,
+      "map": "CaveMaze_Center_02",
+      "file": "CaveMaze_Center_02_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -1015.0,
+      "y": 225.0,
+      "z": 244.0,
+      "yaw": 0.0,
+      "map": "CaveTown",
+      "file": "CaveTown_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 968.0,
+      "y": -70.00001,
+      "z": 320.0,
+      "yaw": 285.0,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 710.0,
+      "y": 840.0,
+      "z": -431.0,
+      "yaw": 0.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 71.0,
+      "y": 840.0,
+      "z": 0.0001,
+      "yaw": 0.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -846.0,
+      "y": 695.99994,
+      "z": -599.9999,
+      "yaw": 270.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 1066.0,
+      "y": -675.0,
+      "z": 616.7196,
+      "yaw": 285.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -1239.0,
+      "y": -875.0,
+      "z": 615.28217,
+      "yaw": 0.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 999.0,
+      "y": 586.0,
+      "z": 0.314088,
+      "yaw": 0.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -976.0,
+      "y": -456.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 445.0,
+      "y": -358.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -161.0,
+      "y": 1417.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 16,
+      "variant_names": []
+    },
+    {
+      "x": 26.0,
+      "y": -1222.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 16,
+      "variant_names": []
+    },
+    {
+      "x": -1049.5519,
+      "y": -220.8745,
+      "z": 0.0,
+      "yaw": 45.0,
+      "map": "Cave_MoleTunnel",
+      "file": "Cave_MoleTunnel_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 1039.4481,
+      "y": -725.8745,
+      "z": 0.0,
+      "yaw": 45.0,
+      "map": "Cave_MoleTunnel",
+      "file": "Cave_MoleTunnel_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -1160.1005,
+      "y": 565.77075,
+      "z": 0.0,
+      "yaw": 45.0,
+      "map": "Cave_MoleTunnel",
+      "file": "Cave_MoleTunnel_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 720.99994,
+      "y": -1289.0,
+      "z": -0.9999,
+      "yaw": 180.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged",
+      "group_parent": "BP_GameSpawnerGroup_C_13",
+      "variant_count": 2,
+      "variant_names": [
+        "哥布林近战",
+        "哥布林远程"
+      ]
+    },
+    {
+      "x": -32.00006000000001,
+      "y": -1289.0,
+      "z": -0.9999,
+      "yaw": 180.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged",
+      "group_parent": "BP_GameSpawnerGroup_C_14",
+      "variant_count": 3,
+      "variant_names": [
+        "木乃伊",
+        "哥布林近战",
+        "哥布林远程"
+      ]
+    },
+    {
+      "x": -780.1005,
+      "y": 402.77078,
+      "z": 0.0,
+      "yaw": 45.0,
+      "map": "Cave_Tomb_Center",
+      "file": "Cave_Tomb_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -1312.5519,
+      "y": 30.125504,
+      "z": 0.0,
+      "yaw": 45.0,
+      "map": "Cave_Tomb_Center",
+      "file": "Cave_Tomb_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 641.72485,
+      "y": -342.25842,
+      "z": 0.0,
+      "yaw": 80.0,
+      "map": "Cave_Valley",
+      "file": "Cave_Valley_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": -124.0,
+      "y": 957.0,
+      "z": 7.030029e-05,
+      "yaw": 0.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -356.0,
+      "y": -1089.0,
+      "z": -1.0,
+      "yaw": 0.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 38.99999799999998,
+      "y": -191.0,
+      "z": -11.767966000000001,
+      "yaw": 180.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        "哥布林弓手",
+        "哥布林战士"
+      ]
+    },
+    {
+      "x": 640.6413,
+      "y": -349.9334,
+      "z": -400.0,
+      "yaw": 70.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 1228.2703,
+      "y": -393.05533,
+      "z": -400.0,
+      "yaw": 70.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 1360.0,
+      "y": 252.85301,
+      "z": -384.10046,
+      "yaw": 160.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 1383.7145,
+      "y": -52.598167,
+      "z": 0.31406483,
+      "yaw": 70.0,
+      "map": "GoblinJail_Center_02",
+      "file": "GoblinJail_Center_02_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -803.068,
+      "y": -703.3091,
+      "z": -539.9999,
+      "yaw": 65.0,
+      "map": "GoblinMineCenter_01",
+      "file": "GoblinMineCenter_01_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": -190.93108,
+      "y": 140.9049,
+      "z": -17.977125,
+      "yaw": 65.0,
+      "map": "GoblinMineCenter_01",
+      "file": "GoblinMineCenter_01_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": -1026.0,
+      "y": -503.0,
+      "z": 0.0,
+      "yaw": 310.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "GoblinRanged"
+    },
+    {
+      "x": 120.0,
+      "y": 1040.0,
+      "z": 200.0001,
+      "yaw": 350.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 1379.1334,
+      "y": 159.2963,
+      "z": -399.9999,
+      "yaw": 230.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "哥布林弓手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 66.8,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

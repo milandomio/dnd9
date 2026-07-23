@@ -1,0 +1,132 @@
+{
+  "name": "WoodsmanAxe",
+  "translation": "砍柴斧",
+  "translation_EN": "砍柴斧",
+  "category": "",
+  "variant_count": 7,
+  "monsters": [
+    "AshPile",
+    "DwarfHandCannoneer",
+    "DwarfMauler",
+    "FallenDwarf01",
+    "FallenDwarf02",
+    "FallenDwarf03",
+    "FlatChestLarge",
+    "FlatChestLarge_UnderSea",
+    "FrostImp",
+    "FrostImp_Unique",
+    "GoblinAxeman",
+    "GoblinWarrior",
+    "GoblinWarrior_Unique",
+    "Ground",
+    "LavaGolem",
+    "SimpleChestLarge",
+    "SimpleChestLarge_UnderSea",
+    "SkeletonCorpse01",
+    "SkeletonCorpse01_UnderSea",
+    "SkeletonCorpse02",
+    "SkeletonCorpse02_UnderSea",
+    "SkeletonCorpse03",
+    "SkeletonCorpse03_UnderSea",
+    "WoodChestLarge",
+    "WoodChestLarge_UnderSea",
+    "WoodenBarrel",
+    "WoodenBarrel01",
+    "WoodenBarrel02",
+    "WoodenBarrel04",
+    "WoodenBarrel_Firedeep",
+    "WoodenBarrel_UnderSea",
+    "WoodenCrateMedium01",
+    "WoodenCrateMedium_UnderSea",
+    "WoodenCrateSmall",
+    "WoodenCrateSmall_UnderSea",
+    "WoodenCrate_Firedeep_01",
+    "WoodenCrate_Firedeep_02"
+  ],
+  "coords": [
+    {
+      "x": 1290.0,
+      "y": 585.0,
+      "z": 80.0,
+      "yaw": 180.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -1235.0,
+      "y": -970.0,
+      "z": 65.0,
+      "yaw": 285.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -610.0,
+      "y": -1445.0,
+      "z": 55.0,
+      "yaw": 70.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -306.0,
+      "y": -1244.0,
+      "z": -0.49301067,
+      "yaw": 0.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": 1015.0,
+      "y": 380.0,
+      "z": 40.0,
+      "yaw": 180.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -150.0,
+      "y": 1425.0,
+      "z": 40.0,
+      "yaw": 65.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    },
+    {
+      "x": -1175.0,
+      "y": -665.0,
+      "z": 50.0,
+      "yaw": 45.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "WoodsmanAxe"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "砍柴斧",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

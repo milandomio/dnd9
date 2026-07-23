@@ -1,0 +1,58 @@
+{
+  "name": "FrostGiantShielder",
+  "translation": "冰霜持盾巨人",
+  "translation_EN": "冰霜持盾巨人",
+  "coords": [
+    {
+      "x": 161.0,
+      "y": -112.0,
+      "z": -198.9999,
+      "yaw": 180.0,
+      "map": "IceCave_CaveSwamp",
+      "file": "IceCave_CaveSwamp_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder"
+    },
+    {
+      "x": -254.0,
+      "y": 1038.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_IcicleCave",
+      "file": "IceCave_IcicleCave_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder"
+    },
+    {
+      "x": 289.0,
+      "y": -40.0,
+      "z": -399.999895,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder",
+      "group_parent": "BP_GameSpawner_C_29",
+      "variant_count": 3,
+      "variant_names": [
+        "冰霜骷髅弩手",
+        "冰霜巨人狂战士",
+        "冰霜持盾巨人"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰霜持盾巨人",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

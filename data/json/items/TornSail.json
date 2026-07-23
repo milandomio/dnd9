@@ -1,0 +1,54 @@
+{
+  "name": "TornSail",
+  "translation": "破损船帆",
+  "translation_EN": "破损船帆",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 2325.0,
+      "y": 3415.0,
+      "z": 641.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "TornSail"
+    },
+    {
+      "x": 815.0,
+      "y": -41.0,
+      "z": 2622.9521,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "TornSail"
+    },
+    {
+      "x": 1270.0,
+      "y": 570.0,
+      "z": 20.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "TornSail"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "破损船帆",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

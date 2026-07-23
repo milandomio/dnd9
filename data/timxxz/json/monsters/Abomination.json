@@ -1,0 +1,70 @@
+{
+  "name": "Abomination",
+  "translation": "憎恶",
+  "translation_EN": "憎恶",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "Abomination",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": [
+        "地狱三头犬",
+        "地狱猎手",
+        "憎恶",
+        "恶魔处刑者"
+      ]
+    },
+    {
+      "x": 960.0,
+      "y": 30.0,
+      "z": -200.0,
+      "yaw": 175.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "Abomination"
+    },
+    {
+      "x": 0.0,
+      "y": -850.0,
+      "z": 850.0001,
+      "yaw": 90.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "Abomination",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    },
+    {
+      "x": -670.0,
+      "y": -50.0,
+      "z": 400.0,
+      "yaw": 0.0,
+      "map": "ThroneRoom_02",
+      "file": "ThroneRoom_02_HR_D.json",
+      "version": "",
+      "label": "Abomination"
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "憎恶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,1025 @@
+{
+  "map_base": "Inferno_DemonOverseersDominion",
+  "entities": [
+    {
+      "name": "BossRewardDoor",
+      "translation": "被诅咒的宝藏之门",
+      "translation_EN": "被诅咒的宝藏之门",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 750.0,
+          "y": -70.0,
+          "z": -340.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "BossRewardDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -750.0,
+          "y": -70.0,
+          "z": -340.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "BossRewardDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DecayVolume",
+      "translation": "腐败之潮",
+      "translation_EN": "腐败之潮",
+      "type": "decoration",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -650.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "DecayVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 1450.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "DecayVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1050.0,
+          "y": 1450.0,
+          "z": -400.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "DecayVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -1450.0,
+          "z": -500.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "DecayVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1050.0,
+          "y": -1450.0,
+          "z": -400.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "DecayVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DemonOverseer",
+      "translation": "恶魔监军",
+      "translation_EN": "恶魔监军",
+      "type": "monster",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "DemonOverseer",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "EasyFog",
+      "translation": "简易雾",
+      "translation_EN": "简易雾",
+      "type": "decoration",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 6.174608,
+          "y": 37.66653,
+          "z": 1703.4303,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "简易雾",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3.4895818,
+          "y": 8.673957,
+          "z": 2637.3677,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "简易雾",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "EndlessPortalEscape",
+      "translation": "传送门",
+      "translation_EN": "传送门",
+      "type": "decoration",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "EndlessPortalEscape",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Fireflies2",
+      "translation": "萤火虫",
+      "translation_EN": "萤火虫",
+      "type": "decoration",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": -151.31375,
+          "y": 31.859165,
+          "z": 2081.4163,
+          "yaw": 328.8,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "translation_EN": "对象链接器",
+      "type": "decoration",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "HellMaggot",
+      "translation": "魔蛆",
+      "translation_EN": "魔蛆",
+      "type": "monster",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 1250.0,
+          "y": 100.0,
+          "z": -700.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1300.0,
+          "y": -150.0,
+          "z": -700.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1250.0,
+          "y": -150.0,
+          "z": -700.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -250.0,
+          "y": -1200.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -250.0,
+          "y": -1250.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -250.0,
+          "y": -1300.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 200.0,
+          "y": 1200.0,
+          "z": -700.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 200.0,
+          "y": 1250.0,
+          "z": -700.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 200.0,
+          "y": 1300.0,
+          "z": -700.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1200.0,
+          "y": 100.0,
+          "z": -700.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "HellMaggot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Hoard01_9",
+      "translation": "宝藏堆",
+      "translation_EN": "宝藏堆",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": -98.73506,
+          "y": 420.20175,
+          "z": -535.0,
+          "yaw": 15.0,
+          "version": "(D)",
+          "label": "Hoard01_9",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "InfernoModuleConnector",
+      "translation": "木门",
+      "translation_EN": "木门",
+      "type": "decoration",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "InfernoModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "InfernoPlate",
+      "translation": "炼狱平台",
+      "translation_EN": "炼狱平台",
+      "type": "decoration",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -1200.0,
+          "y": -1200.0,
+          "z": 50.0,
+          "yaw": 255.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1250.0,
+          "y": -830.0,
+          "z": -50.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -1250.0,
+          "z": -50.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -885.35535,
+          "y": -885.35535,
+          "z": 150.0,
+          "yaw": 45.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1380.0,
+          "y": -429.99997,
+          "z": -100.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1385.0,
+          "y": 420.00003,
+          "z": -100.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1250.0,
+          "y": 820.0,
+          "z": -50.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1200.0,
+          "y": 1200.0,
+          "z": 50.0,
+          "yaw": 255.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -885.35535,
+          "y": 885.35535,
+          "z": 150.0,
+          "yaw": 315.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 1250.0,
+          "z": -50.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1385.0,
+          "y": 420.00003,
+          "z": -100.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1250.0,
+          "y": 820.0,
+          "z": -50.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1200.0,
+          "y": 1200.0,
+          "z": 50.0,
+          "yaw": 255.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 1250.0,
+          "z": -50.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 885.35535,
+          "y": 885.35535,
+          "z": 150.0,
+          "yaw": 315.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1380.0,
+          "y": -429.99997,
+          "z": -100.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1250.0,
+          "y": -850.0,
+          "z": -50.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1200.0,
+          "y": -1200.0,
+          "z": 50.0,
+          "yaw": 45.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 885.35535,
+          "y": -885.35535,
+          "z": 150.0,
+          "yaw": 45.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -1250.0,
+          "z": -50.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "InfernoPlate",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Inferno_PlaneFog",
+      "translation": "平面雾",
+      "translation_EN": "平面雾",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Inferno_PlaneFog",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "KillVolume",
+      "translation": "虚空",
+      "translation_EN": "虚空",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -2850.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "KillVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LevelSequenceActor",
+      "translation": "过场动画",
+      "translation_EN": "过场动画",
+      "type": "decoration",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "过场动画",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MarvelousChest",
+      "translation": "卓越宝箱",
+      "translation_EN": "卓越宝箱",
+      "type": "props",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": 117.0,
+          "y": 460.5,
+          "z": -535.0,
+          "yaw": 300.0,
+          "version": "(D)",
+          "label": "MarvelousChest",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SulfurRoaster_01",
+      "translation": "硫磺灯架",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": -194.72699,
+          "y": -592.0387,
+          "z": -531.6583,
+          "yaw": 328.8,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 228.0063,
+          "y": -597.0505,
+          "z": -531.6583,
+          "yaw": 32.1,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -983.31696,
+          "y": -213.35062,
+          "z": -63.816277,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -983.55273,
+          "y": 213.43425,
+          "z": -63.816277,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 985.2943,
+          "y": 215.09143,
+          "z": -86.11003,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1216.5488,
+          "y": -355.20755,
+          "z": 1351.4386,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1218.7574,
+          "y": 338.90536,
+          "z": 1351.4386,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1217.6158,
+          "y": 531.7814,
+          "z": 1722.4204,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1215.3894,
+          "y": -553.3345,
+          "z": 1722.4204,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -345.5747,
+          "y": -1221.4277,
+          "z": 1351.4386,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 348.5382,
+          "y": -1221.4277,
+          "z": 1351.4386,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 527.2745,
+          "y": -1221.4277,
+          "z": 1722.4204,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 986.48706,
+          "y": -211.69344,
+          "z": -86.11003,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -539.9948,
+          "y": -1221.4279,
+          "z": 1722.4204,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 351.8997,
+          "y": 1212.2047,
+          "z": 1351.4386,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -342.21323,
+          "y": 1220.4615,
+          "z": 1351.4386,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -525.4973,
+          "y": 1219.0325,
+          "z": 1722.4204,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 543.5481,
+          "y": 1220.4489,
+          "z": 1722.4204,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1221.0106,
+          "y": 356.5362,
+          "z": 1351.4386,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1222.8704,
+          "y": -337.57672,
+          "z": 1351.4386,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1225.232,
+          "y": -537.774,
+          "z": 1722.4204,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 193.10991,
+          "y": 593.63904,
+          "z": -177.28178,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1223.9371,
+          "y": 560.5483,
+          "z": 1722.4204,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -616.16187,
+          "y": 147.31436,
+          "z": -177.28178,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -616.796,
+          "y": -144.94481,
+          "z": -177.28178,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 614.72034,
+          "y": -148.91658,
+          "z": -177.28178,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 614.9928,
+          "y": 140.18471,
+          "z": -177.28178,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -202.816,
+          "y": 590.435,
+          "z": -177.28178,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "硫磺灯架",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Salmon",
+  "translation": "鲑鱼",
+  "translation_EN": "鲑鱼",
+  "coords": [
+    {
+      "x": 475.0,
+      "y": -95.0,
+      "z": -175.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "Salmon"
+    },
+    {
+      "x": 475.0,
+      "y": -35.0,
+      "z": -175.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "Salmon"
+    },
+    {
+      "x": 475.0,
+      "y": 35.0,
+      "z": -175.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "Salmon"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "鲑鱼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 26.25,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

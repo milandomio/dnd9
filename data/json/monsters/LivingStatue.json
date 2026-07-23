@@ -1,0 +1,145 @@
+{
+  "name": "LivingStatue",
+  "translation": "石像鬼",
+  "translation_EN": "石像鬼",
+  "coords": [
+    {
+      "x": 200.00000000000009,
+      "y": 0.0,
+      "z": -200.0,
+      "yaw": 185.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "LivingStatue",
+      "group_parent": "BP_GameSpawnerGroup_C_2"
+    },
+    {
+      "x": -205.0,
+      "y": 10.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "LivingStatue",
+      "group_parent": "BP_GameSpawnerGroup_C_1"
+    },
+    {
+      "x": -555.0,
+      "y": 15.0,
+      "z": 105.0,
+      "yaw": 180.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -320.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 330.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -320.00003,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 329.99997,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 505.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -515.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -3905.0,
+      "y": -315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -3905.0,
+      "y": 315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "石像鬼",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 45.2,
+          "普通": 55.0,
+          "豪客赛": 56.0,
+          "逆袭赛": 61.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "石像鬼",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 66.8,
+          "普通": 40.0,
+          "豪客赛": 71.5,
+          "逆袭赛": 71.5
+        }
+      }
+    ]
+  }
+}

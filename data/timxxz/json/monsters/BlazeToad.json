@@ -1,0 +1,93 @@
+{
+  "name": "BlazeToad",
+  "translation": "烈焰蛤蟆",
+  "translation_EN": "烈焰蛤蟆",
+  "coords": [
+    {
+      "x": -920.0,
+      "y": 240.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 840.0,
+      "y": -25.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 1115.0,
+      "y": 59.0,
+      "z": -438.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": -801.0,
+      "y": 243.0,
+      "z": -352.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 563.0,
+      "y": -569.0,
+      "z": -52.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "BlazeToad",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        "烈焰野猪",
+        "烈焰蛤蟆"
+      ]
+    },
+    {
+      "x": -930.0,
+      "y": 480.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "BlazeToad",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        "烈焰野猪",
+        "烈焰蛤蟆"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "烈焰蛤蟆",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 22.6,
+          "普通": 55.0,
+          "豪客赛": 56.0,
+          "逆袭赛": 61.0
+        }
+      }
+    ]
+  }
+}

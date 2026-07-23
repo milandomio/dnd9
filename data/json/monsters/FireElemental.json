@@ -1,0 +1,57 @@
+{
+  "name": "FireElemental",
+  "translation": "火元素",
+  "translation_EN": "火元素",
+  "coords": [
+    {
+      "x": -75.0,
+      "y": 155.0,
+      "z": -110.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "FireElemental"
+    },
+    {
+      "x": 455.0,
+      "y": -405.0,
+      "z": -149.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireElemental",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -470.0,
+      "y": 480.0,
+      "z": -149.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireElemental",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "火元素",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

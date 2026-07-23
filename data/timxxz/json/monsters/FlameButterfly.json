@@ -1,0 +1,157 @@
+{
+  "name": "FlameButterfly",
+  "translation": "赤焰蝶",
+  "translation_EN": "赤焰蝶",
+  "coords": [
+    {
+      "x": -1015.0,
+      "y": 630.0,
+      "z": 90.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -13.0,
+      "y": -55.0,
+      "z": 113.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -115.0,
+      "y": 15.0,
+      "z": 490.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": 80.0,
+      "y": 185.0,
+      "z": -20.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -145.0,
+      "y": -342.0,
+      "z": 246.27762,
+      "yaw": 0.0,
+      "map": "Firedeep_FlameTerrace",
+      "file": "Firedeep_FlameTerrace_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -405.0,
+      "y": 375.0,
+      "z": 5.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -938.0,
+      "y": -5.0,
+      "z": 1233.0,
+      "yaw": 0.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": 465.0,
+      "y": -500.0,
+      "z": 50.0,
+      "yaw": 320.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -21.0,
+      "y": 196.0,
+      "z": 93.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -160.0,
+      "y": -35.0,
+      "z": 509.30975,
+      "yaw": 0.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": 14.0,
+      "y": 147.0,
+      "z": 317.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly"
+    },
+    {
+      "x": -476.0,
+      "y": -14.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 473.0,
+      "y": -14.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "FlameButterfly",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "赤焰蝶",
+        "spawn_rate": 0.05,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

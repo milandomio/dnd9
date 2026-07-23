@@ -1,0 +1,64 @@
+{
+  "name": "Pincushion",
+  "translation": "针垫",
+  "translation_EN": "针垫",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -748.5976,
+      "y": -538.5403,
+      "z": 552.29364,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "Pincushion"
+    },
+    {
+      "x": -41.497883,
+      "y": -1135.2091,
+      "z": 76.705635,
+      "yaw": 131.5,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "Pincushion"
+    },
+    {
+      "x": 127.0,
+      "y": 1013.0,
+      "z": 2042.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "Pincushion"
+    },
+    {
+      "x": 1264.0,
+      "y": 4955.0,
+      "z": 275.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Pincushion"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "针垫",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

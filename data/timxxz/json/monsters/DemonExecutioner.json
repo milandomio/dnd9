@@ -1,0 +1,111 @@
+{
+  "name": "DemonExecutioner",
+  "translation": "恶魔处刑者",
+  "translation_EN": "恶魔处刑者",
+  "coords": [
+    {
+      "x": 568.3833,
+      "y": 533.7097,
+      "z": 0.0,
+      "yaw": 41.2,
+      "map": "InfernoCastleConner",
+      "file": "InfernoCastleConner_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 1025.0,
+      "y": -482.0,
+      "z": 14.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -665.0,
+      "y": -800.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "InfernoRooms",
+      "file": "InfernoRooms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 670.0,
+      "y": 660.0,
+      "z": 500.0,
+      "yaw": 220.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -5.0,
+      "y": -10.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": [
+        "地狱三头犬",
+        "地狱猎手",
+        "憎恶",
+        "恶魔处刑者"
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": -375.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "variant_count": 2,
+      "variant_names": [
+        "恶魔处刑者",
+        "恶魔鬼童"
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 357.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "variant_count": 2,
+      "variant_names": [
+        "恶魔处刑者",
+        "恶魔鬼童"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔处刑者",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

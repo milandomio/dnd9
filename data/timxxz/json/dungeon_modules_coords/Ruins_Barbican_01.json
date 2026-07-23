@@ -1,0 +1,3455 @@
+{
+  "map_base": "Ruins_Barbican_01",
+  "entities": [
+    {
+      "name": "ArcheryTarget",
+      "translation": "射箭靶",
+      "translation_EN": "射箭靶",
+      "type": "decoration",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -115.0,
+          "y": 1205.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "射箭靶",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -125.0,
+          "y": 910.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "射箭靶",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Armor_DualBoss",
+      "translation": "双Boss-护甲",
+      "translation_EN": "双Boss-护甲",
+      "type": "item",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 245.0,
+          "y": 3440.0,
+          "z": -1633.5063,
+          "yaw": 355.0,
+          "version": "",
+          "label": "双Boss-护甲",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Arrow",
+      "translation": "箭",
+      "translation_EN": "箭",
+      "type": "item",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 313.80742999999995,
+          "y": 1041.058666,
+          "z": 157.0,
+          "yaw": 345.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 318.8074,
+          "y": 1054.058666,
+          "z": 120.0,
+          "yaw": 15.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_8",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 365.14886,
+          "y": 1207.46498,
+          "z": 113.0,
+          "yaw": 320.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 349.0,
+          "y": 1193.0,
+          "z": 120.0,
+          "yaw": 300.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 526.66866,
+          "y": 1233.70053,
+          "z": 153.0,
+          "yaw": 280.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 516.0,
+          "y": 1237.0,
+          "z": 160.0,
+          "yaw": 260.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -188.33339999999998,
+          "y": 1213.67075,
+          "z": 132.0,
+          "yaw": 175.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -187.0,
+          "y": 1182.0,
+          "z": 120.0,
+          "yaw": 205.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -190.33339999999998,
+          "y": 1200.67074,
+          "z": 107.0,
+          "yaw": 185.0,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -188.0,
+          "y": 1207.0,
+          "z": 120.0,
+          "yaw": 165.3,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -201.33337,
+          "y": 924.31763,
+          "z": 104.662384,
+          "yaw": 173.9,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -200.0,
+          "y": 904.52953,
+          "z": 132.14815,
+          "yaw": 186.9,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -203.33339,
+          "y": 896.8048200000001,
+          "z": 110.74895,
+          "yaw": 176.5,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_8",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -201.0,
+          "y": 911.0,
+          "z": 108.0,
+          "yaw": 185.2,
+          "version": "",
+          "label": "Arrow",
+          "group_parent": "BP_SingleGameSpawnerGroup_C_8",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "AshTree02",
+      "translation": "白蜡树",
+      "translation_EN": "白蜡树",
+      "type": "props",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": 1078.3407,
+          "y": 685.5882,
+          "z": 0.0,
+          "yaw": 235.0,
+          "version": "(A)",
+          "label": "AshTree02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1006.0,
+          "y": -639.0,
+          "z": 0.0,
+          "yaw": 101.0,
+          "version": "(A)",
+          "label": "AshTree02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -280.0,
+          "y": -970.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "AshTree02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Bandage",
+      "translation": "绷带",
+      "translation_EN": "绷带",
+      "type": "item",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 230.0,
+          "y": 2930.0,
+          "z": -1633.0472,
+          "yaw": 315.0,
+          "version": "",
+          "label": "Bandage",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Banshee_Soulflame",
+      "translation": "狺女的哀伤灵焰",
+      "translation_EN": "狺女的哀伤灵焰",
+      "type": "decoration",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 329.0,
+          "y": 992.0,
+          "z": -1600.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "狺女的哀伤灵焰",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BlackRose",
+      "translation": "黑玫瑰",
+      "translation_EN": "黑玫瑰",
+      "type": "props",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 310.0,
+          "y": 195.0,
+          "z": -1600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "黑玫瑰",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BossReward_DoubleStoneDoor",
+      "translation": "被诅咒的宝藏之门",
+      "type": "decoration",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 5.0,
+          "y": 4820.0,
+          "z": -1599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BossReward_DoubleStoneDoor",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": 0.0,
+          "y": 1030.0,
+          "z": -900.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BossReward_DoubleWoodenDoorArched",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Candle_A",
+      "translation": "蜡烛",
+      "type": "decoration",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -228.0,
+          "y": 124.0,
+          "z": -1598.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 263.0,
+          "y": 119.0,
+          "z": -1600.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.5,
+          "y": 1134.5,
+          "z": -1494.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 728.1292,
+          "y": -1470.4652,
+          "z": -660.11536,
+          "yaw": 220.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -934.8708,
+          "y": -235.4652,
+          "z": -797.2292,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -200.5,
+          "y": 574.5,
+          "z": -1499.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -9.094947e-13,
+          "y": 1605.0,
+          "z": -675.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Candle_A",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1423.0,
+          "y": 4674.0,
+          "z": -2000.0,
+          "yaw": 351.9,
+          "version": "(A)",
+          "label": "蜡烛",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1407.0,
+          "y": 4658.0,
+          "z": -2000.0,
+          "yaw": 200.5,
+          "version": "(A)",
+          "label": "蜡烛",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 73.0,
+          "y": 2047.0,
+          "z": -1695.0,
+          "yaw": 123.7,
+          "version": "(A)",
+          "label": "蜡烛",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1007.9764,
+          "y": 3314.1357,
+          "z": -1752.2347,
+          "yaw": 139.4,
+          "version": "(A)",
+          "label": "蜡烛",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 86.550964,
+          "y": 4334.574,
+          "z": -1752.2347,
+          "yaw": 24.8,
+          "version": "(A)",
+          "label": "蜡烛",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Candles02a",
+      "translation": "Candles02a",
+      "translation_EN": "Candles02a",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 935.0,
+          "y": 820.0,
+          "z": -886.03577,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -930.0,
+          "y": 659.99994,
+          "z": -886.03577,
+          "yaw": 155.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 981.0,
+          "y": -581.0,
+          "z": -748.03577,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1076.0,
+          "y": -1114.0,
+          "z": -706.03577,
+          "yaw": 155.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -769.0,
+          "y": -1364.0,
+          "z": -757.5638,
+          "yaw": 210.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -999.0,
+          "y": -776.00006,
+          "z": -406.5638,
+          "yaw": 120.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -965.0,
+          "y": 544.99994,
+          "z": -406.5638,
+          "yaw": 120.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1011.0,
+          "y": 526.0,
+          "z": -407.0358,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 985.0,
+          "y": -693.0,
+          "z": -407.0358,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Candles02a",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Chain",
+      "translation": "锁链",
+      "translation_EN": "锁链",
+      "type": "decoration",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": -802.0,
+          "y": 1990.0,
+          "z": -1774.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 756.0,
+          "y": -1540.0,
+          "z": -648.0,
+          "yaw": 190.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1263.0,
+          "y": 1543.0,
+          "z": -661.0,
+          "yaw": 190.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Cloak",
+      "translation": "披风",
+      "translation_EN": "披风",
+      "type": "item",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": -200.0,
+          "y": 475.0,
+          "z": -1500.0,
+          "yaw": 45.0,
+          "version": "",
+          "label": "披风",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Cockatrice",
+      "translation": "蛇尾鸡",
+      "translation_EN": "蛇尾鸡",
+      "type": "monster",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 467.0,
+          "y": -1108.0,
+          "z": 0.0,
+          "yaw": 65.0,
+          "version": "",
+          "label": "Cockatrice",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -491.0,
+          "y": 1125.0,
+          "z": 0.0,
+          "yaw": 235.0,
+          "version": "",
+          "label": "Cockatrice",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "CofferSmall",
+      "translation": "迷你宝盒",
+      "translation_EN": "迷你宝盒",
+      "type": "props",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": 1379.2576,
+          "y": -1363.245,
+          "z": 0.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 945.1944,
+          "y": -361.57254,
+          "z": 0.0,
+          "yaw": 305.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -596.5414,
+          "y": -491.77185,
+          "z": 0.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1136.5414,
+          "y": -1395.7719,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -207.54141,
+          "y": 1413.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 351.4586,
+          "y": 1373.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FallingDebrisActor_Crypt",
+      "translation": "坠落碎石",
+      "translation_EN": "坠落碎石",
+      "type": "decoration",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": -5.0,
+          "y": 0.0,
+          "z": 510.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "坠落碎石",
+          "group_parent": "BP_GameSpawnerGroup_C_6",
+          "sub_group_parent": "BP_GameObjectLinker_C_5"
+        },
+        {
+          "x": -1265.0,
+          "y": 1345.0,
+          "z": -395.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠落碎石",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_2"
+        },
+        {
+          "x": 1230.0,
+          "y": -1310.0,
+          "z": -395.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠落碎石",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_3"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FallingIcicleArea",
+      "translation": "坠冰区域",
+      "translation_EN": "坠冰区域",
+      "type": "decoration",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": -1165.0,
+          "y": 1320.0,
+          "z": -800.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠冰区域",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_2"
+        },
+        {
+          "x": 1282.5,
+          "y": -1280.0,
+          "z": -852.5,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠冰区域",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_3"
+        },
+        {
+          "x": 0.0,
+          "y": 10.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠冰区域",
+          "group_parent": "BP_GameSpawnerGroup_C_6",
+          "sub_group_parent": "BP_GameObjectLinker_C_5"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FlatChestLarge",
+      "translation": "方型宝箱",
+      "translation_EN": "方型宝箱",
+      "type": "props",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 718.0,
+          "y": -216.0,
+          "z": 650.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1088.0,
+          "y": 3210.0,
+          "z": -1752.2347,
+          "yaw": 0.0,
+          "version": "",
+          "label": "OrnateChestLarge",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "translation_EN": "传送门",
+      "type": "decoration",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -1220.0,
+          "y": 790.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -810.0,
+          "y": 1260.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -640.0,
+          "y": 849.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -30.0,
+          "y": 470.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 460.0,
+          "y": 1150.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1210.0,
+          "y": 1150.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 910.0,
+          "y": 760.0,
+          "z": 7.7308626,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 910.0,
+          "y": -500.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 910.0,
+          "y": -1180.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 230.0,
+          "y": -930.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -660.0,
+          "y": -1190.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -490.0,
+          "y": -760.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 20.0,
+          "y": -520.0,
+          "z": 3.8155963,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "translation_EN": "对象链接器",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 50.0,
+          "y": -60.0,
+          "z": -900.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1280.0,
+          "y": 1275.0,
+          "z": -900.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_2"
+        },
+        {
+          "x": 1212.5,
+          "y": -1355.0,
+          "z": -952.5,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_3"
+        },
+        {
+          "x": 10.0,
+          "y": 65.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "BP_GameSpawnerGroup_C_6",
+          "sub_group_parent": "BP_GameObjectLinker_C_5"
+        },
+        {
+          "x": 50.0,
+          "y": 65.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "BP_GameSpawnerGroup_C_6",
+          "sub_group_parent": "BP_GameObjectLinker_C_6"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_EN": "生成器组",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -213.0,
+          "y": 3173.0,
+          "z": -1753.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -575.0,
+          "y": 829.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1280.0,
+          "y": 1360.0,
+          "z": -900.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -75.0,
+          "y": 80.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 370.0,
+          "y": 1080.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -250.0,
+          "y": 1050.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 180.0,
+          "y": 1150.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -150.0,
+          "y": 1080.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Gems",
+      "translation": "宝石",
+      "translation_EN": "宝石",
+      "type": "item",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": -195.0,
+          "y": 1275.0,
+          "z": -1495.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "宝石",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Ladder_02",
+      "translation": "梯子",
+      "translation_EN": "梯子",
+      "type": "decoration",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Ladder_02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Lamp02On",
+      "translation": "灯",
+      "translation_EN": "灯",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 961.0,
+          "y": -134.0,
+          "z": 900.0,
+          "yaw": 335.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 261.0,
+          "y": -144.0,
+          "z": 860.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 721.0,
+          "y": -304.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -699.0,
+          "y": 296.0,
+          "z": 990.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -239.00002,
+          "y": 145.99998,
+          "z": 860.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1455.0,
+          "y": 986.59827,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1345.0,
+          "y": 475.0,
+          "z": 150.0,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1385.0,
+          "y": -1010.0,
+          "z": 210.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -625.0,
+          "y": -1455.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1140.0,
+          "y": -315.0,
+          "z": 240.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -131.0,
+          "y": 5.0000086,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1415.0,
+          "y": 630.1339,
+          "z": 195.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -994.9018,
+          "y": 1455.0,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 593.61383,
+          "y": 1455.0,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 643.57056,
+          "y": -1455.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 811.0,
+          "y": -765.9239,
+          "z": 180.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 616.0,
+          "y": -666.0,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1447.6368,
+          "y": -992.40814,
+          "z": 180.00002,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MarvelousChest",
+      "translation": "卓越宝箱",
+      "translation_EN": "卓越宝箱",
+      "type": "props",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -180.0,
+          "y": 815.0,
+          "z": -1600.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "MarvelousChest",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Mimic_Large_Flat",
+      "translation": "巨型宝箱怪",
+      "type": "monster",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": 718.0,
+          "y": -216.0,
+          "z": 650.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Mimic_Small_Ornate",
+      "translation": "小型宝箱怪",
+      "type": "monster",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 1379.2576,
+          "y": -1363.245,
+          "z": 0.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 945.1944,
+          "y": -361.57254,
+          "z": 0.0,
+          "yaw": 305.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -596.5414,
+          "y": -491.77185,
+          "z": 0.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1136.5414,
+          "y": -1395.7719,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -207.54141,
+          "y": 1413.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 351.4586,
+          "y": 1373.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "MurderofCrowsVolume",
+      "translation": "鸦群",
+      "translation_EN": "鸦群",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": -1600.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 1600.0001,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 350.00006,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1050.0,
+          "y": 350.00006,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1050.0,
+          "y": -249.99994,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": -249.99994,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 350.0001,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.00006,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -199.99994,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1050.0,
+          "y": 350.00003,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -249.99995,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -950.0,
+          "y": -249.99997,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -950.0,
+          "y": 350.00003,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.00003,
+          "z": 600.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Ore_RubysilverOre_Low",
+      "translation": "红宝石银矿",
+      "type": "props",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": -770.0,
+          "y": 2385.0,
+          "z": -1999.99991,
+          "yaw": 330.0,
+          "version": "",
+          "label": "Ore_RubysilverOre",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 360.0,
+          "y": 2960.0,
+          "z": -1752.685935,
+          "yaw": 300.0,
+          "version": "",
+          "label": "Ore_RubysilverOre",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -745.0,
+          "y": 4035.0,
+          "z": -1997.1134,
+          "yaw": 300.0,
+          "version": "",
+          "label": "Ore_RubysilverOre",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -325.0,
+          "y": 3530.0,
+          "z": -1752.685935,
+          "yaw": 255.0,
+          "version": "",
+          "label": "Ore_RubysilverOre",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true,
+      "group_size": 4
+    },
+    {
+      "name": "OrnateChestLarge",
+      "translation": "狮头宝箱",
+      "type": "props",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 718.0,
+          "y": -216.0,
+          "z": 650.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱",
+      "type": "props",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 1379.2576,
+          "y": -1363.245,
+          "z": 0.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 945.1944,
+          "y": -361.57254,
+          "z": 0.0,
+          "yaw": 305.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -596.5414,
+          "y": -491.77185,
+          "z": 0.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1136.5414,
+          "y": -1395.7719,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -207.54141,
+          "y": 1413.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 351.4586,
+          "y": 1373.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Pot02",
+      "translation": "罐子",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 1009.0,
+          "y": -432.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1396.0,
+          "y": -594.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Pot03",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Potion",
+      "translation": "药水",
+      "translation_EN": "药水",
+      "type": "item",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -200.0,
+          "y": 3430.0,
+          "z": -1635.0,
+          "yaw": 315.0,
+          "version": "",
+          "label": "药水",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Rat",
+      "translation": "老鼠",
+      "translation_EN": "老鼠",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 474.0,
+          "y": -122.0,
+          "z": 408.0,
+          "yaw": 105.1,
+          "version": "(A)",
+          "label": "老鼠",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 443.78818,
+          "y": -78.21021,
+          "z": 407.0,
+          "yaw": 21.7,
+          "version": "(A)",
+          "label": "老鼠",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Roaster01On",
+      "translation": "灯架子",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -620.49744,
+          "y": 2066.4202,
+          "z": -1999.9999,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1151.4799,
+          "y": 2487.4778,
+          "z": -1998.9999,
+          "yaw": 89.8,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -591.2068,
+          "y": 4341.3784,
+          "z": -1978.9999,
+          "yaw": 90.1,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 654.7932,
+          "y": 4323.3784,
+          "z": -1989.9999,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1134.4475,
+          "y": 3847.502,
+          "z": -1991.4135,
+          "yaw": 89.9,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 687.0485,
+          "y": 2062.568,
+          "z": -1999.5264,
+          "yaw": 89.8,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1123.6389,
+          "y": 2540.5317,
+          "z": -1981.1111,
+          "yaw": 89.1,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1.7932,
+          "y": 3196.3782,
+          "z": -1752.6859,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1122.2068,
+          "y": 3969.3782,
+          "z": -1999.9999,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Roaster01On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1491.1823,
+          "y": 1780.8219,
+          "z": -1987.9999,
+          "yaw": 46.7,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1478.8177,
+          "y": 1819.8219,
+          "z": -1999.9999,
+          "yaw": 46.7,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -895.0,
+          "y": 532.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -123.0,
+          "y": 796.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 370.0,
+          "y": 895.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -74.0,
+          "y": -841.0,
+          "z": 6.3932905,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 977.0,
+          "y": 591.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 500.0,
+          "y": 560.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -400.0,
+          "y": 445.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "RuinsModuleConnector",
+      "translation": "木门",
+      "translation_EN": "木门",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestLarge",
+      "translation": "大型橡木宝箱",
+      "translation_EN": "大型橡木宝箱",
+      "type": "props",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 718.0,
+          "y": -216.0,
+          "z": 650.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestSmall",
+      "translation": "小型橡木宝箱",
+      "translation_EN": "小型橡木宝箱",
+      "type": "props",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": 840.31647,
+          "y": -469.914,
+          "z": 0.0,
+          "yaw": 315.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1379.2576,
+          "y": -1363.245,
+          "z": 0.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1256.5414,
+          "y": -1361.7719,
+          "z": 0.0,
+          "yaw": 45.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 548.45856,
+          "y": -451.77185,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 945.1944,
+          "y": -361.57254,
+          "z": 0.0,
+          "yaw": 305.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -596.5414,
+          "y": -491.77185,
+          "z": 0.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 951.45856,
+          "y": 21.22816,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1136.5414,
+          "y": -1395.7719,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -899.5414,
+          "y": -478.77185,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -878.5414,
+          "y": 209.22815,
+          "z": 0.0,
+          "yaw": 315.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1327.5414,
+          "y": 1413.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -207.54141,
+          "y": 1413.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 351.4586,
+          "y": 1373.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1319.4586,
+          "y": 1413.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 877.4586,
+          "y": 410.22815,
+          "z": 0.0,
+          "yaw": 65.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SingleStoneDoor",
+      "translation": "石门",
+      "translation_EN": "石门",
+      "type": "decoration",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": -680.0,
+          "y": 1000.0,
+          "z": -900.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "SingleStoneDoor",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 986.0,
+          "y": -1168.0,
+          "z": -900.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "SingleStoneDoor",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonCorpse03",
+      "translation": "遗骸",
+      "translation_EN": "遗骸",
+      "type": "props",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -979.5414,
+          "y": 424.22815,
+          "z": 0.0,
+          "yaw": 65.0,
+          "version": "",
+          "label": "SkeletonCorpse_03",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonFootmanFromFakeDeath",
+      "translation": "骷髅步兵",
+      "translation_EN": "骷髅步兵",
+      "type": "monster",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 457.0,
+          "y": 1083.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 254.0,
+          "y": 908.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -761.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -687.0,
+          "y": 118.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonGuardmanFromFakeDeath",
+      "translation": "骷髅卫士",
+      "translation_EN": "骷髅卫士",
+      "type": "monster",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -602.0,
+          "y": 547.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonSwordman",
+      "translation": "骷髅双手剑士",
+      "translation_EN": "骷髅双手剑士",
+      "type": "monster",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 523.9401,
+          "y": 186.02548,
+          "z": 660.0,
+          "yaw": 220.0,
+          "version": "",
+          "label": "SkeletonSwordman",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SpectralKnight",
+      "translation": "鬼灵骑士",
+      "translation_EN": "鬼灵骑士",
+      "type": "monster",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 2.2906150000000025,
+          "y": -170.85586,
+          "z": -899.9999991037588,
+          "yaw": 270.0,
+          "version": "",
+          "label": "SpectralKnight",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SturdyCloth",
+      "translation": "结实的布料",
+      "translation_EN": "结实的布料",
+      "type": "item",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": 865.0,
+          "y": -173.0,
+          "z": 650.0,
+          "yaw": 30.0,
+          "version": "",
+          "label": "SturdyCloth",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SuperHoard01_9",
+      "translation": "超级宝藏堆",
+      "translation_EN": "超级宝藏堆",
+      "type": "props",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 5.065485,
+          "y": 3157.4036,
+          "z": -1751.5063,
+          "yaw": 235.0,
+          "version": "",
+          "label": "超级宝藏堆",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Torch02On",
+      "translation": "火把",
+      "type": "decoration",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 949.20996,
+          "y": 1220.4296,
+          "z": -935.0,
+          "yaw": 280.0,
+          "version": "",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -600.00006,
+          "y": 1535.0,
+          "z": -700.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -589.00006,
+          "y": 1046.0,
+          "z": -700.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1090.0,
+          "y": 1483.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 542.0,
+          "y": 495.00003,
+          "z": -1375.0,
+          "yaw": 190.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 321.28867,
+          "y": 1146.7007,
+          "z": -700.0,
+          "yaw": 280.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 420.73474,
+          "y": 1484.752,
+          "z": -700.0,
+          "yaw": 10.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1379.21,
+          "y": 1120.4296,
+          "z": -1000.0,
+          "yaw": 10.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1046.0,
+          "y": -1428.0,
+          "z": -700.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1380.0,
+          "y": 380.00003,
+          "z": -1320.0,
+          "yaw": 10.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -525.0,
+          "y": 480.0,
+          "z": -1225.0,
+          "yaw": 185.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -309.0,
+          "y": 795.0,
+          "z": -1375.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1157.0,
+          "y": 3365.9968,
+          "z": -1570.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1256.2203,
+          "y": 2101.1199,
+          "z": -1770.0,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -200.00003,
+          "y": 4380.0,
+          "z": -1570.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1250.9482,
+          "y": 4294.6377,
+          "z": -1773.0,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 233.89015,
+          "y": 1669.616,
+          "z": -1370.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -231.9743,
+          "y": 1670.5951,
+          "z": -1370.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -740.0,
+          "y": 1675.0,
+          "z": -1740.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 715.6203,
+          "y": 4725.0,
+          "z": -1703.8229,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1260.2692,
+          "y": 4285.858,
+          "z": -1770.0,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 19.113289,
+          "y": 56.27111,
+          "z": -1398.0,
+          "yaw": 275.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -237.7243,
+          "y": 4730.778,
+          "z": -1370.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 234.3977,
+          "y": 4729.4307,
+          "z": -1370.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 755.0,
+          "y": 1675.0,
+          "z": -1740.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -755.1408,
+          "y": 4725.0,
+          "z": -1730.3342,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -200.00003,
+          "y": 2022.0,
+          "z": -1570.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 397.0,
+          "y": 1177.0,
+          "z": -1375.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1148.0,
+          "y": 3010.0,
+          "z": -1570.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1241.1823,
+          "y": 2117.8218,
+          "z": -1770.0,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 347.0,
+          "y": 797.0,
+          "z": -1375.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 433.0,
+          "y": -1274.0,
+          "z": -650.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 878.0,
+          "y": 41.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 871.0,
+          "y": -343.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 882.0,
+          "y": -951.0,
+          "z": -700.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1.0,
+          "y": -1448.0,
+          "z": -700.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -398.39496,
+          "y": 881.0,
+          "z": -713.8578,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -427.0,
+          "y": -1274.0,
+          "z": -650.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -874.0,
+          "y": -518.0,
+          "z": -700.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -887.0,
+          "y": 214.0,
+          "z": -700.0,
+          "yaw": 179.6,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 401.60504,
+          "y": 872.0,
+          "z": -713.8578,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02_Blue_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "TrainingDummy",
+      "translation": "训练假人",
+      "translation_EN": "训练假人",
+      "type": "monster",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 521.4586,
+          "y": 1263.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "TrainingDummy",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 323.0818,
+          "y": 1233.819,
+          "z": 0.0,
+          "yaw": 310.0,
+          "version": "",
+          "label": "TrainingDummy",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 272.45386,
+          "y": 1050.7964,
+          "z": 0.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "TrainingDummy",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Trinkets",
+      "translation": "小饰品",
+      "translation_EN": "小饰品",
+      "type": "item",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": -185.0,
+          "y": 1250.0,
+          "z": -1495.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -160.0,
+          "y": 640.0,
+          "z": -1500.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -175.0,
+          "y": 1125.0,
+          "z": -1495.0,
+          "yaw": 275.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -210.0,
+          "y": 1070.0,
+          "z": -1495.0,
+          "yaw": 275.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -195.0,
+          "y": 625.0,
+          "z": -1500.0,
+          "yaw": 275.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": -185.0,
+          "y": 1015.0,
+          "z": -1495.0,
+          "yaw": 275.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0"
+        },
+        {
+          "x": 305.0,
+          "y": 2975.0,
+          "z": -1635.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -245.0,
+          "y": 3490.0,
+          "z": -1635.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 200.0,
+          "y": 3015.0,
+          "z": -1635.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -275.0,
+          "y": 3390.0,
+          "z": -1635.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "小饰品",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Weapon_DualBoss",
+      "translation": "双Boss-武器",
+      "translation_EN": "双Boss-武器",
+      "type": "item",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -235.0,
+          "y": 2959.0,
+          "z": -1634.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "双Boss-武器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestLarge",
+      "translation": "大型加固宝箱",
+      "translation_EN": "大型加固宝箱",
+      "type": "props",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 718.0,
+          "y": -216.0,
+          "z": 650.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "小型加固宝箱",
+      "translation_EN": "小型加固宝箱",
+      "type": "props",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 1379.2576,
+          "y": -1363.245,
+          "z": 0.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 945.1944,
+          "y": -361.57254,
+          "z": 0.0,
+          "yaw": 305.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -596.5414,
+          "y": -491.77185,
+          "z": 0.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1136.5414,
+          "y": -1395.7719,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -207.54141,
+          "y": 1413.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 351.4586,
+          "y": 1373.2281,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenBarrel01",
+      "translation": "木桶",
+      "translation_EN": "木桶",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 873.0911,
+          "y": 991.7683,
+          "z": 28.74246,
+          "yaw": 319.6,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -938.0,
+          "y": -138.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -982.0,
+          "y": -48.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -977.0,
+          "y": 62.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 936.1609,
+          "y": 874.9269,
+          "z": 8.513901,
+          "yaw": 320.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 794.3015,
+          "y": 922.2899,
+          "z": 17.210184,
+          "yaw": 190.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenCrateSmall",
+      "translation": "小型木板箱",
+      "translation_EN": "小型木板箱",
+      "type": "props",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": -1385.5414,
+          "y": -1351.7719,
+          "z": 0.0,
+          "yaw": 360.0,
+          "version": "",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1117.1643,
+          "y": -1214.3829,
+          "z": 103.0,
+          "yaw": 175.0,
+          "version": "",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1077.0172,
+          "y": -1166.6569,
+          "z": 0.0,
+          "yaw": 170.0,
+          "version": "",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1114.7307,
+          "y": -1276.9274,
+          "z": 0.0,
+          "yaw": 175.0,
+          "version": "",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

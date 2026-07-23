@@ -1,0 +1,1125 @@
+{
+  "map_base": "ShipGraveyard_ElephantIsland",
+  "entities": [
+    {
+      "name": "AltarOfSacrifice",
+      "translation": "献祭神坛",
+      "translation_EN": "献祭神坛",
+      "type": "decoration",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": -3437.3853,
+          "y": 177.39528,
+          "z": 2359.7722,
+          "yaw": 0.4,
+          "version": "",
+          "label": "献祭神坛",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Birdcage",
+      "translation": "鸟笼",
+      "translation_EN": "鸟笼",
+      "type": "item",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": -3555.5608,
+          "y": 111.87572,
+          "z": 2607.4749,
+          "yaw": 142.0,
+          "version": "",
+          "label": "Birdcage",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BrokenTelescopeHead",
+      "translation": "坏掉的望远镜",
+      "translation_EN": "坏掉的望远镜",
+      "type": "item",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": -3337.6357,
+          "y": 1135.7839,
+          "z": 1380.1427,
+          "yaw": 282.0,
+          "version": "",
+          "label": "BrokenTelescopeHead",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "BrokenWoodenBarrelFragment",
+      "translation": "坏木桶的碎片",
+      "translation_EN": "坏木桶的碎片",
+      "type": "item",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -108.96375,
+          "y": -1102.4495,
+          "z": 1653.1582,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BrokenWoodenBarrelFragment",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "CustomFogVolume_DCWaterExclusionVolume",
+      "translation": "水排除区域",
+      "translation_EN": "水排除区域",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -422.17676,
+          "y": 174.34187,
+          "z": 250.0,
+          "yaw": 100.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -226.80815,
+          "y": 43.64717,
+          "z": 250.0,
+          "yaw": 55.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1088.967,
+          "y": 207.71796,
+          "z": 250.0,
+          "yaw": 245.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1620.3541,
+          "y": 416.8896,
+          "z": 250.0,
+          "yaw": 245.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -192.60599,
+          "y": -266.69705,
+          "z": 250.0,
+          "yaw": 325.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -357.716,
+          "y": -366.89026,
+          "z": 250.0,
+          "yaw": 280.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -536.298,
+          "y": -290.67682,
+          "z": 250.0,
+          "yaw": 235.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -701.0625,
+          "y": 10.2843895,
+          "z": 250.0,
+          "yaw": 190.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -609.2902,
+          "y": 141.34871,
+          "z": 250.0,
+          "yaw": 145.0,
+          "version": "(A)",
+          "label": "水排除区域",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Expressman",
+      "translation": "快递员",
+      "translation_EN": "快递员",
+      "type": "monster",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 725.0,
+          "y": -70.0,
+          "z": 1665.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "快递员",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "ExpressmanOtto",
+      "translation": "快递员奥托",
+      "translation_EN": "快递员奥托",
+      "type": "monster",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": 715.6066,
+          "y": -160.6066,
+          "z": 1665.0,
+          "yaw": 135.0,
+          "version": "",
+          "label": "快递员奥托",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Fireflies",
+      "translation": "萤火虫",
+      "translation_EN": "萤火虫",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "translation_EN": "传送门",
+      "type": "decoration",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 1300.0,
+          "y": 1250.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -200.0,
+          "y": 1050.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1900.0,
+          "y": 1150.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3200.0,
+          "y": 1300.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -4400.0,
+          "y": 1250.0,
+          "z": -970.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -4560.0,
+          "y": -1360.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1010.0,
+          "y": -790.0,
+          "z": -750.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 675.0,
+          "y": 815.0,
+          "z": -880.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1135.0,
+          "y": 210.0,
+          "z": -965.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1100.0,
+          "y": 1415.0,
+          "z": -965.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -455.0,
+          "y": 580.0,
+          "z": -970.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -2405.0,
+          "y": 1470.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -4590.0,
+          "y": 890.0,
+          "z": -985.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3750.0,
+          "y": -1390.0,
+          "z": -1000.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_EN": "生成器组",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -3345.0,
+          "y": 450.0,
+          "z": 100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3405.0,
+          "y": 500.0,
+          "z": 100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3465.0,
+          "y": 550.0,
+          "z": 100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GiantBat",
+      "translation": "巨型蝙蝠",
+      "translation_EN": "巨型蝙蝠",
+      "type": "monster",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": -3495.0,
+          "y": 535.0,
+          "z": 1590.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "GiantBat",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GlowingCoralRoaster01_On",
+      "translation": "灯架子",
+      "type": "props",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": -550.6336,
+          "y": -204.86433,
+          "z": -182.48552,
+          "yaw": 309.9,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1033.588,
+          "y": -156.95114,
+          "z": -756.6679,
+          "yaw": 65.1,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -615.982,
+          "y": -450.59338,
+          "z": -543.91644,
+          "yaw": 221.8,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -261.24603,
+          "y": -131.97328,
+          "z": -416.0853,
+          "yaw": 230.1,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -260.1594,
+          "y": -281.15,
+          "z": -41.39143,
+          "yaw": 26.8,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -653.49274,
+          "y": -120.25618,
+          "z": -804.1613,
+          "yaw": 267.7,
+          "version": "(A)",
+          "label": "GlowingCoralRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "GoatHideRug",
+      "translation": "山羊皮毯",
+      "translation_EN": "山羊皮毯",
+      "type": "item",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": -859.297,
+          "y": 804.80786,
+          "z": 1663.2518,
+          "yaw": 220.8,
+          "version": "",
+          "label": "GoatHideRug",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "HerbPouch",
+      "translation": "草药袋",
+      "translation_EN": "草药袋",
+      "type": "item",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -4846.3037,
+          "y": -729.4646,
+          "z": 4303.829,
+          "yaw": 131.4,
+          "version": "",
+          "label": "HerbPouch",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LadderBase",
+      "translation": "梯子底部",
+      "translation_EN": "梯子底部",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "梯子底部",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "梯子底部",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LeatherBoot",
+      "translation": "皮靴子",
+      "translation_EN": "皮靴子",
+      "type": "item",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -3310.528,
+          "y": 525.169,
+          "z": 1283.8694,
+          "yaw": 193.6,
+          "version": "",
+          "label": "LeatherBoot",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Mummy",
+      "translation": "木乃伊",
+      "translation_EN": "木乃伊",
+      "type": "monster",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": -2745.0,
+          "y": 645.0,
+          "z": 110.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Mummy",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3482.727585,
+          "y": -462.23720000000003,
+          "z": 505.0,
+          "yaw": 150.0,
+          "version": "",
+          "label": "Mummy",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -2790.0,
+          "y": -120.0,
+          "z": 1270.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "Mummy",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "NavigationalCompass",
+      "translation": "航海罗盘",
+      "translation_EN": "航海罗盘",
+      "type": "item",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -2908.4893,
+          "y": -183.13657,
+          "z": 1350.071,
+          "yaw": 209.7,
+          "version": "",
+          "label": "NavigationalCompass",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "OldRope",
+      "translation": "旧绳索",
+      "translation_EN": "旧绳索",
+      "type": "item",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -3273.1929,
+          "y": 1178.936,
+          "z": 1383.6848,
+          "yaw": 5.4,
+          "version": "",
+          "label": "OldRope",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -901.422,
+          "y": 771.5969,
+          "z": 1662.2518,
+          "yaw": 158.9,
+          "version": "",
+          "label": "OldRope",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Path_01",
+      "translation": "小径",
+      "translation_EN": "小径",
+      "type": "decoration",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -534.6894,
+          "y": -1598.5912,
+          "z": 1609.4603,
+          "yaw": 174.7,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -781.1969,
+          "y": -1153.6512,
+          "z": 1516.3593,
+          "yaw": 129.9,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 257.70633,
+          "y": -2491.4033,
+          "z": 1683.1173,
+          "yaw": 153.2,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 44.34454,
+          "y": -3419.1375,
+          "z": 1623.5881,
+          "yaw": 153.2,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1308.4684,
+          "y": -554.9239,
+          "z": 1625.3992,
+          "yaw": 88.4,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Roaster02On",
+      "translation": "灯架子",
+      "translation_EN": "灯架子",
+      "type": "decoration",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -2645.0,
+          "y": -905.0,
+          "z": 645.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1595.0,
+          "y": -665.0,
+          "z": 870.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -2070.0,
+          "y": 145.0,
+          "z": 1070.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -2640.0,
+          "y": -260.0,
+          "z": 1270.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3057.8467,
+          "y": 1124.4156,
+          "z": 1267.6724,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1086.7817,
+          "y": 389.17694,
+          "z": 19.897812,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -2535.0,
+          "y": 795.0,
+          "z": 100.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SailorsJournal",
+      "translation": "水手日记",
+      "translation_EN": "水手日记",
+      "type": "item",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": -2184.0,
+          "y": 795.0,
+          "z": 190.98076,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SailorsJournal",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SealedLetter",
+      "translation": "密封信函",
+      "translation_EN": "密封信函",
+      "type": "item",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -4849.2905,
+          "y": -719.86926,
+          "z": 4308.8037,
+          "yaw": 226.9,
+          "version": "",
+          "label": "SealedLetter",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "ShipsWheel",
+      "translation": "舵轮",
+      "translation_EN": "舵轮",
+      "type": "item",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 873.03625,
+          "y": -1207.4495,
+          "z": 1679.3458,
+          "yaw": 187.5,
+          "version": "",
+          "label": "ShipsWheel",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonCorpse01",
+      "translation": "遗骸",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": -2969.1284,
+          "y": 0.0,
+          "z": 2309.962,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonCorpse_01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -2948.333,
+          "y": 110.0,
+          "z": 2318.1807,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonCorpse_02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "SturdyRope",
+      "translation": "结实的绳索",
+      "translation_EN": "结实的绳索",
+      "type": "item",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -3035.9336,
+          "y": -57.542683,
+          "z": 1384.5753,
+          "yaw": 317.8,
+          "version": "",
+          "label": "SturdyRope",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Torch03On",
+      "translation": "火把",
+      "translation_EN": "火把",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -3777.1238,
+          "y": -371.4133,
+          "z": 303.25058,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1893.531,
+          "y": 406.3605,
+          "z": 222.93237,
+          "yaw": 250.0,
+          "version": "(A)",
+          "label": "Torch03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -3596.405,
+          "y": -772.3825,
+          "z": 679.84735,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch03On",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenDice",
+      "translation": "木骰子",
+      "translation_EN": "木骰子",
+      "type": "item",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": -4854.5176,
+          "y": -726.9818,
+          "z": 4307.497,
+          "yaw": 79.6,
+          "version": "",
+          "label": "WoodenDice",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -4855.6675,
+          "y": -722.32416,
+          "z": 4311.043,
+          "yaw": 15.6,
+          "version": "",
+          "label": "WoodenDice",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenPlank",
+      "translation": "木板",
+      "translation_EN": "木板",
+      "type": "item",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": -465.96375,
+          "y": -1125.8755,
+          "z": 1726.9237,
+          "yaw": 0.0,
+          "version": "",
+          "label": "WoodenPlank",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -460.96375,
+          "y": -1120.8755,
+          "z": 1726.9237,
+          "yaw": 37.1,
+          "version": "",
+          "label": "WoodenPlank",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WovenRattanBottle",
+      "translation": "藤编壶",
+      "translation_EN": "藤编壶",
+      "type": "item",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": -3555.5608,
+          "y": 196.87572,
+          "z": 2492.3362,
+          "yaw": 147.5,
+          "version": "",
+          "label": "WovenRattanBottle",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

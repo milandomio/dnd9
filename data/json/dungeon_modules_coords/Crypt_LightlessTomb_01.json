@@ -1,0 +1,4345 @@
+{
+  "map_base": "Crypt_LightlessTomb_01",
+  "entities": [
+    {
+      "name": "Armor_Armory",
+      "translation": "军械库-护甲",
+      "translation_EN": "军械库-护甲",
+      "type": "item",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -25.0,
+          "y": -70.0,
+          "z": -500.0,
+          "yaw": 25.0,
+          "version": "(D)",
+          "label": "军械库-护甲",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Chain",
+      "translation": "锁链",
+      "translation_EN": "锁链",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 409.0,
+          "y": 882.0,
+          "z": -218.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1433.0,
+          "y": 331.0,
+          "z": 323.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1168.0,
+          "y": 331.0,
+          "z": 323.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 409.0,
+          "y": 170.0,
+          "z": -226.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 409.0,
+          "y": -525.0,
+          "z": -402.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 409.0,
+          "y": -878.0,
+          "z": -218.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 790.0,
+          "y": -879.0,
+          "z": -219.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 785.0,
+          "y": -521.0,
+          "z": -403.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 790.0,
+          "y": -174.0,
+          "z": -219.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 790.0,
+          "y": 176.0,
+          "z": -403.0,
+          "yaw": 166.0,
+          "version": "(A)",
+          "label": "锁链",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "CofferSmall",
+      "translation": "迷你宝盒",
+      "translation_EN": "迷你宝盒",
+      "type": "props",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 1477.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1489.0,
+          "y": 65.0,
+          "z": 250.0,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 668.0,
+          "y": 492.0,
+          "z": 250.31407,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Coffin_01",
+      "translation": "精致棺材",
+      "translation_EN": "精致棺材",
+      "type": "props",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "Coffin_02",
+      "translation": "旧棺材",
+      "translation_EN": "旧棺材",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "Coffin_03",
+      "translation": "棺材",
+      "type": "props",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true,
+      "group_size": 44
+    },
+    {
+      "name": "Coffin_05",
+      "translation": "木棺材",
+      "translation_EN": "木棺材",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "Coffin_06",
+      "translation": "皇家棺材",
+      "translation_EN": "皇家棺材",
+      "type": "props",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -850.0,
+          "y": 703.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -300.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 850.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 700.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": 0.0,
+          "z": 500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "棺材",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "CryptModuleConnector",
+      "translation": "木门",
+      "type": "decoration",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "CryptModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 670.0001,
+          "y": -950.0,
+          "z": -500.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "WoodenDoorWithSquareGrating",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -900.0,
+          "y": 69.99995,
+          "z": 250.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "WoodenDoorWithSquareGrating",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 900.0,
+          "y": 69.99995,
+          "z": 250.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "WoodenDoorWithSquareGrating",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -530.0,
+          "y": 949.99994,
+          "z": -500.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "WoodenDoorWithSquareGrating",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -529.9999,
+          "y": -950.00006,
+          "z": -500.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "WoodenDoorWithSquareGrating",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 670.0,
+          "y": 950.0,
+          "z": -500.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "WoodenDoorWithSquareGrating",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "CryptSecretWallDoor02",
+      "translation": "隐秘墙体",
+      "translation_EN": "隐秘墙体",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -250.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "CryptSecretWallDoor02",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": 250.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "CryptSecretWallDoor02",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DeathSkull",
+      "translation": "飞行骷髅头",
+      "translation_EN": "飞行骷髅头",
+      "type": "monster",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": -50.0,
+          "z": -300.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "DeathSkull",
+          "group_parent": "BP_GameSpawnerGroup_C_9",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_EN": "地牢模块",
+      "type": "decoration",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "translation_EN": "对象链接器",
+      "type": "decoration",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": -350.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_EN": "生成器组",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -700.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": 500.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": -200.0,
+          "y": -150.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -50.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Mimic_Small_Ornate",
+      "translation": "小型宝箱怪",
+      "type": "monster",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": 1477.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1489.0,
+          "y": 65.0,
+          "z": 250.0,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 668.0,
+          "y": 492.0,
+          "z": 250.31407,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Ore_GoldOre_Low",
+      "translation": "金矿",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 175.0,
+          "y": 150.0,
+          "z": -500.0,
+          "yaw": 240.0,
+          "version": "(D)",
+          "label": "Ore_GoldOre",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": -170.0,
+          "z": -500.0,
+          "yaw": 5.0,
+          "version": "(D)",
+          "label": "Ore_GoldOre",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱",
+      "type": "props",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 1477.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1489.0,
+          "y": 65.0,
+          "z": 250.0,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 668.0,
+          "y": 492.0,
+          "z": 250.31407,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "Roaster02Off",
+      "translation": "灯架子",
+      "translation_EN": "灯架子",
+      "type": "decoration",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": -545.0,
+          "y": -150.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -350.0,
+          "y": 150.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -100.0,
+          "y": -150.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 100.0,
+          "y": 150.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 350.0,
+          "y": -145.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 550.0,
+          "y": 150.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestSmall",
+      "translation": "小型橡木宝箱",
+      "translation_EN": "小型橡木宝箱",
+      "type": "props",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 1477.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1489.0,
+          "y": 65.0,
+          "z": 250.0,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 668.0,
+          "y": 492.0,
+          "z": 250.31407,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonCorpse01",
+      "translation": "遗骸",
+      "type": "props",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 100.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 300.0,
+          "version": "(D)",
+          "label": "SkeletonCorpse_01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -135.0,
+          "y": 0.0,
+          "z": -500.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "SkeletonCorpse_02",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 0.0,
+          "y": 70.0,
+          "z": -500.0,
+          "yaw": 160.0,
+          "version": "(D)",
+          "label": "SkeletonCorpse_03",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "SkeletonFootmanFromFakeDeath",
+      "translation": "骷髅步兵",
+      "translation_EN": "骷髅步兵",
+      "type": "monster",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -220.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 225.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "骷髅步兵（装死）",
+          "group_parent": "BP_GameSpawnerGroup_C_7",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -700.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_GameSpawnerGroup_C_9",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -500.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_GameSpawnerGroup_C_9",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 500.0,
+          "y": -350.0,
+          "z": -500.0,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_GameSpawnerGroup_C_9",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 700.0,
+          "y": 350.0,
+          "z": -500.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "BP_GameSpawnerGroup_C_9",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Torch02Off",
+      "translation": "火把",
+      "translation_EN": "火把",
+      "type": "decoration",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -421.0,
+          "y": 175.0,
+          "z": -325.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -419.0,
+          "y": -175.0,
+          "z": -325.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -421.0,
+          "y": -525.0,
+          "z": -325.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -779.0,
+          "y": -175.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -779.0,
+          "y": -525.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -452.0,
+          "y": 883.0,
+          "z": -325.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -750.0,
+          "y": 882.0,
+          "z": -325.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -750.0,
+          "y": -881.0,
+          "z": -325.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -450.0,
+          "y": -880.0,
+          "z": -325.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 421.0,
+          "y": 175.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 421.0,
+          "y": 525.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 423.0,
+          "y": -175.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 421.0,
+          "y": -525.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 780.0,
+          "y": -175.0,
+          "z": -325.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 780.0,
+          "y": -525.0,
+          "z": -325.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 780.0,
+          "y": 175.0,
+          "z": -325.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 780.0,
+          "y": 525.0,
+          "z": -325.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 750.0,
+          "y": 882.0,
+          "z": -325.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 456.0,
+          "y": 876.0,
+          "z": -325.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 442.0,
+          "y": -880.0,
+          "z": -325.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 750.0,
+          "y": -880.0,
+          "z": -325.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": 200.0,
+          "z": 400.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 845.0,
+          "y": -200.0,
+          "z": 400.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 845.0,
+          "y": 200.0,
+          "z": 400.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -846.0,
+          "y": -200.0,
+          "z": 400.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -408.0,
+          "y": -479.0,
+          "z": 400.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 494.0,
+          "y": -478.0,
+          "z": 400.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 403.0,
+          "y": 476.0,
+          "z": 400.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -494.0,
+          "y": 476.0,
+          "z": 400.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 12.0,
+          "y": 968.0,
+          "z": -50.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -483.0,
+          "y": 1237.0,
+          "z": 130.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 483.0,
+          "y": 1238.0,
+          "z": 130.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -800.0,
+          "y": 1086.0,
+          "z": 200.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 5.0,
+          "y": -965.0,
+          "z": -60.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": 1090.0,
+          "z": 200.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1089.0,
+          "y": 632.0,
+          "z": 200.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1497.1249,
+          "y": 1497.1249,
+          "z": 175.0,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1495.7107,
+          "y": 1495.7107,
+          "z": 175.0,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1496.4177,
+          "y": -1496.4177,
+          "z": 175.0,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1496.9117,
+          "y": -1494.5442,
+          "z": 175.0,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1086.0,
+          "y": -753.0,
+          "z": 200.0,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -821.0,
+          "y": -1089.0,
+          "z": 200.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 800.0,
+          "y": -1075.0,
+          "z": 200.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1090.0,
+          "y": -819.0,
+          "z": 200.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1091.0,
+          "y": 603.0,
+          "z": 200.0,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 44.0,
+          "y": -478.0,
+          "z": 400.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -45.0,
+          "y": 475.0,
+          "z": 400.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -778.0,
+          "y": 525.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 270.0,
+          "y": -1501.0,
+          "z": 80.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -320.0,
+          "y": -1500.0,
+          "z": 80.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -421.0,
+          "y": 525.0,
+          "z": -325.0,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -779.0,
+          "y": 175.0,
+          "z": -325.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Torch02Off",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WallLever_OnlyActivate",
+      "translation": "拉杆",
+      "translation_EN": "拉杆",
+      "type": "decoration",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": -205.99997,
+          "y": 144.0,
+          "z": -371.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": 205.0,
+          "y": -124.0,
+          "z": -402.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": -875.0,
+          "y": 0.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -875.0,
+          "y": 348.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -875.0,
+          "y": 709.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -875.0,
+          "y": -354.0,
+          "z": -344.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -875.0,
+          "y": -700.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -324.99997,
+          "y": 2.9558578e-12,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -324.99994,
+          "y": -353.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -324.99994,
+          "y": -709.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -324.99997,
+          "y": 343.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": -325.0,
+          "y": 705.0,
+          "z": -343.0,
+          "yaw": 179.9,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_4",
+          "sub_group_parent": "BP_GameObjectLinker_C_1"
+        },
+        {
+          "x": 325.0,
+          "y": 0.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 325.0,
+          "y": 350.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 325.0,
+          "y": 709.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 325.0,
+          "y": -354.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 325.0,
+          "y": -708.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 875.0000299999999,
+          "y": 0.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 875.0000600000001,
+          "y": -350.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 875.0000600000001,
+          "y": -706.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 875.0000299999999,
+          "y": 350.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        },
+        {
+          "x": 875.0,
+          "y": 710.0,
+          "z": -343.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "BP_GameSpawnerGroup_C_5",
+          "sub_group_parent": "BP_GameObjectLinker_C_4"
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "小型加固宝箱",
+      "translation_EN": "小型加固宝箱",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 1477.0,
+          "y": 0.0,
+          "z": 250.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1489.0,
+          "y": 65.0,
+          "z": 250.0,
+          "yaw": 360.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -672.0,
+          "y": 1255.0,
+          "z": -500.0,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "WoodChestSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1120.0,
+          "y": 595.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(D)",
+          "label": "WoodChestSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -671.0,
+          "y": -504.0,
+          "z": 250.31407,
+          "yaw": 90.0,
+          "version": "(D)",
+          "label": "WoodChestSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 668.0,
+          "y": 492.0,
+          "z": 250.31407,
+          "yaw": 270.0,
+          "version": "(D)",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 542.6147,
+          "y": -1279.8859,
+          "z": -500.0,
+          "yaw": 95.0,
+          "version": "(D)",
+          "label": "WoodChestSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenBarrel01",
+      "translation": "木桶",
+      "translation_EN": "木桶",
+      "type": "props",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": -1486.0,
+          "y": -71.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -917.12335,
+          "y": 382.2046,
+          "z": 250.0,
+          "yaw": 25.3,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -802.0,
+          "y": 451.0,
+          "z": 250.0,
+          "yaw": 25.3,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 951.0,
+          "y": -392.0,
+          "z": 250.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 1493.0,
+          "y": -555.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -1107.0,
+          "y": -1055.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -574.0,
+          "y": 1245.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 675.0,
+          "y": 1250.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 575.0,
+          "y": 1250.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": -555.0,
+          "y": -1245.0,
+          "z": -500.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenCrateSmall",
+      "translation": "小型木板箱",
+      "translation_EN": "小型木板箱",
+      "type": "props",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": 1050.0,
+          "y": -1160.0,
+          "z": 0.0,
+          "yaw": 275.0,
+          "version": "(D)",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        },
+        {
+          "x": 640.0,
+          "y": -1240.0,
+          "z": -500.0,
+          "yaw": 275.0,
+          "version": "(D)",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

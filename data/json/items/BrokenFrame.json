@@ -1,0 +1,94 @@
+{
+  "name": "BrokenFrame",
+  "translation": "损坏的画作",
+  "translation_EN": "损坏的画作",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 202.2909,
+      "y": 1362.0121,
+      "z": -1000.0,
+      "yaw": 172.3,
+      "map": "EmptyModule_1F_14",
+      "file": "EmptyModule_1F_14_D.json",
+      "version": "(D)",
+      "label": "BrokenFrame"
+    },
+    {
+      "x": -503.0,
+      "y": 490.0,
+      "z": 273.8578,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "BrokenFrame"
+    },
+    {
+      "x": 3831.9426,
+      "y": 1673.4808,
+      "z": 927.02637,
+      "yaw": 196.9,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BrokenFrame"
+    },
+    {
+      "x": 4212.046,
+      "y": 3136.7322,
+      "z": 165.02618,
+      "yaw": 43.3,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BrokenFrame"
+    },
+    {
+      "x": 1080.0365,
+      "y": -866.753,
+      "z": 710.6465,
+      "yaw": 150.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "BrokenFrame"
+    },
+    {
+      "x": -730.82434,
+      "y": -555.56866,
+      "z": 481.13657,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "BrokenFrame"
+    },
+    {
+      "x": -1260.8171,
+      "y": -589.352,
+      "z": 222.4214,
+      "yaw": 272.8,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BrokenFrame"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "损坏的画作",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "name": "FrostGiantBerserker",
+  "translation": "冰霜巨人狂战士",
+  "translation_EN": "冰霜巨人狂战士",
+  "coords": [
+    {
+      "x": 708.0,
+      "y": -7.0,
+      "z": 0.0001,
+      "yaw": 20.0,
+      "map": "IceCave_Barricade",
+      "file": "IceCave_Barricade_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": 644.0,
+      "y": -157.00002,
+      "z": -81.902596,
+      "yaw": 180.0,
+      "map": "IceCave_Bridge",
+      "file": "IceCave_Bridge_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": 161.0,
+      "y": -253.0,
+      "z": -299.99988,
+      "yaw": 0.0,
+      "map": "IceCave_DualCaverns",
+      "file": "IceCave_DualCaverns_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": -21.0,
+      "y": 188.0,
+      "z": 68.46484,
+      "yaw": 0.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": 288.999985,
+      "y": -356.0,
+      "z": -399.99989539649,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker",
+      "group_parent": "BP_GameSpawner_C_29",
+      "variant_count": 3,
+      "variant_names": [
+        "冰霜骷髅弩手",
+        "冰霜巨人狂战士",
+        "冰霜持盾巨人"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰霜巨人狂战士",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

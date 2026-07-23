@@ -1,0 +1,41 @@
+{
+  "name": "NapoleonWrasse",
+  "translation": "纹唇鱼",
+  "translation_EN": "纹唇鱼",
+  "coords": [
+    {
+      "x": -2960.0,
+      "y": 3435.0,
+      "z": -370.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "NapoleonWrasse"
+    },
+    {
+      "x": -2960.0,
+      "y": 3295.0,
+      "z": -370.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "NapoleonWrasse"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "纹唇鱼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 26.25,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

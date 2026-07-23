@@ -1,0 +1,133 @@
+{
+  "name": "Reefling",
+  "translation": "珊瑚灵",
+  "translation_EN": "珊瑚灵",
+  "coords": [
+    {
+      "x": 976.5833,
+      "y": 501.7372,
+      "z": -951.41455,
+      "yaw": 300.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": 710.9873,
+      "y": -298.23703,
+      "z": -971.41455,
+      "yaw": 300.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": 186.73103,
+      "y": -670.19855,
+      "z": -971.41455,
+      "yaw": 300.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": 1400.0,
+      "y": -80.0,
+      "z": -940.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_CoralForest_01",
+      "file": "ShipGraveyard_CoralForest_01_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": -1280.0,
+      "y": -550.0,
+      "z": -940.0,
+      "yaw": 150.0,
+      "map": "ShipGraveyard_CoralForest_01",
+      "file": "ShipGraveyard_CoralForest_01_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": -1233.6344,
+      "y": 670.30743,
+      "z": -940.0,
+      "yaw": 150.0,
+      "map": "ShipGraveyard_CoralForest_01",
+      "file": "ShipGraveyard_CoralForest_01_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": -159.0,
+      "y": 321.0,
+      "z": -999.9999,
+      "yaw": 310.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": -397.70636,
+      "y": 107.64752,
+      "z": -999.9999,
+      "yaw": 310.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": 259.077,
+      "y": -255.03093,
+      "z": -999.9999,
+      "yaw": 120.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Reefling"
+    },
+    {
+      "x": -305.0,
+      "y": -205.0,
+      "z": -2995.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "Reefling",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    },
+    {
+      "x": -25.0,
+      "y": -15.0,
+      "z": -2995.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "Reefling",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "珊瑚灵",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 52.5,
+          "豪客赛": 68.0,
+          "逆袭赛": 68.0
+        }
+      }
+    ]
+  }
+}

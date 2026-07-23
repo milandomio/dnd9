@@ -1,0 +1,62 @@
+{
+  "name": "LavaGolem",
+  "translation": "熔岩魔像",
+  "translation_EN": "熔岩魔像",
+  "coords": [
+    {
+      "x": 675.0,
+      "y": 120.0,
+      "z": -3.2717965,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "LavaGolem"
+    },
+    {
+      "x": 1165.0,
+      "y": -830.0,
+      "z": -600.0,
+      "yaw": 90.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "LavaGolem"
+    },
+    {
+      "x": -31.819931,
+      "y": 1004.66656,
+      "z": -84.87858,
+      "yaw": 105.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "LavaGolem"
+    },
+    {
+      "x": -555.85785,
+      "y": 617.7817,
+      "z": -95.0,
+      "yaw": 135.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "LavaGolem",
+      "group_parent": "BP_GameSpawnerGroup_C_1"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "熔岩魔像",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 12.0,
+          "豪客赛": 22.5,
+          "逆袭赛": 22.5
+        }
+      }
+    ]
+  }
+}

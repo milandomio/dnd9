@@ -1,0 +1,32 @@
+{
+  "name": "FrostWyvern",
+  "translation": "冰霜飞龙",
+  "translation_EN": "冰霜飞龙",
+  "coords": [
+    {
+      "x": -1600.0,
+      "y": 1600.0,
+      "z": 1000.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "FrostWyvern",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "group_drop_info": {
+    "IceAbyss": [
+      {
+        "translation": "冰霜飞龙",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

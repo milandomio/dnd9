@@ -1,0 +1,203 @@
+{
+  "name": "SturdyCloth",
+  "translation": "结实的布料",
+  "translation_EN": "结实的布料",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -184.0,
+      "y": -4.0,
+      "z": -422.0,
+      "yaw": 80.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 3,
+      "variant_names": [
+        "结实的布料",
+        "殭尸",
+        "木乃伊"
+      ]
+    },
+    {
+      "x": 1024.0,
+      "y": -195.0,
+      "z": 5.712918,
+      "yaw": 0.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 4,
+      "variant_names": [
+        "Bandage",
+        "地面",
+        "药水",
+        "结实的布料"
+      ]
+    },
+    {
+      "x": -1069.0,
+      "y": -20.0,
+      "z": 7.0,
+      "yaw": 275.0,
+      "map": "Cave_BanditCamp_Center",
+      "file": "Cave_BanditCamp_Center_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 4,
+      "variant_names": [
+        "Bandage",
+        "地面",
+        "药水",
+        "结实的布料"
+      ]
+    },
+    {
+      "x": -1325.0,
+      "y": 108.0,
+      "z": 47.0,
+      "yaw": 320.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -1436.0,
+      "y": 1061.0,
+      "z": 160.0,
+      "yaw": 320.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -1445.0,
+      "y": -387.0,
+      "z": 84.0,
+      "yaw": 320.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -599.0,
+      "y": 952.0,
+      "z": -520.50037,
+      "yaw": 30.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 865.0,
+      "y": -173.0,
+      "z": 650.0,
+      "yaw": 30.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 336.0,
+      "y": -387.0,
+      "z": 522.0,
+      "yaw": 30.0,
+      "map": "Ruins_EndWall",
+      "file": "Ruins_EndWall_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 42.0,
+      "y": 155.0,
+      "z": 100.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": 2276.6094,
+      "y": 926.9765,
+      "z": 818.05963,
+      "yaw": 117.2,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "SturdyCloth"
+    },
+    {
+      "x": -444.83908,
+      "y": 529.0492,
+      "z": 21.933466,
+      "yaw": 203.0,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "SturdyCloth"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "结实的布料",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "BronzeLadle",
+  "translation": "青铜长勺",
+  "translation_EN": "青铜长勺",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 278.67105,
+      "y": -652.9661,
+      "z": -993.98865,
+      "yaw": 150.0,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "BronzeLadle"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "青铜长勺",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

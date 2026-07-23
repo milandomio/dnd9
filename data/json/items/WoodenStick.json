@@ -1,0 +1,54 @@
+{
+  "name": "WoodenStick",
+  "translation": "木棍",
+  "translation_EN": "木棍",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 1351.0045,
+      "y": -1348.3446,
+      "z": 188.07698,
+      "yaw": 42.2,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "WoodenStick"
+    },
+    {
+      "x": 3.9195073,
+      "y": -1800.0985,
+      "z": -250.4386,
+      "yaw": 289.7,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "WoodenStick"
+    },
+    {
+      "x": 353.7284,
+      "y": 988.8163,
+      "z": -1799.8156,
+      "yaw": 328.7,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "WoodenStick"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "木棍",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

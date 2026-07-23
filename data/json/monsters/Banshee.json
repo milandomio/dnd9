@@ -1,0 +1,32 @@
+{
+  "name": "Banshee",
+  "translation": "报丧女妖",
+  "translation_EN": "报丧女妖",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -799.9999,
+      "yaw": 5.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "Banshee",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "报丧女妖",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

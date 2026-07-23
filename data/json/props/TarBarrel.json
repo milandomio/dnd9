@@ -1,0 +1,61 @@
+{
+  "name": "TarBarrel",
+  "translation": "焦油木桶",
+  "translation_EN": "焦油木桶",
+  "coords": [
+    {
+      "x": 1705.715,
+      "y": 9.2612705,
+      "z": 20.0,
+      "yaw": 255.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "TarBarrel"
+    },
+    {
+      "x": 3763.9504,
+      "y": 2119.0369,
+      "z": 303.24527,
+      "yaw": 45.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "TarBarrel"
+    },
+    {
+      "x": 120.0,
+      "y": -460.0,
+      "z": 600.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_D.json",
+      "version": "(D)",
+      "label": "TarBarrel"
+    },
+    {
+      "x": 606.27875,
+      "y": 485.87515,
+      "z": 995.0,
+      "yaw": 210.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "TarBarrel"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "焦油木桶",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

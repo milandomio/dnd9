@@ -1,0 +1,127 @@
+{
+  "name": "PirateBowman",
+  "translation": "海盗弓手",
+  "translation_EN": "海盗弓手",
+  "coords": [
+    {
+      "x": 3067.5754,
+      "y": 2503.0576,
+      "z": 654.35693,
+      "yaw": 310.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "PirateBowman"
+    },
+    {
+      "x": 3455.2454,
+      "y": 2818.9893,
+      "z": 292.87253,
+      "yaw": 45.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "PirateBowman"
+    },
+    {
+      "x": -723.0,
+      "y": 2885.0,
+      "z": 1003.0002,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "PirateBowman"
+    },
+    {
+      "x": -629.0,
+      "y": 2195.0,
+      "z": 1726.2009,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "PirateBowman"
+    },
+    {
+      "x": 61.0,
+      "y": 2524.0,
+      "z": 271.00226,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "PirateBowman"
+    },
+    {
+      "x": 3056.885,
+      "y": -535.7699,
+      "z": 385.0,
+      "yaw": 115.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateBowman"
+    },
+    {
+      "x": -114.10254,
+      "y": -2029.6891,
+      "z": 400.0,
+      "yaw": 150.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateBowman",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -308.95825,
+      "y": -1917.1891,
+      "z": 400.0,
+      "yaw": 330.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateBowman",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 365.0,
+      "y": -115.0,
+      "z": 995.0,
+      "yaw": 130.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateBowman"
+    },
+    {
+      "x": -495.0,
+      "y": 995.0,
+      "z": 2070.0,
+      "yaw": 230.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateBowman"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "海盗弓手",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 53.6,
+          "普通": 26.25,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

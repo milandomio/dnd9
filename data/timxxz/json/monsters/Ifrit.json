@@ -1,0 +1,93 @@
+{
+  "name": "Ifrit",
+  "translation": "炎魔",
+  "translation_EN": "炎魔",
+  "coords": [
+    {
+      "x": -145.0,
+      "y": 380.0,
+      "z": -87.62408,
+      "yaw": 120.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -45.0,
+      "y": -250.0,
+      "z": 2.8484504,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -132.0,
+      "y": 1217.0,
+      "z": 6.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        "火元素",
+        "矮人骑士"
+      ]
+    },
+    {
+      "x": 110.0,
+      "y": -65.0,
+      "z": 195.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    },
+    {
+      "x": -385.0,
+      "y": 210.0,
+      "z": -580.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    },
+    {
+      "x": -144.0,
+      "y": -3.0,
+      "z": 204.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "炎魔",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 40.0,
+          "普通": 28.0,
+          "豪客赛": 4.1667,
+          "逆袭赛": 6.5
+        }
+      }
+    ]
+  }
+}

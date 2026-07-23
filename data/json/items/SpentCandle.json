@@ -1,0 +1,74 @@
+{
+  "name": "SpentCandle",
+  "translation": "燃尽的蜡烛",
+  "translation_EN": "燃尽的蜡烛",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -628.40216,
+      "y": -71.57669,
+      "z": 128.98215,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    },
+    {
+      "x": -346.41336,
+      "y": -956.3005,
+      "z": 122.94324,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    },
+    {
+      "x": 854.4007,
+      "y": -41.792725,
+      "z": 83.07296,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    },
+    {
+      "x": 2445.8025,
+      "y": 1022.0696,
+      "z": 772.81256,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "SpentCandle"
+    },
+    {
+      "x": 670.0,
+      "y": 235.0,
+      "z": 315.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "SpentCandle"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "燃尽的蜡烛",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

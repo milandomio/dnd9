@@ -1,0 +1,89 @@
+{
+  "name": "Ale",
+  "translation": "麦酒",
+  "translation_EN": "麦酒",
+  "category": "",
+  "variant_count": 7,
+  "monsters": [
+    "AshPile",
+    "Bookshelf",
+    "FallenDwarf01",
+    "FallenDwarf02",
+    "FallenDwarf03",
+    "FlatChestLarge",
+    "FlatChestLarge_UnderSea",
+    "FrostImp",
+    "FrostImp_Unique",
+    "FrozenGhost",
+    "Ground",
+    "HellMaggot",
+    "IceKoboldArcher",
+    "IceKoboldAxeman",
+    "LavaSlime",
+    "Mummy",
+    "Pot01",
+    "Pot01_UnderSea",
+    "Pot02",
+    "Pot02_UnderSea",
+    "Pot03",
+    "Pot03_UnderSea",
+    "Pot04",
+    "Pot04_UnderSea",
+    "SimpleChestLarge",
+    "SimpleChestLarge_UnderSea",
+    "SkeletonCorpse01",
+    "SkeletonCorpse01_UnderSea",
+    "SkeletonCorpse02",
+    "SkeletonCorpse02_UnderSea",
+    "SkeletonCorpse03",
+    "SkeletonCorpse03_UnderSea",
+    "Slime",
+    "Slime_Unique",
+    "SpiderPot",
+    "SpiderPot_Elite",
+    "SpiderPot_Nightmare",
+    "WoodChestLarge",
+    "WoodChestLarge_UnderSea",
+    "WoodChestMedium",
+    "WoodChestMedium_UnderSea",
+    "WoodChestSmall",
+    "WoodenBarrel",
+    "WoodenBarrel01",
+    "WoodenBarrel02",
+    "WoodenBarrel04",
+    "WoodenBarrel_Firedeep",
+    "WoodenBarrel_UnderSea",
+    "WoodenCrateMedium01",
+    "WoodenCrateMedium_UnderSea",
+    "WoodenCrateSmall",
+    "WoodenCrateSmall_UnderSea",
+    "WoodenCrate_Firedeep_01",
+    "WoodenCrate_Firedeep_02"
+  ],
+  "coords": [
+    {
+      "x": 170.0,
+      "y": -150.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_HR_D.json",
+      "version": "",
+      "label": "Ale"
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "麦酒",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 4.0,
+          "普通": 4.0,
+          "豪客赛": 15.0,
+          "逆袭赛": 15.0
+        }
+      }
+    ]
+  }
+}

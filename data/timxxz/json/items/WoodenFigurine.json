@@ -1,0 +1,94 @@
+{
+  "name": "WoodenFigurine",
+  "translation": "木雕像",
+  "translation_EN": "木雕像",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 4571.0967,
+      "y": 3462.2244,
+      "z": -862.26013,
+      "yaw": 192.5,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "WoodenFigurine"
+    },
+    {
+      "x": 4629.1807,
+      "y": 4652.8203,
+      "z": -625.1504,
+      "yaw": 343.5,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "WoodenFigurine"
+    },
+    {
+      "x": -311.0,
+      "y": -1003.0,
+      "z": 2341.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "WoodenFigurine"
+    },
+    {
+      "x": 138.60736,
+      "y": -568.10596,
+      "z": -2246.943,
+      "yaw": 360.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "WoodenFigurine"
+    },
+    {
+      "x": -922.26105,
+      "y": 674.3444,
+      "z": -2110.1458,
+      "yaw": 360.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "WoodenFigurine"
+    },
+    {
+      "x": -814.10767,
+      "y": -202.27452,
+      "z": -1019.1129,
+      "yaw": 278.2,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "WoodenFigurine"
+    },
+    {
+      "x": -1266.1277,
+      "y": -1170.0374,
+      "z": -993.62665,
+      "yaw": 16.8,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "WoodenFigurine"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "木雕像",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

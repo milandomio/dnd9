@@ -1,0 +1,51 @@
+{
+  "name": "ScrawledFilefish",
+  "translation": "扫帚鱼",
+  "translation_EN": "扫帚鱼",
+  "coords": [
+    {
+      "x": 170.0,
+      "y": -985.0,
+      "z": -2625.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "ScrawledFilefish"
+    },
+    {
+      "x": 170.0,
+      "y": -910.0,
+      "z": -2625.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "ScrawledFilefish"
+    },
+    {
+      "x": -10.0,
+      "y": -910.0,
+      "z": -2625.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "ScrawledFilefish"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "扫帚鱼",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 26.25,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

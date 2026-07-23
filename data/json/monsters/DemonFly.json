@@ -1,0 +1,111 @@
+{
+  "name": "DemonFly",
+  "translation": "恶魔蜉蝣",
+  "translation_EN": "恶魔蜉蝣",
+  "coords": [
+    {
+      "x": -143.0,
+      "y": -194.0,
+      "z": -61.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -143.0,
+      "y": 74.0,
+      "z": -61.0,
+      "yaw": 90.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -1143.0,
+      "y": -870.0,
+      "z": 233.0,
+      "yaw": 90.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -599.0,
+      "y": -914.0,
+      "z": 233.0,
+      "yaw": 90.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -705.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -965.0,
+      "y": 1190.0,
+      "z": -675.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -1135.0,
+      "y": 1190.0,
+      "z": -675.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": 1200.0,
+      "y": -1190.0,
+      "z": -720.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": 1015.0,
+      "y": -1190.0,
+      "z": -720.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔蜉蝣",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

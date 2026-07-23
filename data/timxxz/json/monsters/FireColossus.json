@@ -1,0 +1,32 @@
+{
+  "name": "FireColossus",
+  "translation": "赤焰巨像",
+  "translation_EN": "赤焰巨像",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -3450.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireColossus",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "赤焰巨像",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

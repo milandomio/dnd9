@@ -1,0 +1,61 @@
+{
+  "name": "Sheepshead",
+  "translation": "羊头鲷",
+  "translation_EN": "羊头鲷",
+  "coords": [
+    {
+      "x": -500.0,
+      "y": 60.0,
+      "z": -595.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -500.0,
+      "y": 165.0,
+      "z": -595.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -500.0,
+      "y": 165.0,
+      "z": -520.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -1110.0,
+      "y": -505.0,
+      "z": -1130.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_UnderSeaCave_01",
+      "file": "ShipGraveyard_UnderSeaCave_01_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "羊头鲷",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 26.8,
+          "普通": 26.25,
+          "豪客赛": 34.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

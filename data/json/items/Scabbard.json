@@ -1,0 +1,84 @@
+{
+  "name": "Scabbard",
+  "translation": "剑鞘",
+  "translation_EN": "剑鞘",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 2653.639,
+      "y": 103.06896,
+      "z": -310.25787,
+      "yaw": 294.1,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "Scabbard"
+    },
+    {
+      "x": 557.0517,
+      "y": -263.62234,
+      "z": 571.1251,
+      "yaw": 244.1,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "Scabbard"
+    },
+    {
+      "x": 279.9719,
+      "y": 42.778538,
+      "z": 172.61383,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "Scabbard"
+    },
+    {
+      "x": 4116.4473,
+      "y": 2536.9514,
+      "z": 1146.4255,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Scabbard"
+    },
+    {
+      "x": -474.0,
+      "y": -457.0,
+      "z": 2365.0,
+      "yaw": 295.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "Scabbard"
+    },
+    {
+      "x": 1278.9032,
+      "y": 701.62225,
+      "z": 85.75068,
+      "yaw": 21.9,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "Scabbard"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "剑鞘",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

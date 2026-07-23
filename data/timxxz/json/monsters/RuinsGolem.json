@@ -1,0 +1,80 @@
+{
+  "name": "RuinsGolem",
+  "translation": "废墟魔像",
+  "translation_EN": "废墟魔像",
+  "coords": [
+    {
+      "x": 335.0,
+      "y": 305.0,
+      "z": 9.999999999621423e-05,
+      "yaw": 0.0,
+      "map": "Ruins_Passage_Inner_04",
+      "file": "Ruins_Passage_Inner_04_D.json",
+      "version": "(D)",
+      "label": "RuinsGolem",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 2,
+      "variant_names": [
+        "废墟魔像",
+        "大宝箱"
+      ]
+    },
+    {
+      "x": 41.00001,
+      "y": 390.0,
+      "z": -599.999899,
+      "yaw": 90.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_HR_D.json",
+      "version": "",
+      "label": "RuinsGolem",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        "废墟魔像",
+        "巨型蠕虫"
+      ]
+    },
+    {
+      "x": -366.9998699999999,
+      "y": 24.999900000000025,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "RuinsGolem",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    },
+    {
+      "x": 374.000003,
+      "y": 671.0,
+      "z": -899.999922,
+      "yaw": 270.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "RuinsGolem",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        "废墟魔像",
+        "蛇尾鸡"
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "废墟魔像",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 25.0
+        }
+      }
+    ]
+  }
+}

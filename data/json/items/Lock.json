@@ -1,0 +1,114 @@
+{
+  "name": "Lock",
+  "translation": "挂锁",
+  "translation_EN": "挂锁",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 718.8634,
+      "y": 3827.7163,
+      "z": 315.99478,
+      "yaw": 244.1,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "Lock"
+    },
+    {
+      "x": 3224.0,
+      "y": 1706.0,
+      "z": 380.44867,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "Lock"
+    },
+    {
+      "x": 408.04816,
+      "y": -662.67615,
+      "z": -921.96124,
+      "yaw": 48.6,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Lock"
+    },
+    {
+      "x": -734.77893,
+      "y": 864.7177,
+      "z": -568.7229,
+      "yaw": 21.3,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "Lock"
+    },
+    {
+      "x": 1275.9719,
+      "y": -1640.3307,
+      "z": 51.917152,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "Lock"
+    },
+    {
+      "x": 2324.6912,
+      "y": 4985.1187,
+      "z": 754.3711,
+      "yaw": 199.9,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Lock"
+    },
+    {
+      "x": 4208.3687,
+      "y": 5000.584,
+      "z": 300.48553,
+      "yaw": 200.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Lock"
+    },
+    {
+      "x": 5203.3203,
+      "y": 4383.0376,
+      "z": -488.36066,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "Lock"
+    },
+    {
+      "x": 285.57758,
+      "y": 218.92255,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_ShipRest",
+      "file": "ShipGraveyard_ShipRest_D.json",
+      "version": "(D)",
+      "label": "Lock"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "挂锁",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

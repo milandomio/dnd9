@@ -1,0 +1,84 @@
+{
+  "name": "BrokenTelescopeHead",
+  "translation": "坏掉的望远镜",
+  "translation_EN": "坏掉的望远镜",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -3337.6357,
+      "y": 1135.7839,
+      "z": 1380.1427,
+      "yaw": 282.0,
+      "map": "ShipGraveyard_ElephantIsland",
+      "file": "ShipGraveyard_ElephantIsland_HR_D.json",
+      "version": "",
+      "label": "BrokenTelescopeHead"
+    },
+    {
+      "x": 1327.1262,
+      "y": -2095.5273,
+      "z": 67.23683,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BrokenTelescopeHead"
+    },
+    {
+      "x": 4794.054,
+      "y": 5211.598,
+      "z": 1323.329,
+      "yaw": 282.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "BrokenTelescopeHead"
+    },
+    {
+      "x": 1629.4746,
+      "y": 2184.503,
+      "z": 1312.8424,
+      "yaw": 301.7,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "BrokenTelescopeHead"
+    },
+    {
+      "x": 4575.618,
+      "y": 3181.3733,
+      "z": -966.50415,
+      "yaw": 47.1,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "BrokenTelescopeHead"
+    },
+    {
+      "x": -365.10062,
+      "y": -52.77862,
+      "z": -1799.8156,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SpawningPool",
+      "file": "ShipGraveyard_SpawningPool_HR_D.json",
+      "version": "",
+      "label": "BrokenTelescopeHead"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "坏掉的望远镜",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

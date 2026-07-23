@@ -1,0 +1,44 @@
+{
+  "name": "Tripod",
+  "translation": "三脚架",
+  "translation_EN": "三脚架",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 690.0,
+      "y": 220.0,
+      "z": 315.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "Tripod"
+    },
+    {
+      "x": 459.1571,
+      "y": 835.63354,
+      "z": -1.9528588e-06,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_D.json",
+      "version": "(D)",
+      "label": "Tripod"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "三脚架",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}
