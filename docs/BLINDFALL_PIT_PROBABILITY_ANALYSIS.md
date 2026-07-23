@@ -5,36 +5,106 @@
 | 元素 | 数量 |
 |------|------|
 | BP_GameSpawnerGroup_C | 1（BP_GameSpawnerGroup_C_8） |
-| BP_GameObjectLinker_C | 6（C_1, C_3, C_5, C_7, C_9, C_11） |
+| BP_GameObjectLinker_C（子组） | 6（C_1, C_3, C_5, C_7, C_9, C_11） |
 | BP_ObjectLinkWithTriggerBox_C | 6（C_0~C_5） |
-| 变体池（variant_count） | 11 种实体 |
+| 全组实体种类（variant_count） | 11 种 |
 | BP_GameSpawner_C（组内） | 43 |
+
+## 变体机制（核心结构）
+
+**不是"11种选6"**——6 个 ObjectLinker 各自有独立的子池，并联独立抽选：
+
+```
+C_1 (Hoard)    → {Hoard01(×3), Ore_GoldOre(×8), GrimveilCloak(×1)}          ← 3 种, 12 spawner
+C_3 (MonsterA) → {SkeletonChampion(×3), GrimveilCloak(×1)}                   ← 2 种, 4 spawner
+C_5 (MonsterB) → {Wraith(×3), GrimveilCloak(×1)}                             ← 2 种, 4 spawner
+C_7 (MonsterC) → {SkeletonAxeman(×2), GuardsmanFromFakeDeath(×56),
+                   SkeletonSpearman(×3), SkeletonSwordman(×3),
+                   GrimveilCloak(×1)}                                          ← 5 种, 65 spawner
+C_9 (MonsterD) → {SkeletonArcher(×4), SkeletonCrossbowman(×4),
+                   GrimveilCloak(×1)}                                          ← 3 种, 9 spawner
+C_11 (MonsterE) → {SkeletonArcher(×1), SkeletonChampion(×1),
+                    SkeletonCrossbowman(×1), SkeletonSpearman(×1),
+                    SkeletonSwordman(×1), Wraith(×1),
+                    GrimveilCloak(×1)}                                         ← 7 种, 7 spawner
+```
+
+**variant_count=11** 只是全组实体种类的汇总，不是子池大小。各子池范围从 2~7 种不等。
+
+## 引擎行为
+
+同位置同实体只生成 1 次（引擎去重）。即使多个 ObjectLinker 同时选中同一实体，也只产生 1 个实例。幽鬼、GrimveilCloak 等均遵循此规则。
+
+**6 个坐标点**的父级偏移精确抵消，全部算术对齐至同一世界坐标 (810, −10, −1600)，物理上只有 1 个点。
+
+## ObjectLinker 主题分区
+
+| ObjectLinker | 标签 | 关联实体 | 子池大小 |
+|-------------|------|---------|---------|
+| C_1 | Hoard | Hoard01、Ore_GoldOre、GrimveilCloak | 3 种 |
+| C_3 | MonsterA | SkeletonChampion、GrimveilCloak | 2 种 |
+| C_5 | MonsterB | Wraith、GrimveilCloak | 2 种 |
+| C_7 | MonsterC | SkeletonAxeman、GuardsmanFromFakeDeath、SkeletonSpearman、SkeletonSwordman、GrimveilCloak | 5 种 |
+| C_9 | MonsterD | SkeletonArcher、SkeletonCrossbowman、GrimveilCloak | 3 种 |
+| C_11 | MonsterE | SkeletonArcher、SkeletonChampion、SkeletonCrossbowman、SkeletonSpearman、SkeletonSwordman、Wraith、GrimveilCloak | 7 种 |
+| **GrimveilCloak** | 全部 6 个子组 | 每个子组都有 1 个 GC spawner | 6/6 |
+
+## 精确爆率链（以 GrimveilCloak 物品为例）
+
+各子组抽选权重未在导出 JSON 中暴露（由蓝图 `DCGameObjectLink` 控制），以下按**子池内均匀选 1** 假设。
+
+### 各子组出 GC 的概率
+
+| 子组 | P(该组选中 GC) | 说明 |
+|------|--------------|------|
+| C_1 | 1/3 = 33.33% | 3 种中抽 1 |
+| C_3 | 1/2 = 50% | 2 种中抽 1 |
+| C_5 | 1/2 = 50% | 2 种中抽 1 |
+| C_7 | 1/5 = 20% | 5 种中抽 1 |
+| C_9 | 1/3 = 33.33% | 3 种中抽 1 |
+| C_11 | 1/7 = 14.29% | 7 种中抽 1 |
+
+P(至少 1 组选中 GC) = 1 − P(全部 6 组都不中)
+= 1 − (2/3 × 1/2 × 1/2 × 4/5 × 2/3 × 6/7)
+= 1 − (2/3 × 1/2 × 1/2 × 4/5 × 2/3 × 6/7)
+
+```
+= 1 − 96/1260
+= 1 − 0.0762
+= 0.9238 = 92.38%
+```
+
+这个概率远高于简化假设（43.53%），因为各子池比 11 小得多，GC 在每个子池里的占比都很高。
+
+### 完整链（豪客赛）
+
+| 阶段 | 概率 |
+|------|------|
+| 模块层: BlindfallPit 出现 | 1/100 |
+| 子组层: P(≥1 组选中 GC) | 92.38%（精确子池）vs 43.53%（简化 1/11） |
+| 物品层: pickup 掉率 | 2.5% |
+| **总计** | **≈1/432（精确）** vs ≈1/9,191（简化） |
+
+若模块概率为 1/200：**≈1/865（精确）** vs ≈1/18,382（简化）。
+
+前端目前使用简化公式 `1−(10/11)^6`，因为各子池权重未经确认。精确值高了约 21 倍。
 
 ## 算法验证
 
 ### sub_group_parent 追踪
 
 `search_engine.py::sub_group_root_to_name` 正确识别两种 ObjectLinker 作为子组根：
-
 - `BP_GameObjectLinker_C` → 传给 spawner
 - `BP_ObjectLinkWithTriggerBox_C` → 传给 spawner
-
-每个 spawner 的 `_resolve_world_loc` 结果中正确携带 `sub_group_name`，最终存入 DB 的 `sub_group_parent` 字段。
 
 ### 坐标去重 key
 
 原：`(x, y, z, json_filename)` → 6 个同位置 ObjectLinker 被合并为 1 点
-
 现：`(x, y, z, json_filename, group_parent, sub_group_parent)` → 正确区分
-
-**验证**：GrimveilCloak x=810,y=-10,z=-1600:
-- 旧去重：6 条 → 1 条
-- 新去重：6 条（各 ObjectLinker 分别保留）
 
 ### groupCount 前端计算
 
 ```tsx
-// DetailPage.tsx
 const varGps = [...new Set(
   mapCoords.map((c) =>
     c.group_parent && c.sub_group_parent
@@ -45,88 +115,18 @@ const varGps = [...new Set(
 const groupCount = varGps.length || 1;
 ```
 
-**等价于**：统计该变体组中 unique `(group_parent, sub_group_parent)` 对数。
+### adjRate 公式
 
-## 变体机制
+```tsx
+const adjRate = (v: number) =>
+  hasVariant
+    ? +(v * (1 - (1 - 1 / forcedVcN) ** groupCount)).toFixed(4)
+    : v;
+```
 
-当玩家进入触发区域时，每个 `BP_GameObjectLinker_C` 独立从变体池中选择 1 种实体并召唤。
+`forcedVcN` = variant_count（默认 11），`groupCount` = unique sub_group_parent 数。
 
-### 11 种实体分布（Crypt_BlindfallPit_D）
-
-| 实体 | 出现 ObjectLinker | 总刷怪点数 |
-|------|-------------------|-----------|
-| GrimveilCloak | C_1, C_3, C_5, C_7, C_9, C_11（全 6） | 6×1 |
-| SkeletonChampion | C_3(×3), C_11(×1) | 4 |
-| Hoard01_3 | C_1(×3) | 3 |
-| Ore_GoldOre | C_1(×8) | 8 |
-| SkeletonArcher | C_9(×4), C_11(×1) | 5 |
-| SkeletonCrossbowman | C_9(×4), C_11(×1) | 5 |
-| SkeletonSpearman | C_7(×3), C_11(×1) | 4 |
-| SkeletonSwordman | C_7(×3), C_11(×1) | 4 |
-| SkeletonAxeman | C_7(×2) | 2 |
-| SkeletonGuardsmanFromFakeDeath | C_7(×56) | 56 |
-| Wraith | C_5(×3), C_11(×1) | 4 |
-
-### ObjectLinker 主题分区
-
-| ObjectLinker | 标签 | 关联实体 |
-|-------------|------|---------|
-| C_1 | Hoard | 宝箱/金矿类（3 种） |
-| C_3 | MonsterA | 精英近战 |
-| C_5 | MonsterB | 幽鬼 |
-| C_7 | MonsterC | 杂兵近战群（56 装死卫兵） |
-| C_9 | MonsterD | 远程兵 |
-| C_11 | MonsterE | 混合全品种 |
-
-### 爆率计算
-
-由于 `BP_GameObjectLinker_C` 是互斥、独立、均匀的选择，没有额外权重信息时假设每 ObjectLinker 从完整 11 种池中均匀选择：
-
-| 指标 | 公式 | 值 |
-|------|------|-----|
-| 单次选择特定实体的概率 | 1/11 | 9.09% |
-| 至少出现一次的概率 | 1 - (10/11)^6 | 43.53% |
-| 恰好出现 k 次的概率 | C(6,k) × (1/11)^k × (10/11)^(6-k) | k=0: 56.47%, k=1: 33.86%, k=2: 8.47%, k=3: 1.13% |
-| 期望出现次数 | 6/11 | 0.545 |
-
-**限制**：此计算假设每 ObjectLinker 从全部 11 种中等概率选取。实际游戏中各 ObjectLinker 的权重由 `DCGameObjectLink` 决定，受蓝图逻辑影响，未暴露在导出 JSON 中。前端显示的"11种选M"使用的 M = 该实体出现的 unique `(group_parent, sub_group_parent)` 对数，并非总 ObjectLinker 数 6。
-
-## 概率修正：GrimveilCloak 物品 vs 怪物实体
-
-旧分析把两个东西混在一起了，需要区分：
-
-### 场景 A：GrimveilCloak 怪物直接生成（变体池中的实体）
-
-GrimveilCloak 本身就是 11 种变体之一。当某个 ObjectLinker 选中它时，直接在其坐标点生成 GrimveilCloak 怪物。
-
-| 版本 | 点数 | 单次选中的概率 | P(至少出 1 只) |
-|------|------|--------------|---------------|
-| 修复前 | 1（6 Linker 被合并） | 1/11 = 9.09% | 9.09% |
-| 修复后 | 6（各 Linker 独立） | 每 Linker 1/11，6 次独立 | **1 - (10/11)^6 = 43.53%** ⬆ 4.8× |
-
-**结论**：修复后 GrimveilCloak 怪物出现概率从 9% 暴涨到 43.5%，每次进 BlindfallPit 有近一半概率见到它。
-
-### 场景 B：GrimveilCloak 物品直接生成（修正后的 1/9,200 分析）
-
-GrimveilCloak **物品本身**就是变体池中的直接生成物（`group_drop_info` 实体名 = "阴森帷幕披风"），不是通过容器间接掉落。它有 6 个坐标点，但父级偏移精确抵消，全部算术对齐至同一世界坐标 (810, −10, −1600)。
-
-**引擎行为**：同位置同实体只生成 1 次（如幽鬼只出 1 只）。即使 6 个 ObjectLinker 都选中 GrimveilCloak，也只产生 1 个 pickup。
-
-| 阶段 | 旧理解（1 次抽选） | 新理解（6 次独立，引擎去重） | 公式 |
-|------|-------------------|---------------------------|------|
-| 模块概率 | 1/100 | 1/100 | 不变 |
-| 实体选中 | 11 选 1 → 9.09% | 6 次独立 P(≥1) → **43.53%** | 1−(10/11)^6 |
-| 物品掉率（选中后） | 2.5% | 2.5%（1 次掉落） | 不变 |
-| **总计（豪客赛）** | **1/44,000** | **1/9,191** | 1/100 × 43.53% × 2.5% |
-
-若模块概率为 1/200：**1/18,382**。
-
-### 关键映射总结
-
-| 你要的东西 | 对应的变体实体 | 修复影响 | 新概率（豪客赛） |
-|-----------|--------------|---------|----------------|
-| GrimveilCloak **物品**（直接拾取） | 变体池 GrimveilCloak | ⬆ 涨 4.8× | **≈1/9,200** 每次进 BlindfallPit |
-| GrimveilCloak **怪物**（可见实体，同实体） | 变体池 GrimveilCloak | ⬆ 涨 4.8× | **43.5%** 可见 |
+前端使用简化假设（每子组从完整 11 种均匀抽），精确值需子池权重数据支撑。
 
 ## 对比
 
@@ -134,4 +134,4 @@ GrimveilCloak **物品本身**就是变体池中的直接生成物（`group_drop
 |------|-------------------|------|------|
 | 修复前 | 1 | 11种选1 | 6 个 ObjectLinker 被去重合并，groupCount=1 |
 | 修复后 | 6 | 11种选6 | 使用 sub_group_parent 去重，groupCount=6 |
-| 实际游戏 | 1 物理点 | 11种各 ObjectLinker 独立选 | 6 次独立抽选，可重复，GrimveilCloak 会重叠 |
+| 实际游戏 | 1 物理点 | 6 子组独立抽选 | 引擎去重，最多 1 个 |
