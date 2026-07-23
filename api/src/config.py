@@ -17,6 +17,8 @@ GAME_JSON = LOCALIZATION_DIR / "Game.json"
 LOCALIZATION_EN_DIR = GAME_ROOT.parent / "Localization" / "Game" / "en"
 EN_GAME_JSON = LOCALIZATION_EN_DIR / "Game.json"
 
+LOCALIZATION_ROOT = GAME_ROOT.parent / "Localization" / "Game"
+
 ITEM_DIR = DATA_DIR / "Item" / "Item"
 MONSTER_DIR = DATA_DIR / "Monster" / "Monster"
 PROPS_DIR = DATA_DIR / "Props" / "Props"
