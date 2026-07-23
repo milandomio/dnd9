@@ -5,6 +5,7 @@ import { useDataVersion } from '../hooks/useDataVersion';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
+import { dataUrl } from '../utils/dataUrl';
 import SectionHeader from '../components/SectionHeader';
 import VariantSwitch from '../components/VariantSwitch';
 import DebugPanel from '../components/DebugPanel';
@@ -205,7 +206,10 @@ export default function LootdropDetailPage() {
     }
     const fetchName =
       currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
-    const lootUrl = `/data/json/lootdrops/${fetchName}.json`;
+    const lootUrl = dataUrl(
+      dataVersion,
+      `/data/json/lootdrops/${fetchName}.json`
+    );
     if (_preloadedLootdrop?.monsters && _preloadedLootdropUrl === lootUrl)
       return;
     if (lootFetchedRef.current) return;
@@ -219,7 +223,7 @@ export default function LootdropDetailPage() {
         setHidden(defaultHidden(item.monsters, defaultThreshold));
       })
       .catch(console.error);
-  }, [baseName, currentSuffix, effectiveSsrData]);
+  }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
 
   // Auto-redirect to default variant when visiting base URL
   useEffect(() => {
@@ -305,7 +309,7 @@ export default function LootdropDetailPage() {
       if (_globalRefPending.has(ref)) {
         return _globalRefPending.get(ref)!.then((coords) => [ref, coords]);
       }
-      const p = fetch(`/data/json/${ref}.json`)
+      const p = fetch(dataUrl(dataVersion, `/data/json/${ref}.json`))
         .then((r) => r.json())
         .then((entity) => {
           const coords: LootdropCoord[] = Array.isArray(entity)

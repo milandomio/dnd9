@@ -42,6 +42,7 @@ export default defineConfig(({ mode }) => {
       },
       VitePWA({
         registerType: 'prompt',
+        injectRegister: false,
         workbox: {
           // registerSW.js 预缓存确保 SW 注册脚本离线可用；
           // manifest.webmanifest 和 icons/ 由 VitePWA 自动处理，不重复声明；
@@ -49,11 +50,7 @@ export default defineConfig(({ mode }) => {
           // navigateFallback 未启用：SSG 路由的独立 HTML（含 SSR 数据）由 NetworkFirst 接管，
           // 访问后缓存，离线重复访问正常显示（含 SSR 数据）；首次离线深度链接无缓存时浏览器报错。
           navigateFallback: undefined,
-          globPatterns: [
-            'assets/**/*.{js,css}',
-            'registerSW.js',
-            'offline.html',
-          ],
+          globPatterns: ['assets/**/*.{js,css}', 'offline.html'],
           runtimeCaching: [
             {
               // Version-based invalidation via refreshNow() clears df5-* caches;
@@ -75,7 +72,8 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              urlPattern: ({ url }) => url.pathname.startsWith('/data/json/'),
+              urlPattern: ({ url }) =>
+                /^\/data\/(?:[a-z0-9]+\/)?json\//.test(url.pathname),
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'df5-data-json',

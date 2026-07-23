@@ -5,6 +5,8 @@ import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDataVersion } from '../hooks/useDataVersion';
+import { dataUrl } from '../utils/dataUrl';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import type { DungeonModule } from '../types/data';
 import {
@@ -75,6 +77,7 @@ export default function QuestItemGroupPage() {
     }
     return new Set();
   });
+  const dataVersion = useDataVersion();
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
@@ -87,7 +90,12 @@ export default function QuestItemGroupPage() {
       setLoading(false);
       return;
     }
-    fetch(`/data/json/quest_items_groups/${encodeURIComponent(group)}.json`)
+    fetch(
+      dataUrl(
+        dataVersion,
+        `/data/json/quest_items_groups/${encodeURIComponent(group)}.json`
+      )
+    )
       .then<GroupData>((r) => r.json())
       .then((gd) => {
         setData(gd);
@@ -95,7 +103,7 @@ export default function QuestItemGroupPage() {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [group, ssrData]);
+  }, [group, ssrData, dataVersion]);
 
   if (loading)
     return (

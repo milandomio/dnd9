@@ -1,5 +1,18 @@
 # 2026-07-23 会话修改记录
 
+## 移动散落文档 PLAN_MERGE_VARIANT_SPAWN.md → docs/
+- **原因**：`PLAN_MERGE_VARIANT_SPAWN.md` 位于项目根目录，未归入 `docs/` 文件夹
+- **变更文件**：`PLAN_MERGE_VARIANT_SPAWN.md` → `docs/PLAN_MERGE_VARIANT_SPAWN.md`
+
+## 修复 SW 更新 Banner 不显示的竞态问题
+- **原因**：`vite-plugin-pwa` 默认自动注入 `registerSW.js`，在 `<head>` 阶段抢先注册 SW。浏览器检测到新 SW 后触发 `updatefound`+`statechange`，但此时 React 尚未 mount，`SWUpdateBanner` 的监听器错过了事件，导致 Banner 永不出现。
+- **变更文件**：
+  - `web/vite.config.ts` — 添加 `injectRegister: false` 禁止自动注入，`SWUpdateBanner` 成为唯一注册点；移除不再生成的 `registerSW.js` 从 precache 列表
+  - `web/src/components/SWUpdateBanner.tsx` — 注册后增加 `reg.waiting` 防御性检查，若已有 SW 处于 waiting 状态则直接显示 Banner
+- **关键逻辑**：
+  - 禁止自动注入后，`SWUpdateBanner` 的 `useEffect` 中 `navigator.serviceWorker.register('/sw.js')` 成为唯一注册调用
+  - `reg.waiting` 检查兜底 catch 到已在 waiting 状态的新 SW（旧版本已抢注的场景）
+
 ## 共生池 vs 冲突池逻辑文档补充
 
 - **原因**：分析 Firedeep_MagmaFalls 赤焰巨像的子池问题时，发现 BP_GameObjectLinker_C 有两种语义——有 `group_parent` 时为冲突池（互斥 N 种选 M），无 `group_parent` 时为共生池（所有实体共存）。当前代码三层过滤（SQL WHERE、build_coord_out、前端 `!gp continue`）已正确排除共生池，无需代码修改。
