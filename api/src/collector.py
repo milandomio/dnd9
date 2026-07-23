@@ -6,7 +6,6 @@ from pathlib import Path
 from config import (
     DB_PATH,
     DUNGEON_MODULE_DIR,
-    EN_GAME_JSON,
     GAME_JSON,
     GAME_ROOT,
     ITEM_DIR,
@@ -295,11 +294,7 @@ def run():
 
         resolver = NameResolver(translations)
 
-        en_translations: dict[str, str] = {}
-        if EN_GAME_JSON.exists():
-            from db._helpers import load_game_json
-
-            en_translations = load_game_json(EN_GAME_JSON)
+        en_translations = db.get_translations_map("en")
         resolver_en = NameResolver(en_translations) if en_translations else resolver
         en_resolve = resolver_en.resolve
 
