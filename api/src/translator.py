@@ -225,7 +225,7 @@ class NameResolver:
         return name
 
 
-def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_pool_sizes: dict | None = None) -> dict:
+def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_pool_info: dict | None = None) -> dict:
     _gp = c.get("group_parent", "")
     _sgp = c.get("sub_group_parent", "")
     _mb = c["map_base"]
@@ -245,11 +245,12 @@ def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_po
         out["group_parent"] = _gp
     if _sgp:
         out["sub_group_parent"] = _sgp
-    if sub_pool_sizes and _sgp:
+    if sub_pool_info and _sgp:
         key = (c["map_base"], c["json_filename"], _gp, _sgp)
-        psz = sub_pool_sizes.get(key)
-        if psz and psz > 0:
-            out["sub_pool_size"] = psz
+        spi = sub_pool_info.get(key)
+        if spi and spi[0] > 0:
+            out["sub_pool_size"] = spi[0]
+            out["sub_pool_names"] = spi[1]
     vc_info = vc.get((c["map_base"], c["json_filename"], _gp))
     if vc_info and vc_info[0] > 1:
         out["variant_count"] = vc_info[0]
