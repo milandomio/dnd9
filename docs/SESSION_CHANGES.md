@@ -1023,3 +1023,17 @@ if (typeof window !== 'undefined') {
 
 **变更文件：**
 - `api/src/lootdrop_builder.py` — 移除 `_agg_drop_rates` 聚合与注入逻辑
+
+## 显示每个 ObjectLinker 子池的实体种类数与刷怪点数（替代"11种选6"）
+
+- **原因**：变体显示"11种选6"过于笼统，实际 BP_GameObjectLinker_C_3 只有 2 种实体（骷髅冠军、幽鬼）、C_11 有 7 种，需要分别显示每个 linker 的子池信息
+- **变更文件**：
+  - `api/src/db/repositories/coordinates.py` — 新增 `get_sub_group_pool_sizes()` 方法，按 `(map_base, json_filename, group_parent, sub_group_parent)` 统计 DISTINCT entity 数
+  - `api/src/db/__init__.py` — 暴露 `get_sub_group_pool_sizes()` 方法
+  - `api/src/translator.py:build_coord_out` — 新增 `sub_pool_sizes` 参数，每个 coord 输出 `sub_pool_size`
+  - `api/src/collector.py` — 调用 `get_sub_group_pool_sizes()`；传递给 entity_export 各函数和 build_coord_out
+  - `api/src/entity_export.py` — 三个 export 函数均新增 `sub_pool_sizes` 参数，透传至 build_coord_out
+  - `web/src/types/data.ts` — Coord 接口新增 `sub_pool_size?: number`
+  - `web/src/pages/DetailPage.tsx` — 变体标签按 `sub_group_parent` 分组，显示 `(c3子池2种选3)(c11子池7种选1)` 格式
+- **数据**：21 个 sub-groups 被检测到；SkeletonChampion 的 Crypt 模块显示(c3子池2种选3)(c11子池7种选1)
+- **验证**：HTTP 200 ✓
