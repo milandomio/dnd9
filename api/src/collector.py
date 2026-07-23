@@ -317,8 +317,14 @@ def run():
                 _mrow = _monsters_lookup.get(_kw)
                 if _mrow:
                     _sp_tr.append(resolver.resolve(_kw, _mrow["translation_key"], "monster"))
-                elif _cls and "props" in _cls.get("types", []):
-                    _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                elif _cls:
+                    _cls_types = _cls.get("types", [])
+                    if "props" in _cls_types:
+                        _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                    elif "item" in _cls_types:
+                        _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "item"))
+                    else:
+                        _sp_tr.append(resolver.resolve(_kw, None, "props") or _kw)
                 else:
                     _sp_tr.append(resolver.resolve(_kw, None, "props") or _kw)
             _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr)
