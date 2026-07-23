@@ -4,11 +4,11 @@
 
 ## 现状问题
 
-| 问题 | 说明 |
-|------|------|
-| 仅 `dungeon_modules.json` 使用版本化路径 | 其余 12+ 个 fetch 仍用非版本化 `/data/json/...` |
-| SW 规则不兼容版本化路径 | `startsWith('/data/json/')` 不匹配 `/data/{ver}/json/...` |
-| 详情页无 preload | LCP P99=17.86s，主要瓶颈在 coord JSON 和图片未预下载 |
+| 问题                                     | 说明                                                      |
+| ---------------------------------------- | --------------------------------------------------------- |
+| 仅 `dungeon_modules.json` 使用版本化路径 | 其余 12+ 个 fetch 仍用非版本化 `/data/json/...`           |
+| SW 规则不兼容版本化路径                  | `startsWith('/data/json/')` 不匹配 `/data/{ver}/json/...` |
+| 详情页无 preload                         | LCP P99=17.86s，主要瓶颈在 coord JSON 和图片未预下载      |
 
 ## 架构流程
 
@@ -37,7 +37,7 @@
 export function dataUrl(version: string, path: string) {
   if (!version) return path;
   const short = Number(version).toString(36);
-  return path.replace('/data/json', `/data/${short}/json`);
+  return path.replace("/data/json", `/data/${short}/json`);
 }
 ```
 
@@ -50,86 +50,55 @@ export function dataUrl(version: string, path: string) {
 urlPattern: ({ url }) => /^\/data\/(?:[a-z0-9]+\/)?json\//.test(url.pathname),
 ```
 
-**全局 preload** — 在 `inject-versioned-preload` 插件中增加常用全局 JSON：
-
-- `index.json`（首页）
-- `search_index.json`（导航搜索 + 列表页）
-- `dungeon_modules.json`（已有 ✅）
+### ✅ 2b. 全局 preload 增加 index.json + search_index.json（已实施）
 
 ```ts
-// 当前
-const preloads = [
-  `<link rel="preload" href="/data/json/meta.json" as="fetch" crossorigin="anonymous">`,
-  `<link rel="preload" href="/data/${short}/json/dungeon_modules.json" as="fetch" crossorigin="anonymous">`,
-];
-
-// 增加
   `<link rel="preload" href="/data/${short}/json/index.json" as="fetch" crossorigin="anonymous">`,
   `<link rel="preload" href="/data/${short}/json/search_index.json" as="fetch" crossorigin="anonymous">`,
 ```
 
-每个 SSG HTML 页面都使用同一个 `template`（`index.html`），全局 preload 注入一次，所有页面都受益。
+### ✅ 3. 修改 `web/scripts/ssg.mjs` 详情页 preload 注入（已实施）
 
-### 3. 修改 `web/scripts/ssg.mjs`
+在页面生成循环中按路由类型注入详情页特定的版本化 preload：
 
-在页面生成循环（~331-377 行）中按路由类型注入详情页特定的版本化 preload：
+| 路由                                  | Preload URL                                                                       |
+| ------------------------------------- | --------------------------------------------------------------------------------- |
+| `/dungeon_modules/:group/:name`       | `/data/{short}/json/dungeon_modules_coords/{name}.json` + `/data/img/{name}.webp` |
+| `/:page/:name` (items/monsters/props) | `/data/{short}/json/{page}/{name}.json`                                           |
+| `/lootdrops/:name`                    | `/data/{short}/json/lootdrops/{name}.json`                                        |
 
-| 路由 | Preload URL |
-|------|------------|
-| `/dungeon_modules/:group/:name` | `/data/{short}/json/dungeon_modules_coords/{name}.json` + `/data/img/{name}.webp` |
-| `/:page/:name` (items/monsters/props) | `/data/{short}/json/{page}/{name}.json` |
-| `/lootdrops/:name` | `/data/{short}/json/lootdrops/{name}.json` |
+### ✅ 4. 修改所有客户端 fetch 调用（已实施）
 
-每个详情页只 preload 自己需要的 1-2 个文件，不浪费带宽。
+| 文件                         | URL 模式                                | 状态              |
+| ---------------------------- | --------------------------------------- | ----------------- |
+| `hooks/useDungeonModules.ts` | `/data/{ver}/json/dungeon_modules.json` | 无需改 ✅         |
+| `hooks/useSearchIndex.ts`    | `/data/json/search_index.json`          | `dataUrl()` 完成 |
+| `hooks/useDataVersion.ts`    | `/data/json/meta.json`                  | 不变（固定路径）  |
+| `DetailPage.tsx`              | `/:page/:name.json`                     | `dataUrl()` 完成 |
+| `DungeonModuleDetailPage.tsx` | `dungeon_modules_coords/{name}.json`    | `dataUrl()` 完成 |
+| `ListPage.tsx`                | `/:page.json`                           | `dataUrl()` 完成 |
+| `LootdropDetailPage.tsx`      | `lootdrops/{name}.json` + ref 坐标      | `dataUrl()` 完成 |
+| `HomePage.tsx`                | `index.json`                            | `dataUrl()` 完成 |
+| `ExplorePage.tsx`             | `explore.json`                          | `dataUrl()` 完成 |
+| `QuestItemsPage.tsx`          | `quest_items_groups.json`               | `dataUrl()` 完成 |
+| `QuestItemGroupPage.tsx`      | `quest_items_groups/{group}.json`       | `dataUrl()` 完成 |
+| `QuestNPCPage.tsx`            | `quest_npc.json`                        | `dataUrl()` 完成 |
+| `QuestNPCDetailPage.tsx`      | `quest_npc.json`                        | `dataUrl()` 完成 |
 
-### 4. 修改所有客户端 fetch 调用
+所有页面已完成 `dataUrl(dataVersion, path)` 包装 + `dataVersion` useEffect dep。
 
-**Hooks（3 处）：**
+### ✅ 5. 删除模块级 JS preload（已实施 — 替换为 SSG preload）
 
-| 文件 | URL 模式 | 改动 |
-|------|---------|------|
-| `hooks/useDungeonModules.ts` | `/data/{ver}/json/dungeon_modules.json` | 已版本化 ✅ |
-| `hooks/useSearchIndex.ts` | `/data/json/search_index.json` | 加 `dataVersion` dep + `dataUrl()` |
-| `hooks/useDataVersion.ts` | `/data/json/meta.json` | 不变（固定路径） |
-
-**页面（~12 处）：** 所有 `fetch('/data/json/...')` 改为 `fetch(dataUrl(dataVersion, '/data/json/...'))`：
-
-| 文件 | Fetch URL(s) |
-|------|-------------|
-| `DetailPage.tsx` | `/:page/:name.json`（模块级 preload + useEffect） |
-| `DungeonModuleDetailPage.tsx` | `dungeon_modules_coords/{name}.json` |
-| `ListPage.tsx` | `/:page.json` |
-| `LootdropDetailPage.tsx` | `lootdrops/{name}.json` + ref 坐标 |
-| `HomePage.tsx` | `index.json` |
-| `ExplorePage.tsx` | `explore.json` |
-| `QuestItemsPage.tsx` | `quest_items_groups.json` |
-| `QuestItemGroupPage.tsx` | `quest_items_groups/{group}.json` |
-| `QuestNPCPage.tsx` | `quest_npc.json` |
-| `QuestNPCDetailPage.tsx` | `quest_npc.json` |
-
-每个页面需要：
-1. 从 `useDataVersion()` 获取 `dataVersion`
-2. fetch URL 用 `dataUrl(dataVersion, path)` 包装
-3. `useEffect` dep 包含 `dataVersion`，版本变化时自动用新版本化路径 refetch
-
-### 5. 删除模块级 JS preload（替换为 SSG preload）
-
-三个详情页有模块作用域的 `fetch()` 作预加载，改为 SSG `<link rel="preload">` 替代后可以删除：
-
-| 文件 | 删除内容 |
-|------|---------|
-| `DungeonModuleDetailPage.tsx` | `_preloadedCoordsUrl` / `_preloadedCoords` 和相关逻辑 |
-| `DetailPage.tsx` | `_preloadedEntityUrl` / `_preloadedEntity` 和相关逻辑 |
-| `LootdropDetailPage.tsx` | `_preloadedLootdropUrl` / `_preloadedLootdrop` 和相关逻辑 |
+三个详情页的模块级 preload 已全部移除，由 SSG `<link rel="preload">` 替代。
 
 ### 6. 不动的资源
 
-| 资源 | 路径 | 策略 |
-|------|------|------|
-| `meta.json` | `/data/json/meta.json` | 固定路径，SW 5 分钟 TTL，作版本检测 |
-| 图片 | `/data/img/*` | 非版本化（很少变化），ETag 足够 |
-| JS/CSS chunk | `/assets/*` | content-hash，SW 预缓存 |
-| HTML | `/*.html` | SSG 产物，NetworkFirst |
+| 资源         | 路径                   | 策略                                |
+| ------------ | ---------------------- | ----------------------------------- |
+| `meta.json`  | `/data/json/meta.json` | 固定路径，SW 5 分钟 TTL，作版本检测 |
+| 图片         | `/data/img/*`          | 非版本化（很少变化），ETag 足够     |
+| JS/CSS chunk | `/assets/*`            | content-hash，SW 预缓存             |
+| HTML         | `/*.html`              | SSG 产物，NetworkFirst              |
 
 ## 注意事项
 

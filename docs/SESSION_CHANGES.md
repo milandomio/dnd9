@@ -1,10 +1,49 @@
 # 2026-07-23 会话修改记录
 
+## SSG preload 注入 + 移除模块级 JS preload
+
+- **原因**：完成缓存优化计划其余项。全局 preload 增加 `index.json` + `search_index.json`；SSG 构建时注入详情页特定 preload（实体 JSON / lootdrops / 坐标 + 图片）；移除 3 个详情页的模块级 JS preload。
+- **变更文件**：
+  - `web/vite.config.ts` — 全局 preload 增加 `index.json` + `search_index.json`
+  - `web/scripts/ssg.mjs` — 页面生成循环中按路由类型注入版本化 preload（items/monsters/props/lootdrops/dungeon_modules）
+  - `web/src/pages/DetailPage.tsx` — 移除 `_preloadedEntity` / `_preloadedEntityUrl` 模块级 preload
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — 移除 `_preloadedCoords` / `_preloadedCoordsUrl` 模块级 preload
+  - `web/src/pages/LootdropDetailPage.tsx` — 移除 `_preloadedLootdrop` / `_preloadedLootdropUrl` 模块级 preload
+- **关键逻辑**：
+  - SSG preload 注入：在循环中根据 `urlPath` 正则匹配路由类型，追加 `<link rel="preload">` 到 `</head>` 前
+  - 模块级 preload 移除后，详情页初始状态由 SSR 数据或 `null` 兜底，useEffect 的版本化 fetch 负责获取数据
+  - 浏览器通过 SSG `<link rel="preload">` 预加载资源，useEffect fetch 命中 HTTP 预加载缓存，无额外延迟
+
 ## 移动散落文档 PLAN_MERGE_VARIANT_SPAWN.md → docs/
+
 - **原因**：`PLAN_MERGE_VARIANT_SPAWN.md` 位于项目根目录，未归入 `docs/` 文件夹
 - **变更文件**：`PLAN_MERGE_VARIANT_SPAWN.md` → `docs/PLAN_MERGE_VARIANT_SPAWN.md`
 
+## 全量 JSON 版本化 — 客户端 fetch 改用 dataUrl()
+
+- **原因**：所有 fetch 仍使用非版本化路径 `/data/json/...`，SW 缓存旧数据后永不更新。部署新版后旧缓存不失效，用户看不到新数据。
+- **变更文件**：
+  - `web/src/utils/dataUrl.ts` — 新建工具函数 `dataUrl(version, path)` 将 `/data/json/...` 转为 `/data/{ver}/json/...`
+  - `web/vite.config.ts` — SW urlPattern 从 `startsWith('/data/json/')` 改为 `/^\/data\/(?:[a-z0-9]+\/)?json\//` 兼容版本化路径
+  - `web/src/hooks/useSearchIndex.ts` — fetchIndex 使用 `dataUrl(version, ...)`
+  - `web/src/pages/DetailPage.tsx` — useEffect fetch 使用 `dataUrl(dataVersion, ...)` + `dataVersion` dep
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — useEffect fetch 使用 `dataUrl(dataVersion, ...)`
+  - `web/src/pages/LootdropDetailPage.tsx` — 主 fetch + ref coords fetch 使用 `dataUrl(dataVersion, ...)`
+  - `web/src/pages/ListPage.tsx` — fallback fetch 使用 `dataUrl(dataVersion, ...)`
+  - `web/src/pages/HomePage.tsx` — 新增 `useDataVersion` + `dataUrl()` + `dataVersion` dep
+  - `web/src/pages/ExplorePage.tsx` — fetch 使用 `dataUrl(dataVersion, ...)`
+  - `web/src/pages/QuestItemsPage.tsx` — fetch 使用 `dataUrl(dataVersion, ...)`
+  - `web/src/pages/QuestItemGroupPage.tsx` — 新增 `useDataVersion` + `dataUrl()` + `dataVersion` dep
+  - `web/src/pages/QuestNPCPage.tsx` — fetch 使用 `dataUrl(dataVersion, ...)`
+  - `web/src/pages/QuestNPCDetailPage.tsx` — 新增 `useDataVersion` + `dataUrl()` + `dataVersion` dep
+- **关键逻辑**：
+  - 数据版本由 SSG 构建时的 `meta.json` mtime 决定，转换为 base36 短码嵌入版本化路径
+  - `dataUrl('', '/data/json/...')` 返回原路径（版本未就绪时）
+  - 部署新版后，新 HTML 的 preload + 客户端 fetch 都使用新版本化路径，SW 无法命中旧缓存
+  - 旧版本化路径缓存被 SW LRU 策略逐渐驱逐
+
 ## 修复 SW 更新 Banner 不显示的竞态问题
+
 - **原因**：`vite-plugin-pwa` 默认自动注入 `registerSW.js`，在 `<head>` 阶段抢先注册 SW。浏览器检测到新 SW 后触发 `updatefound`+`statechange`，但此时 React 尚未 mount，`SWUpdateBanner` 的监听器错过了事件，导致 Banner 永不出现。
 - **变更文件**：
   - `web/vite.config.ts` — 添加 `injectRegister: false` 禁止自动注入，`SWUpdateBanner` 成为唯一注册点；移除不再生成的 `registerSW.js` 从 precache 列表
@@ -93,6 +132,7 @@
 # 2026-07-22 会话修改记录
 
 ## ShipGraveyard_BladehandRefuge 旋转值修复
+
 - **原因**：`ShipGraveyard_BladehandRefuge` 无 DungeonModule JSON 文件，通过 `extra_rows` 分支插入 DB 时旋转值硬编码为 270，而布局文件计算值为 0
 - **变更文件**：`api/src/db/importers/modules.py`
 - **关键逻辑**：`extra_rows.append` 第 9 个参数从 `270` 改为 `module_rotations.get(base_name, 270)`，使无 DungeonModule 文件的模块也能从布局文件中获取正确的旋转值
@@ -100,6 +140,7 @@
 - **文档补充**：`docs/REFERENCE.md` 旋转值章节重写，补充公式、映射表、插入路径、前端链路
 
 ## SW 更新检测修复
+
 - **原因**：原有 `workbox-window` 库未安装导致动态 import 失败被 `.catch()` 吞掉 + `autoUpdate` 使 SW 跳过 waiting 状态，页面无法感知 SW 更新
 - **变更文件**：`web/vite.config.ts`、`web/src/components/SWUpdateBanner.tsx`
 - **关键逻辑**：
@@ -116,6 +157,7 @@
 **原因：** `/dungeon_modules/`（列表页）和 `/dungeon_modules/:group/:name`（详情页）是纯 CSR Shell，HTML 中 `<div id="root">` 为空，用户需等 JS 全量下载→执行→fetch 才能看到内容。参照 lootdrop 页面模式加入 SSR。
 
 **变更文件：**
+
 - `web/scripts/ssg.mjs` — 3 处修改
   - `routeDataKey()`: 详情页从 `return ""` 改为 `return \`dungeon_modules_detail/${group}/${name}\``
   - `SINGLE` 循环: 替换 `continue`，注入预计算的分组 summary 到 `ssrDataMap["dungeon_modules"]`
@@ -131,6 +173,7 @@
   - `useEffect` 中若 SSR 数据已存在则跳过分组构建
 
 **逻辑/映射关系：**
+
 - 路由数据键：详情页 → `dungeon_modules_detail/:group/:name`（区别于 group 页的 `dungeon_modules/:group`）
 - SSR 数据守卫：`ssrData?.coords?.entities`（同 lootdrop 的 `ssrData?.item?.monsters`）
 - Quick 模式：`coords: null` → guard 失败 → 自动降级 CSR
@@ -142,9 +185,11 @@
 **原因：** 用户要求物品列表页只展示地面掉落物（从地面直接拾取的物品），从箱子或怪物爆出的物品应归类到掉落表（/lootdrops）。
 
 **变更文件：**
+
 - `api/src/entity_export.py:42-46` — 在 `export_items()` 中添加过滤逻辑
 
 **逻辑/映射关系：**
+
 - 保留条件：`monsters` 列表包含 `"Ground"`（地面掉落物）或 `monsters` 为空（装饰/任务物品）
 - 排除条件：`monsters` 列表存在但不含 `"Ground"`（仅从怪物/箱子产出）
 - 效果：items 从 517 降为 96 个物品
@@ -155,19 +200,22 @@
 **验证结论：** 计算正确，`0.0018%` 即 `5/28/10000`。
 
 **爆率公式：** `pool_weight / shared_count / rate_total`
+
 - `pool_weight` = 该 luck_grade 的权重
 - `shared_count` = 同 luck_grade 的物品数
 - `rate_total` = 所有 luck_grade 正权重之和
 
 **超级金堆 Inferno Lv1 (`ID_Droprate_Hoard_WeaponArmor_3001`)：**
-| LuckGrade | 权重 | 物品数 | 说明 |
-|:---:|---:|---:|---|
-| 5 (魔法) | 7190 | 191 | 白色/蓝色武器 |
-| 6 (稀有) | 2500 | 0 | 无 LG6 物品，权重闲置 |
-| 7 (史诗) | 305 | 0 | 无 LG7 物品，权重闲置 |
-| 8 (神器) | 5 | **28** | 28 件命名神器平分 LG8 权重 |
+
+| LuckGrade | 权重 | 物品数 | 说明                       |
+| :-------: | ---: | -----: | -------------------------- |
+| 5 (魔法)  | 7190 |    191 | 白色/蓝色武器              |
+| 6 (稀有)  | 2500 |      0 | 无 LG6 物品，权重闲置      |
+| 7 (史诗)  |  305 |      0 | 无 LG7 物品，权重闲置      |
+| 8 (神器)  |    5 | **28** | 28 件命名神器平分 LG8 权重 |
 
 **关键点：**
+
 - `5/10000 = 0.05%` — 超级金堆产出**任意**神器的概率
 - `5/28/10000 = 0.0018%` — 超级金堆产出**某件特定**神器的概率
 - 游戏机制：先按权重 roll 运气等级，再在同级内均匀随机挑选
@@ -178,6 +226,7 @@
 ## 诊断：ShipGraveyard_BladehandRefuge 模块翻译丢失原因
 
 **原因：** `ShipGraveyard_BladehandRefuge` 没有对应的 DungeonModule JSON 文件（`Data/Generated/V2/Dungeon/DungeonModule/` 下不存在），仅作为地图文件存在（`Maps/.../ShipGraveyard_BladehandRefuge_A.json`）。`ModulesImporter` 通过 `_build_path_group_map()` 将其添加为"extra row"，但：
+
 - `translation_key` = `""`（没有源 DungeonModule JSON 继承 Name.Key）
 - `sl_base_name` = `""`（没有 SubLevelAsset 引用）
 - `NameResolver` 所有翻译策略均失败（无 Game.json key `Text_DesignData_Dungeon_DungeonModule_BladehandRefuge`、无 HARDCODED 条目、模糊匹配无效）
@@ -193,10 +242,12 @@
 **原因：** spawner keyword `TearofHrithurs` 比物品名 `TearofHrimthurs` 少一个 m，导致 `_spawner_ldg` 无 item_name 映射，enrichment 无法注入 `group_drop_info`。前端 `variant_count > 1` 条件又过滤了非变体物品。
 
 **变更：**
+
 - `api/src/drop_rate.py` — 预加载时从 `lootdrop_rate_items` 反向取 item base name → lootdrop_group_id 映射，处理 keyword 与 item_name 不一致的情况
 - `web/src/pages/DetailPage.tsx` — 移除 `variant_count > 1` 条件，有 `group_drop_info` 就显示；variant 仅作爆率分摊和 "(N种选1)" 文字
 
 **关键逻辑：**
+
 - `TearofHrimthurs_5001`(lootdrop_rate_items) → 去后缀 `_5001` → `TearofHrimthurs` → 通过 `_ld_id_to_groups` 关联 `ID_LootdropGroup_TearofHrimthurs`
 - 综合爆率：PVE 0.1%, 普通 0.35%, 豪客赛 0.5%, 逆袭赛 0.5%
 
@@ -333,15 +384,17 @@ AFTER (并行):
 **① 模块级变量 + 预加载 fetch**（行 70–83，组件函数之前）
 
 ```ts
-let _preloadedLootdropUrl = '';
+let _preloadedLootdropUrl = "";
 let _preloadedLootdrop: LootdropItem | null = null;
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   const _m = window.location.pathname.match(/^\/lootdrops\/([^/]+)/);
   if (_m) {
     _preloadedLootdropUrl = `/data/json/lootdrops/${_m[1]}.json`;
     fetch(_preloadedLootdropUrl)
       .then((r) => r.json())
-      .then((d) => { _preloadedLootdrop = d as LootdropItem; })
+      .then((d) => {
+        _preloadedLootdrop = d as LootdropItem;
+      })
       .catch(() => {});
   }
 }
@@ -356,7 +409,7 @@ if (typeof window !== 'undefined') {
 ```ts
 const [data, setData] = useState<LootdropItem | null>(
   _preloadedLootdrop ??
-    (effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null)
+    (effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null),
 );
 ```
 
@@ -379,6 +432,7 @@ useEffect(() => {
 ```
 
 关键变更：
+
 - **`_preloadedLootdropUrl === lootUrl`**：精确比对预加载 URL 和当前组件需要的 URL，防止导航切换后误用旧预加载数据跳过新 fetch
 - **移除 `dataVersion` 依赖**：因为 URL 不含版本号，不需要等 meta.json 信号
 - **不变**：`lootFetchedRef.current` 兜底机制保留，导航切换时 `name` 的 effect 重置该 flag，确保新页面走 fallback fetch
@@ -388,15 +442,19 @@ useEffect(() => {
 **① 模块级预加载**（行 30–45）
 
 ```ts
-let _preloadedEntityUrl = '';
+let _preloadedEntityUrl = "";
 let _preloadedEntity: Entity | null = null;
-if (typeof window !== 'undefined') {
-  const _m = window.location.pathname.match(/^\/(items|monsters|props)\/([^/]+)/);
+if (typeof window !== "undefined") {
+  const _m = window.location.pathname.match(
+    /^\/(items|monsters|props)\/([^/]+)/,
+  );
   if (_m) {
     _preloadedEntityUrl = `/data/json/${_m[1]}/${_m[2]}.json`;
     fetch(_preloadedEntityUrl)
       .then((r) => r.json())
-      .then((d) => { _preloadedEntity = d as Entity; })
+      .then((d) => {
+        _preloadedEntity = d as Entity;
+      })
       .catch(() => {});
   }
 }
@@ -413,13 +471,13 @@ if (typeof window !== 'undefined') {
 
 ### 正确性保证
 
-| 场景 | 预加载行为 | 预期结果 |
-|------|-----------|---------|
-| 首次加载（SSG 页面） | 模块级 fetch 在 hydration 前发起，可能已返回 | useState 带数据，useEffect 命中跳过 |
-| 导航切换（同页不同 name） | 模块级变量未更新（ESM cache），URL 比对不匹配 | useEffect fallback fetch 接手 |
-| SSR data 已注入（Quick mode 有数据） | 预加载数据覆盖 SSR（优先级更高） | ✅ 数据正确 |
-| 预加载失败（网络错误） | `_preloadedLootdrop` 保持 null | useEffect fallback fetch 兜底 |
-| 变体跳转（`/lootdrops/GoldenKey/` → `GoldenKey_5001/`） | 初始预加载 `GoldenKey.json` 与跳转后 `GoldenKey_5001.json` URL 不匹配 | fallback fetch 获取变体数据 |
+| 场景                                                    | 预加载行为                                                            | 预期结果                            |
+| ------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------- |
+| 首次加载（SSG 页面）                                    | 模块级 fetch 在 hydration 前发起，可能已返回                          | useState 带数据，useEffect 命中跳过 |
+| 导航切换（同页不同 name）                               | 模块级变量未更新（ESM cache），URL 比对不匹配                         | useEffect fallback fetch 接手       |
+| SSR data 已注入（Quick mode 有数据）                    | 预加载数据覆盖 SSR（优先级更高）                                      | ✅ 数据正确                         |
+| 预加载失败（网络错误）                                  | `_preloadedLootdrop` 保持 null                                        | useEffect fallback fetch 兜底       |
+| 变体跳转（`/lootdrops/GoldenKey/` → `GoldenKey_5001/`） | 初始预加载 `GoldenKey.json` 与跳转后 `GoldenKey_5001.json` URL 不匹配 | fallback fetch 获取变体数据         |
 
 ### 效果
 
@@ -984,10 +1042,12 @@ if (typeof window !== 'undefined') {
 **原因：** `/lootdrops/WarMaul_6001/` 导航到 `/lootdrops/WarMaul_8001/` 时页面不刷新，需 F5 才能显示正确标题和分类按钮。
 
 **变更文件：**
+
 - `web/src/components/VariantSwitch.tsx` — 新建变体稀有度切换组件，从 LootdropDetailPage 提取
 - `web/src/pages/LootdropDetailPage.tsx` — 内联变体按钮替换为 `<VariantSwitch>`；导航时清除 `_preloadedLootdrop` 缓存
 
 **关键修复：**
+
 - 模块级 `_preloadedLootdrop` 缓存在客户端导航后仍保留旧页面数据，干扰 useEffect 数据拉取逻辑
 - 在 `name` 变化的 useEffect 中同时清除 `_preloadedLootdrop` 和 `_preloadedLootdropUrl`，确保下次 fetch 不被跳过
 
@@ -996,9 +1056,11 @@ if (typeof window !== 'undefined') {
 **原因：** `build_and_save_lootdrop_details` 中 `monsters_out` 的每个怪物条目未填充 `drop_rates` 字段，导致前端地图卡片中不显示爆率。此问题在 _8001 神器变体页面（继承基础物品的完整怪物列表后）尤为明显。
 
 **变更文件：**
+
 - `api/src/lootdrop_builder.py` — 在 `max_score` 计算后，聚合 `group_drop_info` 中各模式的最高爆率，注入到每个怪物条目的 `drop_rates` 字段
 
 **修复效果：**
+
 - 所有 lootdrop 详情页的怪物现在都有 `drop_rates`（各模式下跨组取最大值）
 - 前端地图卡片中怪物名称旁正确显示 `[豪客赛:X%]` 等爆率信息
 - WarMaul_8001 页面：宝藏堆 显示 `[豪客赛:0.0107%][逆袭赛:0.0107%]`
@@ -1008,6 +1070,7 @@ if (typeof window !== 'undefined') {
 **调查结论：** 宝藏堆在 RondelDagger_8001 页面显示的神器爆率 `[豪客赛:0.0107%]` 是**正确的**。
 
 **数据链路：**
+
 - `Hoard01_3` 的候选 LDG 包含 `ID_LootDropGroup_SuperHoard`
 - SuperHoard 在 mode=3(豪客赛) floor=23 绑定 `ID_Lootdrop_Drop_HoardWeaponArmor`
 - 该 LootDrop 直接包含 `WarMaul_8001` 条目（LuckGrade=8）
@@ -1020,6 +1083,7 @@ if (typeof window !== 'undefined') {
 **修复：** 从 item_name 的 `_\d{4}` 后缀提取 luck_grade，用于 pool weight 查询；shared count 仍使用物品本身的 luck_grade（与 `compute_variant_rate` 的行为一致）。
 
 **变更文件：**
+
 - `api/src/drop_rate.py` — `compute_drop_rate` 新增 `_variant_luck_grade` 提取逻辑
 
 ### get_group_drop_rates 分离主/备 LDG 修复
@@ -1029,12 +1093,14 @@ if (typeof window !== 'undefined') {
 **修复：** `get_group_drop_rates` 将候选 LDG 分为 `_primary_set`（spawner_ldg 直连）和 `_fallback_set`（entity_ldg_all + 去尾数聚合）。对于 `luck_grade >= 8` 的变体物品，仅使用 `_primary_set` 计算爆率，不使用 fallback LDGs。
 
 **影响：**
+
 - 宝藏堆（Hoard01_3）→ 神器爆率 = 0 ✓
 - 超级宝藏堆（SuperHoard01_9）→ 神器爆率正确（Primary 直连 SuperHoard LDG）✓
 - 其他实体（AncientStingray 等）→ 不变 ✓
 - 基础物品爆率（非变体）→ 不变（走原有 primary+fallback 逻辑）
 
 **变更文件：**
+
 - `api/src/drop_rate.py` — `get_group_drop_rates` 分离 primary/fallback LDGs，LG≥8 仅用 primary
 
 ### 回退怪物级 drop_rates 注入
@@ -1044,6 +1110,7 @@ if (typeof window !== 'undefined') {
 **操作：** 删除 `lootdrop_builder.py` 中 `max_score` 计算后聚合 `group_drop_info` 注入 `monsters[]` 每个条目的 `drop_rates` 字段的代码块。
 
 **变更文件：**
+
 - `api/src/lootdrop_builder.py` — 移除 `_agg_drop_rates` 聚合与注入逻辑
 
 ## 显示每个 ObjectLinker 子池的实体翻译名列表 + 种类数 + 刷怪点数

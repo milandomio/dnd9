@@ -33,23 +33,6 @@ interface ModuleCoordsData {
   entities: CoordEntity[];
 }
 
-let _preloadedCoordsUrl = '';
-let _preloadedCoords: ModuleCoordsData | null = null;
-if (typeof window !== 'undefined') {
-  const _m = window.location.pathname.match(
-    /^\/dungeon_modules\/[^/]+\/([^/]+)/
-  );
-  if (_m) {
-    _preloadedCoordsUrl = `/data/json/dungeon_modules_coords/${_m[1]}.json`;
-    fetch(_preloadedCoordsUrl)
-      .then((r) => r.json())
-      .then((d) => {
-        _preloadedCoords = d as ModuleCoordsData;
-      })
-      .catch(() => {});
-  }
-}
-
 export default function DungeonModuleDetailPage() {
   const { group, name } = useParams<{ group: string; name: string }>();
   const { modules } = useDungeonModules();
@@ -62,11 +45,9 @@ export default function DungeonModuleDetailPage() {
   const effectiveCoords = ssrData?.coords?.entities ? ssrData.coords : null;
   const effectiveModSsr = ssrData?.module?.size_x ? ssrData.module : null;
   const [coordsData, setCoordsData] = useState<ModuleCoordsData | null>(
-    _preloadedCoords ?? effectiveCoords
+    effectiveCoords
   );
-  const [loading, setLoading] = useState(
-    !(_preloadedCoords ?? effectiveCoords)
-  );
+  const [loading, setLoading] = useState(!effectiveCoords);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
@@ -90,9 +71,6 @@ export default function DungeonModuleDetailPage() {
       dataVersion,
       `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
     );
-    if (_preloadedCoords && _preloadedCoordsUrl === coordsUrl) {
-      return;
-    }
     fetch(coordsUrl)
       .then<ModuleCoordsData>((r) => r.json())
       .then((coords) => {

@@ -33,6 +33,8 @@ export default defineConfig(({ mode }) => {
           const preloads = [
             `<link rel="preload" href="/data/json/meta.json" as="fetch" crossorigin="anonymous">`,
             `<link rel="preload" href="/data/${short}/json/dungeon_modules.json" as="fetch" crossorigin="anonymous">`,
+            `<link rel="preload" href="/data/${short}/json/index.json" as="fetch" crossorigin="anonymous">`,
+            `<link rel="preload" href="/data/${short}/json/search_index.json" as="fetch" crossorigin="anonymous">`,
           ];
           return out.replace(
             '</title>',
