@@ -31,7 +31,7 @@ def export_items(
     output_dir: Path,
     map_to_module: dict | None = None,
     item_coord_chain_map: dict[str, set[str]] | None = None,
-    sub_pool_sizes: dict | None = None,
+    sub_pool_info: dict | None = None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
     items_index = []
@@ -79,7 +79,7 @@ def export_items(
             "category": r["category"],
             "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
-            "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_sizes) for c in coords],
+            "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in coords],
         }
         _save(output_dir, f"items/{name}.json", entity_data)
     _save(output_dir, "items.json", items_index)
@@ -94,7 +94,7 @@ def export_monsters(
     monster_names: set[str],
     output_dir: Path,
     map_to_module: dict | None = None,
-    sub_pool_sizes: dict | None = None,
+    sub_pool_info: dict | None = None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
     _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
@@ -140,7 +140,7 @@ def export_monsters(
             "name": canonical["monster_name"],
             "translation": translation,
             "coords": [
-                build_coord_out(c, coord_variant_count, map_to_module, sub_pool_sizes) for c in merged_coords_list
+                build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
             ],
         }
         _save(output_dir, f"monsters/{canonical['monster_name']}.json", entity_data)
@@ -157,7 +157,7 @@ def export_props(
     prop_names: set[str],
     output_dir: Path,
     map_to_module: dict | None = None,
-    sub_pool_sizes: dict | None = None,
+    sub_pool_info: dict | None = None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
     props_index = []
@@ -222,7 +222,7 @@ def export_props(
         entity_data = {
             "name": name_key,
             "translation": translation,
-            "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_sizes) for c in merged_coords],
+            "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
         _save(output_dir, f"props/{name_key}.json", entity_data)
     _save(output_dir, "props.json", props_index)

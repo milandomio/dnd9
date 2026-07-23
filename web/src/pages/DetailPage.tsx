@@ -879,7 +879,11 @@ export default function DetailPage() {
                           (() => {
                             const linkerGroups = new Map<
                               string,
-                              { coords: Coord[]; poolSize: number }
+                              {
+                                coords: Coord[];
+                                poolSize: number;
+                                poolNames: string[];
+                              }
                             >();
                             for (const c of mapCoords) {
                               const sgp = c.sub_group_parent;
@@ -890,26 +894,24 @@ export default function DetailPage() {
                                 linkerGroups.set(key, {
                                   coords: [],
                                   poolSize: c.sub_pool_size ?? 0,
+                                  poolNames: c.sub_pool_names ?? [],
                                 });
                               }
                               linkerGroups.get(key)!.coords.push(c);
                             }
                             if (linkerGroups.size > 0) {
                               return [...linkerGroups.entries()].map(
-                                ([key, g]) => {
-                                  const linkerLabel = key
-                                    .split('::')[1]
-                                    .replace('C_', 'c');
+                                ([, g]) => {
                                   const uniquePos = new Set(
                                     g.coords.map((c) => `${c.x},${c.y},${c.z}`)
                                   ).size;
                                   return (
                                     <span
-                                      key={key}
+                                      key={g.poolNames.join(',')}
                                       style={{ color: tokens.muted }}
                                     >
-                                      ({linkerLabel}子池{g.poolSize}种选
-                                      {uniquePos})
+                                      ({g.poolNames.join('、')}
+                                      {g.poolSize}种选{uniquePos})
                                     </span>
                                   );
                                 }
