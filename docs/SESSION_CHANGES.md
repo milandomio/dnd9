@@ -1153,3 +1153,25 @@ if (typeof window !== "undefined") {
   - 所有详情页标题格式统一为 `{translation}{name} {typeChinese}{typeEnglish}`（如 `献魂册SoulDevotedFolio 掉落来源Source`）
 - **效果**：3096 个 SSG 页面全部有正确 SEO 标题（含英文名 + 中文分类）
 - **验证**：curl 检查 items/monsters/props/lootdrops/quest_items/quest_npc/dungeon_modules 各类型页面 title 均正确 ✓
+
+## 添加 translation_EN（英文本地化名称）替代 asset name
+
+- **原因**：标题中使用原始 asset name（如 `HeaterShield`、`Mimic_Large_Flat`），需要改用游戏英文本地化的正确英文名（如 `Heater Shield`、`Mimic`）
+- **变更文件**：
+  - `api/src/config.py` — 添加 `EN_GAME_JSON` 路径指向 `en/Game.json`
+  - `api/src/db/_helpers.py` — `load_game_json()` 支持缓存 + 可指定路径；新增 `load_en_game_json()`
+  - `api/src/collector.py` — 加载英翻创建 `resolver_en`，传入所有 export 函数
+  - `api/src/translator.py` — （无改动，复用 NameResolver 逻辑）
+  - `api/src/entity_export.py` — 所有三种实体导出均注入 `translation_EN` 字段
+  - `api/src/lootdrop_builder.py` — `build_loot_index` + `build_and_save_lootdrop_details` 添加 `translation_EN`（含 variant 详情页）
+  - `api/src/module_builder.py` — `build_modules_map` + `build_and_save_module_coords` 添加 `translation_EN`
+  - `api/src/index_export.py` — `generate_quest_items_groups` 接受 `resolve_en_name` 参数
+  - `web/src/types/data.ts` — `ItemEntity`/`MonsterEntity`/`PropsEntity`/`DungeonModule` 增加 `translation_EN?: string`
+  - `web/src/types/quest.ts` — `NPCEntry` 增加 `translation_EN?: string`
+  - `web/src/pages/DetailPage.tsx` — title/og:title 改用 `translation_EN` as fallback
+  - `web/src/pages/LootdropDetailPage.tsx` — title/og:title 改用 `translation_EN`；`LootdropItem` 接口增加 `translation_EN`
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — title 改用 `translation_EN`；SSR loading 改为 `!effectiveCoords && !effectiveModSsr`
+  - `web/src/pages/QuestNPCDetailPage.tsx` — title 改用 `translation_EN`
+  - `web/scripts/ssg.mjs` — quick mode SSR 注入 `translation_EN`
+- **效果**：标题显示正确英文名: `献魂册Soul-Devoted Folio`、`斗盾Heater Shield`、`信徒会所Admirer's Room`
+- **验证**：3096 pages, 检查各类型 title 均使用翻译后英文名 ✓
