@@ -225,11 +225,9 @@ class NameResolver:
         return name
 
 
-def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None) -> dict:
-    """构建坐标输出 dict，附带变体信息。
-    map 字段解析为 dungeon_modules.json 中的模块名（通过 map_to_module 映射）。
-    """
+def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_pool_sizes: dict | None = None) -> dict:
     _gp = c.get("group_parent", "")
+    _sgp = c.get("sub_group_parent", "")
     _mb = c["map_base"]
     if map_to_module:
         _mb = map_to_module.get(_mb, _mb)
@@ -245,9 +243,13 @@ def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None) -> dic
     }
     if _gp:
         out["group_parent"] = _gp
-    _sgp = c.get("sub_group_parent", "")
     if _sgp:
         out["sub_group_parent"] = _sgp
+    if sub_pool_sizes and _sgp:
+        key = (c["map_base"], c["json_filename"], _gp, _sgp)
+        psz = sub_pool_sizes.get(key)
+        if psz and psz > 0:
+            out["sub_pool_size"] = psz
     vc_info = vc.get((c["map_base"], c["json_filename"], _gp))
     if vc_info and vc_info[0] > 1:
         out["variant_count"] = vc_info[0]

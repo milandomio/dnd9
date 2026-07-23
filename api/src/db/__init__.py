@@ -181,3 +181,6 @@ class DatabaseManager:
 
     def get_coord_variant_counts(self) -> dict[tuple[str, str, str], tuple[int, list[str]]]:
         return self.repos.coordinates.get_variant_counts()
+
+    def get_sub_group_pool_sizes(self) -> dict[tuple[str, str, str, str], int]:
+        return self.repos.coordinates.get_sub_group_pool_sizes()

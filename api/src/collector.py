@@ -258,6 +258,8 @@ def run():
         pipe.log(f"[JSON] get_all_coordinates DONE -> {len(all_coords)} entity keys")
         _coord_variant_count = db.get_coord_variant_counts()
         pipe.log(f"[JSON] get_coord_variant_counts DONE -> {len(_coord_variant_count)} variant groups")
+        _sub_pool_sizes = db.get_sub_group_pool_sizes()
+        pipe.log(f"[JSON] get_sub_group_pool_sizes DONE -> {len(_sub_pool_sizes)} sub-groups")
 
         _og_to_keywords: dict[str, set[str]] = {}
         for _kw, _clist in all_coords.items():
@@ -351,6 +353,7 @@ def run():
                 OUTPUT_DIR,
                 map_to_module,
                 item_coord_chain_map,
+                _sub_pool_sizes,
             )
             # P005: Build from actual exported files, not raw DB data
             for e in items_index:
@@ -366,6 +369,7 @@ def run():
                 _monster_names,
                 OUTPUT_DIR,
                 map_to_module,
+                _sub_pool_sizes,
             )
             for e in monsters_index:
                 entity_page_map[e["name"]] = f"monsters/{e['name']}"
@@ -381,6 +385,7 @@ def run():
                 _prop_names,
                 OUTPUT_DIR,
                 map_to_module,
+                _sub_pool_sizes,
             )
             for e in props_index:
                 entity_page_map[e["name"]] = f"props/{e['name']}"
@@ -394,7 +399,7 @@ def run():
                 continue
             if not _coords:
                 continue
-            coord_data = [build_coord_out(c, _coord_variant_count, map_to_module) for c in _coords]
+            coord_data = [build_coord_out(c, _coord_variant_count, map_to_module, _sub_pool_sizes) for c in _coords]
             _save(f"coords/{_entity_name}.json", coord_data)
             entity_page_map[_entity_name] = f"coords/{_entity_name}"
             _orphan_count += 1

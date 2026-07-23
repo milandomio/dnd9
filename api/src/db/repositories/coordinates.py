@@ -74,3 +74,17 @@ class CoordinatesRepository:
                 names,
             )
         return result
+
+    def get_sub_group_pool_sizes(self) -> dict[tuple[str, str, str, str], int]:
+        c = self.conn.cursor()
+        result: dict[tuple[str, str, str, str], int] = {}
+        for row in c.execute(
+            "SELECT map_base, json_filename, group_parent, sub_group_parent, "
+            "COUNT(DISTINCT original_keyword) as pool_size "
+            "FROM spawners WHERE group_parent != '' AND sub_group_parent != '' "
+            "AND has_lootdrop = 1 "
+            "GROUP BY map_base, json_filename, group_parent, sub_group_parent"
+        ):
+            key = (row["map_base"], row["json_filename"], row["group_parent"], row["sub_group_parent"])
+            result[key] = row["pool_size"]
+        return result
