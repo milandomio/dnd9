@@ -210,7 +210,8 @@ export default function QuestNPCDetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {npc.npc_name_display} - 任务列表 | 越来越黑暗闪电指南 DarkFlashNav
+          {npc.npc_name_display}
+          {npc.npc_name} 任务列表QuestList | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
