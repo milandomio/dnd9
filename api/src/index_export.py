@@ -29,7 +29,14 @@ def save_quest_data(db, output_dir: Path) -> tuple[int, int, int, list[dict]]:
 
 
 def generate_quest_items_groups(
-    db, merged_loot, resolve_name, all_coords, modules, output_dir: Path, group_label_resolver=None
+    db,
+    merged_loot,
+    resolve_name,
+    all_coords,
+    modules,
+    output_dir: Path,
+    group_label_resolver=None,
+    resolve_en_name=None,
 ):
     """Generate quest items groups with coordinates."""
     import logging

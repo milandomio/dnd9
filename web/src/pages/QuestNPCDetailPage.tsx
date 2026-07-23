@@ -211,7 +211,8 @@ export default function QuestNPCDetailPage() {
       <Helmet>
         <title>
           {npc.npc_name_display}
-          {npc.npc_name} 任务列表QuestList | 越来越黑暗闪电指南 DarkFlashNav
+          {npc.translation_EN ?? npc.npc_name} 任务列表QuestList |
+          越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"

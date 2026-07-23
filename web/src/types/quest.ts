@@ -26,6 +26,7 @@ export interface NPCQuest {
 export interface NPCEntry {
   npc_name: string;
   npc_name_display: string;
+  translation_EN?: string;
   quest_count: number;
   category: string;
   quests: NPCQuest[];

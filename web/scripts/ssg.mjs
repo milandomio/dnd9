@@ -229,7 +229,7 @@ for (const p of PAGES) {
     } else {
       // Quick mode: inject minimal metadata for SEO (name + translation only)
       if (p === "lootdrops") {
-        const minimalItem = { item: { name: e.name, translation: e.translation } };
+        const minimalItem = { item: { name: e.name, translation: e.translation, translation_EN: e.translation_EN } };
         ssrDataMap[`lootdrops/${name}`] = minimalItem;
         if (e.variant_suffixes && e.variant_suffixes.length > 1) {
           for (const suffix of e.variant_suffixes) {
@@ -237,7 +237,7 @@ for (const p of PAGES) {
           }
         }
       } else {
-        ssrDataMap[`${p}/${name}`] = { entity: { name: e.name, translation: e.translation } };
+        ssrDataMap[`${p}/${name}`] = { entity: { name: e.name, translation: e.translation, translation_EN: e.translation_EN } };
       }
     }
   }
@@ -256,7 +256,7 @@ for (const m of moduleData) {
       ssrDataMap[key] = { module: m, coords: null };
     }
   } else {
-    ssrDataMap[key] = { module: { name: m.name, translation: m.translation }, coords: null };
+    ssrDataMap[key] = { module: { name: m.name, translation: m.translation, translation_EN: m.translation_EN }, coords: null };
   }
 }
 
