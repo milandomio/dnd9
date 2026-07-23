@@ -30,9 +30,7 @@
 
 ## 改动清单
 
-### 1. 新建 `web/src/utils/dataUrl.ts`
-
-工具函数，统一收敛版本化 URL 构建逻辑：
+### ✅ 1. 新建 `web/src/utils/dataUrl.ts` (已实施)
 
 ```ts
 // /data/json/foo → /data/{verShort}/json/foo
@@ -43,15 +41,12 @@ export function dataUrl(version: string, path: string) {
 }
 ```
 
-### 2. 修改 `web/vite.config.ts`
+### ✅ 2. 修改 `web/vite.config.ts` (已实施)
 
 **SW 路由规则** — df5-data-json 的 urlPattern：
 
 ```ts
-// 当前：不匹配版本化路径
-urlPattern: ({ url }) => url.pathname.startsWith('/data/json/'),
-
-// 改为：兼容版本化和非版本化路径
+// 兼容版本化和非版本化路径
 urlPattern: ({ url }) => /^\/data\/(?:[a-z0-9]+\/)?json\//.test(url.pathname),
 ```
 

@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
+import { dataUrl } from '../utils/dataUrl';
 import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
@@ -85,14 +86,14 @@ export default function DungeonModuleDetailPage() {
       setHidden(new Set(effectiveCoords.entities.map((e) => e.name)));
       return;
     }
-    if (
-      _preloadedCoords &&
-      _preloadedCoordsUrl ===
-        `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
-    ) {
+    const coordsUrl = dataUrl(
+      dataVersion,
+      `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
+    );
+    if (_preloadedCoords && _preloadedCoordsUrl === coordsUrl) {
       return;
     }
-    fetch(`/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`)
+    fetch(coordsUrl)
       .then<ModuleCoordsData>((r) => r.json())
       .then((coords) => {
         setCoordsData(coords);

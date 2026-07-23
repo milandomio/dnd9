@@ -11,6 +11,7 @@ import type {
   GroupDropInfo,
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
+import { useDataVersion } from '../hooks/useDataVersion';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
@@ -26,6 +27,7 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
+import { dataUrl } from '../utils/dataUrl';
 
 let _preloadedEntityUrl = '';
 let _preloadedEntity: Entity | null = null;
@@ -82,6 +84,7 @@ export default function DetailPage() {
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
 
+  const dataVersion = useDataVersion();
   const fetchedRef = useRef(false);
 
   // Reset fetch guard when navigating between entities
@@ -132,7 +135,7 @@ export default function DetailPage() {
       return;
     }
     const decoded = decodeURIComponent(name!);
-    const url = `/data/json/${page}/${decoded}.json`;
+    const url = dataUrl(dataVersion, `/data/json/${page}/${decoded}.json`);
     if (_preloadedEntity?.coords && _preloadedEntityUrl === url) return;
     if (fetchedRef.current) return;
     fetchedRef.current = true;
@@ -142,7 +145,7 @@ export default function DetailPage() {
         setEntity(entityData);
       })
       .catch(console.error);
-  }, [page, name, ssrData]);
+  }, [page, name, ssrData, dataVersion]);
 
   if (!entity)
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;

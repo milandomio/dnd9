@@ -26,6 +26,10 @@ export default function SWUpdateBanner() {
     navigator.serviceWorker
       .register('/sw.js')
       .then((reg) => {
+        if (reg.waiting && navigator.serviceWorker.controller) {
+          setState('update');
+          return;
+        }
         reg.addEventListener('updatefound', () => {
           const newWorker = reg.installing;
           if (!newWorker) return;

@@ -5,6 +5,7 @@ import Disclaimer from '../components/Disclaimer';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { dataUrl } from '../utils/dataUrl';
 
 interface ExploreTarget {
   name: string;
@@ -28,7 +29,7 @@ export default function ExplorePage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('/data/json/explore.json')
+    fetch(dataUrl(dataVersion, '/data/json/explore.json'))
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)
       .catch(console.error);

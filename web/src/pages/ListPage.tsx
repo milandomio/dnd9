@@ -5,6 +5,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
+import { dataUrl } from '../utils/dataUrl';
 import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
 
 type IndexEntry = SearchEntry & {
@@ -92,7 +93,7 @@ export default function ListPage() {
         setData(entries as IndexEntry[]);
       } else {
         // fallback: search_index has no data for this page
-        fetch(`/data/json/${page}.json`)
+        fetch(dataUrl(dataVersion, `/data/json/${page}.json`))
           .then((r) => r.json())
           .then(setData)
           .catch(console.error);

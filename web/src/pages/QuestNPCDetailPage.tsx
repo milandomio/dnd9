@@ -3,8 +3,9 @@ import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
-import { useSeasonVersion } from '../hooks/useDataVersion';
+import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
@@ -108,6 +109,7 @@ export default function QuestNPCDetailPage() {
   const [search, setSearch] = useState('');
   const [onlyFetch, setOnlyFetch] = useState(false);
   const [onlySuggested, setOnlySuggested] = useState(false);
+  const dataVersion = useDataVersion();
   const seasonVersion = useSeasonVersion();
 
   const highlightQuestNum = (location.state as { questNumber?: number })
@@ -117,11 +119,11 @@ export default function QuestNPCDetailPage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('/data/json/quest_npc.json')
+    fetch(dataUrl(dataVersion, '/data/json/quest_npc.json'))
       .then<NPCEntry[]>((r) => r.json())
       .then(setAllNpcs)
       .catch(console.error);
-  }, [ssrData]);
+  }, [ssrData, dataVersion]);
 
   // Only clear quest_npc_* localStorage keys when season version changes
   useEffect(() => {

@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
+import { useDataVersion } from '../hooks/useDataVersion';
+import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
 
@@ -95,14 +97,15 @@ export default function HomePage() {
   const ssrData = useSSRData<IndexEntry[]>('home');
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const { tokens, dark } = useTheme();
+  const dataVersion = useDataVersion();
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('/data/json/index.json')
+    fetch(dataUrl(dataVersion, '/data/json/index.json'))
       .then((r) => r.json())
       .then(setData)
       .catch(console.error);
-  }, []);
+  }, [ssrData, dataVersion]);
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>

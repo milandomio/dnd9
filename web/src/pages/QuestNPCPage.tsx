@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
@@ -43,7 +44,7 @@ export default function QuestNPCPage() {
 
   useEffect(() => {
     if (ssrData) return;
-    fetch('/data/json/quest_npc.json')
+    fetch(dataUrl(dataVersion, '/data/json/quest_npc.json'))
       .then<NPCEntry[]>((r) => r.json())
       .then(setData)
       .catch(console.error);
