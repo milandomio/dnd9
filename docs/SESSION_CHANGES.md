@@ -25,6 +25,14 @@
 - **效果**：GrimveilCloak 豪客赛爆率从 `0.2273%` → `1.0888%`（↑4.8×）
 - **文档**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` 新增概率修正章节，区分怪物直接生成（43.5%）和物品掉落（≈1/9,200）
 
+## adjRate 改用多重 pickup exact 公式 100×(1−(1−v/(100N))^G)
+
+- **原因**：原 exact 公式 `v×(1−(1−1/N)^G)` 假设"一旦选中只出 1 个 pickup"，但实际 6 个 ObjectLinker 的坐标精确对齐同一物理点，若多个同时选中则多个 pickup 重叠，各有 v% 独立判定掉落
+- **变更文件**：
+  - `web/src/pages/DetailPage.tsx` — adjRate 改为 `100 × (1 − (1 − v/(100×N))^G)`
+- **效果**：GrimveilCloak 豪客赛爆率从 `1.0888%` → `1.3559%`（又涨约 25%，因为考虑了多重 pickup 叠加效应）
+- **文档**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` — 更新概率表格，标注 6 个坐标精确对齐同一物理点的设计
+
 # 2026-07-22 会话修改记录
 
 ## 修复 ElephantIsland 硬编码未生效问题（前端构建过时）
