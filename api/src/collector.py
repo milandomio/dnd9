@@ -312,13 +312,15 @@ def run():
         _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[str]]] = {}
         for _sp_key, (_sp_cnt, _sp_raw_names) in _sub_pool_info_raw.items():
             _sp_tr: list[str] = []
-            for _name in _sp_raw_names:
-                _sp_tr.append(
-                    resolver.resolve(_name, "", "monster")
-                    or resolver.resolve(_name, "", "props")
-                    or resolver.resolve(_name, "", "item")
-                    or _name
-                )
+            for _kw in _sp_raw_names:
+                _cls = entity_class.get(_kw, {})
+                _mrow = _monsters_lookup.get(_kw)
+                if _mrow:
+                    _sp_tr.append(resolver.resolve(_kw, _mrow["translation_key"], "monster"))
+                elif _cls and "props" in _cls.get("types", []):
+                    _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                else:
+                    _sp_tr.append(resolver.resolve(_kw, None, "props") or _kw)
             _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr)
 
         pipe.log("[JSON] building merged lootdrop map...")
