@@ -1,5 +1,12 @@
 # 2026-07-23 会话修改记录
 
+## Cloudflare Pages 构建检查修复：关闭预览分支拉取
+
+- **原因**：推送 `7a9c6756` 后 GitHub check run 显示 `Cloudflare Pages: failure`。调查发现 CF Pages 将 `main` 分支当作预览分支，从源码重新构建（而非直接 serve gh-pages 的预构建文件），因构建命令/环境不一致立即失败（`09:50:28` 开始和完成同秒）。实际服务正常（`dnd9.icetar.com` 已部署新代码：SW regex urlPattern、版本化 preload 均正确）。
+- **修复方式**：在 Cloudflare Dashboard → Pages → dnd9 → Settings → Preview branches 关闭预览分支拉取（或限制为 `preview/*`），使 main 的 push 不再触发 CF 构建。
+- **变更文件**：无（Dashboard 配置改动，非代码变更）
+- **验证**：后续推送不会再有 CF Pages 构建失败 check run。旧 commit 的死 check 不会重新运行。
+
 ## SSG preload 注入 + 移除模块级 JS preload
 
 - **原因**：完成缓存优化计划其余项。全局 preload 增加 `index.json` + `search_index.json`；SSG 构建时注入详情页特定 preload（实体 JSON / lootdrops / 坐标 + 图片）；移除 3 个详情页的模块级 JS preload。

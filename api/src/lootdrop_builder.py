@@ -319,6 +319,7 @@ def build_and_save_lootdrop_details(
     item_max_score: dict[str, float] = {}
     item_valid_names: dict[str, set[str]] = {}
     item_hr100: dict[str, bool] = {}
+    item_variant_suffixes: dict[str, list[str]] = {}
     detail_count = 0
     detail_total = len(loot_index)
     if log_fn:
@@ -701,6 +702,11 @@ def build_and_save_lootdrop_details(
                         if variant_count >= 8 and "8001" not in vs:
                             vs.append("8001")
             if vs and len(vs) > 1:
+                if not item_name.endswith("_8001"):
+                    # variant_suffixes only for base items; _8001 has its own entry
+                    _vs_out = [s for s in vs if s != "8001"]
+                    detail["variant_suffixes"] = _vs_out
+                    item_variant_suffixes[item_name] = _vs_out
                 if translations:
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
                 # Pre-compute base item spawners (union of all variants) as fallback
@@ -805,12 +811,15 @@ def build_and_save_lootdrop_details(
     if log_fn:
         log_fn(f"[JSON] lootdrops detail files DONE -> {detail_count} items")
 
-    # Update lootdrops.json index with max_score, hr100 and filtered monsters
+    # Update lootdrops.json index with max_score, hr100, variant_suffixes and filtered monsters
     for _entry in loot_index:
         _iname = _entry["name"]
         _entry["max_score"] = item_max_score.get(_iname, 0.0)
         if item_hr100.get(_iname):
             _entry["hr100"] = True
+        _vs = item_variant_suffixes.get(_iname)
+        if _vs:
+            _entry["variant_suffixes"] = _vs
         _valid = item_valid_names.get(_iname)
         if _valid:
             _filtered = [

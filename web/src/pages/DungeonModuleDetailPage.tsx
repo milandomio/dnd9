@@ -43,7 +43,7 @@ export default function DungeonModuleDetailPage() {
     coords: ModuleCoordsData | null;
   }>(dataKey);
   const effectiveCoords = ssrData?.coords?.entities ? ssrData.coords : null;
-  const effectiveModSsr = ssrData?.module?.size_x ? ssrData.module : null;
+  const effectiveModSsr = ssrData?.module?.name ? ssrData.module : null;
   const [coordsData, setCoordsData] = useState<ModuleCoordsData | null>(
     effectiveCoords
   );
@@ -174,7 +174,8 @@ export default function DungeonModuleDetailPage() {
 
       <Helmet>
         <title>
-          {m.translation} 地图模块 | 越来越黑暗闪电指南 DarkFlashNav
+          {m.translation}
+          {m.name} 地图模块Module | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"

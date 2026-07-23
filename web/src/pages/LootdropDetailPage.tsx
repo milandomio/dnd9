@@ -123,9 +123,17 @@ export default function LootdropDetailPage() {
     ? ssrData
     : baseSsrData?.item?.monsters
       ? baseSsrData
-      : null;
+      : ssrData?.item?.name
+        ? ssrData
+        : baseSsrData?.item?.name
+          ? baseSsrData
+          : null;
   const [data, setData] = useState<LootdropItem | null>(
-    effectiveSsrData?.item?.monsters ? effectiveSsrData.item : null
+    effectiveSsrData?.item?.monsters
+      ? effectiveSsrData.item
+      : effectiveSsrData?.item?.name
+        ? (effectiveSsrData.item as LootdropItem)
+        : null
   );
   const dataVersion = useDataVersion();
   const { modules: globalModules } = useDungeonModules();
@@ -635,8 +643,8 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {data.translation || data.name} 掉落来源 | 越来越黑暗闪电指南
-          DarkFlashNav
+          {data.translation}
+          {data.name} 掉落来源Source | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -648,7 +656,7 @@ export default function LootdropDetailPage() {
         />
         <meta
           property="og:title"
-          content={`${data.translation || data.name} 掉落来源 | DarkFlashNav`}
+          content={`${data.translation}${data.name} 掉落来源Source | DarkFlashNav`}
         />
         <meta
           property="og:description"
