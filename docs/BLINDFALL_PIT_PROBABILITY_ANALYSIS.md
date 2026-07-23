@@ -142,6 +142,70 @@ const adjRate = (v: number) =>
 
 > 注：之前的"骷髅冠军最多 4 个"是错误结论，误将 C_3 的 3 个 spawn 位置算作独立出怪，实际每个 linker 只选 1 位置生成。
 
+## 子池信息提取与显示链路
+
+### 数据流
+
+```
+DB (spawners 表) → api/src/db/repositories/coordinates.py
+  → api/src/collector.py (翻译实体名)
+  → api/src/translator.py::build_coord_out (输出到 JSON)
+  → data/json/monsters|items|props/*.json (coord 内联)
+  → 前端 DetailPage.tsx (按 sub_group_parent 分组渲染)
+```
+
+### 步骤拆解
+
+1. **SQL 查询** (`coordinates.py:get_sub_group_pool_info`)
+   ```sql
+   SELECT map_base, json_filename, group_parent, sub_group_parent,
+          COUNT(DISTINCT original_keyword) as pool_size,
+          GROUP_CONCAT(DISTINCT original_keyword) as keywords
+   FROM spawners
+   WHERE group_parent != '' AND sub_group_parent != '' AND has_lootdrop = 1
+   GROUP BY map_base, json_filename, group_parent, sub_group_parent
+   ```
+   按 `(map, file, group_parent, sub_group_parent)` 分组，统计各 ObjectLinker 子池内的独立实体种类数和实体名列表。
+
+2. **名称翻译** (`collector.py`)
+   用 `entity_classification` 判断实体类型（monster/props/item），取出对应 `translation_key` 调用 `NameResolver.resolve()`，得到中文显示名。GrimveilCloak→阴森帷幕披风等。
+
+3. **JSON 注入** (`translator.py:build_coord_out`)
+   每个 coord 的 `sub_pool_size`（子池实体种类数）和 `sub_pool_names`（翻译后的实体名列表）随 `coords[]` 字段写入实体详情 JSON。
+
+4. **前端分组渲染** (`DetailPage.tsx`)
+   ```tsx
+   const linkerGroups = new Map</* sub_group_parent → {coords, poolSize, poolNames} */>();
+   for (const c of mapCoords) {
+     const sgp = c.sub_group_parent, gp = c.group_parent;
+     if (!sgp || !gp) continue;
+     // 按 `${gp}::${sgp}` 分组
+   }
+   // 每组显示: (entityName1、entityName2、...poolSize种选uniquePos · uniquePos点选1)
+   ```
+
+   效果：`(骷髅冠军、阴森帷幕披风2种选3 · 3点选1)`
+
+### 关键字段
+
+| 字段 | 来源 | 含义 |
+|------|------|------|
+| `sub_group_parent` | search_engine → spawners 表 | ObjectLinker 名称（如 BP_GameObjectLinker_C_3） |
+| `sub_pool_size` | SQL COUNT(DISTINCT original_keyword) | 该 linker 子池的实体种类数 |
+| `sub_pool_names` | SQL GROUP_CONCAT + NameResolver 翻译 | 子池内所有实体的翻译名列表 |
+| `uniquePos` | 前端按 (x,y,z) 去重 | 该实体在此 linker 中的 spawn 位置数 |
+
+### 子池分组（Blindfall Pit 全量）
+
+| Linker | 子池实体 | 种数 | spawner 数 |
+|--------|----------|------|-----------|
+| C_1 | 宝藏堆, 金矿脉, 阴森帷幕披风 | 3 | 12 |
+| C_3 | 骷髅冠军, 阴森帷幕披风 | 2 | 4 |
+| C_5 | 幽鬼, 阴森帷幕披风 | 2 | 4 |
+| C_7 | 骷髅斧手, GuardsmanFromFakeDeath, 骷髅长枪兵, 骷髅双手剑士, 阴森帷幕披风 | 5 | 65 |
+| C_9 | 骷髅弓箭手, 骷髅弩手, 阴森帷幕披风 | 3 | 9 |
+| C_11 | 骷髅弓箭手, 骷髅冠军, 骷髅弩手, 骷髅长枪兵, 骷髅双手剑士, 幽鬼, 阴森帷幕披风 | 7 | 7 |
+
 ## 对比
 
 | 版本 | GrimveilCloak 点数 | 标签 | 说明 |
