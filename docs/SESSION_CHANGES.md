@@ -25,13 +25,12 @@
 - **效果**：GrimveilCloak 豪客赛爆率从 `0.2273%` → `1.0888%`（↑4.8×）
 - **文档**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` 新增概率修正章节，区分怪物直接生成（43.5%）和物品掉落（≈1/9,200）
 
-## adjRate 改用多重 pickup exact 公式 100×(1−(1−v/(100N))^G)
+## adjRate 回退到 v×(1−(1−1/N)^G)
 
-- **原因**：原 exact 公式 `v×(1−(1−1/N)^G)` 假设"一旦选中只出 1 个 pickup"，但实际 6 个 ObjectLinker 的坐标精确对齐同一物理点，若多个同时选中则多个 pickup 重叠，各有 v% 独立判定掉落
+- **原因**：将公式改为 `100×(1−(1−v/(100N))^G)` 是错误的——引擎对同位置同实体去重（如幽鬼只出 1 只），最多 1 个 pickup
 - **变更文件**：
-  - `web/src/pages/DetailPage.tsx` — adjRate 改为 `100 × (1 − (1 − v/(100×N))^G)`
-- **效果**：GrimveilCloak 豪客赛爆率从 `1.0888%` → `1.3559%`（又涨约 25%，因为考虑了多重 pickup 叠加效应）
-- **文档**：`docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` — 更新概率表格，标注 6 个坐标精确对齐同一物理点的设计
+  - `web/src/pages/DetailPage.tsx` — adjRate 回退到 `v * (1 - (1 - 1 / N) ** G)`
+- **最终结论**：GrimveilCloak 豪客赛掉率 `0.2273%` → `1.0888%`（仅 4.8× 提升，无额外叠加效应），综合概率 ≈1/9,191
 
 # 2026-07-22 会话修改记录
 
