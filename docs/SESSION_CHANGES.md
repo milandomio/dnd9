@@ -1,3 +1,18 @@
+# 2026-07-24 会话修改记录
+
+## 所有语言翻译导入数据库
+
+- **原因**：英文翻译 `en/Game.json` 之前直接从文件读取到内存，需要与中文一样导入 DB 统一管理；其他语言也一并入库以便后续扩展
+- **变更文件**：
+  - `api/src/config.py` — 添加 `LOCALIZATION_ROOT` 指向语言目录根
+  - `api/src/db/_helpers.py` — 添加 `discover_languages()` 自动发现所有语言目录、`locale_display_name()` 友好名
+  - `api/src/db/schema.py` — 添加 `ensure_translation_table(lang)` 为每种语言创建独立表
+  - `api/src/db/__init__.py` — `import_translations()` 导入所有 10 种语言到对应表（`translations_en`、`translations_de` 等）zh-Hans 保持 `translations` 表不变；`get_translations_map(lang)` 支持按语言查询
+  - `api/src/collector.py` — EN 改为 `db.get_translations_map("en")`，移除文件直读
+- **DB 结果**：10 张翻译表，各 1.2-1.3 万条记录
+- **效果**：英文名显示不变（`Heater Shield`、`Soul-Devoted Folio`），流水线 107s 运行正常
+- **验证**：3096 pages 构建通过
+
 # 2026-07-23 会话修改记录
 
 ## Cloudflare Pages 构建检查修复：关闭预览分支拉取
