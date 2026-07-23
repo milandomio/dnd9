@@ -911,7 +911,11 @@ export default function DetailPage() {
                                       style={{ color: tokens.muted }}
                                     >
                                       ({g.poolNames.join('、')}
-                                      {g.poolSize}种选{uniquePos})
+                                      {g.poolSize}种选{uniquePos}
+                                      {uniquePos > 1
+                                        ? ` · ${uniquePos}点选1`
+                                        : ''}
+                                      )
                                     </span>
                                   );
                                 }
