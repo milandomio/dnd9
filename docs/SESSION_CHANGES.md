@@ -1,5 +1,14 @@
 # 2026-07-25 会话修改记录
 
+## P9: locale 字典体积优化 — 只导出实际使用的 translation_key
+
+- **原因**：`locale_builder.py` 从 DB 导出全部 1608 个翻译 key 到每种语言的 locale JSON，前端只用到 search_index + 实体数据文件中的 ~1055 个 key，多出 ~552 个无用 key（34% 冗余）
+- **变更文件**：
+  - `api/src/locale_builder.py` — 新增 `_load_used_keys()`，扫描 `search_index.json` + items/monsters/props/lootdrops 目录下所有 JSON 文件（含嵌套 monsters、group_drop_info）收集实际使用的 `translation_key`；`build_locale_files()` 按此集合过滤翻译字典
+- **关键逻辑/映射**：过滤集来源 = search_index 中所有含 `translation_key` 的条目 + 每个实体 JSON 的顶层 `translation_key` + 嵌套 `monsters[].translation_key` + `group_drop_info/chains[].translation_key`；未命中 key 的前端 `t()` 回退到中文 `translation`/`name`
+- **验证**：管线通过（88s），HTTP 200，10 语言 locale 各 1054-1056 key（原 ~1608），实体翻译键无缺失（0 missing）
+- **效果**：每个 locale JSON 从 ~100KB 降到 ~65-83KB（↓34%），10 文件总计从 ~1.07MB 降到 ~698KB
+
 ## P8d: 剩余页面 UI i18n 全量接入 + LootdropDetail 嵌套实体名翻译
 
 - **原因**: P8 仍有 9 个页面未接入 `useLocale`/`ut()`，页面标题/统计/按钮/标签等仍硬编码中文；LootdropDetail 嵌套怪物名需按 locale 翻译

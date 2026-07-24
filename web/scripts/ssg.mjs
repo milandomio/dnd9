@@ -241,7 +241,6 @@ for (const p of PAGES) {
             name: e.name,
             translation: e.translation,
             translation_key: e.translation_key,
-            translation_EN: e.translation_EN,
           },
         };
         ssrDataMap[`lootdrops/${name}`] = minimalItem;
@@ -256,7 +255,6 @@ for (const p of PAGES) {
             name: e.name,
             translation: e.translation,
             translation_key: e.translation_key,
-            translation_EN: e.translation_EN,
           },
         };
       }
@@ -282,7 +280,6 @@ for (const m of moduleData) {
         name: m.name,
         translation: m.translation,
         translation_key: m.translation_key,
-        translation_EN: m.translation_EN,
       },
       coords: null,
     };

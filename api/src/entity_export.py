@@ -32,7 +32,6 @@ def export_items(
     map_to_module: dict | None = None,
     item_coord_chain_map: dict[str, set[str]] | None = None,
     sub_pool_info: dict | None = None,
-    resolve_en_name=None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
     items_index = []
@@ -40,20 +39,14 @@ def export_items(
         name = r["item_name"]
         if name in skip_variants:
             continue
-        # Only keep ground loot items (have "Ground" in lootdrop relationships
-        # or no lootdrop relationships at all for decoration/quest items)
         _mons = merged_loot.get(name, [])
         if _mons and "Ground" not in _mons:
             continue
         coords = filter_coords(all_coords.get(name, []), item_names)
-        # Try ore name cleaning: GoldOres → GoldOre
         if not coords:
             m = ORE_ITEM_COORD_RE.match(name)
             if m:
                 coords = filter_coords(all_coords.get(m.group(1) + "Ore", []), item_names)
-        # Fallback: trace lootdrop chain item → lootdrop_group → spawner → coords
-        # Skip filter_coords here because the coord's keyword is the spawner name,
-        # not the item name, so the entity_names check would reject it.
         if not coords and item_coord_chain_map:
             for spawner_kw in item_coord_chain_map.get(name, []):
                 _raw = all_coords.get(spawner_kw, [])
@@ -63,14 +56,12 @@ def export_items(
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
-        translation_en = resolve_en_name(name, r["translation_key"], "item") if resolve_en_name else name
         variant_count = r.get("variant_count", 1)
         items_index.append(
             {
                 "name": name,
                 "translation": translation,
                 "translation_key": r["translation_key"],
-                "translation_EN": translation_en,
                 "category": r["category"],
                 "variant_count": variant_count,
                 "monsters": merged_loot.get(name, []),
@@ -81,7 +72,6 @@ def export_items(
             "name": name,
             "translation": translation,
             "translation_key": r["translation_key"],
-            "translation_EN": translation_en,
             "category": r["category"],
             "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
@@ -101,7 +91,6 @@ def export_monsters(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
-    resolve_en_name=None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
     _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
@@ -136,17 +125,11 @@ def export_monsters(
                     merged_coords_list.append(c)
         if not merged_coords_list:
             continue
-        translation_en = (
-            resolve_en_name(canonical["monster_name"], canonical["translation_key"], "monster")
-            if resolve_en_name
-            else canonical["monster_name"]
-        )
         monsters_index.append(
             {
                 "name": canonical["monster_name"],
                 "translation": translation,
                 "translation_key": canonical["translation_key"],
-                "translation_EN": translation_en,
                 "coordCount": len(merged_coords_list),
             }
         )
@@ -154,7 +137,6 @@ def export_monsters(
             "name": canonical["monster_name"],
             "translation": translation,
             "translation_key": canonical["translation_key"],
-            "translation_EN": translation_en,
             "coords": [
                 build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
             ],
@@ -174,7 +156,6 @@ def export_props(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
-    resolve_en_name=None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
     props_index = []
@@ -229,17 +210,11 @@ def export_props(
                 break
 
         canonical_prop = group[0]
-        translation_en = (
-            resolve_en_name(canonical_prop["asset_name"], canonical_prop["translation_key"], "props")
-            if resolve_en_name
-            else name_key
-        )
         props_index.append(
             {
                 "name": name_key,
                 "translation": translation,
                 "translation_key": canonical_prop["translation_key"],
-                "translation_EN": translation_en,
                 "coordCount": len(merged_coords),
                 "type": entity_type,
             }
@@ -248,7 +223,6 @@ def export_props(
             "name": name_key,
             "translation": translation,
             "translation_key": canonical_prop["translation_key"],
-            "translation_EN": translation_en,
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
         _save(output_dir, f"props/{name_key}.json", entity_data)
