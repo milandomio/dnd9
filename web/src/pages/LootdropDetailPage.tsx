@@ -21,6 +21,7 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
+import { useLocale } from '../i18n/useLocale';
 
 interface LootdropCoord {
   x: number;
@@ -64,6 +65,7 @@ interface GroupDropInfo {
 interface LootdropItem {
   name: string;
   translation: string;
+  translation_key?: string;
   translation_EN?: string;
   monsters: LootdropMonster[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
@@ -177,6 +179,7 @@ export default function LootdropDetailPage() {
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
+  const { t } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
   const lootFetchedRef = useRef(false);
@@ -628,6 +631,7 @@ export default function LootdropDetailPage() {
   const visibleCount = resolvedMonsters.filter(
     (m) => !hidden.has(m.translation)
   ).length;
+  const itemLabel = t(data.translation_key, data.translation || data.name);
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -644,13 +648,13 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {data.translation}
+          {itemLabel}
           {data.translation_EN ?? data.name} 掉落来源Source | 越来越黑暗闪电指南
           DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${bottomCount} 个位置点。`}
+          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落，共 ${bottomCount} 个位置点。`}
         />
         <meta
           name="keywords"
@@ -658,11 +662,11 @@ export default function LootdropDetailPage() {
         />
         <meta
           property="og:title"
-          content={`${data.translation}${data.translation_EN ?? data.name} 掉落来源Source | DarkFlashNav`}
+          content={`${itemLabel}${data.translation_EN ?? data.name} 掉落来源Source | DarkFlashNav`}
         />
         <meta
           property="og:description"
-          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落`}
+          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落`}
         />
       </Helmet>
       <h1
@@ -673,7 +677,7 @@ export default function LootdropDetailPage() {
           margin: '0 0 8px',
         }}
       >
-        {data.translation}
+        {itemLabel}
         {currentSuffix && data.variant_rarity?.[currentSuffix] && (
           <span
             style={{
