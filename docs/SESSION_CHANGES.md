@@ -1,5 +1,16 @@
 # 2026-07-24 会话修改记录
 
+## 主文档精简与低频内容归档
+
+- **原因**：`CLAUDE.md` 混入大量低频参考内容（项目树、页面布局、组件表、Hydration 排障、数据管道细节、PWA 缓存、DB 推送流程、长文档索引），导致主文档过长且高频规则不够突出
+- **变更文件**：
+  - `CLAUDE.md` — 保留执行规则、术语、工具约束、开发/构建强制入口；新增子文档查阅表，按任务场景映射到对应 docs 文档
+  - `docs/AGENT_REFERENCE.md` — 新建长期参考归档，承接项目结构、V4 参考、页面布局、组件架构、详情页同步规则、fetch 路径规则、useDataVersion 状态同步、React Hydration 规则、前端排错流程、数据管道关键规则、子池规则、PWA 缓存规则和文档索引
+  - `docs/DEVELOPMENT_WORKFLOW.md` — 新建开发流程文档，承接 checkpoint、提交前 format / format:check / tsc 预检、常见 TS/Prettier 问题和自动生成数据警告
+  - `docs/BUILD_AND_DEPLOY.md` — 新建构建部署文档，承接完整构建、仅前端构建、启动 web、HTTP 200 验证、一键部署、数据流、远端和含 DB 推送流程
+  - `docs/SESSION_CHANGES.md` — 记录本次文档拆分
+- **关键逻辑/映射关系**：`CLAUDE.md` 通过“子文档查阅规则”让代理知道不同任务先查哪份文档；开发/提交查 `DEVELOPMENT_WORKFLOW.md`；构建/部署/DB 推送查 `BUILD_AND_DEPLOY.md`；架构/页面/排障/历史索引查 `AGENT_REFERENCE.md`；技术详细规范继续指向 `REFERENCE.md` / `PWA_ROADMAP.md`
+
 ## 所有语言翻译导入数据库
 
 - **原因**：英文翻译 `en/Game.json` 之前直接从文件读取到内存，需要与中文一样导入 DB 统一管理；其他语言也一并入库以便后续扩展
