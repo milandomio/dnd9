@@ -1,5 +1,15 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划阶段 4：语言前缀识别与无前缀中文策略
+
+- **原因**：多语言路由需要支持 `/en/...` 等语言前缀，但无前缀 URL 必须继续作为简体中文，避免旧链接被浏览器语言自动重定向破坏
+- **变更文件**：
+  - `web/src/i18n/LanguageContext.tsx` — 新增 `LanguageRoute`、`useLanguage()`、`stripLangPrefix()`、`withLangPrefix()`，统一识别支持语言并提供路径转换工具
+  - `web/src/AppInner.tsx` — 在现有无前缀路由之外追加 `/:lang/...` 路由，语言路径复用同一页面组件，并放在泛型 `/:page` 路由之前避免误匹配
+  - `docs/plans/MULTILANG_PLAN.md` — 将“无前缀自动按浏览器语言重定向”修正为“无前缀固定 zh-Hans”
+  - `docs/SESSION_CHANGES.md` — 记录阶段 4 变更
+- **关键逻辑/映射关系**：`/items/Ale/` → `zh-Hans` 原路径；`/en/items/Ale/` → `lang=en` + 复用 `DetailPage`；语言切换后续通过 `withLangPrefix(path, lang)` 生成目标 URL
+
 ## 多语言计划阶段 3：导出版本化 locale 字典
 
 - **原因**：多语言前端需要按 `translation_key` 查询语言字典；字典路径必须复用现有版本化数据策略，避免绕开 SW/CDN 缓存失效机制

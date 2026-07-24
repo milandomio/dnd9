@@ -23,6 +23,7 @@ import Footer from './components/Footer';
 import SWUpdateBanner from './components/SWUpdateBanner';
 import OfflineDetector from './components/OfflineDetector';
 import InstallPrompt from './components/InstallPrompt';
+import { LanguageRoute } from './i18n/LanguageContext';
 
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
@@ -60,6 +61,102 @@ export function AppInner() {
           element={<DungeonModuleDetailPage />}
         />
         <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
+        <Route
+          path="/:lang"
+          element={
+            <LanguageRoute>
+              <HomePage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/explore"
+          element={
+            <LanguageRoute>
+              <ExplorePage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/quest_items"
+          element={
+            <LanguageRoute>
+              <QuestItemsPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/quest_items/:group"
+          element={
+            <LanguageRoute>
+              <QuestItemGroupPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/quest_npc"
+          element={
+            <LanguageRoute>
+              <QuestNPCPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/quest_npc/:npc_name"
+          element={
+            <LanguageRoute>
+              <QuestNPCDetailPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/dungeon_modules"
+          element={
+            <LanguageRoute>
+              <DungeonModulesPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/dungeon_modules/:group"
+          element={
+            <LanguageRoute>
+              <DungeonModuleGroupPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/dungeon_modules/:group/:name"
+          element={
+            <LanguageRoute>
+              <DungeonModuleDetailPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/lootdrops/:name"
+          element={
+            <LanguageRoute>
+              <LootdropDetailPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/:page"
+          element={
+            <LanguageRoute>
+              <ListPage />
+            </LanguageRoute>
+          }
+        />
+        <Route
+          path="/:lang/:page/:name"
+          element={
+            <LanguageRoute>
+              <DetailPage />
+            </LanguageRoute>
+          }
+        />
         <Route path="/:page" element={<ListPage />} />
         <Route path="/:page/:name" element={<DetailPage />} />
       </Routes>
