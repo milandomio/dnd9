@@ -1,5 +1,16 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划阶段 2：实体与搜索索引补 translation_key
+
+- **原因**：多语言字典需要用 `translation_key` 查找各语言文本；当前 items/monsters/props/lootdrops 的索引、详情和 `search_index.json` 只输出 `translation` / `translation_EN`，无法稳定做实体名 i18n
+- **变更文件**：
+  - `api/src/entity_export.py` — items/monsters/props 的索引和详情 JSON 写入 canonical `translation_key`
+  - `api/src/lootdrop_builder.py` — lootdrop 索引、基础详情、变体详情写入 `translation_key`；`_8001` 变体沿用基础物品 translation key
+  - `api/src/index_export.py` — `search_index.json` 对 items/monsters/props/lootdrops/dungeon_modules 透传 `translation_key`
+  - `web/src/types/data.ts` — 实体和 dungeon module 类型新增可选 `translation_key`
+  - `docs/SESSION_CHANGES.md` — 记录阶段 2 变更
+- **关键逻辑/映射关系**：前端后续可用 `entry.translation_key -> localeDict[translation_key]` 翻译列表、搜索结果和详情标题；聚合 monsters/props 使用 canonical 实体 key；lootdrop `_8001` 页面复用基础物品 key 作为多语言回退入口
+
 ## 多语言计划阶段 1：修复 SSG 版本化数据目录顺序
 
 - **原因**：`web/scripts/ssg.mjs` 先删除 `dist/data/json` 后再写入 `meta.json`，会导致构建阶段复制 `meta.json` 到不存在目录；多语言计划 P0 要求先修复版本化数据目录处理

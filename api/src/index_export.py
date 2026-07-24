@@ -232,6 +232,7 @@ def build_and_save_indexes(
             {
                 "name": entry["name"],
                 "translation": entry.get("translation", ""),
+                "translation_key": entry.get("translation_key", ""),
                 "page": "items",
                 "url": f"/items/{urllib.parse.quote(entry['name'], safe='')}/",
             }
@@ -241,6 +242,7 @@ def build_and_save_indexes(
             {
                 "name": entry["name"],
                 "translation": entry.get("translation", ""),
+                "translation_key": entry.get("translation_key", ""),
                 "page": "monsters",
                 "url": f"/monsters/{urllib.parse.quote(entry['name'], safe='')}/",
             }
@@ -249,6 +251,7 @@ def build_and_save_indexes(
         si_entry = {
             "name": entry["name"],
             "translation": entry.get("translation", ""),
+            "translation_key": entry.get("translation_key", ""),
             "page": "props",
             "url": f"/props/{urllib.parse.quote(entry['name'], safe='')}/",
         }
@@ -259,6 +262,7 @@ def build_and_save_indexes(
         si_entry = {
             "name": entry["name"],
             "translation": entry.get("translation", ""),
+            "translation_key": entry.get("translation_key", ""),
             "page": "lootdrops",
             "url": f"/lootdrops/{urllib.parse.quote(entry['name'], safe='')}/",
         }
@@ -296,6 +300,7 @@ def build_and_save_indexes(
             {
                 "name": m["name"],
                 "translation": m.get("translation", m["name"]),
+                "translation_key": m.get("translation_key", ""),
                 "page": "dungeon_modules",
                 "tag": (
                     group_label_resolver(m.get("group", "")) if group_label_resolver else (m.get("group", "") or "模块")

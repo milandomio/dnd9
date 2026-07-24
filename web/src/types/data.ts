@@ -32,6 +32,7 @@ export interface GroupDropInfo {
 export interface ItemEntity {
   name: string;
   translation: string;
+  translation_key?: string;
   translation_EN?: string;
   category: string;
   monsters: string[];
@@ -42,6 +43,7 @@ export interface ItemEntity {
 export interface MonsterEntity {
   name: string;
   translation: string;
+  translation_key?: string;
   translation_EN?: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
@@ -50,6 +52,7 @@ export interface MonsterEntity {
 export interface PropsEntity {
   name: string;
   translation: string;
+  translation_key?: string;
   translation_EN?: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
@@ -59,6 +62,7 @@ export interface DungeonModule {
   name: string;
   names: string[];
   translation: string;
+  translation_key?: string;
   translation_EN?: string;
   group: string;
   group_display?: string;

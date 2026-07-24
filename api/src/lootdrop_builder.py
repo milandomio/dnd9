@@ -267,6 +267,13 @@ def build_loot_index(
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
         variant_count = item_row.get("variant_count", 1) if item_row else 1
+        translation_key = ""
+        if item_row and item_row.get("translation_key"):
+            translation_key = item_row["translation_key"]
+        elif item_name.endswith("_8001"):
+            base_row = items_lookup.get(item_name.removesuffix("_8001"))
+            if base_row:
+                translation_key = base_row.get("translation_key", "")
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
@@ -296,6 +303,7 @@ def build_loot_index(
         entry: dict = {
             "name": item_name,
             "translation": translation,
+            "translation_key": translation_key,
             "translation_EN": translation_en,
             "variant_count": variant_count,
             "raw_name": raw_name,
@@ -696,6 +704,7 @@ def build_and_save_lootdrop_details(
             detail = {
                 "name": item_name,
                 "translation": entry["translation"],
+                "translation_key": entry.get("translation_key", ""),
                 "translation_EN": entry.get("translation_EN", item_name),
                 "monsters": monsters_out,
                 "group_drop_info": _group_drop_info,
@@ -802,6 +811,7 @@ def build_and_save_lootdrop_details(
                     variant_detail = {
                         "name": variant_name,
                         "translation": variant_translation,
+                        "translation_key": entry.get("translation_key", ""),
                         "translation_EN": entry.get("translation_EN", item_name),
                         "monsters": variant_monsters,
                         "group_drop_info": variant_gdi,
