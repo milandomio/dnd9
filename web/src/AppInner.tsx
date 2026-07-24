@@ -4,6 +4,7 @@
  * Client entry (App.tsx) uses React.lazy for code splitting instead.
  */
 import { Routes, Route } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import { useTheme } from './hooks/useTheme';
 import { useDungeonModules } from './hooks/useDungeonModules';
 import HomePage from './pages/HomePage';
@@ -24,6 +25,13 @@ import SWUpdateBanner from './components/SWUpdateBanner';
 import OfflineDetector from './components/OfflineDetector';
 import InstallPrompt from './components/InstallPrompt';
 import { LanguageProvider } from './i18n/LanguageContext';
+import { useAntdLocale } from './i18n/antdLocale';
+import type { ReactNode } from 'react';
+
+function AntdLocaleProvider({ children }: { children: ReactNode }) {
+  const locale = useAntdLocale();
+  return <ConfigProvider locale={locale}>{children}</ConfigProvider>;
+}
 
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
@@ -31,72 +39,80 @@ export function AppInner() {
   useDungeonModules(); // preload module data eagerly
   return (
     <LanguageProvider>
-      <div
-        style={{
-          minHeight: '100vh',
-          padding: '16px',
-          background: tokens.bg,
-          boxSizing: 'border-box',
-          maxWidth: 1200,
-          margin: '0 auto',
-        }}
-      >
-        <SWUpdateBanner />
-        <OfflineDetector />
-        <InstallPrompt />
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/quest_items" element={<QuestItemsPage />} />
-          <Route path="/quest_items/:group" element={<QuestItemGroupPage />} />
-          <Route path="/quest_npc" element={<QuestNPCPage />} />
-          <Route path="/quest_npc/:npc_name" element={<QuestNPCDetailPage />} />
-          <Route path="/dungeon_modules" element={<DungeonModulesPage />} />
-          <Route
-            path="/dungeon_modules/:group"
-            element={<DungeonModuleGroupPage />}
-          />
-          <Route
-            path="/dungeon_modules/:group/:name"
-            element={<DungeonModuleDetailPage />}
-          />
-          <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
-          <Route path="/:lang" element={<HomePage />} />
-          <Route path="/:lang/explore" element={<ExplorePage />} />
-          <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
-          <Route
-            path="/:lang/quest_items/:group"
-            element={<QuestItemGroupPage />}
-          />
-          <Route path="/:lang/quest_npc" element={<QuestNPCPage />} />
-          <Route
-            path="/:lang/quest_npc/:npc_name"
-            element={<QuestNPCDetailPage />}
-          />
-          <Route
-            path="/:lang/dungeon_modules"
-            element={<DungeonModulesPage />}
-          />
-          <Route
-            path="/:lang/dungeon_modules/:group"
-            element={<DungeonModuleGroupPage />}
-          />
-          <Route
-            path="/:lang/dungeon_modules/:group/:name"
-            element={<DungeonModuleDetailPage />}
-          />
-          <Route
-            path="/:lang/lootdrops/:name"
-            element={<LootdropDetailPage />}
-          />
-          <Route path="/:lang/:page" element={<ListPage />} />
-          <Route path="/:lang/:page/:name" element={<DetailPage />} />
-          <Route path="/:page" element={<ListPage />} />
-          <Route path="/:page/:name" element={<DetailPage />} />
-        </Routes>
-        <Footer />
-      </div>
+      <AntdLocaleProvider>
+        <div
+          style={{
+            minHeight: '100vh',
+            padding: '16px',
+            background: tokens.bg,
+            boxSizing: 'border-box',
+            maxWidth: 1200,
+            margin: '0 auto',
+          }}
+        >
+          <SWUpdateBanner />
+          <OfflineDetector />
+          <InstallPrompt />
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/quest_items" element={<QuestItemsPage />} />
+            <Route
+              path="/quest_items/:group"
+              element={<QuestItemGroupPage />}
+            />
+            <Route path="/quest_npc" element={<QuestNPCPage />} />
+            <Route
+              path="/quest_npc/:npc_name"
+              element={<QuestNPCDetailPage />}
+            />
+            <Route path="/dungeon_modules" element={<DungeonModulesPage />} />
+            <Route
+              path="/dungeon_modules/:group"
+              element={<DungeonModuleGroupPage />}
+            />
+            <Route
+              path="/dungeon_modules/:group/:name"
+              element={<DungeonModuleDetailPage />}
+            />
+            <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
+            <Route path="/:lang" element={<HomePage />} />
+            <Route path="/:lang/explore" element={<ExplorePage />} />
+            <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
+            <Route
+              path="/:lang/quest_items/:group"
+              element={<QuestItemGroupPage />}
+            />
+            <Route path="/:lang/quest_npc" element={<QuestNPCPage />} />
+            <Route
+              path="/:lang/quest_npc/:npc_name"
+              element={<QuestNPCDetailPage />}
+            />
+            <Route
+              path="/:lang/dungeon_modules"
+              element={<DungeonModulesPage />}
+            />
+            <Route
+              path="/:lang/dungeon_modules/:group"
+              element={<DungeonModuleGroupPage />}
+            />
+            <Route
+              path="/:lang/dungeon_modules/:group/:name"
+              element={<DungeonModuleDetailPage />}
+            />
+            <Route
+              path="/:lang/lootdrops/:name"
+              element={<LootdropDetailPage />}
+            />
+            <Route path="/:lang/:page" element={<ListPage />} />
+            <Route path="/:lang/:page/:name" element={<DetailPage />} />
+            <Route path="/:page" element={<ListPage />} />
+            <Route path="/:page/:name" element={<DetailPage />} />
+          </Routes>
+          <Footer />
+        </div>
+      </AntdLocaleProvider>
     </LanguageProvider>
   );
 }

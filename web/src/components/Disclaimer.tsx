@@ -1,10 +1,12 @@
 import type { CSSProperties } from 'react';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 
 export default function Disclaimer() {
   const { tokens } = useTheme();
   const date = useDataVersion();
+  const { ut } = useLocale();
   const box: CSSProperties = {
     textAlign: 'center',
     color: '#ff6b6b',
@@ -27,7 +29,7 @@ export default function Disclaimer() {
 
   return (
     <div style={box}>
-      ⚠️ 数据有误差，以实际游戏内为准
+      {ut('ui.disclaimer.warning')}
       <span style={{ color: tokens.muted, marginLeft: 15 }}>
         地图生成日期：{formattedDate}
         <a
@@ -40,7 +42,7 @@ export default function Disclaimer() {
             fontSize: 'inherit',
           }}
         >
-          【意见或建议】
+          【{ut('ui.disclaimer.feedback')}】
         </a>
       </span>
     </div>

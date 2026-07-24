@@ -342,6 +342,8 @@ def build_and_save_lootdrop_details(
     item_valid_names: dict[str, set[str]] = {}
     item_hr100: dict[str, bool] = {}
     item_variant_suffixes: dict[str, list[str]] = {}
+    m_tk_map = {r["monster_name"]: r.get("translation_key", "") for r in (monsters or [])}
+
     detail_count = 0
     detail_total = len(loot_index)
     if log_fn:
@@ -407,6 +409,7 @@ def build_and_save_lootdrop_details(
                         "name": m_name,
                         "entity_name": m_name,
                         "translation": _type_trans,
+                        "translation_key": m_tk_map.get(m_name, ""),
                         "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
                         "coords": [],
                         "_has_locked": False,
@@ -498,6 +501,7 @@ def build_and_save_lootdrop_details(
                 _group_drop_info.setdefault(_g, []).append(
                     {
                         "translation": _m_data["translation"],
+                        "translation_key": _m_data.get("translation_key", ""),
                         "spawn_rate": _sr,
                         "drop_rates": _dr,
                         "_variant": _m_data.get("entity_name", _m_data["name"]),

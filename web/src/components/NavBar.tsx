@@ -13,15 +13,27 @@ import { SUPPORTED_LANGS, type SupportedLang } from '../i18n/locale';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
 
-const LABEL_MAP: Record<string, string> = {
-  items: '物品表',
-  monsters: '怪物表',
-  props: '实体表',
-  lootdrops: '掉落表',
-  explore: '任务探索表',
-  quest_items: '任务物品表',
-  quest_npc: '任务NPC表',
-  dungeon_modules: '地图模块表',
+const NAV_LABEL_KEYS: Record<string, string> = {
+  items: 'ui.nav.items',
+  monsters: 'ui.nav.monsters',
+  props: 'ui.nav.props',
+  lootdrops: 'ui.nav.lootdrops',
+  explore: 'ui.nav.explore',
+  quest_items: 'ui.nav.quest_items',
+  quest_npc: 'ui.nav.quest_npc',
+  dungeon_modules: 'ui.nav.dungeon_modules',
+};
+
+const PAGE_TAG_KEYS: Record<string, string> = {
+  items: 'ui.search.tag.item',
+  monsters: 'ui.search.tag.monster',
+  props: 'ui.search.tag.prop',
+  lootdrops: 'ui.search.tag.lootdrop',
+  explore: 'ui.search.tag.explore',
+  quest_npc: 'ui.search.tag.npc',
+  quest_items: 'ui.search.tag.quest',
+  dungeon_modules: 'ui.search.tag.module',
+  _nav: 'ui.search.tag.nav',
 };
 
 const GROUP_LABEL_MAP: Record<string, string> = {
@@ -46,24 +58,12 @@ function getRecent(): string[] {
   }
 }
 
-const PAGE_TAG: Record<string, string> = {
-  items: '物品',
-  monsters: '怪物',
-  props: '实体',
-  lootdrops: '掉落',
-  explore: '探索',
-  quest_npc: 'NPC',
-  quest_items: '任务',
-  dungeon_modules: '模块',
-  _nav: '导航',
-};
-
 export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { dark, tokens, toggle } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
-  const { t } = useLocale();
+  const { t, ut } = useLocale();
   const { index: searchIndex, loading: searchLoading } = useSearchIndex();
   const visiblePath = withLangPrefix(location.pathname, 'zh-Hans');
   const parts = visiblePath.split('/').filter(Boolean);
@@ -192,7 +192,8 @@ export default function NavBar() {
   if (parts.length >= 2) {
     for (let i = 0; i < parts.length - 1; i++) {
       const key = parts[i];
-      let label = LABEL_MAP[key] || key;
+      const uiKey = NAV_LABEL_KEYS[key];
+      let label = uiKey ? ut(uiKey) : key;
       const path = '/' + parts.slice(0, i + 1).join('/');
 
       if (i === 1 && parts[0] === 'dungeon_modules') {
@@ -232,7 +233,11 @@ export default function NavBar() {
             ) : undefined
           }
           className="navbar-search-input"
-          placeholder={searchLoading ? '加载中...' : '搜索物品/怪物/实体...'}
+          placeholder={
+            searchLoading
+              ? ut('ui.common.loading')
+              : ut('ui.search.placeholder')
+          }
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => {
@@ -317,7 +322,7 @@ export default function NavBar() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {hit.tag || PAGE_TAG[hit.page] || hit.page}
+                    {hit.tag || ut(PAGE_TAG_KEYS[hit.page] || '') || hit.page}
                   </span>
                 </div>
               ))
@@ -334,7 +339,7 @@ export default function NavBar() {
                   }}
                 >
                   <ClockCircleOutlined />
-                  最近搜索
+                  {ut('ui.search.recent')}
                 </div>
                 {recentSearches.map((term) => (
                   <div
@@ -360,7 +365,7 @@ export default function NavBar() {
                   >
                     <span>{term}</span>
                     <span style={{ fontSize: 11, color: tokens.muted }}>
-                      搜索
+                      {ut('ui.search.search')}
                     </span>
                   </div>
                 ))}
@@ -392,7 +397,7 @@ export default function NavBar() {
           />
           <button
             onClick={toggle}
-            aria-label="切换主题"
+            aria-label={ut('ui.common.toggle_theme')}
             style={{
               width: 36,
               height: 20,
@@ -448,7 +453,7 @@ export default function NavBar() {
             e.currentTarget.style.color = tokens.accent;
           }}
         >
-          返回首页
+          {ut('ui.common.home')}
         </Link>
       </div>
     </div>

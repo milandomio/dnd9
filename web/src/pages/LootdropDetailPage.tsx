@@ -179,7 +179,7 @@ export default function LootdropDetailPage() {
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t } = useLocale();
+  const { t, ut } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
   const lootFetchedRef = useRef(false);
@@ -367,7 +367,7 @@ export default function LootdropDetailPage() {
   if (!data || !refsLoaded)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        数据加载中...
+        {ut('ui.common.loading')}
       </div>
     );
 
@@ -638,8 +638,8 @@ export default function LootdropDetailPage() {
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggleDebug,
           },
@@ -724,7 +724,9 @@ export default function LootdropDetailPage() {
             alignItems: 'center',
           }}
         >
-          <span style={{ color: tokens.muted }}>爆率显示：</span>
+          <span style={{ color: tokens.muted }}>
+            {ut('ui.filter.drop_rate')}：
+          </span>
           <select
             value={modeFilter}
             onChange={(e) => setModeFilter(e.target.value)}
@@ -738,11 +740,11 @@ export default function LootdropDetailPage() {
               cursor: 'pointer',
             }}
           >
-            <option value="">全部</option>
-            <option value="PVE">PVE</option>
-            <option value="普通">普通</option>
-            <option value="豪客赛">豪客赛</option>
-            <option value="逆袭赛">逆袭赛</option>
+            <option value="">{ut('ui.filter.all')}</option>
+            <option value="PVE">{ut('ui.filter.pve')}</option>
+            <option value="普通">{ut('ui.filter.normal')}</option>
+            <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
+            <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
           </select>
           <label style={{ cursor: 'pointer', userSelect: 'none' }}>
             <input
@@ -751,7 +753,7 @@ export default function LootdropDetailPage() {
               onChange={(e) => setHideZeroRate(e.target.checked)}
               style={{ marginRight: 3, cursor: 'pointer' }}
             />
-            隐藏0爆率坐标
+            {ut('ui.filter.hide_zero_rate')}
           </label>
         </div>
       )}
@@ -767,10 +769,10 @@ export default function LootdropDetailPage() {
         if (!hasQuality) return null;
         const QUALITY_CONFIG: Record<string, { label: string; color: string }> =
           {
-            VeryLow: { label: '极低(PVE100%)', color: '#9E9E9E' },
-            Low: { label: '低(普通90%)', color: '#BDBDBD' },
-            Med: { label: '中(普通10%)', color: '#2ECC71' },
-            High: { label: '高品质(豪客赛100%)', color: '#3498DB' },
+            VeryLow: { label: ut('ui.rate.very_low'), color: '#9E9E9E' },
+            Low: { label: ut('ui.rate.low'), color: '#BDBDBD' },
+            Med: { label: ut('ui.rate.medium'), color: '#2ECC71' },
+            High: { label: ut('ui.rate.high'), color: '#3498DB' },
           };
         return (
           <div
