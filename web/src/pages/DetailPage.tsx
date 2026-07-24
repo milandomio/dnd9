@@ -29,6 +29,7 @@ import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
 import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -439,8 +440,9 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {entityLabel}
-          {entity.name} 位置汇总Location | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ??
+            `${entityLabel}${entity.name} 位置汇总Location`}{' '}
+          | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -452,7 +454,7 @@ export default function DetailPage() {
         />
         <meta
           property="og:title"
-          content={`${entityLabel}${entity.name} 位置汇总Location | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? `${entityLabel}${entity.name} 位置汇总Location`} | DarkFlashNav`}
         />
         <meta
           property="og:description"

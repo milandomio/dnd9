@@ -392,11 +392,12 @@ function localizedTitle(routeData, localeDict) {
   return title || entity.translation || entity.name || "DarkFlashNav";
 }
 
-function injectLang(page, lang) {
+function injectLocalizedData(page, lang, title) {
   return page.replace(SSR_SCRIPT_RE, (match, jsonText) => {
     try {
       const payload = JSON.parse(jsonText);
       payload.__lang = lang;
+      if (title) payload.__localizedTitle = title;
       return `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>`;
     } catch {
       return match;
@@ -407,7 +408,7 @@ function injectLang(page, lang) {
 function localizePage(page, route, routeData, localeDict, lang) {
   const canonicalHref = localizedPath(route.path, lang);
   const title = localizedTitle(routeData, localeDict);
-  let out = injectLang(page, lang)
+  let out = injectLocalizedData(page, lang, title)
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
     .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${canonicalHref}">`)
     .replace(HEAD_CLOSE, `    ${alternateLinks(route.path)}\n${HEAD_CLOSE}`);
