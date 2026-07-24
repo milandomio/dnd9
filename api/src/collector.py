@@ -10,6 +10,7 @@ from config import (
     GAME_ROOT,
     ITEM_DIR,
     LAYOUT_DIR,
+    LOCALIZATION_ROOT,
     LOG_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
@@ -54,6 +55,7 @@ _SOURCE_PATHS = [
     SPAWNER_DIR,
     MAPS_DIR,
     LAYOUT_DIR,
+    LOCALIZATION_ROOT,
 ]
 
 
