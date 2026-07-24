@@ -68,6 +68,8 @@ function copyDeep(src, dest) {
 }
 copyDeep(join(DIST, 'data', 'json'), vJsonDir);
 try { rmSync(join(vJsonDir, 'meta.json'), { force: true }); } catch {}
+// Remove original data/json (unused, client uses versioned path)
+rmSync(join(DIST, 'data', 'json'), { recursive: true, force: true });
 
 // ---- step 2: build SSR bundle ----
 console.log("[ssg] building SSR bundle…");
