@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { createContext, useContext } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { DEFAULT_LANG, isSupportedLang, type SupportedLang } from './locale';
 
 type LanguageContextValue = {
@@ -32,9 +32,9 @@ const LanguageContext = createContext<LanguageContextValue>({
   withLangPrefix,
 });
 
-export function LanguageRoute({ children }: { children: ReactNode }) {
-  const { lang: routeLang } = useParams<{ lang?: string }>();
+export function LanguageProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
+  const routeLang = location.pathname.split('/').filter(Boolean)[0];
   const hasLangPrefix = isSupportedLang(routeLang);
   const lang = hasLangPrefix ? routeLang : DEFAULT_LANG;
 

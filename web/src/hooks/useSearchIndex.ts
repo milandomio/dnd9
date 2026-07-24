@@ -5,6 +5,7 @@ import { dataUrl } from '../utils/dataUrl';
 export interface SearchEntry {
   name: string;
   translation: string;
+  translation_key?: string;
   page: string;
   url: string;
   tag?: string;

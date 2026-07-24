@@ -1,5 +1,20 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划阶段 6：运行时 locale 加载与核心显示切换
+
+- **原因**：SSG 已能生成非中文 HTML，但客户端页面仍显示中文实体名；需要运行时加载 locale 字典，并让导航、列表页、详情页使用 `translation_key` 显示当前语言
+- **变更文件**：
+  - `web/src/i18n/LanguageContext.tsx` — 将语言上下文提升为 `LanguageProvider`，覆盖 NavBar 和所有页面；保留路径转换工具
+  - `web/src/i18n/useLocale.ts` — 新增运行时 locale hook，按当前语言和 data version 加载版本化字典
+  - `web/src/AppInner.tsx` — 用 `LanguageProvider` 包裹应用内容，语言前缀路由复用原页面组件
+  - `web/src/components/NavBar.tsx` — 新增语言选择下拉；搜索结果和导航跳转保留/切换语言前缀；搜索结果实体名按 locale 翻译
+  - `web/src/pages/ListPage.tsx` — 列表卡片实体名按 locale 翻译，详情链接保留当前语言前缀
+  - `web/src/pages/DetailPage.tsx` — 详情页主标题、SEO 标题/描述按 locale 翻译实体名
+  - `web/src/pages/LootdropDetailPage.tsx` — lootdrop 主标题、SEO 标题/描述按 locale 翻译物品名
+  - `web/src/hooks/useSearchIndex.ts` — `SearchEntry` 类型增加可选 `translation_key`
+  - `docs/SESSION_CHANGES.md` — 记录阶段 6 变更
+- **关键逻辑/映射关系**：URL 第一段支持语言 → `LanguageProvider.lang`；非 `zh-Hans` 时 `useLocale()` 加载 `/data/{short}/json/locale/{lang}.json`；实体显示用 `translation_key -> localeDict -> 中文 translation/name fallback`
+
 ## 多语言计划阶段 5：SSG 多语言 HTML 后处理
 
 - **原因**：需要为 `/en/...` 等非中文路径生成静态 HTML，并写入对应语言标题、canonical、hreflang 和 `__SSR_DATA__.__lang`；同时避免二次 React 渲染导致构建时间和 hydration 风险增加

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Input, Spin } from 'antd';
+import { Input, Select, Spin } from 'antd';
 import {
   BulbOutlined,
   ClockCircleOutlined,
@@ -9,6 +9,9 @@ import {
 } from '@ant-design/icons';
 import { useTheme } from '../hooks/useTheme';
 import { useSearchIndex, type SearchEntry } from '../hooks/useSearchIndex';
+import { SUPPORTED_LANGS, type SupportedLang } from '../i18n/locale';
+import { useLanguage } from '../i18n/LanguageContext';
+import { useLocale } from '../i18n/useLocale';
 
 const LABEL_MAP: Record<string, string> = {
   items: '物品表',
@@ -59,8 +62,11 @@ export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { dark, tokens, toggle } = useTheme();
+  const { lang, withLangPrefix } = useLanguage();
+  const { t } = useLocale();
   const { index: searchIndex, loading: searchLoading } = useSearchIndex();
-  const parts = location.pathname.split('/').filter(Boolean);
+  const visiblePath = withLangPrefix(location.pathname, 'zh-Hans');
+  const parts = visiblePath.split('/').filter(Boolean);
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchEntry[]>([]);
@@ -140,7 +146,11 @@ export default function NavBar() {
     if (query.trim()) saveRecent(query.trim());
     setQuery('');
     setShowDropdown(false);
-    navigate(hit.url);
+    navigate(withLangPrefix(hit.url, lang));
+  };
+
+  const handleLangChange = (nextLang: SupportedLang) => {
+    navigate(withLangPrefix(location.pathname, nextLang));
   };
 
   const handleRecentClick = (term: string) => {
@@ -284,7 +294,7 @@ export default function NavBar() {
                   }}
                 >
                   <span style={{ color: tokens.text, fontSize: 14 }}>
-                    {hit.translation || hit.name}
+                    {t(hit.translation_key, hit.translation || hit.name)}
                     {hit.translation && hit.translation !== hit.name && (
                       <span
                         style={{
@@ -369,6 +379,13 @@ export default function NavBar() {
           rowGap: 6,
         }}
       >
+        <Select
+          size="small"
+          value={lang}
+          onChange={handleLangChange}
+          options={SUPPORTED_LANGS.map((value) => ({ value, label: value }))}
+          style={{ width: 96 }}
+        />
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <BulbOutlined
             style={{ color: dark ? '#ffd700' : '#333', fontSize: 16 }}
@@ -405,7 +422,7 @@ export default function NavBar() {
         {breadcrumbs.map((crumb) => (
           <Link
             key={crumb.path}
-            to={crumb.path}
+            to={withLangPrefix(crumb.path, lang)}
             style={linkStyle}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = tokens.accent;
@@ -420,7 +437,7 @@ export default function NavBar() {
           </Link>
         ))}
         <Link
-          to="/"
+          to={withLangPrefix('/', lang)}
           style={linkStyle}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = tokens.accent;

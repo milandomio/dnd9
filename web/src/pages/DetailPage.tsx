@@ -28,6 +28,7 @@ import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
+import { useLocale } from '../i18n/useLocale';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -81,6 +82,7 @@ export default function DetailPage() {
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
+  const { t } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -135,6 +137,11 @@ export default function DetailPage() {
 
   if (!entity)
     return <Typography.Text type="danger">数据加载中...</Typography.Text>;
+
+  const entityLabel = t(
+    entity.translation_key,
+    entity.translation || entity.name
+  );
 
   const coords = entity.coords ?? [];
   const visibleCoords = coords.filter(
@@ -430,13 +437,13 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {entity.translation}
+          {entityLabel}
           {entity.translation_EN ?? entity.name} 位置汇总Location |
           越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${entity.translation || entity.name}（${entity.name}）在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
+          content={`${entityLabel}（${entity.name}）在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
         />
         <meta
           name="keywords"
@@ -444,11 +451,11 @@ export default function DetailPage() {
         />
         <meta
           property="og:title"
-          content={`${entity.translation}${entity.translation_EN ?? entity.name} 位置汇总Location | DarkFlashNav`}
+          content={`${entityLabel}${entity.translation_EN ?? entity.name} 位置汇总Location | DarkFlashNav`}
         />
         <meta
           property="og:description"
-          content={`${entity.translation || entity.name} 共 ${coords.length} 个位置点`}
+          content={`${entityLabel} 共 ${coords.length} 个位置点`}
         />
       </Helmet>
       <h1
@@ -459,7 +466,7 @@ export default function DetailPage() {
           margin: '0 0 12px',
         }}
       >
-        {entity.translation || entity.name} 位置汇总
+        {entityLabel} 位置汇总
       </h1>
 
       <DebugPanel

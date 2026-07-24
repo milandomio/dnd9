@@ -7,6 +7,8 @@ import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
 import { dataUrl } from '../utils/dataUrl';
 import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
+import { useLanguage } from '../i18n/LanguageContext';
+import { useLocale } from '../i18n/useLocale';
 
 type IndexEntry = SearchEntry & {
   category?: string;
@@ -14,6 +16,7 @@ type IndexEntry = SearchEntry & {
   type?: string;
   // lootdrops SSR data fields
   variant_count?: number;
+  translation_key?: string;
   monsters?: string[];
   monster_translations?: string[];
   max_score?: number;
@@ -82,6 +85,8 @@ export default function ListPage() {
   const [debug, setDebug] = useState(false);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
+  const { lang, withLangPrefix } = useLanguage();
+  const { t } = useLocale();
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -201,7 +206,7 @@ export default function ListPage() {
                     {group.items.map((entity) => (
                       <Link
                         key={entity.name}
-                        to={`/props/${entity.name}/`}
+                        to={withLangPrefix(`/props/${entity.name}/`, lang)}
                         style={{
                           textDecoration: 'none',
                           display: 'block',
@@ -229,7 +234,10 @@ export default function ListPage() {
                             fontWeight: 'bold',
                           }}
                         >
-                          {entity.translation || entity.name}
+                          {t(
+                            entity.translation_key,
+                            entity.translation || entity.name
+                          )}
                         </div>
                         {debug && (
                           <div
@@ -239,7 +247,8 @@ export default function ListPage() {
                               marginTop: 4,
                             }}
                           >
-                            {entity.translation}【{entity.name}】
+                            {t(entity.translation_key, entity.translation)}【
+                            {entity.name}】
                           </div>
                         )}
                       </Link>
@@ -283,7 +292,7 @@ export default function ListPage() {
                         return (
                           <Link
                             key={entity.name}
-                            to={`/lootdrops/${target}/`}
+                            to={withLangPrefix(`/lootdrops/${target}/`, lang)}
                             style={{
                               textDecoration: 'none',
                               display: 'block',
@@ -312,7 +321,10 @@ export default function ListPage() {
                                 fontWeight: 'bold',
                               }}
                             >
-                              {entity.translation || entity.name}
+                              {t(
+                                entity.translation_key,
+                                entity.translation || entity.name
+                              )}
                             </div>
                             {debug && (
                               <div
@@ -322,7 +334,8 @@ export default function ListPage() {
                                   marginTop: 4,
                                 }}
                               >
-                                {entity.translation}【{entity.name}】
+                                {t(entity.translation_key, entity.translation)}
+                                【{entity.name}】
                               </div>
                             )}
                             {entity.monsters && entity.monsters.length > 0 && (
@@ -356,7 +369,7 @@ export default function ListPage() {
               data.map((entity) => (
                 <Link
                   key={entity.name}
-                  to={`/${page}/${entity.name}/`}
+                  to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
                   style={{
                     textDecoration: 'none',
                     display: 'block',
@@ -384,7 +397,10 @@ export default function ListPage() {
                       fontWeight: 'bold',
                     }}
                   >
-                    {entity.translation || entity.name}
+                    {t(
+                      entity.translation_key,
+                      entity.translation || entity.name
+                    )}
                   </div>
                   {debug && (
                     <div
@@ -394,7 +410,8 @@ export default function ListPage() {
                         marginTop: 4,
                       }}
                     >
-                      {entity.translation}【{entity.name}】
+                      {t(entity.translation_key, entity.translation)}【
+                      {entity.name}】
                     </div>
                   )}
                   {entity.monsters &&
