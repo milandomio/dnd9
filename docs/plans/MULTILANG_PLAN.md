@@ -1,8 +1,8 @@
 # 多语言 (i18n) 重构计划
 
 > 创建日期: 2026-07-24
-> 版本: v0.4 (UI i18n 持续推进中)
-> 状态: P0-P7 完成；P8 部分完成（NavBar/核心页面 UI 已接入）；P9 部分完成（AntD locale 切换）；P10/P11 未开始
+> 版本: v0.5 (UI i18n 全量接入完成)
+> 状态: P0-P7 完成；P8/P8d 完成（9 个剩余页面 UI 全量接入 + 嵌套实体名翻译）；P9 部分完成（AntD locale 切换，字典体积优化待做）；P10/P11 未开始
 
 ---
 
@@ -458,7 +458,7 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 
 ## 9. 实施里程碑
 
-### 9.0 当前完成情况（2026-07-24，最后更新）
+### 9.0 当前完成情况（2026-07-25，最后更新）
 
 **已完成：**
 
@@ -472,8 +472,9 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 | P5 | ssg.mjs 多语言 HTML 后处理 | 9 种非中文 HTML 副本，含 localized title/canonical/hreflang/`__lang` |
 | P6 | NavBar 语言下拉 + 搜索结果翻译 | 语言选择 → 整页导航；搜索结果实体名按 locale 翻译 |
 | P7 | sitemap 多语言 URL | 10 语言 URL + `xhtml:link rel="alternate"` |
-| P8 部分 | lootdrop 嵌套 monsters + group_drop_info 补 `translation_key` | 前端可翻译 lootdrop 内嵌实体名 |
+| P8 | lootdrop 嵌套 monsters + group_drop_info 补 `translation_key` | 前端可翻译 lootdrop 内嵌实体名 |
 | P8 部分 | 新建 `uiLocale.ts`（10 语言 × ~60 key） | NavBar/Disclaimer/ListPage/DetailPage/LootdropDetailPage 核心 UI 接入 `ut()` |
+| **P8d** | **剩余 9 页面 UI i18n + LootdropDetail 嵌套实体名翻译** | **HomePage/DungeonModules(Group/Detail)/Explore/QuestItems(Group)/QuestNPC(List/Detail) 全量接入 `ut()`；GDI/模块名改用 `t(translation_key)`** |
 | P9 部分 | Ant Design locale 切换 | `useAntdLocale` + `AntdLocaleProvider`，按语言懒加载 antd locale 模块 |
 
 **当前架构速览：**
@@ -487,52 +488,6 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 
 ### 9.1 待完成项（优先级排序，供下次会话使用）
 
-#### 高优先级（P8d：其余页面 UI i18n）
-
-以下页面尚未导入 `useLocale` / 接入 `ut()`，页面标题、统计文字、按钮标签等仍硬编码中文。
-按改动量排序：
-
-1. **`HomePage.tsx`** — 页面 tagline、SEO 描述、导航卡片标签（5 行改动）
-2. **`DungeonModulesPage.tsx`** — 标题、"未分组"回退、统计（4 行改动）
-3. **`DungeonModuleGroupPage.tsx`** — 标题、调试按钮（4 行改动）
-4. **`ExplorePage.tsx`** — 标题、统计（3 行改动）
-5. **`QuestItemsPage.tsx`** — 标题、统计（3 行改动）
-6. **`QuestItemGroupPage.tsx`** — 标题、实体图例、位置统计（5 行改动）
-7. **`QuestNPCPage.tsx`** — 标题、NPC 分类标签（4 行改动）
-8. **`DungeonModuleDetailPage.tsx`** — 标题、rarity 标签、实体类型标签、SEO（8 行改动）
-9. **`QuestNPCDetailPage.tsx`** — 奖励类型、任务目标、rarity、统计、NPC 名（15 行改动）
-
-**改造模式**（参考已完成的 DetailPage/ListPage）：
-```tsx
-import { useLocale } from '../i18n/useLocale';
-// 在组件内：
-const { t, ut } = useLocale();
-// UI 标签：{ut('ui.common.loading')}
-// 实体名：{t(entity.translation_key, entity.translation || entity.name)}
-```
-
-**可能需要新增的 UI locale key**（追加到 `uiLocale.ts` 各语言段）：
-```
-ui.home.tagline         → 越来越黑暗闪电指南...
-ui.home.view_items      → 查看物品位置
-ui.module.preview       → 地图模块预览（暂停维护）
-ui.quest.type.kill      → 击杀
-ui.quest.type.collect   → 收集
-ui.quest.type.survive   → 逃生
-ui.quest.type.use       → 使用
-ui.quest.random_reward  → 随机奖励
-ui.quest.no_tasks       → 该NPC暂无任务
-ui.quest.affinity       → 好感度
-ui.quest.gold           → 金币
-ui.quest.exp            → 经验值
-ui.npc.装备NPC           → 装备NPC  (NPC 分类名，也可直接 t() 查实体 locale)
-ui.npc.优选NPC           → 优选NPC
-ui.npc.可用NPC           → 可用NPC
-ui.npc.不推荐NPC         → 不推荐NPC
-```
-
-翻译时优先查对应语言 `Game.json` 的官方表达。
-
 #### 中优先级
 
 **P9 剩余：locale 字典体积优化**
@@ -540,10 +495,6 @@ ui.npc.不推荐NPC         → 不推荐NPC
 - 优化方案：在 `build_locale_files()` 中只导出 `search_index.json` 中实际出现的 `translation_key` + 手动维护的 `ui.*` key
 - 或直接接受全量体积（已有 SW 缓存 + GZip，影响可控）
 - 修改位置：`api/src/locale_builder.py:build_locale_files()`
-
-**P8 剩余：lootdrop 详情页前端嵌套实体名翻译**
-- 后端已补 `translation_key`（本次会话完成），前端 `LootdropDetailPage.tsx` 需在渲染 `monsters` 和 `group_drop_info` 时用 `t()` 替换 `entry.translation` 为翻译后文本
-- 修改位置：`LootdropDetailPage.tsx:1065` gdi 条目匹配、`:1108` 模块名渲染
 
 **P10：Playwright 回归测试（未开始）**
 - 需要：5 页面 × 3 语言 × 标题验证 + Hydration 检查
@@ -571,7 +522,7 @@ api/src/locale_builder.py          # locale 字典导出
 web/src/i18n/locale.ts             # 语言列表 / loadLocale()
 web/src/i18n/LanguageContext.tsx    # LanguageProvider + 路径工具
 web/src/i18n/useLocale.ts          # useLocale() hook
-web/src/i18n/uiLocale.ts           # UI 文案字典 (10 语言 × ~60 key)
+web/src/i18n/uiLocale.ts           # UI 文案字典 (10 语言 × ~60 key → 已扩展至 ~135 key)
 web/src/i18n/antdLocale.ts         # AntD locale 懒加载 hook
 ```
 
@@ -589,7 +540,16 @@ web/src/components/NavBar.tsx       # + 语言下拉 + UI i18n
 web/src/components/Disclaimer.tsx   # + UI i18n
 web/src/pages/ListPage.tsx          # + 实体名翻译 + UI i18n
 web/src/pages/DetailPage.tsx        # + 实体名翻译 + UI i18n
-web/src/pages/LootdropDetailPage.tsx # + 实体名翻译 + UI i18n
+web/src/pages/LootdropDetailPage.tsx # + 实体名翻译 + UI i18n + 嵌套实体名 t() 翻译 + GroupDropInfo translation_key
+web/src/pages/HomePage.tsx          # P8d: 卡片描述/tagline/计数全部 ut()
+web/src/pages/DungeonModulesPage.tsx # P8d: 标题/统计/模块计数 ut()
+web/src/pages/DungeonModuleGroupPage.tsx # P8d: 标题/隐藏计数/调试按钮 ut()
+web/src/pages/ExplorePage.tsx       # P8d: 标题/统计/任务标签 ut()
+web/src/pages/QuestItemsPage.tsx     # P8d: 标题/统计/实体位置计数 ut()
+web/src/pages/QuestItemGroupPage.tsx # P8d: 标题/图例/位置统计 ut()
+web/src/pages/QuestNPCPage.tsx      # P8d: 统计/NPC分类标签/CATEGORY_KEYS ut()
+web/src/pages/DungeonModuleDetailPage.tsx # P8d: 标题/实体类型标签/位置统计 ut()
+web/src/pages/QuestNPCDetailPage.tsx # P8d: CONTENT_TYPE_KEY/REWARD_TYPE_KEY → ut(); 全部中文标签替换
 web/src/hooks/useSearchIndex.ts     # + translation_key 类型
 web/src/types/data.ts               # + translation_key 字段
 web/scripts/ssg.mjs                 # + 多语言 HTML 后处理 + hreflang + sitemap
