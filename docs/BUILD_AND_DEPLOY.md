@@ -6,11 +6,13 @@
 
 ```bash
 git commit -am "WIP: <描述>"                    # 1. checkpoint
-cd api && python main.py > pipeline.log 2>&1     # 2. 数据管道，必须写日志
-cd web && npm run build > build.log 2>&1         # 3. 前端构建，必须写日志
+cd api && python main.py > pipeline.log 2>&1     # 2. 数据管道（含 locale 字典导出）
+cd web && npm run build > build.log 2>&1         # 3. 前端构建（含 SSG 多语言 HTML 后处理）
 # 4. 启动web + 强制验证
 cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
+
+`python main.py` 在 search_index 步骤后自动运行 `build_locale_files`，生成 `data/json/locale/{lang}.json`（10种语言）。`npm run build` 中的 `ssg.mjs` 使用这些 locale 字典为每种语言生成 HTML 副本（dist/{lang}/...）。完整构建产物约 1.28 GB。
 
 禁止直接执行实时输出的长流程命令。`python main.py`、`npm run build`、`./deploy.sh`、Playwright 全站测试等必须使用 `> 日志文件 2>&1`，完成后单独读取日志检查结果，避免长输出流阻塞 TUI 进程。
 

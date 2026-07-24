@@ -439,15 +439,9 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 ### 9.0 当前完成情况（2026-07-24）
 
 已完成：
-
-- P0：修复 `ssg.mjs` 版本化数据目录顺序，保留 `/data/json/meta.json`，大 JSON 进入 `/data/{short}/json/`。
-- P1：items/monsters/props/lootdrops/dungeon_modules/search_index 输出 `translation_key`。
-- P2：新增 `api/src/locale_builder.py`，导出 10 语言 `data/json/locale/{lang}.json`。
-- P3：新增语言前缀路由，`/en/...` 等路径可访问；无前缀路径固定 `zh-Hans`，不自动重定向。
-- P4：新增 `LanguageProvider` / `useLocale()`，按 URL 语言和 data version 加载版本化 locale 字典。
-- P5：`ssg.mjs` 生成非中文 HTML 副本，注入 localized title、canonical、hreflang、`window.__SSR_DATA__.__lang`。
-- P6：NavBar 语言下拉、搜索结果、列表页、items/monsters/props 详情页、lootdrop 详情页主实体名已接入 locale。
-- P7：sitemap 已输出 10 语言 URL，并带 `xhtml:link rel="alternate"`。
+- P0-P7：核心链路（translation_key 注入、locale_builder、语言路由、LanguageProvider、SSG 多语言 HTML 后处理、NavBar 语言切换、sitemap 多语言）。  
+- P8 部分：lootdrop 嵌套 monsters 和 group_drop_info 补 `translation_key`；NavBar/Disclaimer/ListPage/DetailPage/LootdropDetailPage 核心 UI 文案接入 `ut()`（uiLocale.ts 维护 10 语言 UI 字典）；创建 `web/src/i18n/uiLocale.ts`（~60 key/语言）。  
+- P9 部分：Ant Design locale 切换（`useAntdLocale` + `AntdLocaleProvider`），按语言懒加载 antd locale 模块。
 
 待完成：
 

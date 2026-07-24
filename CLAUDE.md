@@ -14,6 +14,7 @@
 | 数据管道、前端构建、启动 web、HTTP 200 验证、部署、DB 推送 | `docs/BUILD_AND_DEPLOY.md` |
 | 项目结构、页面布局、组件职责、Hydration 排障、数据管道细节、子池、PWA 缓存、文档索引 | `docs/AGENT_REFERENCE.md` |
 | 数据管道、数据库、地图模块详细规范 | `docs/REFERENCE.md` |
+| 多语言 (i18n) 架构、locale 字典、语言路由、P8-P12 进度 | `docs/plans/MULTILANG_PLAN.md` |
 | PWA 架构规划 | `docs/PWA_ROADMAP.md` |
 | 前端水合错误 Playwright 排查 | `docs/DEBUG_HYDRATION_WITH_PLAYWRIGHT.md` |
 | Hydration #310 历史修复 | `docs/DEBUG_HYDRATION.md` |
