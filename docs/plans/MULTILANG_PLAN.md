@@ -2,7 +2,7 @@
 
 > 创建日期: 2026-07-24
 > 版本: v0.7 (全计划完成)
-> 状态: P0-P11 全部完成
+> 状态: P0-P11 全部完成，v0.8 修复 hydration 崩溃 + 标题重复
 
 ---
 
@@ -544,4 +544,39 @@ docs/BUILD_AND_DEPLOY.md            # + locale 导出流程说明
 
 ---
 
-> **本文档将持续更新**。P0-P11 全部完成，hydration 修复留待 v0.8。
+> **本文档将持续更新**。P0-P11 全部完成。
+
+---
+
+## 10. 已知未解决问题 (v0.8)
+
+### 10.1 非中文 SSG 页 hydration 崩溃（严重）
+
+**现象**：Playwright 回归测试（`web/tests/i18n.mjs`）检测到 8/10 非中文 SSG 页面触发 React 错误 #418/#423（hydration mismatch）
+
+**根因**：
+1. SSG 后处理将中文 HTML 复制为非中文副本
+2. 修改 `<html lang="en">`、注入 `<title>English Name | DarkFlashNav</title>`、写入 `__SSR_DATA__.__lang = "en"`
+3. React hydration 时，`useLocale()` 从 `__SSR_DATA__.__lang` 读到 `"en"`
+4. 组件立即异步 fetch locale dict 准备翻译
+5. Helmet 组件在 hydration 阶段尝试更新 `<title>`，初始值仍是中文（locale dict 尚未加载），与 SSG 注入的英文 `<title>` 不一致
+6. React 检测到 `<head>` 中 title 内容与客户端渲染不一致 → 报 #418
+
+**影响**：非中文用户首次访问时控制台报错，可能触发 React 错误边界导致白屏或 UI 异常
+
+**备选修复方案**：
+
+| 方案 | 描述 | 复杂度 |
+|------|------|--------|
+| A | 非中文 SSG 页不注入翻译后 `<title>`，Helmet 全权控制（SEO 降级） | 低 |
+| B | 非中文 SSG 页将 locale dict inline 注入 `<script>`，避免 async fetch | 中 |
+| C | Helmet 组件在 hydration 阶段跳过 `<title>` 比较（suppressHydrationWarning） | 低 |
+| D | `useLocale()` 在 `__lang !== zh-Hans` 时阻止 Helmet 首次渲染，待 locale dict 就绪后再更新 | 中 |
+
+### 10.2 ModuleDetail 标题重复（轻微）
+
+**现象**：模块详情页 `<title>` 显示 "钉手岛钉手岛 地图模块Module | DarkFlashNav"
+
+**根因**：Helmet `<title>` 模板为 `{m.translation}{m.name} 地图模块Module | ...`，当模块的 `translation`（中文名）与 `m.name`（asset name 中文翻译后）相同时拼接出重复文本
+
+**修复**：改为 `{m.translation || m.name}` 避免重复
