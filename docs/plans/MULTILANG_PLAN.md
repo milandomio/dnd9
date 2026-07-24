@@ -2,7 +2,9 @@
 
 > 创建日期: 2026-07-24
 > 版本: v0.3 (路由版·轻量SSG)
-> 状态: 计划中 — 等待确认执行
+> 状态: 核心链路已落地 — UI/回归/清理仍待收尾
+
+> 执行进度（2026-07-24）：P0-P7 核心链路已完成并提交；P8-P12 仍需继续执行。当前实现未引入 `react-i18next`，采用轻量 `LanguageProvider` + `useLocale()`。
 
 ---
 
@@ -428,6 +430,33 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 ---
 
 ## 9. 实施里程碑
+
+### 9.0 当前完成情况（2026-07-24）
+
+已完成：
+
+- P0：修复 `ssg.mjs` 版本化数据目录顺序，保留 `/data/json/meta.json`，大 JSON 进入 `/data/{short}/json/`。
+- P1：items/monsters/props/lootdrops/dungeon_modules/search_index 输出 `translation_key`。
+- P2：新增 `api/src/locale_builder.py`，导出 10 语言 `data/json/locale/{lang}.json`。
+- P3：新增语言前缀路由，`/en/...` 等路径可访问；无前缀路径固定 `zh-Hans`，不自动重定向。
+- P4：新增 `LanguageProvider` / `useLocale()`，按 URL 语言和 data version 加载版本化 locale 字典。
+- P5：`ssg.mjs` 生成非中文 HTML 副本，注入 localized title、canonical、hreflang、`window.__SSR_DATA__.__lang`。
+- P6：NavBar 语言下拉、搜索结果、列表页、items/monsters/props 详情页、lootdrop 详情页主实体名已接入 locale。
+- P7：sitemap 已输出 10 语言 URL，并带 `xhtml:link rel="alternate"`。
+
+待完成：
+
+- P8：全量 UI 文案 i18n。当前大量页面文案仍为中文，包括 Disclaimer、按钮、筛选项、统计说明、分组名、爆率提示、加载/空状态等。
+- P8：任务页、探索页、地图模块页、Quest NPC 页仍未系统接入 locale；部分页面只继承 NavBar 语言切换。
+- P8：lootdrop 详情页内嵌怪物名、`group_drop_info`、地图模块名、坐标 label、variant rarity 等仍未全量按 `translation_key` 翻译。
+- P8：后端尚未给 lootdrop `monsters` 内嵌项、`group_drop_info` 条目、quest/export 结构补齐 `translation_key`，因此前端无法稳定翻译所有嵌套名称。
+- P9：locale 字典当前导出完整 Game.json，体积大于原计划估算；需过滤到实际使用 key + UI key，或明确接受完整字典体积。
+- P9：Ant Design locale 仍固定 `zh_CN`，语言切换后组件内置文案不会变。
+- P10：尚未执行 Playwright 多语言 hydration/console 全站回归；只验证了构建通过和 `/`、`/en/items/Ale/` HTTP 200。
+- P11：尚未清理 `translation_EN` / `resolver_en`，仍作为 SEO/回退字段保留。
+- P12：需在完成 P8-P11 后再次同步文档、更新验收标准和计划状态。
+
+### 9.1 原始里程碑
 
 | Phase | 任务 | 产出 | 预估工时 |
 |---|---|---|---|---|

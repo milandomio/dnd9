@@ -1,5 +1,13 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划未完成项回写
+
+- **原因**：多语言核心链路已落地，但原计划仍显示“计划中/等待执行”，且未明确剩余 UI i18n、嵌套 translation_key、回归测试和清理任务
+- **变更文件**：
+  - `docs/plans/MULTILANG_PLAN.md` — 状态改为“核心链路已落地 — UI/回归/清理仍待收尾”；新增当前完成情况，列出 P0-P7 已完成与 P8-P12 待完成项
+  - `docs/SESSION_CHANGES.md` — 记录本次计划回写
+- **关键逻辑/映射关系**：已完成链路为 `translation_key -> locale dict -> SSG localized head -> runtime core display`；未完成链路集中在全量 UI 文案、嵌套实体名 key、locale 体积优化、AntD locale、Playwright hydration 回归和 `translation_EN` 清理
+
 ## 多语言计划阶段 6：运行时 locale 加载与核心显示切换
 
 - **原因**：SSG 已能生成非中文 HTML，但客户端页面仍显示中文实体名；需要运行时加载 locale 字典，并让导航、列表页、详情页使用 `translation_key` 显示当前语言
