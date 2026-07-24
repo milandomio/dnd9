@@ -2,6 +2,8 @@
 
 > **重要**：每句废话 = 用户一次输入的数倍成本。只输出必要内容：判断需求 → 执行 → 等反馈。禁止情绪安抚、铺垫、总结性废话。
 
+**运行环境：WSL 下的 Ubuntu，不要直接执行 win 环境的命令行工具。**
+
 游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
 ## 子文档查阅规则
