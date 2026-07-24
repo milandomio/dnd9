@@ -1,10 +1,8 @@
 # 多语言 (i18n) 重构计划
 
 > 创建日期: 2026-07-24
-> 版本: v0.3 (路由版·轻量SSG)
-> 状态: 核心链路已落地 — UI/回归/清理仍待收尾
-
-> 执行进度（2026-07-24）：P0-P7 核心链路已完成并提交；P8-P12 仍需继续执行。当前实现未引入 `react-i18next`，采用轻量 `LanguageProvider` + `useLocale()`。
+> 版本: v0.4 (UI i18n 持续推进中)
+> 状态: P0-P7 完成；P8 部分完成（NavBar/核心页面 UI 已接入）；P9 部分完成（AntD locale 切换）；P10/P11 未开始
 
 ---
 
@@ -178,24 +176,23 @@ def build_locale_files(db: DatabaseManager, output_dir: Path):
 
 ### 4.1 新增依赖
 
-```bash
-npm i react-i18next i18next
-npm i -D @types/i18next   # 如需
-```
+**未引入 `react-i18next`**。采用轻量自建方案：`LanguageProvider` + `useLocale()` + `ut()`。无需额外 npm 包。
 
-### 4.2 目录结构
+### 4.2 目录结构（实际落地）
 
 ```
 web/src/i18n/
-├── I18nProvider.tsx      # 根 Provider, SSR 安全,从路由提取 lang
-├── useI18n.ts            # Hook 返回 {t, lang, setLang, ready}
-├── config.ts             # 支持语言列表、字典懒加载、namespace
-├── locales/              # UI 文案字典 (TS 直写)
-│   ├── zh-Hans.json
-│   ├── en.json
-│   └── ...
-└── index.ts              # 导出
+├── locale.ts               # 语言列表、loadLocale、translate()
+├── LanguageContext.tsx      # LanguageProvider + useLanguage + 路径工具
+├── useLocale.ts             # Hook: t(translation_key, fallback) + ut(ui_key)
+├── uiLocale.ts              # UI 文案字典 (10 语言 × ~60 key/语言)
+├── antdLocale.ts            # useAntdLocale hook (懒加载 Ant Design locale 模块)
+└── index.ts                 # 导出
 ```
+
+- 实体字典：运行时 fetch `/data/{short}/json/locale/{lang}.json`（后端 locale_builder.py 生成）
+- UI 字典：静态 import `uiLocale.ts`（TypeScript const 对象，~60 key/语言）
+- AntD locale：`useAntdLocale()` 按语言懒加载 `antd/locale/{lang}` 模块
 
 ### 4.3 路由改造 (`AppInner.tsx`)
 
@@ -238,12 +235,15 @@ web/src/i18n/
 
 **无前缀访问**: 固定作为 `zh-Hans` 渲染，不按浏览器语言自动跳转。
 
-### 4.4 `I18nProvider` 关键点
+### 4.4 `LanguageProvider` / `useLocale()` 关键点（已落地）
 
-- URL 路径提取 `lang` 参数 → 验证是否在支持列表中 → 不在则 fallback 到 zh-Hans。
-- SSR 阶段: `i18n.init({ lng: 'zh-Hans', resources: {} })`，不预注入任何 locale dict。HTML 中的 `<title>` 已由后处理替换为目标语言，body 保留中文。
-- 客户端 hydration 后: 读取 `__SSR_DATA__.lang`，非 zh-Hans 时通过 `dataUrl(dataVersion, '/data/json/locale/{lang}.json')` 获取版本化字典 → 切换语言。
-- 字典加载: `fetch(dataUrl(dataVersion, '/data/json/locale/{lang}.json'))`。
+- `LanguageProvider`：从 URL 第一段提取 lang → 验证 SUPPORTED_LANGS → fallback zh-Hans。
+- `useLocale()`：返回 `{ lang, dict, t, ut }`。
+  - `t(key, fallback)`：先查合并字典（UI locale + 运行时实体 locale），再 fallback。
+  - `ut(uiKey)`：直接查 UI locale，用于纯 UI 标签（如 `ut('ui.common.loading')`）。
+- SSR 阶段：只渲染中文，不加载任何 locale dict。非中文页的 `<title>` 由 SSG 后处理替换。
+- 客户端 hydration 后：`useEffect` → `fetch(dataUrl(version, '/data/json/locale/{lang}.json'))` → 合并 UI+实体字典。
+- `uiLocale.ts`：10 语言静态字典（TypeScript const），直接 import，无需 fetch。
 
 ### 4.5 字典加载策略
 
@@ -295,21 +295,43 @@ for (lang of ['en', 'de', 'es', 'fr', 'ja', 'ko', 'pt-BR', 'ru', 'zh-Hant']) {
 4. i18next 替换 UI 文案 (NavBar、列表、卡片等)
 5. Helmet `<title>` 更新为目标语言 (与 SSG 已写入的一致，无闪烁)
 
-### 4.7 UI 文案 i18n
+### 4.7 UI 文案 i18n 完成度
 
-| 文案示例 | 键名 |
+**已接入 `ut()` 的页面/组件：**
+
+| 页面/组件 | 已翻译内容 |
 |---|---|
-| "物品表" | `ui.nav.items` |
-| "怪物表" | `ui.nav.monsters` |
-| "数据有误差,以实际游戏内为准" | `ui.disclaimer` |
-| "未分组" | `ui.common.ungrouped` |
-| "加载中..." | `ui.common.loading` |
+| `NavBar.tsx` | 标签名/面包屑、搜索 placeholder/标签/最近搜索/搜索按钮、主题切换 aria-label、返回首页 |
+| `Disclaimer.tsx` | 免责声明、反馈链接 |
+| `ListPage.tsx` | 页面标题（NavBar 标签复用）、lootdrop 分组名（神器/小型神器等）、调试按钮 |
+| `DetailPage.tsx` | 加载文字、调试按钮、爆率显示/模式筛选/隐藏零爆率标签 |
+| `LootdropDetailPage.tsx` | 同上 + 爆率品质标签（极低/低/中/高） |
 
-- 存入 `web/src/i18n/locales/{lang}.json` (TS 直写或 JSON import),约 15-30 条/语言。
-- **实体名翻译**: 非 zh-Hans 时，列表页卡片、详情页标题、关联实体名等所有展示 entity `translation` 的地方，统一通过 `localeDict[entity.translation_key]` 替换。组件内用 `t(entity.translation_key, { fallback: entity.translation })` 模式。
-- **UI 文案翻译必须人工维护**：前端硬编码 UI 文案不能机械套 Game.json，也不能自动机翻后直接落库。每条 UI key 需要手动写入各语言文案；为保证措辞贴近游戏，翻译时优先查对应语言 `Game.json` 中相同/相近功能的官方表达，再手动改写到 UI 语境。
-- **调试字段默认不翻译**：坐标 `label`、`original_keyword`、`keyword`、文件名、内部 entity name 等主要用于调试和溯源，默认保留原始值。只有当这些字段已经作为用户可见文案渲染，或现有中文逻辑已明确翻译给用户看时，才纳入 i18n。
-- **rarity 翻译来源**：`variant_rarity` 本来就由后端从对应语言/翻译表的 Game.json key 提取，不应在前端二次手写或重复映射；后续多语言 rarity 只需确保后端按目标语言输出或前端按 rarity key 查 locale。
+**未接入 `ut()` 的页面/组件（下次会话继续）：**
+
+| 页面 | 待翻译内容 |
+|---|---|
+| `HomePage.tsx` | 页面描述文字、导航卡片标签、SEO tagline |
+| `DungeonModulesPage.tsx` | 标题、统计、"未分组"回退 |
+| `DungeonModuleGroupPage.tsx` | 标题、调试按钮 |
+| `DungeonModuleDetailPage.tsx` | 标题、稀有度标签、实体类型标签、统计 |
+| `ExplorePage.tsx` | 标题 |
+| `QuestItemsPage.tsx` | 标题、统计 |
+| `QuestItemGroupPage.tsx` | 标题、实体图例、位置统计 |
+| `QuestNPCPage.tsx` | 标题、NPC 分类标签 |
+| `QuestNPCDetailPage.tsx` | 奖励类型、任务目标、稀有度、统计、NPC 名 |
+
+**UI locale 键命名规范：**
+```
+ui.nav.items         → 物品表 / Items / ...
+ui.search.placeholder → 搜索物品/怪物/实体... / Search...
+ui.common.loading    → 加载中... / Loading...
+ui.filter.drop_rate  → 爆率显示 / Drop Rate
+ui.rate.very_low     → 极低(PVE100%) / Very Low (PVE 100%)
+ui.list.artifact     → 神器 / Artifact
+ui.detail.position   → 位置 / Position
+ui.disclaimer.warning → 数据有误差...
+```
 
 ---
 
@@ -436,88 +458,145 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 
 ## 9. 实施里程碑
 
-### 9.0 当前完成情况（2026-07-24）
+### 9.0 当前完成情况（2026-07-24，最后更新）
 
-已完成：
-- P0-P7：核心链路（translation_key 注入、locale_builder、语言路由、LanguageProvider、SSG 多语言 HTML 后处理、NavBar 语言切换、sitemap 多语言）。  
-- P8 部分：lootdrop 嵌套 monsters 和 group_drop_info 补 `translation_key`；NavBar/Disclaimer/ListPage/DetailPage/LootdropDetailPage 核心 UI 文案接入 `ut()`（uiLocale.ts 维护 10 语言 UI 字典）；创建 `web/src/i18n/uiLocale.ts`（~60 key/语言）。  
-- P9 部分：Ant Design locale 切换（`useAntdLocale` + `AntdLocaleProvider`），按语言懒加载 antd locale 模块。
+**已完成：**
 
-待完成：
+| Phase | 内容 | 产出 |
+|---|---|---|
+| P0 | 修复 ssg.mjs 版本化数据目录顺序 | meta.json 保留，大 JSON 进版本化路径 |
+| P1 | items/monsters/props/lootdrops/modules/search_index 输出 `translation_key` | 实体 JSON 含 translation_key |
+| P2 | 新建 `locale_builder.py` | 10 语言 `data/json/locale/{lang}.json` |
+| P3 | 语言前缀路由 `/:lang/...` | `/en/...` 等路径可访问；无前缀固定 zh-Hans |
+| P4 | `LanguageProvider` + `useLocale()` | URL 提取 lang → 加载版本化 locale dict |
+| P5 | ssg.mjs 多语言 HTML 后处理 | 9 种非中文 HTML 副本，含 localized title/canonical/hreflang/`__lang` |
+| P6 | NavBar 语言下拉 + 搜索结果翻译 | 语言选择 → 整页导航；搜索结果实体名按 locale 翻译 |
+| P7 | sitemap 多语言 URL | 10 语言 URL + `xhtml:link rel="alternate"` |
+| P8 部分 | lootdrop 嵌套 monsters + group_drop_info 补 `translation_key` | 前端可翻译 lootdrop 内嵌实体名 |
+| P8 部分 | 新建 `uiLocale.ts`（10 语言 × ~60 key） | NavBar/Disclaimer/ListPage/DetailPage/LootdropDetailPage 核心 UI 接入 `ut()` |
+| P9 部分 | Ant Design locale 切换 | `useAntdLocale` + `AntdLocaleProvider`，按语言懒加载 antd locale 模块 |
 
-- P8：全量 UI 文案 i18n。当前大量页面文案仍为中文，包括 Disclaimer、按钮、筛选项、统计说明、分组名、爆率提示、加载/空状态等。UI 文案和前端硬编码必须手动翻译，翻译时参考对应语言 Game.json 的官方表达。
-- P8：任务页、探索页、地图模块页、Quest NPC 页仍未系统接入 locale；部分页面只继承 NavBar 语言切换。
-- P8：lootdrop 详情页内嵌怪物名、`group_drop_info`、地图模块名等仍未全量按 `translation_key` 翻译；坐标 label 属调试/溯源字段，默认不翻译，除非它已作为用户可见文案渲染；variant rarity 已由 Game.json 翻译链路提供，不做前端硬编码映射。
-- P8：后端尚未给 lootdrop `monsters` 内嵌项、`group_drop_info` 条目、quest/export 结构补齐 `translation_key`，因此前端无法稳定翻译所有嵌套名称。
-- P9：locale 字典当前导出完整 Game.json，体积大于原计划估算；需过滤到实际使用 key + UI key，或明确接受完整字典体积。
-- P9：Ant Design locale 仍固定 `zh_CN`，语言切换后组件内置文案不会变。
-- P10：尚未执行 Playwright 多语言 hydration/console 全站回归；只验证了构建通过和 `/`、`/en/items/Ale/` HTTP 200。
-- P11：尚未清理 `translation_EN` / `resolver_en`，仍作为 SEO/回退字段保留。
-- P12：需在完成 P8-P11 后再次同步文档、更新验收标准和计划状态。
-
-### 9.1 原始里程碑
-
-| Phase | 任务 | 产出 | 预估工时 |
-|---|---|---|---|---|
-| **P0 准备** | 确认计划、分支切分；修改 ssg.mjs 版本化数据目录为"移动而非复制"（省 681 MB） | `feat/multilang` 分支; ssg.mjs 改 rmSync 冗余 JSON | 0.5h |
-| **P1 translation_key 注入** | entity_export/lootdrop_builder/module_builder/index_export 加 `translation_key` 字段 | 实体 JSON 含 translation_key,管道跑通 | 1.5h |
-| **P2 locale_builder** | 新建 `locale_builder.py`,集成 collector 管道 | `api/output/json/locale/*.json` 生成 (10 语言) | 1.5h |
-| **P3 前端路由改造** | AppInner 添加 `/:lang` 前缀路由 + 无前缀重定向逻辑 | `/en/items/...` 可访问 | 2h |
-| **P4 I18nProvider + URL 检测** | 从 URL 提取 lang、验证列表、加载 locale dict、注入 i18next | `I18nProvider` 按 URL 自动选语言 | 2h |
-| **P5 SSG 文本后处理** | ssg.mjs 新增后处理阶段:读中文 HTML → locale dict 替换 `<title>` → 注入 lang+hreflang → 写 `dist/{lang}/.../index.html` | 9 语言 HTML 生成 | 1.5h |
-| **P6 NavBar 语言切换** | 下拉选择语言 → `/{newLang}/当前路径` 整页导航 | 导航栏语言切换 | 1.5h |
-| **P7 hreflang + sitemap** | 每个页面注入 alternate 链接 + 多语言 sitemap | SEO 完整 | 1.5h |
-| **P8 UI 文案 i18n** | 15-30 条常用文案迁移 + Disclaimer/NavBar/列表页 | 导航/提示切语言 | 1.5h |
-| **P9 PWA 缓存调整** | workbox 新增 locale 缓存规则 (maxEntries:15) | locale dict SW 缓存正常 | 0.5h |
-| **P10 回归测试** | Playwright 5 页 (home/items/Ale/lootdrops/HeaterShield_8001/monsters/Mimic_Large_Flat/dungeon_modules/Crypt/AdmirerRoom) × 3 语言 (zh-Hans/en/ja) × 标题验证 + Hydration 检查 | 全绿 | 2h |
-| **P11 后端清理 (可选)** | 删 `translation_EN`/`resolver_en`/`load_en_game_json` | 代码减 ~120 行 | 1.5h |
-| **P12 文档 & 收尾** | 更新 CLAUDE.md 流程说明 | 文档同步 | 0.5h |
-
-**总计约 16.5h (2.5-3 天)。全部 10 语言同步推出。**
+**当前架构速览：**
+- 语言检测：URL 前缀 → `LanguageProvider.lang` → `useLocale()`
+- 实体翻译：`entity.translation_key` → `loadLocale()` 运行时 fetch → `t(key, fallback)`
+- UI 翻译：`ut('ui.nav.items')` → 静态 `uiLocale.ts` 字典 → 合并入 `useLocale().t()`
+- AntD 翻译：`useAntdLocale()` → 懒加载 antd locale 模块 → `ConfigProvider locale`
+- SSG 多语言：中文 renderToString 一次 → 文本后处理生成 9 非中文副本
 
 ---
 
-## 10. 附录: 关键文件变更清单
+### 9.1 待完成项（优先级排序，供下次会话使用）
 
-### 后端 (新增/修改)
+#### 高优先级（P8d：其余页面 UI i18n）
 
+以下页面尚未导入 `useLocale` / 接入 `ut()`，页面标题、统计文字、按钮标签等仍硬编码中文。
+按改动量排序：
+
+1. **`HomePage.tsx`** — 页面 tagline、SEO 描述、导航卡片标签（5 行改动）
+2. **`DungeonModulesPage.tsx`** — 标题、"未分组"回退、统计（4 行改动）
+3. **`DungeonModuleGroupPage.tsx`** — 标题、调试按钮（4 行改动）
+4. **`ExplorePage.tsx`** — 标题、统计（3 行改动）
+5. **`QuestItemsPage.tsx`** — 标题、统计（3 行改动）
+6. **`QuestItemGroupPage.tsx`** — 标题、实体图例、位置统计（5 行改动）
+7. **`QuestNPCPage.tsx`** — 标题、NPC 分类标签（4 行改动）
+8. **`DungeonModuleDetailPage.tsx`** — 标题、rarity 标签、实体类型标签、SEO（8 行改动）
+9. **`QuestNPCDetailPage.tsx`** — 奖励类型、任务目标、rarity、统计、NPC 名（15 行改动）
+
+**改造模式**（参考已完成的 DetailPage/ListPage）：
+```tsx
+import { useLocale } from '../i18n/useLocale';
+// 在组件内：
+const { t, ut } = useLocale();
+// UI 标签：{ut('ui.common.loading')}
+// 实体名：{t(entity.translation_key, entity.translation || entity.name)}
 ```
-api/src/locale_builder.py          (新建)
-api/src/collector.py               (加 build_locale_files 步骤)
-api/src/entity_export.py           (加 translation_key 写入)
-api/src/lootdrop_builder.py        (加 translation_key 写入)
-api/src/module_builder.py          (加 translation_key 写入)
-api/src/index_export.py            (加 translation_key 写入)
-api/src/config.py                  (加 LOCALE_OUTPUT_DIR)
-api/src/db/__init__.py             (保持 get_translations_map(lang))
+
+**可能需要新增的 UI locale key**（追加到 `uiLocale.ts` 各语言段）：
+```
+ui.home.tagline         → 越来越黑暗闪电指南...
+ui.home.view_items      → 查看物品位置
+ui.module.preview       → 地图模块预览（暂停维护）
+ui.quest.type.kill      → 击杀
+ui.quest.type.collect   → 收集
+ui.quest.type.survive   → 逃生
+ui.quest.type.use       → 使用
+ui.quest.random_reward  → 随机奖励
+ui.quest.no_tasks       → 该NPC暂无任务
+ui.quest.affinity       → 好感度
+ui.quest.gold           → 金币
+ui.quest.exp            → 经验值
+ui.npc.装备NPC           → 装备NPC  (NPC 分类名，也可直接 t() 查实体 locale)
+ui.npc.优选NPC           → 优选NPC
+ui.npc.可用NPC           → 可用NPC
+ui.npc.不推荐NPC         → 不推荐NPC
 ```
 
-### 前端 (新增/修改)
+翻译时优先查对应语言 `Game.json` 的官方表达。
 
+#### 中优先级
+
+**P9 剩余：locale 字典体积优化**
+- `locale_builder.py` 当前导出完整 Game.json（~1608 key 的 DB 全量），体积 > 500 KB / 语言
+- 优化方案：在 `build_locale_files()` 中只导出 `search_index.json` 中实际出现的 `translation_key` + 手动维护的 `ui.*` key
+- 或直接接受全量体积（已有 SW 缓存 + GZip，影响可控）
+- 修改位置：`api/src/locale_builder.py:build_locale_files()`
+
+**P8 剩余：lootdrop 详情页前端嵌套实体名翻译**
+- 后端已补 `translation_key`（本次会话完成），前端 `LootdropDetailPage.tsx` 需在渲染 `monsters` 和 `group_drop_info` 时用 `t()` 替换 `entry.translation` 为翻译后文本
+- 修改位置：`LootdropDetailPage.tsx:1065` gdi 条目匹配、`:1108` 模块名渲染
+
+**P10：Playwright 回归测试（未开始）**
+- 需要：5 页面 × 3 语言 × 标题验证 + Hydration 检查
+- 测试框架未搭建，暂无 Playwright 测试文件
+- 参考文档：`docs/DEBUG_HYDRATION_WITH_PLAYWRIGHT.md`
+
+#### 低优先级
+
+**P11：清理 `translation_EN` / `resolver_en`**
+- 涉及 8 个文件（api 4 个 + web 4 个），19 处引用
+- 移除后详情 JSON 减 ~1.5 MB
+- 风险：SSG 中 mult 语言后处理依赖 `translation_key`，不再需要 `translation_EN`；但需确保所有实体 JSON 的 `translation_key` 覆盖完整
+
+**P9 PWA 缓存调整**
+- `vite.config.ts` 现有 `/^\/data\/(?:[a-z0-9]+\/)?json\//` 已覆盖 locale 字典
+- 无需额外 workbox 规则
+
+---
+
+### 9.2 文件变更清单（已实际修改）
+
+**新增：**
 ```
-web/package.json                   (+ react-i18next, i18next)
-web/src/i18n/I18nProvider.tsx      (新建 — 从路由提取 lang,加载 locale dict)
-web/src/i18n/useI18n.ts            (新建)
-web/src/i18n/config.ts             (新建 — 语言列表 / 检测逻辑)
-web/src/i18n/locales/*.json        (新建, 10 语言 × UI 文案)
-web/src/i18n/index.ts              (新建)
-web/src/AppInner.tsx               (+ /:lang 前缀路由 + 无前缀重定向)
-web/src/ssr.tsx                    (+ lang 参数透传)
-web/src/components/NavBar.tsx      (+ 语言切换下拉,导航到 /{lang}/当前路径)
-web/src/pages/DetailPage.tsx       (title 从 SSG locale dict 注入)
-web/src/pages/LootdropDetailPage.tsx (同上)
-web/src/pages/DungeonModuleDetailPage.tsx (同上)
-web/src/pages/QuestNPCDetailPage.tsx (同上)
-web/src/pages/QuestItemGroupPage.tsx (group 名保留现状)
-web/src/pages/ListPage.tsx         (列表页标题同步)
-web/scripts/ssg.mjs                (新增后处理阶段 — 文本替换 `<title>` + 注入 lang/hreflang)
-web/vite.config.ts                 (+ workbox locale 缓存, df5-html maxEntries 保持 1300)
+api/src/locale_builder.py          # locale 字典导出
+web/src/i18n/locale.ts             # 语言列表 / loadLocale()
+web/src/i18n/LanguageContext.tsx    # LanguageProvider + 路径工具
+web/src/i18n/useLocale.ts          # useLocale() hook
+web/src/i18n/uiLocale.ts           # UI 文案字典 (10 语言 × ~60 key)
+web/src/i18n/antdLocale.ts         # AntD locale 懒加载 hook
+```
+
+**修改：**
+```
+api/src/collector.py               # + build_locale_files 管道步骤
+api/src/entity_export.py            # + translation_key 写入
+api/src/lootdrop_builder.py         # + translation_key (顶层 + 嵌套 monsters + gdi)
+api/src/module_builder.py           # + translation_key 写入
+api/src/index_export.py             # + translation_key 到索引
+api/src/config.py                   # + LOCALE_OUTPUT_DIR
+web/src/App.tsx                     # 移除硬编码 zhCN
+web/src/AppInner.tsx                # + 语言前缀路由 + AntdLocaleProvider
+web/src/components/NavBar.tsx       # + 语言下拉 + UI i18n
+web/src/components/Disclaimer.tsx   # + UI i18n
+web/src/pages/ListPage.tsx          # + 实体名翻译 + UI i18n
+web/src/pages/DetailPage.tsx        # + 实体名翻译 + UI i18n
+web/src/pages/LootdropDetailPage.tsx # + 实体名翻译 + UI i18n
+web/src/hooks/useSearchIndex.ts     # + translation_key 类型
+web/src/types/data.ts               # + translation_key 字段
+web/scripts/ssg.mjs                 # + 多语言 HTML 后处理 + hreflang + sitemap
+CLAUDE.md                           # + 多语言文档映射
+docs/BUILD_AND_DEPLOY.md            # + locale 导出流程说明
 ```
 
 ---
 
-## 11. 确认执行
-
-> **本文档为计划草案,尚未执行任何代码变更。**
-> 请核对后回复 **"确认执行"**,我将按上述里程碑分阶段落地。
-> 如需调整 (例如先不做 UI 文案、改键策略、或保留 translation_EN),请直接在文档上标注或告知。
+> **本文档将持续更新**。下次会话从 §9.1 待完成项开始执行。
