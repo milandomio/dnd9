@@ -5,14 +5,14 @@
 ## 完整构建
 
 ```bash
-git commit -am "WIP: <描述>"                 # 1. checkpoint
-cd api && python main.py                      # 2. 数据管道（自动交付到 data/）
-cd web && npm run build > build.log 2>&1      # 3. 前端构建，必须写日志
+git commit -am "WIP: <描述>"                    # 1. checkpoint
+cd api && python main.py > pipeline.log 2>&1     # 2. 数据管道，必须写日志
+cd web && npm run build > build.log 2>&1         # 3. 前端构建，必须写日志
 # 4. 启动web + 强制验证
 cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
 
-禁止直接执行实时输出的 `npm run build`。构建必须使用 `npm run build > build.log 2>&1`，完成后单独读取 `build.log` 检查结果，避免长输出流阻塞 TUI 进程。其他 npm 长输出命令同理优先写日志再读取。
+禁止直接执行实时输出的长流程命令。`python main.py`、`npm run build`、`./deploy.sh`、Playwright 全站测试等必须使用 `> 日志文件 2>&1`，完成后单独读取日志检查结果，避免长输出流阻塞 TUI 进程。
 
 构建完成后必须验证 web 服务可用（HTTP 200），不可跳过。若返回非 200，必须排查错误并修复至返回 200 为止。
 
@@ -31,7 +31,7 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 ## 一键部署
 
 ```bash
-./deploy.sh   # 管道 → 构建 → 启动服务 → git 提交
+./deploy.sh > deploy.log 2>&1   # 管道 → 构建 → 启动服务 → git 提交
 ```
 
 ## 数据流
