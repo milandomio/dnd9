@@ -69,6 +69,7 @@ def export_items(
             {
                 "name": name,
                 "translation": translation,
+                "translation_key": r["translation_key"],
                 "translation_EN": translation_en,
                 "category": r["category"],
                 "variant_count": variant_count,
@@ -79,6 +80,7 @@ def export_items(
         entity_data = {
             "name": name,
             "translation": translation,
+            "translation_key": r["translation_key"],
             "translation_EN": translation_en,
             "category": r["category"],
             "variant_count": variant_count,
@@ -143,6 +145,7 @@ def export_monsters(
             {
                 "name": canonical["monster_name"],
                 "translation": translation,
+                "translation_key": canonical["translation_key"],
                 "translation_EN": translation_en,
                 "coordCount": len(merged_coords_list),
             }
@@ -150,6 +153,7 @@ def export_monsters(
         entity_data = {
             "name": canonical["monster_name"],
             "translation": translation,
+            "translation_key": canonical["translation_key"],
             "translation_EN": translation_en,
             "coords": [
                 build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
@@ -234,6 +238,7 @@ def export_props(
             {
                 "name": name_key,
                 "translation": translation,
+                "translation_key": canonical_prop["translation_key"],
                 "translation_EN": translation_en,
                 "coordCount": len(merged_coords),
                 "type": entity_type,
@@ -242,6 +247,7 @@ def export_props(
         entity_data = {
             "name": name_key,
             "translation": translation,
+            "translation_key": canonical_prop["translation_key"],
             "translation_EN": translation_en,
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
