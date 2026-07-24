@@ -1,8 +1,8 @@
 # 多语言 (i18n) 重构计划
 
 > 创建日期: 2026-07-24
-> 版本: v0.5 (UI i18n 全量接入完成)
-> 状态: P0-P7 完成；P8/P8d 完成（9 个剩余页面 UI 全量接入 + 嵌套实体名翻译）；P9 部分完成（AntD locale 切换，字典体积优化待做）；P10/P11 未开始
+> 版本: v0.7 (全计划完成)
+> 状态: P0-P11 全部完成
 
 ---
 
@@ -486,31 +486,16 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 
 ---
 
-### 9.1 待完成项（优先级排序，供下次会话使用）
+### 9.1 完成项回顾
 
-#### 中优先级
+所有 P0-P11 计划项已完成。
 
-**P9 剩余：locale 字典体积优化**
-- `locale_builder.py` 当前导出完整 Game.json（~1608 key 的 DB 全量），体积 > 500 KB / 语言
-- 优化方案：在 `build_locale_files()` 中只导出 `search_index.json` 中实际出现的 `translation_key` + 手动维护的 `ui.*` key
-- 或直接接受全量体积（已有 SW 缓存 + GZip，影响可控）
-- 修改位置：`api/src/locale_builder.py:build_locale_files()`
-
-**P10：Playwright 回归测试（未开始）**
-- 需要：5 页面 × 3 语言 × 标题验证 + Hydration 检查
-- 测试框架未搭建，暂无 Playwright 测试文件
-- 参考文档：`docs/DEBUG_HYDRATION_WITH_PLAYWRIGHT.md`
-
-#### 低优先级
-
-**P11：清理 `translation_EN` / `resolver_en`**
-- 涉及 8 个文件（api 4 个 + web 4 个），19 处引用
-- 移除后详情 JSON 减 ~1.5 MB
-- 风险：SSG 中 mult 语言后处理依赖 `translation_key`，不再需要 `translation_EN`；但需确保所有实体 JSON 的 `translation_key` 覆盖完整
-
-**P9 PWA 缓存调整**
-- `vite.config.ts` 现有 `/^\/data\/(?:[a-z0-9]+\/)?json\//` 已覆盖 locale 字典
-- 无需额外 workbox 规则
+| Phase | 内容 | 完成度 |
+|---|---|---|
+| P0-P8d | 翻译键注入、locale 导出、语言路由、SSG 多语言、UI i18n 全量接入 | ✅ |
+| P9 | AntD locale 切换 + locale 字典体积优化（1056 key/语言，↓34%） | ✅ |
+| P10 | Playwright 回归测试框架搭建（5 页面 × 3 语言 × 标题验证 + Hydration 检查） | ✅ |
+| P11 | 移除 `translation_EN` / `resolver_en`（16 文件，~50 处引用） | ✅ |
 
 ---
 
@@ -559,4 +544,4 @@ docs/BUILD_AND_DEPLOY.md            # + locale 导出流程说明
 
 ---
 
-> **本文档将持续更新**。下次会话从 §9.1 待完成项开始执行。
+> **本文档将持续更新**。P0-P11 全部完成，hydration 修复留待 v0.8。

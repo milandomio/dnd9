@@ -1,5 +1,34 @@
 # 2026-07-25 会话修改记录
 
+## P11: 移除 translation_EN / resolver_en（16 文件，~50 处引用）
+
+- **原因**：`translation_EN` 和 `resolver_en` 是多语言过渡期的历史产物，现在所有实体都有 `translation_key` + locale dict 处理翻译，不再需要英文本地化冗余字段；移除后每个详情 JSON 减 ~1.5 MB
+- **变更文件**：
+  - `api/src/collector.py` — 移除 `resolver_en` / `en_resolve` 创建和传递（到 8 个导出函数的参数）
+  - `api/src/entity_export.py` — 3 个 export 函数移除 `resolve_en_name` 参数；items/monsters/props 输出移除 `translation_EN`
+  - `api/src/module_builder.py` — `build_modules_map`/`build_and_save_module_coords` 移除 `resolve_en_name`；模块 map 和 coords 输出移除 `translation_EN` + `trans_lookup_en`
+  - `api/src/lootdrop_builder.py` — `build_loot_index`/`build_and_save_lootdrop_details` 移除 `resolve_en_name`；索引和详情输出移除 `translation_EN`
+  - `api/src/index_export.py` — `generate_quest_items_groups` 移除未使用的 `resolve_en_name` 参数
+  - `web/src/types/data.ts` — `ItemEntity`/`MonsterEntity`/`PropsEntity`/`DungeonModule` 接口移除 `translation_EN?: string`
+  - `web/src/types/quest.ts` — `NPCEntry` 接口移除 `translation_EN?: string`
+  - `web/src/pages/DetailPage.tsx` — `<Helmet>` title/og:title 改为 `entity.name` 代替 `entity.translation_EN ?? entity.name`
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — 同上，改用 `m.name`
+  - `web/src/pages/LootdropDetailPage.tsx` — `LootdropItem` 接口移除 `translation_EN`；title/og:title 改用 `data.name`
+  - `web/src/pages/QuestNPCDetailPage.tsx` — title 改用 `npc.npc_name` 代替 `npc.translation_EN ?? npc.npc_name`
+  - `web/scripts/ssg.mjs` — quick mode SSR 数据注入移除 `translation_EN`
+- **验证**：管道通过（EXIT 0），前端构建通过，HTTP 200，JSON 中 `translation_EN` 全部消失
+
+## P10: Playwright 回归测试框架
+
+- **原因**：多语言功能需要回归测试确保标题正确 + 无 hydration 错误
+- **变更文件**：
+  - `web/tests/i18n.mjs` — 新建 Playwright 测试（15 页面 = 5 页 × 3 语言 zh-Hans/en/ja）；检测非中文页 title 非空 + 跨语言标题不同 + 控制台 hydration 错误
+- **测试结果**：
+  - zh-Hans 页正常（HomePage 通过，ItemDetail 通过，ModuleDetail 通过）
+  - 非中文页检测到 8/10 有 hydration 错误（#418/#423），根因是 SSG 后处理替换 `<title>` 但 React Helmet hydration 时尚未加载 locale dict 导致 mismatch
+  - 跨语言标题验证通过（en≠ja）
+- **遗留问题**：非中文 SSG 页的 hydration 不匹配需单独修复（本轮未修）
+
 ## P9: locale 字典体积优化 — 只导出实际使用的 translation_key
 
 - **原因**：`locale_builder.py` 从 DB 导出全部 1608 个翻译 key 到每种语言的 locale JSON，前端只用到 search_index + 实体数据文件中的 ~1055 个 key，多出 ~552 个无用 key（34% 冗余）
