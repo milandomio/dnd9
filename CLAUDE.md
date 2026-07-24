@@ -80,5 +80,6 @@
 - 改代码前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 创建 checkpoint；如存在用户未提交改动，只处理本任务相关文件，禁止回退他人改动。
 - 提交前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 手动跑 format / format:check / tsc 预检。
 - 构建、启动 web、部署、DB 推送必须按 `docs/BUILD_AND_DEPLOY.md` 执行；构建完成后必须验证 HTTP 200。
+- 禁止直接执行实时输出的 `npm run build`；必须重定向到 `build.log` 后单独读取日志，避免阻塞 TUI。
 - 不要直接改 `data/` 下的自动生成文件；修改 `api/src/collector.py` 等生成逻辑。
 - `python main.py` 必须在 `npm run build` 之前运行。
