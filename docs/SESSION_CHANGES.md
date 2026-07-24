@@ -1,5 +1,35 @@
 # 2026-07-24 会话修改记录
 
+## 多语言 P8-P12 持续推进：UI i18n + AntD locale + 嵌套 translation_key
+
+- **原因**：P0-P7 核心链路已落地但 UI 仍全量硬编码中文，P8-P12 待执行项需逐步收尾
+- **变更文件**：
+  - `api/src/lootdrop_builder.py` — 嵌套 monsters 和 group_drop_info 补 `translation_key`，前端可按 `translation_key` 翻译 lootdrop 内嵌实体名
+  - `web/src/i18n/uiLocale.ts` — 新建 10 语言 UI 文案字典（~60 key/语言），覆盖 NavBar、搜索、提示、筛选、爆率标签、列表分组、通用按钮；键命名遵循 `ui.<模块>.<key>`
+  - `web/src/i18n/useLocale.ts` — 扩展 `useLocale` 新增 `ut(key)` 方法，运行时合并 UI locale 与实体 locale dict；`t(key, fallback)` 优先查合并字典
+  - `web/src/i18n/antdLocale.ts` — 新建 `useAntdLocale` hook，按当前语言懒加载 Ant Design locale 模块（10 语言映射）
+  - `web/src/App.tsx` — 移除顶层硬编码 `zhCN`，locale 改为 AppInner 内 `AntdLocaleProvider` 动态切换；ssr.tsx 保持固定 zhCN
+  - `web/src/AppInner.tsx` — 新增 `AntdLocaleProvider` 组件，在 LanguageProvider 内按 URL 语言注入 AntD locale
+  - `web/src/components/NavBar.tsx` — 将 `LABEL_MAP` 改为 `NAV_LABEL_KEYS` + `ut()` 动态翻译；搜索 placeholders、结果标签、最近搜索、面包屑、主题按钮全部接入 `ut()`
+  - `web/src/components/Disclaimer.tsx` — 免责声明和反馈链接接入 `ut()`
+  - `web/src/pages/ListPage.tsx` — 页面标题、组件分组名（神器/小型神器等）、调试按钮全部接入 `ut()`；列表实体名已用 `t(translation_key)` 翻译
+  - `web/src/pages/DetailPage.tsx` — 加载文字、调试按钮、爆率显示/模式筛选/隐藏零爆率标签接入 `ut()`
+  - `web/src/pages/LootdropDetailPage.tsx` — 同上，外加爆率品质标签（极低/低/中/高）接入 `ut()`
+  - `docs/BUILD_AND_DEPLOY.md` — 完整构建说明补充 locale 字典导出和多语言 HTML 后处理流程
+  - `CLAUDE.md` — 子文档查阅表新增 `docs/plans/MULTILANG_PLAN.md` 多语言文档映射
+  - `docs/plans/MULTILANG_PLAN.md` — 更新 P8/P9 完成状态
+  - `docs/SESSION_CHANGES.md` — 记录本次持续落地
+- **关键逻辑/映射关系**：
+  - UI locale：`ui.nav.*/ui.search.*/ui.common.*/ui.filter.*/ui.rate.*/ui.list.*/ui.detail.*/ui.disclaimer.*` 10 组 60+ key → 10 语言 `UI_LOCALE` 字典 → `ut(key)` 查找（fallback 到中文）
+  - 实体 locale：`translation_key → localeDict（运行时 loadLocale） → t(key, fallback)` 合并 UI+实体字典
+  - AntD locale：`lang → ANTD_LOCALE_MAP` 懒加载 → `ConfigProvider locale` 嵌套在 LanguageProvider 内
+  - lootdrop 嵌套：`monster_name → monster_entities.translation_key → localeDict` 前端翻译路径已打通
+- **待完成**：
+  - locale 字典体积优化（当前导出完整 Game.json，需过滤到实际使用 key）
+  - 其余页面（DungeonModule/QuestNPC/Explore/HomePage/QuestItems/DungeonModules）UI i18n 接入
+  - Playwright 多语言 hydration/console 回归测试
+  - 清理 `translation_EN` / `resolver_en`
+
 ## 多语言计划补充翻译边界
 
 - **原因**：多语言剩余任务需要明确翻译边界，避免把调试字段、坐标 label、rarity 或 lootdrop 嵌套来源误纳入高成本/低收益翻译范围
