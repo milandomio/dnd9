@@ -307,6 +307,9 @@ for (lang of ['en', 'de', 'es', 'fr', 'ja', 'ko', 'pt-BR', 'ru', 'zh-Hant']) {
 
 - 存入 `web/src/i18n/locales/{lang}.json` (TS 直写或 JSON import),约 15-30 条/语言。
 - **实体名翻译**: 非 zh-Hans 时，列表页卡片、详情页标题、关联实体名等所有展示 entity `translation` 的地方，统一通过 `localeDict[entity.translation_key]` 替换。组件内用 `t(entity.translation_key, { fallback: entity.translation })` 模式。
+- **UI 文案翻译必须人工维护**：前端硬编码 UI 文案不能机械套 Game.json，也不能自动机翻后直接落库。每条 UI key 需要手动写入各语言文案；为保证措辞贴近游戏，翻译时优先查对应语言 `Game.json` 中相同/相近功能的官方表达，再手动改写到 UI 语境。
+- **调试字段默认不翻译**：坐标 `label`、`original_keyword`、`keyword`、文件名、内部 entity name 等主要用于调试和溯源，默认保留原始值。只有当这些字段已经作为用户可见文案渲染，或现有中文逻辑已明确翻译给用户看时，才纳入 i18n。
+- **rarity 翻译来源**：`variant_rarity` 本来就由后端从对应语言/翻译表的 Game.json key 提取，不应在前端二次手写或重复映射；后续多语言 rarity 只需确保后端按目标语言输出或前端按 rarity key 查 locale。
 
 ---
 
@@ -359,6 +362,8 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 ```
 
 核心操作是字符串替换，不需要 React 参与。详情页的 `__SSR_DATA__` 保留完整的 entity 数据（与中文版相同），仅叠加 `lang` 字段。
+
+**lootdrop SEO 标题限制**：SSG 生成 lootdrop 详情页 `<title>` 时只包含 lootdrop 物品名，不包含嵌套怪物名/来源名。嵌套来源可能非常多，纳入标题会增加后处理计算、字符串长度和 SEO 噪声；来源列表留给页面正文和客户端渲染。
 
 **hreflang 注入**: 每页 `<head>` 中写入 10 条 alternate 链接（指向自身及其他语言版本的 URL），SSG 阶段 URL 已知，纯文本拼接。
 
@@ -446,9 +451,9 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 
 待完成：
 
-- P8：全量 UI 文案 i18n。当前大量页面文案仍为中文，包括 Disclaimer、按钮、筛选项、统计说明、分组名、爆率提示、加载/空状态等。
+- P8：全量 UI 文案 i18n。当前大量页面文案仍为中文，包括 Disclaimer、按钮、筛选项、统计说明、分组名、爆率提示、加载/空状态等。UI 文案和前端硬编码必须手动翻译，翻译时参考对应语言 Game.json 的官方表达。
 - P8：任务页、探索页、地图模块页、Quest NPC 页仍未系统接入 locale；部分页面只继承 NavBar 语言切换。
-- P8：lootdrop 详情页内嵌怪物名、`group_drop_info`、地图模块名、坐标 label、variant rarity 等仍未全量按 `translation_key` 翻译。
+- P8：lootdrop 详情页内嵌怪物名、`group_drop_info`、地图模块名等仍未全量按 `translation_key` 翻译；坐标 label 属调试/溯源字段，默认不翻译，除非它已作为用户可见文案渲染；variant rarity 已由 Game.json 翻译链路提供，不做前端硬编码映射。
 - P8：后端尚未给 lootdrop `monsters` 内嵌项、`group_drop_info` 条目、quest/export 结构补齐 `translation_key`，因此前端无法稳定翻译所有嵌套名称。
 - P9：locale 字典当前导出完整 Game.json，体积大于原计划估算；需过滤到实际使用 key + UI key，或明确接受完整字典体积。
 - P9：Ant Design locale 仍固定 `zh_CN`，语言切换后组件内置文案不会变。
