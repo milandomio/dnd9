@@ -1,5 +1,12 @@
 # 2026-07-25 会话修改记录
 
+## 修复 ListPage SSR 路由匹配错误（zh-Hans 列表页渲染为 HomePage）
+
+- **原因**：`AppInner.tsx` 中 `/:lang` 路由在 `/:page` 之前，导致 `/lootdrops`、`/items` 等单段路径在 SSR 时被 `/:lang` 匹配，渲染 HomePage 而非 ListPage。P4 引入 `/:lang` 时遗留
+- **变更文件**：`web/src/AppInner.tsx` — 在 `/:lang` 之前插入 4 条显式列表路由：`/items`、`/monsters`、`/props`、`/lootdrops` → `<ListPage />`
+- **关键逻辑/映射关系**：React Router v6 按序匹配，`/:lang` 为单段通配符会意外捕获所有非显式路由的单段路径；在 catch-all 前补显式路由即可解除歧义
+- **验证**：`curl /lootdrops/` title 从 HomePage 标题 → `【】点位`
+
 ## §10.1/10.2 修复执行：非中文 SSG 标题 hydration + ModuleDetail 标题重复
 
 - **原因**：执行 MULTILANG_PLAN.md v0.8 推荐的修复方案

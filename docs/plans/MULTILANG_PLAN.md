@@ -1,8 +1,8 @@
 # 多语言 (i18n) 重构计划
 
 > 创建日期: 2026-07-24
-> 版本: v0.9 (§10.1/10.2 已执行修复, §10.3 新增 NavBar 残留)
-> 状态: 标题 hydration 已修复；NavBar 标签 mismatch 待单独处理
+> 版本: v0.9 (§10.1/10.2 已修复; 附加 listPage SSR 路由修复)
+> 状态: 标题 hydration 已修复；§10.3 NavBar 标签 mismatch 待单独处理
 
 ---
 
