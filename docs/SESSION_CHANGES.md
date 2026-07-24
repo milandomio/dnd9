@@ -1,5 +1,13 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划补充翻译边界
+
+- **原因**：多语言剩余任务需要明确翻译边界，避免把调试字段、坐标 label、rarity 或 lootdrop 嵌套来源误纳入高成本/低收益翻译范围
+- **变更文件**：
+  - `docs/plans/MULTILANG_PLAN.md` — 补充 UI 文案必须人工翻译且参考对应语言 Game.json；坐标 label/keyword/file 等调试字段默认不翻译；variant rarity 已来自 Game.json 翻译链路；lootdrop SSG SEO 标题不包含嵌套怪物名
+  - `docs/SESSION_CHANGES.md` — 记录本次计划约束补充
+- **关键逻辑/映射关系**：用户可见实体名走 `translation_key -> locale`；UI 文案走人工维护 `ui.*`；调试/溯源字段保留原始值；rarity 继续复用 Game.json key；lootdrop SEO 标题仅使用物品名降低计算量和标题噪声
+
 ## 多语言计划未完成项回写
 
 - **原因**：多语言核心链路已落地，但原计划仍显示“计划中/等待执行”，且未明确剩余 UI i18n、嵌套 translation_key、回归测试和清理任务
