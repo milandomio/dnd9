@@ -82,7 +82,7 @@ export default function DetailPage() {
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t } = useLocale();
+  const { t, ut } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -136,7 +136,9 @@ export default function DetailPage() {
   }, [page, name, ssrData, dataVersion]);
 
   if (!entity)
-    return <Typography.Text type="danger">数据加载中...</Typography.Text>;
+    return (
+      <Typography.Text type="danger">{ut('ui.common.loading')}</Typography.Text>
+    );
 
   const entityLabel = t(
     entity.translation_key,
@@ -472,8 +474,8 @@ export default function DetailPage() {
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggle,
           },
@@ -496,7 +498,9 @@ export default function DetailPage() {
             alignItems: 'center',
           }}
         >
-          <span style={{ color: tokens.muted }}>爆率显示：</span>
+          <span style={{ color: tokens.muted }}>
+            {ut('ui.filter.drop_rate')}：
+          </span>
           <select
             value={modeFilter}
             onChange={(e) => setModeFilter(e.target.value)}
@@ -510,11 +514,11 @@ export default function DetailPage() {
               cursor: 'pointer',
             }}
           >
-            <option value="">全部</option>
-            <option value="PVE">PVE</option>
-            <option value="普通">普通</option>
-            <option value="豪客赛">豪客赛</option>
-            <option value="逆袭赛">逆袭赛</option>
+            <option value="">{ut('ui.filter.all')}</option>
+            <option value="PVE">{ut('ui.filter.pve')}</option>
+            <option value="普通">{ut('ui.filter.normal')}</option>
+            <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
+            <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
           </select>
           <label style={{ cursor: 'pointer', userSelect: 'none' }}>
             <input
@@ -523,7 +527,7 @@ export default function DetailPage() {
               onChange={(e) => setHideZeroRate(e.target.checked)}
               style={{ marginRight: 3, cursor: 'pointer' }}
             />
-            隐藏0爆率坐标
+            {ut('ui.filter.hide_zero_rate')}
           </label>
         </div>
       )}

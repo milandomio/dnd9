@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { DEFAULT_LANG, loadLocale, type LocaleDict } from './locale';
 import { useLanguage } from './LanguageContext';
+import { uiDict } from './uiLocale';
 
 export function useLocale() {
   const { lang } = useLanguage();
@@ -27,10 +28,20 @@ export function useLocale() {
     };
   }, [dataVersion, lang]);
 
+  const mergedDict = useMemo(() => {
+    const ui = uiDict(lang);
+    if (!dict) return ui;
+    return { ...ui, ...dict };
+  }, [dict, lang]);
+
   const t = (key: string | undefined, fallback: string) => {
-    if (!dict || !key) return fallback;
-    return dict[key] || fallback;
+    if (!key) return fallback;
+    return mergedDict[key] ?? fallback;
   };
 
-  return { lang, dict, t };
+  const ut = (key: string) => {
+    return mergedDict[key] ?? key;
+  };
+
+  return { lang, dict, t, ut };
 }

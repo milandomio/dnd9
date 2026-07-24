@@ -29,11 +29,20 @@ type LootGroup = {
   items: IndexEntry[];
 };
 
-const LABEL_MAP: Record<string, string> = {
-  items: '物品表',
-  monsters: '怪物表',
-  props: '实体表',
-  lootdrops: '掉落表',
+const NAV_KEY_LOOKUP: Record<string, string> = {
+  items: 'ui.nav.items',
+  monsters: 'ui.nav.monsters',
+  props: 'ui.nav.props',
+  lootdrops: 'ui.nav.lootdrops',
+};
+
+const LOOT_GROUP_KEYS: Record<string, string> = {
+  ['神器']: 'ui.list.artifact',
+  ['小型神器']: 'ui.list.mini_artifact',
+  ['稀有掉落']: 'ui.list.rare_drop',
+  ['物品']: 'ui.list.item',
+  ['饰品']: 'ui.list.accessory',
+  ['武器装备']: 'ui.list.weapon',
 };
 
 function groupLootdrops(items: IndexEntry[]): LootGroup[] {
@@ -86,7 +95,8 @@ export default function ListPage() {
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
-  const { t } = useLocale();
+  const { t, ut } = useLocale();
+  const pageLabel = ut(NAV_KEY_LOOKUP[page!] || '') || page! || '';
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -110,20 +120,17 @@ export default function ListPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          【{LABEL_MAP[page!] ?? page}】点位 | 越来越黑暗闪电指南 DarkFlashNav
+          {`【${pageLabel}】点位 | 越来越黑暗闪电指南 DarkFlashNav`}
         </title>
         <meta
           name="description"
-          content={`${LABEL_MAP[page!] ?? page} 共 ${data.length} 个实体，查询地图位置分布。`}
+          content={`${pageLabel} 共 ${data.length} 个实体，查询地图位置分布。`}
         />
         <meta
           name="keywords"
           content="物品查询,怪物查询,装备查询,武器查询,防具查询,饰品查询,掉落查询,游戏攻略"
         />
-        <meta
-          property="og:title"
-          content={`【${LABEL_MAP[page!] ?? page}】点位`}
-        />
+        <meta property="og:title" content={`【${pageLabel}】点位`} />
         <meta property="og:description" content={`共 ${data.length} 个实体`} />
       </Helmet>
       <h1
@@ -134,7 +141,7 @@ export default function ListPage() {
           marginBottom: 20,
         }}
       >
-        【{LABEL_MAP[page!] ?? page}】点位
+        【{pageLabel}】点位
       </h1>
       <div
         style={{
@@ -149,8 +156,8 @@ export default function ListPage() {
       <DebugPanel
         buttons={[
           {
-            label: '显示全部',
-            activeLabel: '退出调试',
+            label: ut('ui.common.show_all'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: () => setDebug(!debug),
           },
@@ -271,7 +278,10 @@ export default function ListPage() {
                         paddingLeft: 4,
                       }}
                     >
-                      {group.icon} {group.label}（{group.items.length}）
+                      {group.icon}{' '}
+                      {ut(LOOT_GROUP_KEYS[group.label] || group.label) ||
+                        group.label}
+                      （{group.items.length}）
                     </div>
                     <div
                       style={{
