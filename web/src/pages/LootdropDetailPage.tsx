@@ -22,6 +22,7 @@ import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 interface LootdropCoord {
   x: number;
@@ -648,8 +649,8 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {itemLabel}
-          {data.name} 掉落来源Source | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? `${itemLabel}${data.name} 掉落来源Source`} |
+          越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -661,7 +662,7 @@ export default function LootdropDetailPage() {
         />
         <meta
           property="og:title"
-          content={`${itemLabel}${data.name} 掉落来源Source | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? `${itemLabel}${data.name} 掉落来源Source`} | DarkFlashNav`}
         />
         <meta
           property="og:description"

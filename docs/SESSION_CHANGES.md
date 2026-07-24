@@ -1,5 +1,28 @@
 # 2026-07-25 会话修改记录
 
+## §10.1/10.2 修复执行：非中文 SSG 标题 hydration + ModuleDetail 标题重复
+
+- **原因**：执行 MULTILANG_PLAN.md v0.8 推荐的修复方案
+- **变更文件**：
+  - `web/scripts/ssg.mjs` — `injectLang()` 替换为 `injectLocalizedData(page, lang, title)`，在注入 `__lang` 时同步注入 `__localizedTitle`
+  - `web/src/i18n/ssrTitle.ts` — 新建，导出 `ssrLocalizedTitle()` 读取 `window.__SSR_DATA__.__localizedTitle`
+  - `web/src/pages/DetailPage.tsx` — Helmet `<title>` / `og:title` 优先使用 `ssrLocalizedTitle() ?? 原中文拼接`
+  - `web/src/pages/LootdropDetailPage.tsx` — 同上
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — 同上；同时修复 §10.2（`moduleDisplayName = m.translation || m.name` 统一标题/描述/H1，消除 `钉手岛钉手岛` 重复）
+  - `web/src/pages/QuestNPCDetailPage.tsx` — 同上（防御性接入，NPC 页 SSG 暂未生成 localized title）
+  - `docs/plans/MULTILANG_PLAN.md` — 升级版本到 v0.9，标记 10.1/10.2 已完成，新增 10.3（NavBar 残留分析）
+  - `docs/SESSION_CHANGES.md` — 本次记录
+- **关键逻辑/映射关系**：
+  - `ssg.mjs`: `localizedTitle(routeData, localeDict)` → 同时写入 `<title>` 和 `__SSR_DATA__.__localizedTitle`；中文页（无 prefix）不注入该字段
+  - 前端: `ssrLocalizedTitle()` 在 hydration 首轮返回与 SSG head 一致的值 → Helmet 不产生 mismatch
+  - `__localizedTitle` 仅服务首轮 hydration 对齐；正文翻译仍走 `translation_key -> locale dict -> t()`
+- **验证结果**：
+  - `curl /en/lootdrops/HeaterShield_8001/ | grep title` → `Heater Shield` ✓
+  - `curl /ja/items/Ale/ | grep title` → `エール` ✓
+  - Playwright: 标题 hydrated 正确（lootdrop en/ja 标题分别是英文/日文）；hydro 错误从 8→7（-1 标题错误消除，剩余 7 全部来自 NavBar 标签 mismatch — 见 §10.3）
+  - zh-Hans 页：无 regression
+- **已知残留**：NavBar 标签（~8 个 tab）在非中文页仍产生 hydration mismatch（root cause: `ut()` 在 lang=en 时直接返回静态英文标签，而 body 是中文 SSG DOM）。暂时接受，留待后续修复。
+
 ## 多语言 v0.8 未解决问题分析与方案回写
 
 - **原因**：`docs/plans/MULTILANG_PLAN.md` 已记录非中文 SSG 页 hydration 崩溃和 ModuleDetail 标题重复，但原文只有备选方案，未明确推荐路径、执行边界和验收标准；同时部分旧验收/风险描述仍写成无前缀按浏览器语言重定向，与当前“无前缀固定 zh-Hans”策略冲突

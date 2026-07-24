@@ -9,6 +9,7 @@ import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import type { DungeonModule } from '../types/data';
 import {
   getAdj,
@@ -99,6 +100,7 @@ export default function DungeonModuleDetailPage() {
     );
 
   const m = mod;
+  const moduleDisplayName = m.translation || m.name;
   const groupLabel = m.group_display || m.group || '未分组';
   const sx = m.size_x || 1;
   const sy = m.size_y || 1;
@@ -176,12 +178,12 @@ export default function DungeonModuleDetailPage() {
 
       <Helmet>
         <title>
-          {m.translation}
-          {m.name} 地图模块Module | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? moduleDisplayName} 地图模块Module |
+          越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${m.translation} 地图模块详情，${sx}x${sy}，分组 ${groupLabel}，${entities.length} 个实体，${totalCoords} 个位置。`}
+          content={`${moduleDisplayName} 地图模块详情，${sx}x${sy}，分组 ${groupLabel}，${entities.length} 个实体，${totalCoords} 个位置。`}
         />
       </Helmet>
       <h1
@@ -192,7 +194,8 @@ export default function DungeonModuleDetailPage() {
           margin: '0 0 8px',
         }}
       >
-        【{m.translation}】{ut('ui.module_detail.title').replace('{name}', '')}
+        【{moduleDisplayName}】
+        {ut('ui.module_detail.title').replace('{name}', '')}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
           {groupLabel} | {sx}x{sy}
         </span>

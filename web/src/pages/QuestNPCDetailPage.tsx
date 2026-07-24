@@ -6,6 +6,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
@@ -212,8 +213,9 @@ export default function QuestNPCDetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {npc.npc_name_display}
-          {npc.npc_name} 任务列表QuestList | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ??
+            `${npc.npc_name_display}${npc.npc_name} 任务列表QuestList`}{' '}
+          | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
