@@ -73,7 +73,7 @@ data/json/locale/
 ...
 ```
 
-- **无前缀路径** (如 `/items/Ale/`) 自动重定向到当前浏览器首选语言版本，用户无感。
+- **无前缀路径** (如 `/items/Ale/`) 固定保持简体中文，避免破坏现有外链；只有用户主动切换语言才进入 `/{lang}/...`。
 - 语言代码与 locale 文件名一致（`en`、`ja`、`ko`、`zh-Hant`、`zh-Hans` 等）。
 
 #### 2.3.2 支持的语言范围
@@ -216,7 +216,7 @@ web/src/i18n/
   <Route path="/:lang/:page" element={<ListPage />} />
   <Route path="/:lang/:page/:name" element={<DetailPage />} />
 
-  {/* 无前缀 → 检测浏览器语言后重定向 */}
+  {/* 无前缀 → zh-Hans，保持现有 URL */}
   <Route path="/" element={<HomePage />} />
   <Route path="/explore" element={<ExplorePage />} />
   <Route path="/quest_items" element={<QuestItemsPage />} />
@@ -234,7 +234,7 @@ web/src/i18n/
 
 **SSR 路由生成**: SSG 分别输出 `/{lang}/lootdrops/HeaterShield_8001/index.html` 等，HTML 中 `<title>` 已为对应语言。
 
-**无前缀访问**: 客户端检测 `navigator.language` → 匹配支持的语言列表 → `window.location.replace('/{lang}/' + restPath)`。
+**无前缀访问**: 固定作为 `zh-Hans` 渲染，不按浏览器语言自动跳转。
 
 ### 4.4 `I18nProvider` 关键点
 
@@ -250,7 +250,7 @@ web/src/i18n/
 | 后处理写入 `/en/lootdrops/.../` | 文本替换 `__SSR_DATA__` 注入 `lang: 'en'` + 替换 `<title>` 为翻译后标题 |
 | 客户端 hydration | SSR/CSR 语言一致（从 URL 确定），直接 hydrate，无 mismatch |
 | 客户端切换语言 | `localStorage.setItem('lang', 'en')` → `window.location.href = '/en/当前路径'` → 加载 SSG 页 |
-| 无前缀访问 | 检测 `navigator.language` 匹配列表 → 重定向到 `/{lang}/...` |
+| 无前缀访问 | 固定 `zh-Hans`，不自动重定向 |
 
 ### 4.6 详情页标题 (SSG 后处理 + 客户端 i18n)
 
