@@ -24,6 +24,7 @@ const ROOT = new URL("../../", import.meta.url).pathname;
 const DIST = join(WEB, "dist");
 const SSR_OUT = join(WEB, "dist-ssr");
 const DATA = join(ROOT, "data", "json");
+const SITE = "https://dnd9.icetar.com";
 
 // ---- helpers ----
 function readJSON(p) {
@@ -91,6 +92,9 @@ const moduleData = readJSON(join(DATA, "dungeon_modules.json"));
 
 const PAGES = ["items", "monsters", "props", "lootdrops"];
 const SINGLE = ["explore", "quest_items", "quest_npc", "dungeon_modules"];
+const DEFAULT_LANG = "zh-Hans";
+const LANGS = ["zh-Hans", "en", "de", "es", "fr", "ja", "ko", "pt-BR", "ru", "zh-Hant"];
+const NON_DEFAULT_LANGS = LANGS.filter((lang) => lang !== DEFAULT_LANG);
 
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
@@ -232,7 +236,14 @@ for (const p of PAGES) {
     } else {
       // Quick mode: inject minimal metadata for SEO (name + translation only)
       if (p === "lootdrops") {
-        const minimalItem = { item: { name: e.name, translation: e.translation, translation_EN: e.translation_EN } };
+        const minimalItem = {
+          item: {
+            name: e.name,
+            translation: e.translation,
+            translation_key: e.translation_key,
+            translation_EN: e.translation_EN,
+          },
+        };
         ssrDataMap[`lootdrops/${name}`] = minimalItem;
         if (e.variant_suffixes && e.variant_suffixes.length > 1) {
           for (const suffix of e.variant_suffixes) {
@@ -240,7 +251,14 @@ for (const p of PAGES) {
           }
         }
       } else {
-        ssrDataMap[`${p}/${name}`] = { entity: { name: e.name, translation: e.translation, translation_EN: e.translation_EN } };
+        ssrDataMap[`${p}/${name}`] = {
+          entity: {
+            name: e.name,
+            translation: e.translation,
+            translation_key: e.translation_key,
+            translation_EN: e.translation_EN,
+          },
+        };
       }
     }
   }
@@ -259,7 +277,15 @@ for (const m of moduleData) {
       ssrDataMap[key] = { module: m, coords: null };
     }
   } else {
-    ssrDataMap[key] = { module: { name: m.name, translation: m.translation, translation_EN: m.translation_EN }, coords: null };
+    ssrDataMap[key] = {
+      module: {
+        name: m.name,
+        translation: m.translation,
+        translation_key: m.translation_key,
+        translation_EN: m.translation_EN,
+      },
+      coords: null,
+    };
   }
 }
 
@@ -299,6 +325,7 @@ const t0 = Date.now();
 console.log(`[ssg] mode=${QUICK ? "quick" : "full"} — ${routes.length} routes`);
 const ROOT_MARKER = '<div id="root">';
 const HEAD_CLOSE = "</head>";
+const SSR_SCRIPT_RE = /<script>window\.__SSR_DATA__=(.*?)<\/script>/s;
 
 /**
  * Map route path to its data key in ssrDataMap.
@@ -329,6 +356,68 @@ function routeDataKey(path) {
  */
 function baseHrefFromFile(_file) {
   return "/";
+}
+
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function localizedPath(path, lang) {
+  const canonical = path === "/" ? "/" : path.replace(/\/?$/, "/");
+  return lang === DEFAULT_LANG ? canonical : `/${lang}${canonical}`;
+}
+
+function alternateLinks(path) {
+  return LANGS.map((lang) => {
+    const href = SITE + localizedPath(path, lang);
+    return `<link rel="alternate" hreflang="${lang}" href="${href}">`;
+  }).join("\n    ");
+}
+
+function firstTranslatable(data) {
+  if (!data || typeof data !== "object") return null;
+  if (data.translation_key || data.translation) return data;
+  if (data.entity) return firstTranslatable(data.entity);
+  if (data.item) return firstTranslatable(data.item);
+  if (data.module) return firstTranslatable(data.module);
+  if (Array.isArray(data)) return null;
+  return null;
+}
+
+function localizedTitle(routeData, localeDict) {
+  const entity = firstTranslatable(routeData);
+  if (!entity) return "";
+  const title = entity.translation_key ? localeDict[entity.translation_key] : "";
+  return title || entity.translation || entity.name || "DarkFlashNav";
+}
+
+function injectLang(page, lang) {
+  return page.replace(SSR_SCRIPT_RE, (match, jsonText) => {
+    try {
+      const payload = JSON.parse(jsonText);
+      payload.__lang = lang;
+      return `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>`;
+    } catch {
+      return match;
+    }
+  });
+}
+
+function localizePage(page, route, routeData, localeDict, lang) {
+  const canonicalHref = localizedPath(route.path, lang);
+  const title = localizedTitle(routeData, localeDict);
+  let out = injectLang(page, lang)
+    .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
+    .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${canonicalHref}">`)
+    .replace(HEAD_CLOSE, `    ${alternateLinks(route.path)}\n${HEAD_CLOSE}`);
+  if (title) {
+    out = out.replace(/<title[^>]*>[^<]*<\/title>/, `<title>${escapeHtml(title)} | DarkFlashNav</title>`);
+  }
+  return out;
 }
 
 for (let i = 0; i < routes.length; i++) {
@@ -402,6 +491,29 @@ for (let i = 0; i < routes.length; i++) {
   }
 }
 
+// ---- step 5b: generate localized HTML copies without re-rendering React ----
+console.log(`[ssg] generating localized HTML copies for ${NON_DEFAULT_LANGS.length} languages…`);
+const localeDicts = {};
+for (const lang of NON_DEFAULT_LANGS) {
+  localeDicts[lang] = readJSON(join(DATA, "locale", `${lang}.json`));
+}
+let localizedCount = 0;
+for (const lang of NON_DEFAULT_LANGS) {
+  for (const r of routes) {
+    if (r.redirect) continue;
+    const dataKey = routeDataKey(r.path);
+    const routeData = ssrDataMap[dataKey];
+    const srcPath = join(DIST, r.file);
+    const dstFile = r.file === "index.html" ? `${lang}/index.html` : join(lang, r.file);
+    const dstPath = join(DIST, dstFile);
+    const page = readFileSync(srcPath, "utf-8");
+    mkdirSync(dirname(dstPath), { recursive: true });
+    writeFileSync(dstPath, localizePage(page, r, routeData, localeDicts[lang], lang), "utf-8");
+    localizedCount++;
+  }
+}
+console.log(`[ssg] localized HTML generated: ${localizedCount}`);
+
 // ---- step 6: 404.html ----
 writeFileSync(join(DIST, "404.html"), readFileSync(join(DIST, "index.html"), "utf-8"), "utf-8");
 
@@ -411,7 +523,6 @@ try { rmSync(join(DIST, ".vite"), { recursive: true, force: true }); } catch {}
 console.log("[ssg] SSR build cleaned up");
 
 // ---- step 8: sitemap.xml ----
-const SITE = "https://dnd9.icetar.com";
 const dataDateStr = new Date(Number(dataDate) * 1000).toISOString().split("T")[0];
 
 function sitemapPriority(path) {
@@ -427,12 +538,18 @@ function sitemapPriority(path) {
 }
 
 let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
 for (const r of routes) {
   if (r.redirect) continue;
-  const loc = SITE + (r.path === "/" ? "/" : r.path.replace(/\/?$/, "/"));
   const [prio, freq] = sitemapPriority(r.path);
-  sitemap += `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
+  for (const lang of LANGS) {
+    const loc = SITE + localizedPath(r.path, lang);
+    const alts = LANGS.map(
+      (altLang) =>
+        `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${SITE + localizedPath(r.path, altLang)}" />`
+    ).join("\n");
+    sitemap += `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
+  }
 }
 sitemap += '</urlset>\n';
 writeFileSync(join(DIST, "sitemap.xml"), sitemap, "utf-8");

@@ -1,5 +1,14 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划阶段 5：SSG 多语言 HTML 后处理
+
+- **原因**：需要为 `/en/...` 等非中文路径生成静态 HTML，并写入对应语言标题、canonical、hreflang 和 `__SSR_DATA__.__lang`；同时避免二次 React 渲染导致构建时间和 hydration 风险增加
+- **变更文件**：
+  - `web/scripts/ssg.mjs` — 新增语言常量、locale 字典读取、HTML 后处理函数；中文 SSG 完成后复制非中文 HTML 到 `dist/{lang}/...`，替换 `<html lang>`、`<title>`、canonical、alternate links，并向 `window.__SSR_DATA__` 注入 `__lang`
+  - `web/scripts/ssg.mjs` — sitemap 改为 10 语言 URL，并为每条 URL 注入 `xhtml:link rel="alternate"`
+  - `docs/SESSION_CHANGES.md` — 记录阶段 5 变更
+- **关键逻辑/映射关系**：React 仍只渲染无前缀中文页面；非中文页面 = 中文 HTML body + 语言化 head + `__lang` 标记；标题来源 `routeData.translation_key -> locale/{lang}.json -> fallback translation/name`
+
 ## 多语言计划阶段 4：语言前缀识别与无前缀中文策略
 
 - **原因**：多语言路由需要支持 `/en/...` 等语言前缀，但无前缀 URL 必须继续作为简体中文，避免旧链接被浏览器语言自动重定向破坏
