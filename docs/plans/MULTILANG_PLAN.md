@@ -23,7 +23,7 @@
 1. **语言路由**: 访问 `/en/lootdrops/HeaterShield_8001/` 直接展示英文页面，URL 自动决定语言。
 2. **SSG 预生成多语言标题**: 每种语言的 SSG 页面 `<title>` 直接写入对应语言翻译，SEO 友好，搜索引擎收录各语言版本。
 3. **复用既有 `translation_key`** 作为 i18n 主键，DB `translations_{lang}` 表天然对齐 10 种语言。
-4. **前端加载对应语言字典**: 路由语言前缀 → 自动 fetch `/data/locale/{lang}.json` → i18n 切换。
+4. **前端加载对应语言字典**: 路由语言前缀 → 自动 fetch 版本化 `/data/{short}/json/locale/{lang}.json` → i18n 切换。
 5. **PWA 缓存**: locale 字典纳入 Service Worker，语言切换瞬间加载。
 6. **清理冗余字段**（次优先级）: 移除 `translation_EN` / `resolver_en`，详情 JSON 减 ~1.5 MB。
 
@@ -43,7 +43,7 @@
 ### 2.2 字典文件结构
 
 ```
-web/public/data/locale/
+data/json/locale/
 ├── zh-Hans.json     # 实体字典 + UI 文案合并,键=translation_key|ui.*
 ├── en.json          # 同上
 ├── de.json
@@ -118,7 +118,7 @@ web/public/data/locale/
 
 | 文件 | 变更 |
 |---|---|
-| `api/src/locale_builder.py` **(新)** | 导出所有语言字典到 `/data/locale/{lang}.json` |
+| `api/src/locale_builder.py` **(新)** | 导出所有语言字典到 `/data/json/locale/{lang}.json` |
 | `api/src/collector.py` | 加 `translation_key` 到 entity JSON; 加管道步骤 `build_locale_files`; `_SOURCE_PATHS` 加 `LOCALIZATION_ROOT` |
 | `api/src/entity_export.py` | 加 `translation_key` 写入; 可选删 `resolve_en_name` / `translation_EN` |
 | `api/src/lootdrop_builder.py` | 同上 |
@@ -161,7 +161,7 @@ def build_locale_files(db: DatabaseManager, output_dir: Path):
             json.dump(data, f, ensure_ascii=False, indent=2)
 ```
 
-- 输出到 `api/output/json/locale/{lang}.json`。
+- 输出到 `api/output/json/locale/{lang}.json`，前端经版本化路径 `/data/{short}/json/locale/{lang}.json` 读取。
 - 每条 key 对应一个 `translation_key`（如 `Text_DesignData_Item_Item_Ale_1001`），值是该语言的翻译文本。
 - 实体 JSON 的 `translation_key` 字段直接作为 locale dict 的查找键。
 
@@ -240,8 +240,8 @@ web/src/i18n/
 
 - URL 路径提取 `lang` 参数 → 验证是否在支持列表中 → 不在则 fallback 到 zh-Hans。
 - SSR 阶段: `i18n.init({ lng: 'zh-Hans', resources: {} })`，不预注入任何 locale dict。HTML 中的 `<title>` 已由后处理替换为目标语言，body 保留中文。
-- 客户端 hydration 后: 读取 `__SSR_DATA__.lang`，非 zh-Hans 时 `fetch('/data/locale/{lang}.json')` → `i18n.addResourceBundle` → `changeLanguage(lang)`。
-- 字典加载: `fetch('/data/locale/{lang}.json')` → `i18n.addResourceBundle`。
+- 客户端 hydration 后: 读取 `__SSR_DATA__.lang`，非 zh-Hans 时通过 `dataUrl(dataVersion, '/data/json/locale/{lang}.json')` 获取版本化字典 → 切换语言。
+- 字典加载: `fetch(dataUrl(dataVersion, '/data/json/locale/{lang}.json'))`。
 
 ### 4.5 字典加载策略
 
@@ -289,7 +289,7 @@ for (lang of ['en', 'de', 'es', 'fr', 'ja', 'ko', 'pt-BR', 'ru', 'zh-Hant']) {
 
 1. HTML 解析 → `__SSR_DATA__.lang` 非 zh-Hans
 2. Hydrate 中文 body (SSR/CSR 完全一致，安全)
-3. `useEffect` → fetch `/data/locale/{lang}.json` → i18next.addResourceBundle
+3. `useEffect` → fetch `/data/{short}/json/locale/{lang}.json` → 加载 locale dict
 4. i18next 替换 UI 文案 (NavBar、列表、卡片等)
 5. Helmet `<title>` 更新为目标语言 (与 SSG 已写入的一致，无闪烁)
 
@@ -312,11 +312,11 @@ for (lang of ['en', 'de', 'es', 'fr', 'ja', 'ko', 'pt-BR', 'ru', 'zh-Hant']) {
 
 | 资源 | 缓存策略 |
 |---|---|
-| `/data/locale/*.json` | `StaleWhileRevalidate`, `maxEntries: 15` (10 语言 + 备用) |
+| `/data/{short}/json/locale/*.json` | 复用现有 `df5-data-json` `StaleWhileRevalidate` 缓存 |
 | `/*.html` (多语言 SSG) | 现有策略不变。用户同一时间只使用一种语言，不会被其他语言 HTML 驱逐 |
 | 现有 JSON / img | 保持原策略 |
 
-- `vite.config.ts` workbox 配置新增 `urlPattern: /^\/data\/locale\/.*\.json$/`。
+- `vite.config.ts` 不需要新增 locale 专用规则；现有 `/^\/data\/(?:[a-z0-9]+\/)?json\//` 已覆盖版本化 locale 字典。
 - `df5-html` `maxEntries` **保持 1300 不变** — 用户不会同时浏览多语言页面，单语言 HTML 数量未变。
 
 ---

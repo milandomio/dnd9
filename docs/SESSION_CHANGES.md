@@ -1,5 +1,18 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划阶段 3：导出版本化 locale 字典
+
+- **原因**：多语言前端需要按 `translation_key` 查询语言字典；字典路径必须复用现有版本化数据策略，避免绕开 SW/CDN 缓存失效机制
+- **变更文件**：
+  - `api/src/locale_builder.py` — 新建 `build_locale_files()`，从 DB 10 张翻译表导出 `api/output/json/locale/{lang}.json`
+  - `api/src/collector.py` — 在 `search_index` 后增加 `locale export` 管道步骤，生成 locale 字典并随 data delivery 交付
+  - `web/src/i18n/locale.ts` — 新增支持语言列表、`localeUrl()`、`loadLocale()`、`translate()`，字典读取路径走 `dataUrl(version, '/data/json/locale/{lang}.json')`
+  - `CLAUDE.md` — 将日志重定向规则扩展为所有长流程命令，覆盖 `python main.py`、构建、部署和全站测试
+  - `docs/BUILD_AND_DEPLOY.md` — 将数据管道命令改为 `python main.py > pipeline.log 2>&1`，部署命令改为 `./deploy.sh > deploy.log 2>&1`
+  - `docs/plans/MULTILANG_PLAN.md` — 修正 locale 路径和 PWA 缓存策略为版本化 `/data/{short}/json/locale/*.json`
+  - `docs/SESSION_CHANGES.md` — 记录阶段 3 变更
+- **关键逻辑/映射关系**：DB `translations` / `translations_{lang}` → `data/json/locale/{lang}.json` → 构建时复制到 `/data/{short}/json/locale/{lang}.json` → 前端用 `translation_key` 查 `LocaleDict`
+
 ## 多语言计划阶段 2：实体与搜索索引补 translation_key
 
 - **原因**：多语言字典需要用 `translation_key` 查找各语言文本；当前 items/monsters/props/lootdrops 的索引、详情和 `search_index.json` 只输出 `translation` / `translation_EN`，无法稳定做实体名 i18n

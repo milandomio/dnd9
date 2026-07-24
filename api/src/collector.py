@@ -27,6 +27,7 @@ from enrichment import enrich_all_entities
 from entity_export import export_items, export_monsters, export_props
 from image_utils import sync_webp_images
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
+from locale_builder import build_locale_files
 from lootdrop_builder import (
     build_and_save_lootdrop_details,
     build_loot_index,
@@ -507,6 +508,10 @@ def run():
                 group_label_resolver=lambda g: resolve_group_label(g, translations),
             )
             ctx.set_result("DONE")
+
+        with pipe.step("locale export") as ctx:
+            locale_langs = build_locale_files(db, OUTPUT_DIR)
+            ctx.set_result(f"{len(locale_langs)} languages")
 
         print(f"\n[DONE] Output written to {OUTPUT_DIR}")
         for entry in index_data:
