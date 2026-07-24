@@ -8,7 +8,9 @@
   - `api/src/db/_helpers.py` — 添加 `discover_languages()` 自动发现所有语言目录、`locale_display_name()` 友好名
   - `api/src/db/schema.py` — 添加 `ensure_translation_table(lang)` 为每种语言创建独立表
   - `api/src/db/__init__.py` — `import_translations()` 导入所有 10 种语言到对应表（`translations_en`、`translations_de` 等）zh-Hans 保持 `translations` 表不变；`get_translations_map(lang)` 支持按语言查询
-  - `api/src/collector.py` — EN 改为 `db.get_translations_map("en")`，移除文件直读
+   - `api/src/collector.py` — EN 改为 `db.get_translations_map("en")`，移除文件直读；`LOCALIZATION_ROOT` 加入 `_SOURCE_PATHS` 触发 DB 更新
+   - `api/src/config.py` — 移除未使用的 `LOCALIZATION_EN_DIR`/`EN_GAME_JSON`
+   - `api/src/db/_helpers.py` — 移除未使用的 `load_en_game_json()`
 - **DB 结果**：10 张翻译表，各 1.2-1.3 万条记录
 - **效果**：英文名显示不变（`Heater Shield`、`Soul-Devoted Folio`），流水线 107s 运行正常
 - **验证**：3096 pages 构建通过
