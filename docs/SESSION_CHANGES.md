@@ -1,5 +1,16 @@
 # 2026-07-25 会话修改记录
 
+## 多语言 v0.8 未解决问题分析与方案回写
+
+- **原因**：`docs/plans/MULTILANG_PLAN.md` 已记录非中文 SSG 页 hydration 崩溃和 ModuleDetail 标题重复，但原文只有备选方案，未明确推荐路径、执行边界和验收标准；同时部分旧验收/风险描述仍写成无前缀按浏览器语言重定向，与当前“无前缀固定 zh-Hans”策略冲突
+- **变更文件**：
+  - `docs/plans/MULTILANG_PLAN.md` — 状态更新为“已知问题分析完成，待确认执行修复”；修正 `/items/Ale/` 无前缀验收标准；修正风险表中的 hydration 与无前缀策略；补充 10.1/10.2 推荐修复方案、关键约束、验收标准和“用户确认前不得执行”的边界
+  - `docs/SESSION_CHANGES.md` — 记录本次文档分析回写
+- **关键逻辑/映射关系**：
+  - 10.1 推荐方案：SSG 后处理继续写本地化 `<title>`，同时只注入当前页面轻量 `__localizedTitle`；Helmet 首轮优先使用该值，保证 SSG head 与 hydration 首轮一致；正文翻译仍走 `translation_key -> locale dict -> t()`，不 inline 整份 locale JSON
+  - 10.2 推荐方案：`DungeonModuleDetailPage` 统一 `moduleDisplayName = m.translation || m.name`，title/description/H1 复用同一展示名；若执行 10.1，则优先级扩展为 `__localizedTitle -> t(translation_key) -> moduleDisplayName`
+- **执行边界**：本次仅分析并回写文档；未修改 `web/scripts/ssg.mjs`、页面 Helmet 或 i18n hook，未执行计划中的修复方案
+
 ## P11: 移除 translation_EN / resolver_en（16 文件，~50 处引用）
 
 - **原因**：`translation_EN` 和 `resolver_en` 是多语言过渡期的历史产物，现在所有实体都有 `translation_key` + locale dict 处理翻译，不再需要英文本地化冗余字段；移除后每个详情 JSON 减 ~1.5 MB
