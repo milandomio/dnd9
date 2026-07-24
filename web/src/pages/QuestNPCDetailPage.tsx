@@ -5,6 +5,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
@@ -60,22 +61,22 @@ const checkboxStyle: React.CSSProperties = {
 
 const HIDDEN_QUESTS = new Set(['Id_Quest_Leathersmith_02']);
 
-const CONTENT_TYPE_LABEL: Record<string, string> = {
-  Kill: '击杀',
-  Fetch: '收集',
-  Explore: '探索',
-  Props: '道具',
-  UseItem: '使用',
-  Escape: '逃生',
-  Hold: '坚守',
-  Damage: '伤害',
+const CONTENT_TYPE_KEY: Record<string, string> = {
+  Kill: 'ui.content.kill',
+  Fetch: 'ui.content.collect',
+  Explore: 'ui.content.explore',
+  Props: 'ui.content.prop',
+  UseItem: 'ui.content.use',
+  Escape: 'ui.content.escape',
+  Hold: 'ui.content.hold',
+  Damage: 'ui.content.damage',
 };
 
-const REWARD_TYPE_LABEL: Record<string, string> = {
-  item: '物品',
-  exp: '经验值',
-  affinity: '好感度',
-  random: '随机奖励',
+const REWARD_TYPE_KEY: Record<string, string> = {
+  item: 'ui.quest_detail.item',
+  exp: 'ui.quest_detail.exp',
+  affinity: 'ui.quest_detail.affinity',
+  random: 'ui.quest_detail.random_reward',
 };
 
 function formatRequired(
@@ -103,6 +104,7 @@ export default function QuestNPCDetailPage() {
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+  const { ut } = useLocale();
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
@@ -171,7 +173,7 @@ export default function QuestNPCDetailPage() {
           color: tokens.muted,
         }}
       >
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
   }
@@ -280,9 +282,12 @@ export default function QuestNPCDetailPage() {
                 marginRight: 8,
               }}
             />
-            {npc.npc_name_display} - 任务列表
+            {npc.npc_name_display} - {ut('ui.quest_detail.task_list')}
             <span style={{ color: tokens.muted, fontSize: 14 }}>
-              {quests.length}个任务
+              {ut('ui.quest_detail.tasks_count').replace(
+                '{count}',
+                String(quests.length)
+              )}
             </span>
           </h1>
         </div>
@@ -310,7 +315,7 @@ export default function QuestNPCDetailPage() {
               onChange={(e) => setOnlyFetch(e.target.checked)}
               style={{ ...checkboxStyle, width: 16, height: 16 }}
             />
-            仅显示收集任务
+            {ut('ui.quest_detail.fetch_only')}
           </label>
           {lastAffinityQuest && (
             <label
@@ -328,7 +333,8 @@ export default function QuestNPCDetailPage() {
                 onChange={(e) => setOnlySuggested(e.target.checked)}
                 style={{ ...checkboxStyle, width: 16, height: 16 }}
               />
-              建议完成至#{lastAffinityQuest.quest_number}
+              {ut('ui.quest_detail.suggest_to')}
+              {lastAffinityQuest.quest_number}
             </label>
           )}
         </div>
@@ -449,7 +455,7 @@ export default function QuestNPCDetailPage() {
                               marginBottom: 4,
                             }}
                           >
-                            任务目标
+                            {ut('ui.quest_detail.objective')}
                           </div>
                           <table
                             style={{
@@ -476,7 +482,7 @@ export default function QuestNPCDetailPage() {
                                     width: '2em',
                                   }}
                                 >
-                                  类型
+                                  {ut('ui.quest_detail.type')}
                                 </th>
                                 <th
                                   style={{
@@ -499,7 +505,7 @@ export default function QuestNPCDetailPage() {
                                       width: '5em',
                                     }}
                                   >
-                                    目标地图
+                                    {ut('ui.quest_detail.target_map')}
                                   </th>
                                 )}
                                 {hasLoot && (
@@ -513,7 +519,7 @@ export default function QuestNPCDetailPage() {
                                       width: '3em',
                                     }}
                                   >
-                                    战利品
+                                    {ut('ui.quest_detail.loot')}
                                   </th>
                                 )}
                                 {hasRarity && (
@@ -527,7 +533,7 @@ export default function QuestNPCDetailPage() {
                                       width: '3em',
                                     }}
                                   >
-                                    稀有度
+                                    {ut('ui.quest_detail.rarity')}
                                   </th>
                                 )}
                                 <th
@@ -540,7 +546,7 @@ export default function QuestNPCDetailPage() {
                                     width: '2em',
                                   }}
                                 >
-                                  数量
+                                  {ut('ui.quest_detail.count')}
                                 </th>
                               </tr>
                             </thead>
@@ -568,7 +574,7 @@ export default function QuestNPCDetailPage() {
                                         whiteSpace: 'nowrap',
                                       }}
                                     >
-                                      {CONTENT_TYPE_LABEL[c.type] || c.type}
+                                      {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
                                     </td>
                                     <td
                                       style={{
@@ -695,7 +701,7 @@ export default function QuestNPCDetailPage() {
                           marginBottom: 4,
                         }}
                       >
-                        任务奖励
+                        {ut('ui.quest_detail.reward')}
                       </div>
                       <table
                         style={{
@@ -722,7 +728,7 @@ export default function QuestNPCDetailPage() {
                                 width: '4em',
                               }}
                             >
-                              类型
+                              {ut('ui.quest_detail.type')}
                             </th>
                             <th
                               style={{
@@ -732,7 +738,7 @@ export default function QuestNPCDetailPage() {
                                 fontSize: 13,
                               }}
                             >
-                              物品
+                              {ut('ui.quest_detail.item')}
                             </th>
                             <th
                               style={{
@@ -744,7 +750,7 @@ export default function QuestNPCDetailPage() {
                                 width: '2em',
                               }}
                             >
-                              数量
+                              {ut('ui.quest_detail.count')}
                             </th>
                           </tr>
                         </thead>
@@ -769,7 +775,9 @@ export default function QuestNPCDetailPage() {
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
-                                  {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
+                                  {ut(
+                                    REWARD_TYPE_KEY[r.type_key] || r.type_key
+                                  )}
                                 </td>
                                 <td
                                   style={{
@@ -814,7 +822,9 @@ export default function QuestNPCDetailPage() {
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
-                                  {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
+                                  {ut(
+                                    REWARD_TYPE_KEY[r.type_key] || r.type_key
+                                  )}
                                 </td>
                                 <td
                                   style={{
@@ -862,7 +872,7 @@ export default function QuestNPCDetailPage() {
                                 color: dark ? '#FFD54F' : '#F57F17',
                               }}
                             >
-                              金币
+                              {ut('ui.quest_detail.gold')}
                             </div>
                             <div
                               style={{
@@ -878,7 +888,7 @@ export default function QuestNPCDetailPage() {
                                 color: dark ? '#4fc3f7' : '#0277BD',
                               }}
                             >
-                              经验值
+                              {ut('ui.quest_detail.exp')}
                             </div>
                             <div
                               style={{
@@ -909,9 +919,11 @@ export default function QuestNPCDetailPage() {
                             marginTop: 6,
                           }}
                         >
-                          <span style={{ fontWeight: 'bold' }}>前置任务: </span>
+                          <span style={{ fontWeight: 'bold' }}>
+                            {ut('ui.quest_detail.prereq')}
+                          </span>
                           {isPrevSameNpc ? (
-                            <span>【上一个】</span>
+                            <span>{ut('ui.quest_detail.prev_quest')}</span>
                           ) : req.npcName ? (
                             <Link
                               to={`/quest_npc/${req.npcName}`}
@@ -944,7 +956,9 @@ export default function QuestNPCDetailPage() {
             marginTop: 40,
           }}
         >
-          {search ? '没有匹配的任务' : '该NPC暂无任务'}
+          {search
+            ? ut('ui.quest_detail.no_match')
+            : ut('ui.quest_detail.no_tasks')}
         </div>
       )}
     </div>

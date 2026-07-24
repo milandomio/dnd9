@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
+import { useLocale } from '../i18n/useLocale';
 
 interface GroupSummary {
   group: string;
@@ -39,6 +40,7 @@ export default function DungeonModulesPage() {
   const [loading, setLoading] = useState(!ssrGroups);
   const { tokens } = useTheme();
   const { modules } = useDungeonModules();
+  const { ut } = useLocale();
 
   useEffect(() => {
     if (ssrGroups) return;
@@ -65,7 +67,7 @@ export default function DungeonModulesPage() {
   if (loading)
     return (
       <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
 
@@ -89,7 +91,7 @@ export default function DungeonModulesPage() {
           marginBottom: 10,
         }}
       >
-        【地图模块表】地图模块汇总
+        {ut('ui.module.title')}
       </h1>
       <div
         style={{
@@ -99,7 +101,9 @@ export default function DungeonModulesPage() {
           marginBottom: 24,
         }}
       >
-        共 {groups.length} 个地图分组 | {totalMods} 个模块
+        {ut('ui.module.stat')
+          .replace('{groups}', String(groups.length))
+          .replace('{total}', String(totalMods))}
       </div>
       <div
         style={{
@@ -158,7 +162,10 @@ export default function DungeonModulesPage() {
                     lineHeight: 1.5,
                   }}
                 >
-                  {g.module_count} 个模块
+                  {ut('ui.module.count').replace(
+                    '{count}',
+                    String(g.module_count)
+                  )}
                 </div>
               </div>
             </Link>

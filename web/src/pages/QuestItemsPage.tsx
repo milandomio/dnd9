@@ -6,6 +6,7 @@ import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
+import { useLocale } from '../i18n/useLocale';
 
 interface GroupEntry {
   group: string;
@@ -31,6 +32,7 @@ export default function QuestItemsPage() {
   const [loading, setLoading] = useState(!ssrData);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
+  const { ut } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -66,7 +68,7 @@ export default function QuestItemsPage() {
           marginBottom: 10,
         }}
       >
-        【任务物品表】任务物品汇总
+        {ut('ui.quest_items.title')}
       </h1>
       <div
         style={{
@@ -76,7 +78,9 @@ export default function QuestItemsPage() {
           marginBottom: 24,
         }}
       >
-        共 {groups.length} 个地图分组 | {totalPos} 个位置点
+        {ut('ui.quest_items.stat')
+          .replace('{groups}', String(groups.length))
+          .replace('{total}', String(totalPos))}
       </div>
       <Row gutter={[16, 16]} justify="center">
         {groups.map((g) => {
@@ -117,9 +121,15 @@ export default function QuestItemsPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    {g.entity_count} 个实体
+                    {ut('ui.quest_items.entity').replace(
+                      '{count}',
+                      String(g.entity_count)
+                    )}
                     <br />
-                    {g.position_count} 个位置
+                    {ut('ui.quest_items.pos').replace(
+                      '{count}',
+                      String(g.position_count)
+                    )}
                   </div>
                 </Card>
               </Link>
@@ -135,7 +145,7 @@ export default function QuestItemsPage() {
           fontSize: 14,
         }}
       >
-        数据来源于NPC的Fetch任务，按地图模块分组显示任务物品位置
+        {ut('ui.quest_items.footer')}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
+import { useLocale } from '../i18n/useLocale';
 import type { DungeonModule } from '../types/data';
 
 export default function DungeonModuleGroupPage() {
@@ -15,6 +16,7 @@ export default function DungeonModuleGroupPage() {
   const { modules: allModules } = useDungeonModules();
   const [loading, setLoading] = useState(!ssrModules);
   const { tokens } = useTheme();
+  const { ut } = useLocale();
 
   const modules = useMemo(() => {
     // Prefer SSR data (pre-filtered for this group)
@@ -51,7 +53,7 @@ export default function DungeonModuleGroupPage() {
   if (loading)
     return (
       <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
   if (!modules.length)
@@ -61,7 +63,8 @@ export default function DungeonModuleGroupPage() {
       </div>
     );
 
-  const groupLabel = modules[0]?.group_display || group || '未分组';
+  const groupLabel =
+    modules[0]?.group_display || group || ut('ui.common.ungrouped');
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -84,10 +87,15 @@ export default function DungeonModuleGroupPage() {
             display: 'inline',
           }}
         >
-          【{groupLabel}】地图模块
+          【{groupLabel}】{ut('ui.module_group.title').replace('{group}', '')}
           <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
-            {visible.length} 个模块
-            {hiddenCount > 0 ? `（${hiddenCount} 个已隐藏）` : ''}
+            {ut('ui.module.count').replace('{count}', String(visible.length))}
+            {hiddenCount > 0
+              ? ut('ui.module_group.hidden').replace(
+                  '{count}',
+                  String(hiddenCount)
+                )
+              : ''}
           </span>
         </h1>
         <Button
@@ -95,7 +103,7 @@ export default function DungeonModuleGroupPage() {
           size="small"
           style={{ marginLeft: 12, opacity: debug ? 1 : 0.5 }}
         >
-          {debug ? '调试模式：显示全部' : '调试模式开启'}
+          {debug ? ut('ui.common.debug_on') : ut('ui.common.debug_off')}
         </Button>
       </div>
       <div

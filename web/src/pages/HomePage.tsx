@@ -7,6 +7,7 @@ import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 
 type CardTheme = {
   border: string;
@@ -98,6 +99,7 @@ export default function HomePage() {
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const { tokens, dark } = useTheme();
   const dataVersion = useDataVersion();
+  const { ut } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -142,7 +144,7 @@ export default function HomePage() {
       >
         越来越黑暗闪电指南
         <div style={{ fontSize: 14, color: tokens.muted, marginTop: 4 }}>
-          DarkFlashNav
+          DarkFlashNav · {ut('ui.home.title')}
         </div>
       </h1>
       <Disclaimer />
@@ -214,21 +216,25 @@ export default function HomePage() {
                 </div>
                 <div style={{ color: t.titleColor, fontSize: 13 }}>
                   {entry.page === 'quest_items' || entry.page === 'quest_npc'
-                    ? `任务${entry.count}个`
+                    ? ut('ui.home.quest_count').replace(
+                        '{count}',
+                        String(entry.count)
+                      )
                     : `${entry.label}${entry.count}个`}
                 </div>
                 <div
                   style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}
                 >
-                  {entry.page === 'items' && '查看物品位置'}
-                  {entry.page === 'monsters' && '查看怪物位置'}
-                  {entry.page === 'props' && '查看实体位置'}
-                  {entry.page === 'lootdrops' && '查看物品掉落怪物'}
-                  {entry.page === 'explore' && '地图模块预览（暂停维护）'}
+                  {entry.page === 'items' && ut('ui.home.view_items')}
+                  {entry.page === 'monsters' && ut('ui.home.view_monsters')}
+                  {entry.page === 'props' && ut('ui.home.view_props')}
+                  {entry.page === 'lootdrops' && ut('ui.home.view_lootdrops')}
+                  {entry.page === 'explore' && ut('ui.home.view_explore')}
                   {entry.page === 'quest_items' &&
-                    '按地图分组查看任务物品（暂停维护）'}
-                  {entry.page === 'quest_npc' && '查看NPC任务详情'}
-                  {entry.page === 'dungeon_modules' && '按地图分组查看所有模块'}
+                    ut('ui.home.view_quest_items')}
+                  {entry.page === 'quest_npc' && ut('ui.home.view_quest_npc')}
+                  {entry.page === 'dungeon_modules' &&
+                    ut('ui.home.view_dungeon_modules')}
                 </div>
               </Link>
             );
