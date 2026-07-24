@@ -77,6 +77,10 @@ export function AppInner() {
               element={<DungeonModuleDetailPage />}
             />
             <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
+            <Route path="/items" element={<ListPage />} />
+            <Route path="/monsters" element={<ListPage />} />
+            <Route path="/props" element={<ListPage />} />
+            <Route path="/lootdrops" element={<ListPage />} />
             <Route path="/:lang" element={<HomePage />} />
             <Route path="/:lang/explore" element={<ExplorePage />} />
             <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
