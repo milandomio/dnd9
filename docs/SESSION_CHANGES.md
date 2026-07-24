@@ -1,5 +1,16 @@
 # 2026-07-24 会话修改记录
 
+## 多语言计划阶段 1：修复 SSG 版本化数据目录顺序
+
+- **原因**：`web/scripts/ssg.mjs` 先删除 `dist/data/json` 后再写入 `meta.json`，会导致构建阶段复制 `meta.json` 到不存在目录；多语言计划 P0 要求先修复版本化数据目录处理
+- **变更文件**：
+  - `web/scripts/ssg.mjs` — 在版本化复制前生成 `data/json/meta.json`，复制到 `/data/{short}/json/` 后移除版本目录内的 `meta.json`；删除原始 `dist/data/json` 后重建目录并只保留 `/data/json/meta.json`
+  - `.gitignore` — 忽略 `*.log`，避免 `build.log` 等构建验证日志被提交
+  - `CLAUDE.md` — 新增禁止直接实时输出 `npm run build` 的强制规则，要求写入 `build.log` 后单独读取
+  - `docs/BUILD_AND_DEPLOY.md` — 将构建命令改为 `npm run build > build.log 2>&1`，补充避免阻塞 TUI 的日志读取规则
+  - `docs/SESSION_CHANGES.md` — 记录阶段 1 变更
+- **关键逻辑/映射关系**：大 JSON 只保留在版本化路径 `/data/{short}/json/...`；版本检测文件固定保留在 `/data/json/meta.json`，供 `useDataVersion()` 和 SW `df5-meta` 缓存规则使用
+
 ## 主文档精简与低频内容归档
 
 - **原因**：`CLAUDE.md` 混入大量低频参考内容（项目树、页面布局、组件表、Hydration 排障、数据管道细节、PWA 缓存、DB 推送流程、长文档索引），导致主文档过长且高频规则不够突出

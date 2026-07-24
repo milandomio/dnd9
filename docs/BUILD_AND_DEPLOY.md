@@ -5,12 +5,14 @@
 ## 完整构建
 
 ```bash
-git commit -am "WIP: <描述>"   # 1. checkpoint
-cd api && python main.py        # 2. 数据管道（自动交付到 data/）
-cd web && npm run build          # 3. 前端构建
+git commit -am "WIP: <描述>"                 # 1. checkpoint
+cd api && python main.py                      # 2. 数据管道（自动交付到 data/）
+cd web && npm run build > build.log 2>&1      # 3. 前端构建，必须写日志
 # 4. 启动web + 强制验证
 cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
+
+禁止直接执行实时输出的 `npm run build`。构建必须使用 `npm run build > build.log 2>&1`，完成后单独读取 `build.log` 检查结果，避免长输出流阻塞 TUI 进程。其他 npm 长输出命令同理优先写日志再读取。
 
 构建完成后必须验证 web 服务可用（HTTP 200），不可跳过。若返回非 200，必须排查错误并修复至返回 200 为止。
 
@@ -21,7 +23,7 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 只改 `web/` 代码时，不需要跑数据管道，直接构建 + 启动预览：
 
 ```bash
-cd web && npm run build          # 1. 前端构建（含 TS 类型检查 + SSG）
+cd web && npm run build > build.log 2>&1      # 1. 前端构建（含 TS 类型检查 + SSG）
 # 2. 启动web + 强制验证（同完整构建规则）
 cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
