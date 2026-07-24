@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from config import EN_GAME_JSON, GAME_JSON, GAME_ROOT, LOCALIZATION_ROOT
+from config import GAME_JSON, GAME_ROOT, LOCALIZATION_ROOT
 
 log = logging.getLogger(__name__)
 
@@ -52,10 +52,6 @@ def load_game_json(path: Path | None = None) -> dict[str, str]:
     except Exception as e:
         log.warning("failed to load game JSON %s: %s", target, e)
         return {}
-
-
-def load_en_game_json() -> dict[str, str]:
-    return load_game_json(EN_GAME_JSON)
 
 
 def discover_languages() -> list[str]:
