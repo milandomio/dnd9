@@ -177,8 +177,7 @@ export default function DungeonModuleDetailPage() {
       <Helmet>
         <title>
           {m.translation}
-          {m.translation_EN ?? m.name} 地图模块Module | 越来越黑暗闪电指南
-          DarkFlashNav
+          {m.name} 地图模块Module | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"

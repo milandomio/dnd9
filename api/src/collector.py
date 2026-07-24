@@ -297,10 +297,6 @@ def run():
 
         resolver = NameResolver(translations)
 
-        en_translations = db.get_translations_map("en")
-        resolver_en = NameResolver(en_translations) if en_translations else resolver
-        en_resolve = resolver_en.resolve
-
         _monsters_lookup = {r["monster_name"]: r for r in monsters}
         for _vkey, (_vcnt, _vraw) in list(_coord_variant_count.items()):
             if _vraw:
@@ -358,7 +354,7 @@ def run():
 
         pipe.log("[JSON] building modules_map...")
         modules = db.get_dungeon_modules()
-        modules_map = build_modules_map(db, resolver.resolve, module_rotations=None, resolve_en_name=en_resolve)
+        modules_map = build_modules_map(db, resolver.resolve, module_rotations=None)
         map_to_module, module_to_maps = build_map_mappings(modules_map)
         # 注入分组显示名
         for _mod in modules_map.values():
@@ -381,7 +377,6 @@ def run():
                 map_to_module,
                 item_coord_chain_map,
                 _sub_pool_info,
-                en_resolve,
             )
             # P005: Build from actual exported files, not raw DB data
             for e in items_index:
@@ -398,7 +393,6 @@ def run():
                 OUTPUT_DIR,
                 map_to_module,
                 _sub_pool_info,
-                en_resolve,
             )
             for e in monsters_index:
                 entity_page_map[e["name"]] = f"monsters/{e['name']}"
@@ -415,7 +409,6 @@ def run():
                 OUTPUT_DIR,
                 map_to_module,
                 _sub_pool_info,
-                en_resolve,
             )
             for e in props_index:
                 entity_page_map[e["name"]] = f"props/{e['name']}"
@@ -440,7 +433,7 @@ def run():
 
         with pipe.step("dungeon_modules export") as ctx:
             merged_coords = build_and_save_module_coords(
-                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR, en_resolve
+                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR
             )
             modules_data = build_and_save_modules_data(modules_map, module_to_maps, merged_coords, OUTPUT_DIR)
             ctx.set_result(f"{len(modules_data)} modules")
@@ -451,7 +444,7 @@ def run():
         pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
 
         with pipe.step("lootdrops") as ctx:
-            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve, en_resolve)
+            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve)
             _save("lootdrops.json", loot_index)
             ctx.set_result(f"{len(loot_index)} items")
 
@@ -469,7 +462,6 @@ def run():
             map_to_module,
             translations,
             entity_page_map,
-            en_resolve,
         )
         pipe.log("[JSON] lootdrops detail files DONE")
 
@@ -490,7 +482,6 @@ def run():
                 modules,
                 OUTPUT_DIR,
                 group_label_resolver=lambda g: resolve_group_label(g, translations),
-                resolve_en_name=en_resolve,
             )
 
         with pipe.step("search_index") as ctx:

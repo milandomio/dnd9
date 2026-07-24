@@ -195,7 +195,6 @@ def build_loot_index(
     monsters: list[dict],
     entity_class: dict,
     resolve_name,
-    resolve_en_name=None,
 ) -> list[dict]:
     """Build lootdrops.json index (grouped by item for list page)."""
     items_lookup = {r["item_name"]: r for r in items}
@@ -214,11 +213,6 @@ def build_loot_index(
             if item_row
             else (resolve_name(item_name, None, "item") or item_name)
         )
-        if item_name == "Longsword":
-            print(
-                f"[DEBUG] build_loot_index('Longsword'): {len(monster_names)} monsters, item_row={'YES' if item_row else 'NO'}"
-            )
-            print(f"[DEBUG]   first 10: {sorted(monster_names)[:10]}")
         mon_translations = []
         for m in sorted(monster_names):
             cls = entity_class.get(m)
@@ -234,7 +228,6 @@ def build_loot_index(
             elif cls and "props" in cls["types"]:
                 mon_translations.append(resolve_name(m, cls.get("translation_key", ""), "props"))
                 continue
-            # Try direct monster lookup
             mon_row = monsters_lookup.get(m)
             if mon_row:
                 mon_translations.append(resolve_name(m, mon_row["translation_key"], "monster"))
@@ -289,22 +282,10 @@ def build_loot_index(
                 merged_names.append(mn)
                 merged_translations.append(mt)
         raw_name = item_row.get("raw_name", "") if item_row else ""
-        translation_en: str = item_name
-        if resolve_en_name:
-            tk = None
-            if item_row and item_row.get("translation_key"):
-                tk = item_row["translation_key"]
-            elif item_name.endswith("_8001"):
-                base_name = item_name.removesuffix("_8001")
-                base_row = items_lookup.get(base_name)
-                if base_row:
-                    tk = base_row.get("translation_key")
-            translation_en = resolve_en_name(item_name, tk, "item")
         entry: dict = {
             "name": item_name,
             "translation": translation,
             "translation_key": translation_key,
-            "translation_EN": translation_en,
             "variant_count": variant_count,
             "raw_name": raw_name,
             "monsters": sorted(merged_names),
@@ -329,7 +310,6 @@ def build_and_save_lootdrop_details(
     map_to_module: dict | None = None,
     translations: dict[str, str] | None = None,
     entity_page_map: dict[str, str] | None = None,
-    resolve_en_name=None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
     map_base_to_group = drop_engine.map_base_to_group
@@ -709,7 +689,6 @@ def build_and_save_lootdrop_details(
                 "name": item_name,
                 "translation": entry["translation"],
                 "translation_key": entry.get("translation_key", ""),
-                "translation_EN": entry.get("translation_EN", item_name),
                 "monsters": monsters_out,
                 "group_drop_info": _group_drop_info,
             }
@@ -816,7 +795,6 @@ def build_and_save_lootdrop_details(
                         "name": variant_name,
                         "translation": variant_translation,
                         "translation_key": entry.get("translation_key", ""),
-                        "translation_EN": entry.get("translation_EN", item_name),
                         "monsters": variant_monsters,
                         "group_drop_info": variant_gdi,
                         "variant_rarity": detail.get("variant_rarity", {}),

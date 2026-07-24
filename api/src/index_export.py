@@ -36,7 +36,6 @@ def generate_quest_items_groups(
     modules,
     output_dir: Path,
     group_label_resolver=None,
-    resolve_en_name=None,
 ):
     """Generate quest items groups with coordinates."""
     import logging

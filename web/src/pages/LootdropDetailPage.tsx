@@ -67,7 +67,6 @@ interface LootdropItem {
   name: string;
   translation: string;
   translation_key?: string;
-  translation_EN?: string;
   monsters: LootdropMonster[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
   variant_rarity?: Record<string, string>;
@@ -650,8 +649,7 @@ export default function LootdropDetailPage() {
       <Helmet>
         <title>
           {itemLabel}
-          {data.translation_EN ?? data.name} 掉落来源Source | 越来越黑暗闪电指南
-          DarkFlashNav
+          {data.name} 掉落来源Source | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -663,7 +661,7 @@ export default function LootdropDetailPage() {
         />
         <meta
           property="og:title"
-          content={`${itemLabel}${data.translation_EN ?? data.name} 掉落来源Source | DarkFlashNav`}
+          content={`${itemLabel}${data.name} 掉落来源Source | DarkFlashNav`}
         />
         <meta
           property="og:description"
