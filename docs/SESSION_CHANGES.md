@@ -1,3 +1,25 @@
+# 2026-07-25 会话修改记录
+
+## P8d: 剩余页面 UI i18n 全量接入 + LootdropDetail 嵌套实体名翻译
+
+- **原因**: P8 仍有 9 个页面未接入 `useLocale`/`ut()`，页面标题/统计/按钮/标签等仍硬编码中文；LootdropDetail 嵌套怪物名需按 locale 翻译
+- **变更文件**:
+  - `web/src/i18n/uiLocale.ts` — 追加 ~75 个新 key (10 语言全覆盖): home/module/explore/quest_items/quest_group/quest_npc/quest_detail/content/npc 各组
+  - `web/src/pages/HomePage.tsx` — 导航卡片描述/home tagline/计数文本全部替换为 `ut()`
+  - `web/src/pages/DungeonModulesPage.tsx` — 页面标题/统计/模块计数接入 `ut()`
+  - `web/src/pages/DungeonModuleGroupPage.tsx` — 页面标题/隐藏计数/调试按钮接入 `ut()`
+  - `web/src/pages/ExplorePage.tsx` — 页面标题/统计/任务标签接入 `ut()`
+  - `web/src/pages/QuestItemsPage.tsx` — 页面标题/统计/实体计数/位置计数/页脚接入 `ut()`
+  - `web/src/pages/QuestItemGroupPage.tsx` — 页面标题/图例/位置统计/包含地图/调试按钮接入 `ut()`
+  - `web/src/pages/QuestNPCPage.tsx` — 活跃NPC统计/任务计数/NPC分类标签(CATEGORY_KEYS → locale)接入 `ut()`
+  - `web/src/pages/DungeonModuleDetailPage.tsx` — 标题/实体类型标签/选1点/位置统计/包含实体接入 `ut()`
+  - `web/src/pages/QuestNPCDetailPage.tsx` — 任务列表/奖励类型(CONTENT_TYPE_KEY/REWARD_TYPE_KEY → locale)/任务目标/奖励/前置任务/金币经验值标签全部接入 `ut()`
+  - `web/src/pages/LootdropDetailPage.tsx` — GDI 条目怪物名改用 `t(translation_key)`；模块名改用 `t(translation_key)`；GroupDropInfo 接口补充 `translation_key` 字段
+- **关键逻辑/映射**: 
+  - 新增 `CATEGORY_KEYS` 映射（NPC 分类中文→locale key），`CONTENT_TYPE_KEY`（内容类型→locale key），`REWARD_TYPE_KEY`（奖励类型→locale key）
+  - 所有页面的 `const { t, ut }` 拆分为：用到 `t` 的页面保留两者，只用 `ut` 的页面只解构 `ut`
+  - 模板字符串（含 `{count}` 占位符）使用 `.replace()` 替换后传入，避免引入模板引擎依赖
+
 # 2026-07-24 会话修改记录
 
 ## 多语言 P8-P12 持续推进：UI i18n + AntD locale + 嵌套 translation_key

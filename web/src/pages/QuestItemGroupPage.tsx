@@ -8,6 +8,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { useLocale } from '../i18n/useLocale';
 import type { DungeonModule } from '../types/data';
 import {
   getAdj,
@@ -81,6 +82,7 @@ export default function QuestItemGroupPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
+  const { ut } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -108,7 +110,7 @@ export default function QuestItemGroupPage() {
   if (loading)
     return (
       <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
   if (!data)
@@ -231,8 +233,8 @@ export default function QuestItemGroupPage() {
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggleDebug,
           },
@@ -257,9 +259,12 @@ export default function QuestItemGroupPage() {
           margin: '0 0 8px',
         }}
       >
-        【{data.group_display}】任务物品
+        【{data.group_display}】
+        {ut('ui.quest_group.title').replace('{group}', '')}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
-          {entities.length}种实体 {totalCoords}个位置
+          {ut('ui.quest_group.stat')
+            .replace('{entities}', String(entities.length))
+            .replace('{coords}', String(totalCoords))}
         </span>
       </h1>
 
@@ -297,7 +302,9 @@ export default function QuestItemGroupPage() {
             transition: 'all 0.2s',
           }}
         >
-          {hidden.size === 0 ? '隐藏全部' : '全部显示'}
+          {hidden.size === 0
+            ? ut('ui.common.hide_all')
+            : ut('ui.common.show_all')}
         </button>
         {entities.map((e) => (
           <button
@@ -337,7 +344,9 @@ export default function QuestItemGroupPage() {
             color: tokens.muted,
           }}
         >
-          <strong style={{ color: tokens.text }}>实体图例：</strong>
+          <strong style={{ color: tokens.text }}>
+            {ut('ui.quest_group.legend')}
+          </strong>
           {entities.map((e) => (
             <span
               key={e.name}
@@ -701,7 +710,8 @@ export default function QuestItemGroupPage() {
                           </span>
                           <span style={{ color: tokens.muted }}>
                             ({dots.filter((d) => d.entity.name === en).length}
-                            点)
+                            {ut('ui.quest_group.points').replace('{count}', '')}
+                            )
                           </span>
                         </span>
                       );
@@ -784,9 +794,14 @@ export default function QuestItemGroupPage() {
           color: tokens.muted,
         }}
       >
-        <strong>位置统计：共 {totalCoords} 个位置点</strong>
+        <strong>
+          {ut('ui.quest_group.pos_stat').replace(
+            '{count}',
+            String(totalCoords)
+          )}
+        </strong>
         <br />
-        <strong>包含地图：</strong>{' '}
+        <strong>{ut('ui.quest_group.map_includes')}</strong>{' '}
         {[...new Set([...mapGroups.keys()])]
           .map((k) => modules.get(k)?.translation || k)
           .join('、')}

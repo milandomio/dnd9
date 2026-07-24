@@ -5,6 +5,7 @@ import Disclaimer from '../components/Disclaimer';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 
 interface ExploreTarget {
@@ -26,6 +27,7 @@ export default function ExplorePage() {
   const { modules } = useDungeonModules();
   const dataVersion = useDataVersion();
   const { tokens, dark } = useTheme();
+  const { ut } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -60,7 +62,7 @@ export default function ExplorePage() {
           marginBottom: 20,
         }}
       >
-        【任务探索表】探索目标汇总
+        {ut('ui.explore.title')}
       </h1>
       <div
         style={{
@@ -70,7 +72,9 @@ export default function ExplorePage() {
           marginBottom: 20,
         }}
       >
-        共 {data.length} 个探索目标，分布在 {grouped.size} 个NPC
+        {ut('ui.explore.stat')
+          .replace('{count}', String(data.length))
+          .replace('{npcCount}', String(grouped.size))}
       </div>
       <Disclaimer />
       {[...grouped.entries()].map(([npcName, targets]) => {
@@ -151,7 +155,8 @@ export default function ExplorePage() {
                         textAlign: 'center',
                       }}
                     >
-                      {npcName} - 任务: {t.quest_title || `#${t.quest_number}`}
+                      {npcName} - {ut('ui.explore.quest')}:{' '}
+                      {t.quest_title || `#${t.quest_number}`}
                     </div>
                     <div
                       style={{

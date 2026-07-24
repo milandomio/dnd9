@@ -57,6 +57,7 @@ interface LootdropMonster {
 
 interface GroupDropInfo {
   translation: string;
+  translation_key?: string;
   spawn_rate: number;
   spawn_rates?: Record<string, number>;
   drop_rates: Record<string, number>;
@@ -1030,7 +1031,7 @@ export default function LootdropDetailPage() {
                             marginRight: 8,
                           }}
                         >
-                          {info.translation}
+                          {t(info.translation_key, info.translation)}
                           {info.spawn_rates &&
                           Object.keys(info.spawn_rates).length > 1
                             ? Object.entries(info.drop_rates)
@@ -1107,7 +1108,10 @@ export default function LootdropDetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {mod?.translation || mapName}
+                    {t(
+                      mod?.translation_key,
+                      mod?.translation || mod?.name || mapName
+                    )}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}

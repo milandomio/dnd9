@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
@@ -25,6 +26,13 @@ function lsSet(key: string, val: boolean) {
   }
 }
 
+const CATEGORY_KEYS: Record<string, string> = {
+  装备NPC: 'ui.npc.equip',
+  优选NPC: 'ui.npc.pref',
+  可用NPC: 'ui.npc.avail',
+  不推荐NPC: 'ui.npc.norec',
+};
+
 const CATEGORY_ORDER = ['装备NPC', '优选NPC', '可用NPC', '不推荐NPC'];
 
 const checkboxStyle: React.CSSProperties = {
@@ -41,6 +49,7 @@ export default function QuestNPCPage() {
   const seasonVersion = useSeasonVersion();
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
+  const { ut } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -135,7 +144,7 @@ export default function QuestNPCPage() {
               marginTop: 4,
             }}
           >
-            共 {data.length} 个活跃NPC
+            {ut('ui.quest_npc.active').replace('{count}', String(data.length))}
           </div>
         </div>
       </div>
@@ -152,7 +161,7 @@ export default function QuestNPCPage() {
               marginTop: 24,
             }}
           >
-            {category} ({npcs.length})
+            {ut(CATEGORY_KEYS[category] || category)} ({npcs.length})
           </div>
           <div
             style={{
@@ -228,7 +237,10 @@ export default function QuestNPCPage() {
                             fontWeight: 'normal',
                           }}
                         >
-                          {npc.quest_count} 个任务
+                          {ut('ui.quest_npc.task_count').replace(
+                            '{count}',
+                            String(npc.quest_count)
+                          )}
                         </span>
                       </div>
                     </Link>

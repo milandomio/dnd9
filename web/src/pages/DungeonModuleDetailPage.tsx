@@ -8,6 +8,7 @@ import { dataUrl } from '../utils/dataUrl';
 import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
+import { useLocale } from '../i18n/useLocale';
 import type { DungeonModule } from '../types/data';
 import {
   getAdj,
@@ -54,6 +55,7 @@ export default function DungeonModuleDetailPage() {
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
+  const { ut } = useLocale();
 
   const dataVersion = useDataVersion();
 
@@ -86,7 +88,7 @@ export default function DungeonModuleDetailPage() {
   if (loading)
     return (
       <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
   if (!mod)
@@ -164,8 +166,8 @@ export default function DungeonModuleDetailPage() {
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggleDebug,
           },
@@ -191,7 +193,7 @@ export default function DungeonModuleDetailPage() {
           margin: '0 0 8px',
         }}
       >
-        【{m.translation}】地图模块
+        【{m.translation}】{ut('ui.module_detail.title').replace('{name}', '')}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
           {groupLabel} | {sx}x{sy}
         </span>
@@ -266,20 +268,27 @@ export default function DungeonModuleDetailPage() {
                 width: '100%',
               }}
             >
-              {hidden.size === 0 ? '隐藏全部' : '全部显示'}
+              {hidden.size === 0
+                ? ut('ui.common.hide_all')
+                : ut('ui.common.show_all')}
             </button>
             {(['monster', 'item', 'props', 'decoration'] as const).map(
               (type) => {
                 const group = entities.filter((e) => e.type === type);
                 if (!group.length) return null;
-                const labels: Record<string, { icon: string; label: string }> =
-                  {
-                    monster: { icon: '👹', label: '怪物' },
-                    item: { icon: '📦', label: '物品' },
-                    decoration: { icon: '🔥', label: '装饰' },
-                    props: { icon: '🏛️', label: '实体' },
-                  };
-                const { icon, label } = labels[type];
+                const labels: Record<
+                  string,
+                  { icon: string; labelKey: string }
+                > = {
+                  monster: { icon: '👹', labelKey: 'ui.module_detail.monster' },
+                  item: { icon: '📦', labelKey: 'ui.module_detail.item' },
+                  decoration: {
+                    icon: '🔥',
+                    labelKey: 'ui.module_detail.decoration',
+                  },
+                  props: { icon: '🏛️', labelKey: 'ui.module_detail.prop' },
+                };
+                const { icon, labelKey } = labels[type];
                 return (
                   <div key={type}>
                     <div
@@ -291,7 +300,7 @@ export default function DungeonModuleDetailPage() {
                         paddingLeft: 2,
                       }}
                     >
-                      {icon} {label}
+                      {icon} {ut(labelKey)}
                     </div>
                     <div>
                       {group.map((e) => (
@@ -319,7 +328,10 @@ export default function DungeonModuleDetailPage() {
                           {e.translation || e.name}
                           <span style={{ fontSize: 14, marginLeft: 4 }}>
                             ({e.coords.length}
-                            {e.mutually_exclusive ? '选1' : '点'})
+                            {e.mutually_exclusive
+                              ? ut('ui.module_detail.select_one')
+                              : ut('ui.module_detail.points')}
+                            )
                           </span>
                         </button>
                       ))}
@@ -536,11 +548,16 @@ export default function DungeonModuleDetailPage() {
           color: tokens.muted,
         }}
       >
-        <strong>位置统计：共 {totalCoords} 个位置点</strong>
+        <strong>
+          {ut('ui.module_detail.pos_stat').replace(
+            '{count}',
+            String(totalCoords)
+          )}
+        </strong>
         {entities.length > 0 && (
           <>
             <br />
-            <strong>包含实体：</strong>{' '}
+            <strong>{ut('ui.module_detail.entities')}</strong>{' '}
             {entities
               .map((e) => `${e.translation || e.name}(${e.coords.length})`)
               .join('、')}
