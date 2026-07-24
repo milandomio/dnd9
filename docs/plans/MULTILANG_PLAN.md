@@ -1,8 +1,8 @@
 # 多语言 (i18n) 重构计划
 
 > 创建日期: 2026-07-24
-> 版本: v0.7 (全计划完成)
-> 状态: P0-P11 全部完成，v0.8 修复 hydration 崩溃 + 标题重复
+> 版本: v0.8 (已知问题分析完成，待确认执行修复)
+> 状态: P0-P11 全部完成；10.1/10.2 已给出推荐修复方案，尚未执行
 
 ---
 
@@ -423,7 +423,7 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 |---|---|
 | `/en/lootdrops/HeaterShield_8001/` | `<title>` 为英文名 "Immortal Shield" |
 | `/ja/lootdrops/HeaterShield_8001/` | `<title>` 为日文名 |
-| `/items/Ale/` (无前缀) | 自动重定向到浏览器语言版本 |
+| `/items/Ale/` (无前缀) | 固定简体中文，不按浏览器语言自动跳转 |
 | `/en/items/Ale/` | 列表页卡片名为 "Ale" |
 | `curl /en/monsters/Mimic_Large_Flat/ \| grep '<title'` | 英文名,非空 |
 
@@ -450,8 +450,8 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 |---|---|---|
 | **HTML 文件倍增** | dist 增 ~560 MB | 9 语言 × ~62 MB HTML 副本;SW df5-html maxEntries 保持 1300 (用户单语言浏览) |
 | **翻译键缺失** | 标题为中文回退 | `localeDict[translation_key] || entity.translation` 兜底 |
-| **hydration mismatch** | React warning | 非中文页 body 与中文版完全一致，仅叠加 `__SSR_DATA__.lang`;hydration 安全 |
-| **无前缀页 404** | 旧链接失效 | 保留无前缀路由;客户端检测浏览器语言后重定向 |
+| **hydration mismatch** | React warning / 白屏风险 | 当前 v0.8 未解决；采用 10.1 推荐方案，确保 Helmet 首轮标题与 SSG head 一致 |
+| **无前缀页 404** | 旧链接失效 | 保留无前缀路由；无前缀固定 zh-Hans，不按浏览器语言重定向 |
 | **locale dict 首屏加载** | 非中文页首屏 body 为中文，闪变为目标语言 | 切换前显示 loading 骨架屏;locale dict 小 (~200 KB GZip ~50 KB)，加载快 |
 
 ---
@@ -564,19 +564,62 @@ docs/BUILD_AND_DEPLOY.md            # + locale 导出流程说明
 
 **影响**：非中文用户首次访问时控制台报错，可能触发 React 错误边界导致白屏或 UI 异常
 
-**备选修复方案**：
+**方案评估**：
 
-| 方案 | 描述 | 复杂度 |
-|------|------|--------|
-| A | 非中文 SSG 页不注入翻译后 `<title>`，Helmet 全权控制（SEO 降级） | 低 |
-| B | 非中文 SSG 页将 locale dict inline 注入 `<script>`，避免 async fetch | 中 |
-| C | Helmet 组件在 hydration 阶段跳过 `<title>` 比较（suppressHydrationWarning） | 低 |
-| D | `useLocale()` 在 `__lang !== zh-Hans` 时阻止 Helmet 首次渲染，待 locale dict 就绪后再更新 | 中 |
+| 方案 | 结论 | 原因 |
+|------|------|------|
+| A. 非中文 SSG 页不注入翻译后 `<title>` | 不推荐 | 直接放弃多语言 SEO 目标；只能让客户端后补标题，搜索引擎首 HTML 仍是中文 |
+| B. 非中文 SSG 页 inline 当前页面所需翻译 | **推荐** | 不需要 inline 整份 locale dict；只注入当前路由首个实体的 localized title，保证 Helmet 首轮渲染与 SSG head 一致 |
+| C. 给 `<title>` 加 `suppressHydrationWarning` | 不采用 | React Helmet 不稳定支持；隐藏告警但不保证 head 状态正确，且可能掩盖真实 hydration 问题 |
+| D. 非中文 hydration 时阻止 Helmet 首次渲染 | 可作为兜底 | 能避开 head mismatch，但初始 head 由 SSG 独占，后续切换/CSR 导航需要额外处理 |
+
+**推荐修复方案（待确认执行）**：采用“B 精简版 + D 局部兜底”，只解决 `<head>` 首轮不一致，不改变 body 仍中文 SSG 后客户端翻译的架构。
+
+1. `web/scripts/ssg.mjs` 后处理阶段继续写入本地化 `<title>`，同时向 `window.__SSR_DATA__` 注入一个轻量字段，例如 `__localizedTitle`。
+2. `__localizedTitle` 的值来自当前路由 `firstTranslatable(routeData).translation_key -> localeDict[lang] -> translation/name fallback`，与后处理替换 `<title>` 使用完全同一函数。
+3. 前端新增一个小工具或 hook，例如 `useLocalizedPageTitle(localizedName, fallbackName)`，规则是：首轮如果 `window.__SSR_DATA__.__localizedTitle` 存在，Helmet 使用它；否则使用 `t(translation_key, fallback)`。
+4. `DetailPage.tsx` / `LootdropDetailPage.tsx` / `DungeonModuleDetailPage.tsx` / `QuestNPCDetailPage.tsx` 的 Helmet title 和 description 中实体名统一通过该规则取值；非详情页没有实体本地化 title 的页面继续使用 UI locale fallback。
+5. 保持 `useLocale()` 异步加载整份 locale dict 的现状；dict 就绪后正文实体名和 UI 文案正常切换。
+6. 如果某页面无法稳定推导实体 title，则该页面首轮 Helmet 暂不覆盖 `<title>`，等 locale dict 就绪后再更新，避免再次制造 mismatch。
+
+**关键约束**：
+
+- 不 inline 整份 locale JSON，避免每个 HTML 增加 65-83KB，30,000 页会把 dist 放大到不可接受。
+- 不删除非中文 SSG `<title>`，保留 SEO 收录价值。
+- 不依赖 `suppressHydrationWarning` 静默处理，因为问题来源是业务 title 数据时序不一致，不是不可避免的 DOM 差异。
+- `__localizedTitle` 只服务首轮 hydration 对齐；正文翻译仍走 `translation_key -> locale dict -> t()`。
+
+**验收标准**：
+
+| 测试项 | 通过标准 |
+|---|---|
+| `web/tests/i18n.mjs` | 15 页面回归全部无 React #418/#423/#425 |
+| `curl /en/lootdrops/HeaterShield_8001/ \| grep '<title'` | title 为英文，非空 |
+| `curl /ja/lootdrops/HeaterShield_8001/ \| grep '<title'` | title 为日文，非空 |
+| `/items/Ale/` | 无前缀保持 zh-Hans，控制台无 hydration 错误 |
+| `/en/items/Ale/` | 首 HTML title 与 hydration 后 `document.title` 一致 |
+
+**执行边界**：用户确认前不得改 `web/scripts/ssg.mjs`、页面 Helmet 或 i18n hook；本节仅记录方案。
 
 ### 10.2 ModuleDetail 标题重复（轻微）
 
 **现象**：模块详情页 `<title>` 显示 "钉手岛钉手岛 地图模块Module | DarkFlashNav"
 
-**根因**：Helmet `<title>` 模板为 `{m.translation}{m.name} 地图模块Module | ...`，当模块的 `translation`（中文名）与 `m.name`（asset name 中文翻译后）相同时拼接出重复文本
+**根因**：Helmet `<title>` 模板为 `{m.translation}{m.name} 地图模块Module | ...`。当前代码中 `DungeonModuleDetailPage.tsx` 直接连续输出 `m.translation` 与 `m.name`，当两者文本相同或 `name` 已是展示名时会重复；同页 description / H1 也需要复用同一个 display name，避免 title 与页面主标题不一致。
 
-**修复**：改为 `{m.translation || m.name}` 避免重复
+**推荐修复方案（待确认执行）**：
+
+1. 在 `DungeonModuleDetailPage.tsx` 中引入统一展示名：`const moduleDisplayName = m.translation || m.name`。
+2. Helmet `<title>` 改为 `${moduleDisplayName} ${ut('ui.module_detail.seo_suffix') 或现有固定后缀}`，禁止再拼接 `m.translation + m.name`。
+3. Helmet description、H1、底部统计中的模块名同步使用 `moduleDisplayName`，避免同页不同位置命名规则不一致。
+4. 若接入 10.1 的 `__localizedTitle`，优先级为 `__localizedTitle -> t(m.translation_key, moduleDisplayName) -> moduleDisplayName`，这样非中文模块页也不会在 hydration 首轮回退到重复中文标题。
+
+**验收标准**：
+
+| 测试项 | 通过标准 |
+|---|---|
+| `/dungeon_modules/.../钉手岛/` 或对应复现页 | `<title>` 不出现 `钉手岛钉手岛` |
+| 中文模块详情页 | H1 与 `<title>` 使用同一模块展示名 |
+| 非中文模块详情页 | 不触发 hydration 错误，title 不重复 |
+
+**执行边界**：用户确认前不得修改 `DungeonModuleDetailPage.tsx`；本节仅记录方案。
