@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
+import HomePageTitle from '../components/HomePageTitle';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
@@ -114,41 +115,23 @@ export default function HomePage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>
-          越来越黑暗闪电指南 DarkFlashNav |
-          游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱
-        </title>
+        <title>DarkFlashNav</title>
         <meta
           name="description"
-          content="越来越黑暗闪电指南 DarkFlashNav——游戏地图、任务攻略、BOSS掉落、资源点位、寻找宝箱，一站式查询工具。"
+          content="DarkFlashNav - Dark and Darker 游戏导航工具"
         />
         <meta
           name="keywords"
-          content="越来越黑暗,越来越黑暗玩家指南,越来越黑暗闪电指南,DarkFlashNav,Dark and Darker,darkanddarker,暗黑地牢,地牢探索,DND,游戏攻略,物品查询,怪物位置,掉落查询,地图坐标,装备属性,武器查询,防具查询,饰品查询,任务攻略,NPC位置,宝箱位置,地牢模块"
+          content="DarkFlashNav,Dark and Darker,darkanddarker,游戏攻略,物品查询,怪物位置,掉落查询,地图坐标"
         />
-        <meta
-          property="og:title"
-          content="越来越黑暗闪电指南 - 游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱"
-        />
+        <meta property="og:title" content="DarkFlashNav" />
         <meta
           property="og:description"
-          content="游戏地图、任务攻略、BOSS掉落、资源点位、寻找宝箱"
+          content="Dark and Darker 游戏导航工具"
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <h1
-        style={{
-          textAlign: 'center',
-          color: tokens.accent,
-          fontSize: 26,
-          marginBottom: 4,
-        }}
-      >
-        越来越黑暗闪电指南
-        <div style={{ fontSize: 14, color: tokens.muted, marginTop: 4 }}>
-          DarkFlashNav · {ut('ui.home.title')}
-        </div>
-      </h1>
+      <HomePageTitle />
       <Disclaimer />
       <div
         style={{
