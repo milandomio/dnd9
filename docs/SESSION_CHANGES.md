@@ -33,6 +33,28 @@
 - **附**：强化 `docs/DEVELOPMENT_WORKFLOW.md` / `CLAUDE.md` — **dev 分支同样必须任务完成即本地 commit**，禁止堆积未提交 diff
 - **计划**：`docs/plans/DUNGEON_GROUP_I18N.md`
 
+## 工作区仍脏文件 — 有意未并入本次 commit
+
+- **原因**：与「地图分组名 i18n」不是同一逻辑任务；按 `docs/DEVELOPMENT_WORKFLOW.md` **禁止 `git add -A` 混提**无关 WIP，故只 stage 本任务文件（`8ccfc569` / `cef3f550`）。
+- **不是漏提交**：本任务相关文件与文档均已 commit；下列为会话前/其它功能的半成品，需单独完成或另开 `wip:` commit。
+- **未提交清单（截至 2026-07-26 会话结束）**：
+
+  | 路径 | 大致内容（待确认） | 为何未提 |
+  |------|-------------------|----------|
+  | `api/src/lootdrop_builder.py` | `monster_translation_keys` 等掉落索引 i18n | 其它任务半成品 |
+  | `web/src/pages/HomePage.tsx` | 首页文案/结构 | 其它任务半成品 |
+  | `web/src/pages/ListPage.tsx` | 列表页 i18n/展示 | 其它任务半成品 |
+  | `web/src/components/NavBar.tsx` | 导航相关 | 其它任务半成品 |
+  | `web/src/components/Footer.tsx` | 页脚 | 其它任务半成品 |
+  | `web/src/components/Disclaimer.tsx` | 免责声明 | 其它任务半成品 |
+  | `web/src/i18n/locale.ts` | locale 小改 | 其它任务半成品 |
+  | `web/src/components/AppName.tsx` | 新建，未跟踪 | 其它任务半成品 |
+  | `docs/plans/DETAILPAGE_VAR_REG_SPLIT.md` | 方案文档，未跟踪 | 变体标签任务文档，未单独 commit |
+  | `docs/plans/VARIANT_LABEL_FIX_PLAN.md` | 方案文档，未跟踪 | 同上 |
+
+- **下次处理**：续做对应功能时预检后单独 commit；或用户明确要求时打 `wip: leftover uncommitted WIP from 2026-07-26` 一次性 checkpoint。
+- **禁止**：不要把上表文件 amend 进 `8ccfc569`（已验证的 group i18n commit）。
+
 # 2026-07-25 会话修改记录
 
 ## 变体标签格式修复：去掉误导的"选M组"，混合实体改显"点选N种" + DetailPage 固定点/变体点分离
