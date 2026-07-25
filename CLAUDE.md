@@ -103,6 +103,7 @@
 
 - 改代码前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 创建 checkpoint；**dev 分支同样适用**。如存在用户未提交改动，只处理本任务相关文件，禁止回退他人改动、禁止 `git add -A` 混提。
 - 任务完成或中断前必须本地 commit；禁止多轮改完只写 SESSION_CHANGES 却不 commit。
+- **`git status` 脏文件**：先判定改完 vs 改一半（见 `docs/DEVELOPMENT_WORKFLOW.md`「脏文件验收」）；**已完成的不得当 WIP 搁置**，须拆开单独 commit。
 - 提交前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 手动跑 format / format:check / tsc 预检。
 - 构建、启动 web、部署、DB 推送必须按 `docs/BUILD_AND_DEPLOY.md` 执行；构建完成后必须验证 HTTP 200。
 - 禁止直接执行实时输出的长流程命令；`python main.py`、`npm run build`、部署、全站测试等必须重定向到日志后单独读取，避免阻塞 TUI。
