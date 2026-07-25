@@ -23,7 +23,14 @@
   - `web/scripts/ssg.mjs` — SSR 分组摘要携带 key 字段
 - **关键逻辑**：`formatGroupLabel` = `t(group_key)+floor+ui.common.floor[（t(sub_key)）]`；zh-Hans 无 locale 时回退 `group_display`
 - **module_builder**：`.copy()` 已透传，无需改
-- **验证**：TSC + Prettier 通过；`formatGroupLabel` 冒烟 en=`The Ruins2F（The Crypt）` / zh fallback=`废墟2层（地穴）`；完整验证需 `python main.py` 后查 locale/en.json 含 DungeonSlot key
+- **验证**：
+  - TSC + Prettier + pre-commit 通过；commit `8ccfc569`
+  - `python main.py` EXIT:0（约 95s）
+  - `dungeon_modules.json` Crypt：`group_key=…TheCrypts_1stFloor` floor=2 sub=`…2ndFloor` + `group_display=废墟2层（地穴）`
+  - `locale/en.json` 含 8 个 `DungeonSlot` key（GoblinCave/FireDeep/Ice/Crypts/ShipGraveyard）
+  - formatGroupLabel 冒烟：en=`The Ruins2F（The Crypt）` / zh fallback=`废墟2层（地穴）`
+  - quest_items_groups 同步写出三 key 字段
+- **附**：强化 `docs/DEVELOPMENT_WORKFLOW.md` / `CLAUDE.md` — **dev 分支同样必须任务完成即本地 commit**，禁止堆积未提交 diff
 - **计划**：`docs/plans/DUNGEON_GROUP_I18N.md`
 
 # 2026-07-25 会话修改记录
