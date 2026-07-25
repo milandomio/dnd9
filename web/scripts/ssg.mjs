@@ -95,27 +95,26 @@ const PAGES = ["items", "monsters", "props", "lootdrops"];
 const SINGLE = ["explore", "quest_items", "quest_npc", "dungeon_modules"];
 const DEFAULT_LANG = "zh-Hans";
 const LANGS = ["zh-Hans", "en", "de", "es", "fr", "ja", "ko", "pt-BR", "ru", "zh-Hant"];
-const NON_DEFAULT_LANGS = LANGS.filter((lang) => lang !== DEFAULT_LANG);
 
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
 
 // Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: "/", file: "index.html" }];
-for (const p of PAGES) routes.push({ path: `/${p}`, file: `${p}/index.html` });
-for (const p of SINGLE) routes.push({ path: `/${p}`, file: `${p}/index.html` });
+for (const p of PAGES) routes.push({ path: `/${DEFAULT_LANG}/${p}`, file: `${DEFAULT_LANG}/${p}/index.html` });
+for (const p of SINGLE) routes.push({ path: `/${DEFAULT_LANG}/${p}`, file: `${DEFAULT_LANG}/${p}/index.html` });
 for (const g of questGroups) {
-  routes.push({ path: `/quest_items/${g.group}`, file: `quest_items/${g.group}/index.html` });
+  routes.push({ path: `/${DEFAULT_LANG}/quest_items/${g.group}`, file: `${DEFAULT_LANG}/quest_items/${g.group}/index.html` });
 }
 
 // Dungeon modules: group pages and module detail pages
 const dmGroups = new Set(moduleData.map(m => m.group).filter(Boolean));
 for (const g of dmGroups) {
-  routes.push({ path: `/dungeon_modules/${g}`, file: `dungeon_modules/${g}/index.html` });
+  routes.push({ path: `/${DEFAULT_LANG}/dungeon_modules/${g}`, file: `${DEFAULT_LANG}/dungeon_modules/${g}/index.html` });
 }
 for (const m of moduleData) {
   const group = m.group || "";
-  routes.push({ path: `/dungeon_modules/${group}/${m.name}`, file: `dungeon_modules/${group}/${m.name}/index.html` });
+  routes.push({ path: `/${DEFAULT_LANG}/dungeon_modules/${group}/${m.name}`, file: `${DEFAULT_LANG}/dungeon_modules/${group}/${m.name}/index.html` });
 }
 
 for (const p of PAGES) {
@@ -125,18 +124,18 @@ for (const p of PAGES) {
       // Base lootdrop entry (e.g. "HeaterShield") redirects to default variant;
       // generate a minimal redirect page, then create per-suffix variant pages.
       const defaultSuffix = e.variant_suffixes.includes('5001') ? '5001' : e.variant_suffixes[0];
-      const target = `/lootdrops/${e.name}_${defaultSuffix}/`;
+      const target = `/${DEFAULT_LANG}/lootdrops/${e.name}_${defaultSuffix}/`;
       routes.push({
-        path: `/${p}/${encodeURIComponent(e.name)}`,
-        file: `${p}/${e.name}/index.html`,
+        path: `/${DEFAULT_LANG}/${p}/${encodeURIComponent(e.name)}`,
+        file: `${DEFAULT_LANG}/${p}/${e.name}/index.html`,
         redirect: target,
       });
       for (const suffix of e.variant_suffixes) {
         const variantName = `${e.name}_${suffix}`;
-        routes.push({ path: `/lootdrops/${encodeURIComponent(variantName)}`, file: `lootdrops/${variantName}/index.html` });
+        routes.push({ path: `/${DEFAULT_LANG}/lootdrops/${encodeURIComponent(variantName)}`, file: `${DEFAULT_LANG}/lootdrops/${variantName}/index.html` });
       }
     } else {
-      routes.push({ path: `/${p}/${encodeURIComponent(e.name)}`, file: `${p}/${e.name}/index.html` });
+      routes.push({ path: `/${DEFAULT_LANG}/${p}/${encodeURIComponent(e.name)}`, file: `${DEFAULT_LANG}/${p}/${e.name}/index.html` });
     }
   }
 }
@@ -144,7 +143,7 @@ for (const p of PAGES) {
 // Quest NPC detail pages
 const questNpcData = readJSON(join(DATA, "quest_npc.json"));
 for (const npc of questNpcData) {
-  routes.push({ path: `/quest_npc/${encodeURIComponent(npc.npc_name)}`, file: `quest_npc/${npc.npc_name}/index.html` });
+  routes.push({ path: `/${DEFAULT_LANG}/quest_npc/${encodeURIComponent(npc.npc_name)}`, file: `${DEFAULT_LANG}/quest_npc/${npc.npc_name}/index.html` });
 }
 
 // Build per-route data lookup
@@ -330,23 +329,26 @@ const SSR_SCRIPT_RE = /<script>window\.__SSR_DATA__=(.*?)<\/script>/s;
  */
 function routeDataKey(path) {
   if (path === "/") return "home";
-  if (path.startsWith("/items/") || path.startsWith("/monsters/") || path.startsWith("/props/")) return path.slice(1);
-  if (path.startsWith("/lootdrops/")) {
-    return `lootdrops/${decodeURIComponent(path.slice("/lootdrops/".length))}`;
+  // Strip default language prefix for route matching
+  const langPrefix = `/${DEFAULT_LANG}`;
+  const stripped = path.startsWith(langPrefix) ? path.slice(langPrefix.length) || "/" : path;
+  if (stripped.startsWith("/items/") || stripped.startsWith("/monsters/") || stripped.startsWith("/props/")) return stripped.slice(1);
+  if (stripped.startsWith("/lootdrops/")) {
+    return `lootdrops/${decodeURIComponent(stripped.slice("/lootdrops/".length))}`;
   }
-  if (path.startsWith("/quest_items/")) return `quest_items_groups/${path.split("/")[2]}`;
-  if (path === "/quest_items") return "quest_items";
-  if (path === "/quest_npc") return "quest_npc";
-  if (path.startsWith("/quest_npc/")) return "quest_npc";
-  if (path === "/dungeon_modules") return "dungeon_modules";
-  if (path.startsWith("/dungeon_modules/")) {
-    const parts = path.split("/");
+  if (stripped.startsWith("/quest_items/")) return `quest_items_groups/${stripped.split("/")[2]}`;
+  if (stripped === "/quest_items") return "quest_items";
+  if (stripped === "/quest_npc") return "quest_npc";
+  if (stripped.startsWith("/quest_npc/")) return "quest_npc";
+  if (stripped === "/dungeon_modules") return "dungeon_modules";
+  if (stripped.startsWith("/dungeon_modules/")) {
+    const parts = stripped.split("/");
     if (parts.length === 3) return `dungeon_modules/${parts[2]}`;
     if (parts.length >= 4) return `dungeon_modules_detail/${parts[2]}/${parts[3]}`;
     return "";
   }
-  if (path === "/explore") return "explore";
-  return `list-${path.slice(1)}`;
+  if (stripped === "/explore") return "explore";
+  return `list-${stripped.slice(1)}`;
 }
 
 /**
@@ -365,8 +367,13 @@ function escapeHtml(s) {
 }
 
 function localizedPath(path, lang) {
+  // Strip any existing language prefix
+  const parts = path.split("/").filter(Boolean);
+  if (parts.length > 0 && LANGS.includes(parts[0])) {
+    path = "/" + parts.slice(1).join("/") || "/";
+  }
   const canonical = path === "/" ? "/" : path.replace(/\/?$/, "/");
-  const rel = lang === DEFAULT_LANG ? canonical : `/${lang}${canonical}`;
+  const rel = `/${lang}${canonical}`;
   return BASE === "/" ? rel : BASE.replace(/\/$/, "") + rel;
 }
 
@@ -492,19 +499,24 @@ for (let i = 0; i < routes.length; i++) {
 }
 
 // ---- step 5b: generate localized HTML copies without re-rendering React ----
-console.log(`[ssg] generating localized HTML copies for ${NON_DEFAULT_LANGS.length} languages…`);
+console.log(`[ssg] generating localized HTML copies for ${LANGS.filter(l => l !== DEFAULT_LANG).length} non-default languages…`);
 const localeDicts = {};
-for (const lang of NON_DEFAULT_LANGS) {
+for (const lang of LANGS) {
+  if (lang === DEFAULT_LANG) continue;
   localeDicts[lang] = readJSON(join(DATA, "locale", `${lang}.json`));
 }
 let localizedCount = 0;
-for (const lang of NON_DEFAULT_LANGS) {
+for (const lang of LANGS) {
+  if (lang === DEFAULT_LANG) continue;
   for (const r of routes) {
     if (r.redirect) continue;
     const dataKey = routeDataKey(r.path);
     const routeData = ssrDataMap[dataKey];
     const srcPath = join(DIST, r.file);
-    const dstFile = r.file === "index.html" ? `${lang}/index.html` : join(lang, r.file);
+    // Strip DEFAULT_LANG prefix from file path for target lang directory
+    const langFilePrefix = `${DEFAULT_LANG}/`;
+    const relFile = r.file.startsWith(langFilePrefix) ? r.file.slice(langFilePrefix.length) : r.file;
+    const dstFile = relFile === "index.html" ? `${lang}/index.html` : join(lang, relFile);
     const dstPath = join(DIST, dstFile);
     const page = readFileSync(srcPath, "utf-8");
     mkdirSync(dirname(dstPath), { recursive: true });
