@@ -1462,3 +1462,4 @@ if (typeof window !== "undefined") {
   - `ListPage.tsx` — `useParams<{page}>` 从 `/:lang/:page` 正常获取，移除 pathname fallback
 - **SSG 输出结构**: `dist/index.html` → `/`; `dist/zh-Hans/...` → 简体中文; `dist/en/...` → English; etc.
 - **验证**: dev server `:8090` 所有路由 HTTP 200; TSC + ESLint + Prettier 通过
+- **硬编码路径修复**: 全站 9 个文件中的 `Link`/`navigate` 路径补上 `/${lang}/` 前缀（HomePage、VariantSwitch、DungeonModulesPage、DungeonModuleGroupPage、QuestItemsPage、QuestNPCPage、QuestNPCDetailPage、LootdropDetailPage）；NavBar 面包屑改用 `stripLangPrefix` + `lang` 前缀，不再显示语言代码导航按钮
