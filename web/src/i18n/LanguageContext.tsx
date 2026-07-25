@@ -21,7 +21,6 @@ export function stripLangPrefix(path: string) {
 
 export function withLangPrefix(path: string, nextLang: SupportedLang) {
   const stripped = stripLangPrefix(path);
-  if (nextLang === DEFAULT_LANG) return stripped;
   return `/${nextLang}${stripped === '/' ? '/' : stripped}`;
 }
 

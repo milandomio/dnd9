@@ -1,8 +1,8 @@
 # 多语言 (i18n) 重构计划
 
 > 创建日期: 2026-07-24
-> 版本: v0.9 (§10.1/10.2 已修复; 附加 listPage SSR 路由修复)
-> 状态: 标题 hydration 已修复；§10.3 NavBar 标签 mismatch 待单独处理
+> 版本: v0.10 (统一语言前缀路由, zh-Hans 也使用 /zh-Hans/ 前缀)
+> 状态: 路径重构完成; TSC + dev 验证中
 
 ---
 
@@ -62,25 +62,38 @@ data/json/locale/
 
 ### 2.3 路由与 URL 架构
 
-#### 2.3.1 语言前缀路由
+#### 2.3.1 统一语言前缀路由 (v0.10)
+
+**所有语言（含 zh-Hans）统一使用 `/:lang/...` 前缀路由**，不再有非前缀和前缀两套路由树：
 
 ```
-/                                     → zh-Hans (默认,向后兼容)
+/                                     → zh-Hans 首页 (唯一非前缀路由)
+/zh-Hans/                             → 简体中文首页
+/zh-Hans/lootdrops/HeaterShield_8001/ → 简体中文详情
 /en/lootdrops/HeaterShield_8001/      → English
 /ja/items/Ale/                        → 日本語
 /ko/monsters/Mimic_Large_Flat/        → 한국어
 /zh-Hant/props/TreasureChest/         → 繁體中文
-...
 ```
 
-- **无前缀路径** (如 `/items/Ale/`) 固定保持简体中文，避免破坏现有外链；只有用户主动切换语言才进入 `/{lang}/...`。
-- 语言代码与 locale 文件名一致（`en`、`ja`、`ko`、`zh-Hant`、`zh-Hans` 等）。
+- **所有路由统一为 `/:lang/...` 模式**，消除两套路由树导致的参数缺失 bug。
+- **`/` 根路径** 直接展示 zh-Hans 首页，LanguageProvider 自动推断默认语言。
+- **旧路径自动重定向**: `LegacyRedirect` 组件 (`AppInner.tsx`) 将 `/lootdrops`、`/items/Torch` 等非前缀路径 302 跳转到 `/zh-Hans/...`。
+- `withLangPrefix` 始终添加语言前缀（含 zh-Hans），不再为默认语言去前缀。
+- 语言切换通过 `window.location.href` 整页导航。
+- NavBar `visiblePath` 为当前路径，面包屑基于 `stripLangPrefix` 计算。
+
+**变更文件**:
+- `web/src/i18n/LanguageContext.tsx` — `withLangPrefix` 移除 `DEFAULT_LANG` 去前缀逻辑
+- `web/src/AppInner.tsx` — 仅保留 `/:lang/...` 路由树 + `<Route path="*">` LegacyRedirect
+- `web/scripts/ssg.mjs` — 默认语言也生成 `/zh-Hans/` 路径; 本地化循环剥离源路径前缀
+- `web/src/pages/ListPage.tsx` — `useParams<{ page: string }>()` 从 `/:lang/:page` 获取 page
 
 #### 2.3.2 支持的语言范围
 
 | 语言 | 代码 | 路由前缀 |
 |---|---|---|
-| 简体中文 (默认) | zh-Hans | `/` |
+| 简体中文 (默认) | zh-Hans | `/zh-Hans/` |
 | English | en | `/en/` |
 | Deutsch | de | `/de/` |
 | Español | es | `/es/` |

@@ -3,7 +3,8 @@
  * Used by SSR (ssr.tsx) for server-side rendering.
  * Client entry (App.tsx) uses React.lazy for code splitting instead.
  */
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { ConfigProvider } from 'antd';
 import { useTheme } from './hooks/useTheme';
 import { useDungeonModules } from './hooks/useDungeonModules';
@@ -25,12 +26,28 @@ import SWUpdateBanner from './components/SWUpdateBanner';
 import OfflineDetector from './components/OfflineDetector';
 import InstallPrompt from './components/InstallPrompt';
 import { LanguageProvider } from './i18n/LanguageContext';
+import { isSupportedLang } from './i18n/locale';
 import { useAntdLocale } from './i18n/antdLocale';
 import type { ReactNode } from 'react';
 
 function AntdLocaleProvider({ children }: { children: ReactNode }) {
   const locale = useAntdLocale();
   return <ConfigProvider locale={locale}>{children}</ConfigProvider>;
+}
+
+/** Redirect legacy paths without lang prefix to /zh-Hans/... */
+function LegacyRedirect() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const segment = location.pathname.split('/').filter(Boolean)[0];
+    if (!segment || isSupportedLang(segment)) return;
+    window.location.replace(
+      `/zh-Hans${location.pathname}${location.search}${location.hash}`
+    );
+  }, []);
+
+  return null;
 }
 
 /** Shared page content (routes only, no router wrapper). */
@@ -56,31 +73,6 @@ export function AppInner() {
           <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/explore" element={<ExplorePage />} />
-            <Route path="/quest_items" element={<QuestItemsPage />} />
-            <Route
-              path="/quest_items/:group"
-              element={<QuestItemGroupPage />}
-            />
-            <Route path="/quest_npc" element={<QuestNPCPage />} />
-            <Route
-              path="/quest_npc/:npc_name"
-              element={<QuestNPCDetailPage />}
-            />
-            <Route path="/dungeon_modules" element={<DungeonModulesPage />} />
-            <Route
-              path="/dungeon_modules/:group"
-              element={<DungeonModuleGroupPage />}
-            />
-            <Route
-              path="/dungeon_modules/:group/:name"
-              element={<DungeonModuleDetailPage />}
-            />
-            <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
-            <Route path="/items" element={<ListPage />} />
-            <Route path="/monsters" element={<ListPage />} />
-            <Route path="/props" element={<ListPage />} />
-            <Route path="/lootdrops" element={<ListPage />} />
             <Route path="/:lang" element={<HomePage />} />
             <Route path="/:lang/explore" element={<ExplorePage />} />
             <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
@@ -111,8 +103,7 @@ export function AppInner() {
             />
             <Route path="/:lang/:page" element={<ListPage />} />
             <Route path="/:lang/:page/:name" element={<DetailPage />} />
-            <Route path="/:page" element={<ListPage />} />
-            <Route path="/:page/:name" element={<DetailPage />} />
+            <Route path="*" element={<LegacyRedirect />} />
           </Routes>
           <Footer />
         </div>
