@@ -19,6 +19,7 @@ type IndexEntry = SearchEntry & {
   translation_key?: string;
   monsters?: string[];
   monster_translations?: string[];
+  monster_translation_keys?: string[];
   max_score?: number;
   hr100?: boolean;
 };
@@ -103,6 +104,7 @@ export default function ListPage() {
   const { lang, withLangPrefix } = useLanguage();
   const { t, ut } = useLocale();
   const pageLabel = ut(NAV_KEY_LOOKUP[page!] || '') || page! || '';
+  const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -363,14 +365,25 @@ export default function ListPage() {
                                   lineHeight: 1.5,
                                 }}
                               >
-                                <> -目标- </>
+                                {ut('ui.list.target')}{' '}
                                 <span style={{ color: tokens.muted }}>
                                   {entity.monster_translations &&
-                                  entity.monster_translations.length <= 6
-                                    ? entity.monster_translations.join('、')
-                                    : entity.monster_translations
-                                        ?.slice(0, 5)
-                                        .join('、') + '...'}
+                                    (entity.monster_translations.length <= 6
+                                      ? entity.monster_translations
+                                      : entity.monster_translations.slice(0, 5)
+                                    )
+                                      .map((mt, i) =>
+                                        t(
+                                          entity.monster_translation_keys?.[
+                                            i
+                                          ] ?? '',
+                                          mt
+                                        )
+                                      )
+                                      .join(delimiter)}
+                                  {entity.monster_translations &&
+                                    entity.monster_translations.length > 6 &&
+                                    '...'}
                                 </span>
                               </div>
                             )}
@@ -442,17 +455,34 @@ export default function ListPage() {
                         }}
                       >
                         {entity.variant_count && entity.variant_count > 1 ? (
-                          <> [{entity.variant_count}变体] -目标- </>
+                          <>
+                            {' '}
+                            [
+                            {ut('ui.list.variant').replace(
+                              '{count}',
+                              String(entity.variant_count)
+                            )}
+                            ] {ut('ui.list.target')}{' '}
+                          </>
                         ) : (
-                          <> -目标- </>
+                          <> {ut('ui.list.target')} </>
                         )}
                         <span style={{ color: tokens.muted }}>
                           {entity.monster_translations &&
-                          entity.monster_translations.length <= 6
-                            ? entity.monster_translations.join('、')
-                            : entity.monster_translations
-                                ?.slice(0, 5)
-                                .join('、') + '...'}
+                            (entity.monster_translations.length <= 6
+                              ? entity.monster_translations
+                              : entity.monster_translations.slice(0, 5)
+                            )
+                              .map((mt, i) =>
+                                t(
+                                  entity.monster_translation_keys?.[i] ?? '',
+                                  mt
+                                )
+                              )
+                              .join(delimiter)}
+                          {entity.monster_translations &&
+                            entity.monster_translations.length > 6 &&
+                            '...'}
                         </span>
                       </div>
                     )}
