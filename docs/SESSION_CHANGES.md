@@ -1,5 +1,12 @@
 # 2026-07-25 会话修改记录
 
+## main 分支回滚 + dev 设为默认工作分支
+
+- **原因**：main 回滚至 `f9177a5`（多语言 P8-P12 回退），仅保留 `translation_EN`；后续多语言和修复在 dev 分支开发
+- **变更文件**：
+  - `CLAUDE.md` — 新增"默认工作分支：dev，main 已回滚至 f9177a5"说明
+  - 回滚范围：41 个提交（`fa973c16` refactor: remove translation_EN ～ `1cf1924f` fix: language switch hard navigation）
+
 ## 修复 SSR ConfigProvider 双重 locale 导致 Ant Design Select 样式崩坏
 
 - **原因**：`ssr.tsx` 外层 `ConfigProvider` 硬编码 `locale={zhCN}`，同时 `AppInner` 通过 `AntdLocaleProvider` 再次提供 locale，两层嵌套 CSS-in-JS 哈希与客户端（仅内层有 locale）不一致，导致 Select 等组件 hydration 后样式丢失
