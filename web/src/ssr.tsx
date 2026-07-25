@@ -12,7 +12,6 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { ConfigProvider, theme } from 'antd';
-import zhCN from 'antd/locale/zh_CN';
 import { ThemeProvider } from './hooks/useTheme';
 import { DebugProvider } from './hooks/useDebug';
 import SSRDataContext from './context/SSRDataContext';
@@ -73,7 +72,6 @@ export function render(url: string, ssrDataMap: Record<string, any>) {
     <HelmetProvider context={helmetContext}>
       <ThemeProvider>
         <ConfigProvider
-          locale={zhCN}
           theme={{
             algorithm: theme.darkAlgorithm,
             token: { colorPrimary: '#1677ff' },

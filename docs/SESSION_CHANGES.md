@@ -1,5 +1,14 @@
 # 2026-07-25 会话修改记录
 
+## 修复 SSR ConfigProvider 双重 locale 导致 Ant Design Select 样式崩坏
+
+- **原因**：`ssr.tsx` 外层 `ConfigProvider` 硬编码 `locale={zhCN}`，同时 `AppInner` 通过 `AntdLocaleProvider` 再次提供 locale，两层嵌套 CSS-in-JS 哈希与客户端（仅内层有 locale）不一致，导致 Select 等组件 hydration 后样式丢失
+- **变更文件**：
+  - `web/src/ssr.tsx` — 移除冗余 `locale={zhCN}` 及 `import zhCN`，locale 统一由 `AppInner` → `AntdLocaleProvider` 注入
+  - `docs/SESSION_CHANGES.md`
+- **关键逻辑/映射关系**：SSR 与客户端 ConfigProvider 树完全一致：外层无 locale → AntdLocaleProvider 注入 → Select 等组件哈希匹配 → hydration 后样式正常
+- **验证**：`/lootdrops/` 语言下拉框显示正常（与 `/zh-Hant/lootdrops/` 一致）
+
 ## 修复 Ant Design locale 懒加载 + 语言下拉栏显示优化
 
 - **原因**：语言下拉栏只显示语言代码（zh-Hans/en…），没有 readable 名称；AntD locale 模块用 `import()` 动态加载导致切换语言时重新渲染配置提供器，样式可能崩坏
