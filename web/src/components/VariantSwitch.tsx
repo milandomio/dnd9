@@ -15,16 +15,16 @@ const RARITY_COLORS: Record<string, string> = {
 };
 
 function getRarityColor(
-  vr: { name: string; key: string } | undefined,
+  vr: { name: string; translation_key: string } | undefined,
   fallback: string
 ): string {
   if (!vr) return fallback;
-  const rn = vr.key.split('_').pop() || '';
+  const rn = vr.translation_key.split('_').pop() || '';
   return RARITY_COLORS[rn] ?? fallback;
 }
 
 interface VariantSwitchProps {
-  variantRarity: Record<string, { name: string; key: string }>;
+  variantRarity: Record<string, { name: string; translation_key: string }>;
   itemName: string;
   currentSuffix: string | null;
 }
@@ -56,7 +56,7 @@ export default function VariantSwitch({
     >
       {suffixes.map((suffix) => {
         const vr = variantRarity[suffix];
-        const label = vr ? t(vr.key, vr.name) : suffix;
+        const label = vr ? t(vr.translation_key, vr.name) : suffix;
         const color = getRarityColor(vr, tokens.muted);
         const isActive =
           currentSuffix === suffix ||

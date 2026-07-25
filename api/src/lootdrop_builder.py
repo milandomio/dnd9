@@ -103,7 +103,7 @@ def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[
             rarity_name = _FALLBACK_RARITY.get(suffix)
         if rarity_name:
             key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{rarity_name}"
-            result[suffix] = {"name": translations.get(key, rarity_name), "key": key}
+            result[suffix] = {"name": translations.get(key, rarity_name), "translation_key": key}
     return result
 
 

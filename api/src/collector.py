@@ -306,12 +306,12 @@ def run():
                     _mrow = _monsters_lookup.get(_kw)
                     if _mrow:
                         tk = _mrow["translation_key"]
-                        _vtr.append({"key": tk, "name": resolver.resolve(_kw, tk, "monster")})
+                        _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, tk, "monster")})
                     elif _cls and "props" in _cls.get("types", []):
                         tk = _cls.get("translation_key", "")
-                        _vtr.append({"key": tk, "name": resolver.resolve(_kw, tk, "props")})
+                        _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, tk, "props")})
                     else:
-                        _vtr.append({"key": "", "name": resolver.resolve(_kw, None, "props") or _kw})
+                        _vtr.append({"translation_key": "", "name": resolver.resolve(_kw, None, "props") or _kw})
                 _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
         _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[str]]] = {}

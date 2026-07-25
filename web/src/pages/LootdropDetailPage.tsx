@@ -70,7 +70,7 @@ interface LootdropItem {
   translation_key?: string;
   monsters: LootdropMonster[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
-  variant_rarity?: Record<string, { name: string; key: string }>;
+  variant_rarity?: Record<string, { name: string; translation_key: string }>;
 }
 
 const GROUP_ORDER = [
@@ -97,11 +97,11 @@ const RARITY_COLORS: Record<string, string> = {
 };
 
 function getRarityColor(
-  vr: { name: string; key: string } | undefined,
+  vr: { name: string; translation_key: string } | undefined,
   fallback: string
 ): string {
   if (!vr) return fallback;
-  const rn = vr.key.split('_').pop() || '';
+  const rn = vr.translation_key.split('_').pop() || '';
   return RARITY_COLORS[rn] ?? fallback;
 }
 
@@ -702,7 +702,7 @@ export default function LootdropDetailPage() {
           >
             (
             {t(
-              data.variant_rarity[currentSuffix].key,
+              data.variant_rarity[currentSuffix].translation_key,
               data.variant_rarity[currentSuffix].name
             )}
             )
@@ -1510,7 +1510,7 @@ export default function LootdropDetailPage() {
                                   ).length;
                                   if (names.length > 0) {
                                     const localeNames = names.map((vn) =>
-                                      t(vn.key, vn.name)
+                                      t(vn.translation_key, vn.name)
                                     );
                                     parts.push(
                                       `(${localeNames.join('、')}${varDots[0].variant_count}种选${groupCount})`
