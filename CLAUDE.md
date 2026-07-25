@@ -52,7 +52,7 @@
 - "前端" — `web/`，"后端" — `api/`，"db" — `api/data/darkfindv5.db`
 - "坐标" — spawners 表中 x/y/z 三个 REAL 字段
 - "启动web" — 根据分支：
-  - **dev 分支**：`cd web && npm run dev -- --port 8090 --host 0.0.0.0`（Vite HMR，无 SSG）
+  - **dev 分支**：`cd web && kill $(lsof -t -i:8090) 2>/dev/null; sleep 0.5; (npm run dev -- --port 8090 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
   - **其他分支**：`cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
 - "详情页" / "列表页" — 如无特别说明，默认指 lootdrops/monsters/props/items 这四个实体类型所属的详情页和列表页
 - **最后总结必须用中文** — 完成任务后的总结、变更说明一律用中文输出
