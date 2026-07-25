@@ -148,7 +148,7 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
-    base: '/',
+    base: process.env.VITE_BASE || '/',
     server: {
       fs: {
         allow: ['.', '../data'],
