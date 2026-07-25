@@ -15,6 +15,7 @@ import {
   type SupportedLang,
 } from '../i18n/locale';
 import { useLanguage } from '../i18n/LanguageContext';
+import { stripLangPrefix } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
 
 const NAV_LABEL_KEYS: Record<string, string> = {
@@ -69,8 +70,8 @@ export default function NavBar() {
   const { lang, withLangPrefix } = useLanguage();
   const { t, ut } = useLocale();
   const { index: searchIndex, loading: searchLoading } = useSearchIndex();
-  const visiblePath = withLangPrefix(location.pathname, 'zh-Hans');
-  const parts = visiblePath.split('/').filter(Boolean);
+  const contentPath = stripLangPrefix(location.pathname);
+  const parts = contentPath.split('/').filter(Boolean);
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchEntry[]>([]);
@@ -198,7 +199,7 @@ export default function NavBar() {
       const key = parts[i];
       const uiKey = NAV_LABEL_KEYS[key];
       let label = uiKey ? ut(uiKey) : key;
-      const path = '/' + parts.slice(0, i + 1).join('/');
+      const path = `/${lang}/${parts.slice(0, i + 1).join('/')}`;
 
       if (i === 1 && parts[0] === 'dungeon_modules') {
         label = GROUP_LABEL_MAP[parts[1]] || parts[1];

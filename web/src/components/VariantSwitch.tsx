@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const RARITY_COLORS: Record<string, string> = {
   粗糙: '#9E9E9E',
@@ -23,6 +24,7 @@ export default function VariantSwitch({
   currentSuffix,
 }: VariantSwitchProps) {
   const { tokens } = useTheme();
+  const { lang } = useLanguage();
   const suffixes = Object.keys(variantRarity);
   if (suffixes.length <= 1) return null;
   const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
@@ -49,7 +51,7 @@ export default function VariantSwitch({
         return (
           <Link
             key={suffix}
-            to={`/lootdrops/${itemName}_${suffix}/`}
+            to={`/${lang}/lootdrops/${itemName}_${suffix}/`}
             style={{
               padding: '8px 15px',
               border: `2px solid ${color}`,

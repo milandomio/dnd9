@@ -32,7 +32,7 @@ export default function QuestItemsPage() {
   const [loading, setLoading] = useState(!ssrData);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
-  const { ut } = useLocale();
+  const { ut, lang } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -88,7 +88,7 @@ export default function QuestItemsPage() {
           return (
             <Col key={g.group} xs={24} sm={12} md={8} lg={6}>
               <Link
-                to={`/quest_items/${g.group}`}
+                to={`/${lang}/quest_items/${g.group}`}
                 style={{ textDecoration: 'none' }}
               >
                 <Card

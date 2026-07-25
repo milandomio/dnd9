@@ -40,7 +40,7 @@ export default function DungeonModulesPage() {
   const [loading, setLoading] = useState(!ssrGroups);
   const { tokens } = useTheme();
   const { modules } = useDungeonModules();
-  const { ut } = useLocale();
+  const { ut, lang } = useLocale();
 
   useEffect(() => {
     if (ssrGroups) return;
@@ -119,7 +119,7 @@ export default function DungeonModulesPage() {
           return (
             <Link
               key={g.group}
-              to={`/dungeon_modules/${g.group}`}
+              to={`/${lang}/dungeon_modules/${g.group}`}
               style={{ textDecoration: 'none' }}
             >
               <div

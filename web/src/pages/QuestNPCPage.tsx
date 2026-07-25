@@ -49,7 +49,7 @@ export default function QuestNPCPage() {
   const seasonVersion = useSeasonVersion();
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
-  const { ut } = useLocale();
+  const { ut, lang } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -118,7 +118,7 @@ export default function QuestNPCPage() {
           <QuestSearchBar
             allNpcs={data}
             onSelect={(r: QuestSearchResult) =>
-              navigate(`/quest_npc/${r.npc.npc_name}`, {
+              navigate(`/${lang}/quest_npc/${r.npc.npc_name}`, {
                 state: {
                   questNumber: r.quest.quest_number,
                   searchText: r.quest.title,
@@ -209,7 +209,7 @@ export default function QuestNPCPage() {
                       }}
                     />
                     <Link
-                      to={`/quest_npc/${npc.npc_name}`}
+                      to={`/${lang}/quest_npc/${npc.npc_name}`}
                       style={{
                         flex: 1,
                         minWidth: 0,
