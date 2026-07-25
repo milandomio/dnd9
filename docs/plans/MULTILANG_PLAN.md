@@ -2,7 +2,7 @@
 
 > 创建日期: 2026-07-24
 > 版本: v0.10 (统一语言前缀路由, zh-Hans 也使用 /zh-Hans/ 前缀)
-> 状态: 路径重构完成; TSC + dev 验证中
+> 状态: 路径重构已完成验证; SSG 待重新构建测试
 
 ---
 
@@ -104,7 +104,7 @@ data/json/locale/
 | Русский | ru | `/ru/` |
 | 繁體中文 | zh-Hant | `/zh-Hant/` |
 
-> 简体中文保留在根路径 `/`，其余 9 语言前缀路由。避免破坏现有外链。SSG 总页面数 = 3,096 × 10 = ~30,960。
+> **v0.10**: zh-Hans 现在也使用 `/zh-Hans/` 前缀路径，与其他 9 种语言统一。旧外链通过 `LegacyRedirect` 组件（`AppInner.tsx` `*` catch-all）自动跳转到 `/zh-Hans/...`。`/` 根路径仍然直接展示 zh-Hans 首页。SSG 总页面数 = 3,096 × 10 + 1(root) = ~30,961。
 
 ### 2.4 SSG / SEO 策略 (轻量方案)
 
@@ -207,14 +207,14 @@ web/src/i18n/
 - UI 字典：静态 import `uiLocale.ts`（TypeScript const 对象，~60 key/语言）
 - AntD locale：`useAntdLocale()` 按语言懒加载 `antd/locale/{lang}` 模块
 
-### 4.3 路由改造 (`AppInner.tsx`)
+### 4.3 路由改造 (`AppInner.tsx`) — v0.10 已落地
 
-所有路由添加 `:lang` 前缀，同时保留无前缀路径（自动重定向）：
+统一 `/:lang/...` 前缀（含 zh-Hans），非前缀旧路径自动跳转：
 
 ```tsx
-// AppInner.tsx
+// AppInner.tsx (v0.10 实际代码)
 <Routes>
-  {/* 有语言前缀的路由 */}
+  <Route path="/" element={<HomePage />} />                    {/* 唯一非前缀路由 */}
   <Route path="/:lang" element={<HomePage />} />
   <Route path="/:lang/explore" element={<ExplorePage />} />
   <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
@@ -227,26 +227,16 @@ web/src/i18n/
   <Route path="/:lang/lootdrops/:name" element={<LootdropDetailPage />} />
   <Route path="/:lang/:page" element={<ListPage />} />
   <Route path="/:lang/:page/:name" element={<DetailPage />} />
-
-  {/* 无前缀 → zh-Hans，保持现有 URL */}
-  <Route path="/" element={<HomePage />} />
-  <Route path="/explore" element={<ExplorePage />} />
-  <Route path="/quest_items" element={<QuestItemsPage />} />
-  <Route path="/quest_items/:group" element={<QuestItemGroupPage />} />
-  <Route path="/quest_npc" element={<QuestNPCPage />} />
-  <Route path="/quest_npc/:npc_name" element={<QuestNPCDetailPage />} />
-  <Route path="/dungeon_modules" element={<DungeonModulesPage />} />
-  <Route path="/dungeon_modules/:group" element={<DungeonModuleGroupPage />} />
-  <Route path="/dungeon_modules/:group/:name" element={<DungeonModuleDetailPage />} />
-  <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
-  <Route path="/:page" element={<ListPage />} />
-  <Route path="/:page/:name" element={<DetailPage />} />
+  <Route path="*" element={<LegacyRedirect />} />              {/* 旧路径 → /zh-Hans/... */}
 </Routes>
 ```
 
-**SSR 路由生成**: SSG 分别输出 `/{lang}/lootdrops/HeaterShield_8001/index.html` 等，HTML 中 `<title>` 已为对应语言。
+**旧路径处理**: `LegacyRedirect` 组件检查 `location.pathname` 首段，若非 `isSupportedLang` 则 `window.location.replace('/zh-Hans' + path)` 跳转。
 
-**无前缀访问**: 固定作为 `zh-Hans` 渲染，不按浏览器语言自动跳转。
+**关键差异 vs v0.9**:
+- 移除全部非前缀显式路由（`/items`、`/lootdrops/:name` 等），消除 `useParams().page` 缺失 bug。
+- `withLangPrefix` 不再为 zh-Hans 去前缀。
+- SSG 生成路径从 `dist/items/...` 改为 `dist/zh-Hans/items/...`。
 
 ### 4.4 `LanguageProvider` / `useLocale()` 关键点（已落地）
 
@@ -489,6 +479,7 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 | P8 部分 | 新建 `uiLocale.ts`（10 语言 × ~60 key） | NavBar/Disclaimer/ListPage/DetailPage/LootdropDetailPage 核心 UI 接入 `ut()` |
 | **P8d** | **剩余 9 页面 UI i18n + LootdropDetail 嵌套实体名翻译** | **HomePage/DungeonModules(Group/Detail)/Explore/QuestItems(Group)/QuestNPC(List/Detail) 全量接入 `ut()`；GDI/模块名改用 `t(translation_key)`** |
 | P9 部分 | Ant Design locale 切换 | `useAntdLocale` + `AntdLocaleProvider`，按语言懒加载 antd locale 模块 |
+| **P10** | **统一语言前缀 v0.10** | zh-Hans 也用 `/zh-Hans/` 前缀；移除双路由树；`*` catch-all → `LegacyRedirect` 跳转旧路径；`withLangPrefix` 始终加前缀；SSG 默认语言生成至 `/zh-Hans/` 目录 |
 
 **当前架构速览：**
 - 语言检测：URL 前缀 → `LanguageProvider.lang` → `useLocale()`
@@ -496,6 +487,7 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 - UI 翻译：`ut('ui.nav.items')` → 静态 `uiLocale.ts` 字典 → 合并入 `useLocale().t()`
 - AntD 翻译：`useAntdLocale()` → 懒加载 antd locale 模块 → `ConfigProvider locale`
 - SSG 多语言：中文 renderToString 一次 → 文本后处理生成 9 非中文副本
+- 路由统一：所有语言 `/:lang/...`（含 zh-Hans）；旧路径 302 → `/zh-Hans/...`
 
 ---
 
