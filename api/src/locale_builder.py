@@ -6,6 +6,19 @@ from pathlib import Path
 from db._helpers import discover_languages
 
 
+def _collect_keys(obj, used: set[str]):
+    """Recursively collect translation_key values from a JSON structure."""
+    if isinstance(obj, dict):
+        tk = obj.get("translation_key")
+        if tk and isinstance(tk, str):
+            used.add(tk)
+        for v in obj.values():
+            _collect_keys(v, used)
+    elif isinstance(obj, list):
+        for item in obj:
+            _collect_keys(item, used)
+
+
 def _load_used_keys(output_dir: Path) -> set[str]:
     """Load all translation_keys actually used in search_index + entity data files."""
     used: set[str] = set()
@@ -31,23 +44,7 @@ def _load_used_keys(output_dir: Path) -> set[str]:
                     data = json.load(f)
             except (json.JSONDecodeError, OSError):
                 continue
-            tk = data.get("translation_key") if isinstance(data, dict) else None
-            if tk:
-                used.add(tk)
-            monsters = data.get("monsters") if isinstance(data, dict) else None
-            if monsters and isinstance(monsters, list):
-                for m in monsters:
-                    mtk = m.get("translation_key") if isinstance(m, dict) else None
-                    if mtk:
-                        used.add(mtk)
-            gdi = data.get("group_drop_info") if isinstance(data, dict) else None
-            if gdi and isinstance(gdi, dict):
-                for entries in gdi.values():
-                    if isinstance(entries, list):
-                        for e in entries:
-                            etk = e.get("translation_key") if isinstance(e, dict) else None
-                            if etk:
-                                used.add(etk)
+            _collect_keys(data, used)
 
     return used
 

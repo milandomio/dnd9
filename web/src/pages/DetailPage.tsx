@@ -927,7 +927,7 @@ export default function DetailPage() {
                             const names = vc.variant_names ?? [];
                             if (names.length > 0) {
                               const localeNames = names.map((vn) =>
-                                t(vn.key, vn.name)
+                                t(vn.translation_key, vn.name)
                               );
                               return (
                                 <span style={{ color: tokens.muted }}>

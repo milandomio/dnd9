@@ -5,7 +5,7 @@ export interface IndexEntry {
 }
 
 export interface VariantNameEntry {
-  key: string;
+  translation_key: string;
   name: string;
 }
 
