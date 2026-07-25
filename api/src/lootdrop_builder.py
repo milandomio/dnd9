@@ -213,42 +213,56 @@ def build_loot_index(
             if item_row
             else (resolve_name(item_name, None, "item") or item_name)
         )
-        mon_translations = []
+        mon_translations: list[str] = []
+        mon_translation_keys: list[str] = []
         for m in sorted(monster_names):
             cls = entity_class.get(m)
             if cls and "item" in cls["types"]:
                 item_row_m = items_lookup.get(m)
                 if item_row_m:
-                    mon_translations.append(resolve_name(m, item_row_m["translation_key"], "item"))
+                    _tk = item_row_m["translation_key"]
+                    mon_translations.append(resolve_name(m, _tk, "item"))
+                    mon_translation_keys.append(_tk)
                     continue
-                tk = cls.get("translation_key", "")
-                if tk:
-                    mon_translations.append(resolve_name(m, tk, "item"))
+                _tk = cls.get("translation_key", "")
+                if _tk:
+                    mon_translations.append(resolve_name(m, _tk, "item"))
+                    mon_translation_keys.append(_tk)
                     continue
             elif cls and "props" in cls["types"]:
-                mon_translations.append(resolve_name(m, cls.get("translation_key", ""), "props"))
+                _tk = cls.get("translation_key", "")
+                mon_translations.append(resolve_name(m, _tk, "props"))
+                mon_translation_keys.append(_tk)
                 continue
             mon_row = monsters_lookup.get(m)
             if mon_row:
-                mon_translations.append(resolve_name(m, mon_row["translation_key"], "monster"))
+                _tk = mon_row["translation_key"]
+                mon_translations.append(resolve_name(m, _tk, "monster"))
+                mon_translation_keys.append(_tk)
                 continue
             # Try stripping _Hard/_VeryHard suffix
             base = HARD_SUFFIX_RE.sub("", m) if HARD_SUFFIX_RE.search(m) else m
             if base != m:
                 mon_row = monsters_lookup.get(base)
                 if mon_row:
-                    mon_translations.append(resolve_name(base, mon_row["translation_key"], "monster"))
+                    _tk = mon_row["translation_key"]
+                    mon_translations.append(resolve_name(base, _tk, "monster"))
+                    mon_translation_keys.append(_tk)
                     continue
             # Try stripping trailing Unique
             base2 = UNIQUE_SUFFIX_RE.sub("", base) if UNIQUE_SUFFIX_RE.search(base) else base
             if base2 != base:
                 mon_row = monsters_lookup.get(base2)
                 if mon_row:
-                    mon_translations.append(resolve_name(base2, mon_row["translation_key"], "monster"))
+                    _tk = mon_row["translation_key"]
+                    mon_translations.append(resolve_name(base2, _tk, "monster"))
+                    mon_translation_keys.append(_tk)
                     continue
             # Try entity_class translation key as fallback
             if cls and cls.get("translation_key"):
-                mon_translations.append(resolve_name(m, cls["translation_key"], cls["types"][0]))
+                _tk = cls["translation_key"]
+                mon_translations.append(resolve_name(m, _tk, cls["types"][0]))
+                mon_translation_keys.append(_tk)
                 continue
             # Try stripping _Locked suffix and resolving the base name
             locked_name = m.removesuffix("_Locked")
@@ -256,9 +270,11 @@ def build_loot_index(
                 locked_trans = resolve_name(locked_name, None, "props")
                 if locked_trans != locked_name:
                     mon_translations.append(locked_trans)
+                    mon_translation_keys.append("")
                     continue
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
+            mon_translation_keys.append("")
         variant_count = item_row.get("variant_count", 1) if item_row else 1
         translation_key = ""
         if item_row and item_row.get("translation_key"):
@@ -282,8 +298,9 @@ def build_loot_index(
         # Merge _Hard/_VeryHard/Unique variants in loot_index too
         merged_names: list[str] = []
         merged_translations: list[str] = []
+        merged_translation_keys: list[str] = []
         seen_bases: set[str] = set()
-        for mn, mt in zip(monster_names, mon_translations, strict=False):
+        for mn, mt, mtk in zip(monster_names, mon_translations, mon_translation_keys, strict=False):
             if mn == item_name:
                 continue
             b = HARD_SUFFIX_RE.sub("", mn)
@@ -293,6 +310,7 @@ def build_loot_index(
                 seen_bases.add(b)
                 merged_names.append(mn)
                 merged_translations.append(mt)
+                merged_translation_keys.append(mtk)
         raw_name = item_row.get("raw_name", "") if item_row else ""
         entry: dict = {
             "name": item_name,
@@ -302,6 +320,7 @@ def build_loot_index(
             "raw_name": raw_name,
             "monsters": sorted(merged_names),
             "monster_translations": merged_translations,
+            "monster_translation_keys": merged_translation_keys,
         }
         loot_index.append(entry)
     loot_index.sort(key=lambda x: x["translation"] or x["name"])
