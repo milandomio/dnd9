@@ -4,6 +4,8 @@
 
 **运行环境：WSL 下的 Ubuntu，不要直接执行 win 环境的命令行工具。**
 
+**默认工作分支**：`dev`。`main` 分支已回滚至 `f9177a5`（多语言 P8-P12 前），仅保留 translation_EN 特性。新增功能在 dev 分支开发。
+
 游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
 ## 子文档查阅规则
