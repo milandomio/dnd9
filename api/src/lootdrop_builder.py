@@ -85,9 +85,9 @@ _FALLBACK_RARITY = {
 }
 
 
-def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[str, str]) -> dict[str, str]:
+def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[str, str]) -> dict[str, dict]:
     """Read RarityType from game JSON, translate via DB translations table."""
-    result: dict[str, str] = {}
+    result: dict[str, dict] = {}
     for suffix in suffixes:
         rarity_name: str | None = None
         json_path = ITEM_DIR / f"Id_Item_{item_name}_{suffix}.json"
@@ -103,7 +103,7 @@ def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[
             rarity_name = _FALLBACK_RARITY.get(suffix)
         if rarity_name:
             key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{rarity_name}"
-            result[suffix] = translations.get(key, rarity_name)
+            result[suffix] = {"name": translations.get(key, rarity_name), "key": key}
     return result
 
 

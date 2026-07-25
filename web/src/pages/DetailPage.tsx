@@ -926,9 +926,12 @@ export default function DetailPage() {
                             const vc = forcedVc!;
                             const names = vc.variant_names ?? [];
                             if (names.length > 0) {
+                              const localeNames = names.map((vn) =>
+                                t(vn.key, vn.name)
+                              );
                               return (
                                 <span style={{ color: tokens.muted }}>
-                                  ({names.join('、')}
+                                  ({localeNames.join('、')}
                                   {vc.variant_count}种选{groupCount}
                                   {posCount > 1
                                     ? ` · ${posCount}点选${groupCount}`

@@ -4,6 +4,11 @@ export interface IndexEntry {
   count: number;
 }
 
+export interface VariantNameEntry {
+  key: string;
+  name: string;
+}
+
 export interface Coord {
   x: number;
   y: number;
@@ -15,7 +20,7 @@ export interface Coord {
   spawn_rate?: number;
   score?: number;
   variant_count?: number;
-  variant_names?: string[];
+  variant_names?: VariantNameEntry[];
   group_parent?: string;
   sub_group_parent?: string;
   sub_pool_size?: number;
