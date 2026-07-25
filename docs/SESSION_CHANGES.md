@@ -1444,3 +1444,7 @@ if (typeof window !== "undefined") {
   - `web/scripts/ssg.mjs` — quick mode SSR 注入 `translation_EN`
 - **效果**：标题显示正确英文名: `献魂册Soul-Devoted Folio`、`斗盾Heater Shield`、`信徒会所Admirer's Room`
 - **验证**：3096 pages, 检查各类型 title 均使用翻译后英文名 ✓
+
+- **dev 后台启动修复**：`CLAUDE.md` dev 分支启动web 命令改为 `(npm run dev ... &>/dev/null &)` 避免阻塞 TUI
+- **dev 版本化数据路径修复**：`vite.config.ts` 添加 `dev-versioned-data` 中间件，将 `/data/{ver}/json/*` 请求重写为 `/data/json/*`，使 `dataUrl()` 生成的版本化路径在 dev server 上可正常访问
+- **搜索索引加载容错**：`useSearchIndex.ts` 添加 `.catch(() => setLoading(false))`，防止 fetch 失败时加载动画永远不停
