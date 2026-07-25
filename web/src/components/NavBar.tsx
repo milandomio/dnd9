@@ -154,7 +154,7 @@ export default function NavBar() {
   };
 
   const handleLangChange = (nextLang: SupportedLang) => {
-    navigate(withLangPrefix(location.pathname, nextLang));
+    window.location.href = withLangPrefix(location.pathname, nextLang);
   };
 
   const handleRecentClick = (term: string) => {
