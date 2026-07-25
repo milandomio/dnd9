@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
@@ -88,7 +88,13 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
 }
 
 export default function ListPage() {
-  const { page } = useParams<{ page: string }>();
+  const { page: paramPage } = useParams<{ page: string }>();
+  const { pathname } = useLocation();
+  const VALID_PAGES = ['items', 'monsters', 'props', 'lootdrops'];
+  // Explicit routes like /lootdrops have no :page param; derive from pathname
+  const lastSegment = pathname.split('/').filter(Boolean).pop() || '';
+  const page =
+    paramPage || (VALID_PAGES.includes(lastSegment) ? lastSegment : '');
   const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const [debug, setDebug] = useState(false);
