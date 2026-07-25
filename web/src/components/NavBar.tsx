@@ -12,10 +12,10 @@ import { useSearchIndex, type SearchEntry } from '../hooks/useSearchIndex';
 import {
   SUPPORTED_LANGS,
   LANG_DISPLAY_NAME,
+  DEFAULT_LANG,
   type SupportedLang,
 } from '../i18n/locale';
-import { useLanguage } from '../i18n/LanguageContext';
-import { stripLangPrefix } from '../i18n/LanguageContext';
+import { useLanguage, stripLangPrefix } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
 
 const NAV_LABEL_KEYS: Record<string, string> = {
@@ -455,7 +455,7 @@ export default function NavBar() {
           </Link>
         ))}
         <Link
-          to={withLangPrefix('/', lang)}
+          to={lang === DEFAULT_LANG ? '/' : `/${lang}/`}
           style={linkStyle}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = tokens.accent;
