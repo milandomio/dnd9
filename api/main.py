@@ -46,7 +46,12 @@ def _deliver(timer: PipelineTimer | None = None):
             else:
                 shutil.move(str(item), str(dest))
 
-    # Copy images → data/img/
+    # Generate meta.json with the current date as dataVersion
+    # (used by the frontend to version data URLs and enable locale loading)
+    from datetime import date
+
+    meta = {"dataDate": date.today().strftime("%Y%m%d"), "seasonVersion": 9}
+    (json_dst / "meta.json").write_text(json.dumps(meta, separators=(",", ":")), encoding="utf-8")
     img_dst = dst / "img"
     img_dst.mkdir(parents=True, exist_ok=True)
     if IMG_SRC.exists():
