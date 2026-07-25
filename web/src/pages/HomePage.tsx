@@ -8,6 +8,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
+import { useLanguage } from '../i18n/LanguageContext';
 
 type CardTheme = {
   border: string;
@@ -100,6 +101,7 @@ export default function HomePage() {
   const { tokens, dark } = useTheme();
   const dataVersion = useDataVersion();
   const { ut } = useLocale();
+  const { lang } = useLanguage();
 
   useEffect(() => {
     if (ssrData) return;
@@ -162,7 +164,7 @@ export default function HomePage() {
             return (
               <Link
                 key={entry.page}
-                to={`/${entry.page}/`}
+                to={`/${lang}/${entry.page}/`}
                 style={{
                   textDecoration: 'none',
                   display: 'block',

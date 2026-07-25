@@ -105,7 +105,7 @@ export default function QuestNPCDetailPage() {
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const { ut } = useLocale();
+  const { ut, lang } = useLocale();
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
@@ -247,7 +247,7 @@ export default function QuestNPCDetailPage() {
                   el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 });
               } else {
-                navigate(`/quest_npc/${r.npc.npc_name}`, {
+                navigate(`/${lang}/quest_npc/${r.npc.npc_name}`, {
                   state: {
                     questNumber: r.quest.quest_number,
                     searchText: r.quest.title,
@@ -927,7 +927,7 @@ export default function QuestNPCDetailPage() {
                             <span>{ut('ui.quest_detail.prev_quest')}</span>
                           ) : req.npcName ? (
                             <Link
-                              to={`/quest_npc/${req.npcName}`}
+                              to={`/${lang}/quest_npc/${req.npcName}`}
                               style={{
                                 color: tokens.accent,
                                 textDecoration: 'none',

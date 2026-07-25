@@ -180,7 +180,7 @@ export default function LootdropDetailPage() {
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t, ut } = useLocale();
+  const { t, ut, lang } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
   const lootFetchedRef = useRef(false);
@@ -226,7 +226,9 @@ export default function LootdropDetailPage() {
     if (suffixes.length <= 1) return;
     if (currentSuffix) return; // already on a variant URL
     const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
-    navigate(`/lootdrops/${itemName}_${defaultSuffix}/`, { replace: true });
+    navigate(`/${lang}/lootdrops/${itemName}_${defaultSuffix}/`, {
+      replace: true,
+    });
   }, [data, currentSuffix, itemName, navigate]);
 
   // 在调试模式下实时响应阈值变化

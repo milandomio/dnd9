@@ -16,7 +16,7 @@ export default function DungeonModuleGroupPage() {
   const { modules: allModules } = useDungeonModules();
   const [loading, setLoading] = useState(!ssrModules);
   const { tokens } = useTheme();
-  const { ut } = useLocale();
+  const { ut, lang } = useLocale();
 
   const modules = useMemo(() => {
     // Prefer SSR data (pre-filtered for this group)
@@ -119,7 +119,7 @@ export default function DungeonModuleGroupPage() {
           return (
             <Link
               key={mod.name}
-              to={`/dungeon_modules/${group}/${mod.name}`}
+              to={`/${lang}/dungeon_modules/${group}/${mod.name}`}
               style={{
                 textDecoration: 'none',
                 minWidth: 0,
