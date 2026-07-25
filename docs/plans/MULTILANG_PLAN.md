@@ -366,20 +366,20 @@ cd web && npm run build           # SSG 生成所有语言版本页面
 
 两步走:
 
-**Step 1 — 中文全量渲染 (现有流程，不改动)**
+**Step 1 — 中文全量渲染 (v0.10: 输出至 `/zh-Hans/` 目录)**
 ```
-所有路由 × full SSR data → dist/*.html
+所有路由 × full SSR data → dist/zh-Hans/*.html + dist/index.html (root)
 ```
 
-**Step 2 — 非中文后处理 (新增，无 renderToString)**
+**Step 2 — 全语言后处理 (新增，无 renderToString)** (v0.10: 含 zh-Hans)
 ```
-for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
+for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:  // zh-Hans 已由 Step1 生成
     localeDict = readJSON(`data/locale/${lang}.json`)
     for each route:
-        zhHtml = readFile(`dist${route.path}/index.html`)
-        entity = extractEntityFromSSRData(zhHtml)
+        srcHtml = readFile(`dist/zh-Hans${route.path}/index.html`)
+        entity = extractEntityFromSSRData(Html)
         title = localeDict[entity.translation_key] || entity.translation
-        langHtml = zhHtml
+        langHtml = srcHtml
             .replace('<title>...</title>', `<title>${title}</title>`)
             .injectSSRDataField('lang', lang)
             .injectAlternateLinks(allLangUrls)
@@ -397,11 +397,11 @@ for each lang in [en, de, es, fr, ja, ko, pt-BR, ru, zh-Hant]:
 | 阶段 | 当前 | 多语言后 (10 语言) |
 |---|---|---|
 | renderToString 调用 | 3,096 次 | **3,096 次** (不变) |
-| 文本后处理页面数 | 0 | ~27,864 (9 lang × 3,096) |
-| 构建时间 | ~2-3 min | **~3-4 min** (+ 文本替换约 30s) |
-| dist 大小 (单语言) | ~720 MB | **~1.28 GB** (+ 9 × ~62 MB HTML 副本) |
+| 文本后处理页面数 | 0 | ~30,960 (10 lang × 3,096) |
+| 构建时间 | ~2-3 min | **~4-5 min** (+ 文本替换约 30-60s) |
+| dist 大小 (单语言) | ~720 MB | **~1.34 GB** (+ 10 × ~62 MB HTML 副本) |
 
-> 单语言 720 MB 含 681 MB JSON + ~39 MB HTML。9 语言 HTML 副本 ~560 MB，总 dist ~1.28 GB。
+> v0.10: zh-Hans 也生成 `/zh-Hans/` 目录副本（10 语言 × 3,096 = 30,960 页面）。10 语言 HTML 副本 ~620 MB，总 dist ~1.34 GB。
 
 ### 6.3 sitemap.xml
 
