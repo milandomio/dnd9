@@ -17,6 +17,19 @@ export const SUPPORTED_LANGS = [
 
 export type SupportedLang = (typeof SUPPORTED_LANGS)[number];
 
+export const LANG_DISPLAY_NAME: Record<SupportedLang, string> = {
+  'zh-Hans': '简体中文',
+  en: 'English',
+  de: 'Deutsch',
+  es: 'Español',
+  fr: 'Français',
+  ja: '日本語',
+  ko: '한국어',
+  'pt-BR': 'Português (BR)',
+  ru: 'Русский',
+  'zh-Hant': '繁體中文',
+};
+
 export type LocaleDict = Record<string, string>;
 
 const cache = new Map<string, Promise<LocaleDict>>();

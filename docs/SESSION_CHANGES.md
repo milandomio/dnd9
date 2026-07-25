@@ -1,5 +1,14 @@
 # 2026-07-25 会话修改记录
 
+## 修复 Ant Design locale 懒加载 + 语言下拉栏显示优化
+
+- **原因**：语言下拉栏只显示语言代码（zh-Hans/en…），没有 readable 名称；AntD locale 模块用 `import()` 动态加载导致切换语言时重新渲染配置提供器，样式可能崩坏
+- **变更文件**：
+  - `web/src/i18n/antdLocale.ts` — 改为 10 语言全部同步 `import`，移除 `useEffect` 中的异步 fetch；`useAntdLocale()` 直接根据当前 `lang` 返回对应 locale 对象
+  - `web/src/i18n/locale.ts` — 新增 `LANG_DISPLAY_NAME` 映射表（简体中文/English/Deutsch…）
+  - `web/src/components/NavBar.tsx` — Select 组件 `virtual={false}` 禁用虚拟列表，`listHeight={320}` 展示全部 10 项，`getPopupContainer` 定位到父元素避免样式错位，`width=130` 容纳完整语言名
+- **关键逻辑/映射关系**：原 `ANTD_LOCALE_MAP` 值为 `() => Promise<{default: Locale}>`（懒加载函数），改为直接 `Locale` 对象；同步加载消除配置变更导致的整个 AntD 树重渲染
+
 ## 修复 ListPage SSR 路由匹配错误（zh-Hans 列表页渲染为 HomePage）
 
 - **原因**：`AppInner.tsx` 中 `/:lang` 路由在 `/:page` 之前，导致 `/lootdrops`、`/items` 等单段路径在 SSR 时被 `/:lang` 匹配，渲染 HomePage 而非 ListPage。P4 引入 `/:lang` 时遗留

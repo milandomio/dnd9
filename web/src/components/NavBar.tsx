@@ -9,7 +9,11 @@ import {
 } from '@ant-design/icons';
 import { useTheme } from '../hooks/useTheme';
 import { useSearchIndex, type SearchEntry } from '../hooks/useSearchIndex';
-import { SUPPORTED_LANGS, type SupportedLang } from '../i18n/locale';
+import {
+  SUPPORTED_LANGS,
+  LANG_DISPLAY_NAME,
+  type SupportedLang,
+} from '../i18n/locale';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
 
@@ -388,8 +392,16 @@ export default function NavBar() {
           size="small"
           value={lang}
           onChange={handleLangChange}
-          options={SUPPORTED_LANGS.map((value) => ({ value, label: value }))}
-          style={{ width: 96 }}
+          options={SUPPORTED_LANGS.map((value) => ({
+            value,
+            label: LANG_DISPLAY_NAME[value],
+          }))}
+          style={{ width: 130 }}
+          virtual={false}
+          listHeight={320}
+          getPopupContainer={(triggerNode) =>
+            triggerNode.parentElement || document.body
+          }
         />
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <BulbOutlined
