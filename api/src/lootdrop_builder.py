@@ -353,7 +353,12 @@ def build_and_save_lootdrop_details(
     item_valid_names: dict[str, set[str]] = {}
     item_hr100: dict[str, bool] = {}
     item_variant_suffixes: dict[str, list[str]] = {}
+    # monsters table alone misses props/chests; merge entity_class (items+monsters+props)
     m_tk_map = {r["monster_name"]: r.get("translation_key", "") for r in (monsters or [])}
+    for _ec_name, _ec in (entity_class or {}).items():
+        _ec_tk = (_ec or {}).get("translation_key") or ""
+        if _ec_tk and not m_tk_map.get(_ec_name):
+            m_tk_map[_ec_name] = _ec_tk
 
     detail_count = 0
     detail_total = len(loot_index)
@@ -363,6 +368,7 @@ def build_and_save_lootdrop_details(
     for entry in loot_index:
         item_name = entry["name"]
         merged: dict[str, dict] = {}
+        _entry_mtk = entry.get("monster_translation_keys") or []
         for _i, m_name in enumerate(entry["monsters"]):
             if m_name == item_name:
                 continue
@@ -396,6 +402,12 @@ def build_and_save_lootdrop_details(
             if not coords:
                 continue
             m_trans = entry["monster_translations"][_i]
+            # Prefer loot_index keys (already resolved), then maps, then entity_class
+            m_tk = _entry_mtk[_i] if _i < len(_entry_mtk) else ""
+            if not m_tk:
+                m_tk = m_tk_map.get(m_name, "")
+            if not m_tk:
+                m_tk = ((entity_class or {}).get(m_name) or {}).get("translation_key", "") or ""
             base = base_monster_name(m_name)
             locked_base = m_name.replace("_Locked", "")
             is_locked = locked_base != m_name
@@ -420,7 +432,7 @@ def build_and_save_lootdrop_details(
                         "name": m_name,
                         "entity_name": m_name,
                         "translation": _type_trans,
-                        "translation_key": m_tk_map.get(m_name, ""),
+                        "translation_key": m_tk,
                         "color": _MONSTER_COLORS[len(merged) % len(_MONSTER_COLORS)],
                         "coords": [],
                         "_has_locked": False,
