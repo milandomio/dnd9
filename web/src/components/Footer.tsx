@@ -25,21 +25,21 @@ export default function Footer() {
         </a>
         {' · '}
         <a
-          href="https://discord.spellsandguns.com/"
+          href="https://darkanddarker.wiki.spellsandguns.com/Dark_and_Darker_Wiki"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: tokens.accent, textDecoration: 'none' }}
         >
-          Wiki社区
+          WIKI
         </a>
         {' · '}
         <a
-          href="https://chatglm.cn/"
+          href="https://chatglm.cn/main/alltoolsdetail?lang=en"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: tokens.accent, textDecoration: 'none' }}
         >
-          智谱清言
+          ChatGLM
         </a>
         {' · '}
         <a
