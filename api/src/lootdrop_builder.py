@@ -263,6 +263,18 @@ def build_loot_index(
         translation_key = ""
         if item_row and item_row.get("translation_key"):
             translation_key = item_row["translation_key"]
+            # For 8001 variants, read variant's game JSON to get correct Name key
+            if item_name.endswith("_8001"):
+                _vj = ITEM_DIR / f"Id_Item_{item_name}.json"
+                if _vj.exists():
+                    try:
+                        _vd = json.loads(_vj.read_text("utf-8"))
+                        if isinstance(_vd, list) and _vd:
+                            _nk = _vd[0].get("Properties", {}).get("Name", {}).get("Key", "")
+                            if _nk:
+                                translation_key = _nk
+                    except Exception:
+                        pass
         elif item_name.endswith("_8001"):
             base_row = items_lookup.get(item_name.removesuffix("_8001"))
             if base_row:
@@ -719,8 +731,12 @@ def build_and_save_lootdrop_details(
                 # Pre-compute base item spawners (union of all variants) as fallback
                 base_spawners = drop_engine.get_base_item_spawners(item_name)
                 for suffix in vs:
-                    # Skip _8001 — it has its own independent entry from build_merged_loot_map
+                    # Skip _8001 — it has its own independent entry
                     if suffix == "8001":
+                        continue
+                    # When processing the 8001 entry, only the 8001 suffix itself is relevant;
+                    # other suffixes (1001-7001) are already handled by the base entry.
+                    if item_name.endswith("_8001"):
                         continue
                     variant_name = f"{item_name}_{suffix}"
                     luck_grade = int(suffix[0]) if suffix and suffix[0].isdigit() else 0
