@@ -21,17 +21,14 @@ export default function Disclaimer() {
   };
 
   const formattedDate = date
-    ? (() => {
-        const d = new Date(Number(date) * 1000);
-        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      })()
+    ? `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
     : '';
 
   return (
     <div style={box}>
-      {ut('ui.disclaimer.warning')}
+      ⚠️ {ut('ui.disclaimer.warning')}
       <span style={{ color: tokens.muted, marginLeft: 15 }}>
-        地图生成日期：{formattedDate}
+        {ut('ui.disclaimer.data_date').replace('{date}', formattedDate)}
         <a
           href="https://www.bilibili.com/video/BV1isKE68EP5"
           target="_blank"

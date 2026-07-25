@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
+import AppName from '../components/AppName';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
@@ -136,19 +137,7 @@ export default function HomePage() {
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <h1
-        style={{
-          textAlign: 'center',
-          color: tokens.accent,
-          fontSize: 26,
-          marginBottom: 4,
-        }}
-      >
-        越来越黑暗闪电指南
-        <div style={{ fontSize: 14, color: tokens.muted, marginTop: 4 }}>
-          DarkFlashNav · {ut('ui.home.title')}
-        </div>
-      </h1>
+      <AppName />
       <Disclaimer />
       <div
         style={{
@@ -214,7 +203,7 @@ export default function HomePage() {
                     marginBottom: 2,
                   }}
                 >
-                  【{entry.label}】
+                  【{ut(`ui.home.card_labels.${entry.page}`)}】
                 </div>
                 <div style={{ color: t.titleColor, fontSize: 13 }}>
                   {entry.page === 'quest_items' || entry.page === 'quest_npc'
@@ -222,7 +211,12 @@ export default function HomePage() {
                         '{count}',
                         String(entry.count)
                       )
-                    : `${entry.label}${entry.count}个`}
+                    : ut('ui.home.card_subtitle')
+                        .replace(
+                          '{label}',
+                          ut(`ui.home.card_labels.${entry.page}`)
+                        )
+                        .replace('{count}', String(entry.count))}
                 </div>
                 <div
                   style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}
