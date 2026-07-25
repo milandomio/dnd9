@@ -1,5 +1,14 @@
 # 2026-07-26 会话修改记录
 
+## 修复 lootdrop 详情掉落源 translation_key 缺失（en 页仍中文）
+
+- **原因**：`build_and_save_lootdrop_details` 的 `m_tk_map` 只扫 `monster_entities`，宝箱/堆等 props 掉落源 `translation_key` 为空；前端 `t('', 中文)` 只能显示中文（如 Ruby_5001 的宝藏堆、黄金宝箱等）
+- **变更文件**：`api/src/lootdrop_builder.py`
+  - `m_tk_map` 合并 `entity_class`（含 props/items）
+  - 写 monster 时优先 `entry.monster_translation_keys[i]`，再 map / entity_class
+- **验证**：管道 EXIT:0；Ruby_5001 25 源中 24 有 key（en 如 Treasure Hoard / Golden Chest）；仅 `SuperHoard01_9` 无 Game key（`HARDCODED_TRANSLATIONS` 中文，DB props 空 key）
+- **残留**：中文后缀 `(特殊)/(可能上锁)/组` 仍拼在 `translation` 上；有 key 时 en 只显示基名（无后缀）。SuperHoard 需另案（无官方 key）
+
 ## 统一 DetailPage SEO 标题构造，对齐 LootdropDetailPage 格式
 
 - **原因**：DetailPage Helmet `<title>` fallback 为 `{entityLabel}{entity.name} 位置汇总Location`（翻译名+原始名重复，中英混写），与 LootdropDetailPage 的 `{itemLabel}{rarityLabel} -{pageLabel}` 格式不一致
