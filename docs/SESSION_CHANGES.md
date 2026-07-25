@@ -1448,3 +1448,5 @@ if (typeof window !== "undefined") {
 - **dev 后台启动修复**：`CLAUDE.md` dev 分支启动web 命令改为 `(npm run dev ... &>/dev/null &)` 避免阻塞 TUI
 - **dev 版本化数据路径修复**：`vite.config.ts` 添加 `dev-versioned-data` 中间件，将 `/data/{ver}/json/*` 请求重写为 `/data/json/*`，使 `dataUrl()` 生成的版本化路径在 dev server 上可正常访问
 - **搜索索引加载容错**：`useSearchIndex.ts` 添加 `.catch(() => setLoading(false))`，防止 fetch 失败时加载动画永远不停
+- **列表页路由参数缺失修复**：`ListPage.tsx` — 从 `useLocation().pathname` 末段推导 `page`，修复 `/items` `/monsters` `/props` `/lootdrops` 四个显式路由因缺 `:page` 参数导致页面无数据的问题。`useEffect` 已有 valid pages 白名单守卫，不会误触发。
+- **分析结论**：`/lootdrops` 无需重定向到 `/zh-Hans/lootdrops`——`withLangPrefix(DEFAULT_LANG)` 设计即去前缀，`/lootdrops` 就是 zh-Hans 版本。SSG 的 `localizedPath` 同样对默认语言返回无前缀路径。
