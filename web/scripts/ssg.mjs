@@ -25,6 +25,7 @@ const DIST = join(WEB, "dist");
 const SSR_OUT = join(WEB, "dist-ssr");
 const DATA = join(ROOT, "data", "json");
 const SITE = "https://dnd9.icetar.com";
+const BASE = process.env.VITE_BASE || "/";
 
 // ---- helpers ----
 function readJSON(p) {
@@ -352,7 +353,7 @@ function routeDataKey(path) {
  * Compute <base href="..."> value from output file path relative to dist root.
  */
 function baseHrefFromFile(_file) {
-  return "/";
+  return BASE;
 }
 
 function escapeHtml(s) {
@@ -365,7 +366,8 @@ function escapeHtml(s) {
 
 function localizedPath(path, lang) {
   const canonical = path === "/" ? "/" : path.replace(/\/?$/, "/");
-  return lang === DEFAULT_LANG ? canonical : `/${lang}${canonical}`;
+  const rel = lang === DEFAULT_LANG ? canonical : `/${lang}${canonical}`;
+  return BASE === "/" ? rel : BASE.replace(/\/$/, "") + rel;
 }
 
 function alternateLinks(path) {
