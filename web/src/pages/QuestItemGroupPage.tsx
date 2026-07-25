@@ -7,6 +7,7 @@ import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useLocale } from '../i18n/useLocale';
 import type { DungeonModule } from '../types/data';
@@ -47,6 +48,9 @@ interface Entity {
 
 interface GroupData {
   group: string;
+  group_key?: string;
+  group_floor?: number;
+  group_sub_key?: string | null;
   group_display: string;
   entities: Entity[];
 }
@@ -82,7 +86,7 @@ export default function QuestItemGroupPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { ut } = useLocale();
+  const { t, ut } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -227,6 +231,7 @@ export default function QuestItemGroupPage() {
     0
   );
   const visibleCount = entities.filter((e) => !hidden.has(e.name)).length;
+  const groupLabel = formatGroupLabel(data, t, ut);
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -243,12 +248,12 @@ export default function QuestItemGroupPage() {
 
       <Helmet>
         <title>
-          {data.group_display}
+          {groupLabel}
           {group} 任务物品QuestItem | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${data.group_display} 任务物品位置，${visibleCount} 个实体，${totalCoords} 个位置点。`}
+          content={`${groupLabel} 任务物品位置，${visibleCount} 个实体，${totalCoords} 个位置点。`}
         />
       </Helmet>
       <h1
@@ -259,8 +264,7 @@ export default function QuestItemGroupPage() {
           margin: '0 0 8px',
         }}
       >
-        【{data.group_display}】
-        {ut('ui.quest_group.title').replace('{group}', '')}
+        【{groupLabel}】{ut('ui.quest_group.title').replace('{group}', '')}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
           {ut('ui.quest_group.stat')
             .replace('{entities}', String(entities.length))
@@ -398,7 +402,7 @@ export default function QuestItemGroupPage() {
                     : '2px solid #F57F17',
                 }}
               >
-                {groupItems[0]?.mod?.group_display || groupName}
+                {formatGroupLabel(groupItems[0]?.mod, t, ut) || groupName}
               </div>
             )}
             {groupItems.map(({ mapName, mod, dots }) => {
@@ -733,7 +737,7 @@ export default function QuestItemGroupPage() {
               const rowKey = `${e.name}-${j}`;
               return {
                 key: rowKey,
-                group: mod?.group_display || g,
+                group: formatGroupLabel(mod, t, ut) || g,
                 monster: {
                   name: e.name,
                   translation: e.translation,

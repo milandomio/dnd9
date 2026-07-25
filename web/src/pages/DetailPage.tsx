@@ -28,6 +28,7 @@ import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
@@ -145,6 +146,7 @@ export default function DetailPage() {
     entity.translation_key,
     entity.translation || entity.name
   );
+  const pageLabel = ut(`ui.nav.${page}`);
 
   const coords = entity.coords ?? [];
   const visibleCoords = coords.filter(
@@ -440,13 +442,12 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ??
-            `${entityLabel}${entity.name} 位置汇总Location`}{' '}
-          | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`}
+          {' | 越来越黑暗闪电指南 DarkFlashNav'}
         </title>
         <meta
           name="description"
-          content={`${entityLabel}（${entity.name}）在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
+          content={`${entityLabel}在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
         />
         <meta
           name="keywords"
@@ -454,7 +455,7 @@ export default function DetailPage() {
         />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? `${entityLabel}${entity.name} 位置汇总Location`} | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | DarkFlashNav`}
         />
         <meta
           property="og:description"
@@ -589,7 +590,8 @@ export default function DetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {sec.items[0]?.mod?.group_display || sec.groupName}
+                    {formatGroupLabel(sec.items[0]?.mod, t, ut) ||
+                      sec.groupName}
                   </span>
                   {sec.subLabel ? (
                     <span
@@ -755,17 +757,22 @@ export default function DetailPage() {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
                     if (!gdi || gdi.length === 0) return null;
-                    const forcedVc = mapCoords.find(
+                    const varCoords = mapCoords.filter((c) => c.group_parent);
+                    const regCoords = mapCoords.filter((c) => !c.group_parent);
+                    const forcedVc = varCoords.find(
                       (c) => c.variant_count && c.variant_count > 1
                     );
                     const hasVariant = !!forcedVc;
-                    const posCount = new Set(
-                      mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
+                    const regPosCount = new Set(
+                      regCoords.map((c) => `${c.x},${c.y},${c.z}`)
+                    ).size;
+                    const varPosCount = new Set(
+                      varCoords.map((c) => `${c.x},${c.y},${c.z}`)
                     ).size;
                     const forcedVcN = hasVariant
                       ? forcedVc!.variant_names?.length
                         ? (forcedVc!.variant_count as number)
-                        : posCount
+                        : varPosCount || 1
                       : 1;
                     const varGpKeys = [
                       ...new Set(
@@ -925,24 +932,22 @@ export default function DetailPage() {
                             }
                             const vc = forcedVc!;
                             const names = vc.variant_names ?? [];
-                            if (names.length > 0) {
-                              const localeNames = names.map((vn) =>
-                                t(vn.translation_key, vn.name)
-                              );
-                              return (
-                                <span style={{ color: tokens.muted }}>
-                                  ({localeNames.join('、')}
-                                  {vc.variant_count}种选{groupCount}
-                                  {posCount > 1
-                                    ? ` · ${posCount}点选${groupCount}`
-                                    : ''}
-                                  )
-                                </span>
-                              );
+                            const parts: string[] = [];
+                            if (regPosCount > 0) {
+                              parts.push(`(${regPosCount}点)`);
+                            }
+                            if (varPosCount > 0) {
+                              if (names.length > 0) {
+                                parts.push(
+                                  `(${varPosCount}点选${vc.variant_count})`
+                                );
+                              } else {
+                                parts.push(`(${varPosCount}点)`);
+                              }
                             }
                             return (
                               <span style={{ color: tokens.muted }}>
-                                ({posCount}点选{groupCount})
+                                {parts.join(' ')}
                               </span>
                             );
                           })()}
@@ -1199,7 +1204,7 @@ export default function DetailPage() {
             const rowKey = `${c.file}-${i}`;
             return {
               key: rowKey,
-              group: mod?.group_display || g,
+              group: formatGroupLabel(mod, t, ut) || g,
               groupKey: g,
               monster: {
                 name: name || '',

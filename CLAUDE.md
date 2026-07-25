@@ -6,6 +6,8 @@
 
 **默认工作分支**：`dev`。`main` 分支已回滚至 `f9177a5`（多语言 P8-P12 前），仅保留 translation_EN 特性。新增功能在 dev 分支开发。
 
+**提交纪律（dev 同样强制）**：每个逻辑任务完成或中断前必须本地 `git commit` checkpoint；禁止在 dev 上堆积未提交 diff。「仅本地、不 push」≠「可以不 commit」。详见 `docs/DEVELOPMENT_WORKFLOW.md`。
+
 游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
 ## 子文档查阅规则
@@ -99,7 +101,8 @@
 
 ## 开发/构建强制入口
 
-- 改代码前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 创建 checkpoint；如存在用户未提交改动，只处理本任务相关文件，禁止回退他人改动。
+- 改代码前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 创建 checkpoint；**dev 分支同样适用**。如存在用户未提交改动，只处理本任务相关文件，禁止回退他人改动、禁止 `git add -A` 混提。
+- 任务完成或中断前必须本地 commit；禁止多轮改完只写 SESSION_CHANGES 却不 commit。
 - 提交前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 手动跑 format / format:check / tsc 预检。
 - 构建、启动 web、部署、DB 推送必须按 `docs/BUILD_AND_DEPLOY.md` 执行；构建完成后必须验证 HTTP 200。
 - 禁止直接执行实时输出的长流程命令；`python main.py`、`npm run build`、部署、全站测试等必须重定向到日志后单独读取，避免阻塞 TUI。

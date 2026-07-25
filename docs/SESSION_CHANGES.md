@@ -8,16 +8,23 @@
 - **关键逻辑**：模板统一为 `{ssrLocalizedTitle() ?? 标签名 -页面标签} | 越来越黑暗闪电指南 DarkFlashNav`；pageLabel 复用现有 `ui.nav.*` locale key
 - **验证**：TSC 无报错，Prettier 通过
 
-## 地图分组名 i18n 修复 — 后端翻译/存储层（中断点）
+## 地图分组名 i18n 修复 — 全量完成
 
-- **原因**：LootdropDetailPage 分组标题（如"废墟2层（地穴）"）在 en 页仍显示中文；`slot_key` 从未进入 locale JSON 文件导致前端无法 i18n
+- **原因**：分组标题（如"废墟2层（地穴）"）在 en 页仍显示中文；slot_key 未进 locale，前端无法 i18n
 - **变更文件**：
-  - `api/src/translator.py` — `resolve_group_label()` 签名从 `(group, translations) -> str` 改为 `(group) -> dict|None`，返回 `{slot_key, floor, sub_key}` 替代中文拼接字符串
-  - `api/src/collector.py` — 新增 `_resolve_group_display()` 辅助函数（内部拼接中文供 group_display fallback 用）；`modules_map` 注入改为存 `group_key`/`group_floor`/`group_sub_key` 三个字段；两处 `group_label_resolver` lambda 更新
-- **当前进度**：后端 translator/collector 层完成；module_builder / index_export / locale_builder / 前端渲染尚未实施
-- **中断位置**：下次从 `module_builder.py` 透传 group_key 字段到 dungeon_modules.json 开始
-- **计划文档**：`docs/plans/DUNGEON_GROUP_I18N.md`
-- **验证**：管道重跑后检查 locale/en.json 是否含 `Text_UI_WB_DungeonSlot_GoblinCave_1stFloor`
+  - `api/src/translator.py` — `resolve_group_label()` → `{slot_key, floor, sub_key}`
+  - `api/src/collector.py` — 注入 `group_key`/`group_floor`/`group_sub_key` + 双写 `group_display`（zh fallback）
+  - `api/src/index_export.py` — quest_items_groups 写出三 key 字段
+  - `api/src/locale_builder.py` — 扫描 `dungeon_modules.json` 的 group_key/group_sub_key
+  - `web/src/types/data.ts` — DungeonModule 新增三字段，保留 group_display
+  - `web/src/utils/formatGroupLabel.ts` — 新建统一组装 + fallback
+  - `web/src/i18n/uiLocale.ts` — 各语言 `ui.common.floor`
+  - 8 页面：LootdropDetail / Detail / DungeonModuleDetail / DungeonModuleGroup / DungeonModules / QuestItems / QuestItemGroup / Explore
+  - `web/scripts/ssg.mjs` — SSR 分组摘要携带 key 字段
+- **关键逻辑**：`formatGroupLabel` = `t(group_key)+floor+ui.common.floor[（t(sub_key)）]`；zh-Hans 无 locale 时回退 `group_display`
+- **module_builder**：`.copy()` 已透传，无需改
+- **验证**：TSC + Prettier 通过；`formatGroupLabel` 冒烟 en=`The Ruins2F（The Crypt）` / zh fallback=`废墟2层（地穴）`；完整验证需 `python main.py` 后查 locale/en.json 含 DungeonSlot key
+- **计划**：`docs/plans/DUNGEON_GROUP_I18N.md`
 
 # 2026-07-25 会话修改记录
 

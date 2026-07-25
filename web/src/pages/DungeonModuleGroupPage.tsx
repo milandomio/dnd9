@@ -7,6 +7,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import type { DungeonModule } from '../types/data';
 
 export default function DungeonModuleGroupPage() {
@@ -16,7 +17,7 @@ export default function DungeonModuleGroupPage() {
   const { modules: allModules } = useDungeonModules();
   const [loading, setLoading] = useState(!ssrModules);
   const { tokens } = useTheme();
-  const { ut, lang } = useLocale();
+  const { t, ut, lang } = useLocale();
 
   const modules = useMemo(() => {
     // Prefer SSR data (pre-filtered for this group)
@@ -64,7 +65,7 @@ export default function DungeonModuleGroupPage() {
     );
 
   const groupLabel =
-    modules[0]?.group_display || group || ut('ui.common.ungrouped');
+    formatGroupLabel(modules[0], t, ut) || group || ut('ui.common.ungrouped');
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>

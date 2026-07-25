@@ -6,6 +6,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import SectionHeader from '../components/SectionHeader';
 import VariantSwitch from '../components/VariantSwitch';
 import DebugPanel from '../components/DebugPanel';
@@ -37,6 +38,9 @@ interface LootdropCoord {
   variant_names?: VariantNameEntry[];
   score?: number;
   group_parent?: string;
+  sub_group_parent?: string;
+  sub_pool_size?: number;
+  sub_pool_names?: string[];
   quality?: string;
 }
 
@@ -48,6 +52,7 @@ let _globalCacheVersion = '';
 interface LootdropMonster {
   name: string;
   translation: string;
+  translation_key?: string;
   color: string;
   coords?: LootdropCoord[];
   ref?: string;
@@ -191,6 +196,7 @@ export default function LootdropDetailPage() {
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const { t, ut, lang } = useLocale();
+  const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
   const lootFetchedRef = useRef(false);
@@ -440,6 +446,9 @@ export default function LootdropDetailPage() {
         variant_names?: VariantNameEntry[];
         score?: number;
         group_parent?: string;
+        sub_group_parent?: string;
+        sub_pool_size?: number;
+        sub_pool_names?: string[];
         quality?: string;
       }[];
     }
@@ -463,6 +472,9 @@ export default function LootdropDetailPage() {
         variant_names: c.variant_names,
         score: c.score,
         group_parent: c.group_parent,
+        sub_group_parent: c.sub_group_parent,
+        sub_pool_size: c.sub_pool_size,
+        sub_pool_names: c.sub_pool_names,
         quality: c.quality,
       });
     });
@@ -522,7 +534,11 @@ export default function LootdropDetailPage() {
         }
       } else {
         const mKey = `${d.monster.translation}::${posKey}`;
-        const s = d.score ?? 0;
+        let s = d.score ?? 0;
+        if (s === 0) {
+          const rate = _rateLookup.get(d.monster.translation);
+          if (rate) s = (rate.sr * rate.dr) / 100;
+        }
         const prev = regPositions.get(mKey) ?? 0;
         if (s > prev) regPositions.set(mKey, s);
       }
@@ -645,6 +661,12 @@ export default function LootdropDetailPage() {
     (m) => !hidden.has(m.translation)
   ).length;
   const itemLabel = t(data.translation_key, data.translation || data.name);
+  const rarityLabel =
+    currentSuffix && data.variant_rarity?.[currentSuffix]
+      ? `(${t(data.variant_rarity[currentSuffix].translation_key, data.variant_rarity[currentSuffix].name)})`
+      : '';
+  const pageLabel = ut('ui.nav.lootdrops');
+  const helmetTitle = `${itemLabel}${rarityLabel} -${pageLabel}`;
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -661,8 +683,7 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? `${itemLabel}${data.name} 掉落来源Source`} |
-          越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? helmetTitle} | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
@@ -674,7 +695,7 @@ export default function LootdropDetailPage() {
         />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? `${itemLabel}${data.name} 掉落来源Source`} | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? helmetTitle} | DarkFlashNav`}
         />
         <meta
           property="og:description"
@@ -711,8 +732,8 @@ export default function LootdropDetailPage() {
         {' >> '}
         {resolvedMonsters
           .filter((m) => !hidden.has(m.translation))
-          .map((m) => m.translation)
-          .join('、')}
+          .map((m) => t(m.translation_key, m.translation))
+          .join(delimiter)}
         {resolvedMonsters.length - visibleCount > 0 && (
           <span style={{ color: tokens.muted, fontSize: 16 }}>
             {' '}
@@ -720,7 +741,10 @@ export default function LootdropDetailPage() {
           </span>
         )}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
-          {resolvedMonsters.length}种坐标汇总
+          {ut('ui.detail.coord_summary').replace(
+            '{count}',
+            String(resolvedMonsters.length)
+          )}
         </span>
       </h1>
 
@@ -898,7 +922,8 @@ export default function LootdropDetailPage() {
               transition: 'all 0.2s',
             }}
           >
-            {m.translation} ({visibleCountByMonster.get(m.translation) ?? 0})
+            {t(m.translation_key, m.translation)} (
+            {visibleCountByMonster.get(m.translation) ?? 0})
           </button>
         ))}
       </div>
@@ -1024,7 +1049,7 @@ export default function LootdropDetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {groupItems[0]?.mod?.group_display || groupName}
+                    {formatGroupLabel(groupItems[0]?.mod, t, ut) || groupName}
                   </span>
                   {data?.group_drop_info?.[groupName] && (
                     <span
@@ -1440,7 +1465,7 @@ export default function LootdropDetailPage() {
                               style={{ cursor: 'pointer' }}
                               onClick={() => toggle(tl)}
                             >
-                              {m.translation}
+                              {t(m.translation_key, m.translation)}
                             </span>
                             {sr != null && sr !== 100 && (
                               <span
@@ -1462,10 +1487,41 @@ export default function LootdropDetailPage() {
                             )}
                             <span style={{ color: tokens.muted }}>
                               {(() => {
-                                const varDots = mDots.filter(
+                                const linkerGroups = new Map<
+                                  string,
+                                  {
+                                    dots: typeof mDots;
+                                    poolSize: number;
+                                    poolNames: string[];
+                                  }
+                                >();
+                                for (const d of mDots) {
+                                  const sgp = d.sub_group_parent;
+                                  const gp = d.group_parent;
+                                  if (!sgp || !gp) continue;
+                                  const key = `${gp}::${sgp}`;
+                                  if (!linkerGroups.has(key)) {
+                                    linkerGroups.set(key, {
+                                      dots: [],
+                                      poolSize: d.sub_pool_size ?? 0,
+                                      poolNames: d.sub_pool_names ?? [],
+                                    });
+                                  }
+                                  linkerGroups.get(key)!.dots.push(d);
+                                }
+                                const linkerKeys = new Set<string>();
+                                for (const [, g] of linkerGroups) {
+                                  for (const d of g.dots) {
+                                    linkerKeys.add(`${d.x},${d.y},${d.z}`);
+                                  }
+                                }
+                                const nonLinkerDots = mDots.filter(
+                                  (d) => !linkerKeys.has(`${d.x},${d.y},${d.z}`)
+                                );
+                                const varDots = nonLinkerDots.filter(
                                   (d) => d.variant_count && d.variant_count > 1
                                 );
-                                const regDots = mDots.filter(
+                                const regDots = nonLinkerDots.filter(
                                   (d) =>
                                     !d.variant_count || d.variant_count <= 1
                                 );
@@ -1484,6 +1540,14 @@ export default function LootdropDetailPage() {
                                   });
                                 };
                                 const parts: string[] = [];
+                                for (const [, g] of linkerGroups) {
+                                  const uniquePos = new Set(
+                                    g.dots.map((d) => `${d.x},${d.y},${d.z}`)
+                                  ).size;
+                                  parts.push(
+                                    `(${g.poolNames.join('、')}${g.poolSize}种选${uniquePos}${uniquePos > 1 ? ` · ${uniquePos}点选1` : ''})`
+                                  );
+                                }
                                 const dedupedReg = dedupPos(regDots);
                                 if (dedupedReg.length > 0) {
                                   parts.push(`(${dedupedReg.length}点)`);
@@ -1505,20 +1569,12 @@ export default function LootdropDetailPage() {
                                     (s, v) => s + v.count,
                                     0
                                   );
-                                  const groupCount = varPosCounts.filter(
-                                    (v) => v.count > 0
-                                  ).length;
                                   if (names.length > 0) {
-                                    const localeNames = names.map((vn) =>
-                                      t(vn.translation_key, vn.name)
-                                    );
                                     parts.push(
-                                      `(${localeNames.join('、')}${varDots[0].variant_count}种选${groupCount})`
+                                      `(${totalVarPos}点选${varDots[0].variant_count})`
                                     );
                                   } else {
-                                    parts.push(
-                                      `(${totalVarPos}点选${groupCount})`
-                                    );
+                                    parts.push(`(${totalVarPos}点)`);
                                   }
                                 }
                                 return parts.join(' ');
@@ -1562,7 +1618,7 @@ export default function LootdropDetailPage() {
               const rowKey = `${m.translation}-${j}`;
               return {
                 key: rowKey,
-                group: mod?.group_display || g,
+                group: formatGroupLabel(mod, t, ut) || g,
                 monster: {
                   name: m.name,
                   translation: m.translation,

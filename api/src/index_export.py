@@ -5,6 +5,7 @@ import urllib.parse
 from pathlib import Path
 
 from config import HARDCODED_TRANSLATIONS
+from translator import resolve_group_label
 
 
 def _save(output_dir: Path, filename: str, data: list | dict):
@@ -171,6 +172,10 @@ def generate_quest_items_groups(
     for gname in sorted(groups):
         g = groups[gname]
         g["group_display"] = group_label_resolver(gname) if group_label_resolver else gname
+        gl = resolve_group_label(gname)
+        group_key = gl["slot_key"] if gl else gname
+        group_floor = gl["floor"] if gl else 1
+        group_sub_key = gl["sub_key"] if gl else None
         entities = list(g["entities"].values())
         for e in entities:
             e.pop("_seen_coords", None)
@@ -179,6 +184,9 @@ def generate_quest_items_groups(
             {
                 "group": gname,
                 "group_display": g["group_display"],
+                "group_key": group_key,
+                "group_floor": group_floor,
+                "group_sub_key": group_sub_key,
                 "entity_count": len(entities),
                 "position_count": pos_count,
             }
@@ -189,6 +197,9 @@ def generate_quest_items_groups(
             {
                 "group": gname,
                 "group_display": g["group_display"],
+                "group_key": group_key,
+                "group_floor": group_floor,
+                "group_sub_key": group_sub_key,
                 "entities": entities,
             },
         )
@@ -271,6 +282,8 @@ def build_and_save_indexes(
             si_entry["monsters"] = entry["monsters"]
         if entry.get("monster_translations"):
             si_entry["monster_translations"] = entry["monster_translations"]
+        if entry.get("monster_translation_keys"):
+            si_entry["monster_translation_keys"] = entry["monster_translation_keys"]
         si_entry["max_score"] = entry.get("max_score", 0.0)
         if entry.get("hr100"):
             si_entry["hr100"] = True

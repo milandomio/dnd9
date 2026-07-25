@@ -64,13 +64,14 @@
 |------|------|
 | translator.py | ✅ |
 | collector.py 三字段 | ✅ |
-| collector.py 双写 group_display | ⏳ |
-| module_builder 透传确认 | ⏳ |
-| index_export quest 三字段 | ⏳ |
-| locale_builder 扫描 | ⏳ |
-| types + formatGroupLabel + ui.floor | ⏳ |
-| 8 页面 + ssg.mjs | ⏳ |
-| 管线 + 验证 + SESSION_CHANGES | ⏳ |
+| collector.py 双写 group_display | ✅ |
+| module_builder 透传确认 | ✅（.copy() 无需改） |
+| index_export quest 三字段 | ✅ |
+| locale_builder 扫描 | ✅ |
+| types + formatGroupLabel + ui.floor | ✅ |
+| 8 页面 + ssg.mjs | ✅ |
+| TSC + Prettier + SESSION_CHANGES | ✅ |
+| 管线 python main.py 验证 | ⏳ 待用户触发 |
 
 ## 验证
 

@@ -385,6 +385,7 @@ def run():
                 _mod["group_key"] = _g
                 _mod["group_floor"] = 1
                 _mod["group_sub_key"] = None
+            _mod["group_display"] = _resolve_group_display(_g, translations)
 
         # P005: Build ENTITY_PAGE_MAP for coord reference
         entity_page_map: dict[str, str] = {}

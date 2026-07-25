@@ -66,6 +66,9 @@ export interface DungeonModule {
   translation: string;
   translation_key?: string;
   group: string;
+  group_key?: string;
+  group_floor?: number;
+  group_sub_key?: string;
   group_display?: string;
   size_x: number;
   size_y: number;

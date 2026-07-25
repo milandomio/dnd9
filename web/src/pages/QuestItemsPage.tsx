@@ -5,11 +5,15 @@ import { Spin, Card, Row, Col } from 'antd';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 
 interface GroupEntry {
   group: string;
+  group_key?: string;
+  group_floor?: number;
+  group_sub_key?: string | null;
   group_display: string;
   entity_count: number;
   position_count: number;
@@ -32,7 +36,7 @@ export default function QuestItemsPage() {
   const [loading, setLoading] = useState(!ssrData);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
-  const { ut, lang } = useLocale();
+  const { t, ut, lang } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -112,7 +116,7 @@ export default function QuestItemsPage() {
                       marginBottom: 8,
                     }}
                   >
-                    {g.group_display}
+                    {formatGroupLabel(g, t, ut)}
                   </div>
                   <div
                     style={{
