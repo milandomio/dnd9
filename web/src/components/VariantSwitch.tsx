@@ -1,19 +1,30 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useLocale } from '../i18n/useLocale';
 
 const RARITY_COLORS: Record<string, string> = {
-  粗糙: '#9E9E9E',
-  普通: '#BDBDBD',
-  优秀: '#2ECC71',
-  罕见: '#3498DB',
-  史诗: '#9B59B6',
-  传奇: '#F39C12',
-  独特: '#FFD700',
+  Poor: '#9E9E9E',
+  Common: '#BDBDBD',
+  Uncommon: '#2ECC71',
+  Rare: '#3498DB',
+  Epic: '#9B59B6',
+  Legend: '#F39C12',
+  Unique: '#FFD700',
+  Artifact: '#FF4500',
 };
 
+function getRarityColor(
+  vr: { name: string; key: string } | undefined,
+  fallback: string
+): string {
+  if (!vr) return fallback;
+  const rn = vr.key.split('_').pop() || '';
+  return RARITY_COLORS[rn] ?? fallback;
+}
+
 interface VariantSwitchProps {
-  variantRarity: Record<string, string>;
+  variantRarity: Record<string, { name: string; key: string }>;
   itemName: string;
   currentSuffix: string | null;
 }
@@ -25,6 +36,7 @@ export default function VariantSwitch({
 }: VariantSwitchProps) {
   const { tokens } = useTheme();
   const { lang } = useLanguage();
+  const { t } = useLocale();
   const suffixes = Object.keys(variantRarity);
   if (suffixes.length <= 1) return null;
   const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
@@ -43,8 +55,9 @@ export default function VariantSwitch({
       }}
     >
       {suffixes.map((suffix) => {
-        const rarity = variantRarity[suffix] ?? suffix;
-        const color = RARITY_COLORS[rarity] ?? tokens.muted;
+        const vr = variantRarity[suffix];
+        const label = vr ? t(vr.key, vr.name) : suffix;
+        const color = getRarityColor(vr, tokens.muted);
         const isActive =
           currentSuffix === suffix ||
           (!currentSuffix && suffix === defaultSuffix);
@@ -67,7 +80,7 @@ export default function VariantSwitch({
               display: 'inline-block',
             }}
           >
-            {rarity}
+            {label}
           </Link>
         );
       })}

@@ -300,16 +300,18 @@ def run():
         _monsters_lookup = {r["monster_name"]: r for r in monsters}
         for _vkey, (_vcnt, _vraw) in list(_coord_variant_count.items()):
             if _vraw:
-                _vtr: list[str] = []
+                _vtr: list[dict] = []
                 for _kw in _vraw:
                     _cls = entity_class.get(_kw, {})
                     _mrow = _monsters_lookup.get(_kw)
                     if _mrow:
-                        _vtr.append(resolver.resolve(_kw, _mrow["translation_key"], "monster"))
+                        tk = _mrow["translation_key"]
+                        _vtr.append({"key": tk, "name": resolver.resolve(_kw, tk, "monster")})
                     elif _cls and "props" in _cls.get("types", []):
-                        _vtr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                        tk = _cls.get("translation_key", "")
+                        _vtr.append({"key": tk, "name": resolver.resolve(_kw, tk, "props")})
                     else:
-                        _vtr.append(resolver.resolve(_kw, None, "props") or _kw)
+                        _vtr.append({"key": "", "name": resolver.resolve(_kw, None, "props") or _kw})
                 _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
         _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[str]]] = {}

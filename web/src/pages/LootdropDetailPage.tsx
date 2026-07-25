@@ -10,7 +10,7 @@ import SectionHeader from '../components/SectionHeader';
 import VariantSwitch from '../components/VariantSwitch';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
-import type { DungeonModule } from '../types/data';
+import type { DungeonModule, VariantNameEntry } from '../types/data';
 import {
   getAdj,
   useCtrlBtn,
@@ -34,7 +34,7 @@ interface LootdropCoord {
   label?: string;
   spawn_rate?: number;
   variant_count?: number;
-  variant_names?: string[];
+  variant_names?: VariantNameEntry[];
   score?: number;
   group_parent?: string;
   quality?: string;
@@ -70,7 +70,7 @@ interface LootdropItem {
   translation_key?: string;
   monsters: LootdropMonster[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
-  variant_rarity?: Record<string, string>;
+  variant_rarity?: Record<string, { name: string; key: string }>;
 }
 
 const GROUP_ORDER = [
@@ -86,14 +86,24 @@ const GROUP_ORDER = [
 
 const VARIANT_RE = /^(.+?)_(\d{4})$/;
 const RARITY_COLORS: Record<string, string> = {
-  粗糙: '#9E9E9E',
-  普通: '#BDBDBD',
-  优秀: '#2ECC71',
-  罕见: '#3498DB',
-  史诗: '#9B59B6',
-  传奇: '#F39C12',
-  独特: '#FFD700',
+  Poor: '#9E9E9E',
+  Common: '#BDBDBD',
+  Uncommon: '#2ECC71',
+  Rare: '#3498DB',
+  Epic: '#9B59B6',
+  Legend: '#F39C12',
+  Unique: '#FFD700',
+  Artifact: '#FF4500',
 };
+
+function getRarityColor(
+  vr: { name: string; key: string } | undefined,
+  fallback: string
+): string {
+  if (!vr) return fallback;
+  const rn = vr.key.split('_').pop() || '';
+  return RARITY_COLORS[rn] ?? fallback;
+}
 
 function hasAnyRate(dr: Record<string, number>): boolean {
   return Object.values(dr).some((v) => v > 0);
@@ -427,7 +437,7 @@ export default function LootdropDetailPage() {
         idx: number;
         spawn_rate?: number;
         variant_count?: number;
-        variant_names?: string[];
+        variant_names?: VariantNameEntry[];
         score?: number;
         group_parent?: string;
         quality?: string;
@@ -480,7 +490,7 @@ export default function LootdropDetailPage() {
         y: number;
         z: number;
         variant_count?: number;
-        variant_names?: string[];
+        variant_names?: VariantNameEntry[];
         score?: number;
         file: string;
         group_parent?: string;
@@ -683,13 +693,19 @@ export default function LootdropDetailPage() {
         {currentSuffix && data.variant_rarity?.[currentSuffix] && (
           <span
             style={{
-              color:
-                RARITY_COLORS[data.variant_rarity[currentSuffix]] ??
-                tokens.muted,
+              color: getRarityColor(
+                data.variant_rarity[currentSuffix],
+                tokens.muted
+              ),
               marginLeft: 8,
             }}
           >
-            ({data.variant_rarity[currentSuffix]})
+            (
+            {t(
+              data.variant_rarity[currentSuffix].key,
+              data.variant_rarity[currentSuffix].name
+            )}
+            )
           </span>
         )}
         {' >> '}
@@ -1493,8 +1509,11 @@ export default function LootdropDetailPage() {
                                     (v) => v.count > 0
                                   ).length;
                                   if (names.length > 0) {
+                                    const localeNames = names.map((vn) =>
+                                      t(vn.key, vn.name)
+                                    );
                                     parts.push(
-                                      `(${names.join('、')}${varDots[0].variant_count}种选${groupCount})`
+                                      `(${localeNames.join('、')}${varDots[0].variant_count}种选${groupCount})`
                                     );
                                   } else {
                                     parts.push(
