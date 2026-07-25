@@ -44,6 +44,21 @@ from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
 from translator import NameResolver, build_coord_out, resolve_group_label
 
+
+def _resolve_group_display(group: str, translations: dict[str, str]) -> str:
+    """Construct Chinese display string from group name, for JSON fallback."""
+    result = resolve_group_label(group)
+    if not result:
+        return group
+    base = translations.get(result["slot_key"], group)
+    floor = result["floor"]
+    sub_key = result["sub_key"]
+    if sub_key:
+        sub_name = translations.get(sub_key, "")
+        return f"{base}{floor}层（{sub_name}）"
+    return f"{base}{floor}层"
+
+
 _SOURCE_PATHS = [
     GAME_JSON,
     ITEM_DIR,
@@ -361,7 +376,15 @@ def run():
         # 注入分组显示名
         for _mod in modules_map.values():
             _g = _mod.get("group", "")
-            _mod["group_display"] = resolve_group_label(_g, translations)
+            result = resolve_group_label(_g)
+            if result:
+                _mod["group_key"] = result["slot_key"]
+                _mod["group_floor"] = result["floor"]
+                _mod["group_sub_key"] = result["sub_key"]
+            else:
+                _mod["group_key"] = _g
+                _mod["group_floor"] = 1
+                _mod["group_sub_key"] = None
 
         # P005: Build ENTITY_PAGE_MAP for coord reference
         entity_page_map: dict[str, str] = {}
@@ -483,7 +506,7 @@ def run():
                 all_coords,
                 modules,
                 OUTPUT_DIR,
-                group_label_resolver=lambda g: resolve_group_label(g, translations),
+                group_label_resolver=lambda g: _resolve_group_display(g, translations),
             )
 
         with pipe.step("search_index") as ctx:
@@ -498,7 +521,7 @@ def run():
                 quest_npc_count,
                 quest_npcs_data,
                 OUTPUT_DIR,
-                group_label_resolver=lambda g: resolve_group_label(g, translations),
+                group_label_resolver=lambda g: _resolve_group_display(g, translations),
             )
             ctx.set_result("DONE")
 

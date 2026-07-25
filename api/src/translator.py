@@ -85,22 +85,18 @@ DUNGEON_FLOOR_NUMBER: dict[str, int] = {
 }
 
 
-def resolve_group_label(group: str, translations: dict[str, str]) -> str:
-    """从 Game.json 翻译键推导分组显示名。
+def resolve_group_label(group: str) -> dict | None:
+    """Return slot_key info dict for i18n group display.
 
-    主组（如 GoblinCave）格式："{1层名}{层数}层"
-    子楼层组（如 FireDeep）格式："{1层名}{层数}层（{该层原名}）"
+    Returns None if group not found (caller should use raw group name).
+    Caller assembles display string from slot_key + floor + sub_key.
     """
     slot_key = DUNGEON_GROUP_SLOT_KEY.get(group)
     if not slot_key:
-        return group
-    base = translations.get(slot_key, group)
+        return None
     floor = DUNGEON_FLOOR_NUMBER.get(group, 1)
-    if group in DUNGEON_SUBFLOOR_SLOT_KEY:
-        sub_key = DUNGEON_SUBFLOOR_SLOT_KEY[group]
-        sub_name = translations.get(sub_key, "")
-        return f"{base}{floor}层（{sub_name}）"
-    return f"{base}{floor}层"
+    sub_key = DUNGEON_SUBFLOOR_SLOT_KEY.get(group)
+    return {"slot_key": slot_key, "floor": floor, "sub_key": sub_key}
 
 
 # Props 目录中的 _Dummy 实体同时也是怪物
