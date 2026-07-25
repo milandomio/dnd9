@@ -71,7 +71,7 @@
 | types + formatGroupLabel + ui.floor | ✅ |
 | 8 页面 + ssg.mjs | ✅ |
 | TSC + Prettier + SESSION_CHANGES | ✅ |
-| 管线 python main.py 验证 | ⏳ 待用户触发 |
+| 管线 python main.py 验证 | ✅ EXIT:0；locale/en 含 8 个 DungeonSlot key；en=`The Ruins2F（The Crypt）` |
 
 ## 验证
 
