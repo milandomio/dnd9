@@ -5,6 +5,7 @@ import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
@@ -56,7 +57,7 @@ export default function DungeonModuleDetailPage() {
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
-  const { ut } = useLocale();
+  const { t, ut } = useLocale();
 
   const dataVersion = useDataVersion();
 
@@ -101,7 +102,7 @@ export default function DungeonModuleDetailPage() {
 
   const m = mod;
   const moduleDisplayName = m.translation || m.name;
-  const groupLabel = m.group_display || m.group || '未分组';
+  const groupLabel = formatGroupLabel(m, t, ut);
   const sx = m.size_x || 1;
   const sy = m.size_y || 1;
   const baseRange = m.range || Math.max(sx, sy) * 1600 || 1600;

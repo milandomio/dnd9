@@ -7,6 +7,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 
 interface ExploreTarget {
   name: string;
@@ -27,7 +28,7 @@ export default function ExplorePage() {
   const { modules } = useDungeonModules();
   const dataVersion = useDataVersion();
   const { tokens, dark } = useTheme();
-  const { ut } = useLocale();
+  const { t, ut } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -102,12 +103,12 @@ export default function ExplorePage() {
                 gap: 8,
               }}
             >
-              {sorted.map((t, i) => {
-                const mk = modKey(t.module_name);
+              {sorted.map((target, i) => {
+                const mk = modKey(target.module_name);
                 const mod = modules.get(mk);
                 const sx = mod?.size_x ?? 1;
                 const sy = mod?.size_y ?? 1;
-                const groupLabel = mod?.group_display || '';
+                const groupLabel = mod ? formatGroupLabel(mod, t, ut) : '';
                 return (
                   <div
                     key={i}
@@ -145,7 +146,7 @@ export default function ExplorePage() {
                           [{groupLabel}]{' '}
                         </span>
                       )}
-                      {t.name || mk}
+                      {target.name || mk}
                     </h3>
                     <div
                       style={{
@@ -156,7 +157,7 @@ export default function ExplorePage() {
                       }}
                     >
                       {npcName} - {ut('ui.explore.quest')}:{' '}
-                      {t.quest_title || `#${t.quest_number}`}
+                      {target.quest_title || `#${target.quest_number}`}
                     </div>
                     <div
                       style={{

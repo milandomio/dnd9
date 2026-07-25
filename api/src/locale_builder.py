@@ -46,6 +46,21 @@ def _load_used_keys(output_dir: Path) -> set[str]:
                 continue
             _collect_keys(data, used)
 
+    dm_path = output_dir / "dungeon_modules.json"
+    if dm_path.exists():
+        try:
+            with open(dm_path, encoding="utf-8") as f:
+                dm = json.load(f)
+            for m in dm:
+                gk = m.get("group_key")
+                if gk:
+                    used.add(gk)
+                gsk = m.get("group_sub_key")
+                if gsk:
+                    used.add(gsk)
+        except (json.JSONDecodeError, OSError):
+            pass
+
     return used
 
 

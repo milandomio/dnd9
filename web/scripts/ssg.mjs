@@ -164,7 +164,14 @@ for (const p of SINGLE) {
     for (const m of moduleData) {
       const g = m.group || '';
       if (!groupMap.has(g)) {
-        groupMap.set(g, { group: g, group_display: m.group_display || g || '未分组', module_count: 0 });
+        groupMap.set(g, {
+          group: g,
+          group_key: m.group_key,
+          group_floor: m.group_floor,
+          group_sub_key: m.group_sub_key,
+          group_display: m.group_display || g || '未分组',
+          module_count: 0,
+        });
       }
       groupMap.get(g).module_count++;
     }
@@ -189,7 +196,14 @@ for (const g of questGroups) {
       ssrDataMap[`quest_items_groups/${g.group}`] = qg;
     } catch {}
   } else {
-    ssrDataMap[`quest_items_groups/${g.group}`] = { group: g.group, group_display: g.group_display, entities: [] };
+    ssrDataMap[`quest_items_groups/${g.group}`] = {
+      group: g.group,
+      group_key: g.group_key,
+      group_floor: g.group_floor,
+      group_sub_key: g.group_sub_key,
+      group_display: g.group_display,
+      entities: [],
+    };
   }
 }
 
