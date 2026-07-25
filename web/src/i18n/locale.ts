@@ -25,7 +25,7 @@ export const LANG_DISPLAY_NAME: Record<SupportedLang, string> = {
   fr: 'Français',
   ja: '日本語',
   ko: '한국어',
-  'pt-BR': 'Português (BR)',
+  'pt-BR': 'Português',
   ru: 'Русский',
   'zh-Hant': '繁體中文',
 };

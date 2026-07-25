@@ -4,6 +4,7 @@ import { Input, Select, Spin } from 'antd';
 import {
   BulbOutlined,
   ClockCircleOutlined,
+  GlobalOutlined,
   LoadingOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
@@ -389,6 +390,7 @@ export default function NavBar() {
           rowGap: 6,
         }}
       >
+        <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
         <Select
           size="small"
           value={lang}
@@ -397,7 +399,7 @@ export default function NavBar() {
             value,
             label: LANG_DISPLAY_NAME[value],
           }))}
-          style={{ width: 130 }}
+          style={{ width: '7em' }}
           virtual={false}
           listHeight={320}
           getPopupContainer={(triggerNode) =>
