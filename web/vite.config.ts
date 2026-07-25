@@ -147,6 +147,19 @@ export default defineConfig(({ mode }) => {
           });
         },
       },
+      {
+        name: 'dev-versioned-data',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            const match = req.url?.match(/^\/data\/[a-z0-9]+\/json\/(.+)/);
+            if (match) {
+              const originalUrl = `/data/json/${match[1]}`;
+              req.url = originalUrl;
+            }
+            next();
+          });
+        },
+      },
     ],
     base: process.env.VITE_BASE || '/',
     server: {

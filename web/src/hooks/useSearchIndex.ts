@@ -60,10 +60,12 @@ export function useSearchIndex() {
     }
     // 延迟 fetch 到页面首次渲染完成后再发起，避免阻塞关键路径
     const timer = setTimeout(() => {
-      fetchIndex(dataVersion).then((data) => {
-        setIndex(data);
-        setLoading(false);
-      });
+      fetchIndex(dataVersion)
+        .then((data) => {
+          setIndex(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
     }, 0);
     return () => clearTimeout(timer);
   }, [dataVersion]);
