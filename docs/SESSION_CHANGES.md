@@ -1,4 +1,40 @@
+# 2026-07-26 会话修改记录
+
+## 统一 DetailPage SEO 标题构造，对齐 LootdropDetailPage 格式
+
+- **原因**：DetailPage Helmet `<title>` fallback 为 `{entityLabel}{entity.name} 位置汇总Location`（翻译名+原始名重复，中英混写），与 LootdropDetailPage 的 `{itemLabel}{rarityLabel} -{pageLabel}` 格式不一致
+- **变更文件**：
+  - `web/src/pages/DetailPage.tsx` — 新增 `pageLabel = ut('ui.nav.' + page)`；标题 fallback 改为 `{entityLabel} -{pageLabel}`；description 去掉 `（{entity.name}）` 冗余；og:title 同步修改
+- **关键逻辑**：模板统一为 `{ssrLocalizedTitle() ?? 标签名 -页面标签} | 越来越黑暗闪电指南 DarkFlashNav`；pageLabel 复用现有 `ui.nav.*` locale key
+- **验证**：TSC 无报错，Prettier 通过
+
+## 地图分组名 i18n 修复 — 后端翻译/存储层（中断点）
+
+- **原因**：LootdropDetailPage 分组标题（如"废墟2层（地穴）"）在 en 页仍显示中文；`slot_key` 从未进入 locale JSON 文件导致前端无法 i18n
+- **变更文件**：
+  - `api/src/translator.py` — `resolve_group_label()` 签名从 `(group, translations) -> str` 改为 `(group) -> dict|None`，返回 `{slot_key, floor, sub_key}` 替代中文拼接字符串
+  - `api/src/collector.py` — 新增 `_resolve_group_display()` 辅助函数（内部拼接中文供 group_display fallback 用）；`modules_map` 注入改为存 `group_key`/`group_floor`/`group_sub_key` 三个字段；两处 `group_label_resolver` lambda 更新
+- **当前进度**：后端 translator/collector 层完成；module_builder / index_export / locale_builder / 前端渲染尚未实施
+- **中断位置**：下次从 `module_builder.py` 透传 group_key 字段到 dungeon_modules.json 开始
+- **计划文档**：`docs/plans/DUNGEON_GROUP_I18N.md`
+- **验证**：管道重跑后检查 locale/en.json 是否含 `Text_UI_WB_DungeonSlot_GoblinCave_1stFloor`
+
 # 2026-07-25 会话修改记录
+
+## 变体标签格式修复：去掉误导的"选M组"，混合实体改显"点选N种" + DetailPage 固定点/变体点分离
+
+- **原因**：`(N点选M组)` 格式读起来像"从N个里选M个"，实际N个位置各自独立产出1个物品。无 variant_names 时（同实体多组）信息冗余且误导；有 variant_names 时（混合实体）旧格式啰嗦。DetailPage 历史未分离固定点/变体点，Mummy 的 `(12点选2)` 实为 4 固定 + 8 变体
+- **变更文件**：
+  - `web/src/pages/LootdropDetailPage.tsx` — names case: `(名称N种选M)` → `(N点选{variant_count})`；no-names case: `(N点选M组)` → `(N点)`；移除未使用的 `groupCount`
+  - `web/src/pages/DetailPage.tsx` — names case: `(名称N种选M · N点选M)` → 分离 reg/var；no-names case: `(N点选M组)` → 分离 reg/var；新增 `varCoords`/`regCoords` 分裂逻辑，分别计算 `regPosCount`/`varPosCount`
+  - `docs/plans/VARIANT_LABEL_FIX_PLAN.md` — 新建方案文档
+  - `docs/plans/DETAILPAGE_VAR_REG_SPLIT.md` — 新建方案文档
+- **关键逻辑**：
+  - 无 names 时（cnt=1，同一实体类型）去掉组数
+  - 有 names 时（cnt>1，混合实体）改"位置数点选种类数"格式
+  - DetailPage 固定点/变体点分离：`mapCoords` → `varCoords`(有 `group_parent`) + `regCoords`(无 `group_parent`)；`forcedVcN` 无 names 时 fallback 从 `posCount` 改为 `varPosCount`
+  - 两页保持一致的展示逻辑
+- **验证**：TSC 无报错，Prettier 通过
 
 ## main 分支回滚 + dev 设为默认工作分支
 
@@ -1464,3 +1500,15 @@ if (typeof window !== "undefined") {
 - **验证**: dev server `:8090` 所有路由 HTTP 200; TSC + ESLint + Prettier 通过
 - **硬编码路径修复**: 全站 9 个文件中的 `Link`/`navigate` 路径补上 `/${lang}/` 前缀（HomePage、VariantSwitch、DungeonModulesPage、DungeonModuleGroupPage、QuestItemsPage、QuestNPCPage、QuestNPCDetailPage、LootdropDetailPage）；NavBar 面包屑改用 `stripLangPrefix` + `lang` 前缀，不再显示语言代码导航按钮
 - **Variant name i18n**: `api/src/collector.py` `_vtr` 从 `list[str]`（已解析中文名）改为 `list[dict]`（`{translation_key, name}`），保留 translation_key 供前端多语言查询；`api/src/lootdrop_builder.py` `_get_variant_rarity` 返回 `{name, translation_key}` 而非纯文本；`api/src/locale_builder.py` `_load_used_keys` 改为递归 `_collect_keys()` 扫描所有嵌套 `translation_key` 字段，确保 variant_rarity/variant_names 中的 key 被纳入 locale 文件；前端 `VariantNameEntry` 类型 + `t(translation_key, name)` 展示；`RARITY_COLORS` 由中文 key 改为英文 rarity tag 防止多语言不匹配；`VariantSwitch.tsx` 引入 `useLocale` 实现多语言 label
+
+## 怪物名称多语言 + ui.list.variant 模板化
+
+- **原因**：Lootdrop 列表页和详情页的怪物名（如"远古刺鳐"）在英文及其他语言下仍显示中文；列表页 `-目标-`/`变体` 标签未使用 locale key
+- **变更文件**：
+  - `api/src/lootdrop_builder.py` — `build_loot_index()` 在收集 `monster_translations` 的同时并行收集 `monster_translation_keys`，存入 loot index
+  - `api/src/index_export.py` — 将 `monster_translation_keys` 透传到 search index
+  - `web/src/pages/ListPage.tsx` — `IndexEntry` 加 `monster_translation_keys` 字段；怪物名改为 `t(monster_translation_keys[i], monster_translations[i])` 逐条解析；`-目标-` → `ut('ui.list.target')`；`[N变体]` → `ut('ui.list.variant').replace('{count}', ...)`；分隔符按语言区分（中文/日文用`、`，其余用`, `）
+  - `web/src/pages/LootdropDetailPage.tsx` — `LootdropMonster` 加 `translation_key`；h1 怪物名/按钮/坐标表均改为 `t(m.translation_key, m.translation)`；坐标汇总改为 `ut('ui.detail.coord_summary')`；分隔符语言化
+  - `web/src/i18n/uiLocale.ts` — 所有 10 种语言的 `ui.list.variant` 从纯 label 改为 `{count}变体`/`{count} Variants`/等模板格式
+- **关键逻辑/映射关系**：详情页 JSON 已有 `translation_key` per monster（`lootdrop_builder.py:404`），只需前端接口+渲染适配；列表页需后端补充 `monster_translation_keys` 到 search index
+- **验证**：管道输出含 `monster_translation_keys` 字段；TSC + Prettier + Black 通过
