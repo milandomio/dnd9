@@ -1450,3 +1450,15 @@ if (typeof window !== "undefined") {
 - **搜索索引加载容错**：`useSearchIndex.ts` 添加 `.catch(() => setLoading(false))`，防止 fetch 失败时加载动画永远不停
 - **列表页路由参数缺失修复**：`ListPage.tsx` — 从 `useLocation().pathname` 末段推导 `page`，修复 `/items` `/monsters` `/props` `/lootdrops` 四个显式路由因缺 `:page` 参数导致页面无数据的问题。`useEffect` 已有 valid pages 白名单守卫，不会误触发。
 - **分析结论**：`/lootdrops` 无需重定向到 `/zh-Hans/lootdrops`——`withLangPrefix(DEFAULT_LANG)` 设计即去前缀，`/lootdrops` 就是 zh-Hans 版本。SSG 的 `localizedPath` 同样对默认语言返回无前缀路径。
+
+## 统一语言前缀路由重构 (v0.10)
+
+- **原因**：双路由树（有/无 lang 前缀）导致 `:page` 参数丢失 bug（`/lootdrops` 匹配显式路由缺少 `:page` → ListPage 无数据），且 `:lang` 和 `:page` 动态段互斥难以区分。
+- **方案**：zh-Hans 也使用 `/:lang/` 前缀，全语言统一路由结构。非前缀旧路径通过 `LegacyRedirect` 组件跳转到 `/zh-Hans/...`。
+- **变更文件**：
+  - `LanguageContext.tsx` — `withLangPrefix` 移除 `DEFAULT_LANG` 去前缀逻辑，始终返回 `/:lang/path`
+  - `AppInner.tsx` — 移除所有非前缀路由，仅保留 `/:lang/...` 树 + `*` catch-all `LegacyRedirect`。`LegacyRedirect` 用 `useEffect` 检测路径首段是否支持语言，不支持则 `window.location.replace` 到 `/zh-Hans/...`
+  - `ssg.mjs` — 所有路由 `path`/`file` 以 `/${DEFAULT_LANG}/` 前缀生成（如 `/zh-Hans/items`）；`routeDataKey` 先剥离 lang 前缀再匹配；`localizedPath` 先剥离已有前缀再添加目标 lang；本地化循环将默认语言文件路径前缀剥离后写入目标目录；`NON_DEFAULT_LANGS` 变量移除
+  - `ListPage.tsx` — `useParams<{page}>` 从 `/:lang/:page` 正常获取，移除 pathname fallback
+- **SSG 输出结构**: `dist/index.html` → `/`; `dist/zh-Hans/...` → 简体中文; `dist/en/...` → English; etc.
+- **验证**: dev server `:8090` 所有路由 HTTP 200; TSC + ESLint + Prettier 通过
