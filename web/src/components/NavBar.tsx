@@ -83,10 +83,13 @@ export default function NavBar() {
       setQuery(state.searchQuery);
       navigate(location.pathname, { replace: true, state: {} });
       requestAnimationFrame(() => {
-        inputRef.current?.focus();
-        inputRef.current?.scrollIntoView({
+        const searchInput = inputRef.current?.input ?? searchRef.current;
+        searchInput?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
+        });
+        requestAnimationFrame(() => {
+          inputRef.current?.focus({ preventScroll: true });
         });
       });
     }

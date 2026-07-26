@@ -201,11 +201,9 @@ export default function QuestNPCDetailPage() {
     const s = search.toLowerCase();
     const found = npc.quests.find(
       (q) =>
-        t(q.translation_key, q.title).toLowerCase().includes(s) ||
+        q.title.toLowerCase().includes(s) ||
         q.id.toLowerCase().includes(s) ||
-        q.contents.some((c) =>
-          t(c.translation_key, c.target).toLowerCase().includes(s)
-        )
+        q.contents.some((c) => c.target.toLowerCase().includes(s))
     );
     return found?.quest_number ?? null;
   })();
@@ -240,11 +238,9 @@ export default function QuestNPCDetailPage() {
         <div style={{ width: '100%' }}>
           <QuestSearchBar
             allNpcs={allNpcs}
-            query={search}
-            onQueryChange={setSearch}
             onSelect={(r: QuestSearchResult) => {
               if (r.npc.npc_name === npc_name) {
-                setSearch(t(r.quest.translation_key, r.quest.title));
+                setSearch(r.quest.title);
                 requestAnimationFrame(() => {
                   const el = document.querySelector(
                     `[data-quest-num="${r.quest.quest_number}"]`
@@ -255,7 +251,7 @@ export default function QuestNPCDetailPage() {
                 navigate(`/${lang}/quest_npc/${r.npc.npc_name}`, {
                   state: {
                     questNumber: r.quest.quest_number,
-                    searchText: t(r.quest.translation_key, r.quest.title),
+                    searchText: r.quest.title,
                   },
                 });
               }
@@ -546,11 +542,12 @@ export default function QuestNPCDetailPage() {
                                 )}
                                 <th
                                   style={{
-                                    textAlign: 'left',
+                                    textAlign: 'center',
                                     padding: '4px 8px',
                                     color: tokens.muted,
                                     fontSize: 13,
                                     whiteSpace: 'nowrap',
+                                    width: '3em',
                                   }}
                                 >
                                   {ut('ui.quest_detail.count')}
@@ -612,9 +609,14 @@ export default function QuestNPCDetailPage() {
                                         <SearchOutlined
                                           onClick={(e) => {
                                             e.stopPropagation();
-                                            setSearch(
-                                              t(c.translation_key, c.target)
-                                            );
+                                            navigate(location.pathname, {
+                                              state: {
+                                                searchQuery: t(
+                                                  c.translation_key,
+                                                  c.target
+                                                ),
+                                              },
+                                            });
                                           }}
                                           title={ut('ui.search.search')}
                                           style={{
@@ -699,6 +701,7 @@ export default function QuestNPCDetailPage() {
                                           color: dark ? '#ccc' : '#555',
                                           textAlign: 'center',
                                           whiteSpace: 'nowrap',
+                                          width: '3em',
                                         }}
                                       >
                                         {c.count}
