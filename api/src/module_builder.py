@@ -12,6 +12,7 @@ from config import (
     MODULE_DISPLAY_OVERRIDE,
     MODULE_NAME_OVERRIDE,
     MODULE_OFFSET_MAP,
+    SUPERHOARD_I18N_KEY,
 )
 from translator import DEBUG_VARIANT_RE, DUMMY_AS_MONSTER, QUALITY_RE
 
@@ -295,7 +296,9 @@ def build_and_save_module_coords(
     # SuperHoard 类 spawner 作为独立 props 实体注入（无 DB entity 记录）
     for _sh_name in ("SuperHoard01_9", "SuperHoardChest01_9"):
         if _sh_name not in entity_class:
-            entity_class[_sh_name] = {"types": ["props"], "translation_key": ""}
+            entity_class[_sh_name] = {"types": ["props"], "translation_key": SUPERHOARD_I18N_KEY}
+        elif not entity_class[_sh_name].get("translation_key"):
+            entity_class[_sh_name]["translation_key"] = SUPERHOARD_I18N_KEY
     _save(
         output_dir,
         "entity_index.json",

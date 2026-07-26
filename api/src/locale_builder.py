@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+from config import SUPERHOARD_I18N, SUPERHOARD_I18N_KEY
 from db._helpers import discover_languages
 
 
@@ -70,6 +71,7 @@ def build_locale_files(db, output_dir: Path) -> list[str]:
     locale_dir.mkdir(parents=True, exist_ok=True)
 
     used_keys = _load_used_keys(output_dir)
+    used_keys.add(SUPERHOARD_I18N_KEY)
 
     exported: list[str] = []
     for lang in discover_languages():
@@ -80,6 +82,10 @@ def build_locale_files(db, output_dir: Path) -> list[str]:
             filtered = {k: v for k, v in all_translations.items() if k in used_keys}
         else:
             filtered = dict(all_translations)
+        # Inject SuperHoard synthetic key (no Game.json entry)
+        sh_val = SUPERHOARD_I18N.get(lang) or SUPERHOARD_I18N.get("zh-Hans")
+        if sh_val:
+            filtered[SUPERHOARD_I18N_KEY] = sh_val
         dest = locale_dir / f"{lang}.json"
         with open(dest, "w", encoding="utf-8") as f:
             json.dump(filtered, f, ensure_ascii=False, separators=(",", ":"))
