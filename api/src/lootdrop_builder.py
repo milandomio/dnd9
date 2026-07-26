@@ -422,6 +422,7 @@ def build_and_save_lootdrop_details(
     map_to_module: dict | None = None,
     translations: dict[str, str] | None = None,
     entity_page_map: dict[str, str] | None = None,
+    used_translation_keys: set[str] | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
     map_base_to_group = drop_engine.map_base_to_group
@@ -903,6 +904,17 @@ def build_and_save_lootdrop_details(
             _trans_with_any_rate if _trans_with_any_rate else None,
         )
         if monsters_out:
+            if used_translation_keys is not None:
+                _item_tk = entry.get("translation_key")
+                if _item_tk:
+                    used_translation_keys.add(_item_tk)
+                used_translation_keys.update(_m["translation_key"] for _m in monsters_out if _m.get("translation_key"))
+                used_translation_keys.update(
+                    _e["translation_key"]
+                    for _g_entries in _group_drop_info.values()
+                    for _e in _g_entries
+                    if _e.get("translation_key")
+                )
             detail = {
                 "name": item_name,
                 "translation": entry["translation"],
@@ -934,6 +946,10 @@ def build_and_save_lootdrop_details(
                     item_variant_suffixes[item_name] = _vs_out
                 if translations:
                     detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
+                    if used_translation_keys is not None:
+                        used_translation_keys.update(
+                            _rarity["translation_key"] for _rarity in detail["variant_rarity"].values()
+                        )
                 # Pre-compute base item spawners (union of all variants) as fallback
                 base_spawners = drop_engine.get_base_item_spawners(item_name)
                 for suffix in vs:
