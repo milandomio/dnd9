@@ -1,5 +1,12 @@
 # 2026-07-27 会话修改记录
 
+## fix: 无语言前缀详情页误匹配导致空白
+
+- **改动原因**：`/monsters/AncientStingray/` 等无 `/:lang` 前缀路径被 `/:lang/:page` 当成 `lang=monsters`，DetailPage 的 `page`/`name` 错位，页面空白；`LegacyRedirect` 在 `*` 路由上无法拦截已匹配路径。
+- **变更文件**：`web/src/AppInner.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：进入 Routes 前检查首段；非 `SUPPORTED_LANGS` 则 `<Navigate replace>` 到 `/${DEFAULT_LANG}${pathname}`（如 `/zh-Hans/monsters/AncientStingray/`）。`/` 与合法 `/:lang/...` 不变。
+- **验证**：`npm run format` / `format:check` / `npx tsc --noEmit` 通过。
+
 ## fix: 钉手岛/象岛改为数字编号
 
 - **改动原因**：`ShipGraveyard_BladehandRefuge`/`ShipGraveyard_ElephantIsland` 硬编码中文名，与 EmptyModule 数字编号风格不一致且有 i18n 问题。
