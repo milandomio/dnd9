@@ -1944,3 +1944,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：列头通过 `ui.quest_detail.target` 与 `ui.quest_detail.target_map` 显示本地化的 `Target / Map`；Map 值作为 Target 单元格的第二行，Loot 与 Rarity 保持独立同一行。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: 统一 Objective Type 列宽
+
+- **改动原因**：`Explore` 等较长的 Type 值会压缩同一任务行的 Target 内容，且各行列起始位置不一致。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Objective 的列头与每条内容行共享 `7em` 的 Type 列宽，Target、Loot、Rarity 在所有行从相同位置开始。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
