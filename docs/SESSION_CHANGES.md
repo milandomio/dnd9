@@ -1873,6 +1873,12 @@ if (typeof window !== "undefined") {
 - **变更文件**：`api/src/quest_collector.py`、`api/src/quest_extractor/quest_extractor.py`、`api/src/quest_extractor/content_renderer.py`、`api/src/locale_builder.py`、`web/src/pages/QuestNPCDetailPage.tsx`、`web/src/components/QuestSearchBar.tsx`、`web/src/types/quest.ts`。
 - **关键逻辑/映射关系**：任务、任务内容、奖励分别保留游戏 `translation_key`；地图和稀有度使用独立键并纳入 locale 键收集；物品解析补充版本后缀键。详情与任务搜索结果统一通过 `t(key, fallback)` 显示，战利品状态改为非文本标记。
 
+## fix: 泛型任务目标 i18n
+
+- **原因**：Tavern Master 任务的 `亡灵`、`宝箱怪`、`骷髅` 使用 `Type.Character.*` 泛型标签，按怪物实体键无法找到英文；逃脱任务的目标本身没有翻译键。
+- **变更文件**：`api/src/quest_collector.py`。
+- **关键逻辑/映射关系**：击杀目标先尝试 `Text_DesignData_Monster_Monster_{名称}`，再把 `Type.Character.A.B` 映射为 `Text_Code_DCDataBlueprintLibrary_Type_Character_A_B`；Escape 目标复用 `DungeonIdTags` 对应的地图翻译键。
+
 ## fix: Quest NPC 搜索使用当前语言索引
 
 - **改动原因**：任务列表和详情页可显示日文标题与目标，但搜索索引仍使用中文回退字段，导致日文输入无法命中。

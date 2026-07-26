@@ -281,6 +281,29 @@ def _get_dungeon_type_key(translator, content_data):
     return next((key for key in candidates if translator.translate(key)), "")
 
 
+def _get_kill_target_info(translator, tag_name: str) -> tuple[str, str]:
+    """Resolve a kill target through its entity key or Type.Character tag key."""
+    monster = tag_name.split(".")[-1] if tag_name else ""
+    translation_key = f"Text_DesignData_Monster_Monster_{monster}"
+    translated = translator.translate(translation_key) if monster else ""
+    if not translated and tag_name.startswith("Type.Character."):
+        type_name = tag_name.removeprefix("Type.Character.").replace(".", "_")
+        type_key = f"Text_Code_DCDataBlueprintLibrary_Type_Character_{type_name}"
+        translated = translator.translate(type_key)
+        if translated:
+            translation_key = type_key
+    if not translated and monster in HARDCODED_TRANSLATIONS:
+        translated = HARDCODED_TRANSLATIONS[monster]
+    # entity_index fallback (for example SmallJellyfish -> GiantJellyfish key)
+    if not translated and monster:
+        entity_key = _get_entity_key_map().get(monster, "")
+        if entity_key and entity_key != translation_key:
+            translated = translator.translate(entity_key) or ""
+            if translated:
+                translation_key = entity_key
+    return translated or monster, translation_key if translated else ""
+
+
 def _extract_npc_list(translator, extractor, quests):
     grouped_en = extractor.group_quests_by_npc(use_translated_names=False)
     result = []
@@ -315,25 +338,9 @@ def _extract_npc_list(translator, extractor, quests):
                 if ct == "Kill":
                     kill_tag = cd.get("KillTag", {})
                     tag_name = kill_tag.get("TagName", "") if isinstance(kill_tag, dict) else ""
-                    monster = ""
-                    if tag_name:
-                        if tag_name.startswith("Id.Monster.") or tag_name.startswith("Type.Character."):
-                            monster = tag_name.split(".")[-1]
-                        else:
-                            monster = tag_name.split(".")[-1] if "." in tag_name else tag_name
-                    translation_key = f"Text_DesignData_Monster_Monster_{monster}"
-                    translated = translator.translate(translation_key) if monster else ""
-                    if not translated and monster in HARDCODED_TRANSLATIONS:
-                        translated = HARDCODED_TRANSLATIONS[monster]
-                    # entity_index 兜底（如 SmallJellyfish → GiantJellyfish 翻译键）
-                    if not translated and monster:
-                        entity_key = _get_entity_key_map().get(monster, "")
-                        if entity_key and entity_key != f"Text_DesignData_Monster_Monster_{monster}":
-                            translated = translator.translate(entity_key) or ""
-                            if translated:
-                                translation_key = entity_key
-                    item["target"] = translated or monster
-                    if translated:
+                    target, translation_key = _get_kill_target_info(translator, tag_name)
+                    item["target"] = target
+                    if translation_key:
                         item["translation_key"] = translation_key
                     item["count"] = cd.get("ContentCount", 1)
                 elif ct == "Fetch":
@@ -358,6 +365,9 @@ def _extract_npc_list(translator, extractor, quests):
                     item["target"] = extractor.get_hold_target_translation(cd) or ct
                 elif ct == "Escape":
                     item["target"] = extractor.get_escape_target_translation(cd) or ct
+                    key = _get_dungeon_type_key(translator, cd)
+                    if key:
+                        item["translation_key"] = key
                     item["count"] = cd.get("ContentCount", 1)
                 else:
                     item["target"] = ct
