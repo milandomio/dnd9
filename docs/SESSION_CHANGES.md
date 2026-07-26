@@ -1914,3 +1914,12 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/components/QuestSearchBar.tsx`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：构建扁平任务索引时，任务标题和每个目标优先按其 `translation_key` 从当前 locale 字典取值；locale 字典加载完成或语言切换时以 `dict` 依赖重建索引，缺失键继续回退中文字段。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+# 2026-07-27 会话修改记录
+
+## fix: Objective Count 独立右侧列
+
+- **改动原因**：Quest NPC 详情页的 Objective 表格中，Count 与左侧目标详情混排，无法稳定靠右对齐。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Objective 外层改为 `minmax(0, 1fr) 5em` 两列网格；左列显示 Type、Target、Map 及可选 Loot/Rarity，右列的 Count 表头与每条数值均使用居中对齐。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。

@@ -439,11 +439,6 @@ export default function QuestNPCDetailPage() {
                       const hasDungeonType = q.contents.some(
                         (c) => c.dungeon_type
                       );
-                      const detailColumnCount =
-                        2 +
-                        Number(hasDungeonType) +
-                        Number(hasLoot) +
-                        Number(hasRarity);
                       return (
                         <div
                           style={{
@@ -465,289 +460,196 @@ export default function QuestNPCDetailPage() {
                           >
                             {ut('ui.quest_detail.objective')}
                           </div>
-                          <table
+                          <div
                             style={{
-                              width: '100%',
-                              borderCollapse: 'collapse',
+                              display: 'grid',
+                              gridTemplateColumns: 'minmax(0, 1fr) 5em',
                               fontSize: 14,
-                              tableLayout: 'auto',
-                              overflowWrap: 'anywhere',
                             }}
                           >
-                            <colgroup>
-                              <col />
-                              <col />
-                              {hasDungeonType && <col />}
-                              {hasLoot && <col />}
-                              {hasRarity && <col />}
-                              <col style={{ width: '5em' }} />
-                            </colgroup>
-                            <thead>
-                              <tr
-                                style={{
-                                  borderBottom: `1px solid ${tokens.border}`,
-                                }}
-                              >
-                                <th
-                                  style={{
-                                    textAlign: 'left',
-                                    padding: '4px 8px',
-                                    color: tokens.muted,
-                                    fontSize: 13,
-                                    whiteSpace: 'nowrap',
-                                  }}
-                                >
-                                  {ut('ui.quest_detail.type')}
-                                </th>
-                                <th
-                                  style={{
-                                    textAlign: 'left',
-                                    padding: '4px 8px',
-                                    color: tokens.muted,
-                                    fontSize: 13,
-                                    width: '1%',
-                                    whiteSpace: 'nowrap',
-                                  }}
-                                >
-                                  {ut('ui.quest_detail.target')}
-                                </th>
-                                {hasDungeonType && (
-                                  <th
+                            <div
+                              style={{
+                                display: 'grid',
+                                gridTemplateColumns: `auto minmax(0, 1fr)${hasDungeonType ? ' auto' : ''}${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
+                                gap: '4px 16px',
+                                alignItems: 'center',
+                                padding: '4px 8px',
+                                borderBottom: `1px solid ${tokens.border}`,
+                                color: tokens.muted,
+                                fontSize: 13,
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              <span>{ut('ui.quest_detail.type')}</span>
+                              <span>{ut('ui.quest_detail.target')}</span>
+                              {hasDungeonType && (
+                                <span>{ut('ui.quest_detail.target_map')}</span>
+                              )}
+                              {hasLoot && (
+                                <span>{ut('ui.quest_detail.loot')}</span>
+                              )}
+                              {hasRarity && (
+                                <span>{ut('ui.quest_detail.rarity')}</span>
+                              )}
+                            </div>
+                            <div
+                              style={{
+                                padding: '4px 8px',
+                                borderBottom: `1px solid ${tokens.border}`,
+                                color: tokens.muted,
+                                fontSize: 13,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                              }}
+                            >
+                              {ut('ui.quest_detail.count')}
+                            </div>
+                            {q.contents.map((c, i) => {
+                              const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
+                              const contentDone = lsGet(contentKey);
+                              const rowStyle = {
+                                borderBottom: dark
+                                  ? '1px solid rgba(255,255,255,0.06)'
+                                  : '1px solid rgba(0,0,0,0.08)',
+                                opacity: contentDone ? 0.4 : 1,
+                                textDecoration: contentDone
+                                  ? 'line-through'
+                                  : 'none',
+                              };
+                              return (
+                                <Fragment key={i}>
+                                  <div
                                     style={{
-                                      textAlign: 'left',
-                                      padding: '4px 8px',
-                                      color: tokens.muted,
-                                      fontSize: 13,
-                                      width: '1%',
-                                      whiteSpace: 'nowrap',
+                                      ...rowStyle,
+                                      display: 'grid',
+                                      gridTemplateColumns: `auto minmax(0, 1fr)${hasDungeonType ? ' auto' : ''}${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
+                                      gap: '4px 16px',
+                                      alignItems: 'center',
+                                      padding: '6px 8px',
                                     }}
                                   >
-                                    {ut('ui.quest_detail.target_map')}
-                                  </th>
-                                )}
-                                {hasLoot && (
-                                  <th
-                                    style={{
-                                      textAlign: 'left',
-                                      padding: '4px 8px',
-                                      color: tokens.muted,
-                                      fontSize: 13,
-                                      whiteSpace: 'nowrap',
-                                    }}
-                                  >
-                                    {ut('ui.quest_detail.loot')}
-                                  </th>
-                                )}
-                                {hasRarity && (
-                                  <th
-                                    style={{
-                                      textAlign: 'left',
-                                      padding: '4px 8px',
-                                      color: tokens.muted,
-                                      fontSize: 13,
-                                      whiteSpace: 'nowrap',
-                                    }}
-                                  >
-                                    {ut('ui.quest_detail.rarity')}
-                                  </th>
-                                )}
-                                <th
-                                  style={{
-                                    textAlign: 'center',
-                                    padding: '4px 8px',
-                                    color: tokens.muted,
-                                    fontSize: 13,
-                                    whiteSpace: 'nowrap',
-                                  }}
-                                >
-                                  {ut('ui.quest_detail.count')}
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {q.contents.map((c, i) => {
-                                const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
-                                const contentDone = lsGet(contentKey);
-                                return (
-                                  <Fragment key={i}>
-                                    <tr
+                                    <span
                                       style={{
-                                        opacity: contentDone ? 0.4 : 1,
-                                        textDecoration: contentDone
-                                          ? 'line-through'
-                                          : 'none',
+                                        color: dark ? '#ccc' : '#555',
+                                        whiteSpace: 'nowrap',
                                       }}
                                     >
-                                      <td
-                                        rowSpan={2}
-                                        style={{
-                                          padding: '3px 0 3px 8px',
-                                          color: dark ? '#ccc' : '#555',
-                                          whiteSpace: 'nowrap',
-                                          verticalAlign: 'top',
-                                          width: '1%',
-                                        }}
-                                      >
-                                        {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
-                                      </td>
-                                      <td
-                                        style={{
-                                          padding: '3px 8px',
-                                          color: tokens.text,
-                                          height: 22,
-                                          minWidth: 0,
-                                          position: 'relative',
-                                          width: '1%',
-                                          whiteSpace: 'nowrap',
-                                          overflowWrap: 'normal',
-                                          wordBreak: 'keep-all',
-                                        }}
-                                      >
-                                        <span
-                                          style={{
-                                            left: 8,
-                                            position: 'absolute',
-                                            top: 3,
-                                            whiteSpace: 'nowrap',
-                                          }}
-                                        >
-                                          <input
-                                            type="checkbox"
-                                            checked={contentDone}
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              lsSet(contentKey, !contentDone);
-                                              refresh();
-                                            }}
-                                            onChange={() => {}}
-                                            style={{
-                                              ...checkboxStyle,
-                                              width: 16,
-                                              height: 16,
-                                              marginRight: 4,
-                                            }}
-                                          />
-                                          {t(c.translation_key, c.target)}
-                                          <SearchOutlined
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              navigate(location.pathname, {
-                                                state: {
-                                                  searchQuery: t(
-                                                    c.translation_key,
-                                                    c.target
-                                                  ),
-                                                },
-                                              });
-                                            }}
-                                            title={ut('ui.search.search')}
-                                            style={{
-                                              marginLeft: 6,
-                                              cursor: 'pointer',
-                                              fontSize: 13,
-                                              color: tokens.muted,
-                                              transition: 'color 0.2s',
-                                              verticalAlign: 'middle',
-                                            }}
-                                            onMouseEnter={(e) => {
-                                              e.currentTarget.style.color =
-                                                tokens.accent;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                              e.currentTarget.style.color =
-                                                tokens.muted;
-                                            }}
-                                          />
-                                        </span>
-                                      </td>
-                                      <td colSpan={detailColumnCount - 1} />
-                                    </tr>
-                                    <tr
+                                      {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
+                                    </span>
+                                    <span
                                       style={{
-                                        borderBottom: dark
-                                          ? '1px solid rgba(255,255,255,0.06)'
-                                          : '1px solid rgba(0,0,0,0.08)',
-                                        opacity: contentDone ? 0.4 : 1,
-                                        textDecoration: contentDone
-                                          ? 'line-through'
-                                          : 'none',
+                                        color: tokens.text,
+                                        minWidth: 0,
+                                        whiteSpace: 'nowrap',
                                       }}
                                     >
-                                      <td style={{ padding: '3px 8px' }} />
-                                      {hasDungeonType && (
-                                        <td
-                                          style={{
-                                            padding: '3px 8px',
-                                            color: dark ? '#42a5f5' : '#1565c0',
-                                            fontSize: 12,
-                                            height: 22,
-                                            minWidth: 0,
-                                            position: 'relative',
-                                            width: '1%',
-                                            whiteSpace: 'normal',
-                                          }}
-                                        >
-                                          <span
-                                            style={{
-                                              left: 8,
-                                              position: 'absolute',
-                                              top: 3,
-                                              whiteSpace: 'nowrap',
-                                            }}
-                                          >
-                                            {t(
-                                              c.dungeon_translation_key,
-                                              c.dungeon_type || ''
-                                            )}
-                                          </span>
-                                        </td>
-                                      )}
-                                      {hasLoot && (
-                                        <td
-                                          style={{
-                                            padding: '3px 8px',
-                                            color: dark ? '#FFB74D' : '#E65100',
-                                            fontSize: 12,
-                                            whiteSpace: 'nowrap',
-                                          }}
-                                        >
-                                          {c.loot_state ? '✓' : ''}
-                                        </td>
-                                      )}
-                                      {hasRarity && (
-                                        <td
-                                          style={{
-                                            padding: '3px 8px',
-                                            color: getRarityColor(
-                                              c.rarity || '',
-                                              dark
-                                            ),
-                                            fontSize: 12,
-                                            whiteSpace: 'nowrap',
-                                          }}
-                                        >
-                                          {t(
-                                            c.rarity_translation_key,
-                                            c.rarity || ''
-                                          )}
-                                        </td>
-                                      )}
-                                      <td
+                                      <input
+                                        type="checkbox"
+                                        checked={contentDone}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          lsSet(contentKey, !contentDone);
+                                          refresh();
+                                        }}
+                                        onChange={() => {}}
                                         style={{
-                                          padding: '3px 8px',
-                                          color: dark ? '#ccc' : '#555',
-                                          textAlign: 'center',
+                                          ...checkboxStyle,
+                                          width: 16,
+                                          height: 16,
+                                          marginRight: 4,
+                                        }}
+                                      />
+                                      {t(c.translation_key, c.target)}
+                                      <SearchOutlined
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          navigate(location.pathname, {
+                                            state: {
+                                              searchQuery: t(
+                                                c.translation_key,
+                                                c.target
+                                              ),
+                                            },
+                                          });
+                                        }}
+                                        title={ut('ui.search.search')}
+                                        style={{
+                                          marginLeft: 6,
+                                          cursor: 'pointer',
+                                          fontSize: 13,
+                                          color: tokens.muted,
+                                          transition: 'color 0.2s',
+                                          verticalAlign: 'middle',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.color =
+                                            tokens.accent;
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.color =
+                                            tokens.muted;
+                                        }}
+                                      />
+                                    </span>
+                                    {hasDungeonType && (
+                                      <span
+                                        style={{
+                                          color: dark ? '#42a5f5' : '#1565c0',
+                                          fontSize: 12,
                                           whiteSpace: 'nowrap',
                                         }}
                                       >
-                                        {c.count}
-                                      </td>
-                                    </tr>
-                                  </Fragment>
-                                );
-                              })}
-                            </tbody>
-                          </table>
+                                        {t(
+                                          c.dungeon_translation_key,
+                                          c.dungeon_type || ''
+                                        )}
+                                      </span>
+                                    )}
+                                    {hasLoot && (
+                                      <span
+                                        style={{
+                                          color: dark ? '#FFB74D' : '#E65100',
+                                          fontSize: 12,
+                                        }}
+                                      >
+                                        {c.loot_state ? '✓' : ''}
+                                      </span>
+                                    )}
+                                    {hasRarity && (
+                                      <span
+                                        style={{
+                                          color: getRarityColor(
+                                            c.rarity || '',
+                                            dark
+                                          ),
+                                          fontSize: 12,
+                                          whiteSpace: 'nowrap',
+                                        }}
+                                      >
+                                        {t(
+                                          c.rarity_translation_key,
+                                          c.rarity || ''
+                                        )}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div
+                                    style={{
+                                      ...rowStyle,
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      padding: '6px 8px',
+                                      color: dark ? '#ccc' : '#555',
+                                      whiteSpace: 'nowrap',
+                                    }}
+                                  >
+                                    {c.count}
+                                  </div>
+                                </Fragment>
+                              );
+                            })}
+                          </div>
                         </div>
                       );
                     })()}
