@@ -94,12 +94,13 @@ DarkFindV5/
 
 ## 详情页同步规则
 
-`DetailPage.tsx` 同时处理 items、monsters、props 三种实体详情页（通过 `/:page/:name` 路由）。`LootdropDetailPage.tsx` 是独立的掉落详情页。
+`DetailPage.tsx` 同时处理 items、monsters、props 三种实体详情页（通过 `/:page/:name` 路由）。`LootdropDetailPage.tsx` 是独立的掉落详情页；`DungeonModuleDetailPage.tsx`（`/dungeon_modules/:group/:name`）也是独立详情页。
 
 功能更新需同步：
 
 - `DetailPage.tsx` — items/monsters/props 共用，更新一处即覆盖三张表
 - `LootdropDetailPage.tsx` — 掉落详情页，功能独立但 UI 样式应保持一致
+- `DungeonModuleDetailPage.tsx` — 地图模块详情页；模块及坐标实体名称必须使用 `translation_key` + `t()`，分组面包屑复用 `formatGroupLabel()`
 
 爆率显示规则：
 
