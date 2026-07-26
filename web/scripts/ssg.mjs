@@ -80,9 +80,11 @@ cpSync(join(DATA, "meta.json"), join(publicJsonDir, "meta.json"));
 
 // ---- step 2: build SSR bundle ----
 console.log("[ssg] building SSR bundle…");
-execSync("VITE_SSR_BUILD=true node node_modules/.bin/vite build --mode production", { cwd: WEB, stdio: "pipe" });
+// Ant Design derives CSS hashes from NODE_ENV, which must match the client build.
+execSync("NODE_ENV=production VITE_SSR_BUILD=true node node_modules/.bin/vite build --mode production", { cwd: WEB, stdio: "pipe" });
 
 // ---- step 3: load SSR renderer ----
+process.env.NODE_ENV = "production";
 const ssrMod = await import(join(SSR_OUT, "ssr.cjs"));
 const render = ssrMod.render || ssrMod.default?.render;
 
