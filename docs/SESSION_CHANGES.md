@@ -1722,3 +1722,11 @@ if (typeof window !== "undefined") {
 - **变更文件**：`docs/plans/SSG_DETAIL_TEMPLATE.md` — 新增详情 SSG 空壳样板设计。
 - **关键逻辑/映射关系**：每种语言 `props/GoldChest` → 一次 SSR 样板 → 复制至同语言 items/monsters/props 详情路由；每页独立替换目标实体 title；`isDetailTemplate` → 首屏固定 `RareModule_1x1.webp` → CSR 请求当前 `page/name` JSON 后替换真实内容。
 - **范围限制**：`LootdropDetailPage` 数据结构独立，不复用 GoldChest 样板，待后续确定专用样板。
+# 2026-07-27 会话修改记录
+
+## feat: 详情页 GoldChest SSG 样板
+
+- **原因**：items、monsters、props 详情页逐路由 SSR 成本过高，且需要保留稳定的地图卡片首屏结构。
+- **变更文件**：`web/scripts/ssg.mjs`、`web/src/pages/DetailPage.tsx`、`web/src/components/NavBar.tsx`、`web/src/types/data.ts`。
+- **关键逻辑/映射关系**：每种语言仅 `render()` 一次 `/:lang/props/GoldChest`；其 HTML 复用于三类详情页，内联数据改写为 `目标 page/name -> GoldChest 样板 + isDetailTemplate`，而 `<title>`、canonical、hreflang 与 JSON preload 保持目标路由。样板模块仅保留 GoldChest 引用模块，`MapPanel` 固定 `RareModule_1x1.webp`；客户端等待 data version 后请求目标 JSON 并替换实体与真实地图。样板期间隐藏路由相关面包屑，确保复用 HTML 与目标 URL 的首个组件树一致。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run build` 通过；`http://localhost:8080/en/items/Ale/` HTTP 200，Playwright 无 hydration error 且页面更新为 Ale；lootdrop 回归无浏览器错误。

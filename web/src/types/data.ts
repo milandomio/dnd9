@@ -46,6 +46,7 @@ export interface ItemEntity {
   monsters: string[];
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  isDetailTemplate?: boolean;
 }
 
 export interface MonsterEntity {
@@ -54,6 +55,7 @@ export interface MonsterEntity {
   translation_key?: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  isDetailTemplate?: boolean;
 }
 
 export interface PropsEntity {
@@ -62,6 +64,7 @@ export interface PropsEntity {
   translation_key?: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  isDetailTemplate?: boolean;
 }
 
 export interface DungeonModule {

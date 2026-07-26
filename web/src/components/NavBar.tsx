@@ -18,6 +18,7 @@ import {
 } from '../i18n/locale';
 import { useLanguage, stripLangPrefix } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
+import { useSSRData } from '../context/SSRDataContext';
 
 const NAV_LABEL_KEYS: Record<string, string> = {
   items: 'ui.nav.items',
@@ -70,6 +71,7 @@ export default function NavBar() {
   const { dark, tokens, toggle } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
   const { t, ut } = useLocale();
+  const isDetailTemplate = useSSRData<boolean>('__detailTemplate') === true;
   const { index: searchIndex, loading: searchLoading } = useSearchIndex();
   const contentPath = stripLangPrefix(location.pathname);
   const parts = contentPath.split('/').filter(Boolean);
@@ -195,7 +197,7 @@ export default function NavBar() {
   };
 
   const breadcrumbs: { label: string; path: string }[] = [];
-  if (parts.length >= 2) {
+  if (!isDetailTemplate && parts.length >= 2) {
     for (let i = 0; i < parts.length - 1; i++) {
       const key = parts[i];
       const uiKey = NAV_LABEL_KEYS[key];
