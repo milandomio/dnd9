@@ -1,5 +1,12 @@
 # 2026-07-27 会话修改记录
 
+## fix: SSG 后导航栏 Ant Design 样式失效
+
+- **改动原因**：SSR 渲染时 Node 默认开发环境生成 `css-dev-only-*` 类名，生产客户端水合后使用 `css-*` 类名，内联的 Ant Design CSS 无法匹配，导致导航栏搜索框和语言下拉框失去组件样式。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SSG 的 SSR bundle 构建及运行时均固定 `NODE_ENV=production`，使服务端 `extractStyle()` 产出的 CSS 哈希与客户端 `ConfigProvider` 生成的 `css-plsjn` 类一致。
+- **验证**：`npm run build` 完成；Playwright 打开 `8080` 后语言下拉层为 `position: absolute`、深色背景、选项 `display: flex`，无控制台错误；HTTP 200。
+
 ## fix: 地图模块实体翻译键导出
 
 - **改动原因**：`Firedeep_Sinkhole` 的小型宝箱怪已使用官方 `Text_DesignData_Monster_Monster_Mimic_Small_Ornate`，但 locale 导出未扫描 `dungeon_modules_coords`，英文词典缺键后回退显示中文。
