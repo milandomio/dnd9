@@ -560,6 +560,8 @@ export default function QuestNPCDetailPage() {
                                         minWidth: 0,
                                         whiteSpace: 'nowrap',
                                         padding: '6px 8px',
+                                        position: 'relative',
+                                        zIndex: 1,
                                       }}
                                     >
                                       <input
@@ -690,6 +692,8 @@ export default function QuestNPCDetailPage() {
                                       padding: '6px 8px',
                                       color: dark ? '#ccc' : '#555',
                                       whiteSpace: 'nowrap',
+                                      position: 'relative',
+                                      zIndex: 0,
                                     }}
                                   >
                                     {c.count}

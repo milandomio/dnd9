@@ -1965,3 +1965,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：单条目标无 `dungeon_type` 且有 Rarity 时，将其作为 Target / Map 的第二行并在 Rarity 列保留空网格单元；Loot 内容居中并使用 `fontWeight: 900`。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: Count 不遮挡 Objective 搜索按钮
+
+- **改动原因**：Count 单元格覆盖 Target 末端的搜索图标时，点击图标不会触发搜索。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Target 单元格设置相对定位和 `zIndex: 1`，Count 单元格设置 `zIndex: 0`，使重叠区域的点击优先交给 Target 中的放大镜。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
