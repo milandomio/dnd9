@@ -1545,11 +1545,33 @@ export default function LootdropDetailPage() {
                                     0
                                   );
                                   if (names.length > 0) {
-                                    parts.push(
-                                      `(${totalVarPos}点选${varDots[0].variant_count})`
-                                    );
+                                    if (totalVarPos > 1) {
+                                      parts.push(
+                                        `(${totalVarPos}点选${varDots[0].variant_count})`
+                                      );
+                                    } else {
+                                      const nameStr = names
+                                        .map((entry) =>
+                                          t(entry.translation_key, entry.name)
+                                        )
+                                        .join(ut('ui.location.map_sep'));
+                                      parts.push(
+                                        `(${nameStr}${ut(
+                                          'ui.detail.pool_select'
+                                        )
+                                          .replace(
+                                            '{count}',
+                                            String(names.length)
+                                          )
+                                          .replace('{positions}', '1')})`
+                                      );
+                                    }
                                   } else {
-                                    parts.push(`(${totalVarPos}点)`);
+                                    parts.push(
+                                      varGps.length === 1
+                                        ? `(${totalVarPos}点选1)`
+                                        : `(${totalVarPos}点)`
+                                    );
                                   }
                                 }
                                 return parts.join(' ');
