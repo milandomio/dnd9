@@ -1847,3 +1847,9 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCPage.tsx`、`web/src/components/QuestSearchBar.tsx`。
 - **关键逻辑/映射关系**：列表页标题和 Helmet 元数据复用现有 UI 翻译键；非简体中文语言使用稳定的 `npc_name`，简体中文保持 `npc_name_display`；任务搜索框默认占位符改用 `ui.search.placeholder`，搜索结果 NPC 标签沿用相同语言映射。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；Playwright 访问 `http://127.0.0.1:8090/en/quest_npc`，标题为 `Quest NPCs | DarkFlashNav`，页面正文未检测到中文。
+
+## fix: SSG Ant Design body 查询 mock
+
+- **原因**：GitHub Actions 的 `dev` 构建在 SSG 阶段报 `document.body.querySelectorAll is not a function`，导致部署未发布到 `gh-pages-dev`。
+- **变更文件**：`web/src/ssr.tsx`。
+- **关键逻辑/映射关系**：为 Node SSR 的 `document.body` mock 补充 `querySelectorAll: () => []`，与既有 `document`、`document.head` 的空查询行为一致，使 `@ant-design/cssinjs` 初始化样式缓存时可安全扫描已有样式标签。

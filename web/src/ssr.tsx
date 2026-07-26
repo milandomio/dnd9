@@ -60,7 +60,11 @@ globalThis.document = {
     querySelectorAll: () => [],
     insertBefore: () => {},
   },
-  body: { appendChild: () => {}, removeChild: () => {} },
+  body: {
+    appendChild: () => {},
+    removeChild: () => {},
+    querySelectorAll: () => [],
+  },
 } as any;
 globalThis.navigator = { userAgent: 'node' } as any;
 globalThis.location = { href: '', pathname: '', search: '', hash: '' } as any;
