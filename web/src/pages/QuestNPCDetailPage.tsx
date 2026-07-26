@@ -465,8 +465,8 @@ export default function QuestNPCDetailPage() {
                               width: '100%',
                               borderCollapse: 'collapse',
                               fontSize: 14,
-                              tableLayout: 'fixed',
-                              wordBreak: 'break-word',
+                              tableLayout: 'auto',
+                              overflowWrap: 'anywhere',
                             }}
                           >
                             <thead>
@@ -482,7 +482,6 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.muted,
                                     fontSize: 13,
                                     whiteSpace: 'nowrap',
-                                    width: '2em',
                                   }}
                                 >
                                   {ut('ui.quest_detail.type')}
@@ -505,7 +504,6 @@ export default function QuestNPCDetailPage() {
                                       color: tokens.muted,
                                       fontSize: 13,
                                       whiteSpace: 'nowrap',
-                                      width: '5em',
                                     }}
                                   >
                                     {ut('ui.quest_detail.target_map')}
@@ -519,7 +517,6 @@ export default function QuestNPCDetailPage() {
                                       color: tokens.muted,
                                       fontSize: 13,
                                       whiteSpace: 'nowrap',
-                                      width: '3em',
                                     }}
                                   >
                                     {ut('ui.quest_detail.loot')}
@@ -533,7 +530,6 @@ export default function QuestNPCDetailPage() {
                                       color: tokens.muted,
                                       fontSize: 13,
                                       whiteSpace: 'nowrap',
-                                      width: '3em',
                                     }}
                                   >
                                     {ut('ui.quest_detail.rarity')}
@@ -546,7 +542,6 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.muted,
                                     fontSize: 13,
                                     whiteSpace: 'nowrap',
-                                    width: '2em',
                                   }}
                                 >
                                   {ut('ui.quest_detail.count')}
@@ -634,7 +629,7 @@ export default function QuestNPCDetailPage() {
                                           padding: '3px 8px',
                                           color: dark ? '#42a5f5' : '#1565c0',
                                           fontSize: 12,
-                                          whiteSpace: 'nowrap',
+                                          whiteSpace: 'normal',
                                         }}
                                       >
                                         {t(
