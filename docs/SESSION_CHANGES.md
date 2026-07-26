@@ -1749,3 +1749,9 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/components/NavBar.tsx`、`web/src/pages/DungeonModuleDetailPage.tsx`、`api/src/module_builder.py`、`docs/AGENT_REFERENCE.md`。
 - **关键逻辑/映射关系**：NavBar 删除 `GROUP_LABEL_MAP`，从 `dungeon_modules.json` 取对应模块并复用列表页的 `formatGroupLabel()`；`module_builder` 将 `entity_class.translation_key` 写进 `dungeon_modules_coords/*.json`（合并同名实体时保留 canonical key）；模块详情的分类按钮、地图 tooltip、调试表、实体统计统一通过 `t(translation_key, fallback)` 展示。`DungeonModuleDetailPage.tsx` 已标注为独立详情页，后续详情页 i18n 更新必须同步。
 - **验证**：`python api/main.py` 重建数据，`IceCave_Bridge.json` 内 Bandage/BlackRose 等实体含 `translation_key`；Black、Prettier 与 TypeScript 预检通过。
+
+## fix: 地图模块列表 SEO 标题 i18n
+
+- **原因**：`/en/dungeon_modules/` 的 Helmet `<title>` 硬编码中文，浏览器标签与 SEO 标题不会随语言路由变化。
+- **变更文件**：`web/src/pages/DungeonModulesPage.tsx`。
+- **关键逻辑/映射关系**：硬编码标题改为 `ut('ui.module.title') | DarkFlashNav`，复用页面 h1 与现有 10 语言 UI 字典。
