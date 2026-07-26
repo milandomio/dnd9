@@ -550,7 +550,6 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.muted,
                                     fontSize: 13,
                                     whiteSpace: 'nowrap',
-                                    width: '1%',
                                   }}
                                 >
                                   {ut('ui.quest_detail.count')}
@@ -731,7 +730,6 @@ export default function QuestNPCDetailPage() {
                                           color: dark ? '#ccc' : '#555',
                                           textAlign: 'center',
                                           whiteSpace: 'nowrap',
-                                          width: '1%',
                                         }}
                                       >
                                         {c.count}
