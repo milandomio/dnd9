@@ -1999,3 +1999,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：Rarity 目标名的清理正则从仅匹配 `(...)` 扩展为匹配 `(...)` 与 `（...）`，保持所有语言只显示物品主名称。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: 缩小详情 SSG 占位页
+
+- **改动原因**：详情页以 `GoldChest` SSR 作为样板，会将其坐标数据和 Ant Design 内联样式复制至全部物品、怪物及道具详情 HTML，单页约 208KB。
+- **变更文件**：`web/scripts/ssg.mjs`、`web/src/main.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：详情 SSG 改为纯静态壳，仅输出本地化标题、`#####` 模块名及三个 `RareModule_1x1.webp` 占位图；不再渲染 `GoldChest`、地图坐标或调试控件。`__detailTemplate` 标志使客户端以 `createRoot` 替换壳，再按当前路由请求实际 JSON。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run build` 通过；`GoldChest` 输出 3601B、内联样式 0B；预览首页和详情页 HTTP 200。
