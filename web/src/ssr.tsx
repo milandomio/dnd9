@@ -12,6 +12,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { ConfigProvider, theme } from 'antd';
+import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import { ThemeProvider } from './hooks/useTheme';
 import { DebugProvider } from './hooks/useDebug';
 import SSRDataContext from './context/SSRDataContext';
@@ -67,33 +68,40 @@ globalThis.getComputedStyle = () => ({}) as CSSStyleDeclaration;
 
 export function render(url: string, ssrDataMap: Record<string, any>) {
   const helmetContext = { helmet: {} } as any;
+  const styleCache = createCache();
 
   const html = renderToString(
-    <HelmetProvider context={helmetContext}>
-      <ThemeProvider>
-        <ConfigProvider
-          theme={{
-            algorithm: theme.darkAlgorithm,
-            token: { colorPrimary: '#1677ff' },
-          }}
-        >
-          <DebugProvider>
-            <SSRDataContext.Provider value={ssrDataMap}>
-              <StaticRouter location={url}>
-                <AppInner />
-              </StaticRouter>
-            </SSRDataContext.Provider>
-          </DebugProvider>
-        </ConfigProvider>
-      </ThemeProvider>
-    </HelmetProvider>
+    <StyleProvider cache={styleCache}>
+      <HelmetProvider context={helmetContext}>
+        <ThemeProvider>
+          <ConfigProvider
+            theme={{
+              algorithm: theme.darkAlgorithm,
+              token: { colorPrimary: '#1677ff' },
+            }}
+          >
+            <DebugProvider>
+              <SSRDataContext.Provider value={ssrDataMap}>
+                <StaticRouter location={url}>
+                  <AppInner />
+                </StaticRouter>
+              </SSRDataContext.Provider>
+            </DebugProvider>
+          </ConfigProvider>
+        </ThemeProvider>
+      </HelmetProvider>
+    </StyleProvider>
   );
 
   const { helmet } = helmetContext;
 
   return {
     html,
-    head: [helmet?.title?.toString() ?? '', helmet?.meta?.toString() ?? '']
+    head: [
+      extractStyle(styleCache),
+      helmet?.title?.toString() ?? '',
+      helmet?.meta?.toString() ?? '',
+    ]
       .join('')
       .trim(),
   };

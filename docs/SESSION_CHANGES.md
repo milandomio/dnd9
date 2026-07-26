@@ -1755,3 +1755,16 @@ if (typeof window !== "undefined") {
 - **原因**：`/en/dungeon_modules/` 的 Helmet `<title>` 硬编码中文，浏览器标签与 SEO 标题不会随语言路由变化。
 - **变更文件**：`web/src/pages/DungeonModulesPage.tsx`。
 - **关键逻辑/映射关系**：硬编码标题改为 `ut('ui.module.title') | DarkFlashNav`，复用页面 h1 与现有 10 语言 UI 字典。
+
+## fix: SSG 首屏 Ant Design 下拉样式
+
+- **原因**：SSG SSR bundle 使用 `--mode ssr` 编译出开发态 Ant Design class hash，且没有把 CSS-in-JS 样式写入 HTML；生产页面的语言下拉栏首次显示为未样式化标签，交互后才恢复正常。
+- **变更文件**：`web/scripts/ssg.mjs`、`web/vite.config.ts`、`web/src/ssr.tsx`。
+- **关键逻辑/映射关系**：SSR 构建改为 `VITE_SSR_BUILD=true` + production mode；`StyleProvider(createCache())` 收集 Ant Design 样式，`extractStyle()` 注入每页 head。SSR 与客户端共享生产 class hash，首次渲染即可应用下拉样式。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run build` 通过；Playwright 验证 `http://localhost:8080/` 的 `.ant-select` 点击前后均为 24px，且无浏览器水合错误。
+
+## fix: SSG 注入 Ant Design 样式
+
+- **原因**：SSR 构建未使用生产模式且未提取 Ant Design CSS-in-JS 样式，SSG 页面无法正确注入组件样式。
+- **变更文件**：`web/scripts/ssg.mjs`、`web/src/ssr.tsx`、`web/vite.config.ts`。
+- **关键逻辑/映射关系**：SSG 子构建改为 `VITE_SSR_BUILD=true` 的 production mode；Vite 以环境变量识别 SSR bundle；SSR 通过 `StyleProvider`/`extractStyle` 采集并将 Ant Design 样式写入页面 head。
