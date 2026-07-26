@@ -98,7 +98,7 @@ export default function DungeonModulesPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>地图模块表 | 越来越黑暗闪电指南 DarkFlashNav</title>
+        <title>{ut('ui.module.title')} | DarkFlashNav</title>
         <meta
           name="description"
           content="地图模块查询——按地图分组查看所有模块。"
