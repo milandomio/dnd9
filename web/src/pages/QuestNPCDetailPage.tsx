@@ -584,6 +584,8 @@ export default function QuestNPCDetailPage() {
                                           padding: '3px 8px',
                                           color: tokens.text,
                                           whiteSpace: 'nowrap',
+                                          overflowWrap: 'normal',
+                                          wordBreak: 'keep-all',
                                         }}
                                       >
                                         <input
