@@ -733,8 +733,8 @@ export default function QuestNPCDetailPage() {
                           width: '100%',
                           borderCollapse: 'collapse',
                           fontSize: 14,
-                          tableLayout: 'fixed',
-                          wordBreak: 'break-word',
+                          tableLayout: 'auto',
+                          overflowWrap: 'anywhere',
                         }}
                       >
                         <thead>
@@ -750,7 +750,6 @@ export default function QuestNPCDetailPage() {
                                 color: tokens.muted,
                                 fontSize: 13,
                                 whiteSpace: 'nowrap',
-                                width: '4em',
                               }}
                             >
                               {ut('ui.quest_detail.type')}
@@ -767,12 +766,11 @@ export default function QuestNPCDetailPage() {
                             </th>
                             <th
                               style={{
-                                textAlign: 'left',
+                                textAlign: 'center',
                                 padding: '4px 8px',
                                 color: tokens.muted,
                                 fontSize: 13,
                                 whiteSpace: 'nowrap',
-                                width: '2em',
                               }}
                             >
                               {ut('ui.quest_detail.count')}
@@ -817,6 +815,7 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     padding: '3px 8px',
                                     color: dark ? '#ccc' : '#555',
+                                    textAlign: 'center',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
@@ -864,6 +863,7 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     padding: '3px 8px',
                                     color: dark ? '#ccc' : '#555',
+                                    textAlign: 'center',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
