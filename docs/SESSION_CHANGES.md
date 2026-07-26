@@ -1,5 +1,11 @@
 # 2026-07-26 会话修改记录
 
+## 废弃 PERF 变体爆率缓存计划
+
+- **原因**：`docs/PERF_VARIANT_DROP_RATE_CACHE.md` 原「待执行」微缓存方案；现已有 `_variant_rate_cache`，计划仅减冷路径 dict/后缀查找，外层循环不变，收益不高
+- **变更文件**：`docs/PERF_VARIANT_DROP_RATE_CACHE.md` — 状态改为 **废弃**，写明废弃原因；正文保留备查
+- **未改**：`api/src/drop_rate.py` 等代码
+
 ## HARDCODED 全量 10 语 i18n 计划（仅文档，未执行代码）
 
 - **原因**：`HARDCODED_TRANSLATIONS` 仅中文；空 `translation_key` 导致 en 等页 fallback 中文；用户担心扩 10 语时键冲突
