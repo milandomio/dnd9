@@ -1930,3 +1930,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：Objective 外层改为 `minmax(0, 1fr) 5em` 两列网格；左列显示 Type、Target、Map 及可选 Loot/Rarity，右列的 Count 表头与每条数值均使用居中对齐。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: Objective 详情列对齐列头
+
+- **改动原因**：Target 下方的 Map、Loot、Rarity 使用弹性布局，内容未与对应列头对齐。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：详情行复用表头的动态 CSS Grid 列定义；Target 的第二行空位固定为第二列，Map、Loot、Rarity 显式定位到第三列及其后续列。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
