@@ -497,6 +497,7 @@ export default function QuestNPCDetailPage() {
                                     padding: '4px 8px',
                                     color: tokens.muted,
                                     fontSize: 13,
+                                    width: '1%',
                                   }}
                                 >
                                   {ut('ui.quest_detail.target')}
@@ -508,6 +509,7 @@ export default function QuestNPCDetailPage() {
                                       padding: '4px 8px',
                                       color: tokens.muted,
                                       fontSize: 13,
+                                      width: '1%',
                                       whiteSpace: 'nowrap',
                                     }}
                                   >
@@ -584,58 +586,71 @@ export default function QuestNPCDetailPage() {
                                         style={{
                                           padding: '3px 8px',
                                           color: tokens.text,
+                                          height: 22,
+                                          minWidth: 0,
+                                          position: 'relative',
+                                          width: '1%',
                                           whiteSpace: 'nowrap',
                                           overflowWrap: 'normal',
                                           wordBreak: 'keep-all',
                                         }}
                                       >
-                                        <input
-                                          type="checkbox"
-                                          checked={contentDone}
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            lsSet(contentKey, !contentDone);
-                                            refresh();
-                                          }}
-                                          onChange={() => {}}
+                                        <span
                                           style={{
-                                            ...checkboxStyle,
-                                            width: 16,
-                                            height: 16,
-                                            marginRight: 4,
+                                            left: 8,
+                                            position: 'absolute',
+                                            top: 3,
+                                            whiteSpace: 'nowrap',
                                           }}
-                                        />
-                                        {t(c.translation_key, c.target)}
-                                        <SearchOutlined
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            navigate(location.pathname, {
-                                              state: {
-                                                searchQuery: t(
-                                                  c.translation_key,
-                                                  c.target
-                                                ),
-                                              },
-                                            });
-                                          }}
-                                          title={ut('ui.search.search')}
-                                          style={{
-                                            marginLeft: 6,
-                                            cursor: 'pointer',
-                                            fontSize: 13,
-                                            color: tokens.muted,
-                                            transition: 'color 0.2s',
-                                            verticalAlign: 'middle',
-                                          }}
-                                          onMouseEnter={(e) => {
-                                            e.currentTarget.style.color =
-                                              tokens.accent;
-                                          }}
-                                          onMouseLeave={(e) => {
-                                            e.currentTarget.style.color =
-                                              tokens.muted;
-                                          }}
-                                        />
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            checked={contentDone}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              lsSet(contentKey, !contentDone);
+                                              refresh();
+                                            }}
+                                            onChange={() => {}}
+                                            style={{
+                                              ...checkboxStyle,
+                                              width: 16,
+                                              height: 16,
+                                              marginRight: 4,
+                                            }}
+                                          />
+                                          {t(c.translation_key, c.target)}
+                                          <SearchOutlined
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              navigate(location.pathname, {
+                                                state: {
+                                                  searchQuery: t(
+                                                    c.translation_key,
+                                                    c.target
+                                                  ),
+                                                },
+                                              });
+                                            }}
+                                            title={ut('ui.search.search')}
+                                            style={{
+                                              marginLeft: 6,
+                                              cursor: 'pointer',
+                                              fontSize: 13,
+                                              color: tokens.muted,
+                                              transition: 'color 0.2s',
+                                              verticalAlign: 'middle',
+                                            }}
+                                            onMouseEnter={(e) => {
+                                              e.currentTarget.style.color =
+                                                tokens.accent;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                              e.currentTarget.style.color =
+                                                tokens.muted;
+                                            }}
+                                          />
+                                        </span>
                                       </td>
                                       <td colSpan={detailColumnCount - 1} />
                                     </tr>
@@ -657,13 +672,26 @@ export default function QuestNPCDetailPage() {
                                             padding: '3px 8px',
                                             color: dark ? '#42a5f5' : '#1565c0',
                                             fontSize: 12,
+                                            height: 22,
+                                            minWidth: 0,
+                                            position: 'relative',
+                                            width: '1%',
                                             whiteSpace: 'normal',
                                           }}
                                         >
-                                          {t(
-                                            c.dungeon_translation_key,
-                                            c.dungeon_type || ''
-                                          )}
+                                          <span
+                                            style={{
+                                              left: 8,
+                                              position: 'absolute',
+                                              top: 3,
+                                              whiteSpace: 'nowrap',
+                                            }}
+                                          >
+                                            {t(
+                                              c.dungeon_translation_key,
+                                              c.dungeon_type || ''
+                                            )}
+                                          </span>
                                         </td>
                                       )}
                                       {hasLoot && (
