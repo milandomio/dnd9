@@ -46,3 +46,7 @@
 
 - **方案 A**：lootdrop 虚拟实体 — **采用并加固**
 - **方案 B**：DB 虚拟 spawner — 废弃
+
+## 后续
+
+坐标混装与 100% 误赋：**不在本计划范围**。见 `docs/plans/PLAN_GOLDCHEST_SPECIAL_SPLIT.md`（`GoldChest_special` 独立 props 页）。

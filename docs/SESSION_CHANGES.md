@@ -1,5 +1,12 @@
 # 2026-07-26 会话修改记录
 
+## 计划：黄金宝箱(特殊) 拆独立 props 页
+
+- **原因**：`props/GoldChest` 混装 direct(100%) 与 `ChestSpecial_UnderSea`(17.5%)；gdi 虽列出「(海底)黄金宝箱(特殊)」但坐标/ref 仍绑整页，lootdrop 引用后爆率与分类按钮错乱
+- **方案**：仿宝藏堆/超级宝藏堆，导出合成实体 `props/GoldChest_special`（仅 special 坐标）；主页去掉 special 点与 gdi 行；lootdrop ref 指向新页
+- **变更文件**：`docs/plans/PLAN_GOLDCHEST_SPECIAL_SPLIT.md`（状态：待执行）
+- **未改代码**
+
 ## P002 降级：lootdrop gdi ↔ monsters 对齐（容器生成器子类）
 
 - **原因**：`group_drop_info` 有子类翻译（如「黄金宝箱(特殊)」）但 `monsters` 缺失 → 前端参考爆率/图例被滤掉；原计划「实体详情页」过时且不做
