@@ -474,6 +474,14 @@ export default function QuestNPCDetailPage() {
                               overflowWrap: 'anywhere',
                             }}
                           >
+                            <colgroup>
+                              <col />
+                              <col />
+                              {hasDungeonType && <col />}
+                              {hasLoot && <col />}
+                              {hasRarity && <col />}
+                              <col style={{ width: '5em' }} />
+                            </colgroup>
                             <thead>
                               <tr
                                 style={{
