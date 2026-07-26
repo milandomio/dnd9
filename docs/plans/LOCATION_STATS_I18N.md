@@ -1,7 +1,7 @@
 # LocationStats / 地图模块名 i18n 缺口分析
 
 > 创建日期: 2026-07-26  
-> 状态: 待修复  
+> 状态: 已修复  
 > 复现 URL: `http://localhost:8090/en/lootdrops/WarMaul_5001/`
 
 ---

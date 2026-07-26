@@ -1,5 +1,14 @@
 # 2026-07-26 会话修改记录
 
+## fix: LocationStats / 底部地图模块名 i18n
+
+- **原因**：`/en/lootdrops/...` 底部「位置统计」「包含地图」硬编码中文；模块名用 `.translation` 未 `t(translation_key)`
+- **变更文件**：
+  - `web/src/components/LocationStats.tsx` — `useLocale` + `mapKeys`/`modules`，`ui.location.*`
+  - `web/src/i18n/uiLocale.ts` — 10 语言 `pos_stat` / `map_includes` / `map_sep`
+  - `DetailPage` / `LootdropDetailPage` / `QuestItemGroupPage` — 调用改造；h3/mapLabel 用 `t`
+- **文档**：`docs/plans/LOCATION_STATS_I18N.md` 状态已修复
+
 ## 分析：LocationStats / 底部地图模块名 i18n 缺口
 
 - **原因**：`/en/lootdrops/WarMaul_5001/` 底部「位置统计」与「包含地图」模块名未走 i18n
