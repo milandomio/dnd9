@@ -1,5 +1,13 @@
 # 2026-07-26 会话修改记录
 
+## fix: 开发模式清除 PWA 旧数据缓存
+
+- **原因**：`SWUpdateBanner` 在 Vite dev 模式仍注册 `/sw.js`；残留生产 Workbox 以 `StaleWhileRevalidate` 返回旧 `FlatChestLarge.json`/locale，同日数据重建后页面首次请求仍显示旧中文。
+- **变更文件**：
+  - `web/src/components/SWUpdateBanner.tsx` — dev 模式不注册 Service Worker，主动注销残留注册并删除 `df5-*` 缓存；生产模式维持原 PWA 更新流程。
+- **关键逻辑/映射关系**：开发环境 `import.meta.env.DEV` → unregister SW + delete `df5-*` → 浏览器直接读取 Vite 当前 JSON；仅当前已被旧 SW 控制的页面需刷新一次释放控制权。
+- **验证**：`localhost:8090/data/json/props/FlatChestLarge.json` 已返回 `translation_key` 和 `label_type=special`；英语 locale 返回 `Flat Chest` / `Normal`。
+
 ## fix: 派生宝箱参考爆率名称 i18n
 
 - **原因**：`FlatChestLarge` 等 props 的参考爆率名称由生成端拼接「海底 / 特殊 / 随机 / 组 / 可能上锁」，完整中文组合名没有 Game.json key，英语页面显示「方型宝箱(特殊)」。
