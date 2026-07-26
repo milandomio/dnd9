@@ -1,5 +1,15 @@
 # 2026-07-26 会话修改记录
 
+## 分析：LocationStats / 底部地图模块名 i18n 缺口
+
+- **原因**：`/en/lootdrops/WarMaul_5001/` 底部「位置统计」与「包含地图」模块名未走 i18n
+- **根因**：
+  1. `LocationStats.tsx` 硬编码中文，未用 `ut`
+  2. 调用方 `modules.get(k)?.translation` 未 `t(translation_key)`（地图 h3 已正确）
+  3. `ui.module_detail.pos_stat` / `ui.quest_group.*` 已存在但未统一到公共组件
+- **变更文件**：`docs/plans/LOCATION_STATS_I18N.md`（分析 + 修复方案，状态待修复）
+- **涉及**：DetailPage / LootdropDetailPage / QuestItemGroupPage + debug mapLabel
+
 ## fix: DetailPage labelMatch 非对称匹配（GoldChest_special 空白）
 
 - **原因**：`props/GoldChest_special` 页空白；coord label=`ChestSpecial_UnderSea` 含 UnderSea，GDI translation=`黄金宝箱(特殊)` 无海底；对称 `!eF && lF` 全否
