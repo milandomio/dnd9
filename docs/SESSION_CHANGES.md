@@ -1951,3 +1951,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：Objective 的列头与每条内容行共享 `7em` 的 Type 列宽，Target、Loot、Rarity 在所有行从相同位置开始。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: Objective 自动共享列宽
+
+- **改动原因**：固定 Type 列宽在内容较短时占用过多空间，无法根据实际最长值自适应。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Objective 容器直接定义 CSS Grid 的 `auto` Type 列；列头与所有内容单元格通过 `display: contents` 参与同一网格，最长 Type 值自动撑开该列并同步对齐全部行。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。

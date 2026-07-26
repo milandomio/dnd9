@@ -463,33 +463,54 @@ export default function QuestNPCDetailPage() {
                           <div
                             style={{
                               display: 'grid',
-                              gridTemplateColumns: 'minmax(0, 1fr) 5em',
+                              gridTemplateColumns: `auto minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''} 5em`,
                               fontSize: 14,
                             }}
                           >
                             <div
                               style={{
-                                display: 'grid',
-                                gridTemplateColumns: `7em minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
-                                gap: '4px 16px',
-                                alignItems: 'center',
-                                padding: '4px 8px',
-                                borderBottom: `1px solid ${tokens.border}`,
+                                display: 'contents',
                                 color: tokens.muted,
                                 fontSize: 13,
                                 fontWeight: 'bold',
                               }}
                             >
-                              <span>{ut('ui.quest_detail.type')}</span>
-                              <span>
+                              <span
+                                style={{
+                                  padding: '4px 8px',
+                                  borderBottom: `1px solid ${tokens.border}`,
+                                }}
+                              >
+                                {ut('ui.quest_detail.type')}
+                              </span>
+                              <span
+                                style={{
+                                  padding: '4px 8px',
+                                  borderBottom: `1px solid ${tokens.border}`,
+                                }}
+                              >
                                 {ut('ui.quest_detail.target')} /{' '}
                                 {ut('ui.quest_detail.target_map')}
                               </span>
                               {hasLoot && (
-                                <span>{ut('ui.quest_detail.loot')}</span>
+                                <span
+                                  style={{
+                                    padding: '4px 8px',
+                                    borderBottom: `1px solid ${tokens.border}`,
+                                  }}
+                                >
+                                  {ut('ui.quest_detail.loot')}
+                                </span>
                               )}
                               {hasRarity && (
-                                <span>{ut('ui.quest_detail.rarity')}</span>
+                                <span
+                                  style={{
+                                    padding: '4px 8px',
+                                    borderBottom: `1px solid ${tokens.border}`,
+                                  }}
+                                >
+                                  {ut('ui.quest_detail.rarity')}
+                                </span>
                               )}
                             </div>
                             <div
@@ -520,27 +541,26 @@ export default function QuestNPCDetailPage() {
                                 <Fragment key={i}>
                                   <div
                                     style={{
-                                      ...rowStyle,
-                                      display: 'grid',
-                                      gridTemplateColumns: `7em minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
-                                      gap: '4px 16px',
-                                      alignItems: 'center',
-                                      padding: '6px 8px',
+                                      display: 'contents',
                                     }}
                                   >
                                     <span
                                       style={{
+                                        ...rowStyle,
                                         color: dark ? '#ccc' : '#555',
                                         whiteSpace: 'nowrap',
+                                        padding: '6px 8px',
                                       }}
                                     >
                                       {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
                                     </span>
                                     <div
                                       style={{
+                                        ...rowStyle,
                                         color: tokens.text,
                                         minWidth: 0,
                                         whiteSpace: 'nowrap',
+                                        padding: '6px 8px',
                                       }}
                                     >
                                       <input
@@ -607,8 +627,10 @@ export default function QuestNPCDetailPage() {
                                     {hasLoot && (
                                       <span
                                         style={{
+                                          ...rowStyle,
                                           color: dark ? '#FFB74D' : '#E65100',
                                           fontSize: 12,
+                                          padding: '6px 8px',
                                         }}
                                       >
                                         {c.loot_state ? '✓' : ''}
@@ -617,12 +639,14 @@ export default function QuestNPCDetailPage() {
                                     {hasRarity && (
                                       <span
                                         style={{
+                                          ...rowStyle,
                                           color: getRarityColor(
                                             c.rarity || '',
                                             dark
                                           ),
                                           fontSize: 12,
                                           whiteSpace: 'nowrap',
+                                          padding: '6px 8px',
                                         }}
                                       >
                                         {t(
