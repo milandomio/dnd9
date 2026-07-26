@@ -42,7 +42,7 @@ interface LootdropCoord {
   group_parent?: string;
   sub_group_parent?: string;
   sub_pool_size?: number;
-  sub_pool_names?: string[];
+  sub_pool_entries?: VariantNameEntry[];
   quality?: string;
 }
 
@@ -450,7 +450,7 @@ export default function LootdropDetailPage() {
         group_parent?: string;
         sub_group_parent?: string;
         sub_pool_size?: number;
-        sub_pool_names?: string[];
+        sub_pool_entries?: VariantNameEntry[];
         quality?: string;
       }[];
     }
@@ -476,7 +476,7 @@ export default function LootdropDetailPage() {
         group_parent: c.group_parent,
         sub_group_parent: c.sub_group_parent,
         sub_pool_size: c.sub_pool_size,
-        sub_pool_names: c.sub_pool_names,
+        sub_pool_entries: c.sub_pool_entries,
         quality: c.quality,
       });
     });
@@ -1467,7 +1467,7 @@ export default function LootdropDetailPage() {
                                   {
                                     dots: typeof mDots;
                                     poolSize: number;
-                                    poolNames: string[];
+                                    poolEntries: VariantNameEntry[];
                                   }
                                 >();
                                 for (const d of mDots) {
@@ -1479,7 +1479,7 @@ export default function LootdropDetailPage() {
                                     linkerGroups.set(key, {
                                       dots: [],
                                       poolSize: d.sub_pool_size ?? 0,
-                                      poolNames: d.sub_pool_names ?? [],
+                                      poolEntries: d.sub_pool_entries ?? [],
                                     });
                                   }
                                   linkerGroups.get(key)!.dots.push(d);
@@ -1520,7 +1520,7 @@ export default function LootdropDetailPage() {
                                     g.dots.map((d) => `${d.x},${d.y},${d.z}`)
                                   ).size;
                                   parts.push(
-                                    `(${g.poolNames.join('、')}${g.poolSize}种选${uniquePos}${uniquePos > 1 ? ` · ${uniquePos}点选1` : ''})`
+                                    `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}` : ''})`
                                   );
                                 }
                                 const dedupedReg = dedupPos(regDots);
