@@ -29,6 +29,7 @@ export interface Coord {
 
 export interface GroupDropInfo {
   translation: string;
+  translation_key?: string;
   spawn_rate: number;
   spawn_rates?: Record<string, number>;
   drop_rates: Record<string, number>;

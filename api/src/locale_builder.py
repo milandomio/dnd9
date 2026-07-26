@@ -6,6 +6,14 @@ from pathlib import Path
 from config import SUPERHOARD_I18N, SUPERHOARD_I18N_KEY
 from db._helpers import discover_languages
 
+# Always export: drop-rate mode labels (not entity translation_keys)
+FILTER_MODE_LOCALE_KEYS = (
+    "Text_Code_DCPartyFinderCreateWidget_FilterModePvE",
+    "Text_Code_DCPartyFinderCreateWidget_FilterModeNormal",
+    "Text_Code_DCPartyFinderCreateWidget_FilterModeHighRoller",
+    "Text_Code_DCPartyFinderCreateWidget_FilterModeSquireRoyale",
+)
+
 
 def _collect_keys(obj, used: set[str]):
     """Recursively collect translation_key values from a JSON structure."""
@@ -72,6 +80,7 @@ def build_locale_files(db, output_dir: Path) -> list[str]:
 
     used_keys = _load_used_keys(output_dir)
     used_keys.add(SUPERHOARD_I18N_KEY)
+    used_keys.update(FILTER_MODE_LOCALE_KEYS)
 
     exported: list[str] = []
     for lang in discover_languages():

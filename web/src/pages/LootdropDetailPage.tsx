@@ -6,6 +6,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
+import { dropRateModeLabel } from '../utils/dropRate';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import SectionHeader from '../components/SectionHeader';
 import VariantSwitch from '../components/VariantSwitch';
@@ -21,6 +22,7 @@ import {
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
+import ReferenceDropRates from '../components/ReferenceDropRates';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -1052,52 +1054,22 @@ export default function LootdropDetailPage() {
                     {formatGroupLabel(groupItems[0]?.mod, t, ut) || groupName}
                   </span>
                   {data?.group_drop_info?.[groupName] && (
-                    <span
+                    <ReferenceDropRates
+                      entries={data.group_drop_info[groupName]!.filter(
+                        (info) => {
+                          const m = resolvedMonsters.find(
+                            (x) => x.translation === info.translation
+                          );
+                          return m && !hidden.has(m.translation);
+                        }
+                      )}
+                      modeFilter={modeFilter}
                       style={{
                         fontSize: 13,
                         fontWeight: 'normal',
                         color: tokens.muted,
                       }}
-                    >
-                      参考爆率：
-                      {data.group_drop_info[groupName]!.filter((info) => {
-                        const m = resolvedMonsters.find(
-                          (x) => x.translation === info.translation
-                        );
-                        return m && !hidden.has(m.translation);
-                      }).map((info, gi) => (
-                        <span
-                          key={gi}
-                          style={{
-                            display: 'inline-block',
-                            marginRight: 8,
-                          }}
-                        >
-                          {t(info.translation_key, info.translation)}
-                          {info.spawn_rates &&
-                          Object.keys(info.spawn_rates).length > 1
-                            ? Object.entries(info.drop_rates)
-                                .filter(
-                                  ([k]) => !modeFilter || k === modeFilter
-                                )
-                                .map(([mode, rate]) => {
-                                  const sRate = info.spawn_rates![mode];
-                                  return sRate != null
-                                    ? `[${mode}:${sRate}%×${rate}%]`
-                                    : `[${mode}:${rate}%]`;
-                                })
-                                .join('')
-                            : `${info.spawn_rate}%${Object.entries(
-                                info.drop_rates
-                              )
-                                .filter(
-                                  ([k]) => !modeFilter || k === modeFilter
-                                )
-                                .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                                .join('')}`}
-                        </span>
-                      ))}
-                    </span>
+                    />
                   )}
                 </div>
               </div>
@@ -1480,7 +1452,10 @@ export default function LootdropDetailPage() {
                               >
                                 (
                                 {Object.entries(filteredDr!)
-                                  .map(([mode, rate]) => `[${mode}:${rate}%]`)
+                                  .map(
+                                    ([mode, rate]) =>
+                                      `[${dropRateModeLabel(mode, t, ut)}:${rate}%]`
+                                  )
                                   .join('')}
                                 )
                               </span>
