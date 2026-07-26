@@ -21,7 +21,9 @@ export default function Disclaimer() {
   };
 
   const formattedDate = date
-    ? `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
+    ? /^\d{8}$/.test(date)
+      ? `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
+      : new Date(Number(date) * 1000).toISOString().slice(0, 10)
     : '';
 
   return (

@@ -1,5 +1,11 @@
 # 2026-07-27 会话修改记录
 
+## fix: 地图生成日期按时间戳正确显示
+
+- **改动原因**：SSG 写入的 `meta.json.dataDate` 为 Unix 秒级时间戳（如 `1785084775`），免责声明组件误按 `YYYYMMDD` 切片，显示为 `1785-08-47`。
+- **变更文件**：`web/src/components/Disclaimer.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：8 位 `YYYYMMDD` 继续直接格式化；其他值按 Unix 秒级时间戳转换为 ISO 日期，`1785084775` → `2026-07-26`。
+
 ## fix: 地图模块下无运算时不重复展示爆率
 
 - **改动原因**：模块下 `ReferenceDropRates` 数据来自分组级 `group_drop_info`；无变体时与分组「参考爆率」完全相同却重复显示（如 AncientStingray）。
