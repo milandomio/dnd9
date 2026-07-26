@@ -92,9 +92,24 @@ const index = readJSON(join(DATA, "index.json"));
 const moduleData = readJSON(join(DATA, "dungeon_modules.json"));
 
 const PAGES = ["items", "monsters", "props", "lootdrops"];
+const DETAIL_TEMPLATE_PAGES = new Set(["items", "monsters", "props"]);
 const SINGLE = ["explore", "quest_items", "quest_npc", "dungeon_modules"];
 const DEFAULT_LANG = "zh-Hans";
 const LANGS = ["zh-Hans", "en", "de", "es", "fr", "ja", "ko", "pt-BR", "ru", "zh-Hant"];
+const detailTemplateEntity = {
+  ...readJSON(join(DATA, "props", "GoldChest.json")),
+  isDetailTemplate: true,
+};
+const detailTemplateMaps = new Set(detailTemplateEntity.coords.map((coord) => coord.map));
+const detailTemplateModules = moduleData.filter((module) =>
+  [module.name, ...(module.names || []), module.sl_base_name, ...(module.all_sl_base_names || [])]
+    .some((name) => detailTemplateMaps.has(name))
+);
+const detailTemplateData = {
+  entity: detailTemplateEntity,
+  modules: detailTemplateModules,
+  isDetailTemplate: true,
+};
 
 // Quest items groups
 const questGroups = readJSON(join(DATA, "quest_items_groups.json"));
@@ -337,6 +352,25 @@ console.log(`[ssg] mode=${QUICK ? "quick" : "full"} — ${routes.length} routes`
 const ROOT_MARKER = '<div id="root">';
 const HEAD_CLOSE = "</head>";
 const SSR_SCRIPT_RE = /<script>window\.__SSR_DATA__=(.*?)<\/script>/s;
+const detailTemplateRenderCache = new Map();
+
+function isTemplateDetailRoute(path) {
+  const match = path.match(/^\/(?:[^/]+\/)?([^/]+)\/[^/]+$/);
+  return Boolean(match && DETAIL_TEMPLATE_PAGES.has(match[1]));
+}
+
+function renderDetailTemplate(lang) {
+  if (!detailTemplateRenderCache.has(lang)) {
+    detailTemplateRenderCache.set(
+      lang,
+      render(`/${lang}/props/GoldChest`, {
+        "props/GoldChest": detailTemplateData,
+        __detailTemplate: true,
+      })
+    );
+  }
+  return detailTemplateRenderCache.get(lang);
+}
 
 /**
  * Map route path to its data key in ssrDataMap.
@@ -441,6 +475,25 @@ function localizePage(page, route, routeData, localeDict, lang) {
   return out;
 }
 
+function detailPreloads(urlPath) {
+  const detailMatch = urlPath.match(/^\/(?:[^/]+\/)?(items|monsters|props)\/(.+)$/);
+  if (!detailMatch) return "";
+  return `    <link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailMatch[2]}.json" as="fetch" crossorigin="anonymous">\n`;
+}
+
+function createTemplateDetailPage(route, dataKey, routeData, lang, localeDict) {
+  const urlPath = route.path;
+  const canonical = urlPath === "/" ? "/" : urlPath.replace(/\/?$/, "/");
+  const templated = template.replace("</title>", `</title>\n    <link rel="canonical" href="${canonical}">\n    <base href="${baseHrefFromFile(route.file)}">`);
+  const result = renderDetailTemplate(lang);
+  const payload = { [dataKey]: detailTemplateData, __detailTemplate: true };
+  const page = templated
+    .replace(/<title>[^<]*<\/title>\s*/, "")
+    .replace(ROOT_MARKER, `<div id="root">${result.html}`)
+    .replace(HEAD_CLOSE, `${detailPreloads(urlPath)}${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`);
+  return localizePage(page, route, routeData, localeDict, lang);
+}
+
 for (let i = 0; i < routes.length; i++) {
   const r = routes[i];
   const outPath = join(DIST, r.file);
@@ -456,19 +509,19 @@ for (let i = 0; i < routes.length; i++) {
 
   // Detail-specific preload links (versioned paths)
   const detailPreloads = [];
-  const entityMatch = urlPath.match(/^\/(items|monsters|props)\/(.+)$/);
+  const entityMatch = urlPath.match(/^\/(?:[^/]+\/)?(items|monsters|props)\/(.+)$/);
   if (entityMatch) {
     detailPreloads.push(
       `<link rel="preload" href="/data/${shortVer}/json/${entityMatch[1]}/${entityMatch[2]}.json" as="fetch" crossorigin="anonymous">`
     );
   }
-  const lootdropMatch = urlPath.match(/^\/lootdrops\/(.+)$/);
+  const lootdropMatch = urlPath.match(/^\/(?:[^/]+\/)?lootdrops\/(.+)$/);
   if (lootdropMatch) {
     detailPreloads.push(
       `<link rel="preload" href="/data/${shortVer}/json/lootdrops/${lootdropMatch[1]}.json" as="fetch" crossorigin="anonymous">`
     );
   }
-  const moduleMatch = urlPath.match(/^\/dungeon_modules\/[^/]+\/(.+)$/);
+  const moduleMatch = urlPath.match(/^\/(?:[^/]+\/)?dungeon_modules\/[^/]+\/(.+)$/);
   if (moduleMatch) {
     detailPreloads.push(
       `<link rel="preload" href="/data/${shortVer}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">`,
@@ -487,6 +540,8 @@ for (let i = 0; i < routes.length; i++) {
 <meta http-equiv="refresh" content="0;url=${r.redirect}"></head>
 <body><script>window.location.replace("${r.redirect}");</script></body>
 </html>`;
+  } else if (isTemplateDetailRoute(urlPath)) {
+    page = createTemplateDetailPage(r, dataKey, routeData, DEFAULT_LANG, {});
   } else if (routeData) {
     const payload = { [dataKey]: routeData };
     try {
@@ -532,9 +587,11 @@ for (const lang of LANGS) {
     const relFile = r.file.startsWith(langFilePrefix) ? r.file.slice(langFilePrefix.length) : r.file;
     const dstFile = relFile === "index.html" ? `${lang}/index.html` : join(lang, relFile);
     const dstPath = join(DIST, dstFile);
-    const page = readFileSync(srcPath, "utf-8");
+    const page = isTemplateDetailRoute(r.path)
+      ? createTemplateDetailPage(r, dataKey, routeData, lang, localeDicts[lang])
+      : localizePage(readFileSync(srcPath, "utf-8"), r, routeData, localeDicts[lang], lang);
     mkdirSync(dirname(dstPath), { recursive: true });
-    writeFileSync(dstPath, localizePage(page, r, routeData, localeDicts[lang], lang), "utf-8");
+    writeFileSync(dstPath, page, "utf-8");
     localizedCount++;
   }
 }

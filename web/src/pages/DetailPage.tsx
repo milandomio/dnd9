@@ -49,9 +49,11 @@ type Entity = ItemEntity | MonsterEntity | PropsEntity;
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
   const dataKey = `${page}/${name ? decodeURIComponent(name) : ''}`;
-  const ssrData = useSSRData<{ entity: Entity; modules: DungeonModule[] }>(
-    dataKey
-  );
+  const ssrData = useSSRData<{
+    entity: Entity;
+    modules: DungeonModule[];
+    isDetailTemplate?: boolean;
+  }>(dataKey);
   const [entity, setEntity] = useState<Entity | null>(
     ssrData?.entity?.coords
       ? ssrData.entity
@@ -59,18 +61,32 @@ export default function DetailPage() {
         ? (ssrData.entity as Entity)
         : null
   );
+  const isDetailTemplate =
+    ssrData?.isDetailTemplate && entity?.isDetailTemplate;
   const { modules: globalModules } = useDungeonModules();
   // Resolve module by coord's map field (now resolved module name)
   const modules = useMemo(() => {
     const mm = new Map<string, DungeonModule>();
     if (!entity?.coords) return mm;
+    const sourceModules =
+      globalModules.size > 0 ? globalModules : ssrData?.modules;
     for (const c of entity.coords) {
       if (mm.has(c.map)) continue;
-      const mod = globalModules.get(c.map);
+      const mod =
+        sourceModules instanceof Map
+          ? sourceModules.get(c.map)
+          : sourceModules?.find((m) =>
+              [
+                m.name,
+                ...(m.names ?? []),
+                m.sl_base_name,
+                ...(m.all_sl_base_names ?? []),
+              ].includes(c.map)
+            );
       if (mod) mm.set(c.map, mod);
     }
     return mm;
-  }, [entity?.coords, globalModules]);
+  }, [entity?.coords, globalModules, ssrData?.modules]);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
@@ -122,10 +138,11 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (!page || !name) return;
-    if (ssrData?.entity?.coords) {
+    if (ssrData?.entity?.coords && !ssrData.isDetailTemplate) {
       setEntity(ssrData.entity);
       return;
     }
+    if (!dataVersion) return;
     const decoded = decodeURIComponent(name!);
     const url = dataUrl(dataVersion, `/data/json/${page}/${decoded}.json`);
     if (fetchedRef.current) return;
@@ -706,7 +723,7 @@ export default function DetailPage() {
                   )}
 
                   <MapPanel
-                    imageSrc={`/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
+                    imageSrc={`/data/img/${isDetailTemplate ? 'RareModule_1x1' : mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
                     sx={sx}
                     sy={sy}
                     dots={filteredDots}
