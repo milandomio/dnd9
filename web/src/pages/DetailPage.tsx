@@ -881,11 +881,31 @@ export default function DetailPage() {
                           }
                           if (varPosCount > 0) {
                             if (names.length > 0) {
-                              parts.push(
-                                `(${varPosCount}点选${vc.variant_count})`
-                              );
+                              if (varPosCount > 1) {
+                                parts.push(
+                                  `(${varPosCount}点选${vc.variant_count})`
+                                );
+                              } else {
+                                const nameStr = names
+                                  .map((entry) =>
+                                    t(entry.translation_key, entry.name)
+                                  )
+                                  .join(ut('ui.location.map_sep'));
+                                parts.push(
+                                  `(${nameStr}${ut('ui.detail.pool_select')
+                                    .replace('{count}', String(names.length))
+                                    .replace('{positions}', '1')})`
+                                );
+                              }
                             } else {
-                              parts.push(`(${varPosCount}点)`);
+                              const groupPosCount = new Set(
+                                varCoords.map((c) => c.group_parent)
+                              ).size;
+                              parts.push(
+                                groupPosCount === 1
+                                  ? `(${varPosCount}点选1)`
+                                  : `(${varPosCount}点)`
+                              );
                             }
                           }
                           return (

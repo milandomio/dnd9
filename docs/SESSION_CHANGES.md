@@ -1,5 +1,12 @@
 # 2026-07-27 会话修改记录
 
+## fix: 区分同组多点与单点多实体的选择文案
+
+- **改动原因**：`FrostDemon` 的 HoundVale 同实体互斥组被显示为 `(2点)`，IceMaze 两实体互斥组被显示为 `(1点选2)`，均未表达实际选择关系。
+- **变更文件**：`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`group_parent` 是 `BP_GameSpawnerGroup_C` 互斥组依据。同实体且仅一个组时按该组坐标数显示 `N点选1`；有 `variant_names` 且当前实体仅一个点时显示全部实体名加 `N种选1`；多点混合组维持 `N点选M`（M=`variant_count`）。
+- **验证**：`npm run format` / `npm run format:check` / `npx tsc --noEmit` 通过。
+
 ## fix: 地图生成日期按时间戳正确显示
 
 - **改动原因**：SSG 写入的 `meta.json.dataDate` 为 Unix 秒级时间戳（如 `1785084775`），免责声明组件误按 `YYYYMMDD` 切片，显示为 `1785-08-47`。
