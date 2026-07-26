@@ -105,8 +105,8 @@ DarkFindV5/
 爆率显示规则：
 
 - `group_drop_info` 字段已注入 items、monsters、props 三张表的详情 JSON
-- 只在坐标对应的 spawn 文件是变体（`variant_count > 1`）时，才在地图模块图片下显示爆率
-- 非变体 spawn 不显示爆率
+- 地图模块图片下爆率：仅当该模块坐标会触发生成率运算（`variant_count > 1` / N点选m 等，`adjRate` 会改数值）时显示；否则与分组头「参考爆率」相同，不重复复制
+- 非变体、无运算 spawn 不在模块下显示爆率
 - items 的 `drop_rates` 是指定物品的爆率；monsters/props 的 `drop_rates` 是该实体所有可掉落物品的聚合爆率
 - 爆率样式参考 `LootdropDetailPage` 的怪物列表区域
 

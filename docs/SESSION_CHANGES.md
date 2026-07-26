@@ -1,5 +1,12 @@
 # 2026-07-27 会话修改记录
 
+## fix: 地图模块下无运算时不重复展示爆率
+
+- **改动原因**：模块下 `ReferenceDropRates` 数据来自分组级 `group_drop_info`；无变体时与分组「参考爆率」完全相同却重复显示（如 AncientStingray）。
+- **变更文件**：`web/src/pages/DetailPage.tsx`；`docs/AGENT_REFERENCE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：模块图下仅 `hasVariant`（坐标 `variant_count > 1`，会走 `adjRate` 分摊）时渲染爆率 + N点选m 文案；无运算直接 `return null`，只保留分组头参考爆率。
+- **验证**：待 format / tsc。
+
 ## docs: 性能优化草案（管线 + 运行时）
 
 - **改动原因**：当前无时间执行优化；先固化热 DB 基线（~98s）与分阶段方案，供后续按阶段落地。
