@@ -336,10 +336,10 @@ def superhoard_translation_key(name: str) -> str | None:
 
 
 MODULE_NAME_OVERRIDE = {
-    "EmptyModule_1F_14": "3-1模块",
-    "EmptyModule_1F_09": "5-1模块",
-    "EmptyModule_1F_15": "7-4模块",
-    "EmptyModule_1F_13": "6-5模块",
+    "EmptyModule_1F_14": "3-1",
+    "EmptyModule_1F_09": "5-1",
+    "EmptyModule_1F_15": "7-4",
+    "EmptyModule_1F_13": "6-5",
 }
 
 MODULE_DISPLAY_OVERRIDE = {
