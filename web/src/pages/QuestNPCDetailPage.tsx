@@ -435,7 +435,6 @@ export default function QuestNPCDetailPage() {
                   {q.contents.length > 0 &&
                     (() => {
                       const hasLoot = q.contents.some((c) => c.loot_state);
-                      const hasRarity = q.contents.some((c) => c.rarity);
                       return (
                         <div
                           style={{
@@ -460,7 +459,7 @@ export default function QuestNPCDetailPage() {
                           <div
                             style={{
                               display: 'grid',
-                              gridTemplateColumns: `auto minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''} 5em`,
+                              gridTemplateColumns: `auto minmax(12em, 1fr)${hasLoot ? ' auto' : ''} 5em`,
                               fontSize: 14,
                             }}
                           >
@@ -487,7 +486,7 @@ export default function QuestNPCDetailPage() {
                                 }}
                               >
                                 {ut('ui.quest_detail.target')} /{' '}
-                                {ut('ui.quest_detail.target_map')}
+                                {ut('ui.quest_detail.rarity')}
                               </span>
                               {hasLoot && (
                                 <span
@@ -497,16 +496,6 @@ export default function QuestNPCDetailPage() {
                                   }}
                                 >
                                   {ut('ui.quest_detail.loot')}
-                                </span>
-                              )}
-                              {hasRarity && (
-                                <span
-                                  style={{
-                                    padding: '4px 8px',
-                                    borderBottom: `1px solid ${tokens.border}`,
-                                  }}
-                                >
-                                  {ut('ui.quest_detail.rarity')}
                                 </span>
                               )}
                             </div>
@@ -525,8 +514,10 @@ export default function QuestNPCDetailPage() {
                             {q.contents.map((c, i) => {
                               const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
                               const contentDone = lsGet(contentKey);
-                              const mergeRarityIntoTarget =
-                                !c.dungeon_type && Boolean(c.rarity);
+                              const target = t(c.translation_key, c.target);
+                              const targetDisplay = c.rarity
+                                ? target.replace(/\s*\([^)]*\)/g, '')
+                                : target;
                               const rowStyle = {
                                 borderBottom: dark
                                   ? '1px solid rgba(255,255,255,0.06)'
@@ -547,7 +538,8 @@ export default function QuestNPCDetailPage() {
                                       style={{
                                         ...rowStyle,
                                         color: dark ? '#ccc' : '#555',
-                                        whiteSpace: 'nowrap',
+                                        whiteSpace: 'normal',
+                                        overflowWrap: 'anywhere',
                                         padding: '6px 8px',
                                       }}
                                     >
@@ -580,16 +572,13 @@ export default function QuestNPCDetailPage() {
                                           marginRight: 4,
                                         }}
                                       />
-                                      {t(c.translation_key, c.target)}
+                                      {targetDisplay}
                                       <SearchOutlined
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           navigate(location.pathname, {
                                             state: {
-                                              searchQuery: t(
-                                                c.translation_key,
-                                                c.target
-                                              ),
+                                              searchQuery: targetDisplay,
                                             },
                                           });
                                         }}
@@ -624,7 +613,7 @@ export default function QuestNPCDetailPage() {
                                           )}
                                         </div>
                                       )}
-                                      {mergeRarityIntoTarget && (
+                                      {c.rarity && (
                                         <div
                                           style={{
                                             color: getRarityColor(
@@ -654,33 +643,6 @@ export default function QuestNPCDetailPage() {
                                       >
                                         {c.loot_state ? '✓' : ''}
                                       </span>
-                                    )}
-                                    {hasRarity && !mergeRarityIntoTarget && (
-                                      <span
-                                        style={{
-                                          ...rowStyle,
-                                          color: getRarityColor(
-                                            c.rarity || '',
-                                            dark
-                                          ),
-                                          fontSize: 12,
-                                          whiteSpace: 'nowrap',
-                                          padding: '6px 8px',
-                                        }}
-                                      >
-                                        {t(
-                                          c.rarity_translation_key,
-                                          c.rarity || ''
-                                        )}
-                                      </span>
-                                    )}
-                                    {hasRarity && mergeRarityIntoTarget && (
-                                      <span
-                                        style={{
-                                          ...rowStyle,
-                                          padding: '6px 8px',
-                                        }}
-                                      />
                                     )}
                                   </div>
                                   <div
