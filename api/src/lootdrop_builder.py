@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-from config import ITEM_DIR, TRANSLATION_ALIAS_MAP
+from config import ITEM_DIR, TRANSLATION_ALIAS_MAP, superhoard_translation_key
 from translator import (
     HARD_SUFFIX_RE,
     QUALITY_RE,
@@ -230,8 +230,8 @@ def build_loot_index(
                     mon_translation_keys.append(_tk)
                     continue
             elif cls and "props" in cls["types"]:
-                _tk = cls.get("translation_key", "")
-                mon_translations.append(resolve_name(m, _tk, "props"))
+                _tk = cls.get("translation_key", "") or superhoard_translation_key(m) or ""
+                mon_translations.append(resolve_name(m, _tk if _tk.startswith("Text_") else None, "props"))
                 mon_translation_keys.append(_tk)
                 continue
             mon_row = monsters_lookup.get(m)
@@ -272,6 +272,12 @@ def build_loot_index(
                     mon_translations.append(locked_trans)
                     mon_translation_keys.append("")
                     continue
+            # SuperHoard* synthetic key (no Game.json)
+            _sh_tk = superhoard_translation_key(m)
+            if _sh_tk:
+                mon_translations.append(resolve_name(m, None, "props") or m)
+                mon_translation_keys.append(_sh_tk)
+                continue
             # Generic fallback
             mon_translations.append(resolve_name(m, None, "monster") or m)
             mon_translation_keys.append("")
@@ -402,12 +408,14 @@ def build_and_save_lootdrop_details(
             if not coords:
                 continue
             m_trans = entry["monster_translations"][_i]
-            # Prefer loot_index keys (already resolved), then maps, then entity_class
+            # Prefer loot_index keys (already resolved), then maps, then entity_class / SuperHoard
             m_tk = _entry_mtk[_i] if _i < len(_entry_mtk) else ""
             if not m_tk:
                 m_tk = m_tk_map.get(m_name, "")
             if not m_tk:
                 m_tk = ((entity_class or {}).get(m_name) or {}).get("translation_key", "") or ""
+            if not m_tk:
+                m_tk = superhoard_translation_key(m_name) or ""
             base = base_monster_name(m_name)
             locked_base = m_name.replace("_Locked", "")
             is_locked = locked_base != m_name
