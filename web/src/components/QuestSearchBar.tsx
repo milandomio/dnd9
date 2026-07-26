@@ -36,11 +36,11 @@ export default function QuestSearchBar({
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const { dark, tokens } = useTheme();
-  const { t, ut } = useLocale();
+  const { t, ut, dict } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Pre-build flat search index (once per allNpcs change)
+  // Rebuild when the entity locale loads so queries match the displayed language.
   const flatIndex = useMemo(() => {
     const entries: FlatEntry[] = [];
     for (const npc of allNpcs) {
@@ -49,14 +49,20 @@ export default function QuestSearchBar({
         entries.push({
           quest,
           npc,
-          titleLower: quest.title.toLowerCase(),
+          titleLower: (
+            dict?.[quest.translation_key] ?? quest.title
+          ).toLowerCase(),
           idLower: quest.id.toLowerCase(),
-          targetsLower: quest.contents.map((c) => c.target.toLowerCase()),
+          targetsLower: quest.contents.map((content) =>
+            (
+              dict?.[content.translation_key ?? ''] ?? content.target
+            ).toLowerCase()
+          ),
         });
       }
     }
     return entries;
-  }, [allNpcs]);
+  }, [allNpcs, dict]);
 
   // Filter on query change
   const results = useMemo(() => {
