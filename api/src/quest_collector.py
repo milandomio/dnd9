@@ -216,6 +216,7 @@ def _get_npc_category(npc_en):
 def _parse_fetch_content(translator, cd):
     """Parse Fetch/UseItem content data to extract target name and count."""
     item_name = ""
+    translation_key = ""
     type_tag = cd.get("TypeTag", {}) or {}
     tag_name = type_tag.get("TagName", "")
     if tag_name and "Type.Item." in tag_name:
@@ -223,15 +224,29 @@ def _parse_fetch_content(translator, cd):
         type_key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_{item_type}"
         translated = translator.translate(type_key) if translator else ""
         item_name = translated or item_type
+        translation_key = type_key if translated else ""
     if not item_name:
         item_tag = cd.get("ItemIdTag", {}) or {}
         tag_name = item_tag.get("TagName", "")
         if tag_name:
             en = tag_name.split(".")[-1] if "." in tag_name else tag_name
             item_name = _translate_item(translator, en) if translator else en
+            candidates = [
+                f"Text_DesignData_Item_Item_{en}",
+                f"Text_DesignData_Props_Props_{en}",
+                f"Text_DesignData_ItemSkin_ItemSkin_{en}",
+                f"Text_DesignData_Emote_Emote_{en}",
+                f"Text_DesignData_ActionSkin_{en}",
+            ]
+            candidates.extend(f"Text_DesignData_Item_Item_{en}{suffix}" for suffix in _ITEM_SUFFIXES)
+            for key in candidates:
+                if translator and translator.translate(key):
+                    translation_key = key
+                    break
     loot_state = "是" if cd.get("ItemLootState") == "EDCItemLootState::Looted" else ""
     rarity_tag = cd.get("RarityType", {}) or {}
     rarity_name = ""
+    rarity_key = ""
     if isinstance(rarity_tag, dict):
         rn = rarity_tag.get("TagName", "")
         if rn and "Type.Item.Rarity." in rn:
@@ -240,11 +255,30 @@ def _parse_fetch_content(translator, cd):
             translated = translator.translate(rarity_key) if translator else ""
             rarity_name = translated or rarity_raw
     result = {"target": item_name, "count": cd.get("ContentCount", 1)}
+    if translation_key:
+        result["translation_key"] = translation_key
     if loot_state:
         result["loot_state"] = loot_state
     if rarity_name:
         result["rarity"] = rarity_name
+        result["rarity_translation_key"] = rarity_key
     return result
+
+
+def _get_dungeon_type_key(translator, content_data):
+    """Return the first game locale key used for a quest's dungeon target."""
+    dungeon_id_tags = content_data.get("DungeonIdTags", []) if content_data else []
+    if not dungeon_id_tags or not isinstance(dungeon_id_tags[0], dict):
+        return ""
+    tag_name = dungeon_id_tags[0].get("TagName", "")
+    dungeon_name = tag_name.split(".")[-1]
+    type_key = f"Text_DesignData_Dungeon_DungeonType_{dungeon_name}"
+    candidates = [
+        f"Text_DesignData_Dungeon_DungeonType_Group_{dungeon_name}",
+        type_key,
+        *(f"{type_key}{suffix}" for suffix in ("_A", "_N", "_HR", "_AHR")),
+    ]
+    return next((key for key in candidates if translator.translate(key)), "")
 
 
 def _extract_npc_list(translator, extractor, quests):
@@ -258,12 +292,13 @@ def _extract_npc_list(translator, extractor, quests):
         for q in quest_list:
             rewards = []
             for ri in q.get("rewards", []) or []:
-                rname, rtype_key = extractor.get_reward_item_info(ri)
+                rname, rtype_key, translation_key = extractor.get_reward_item_info(ri)
                 rewards.append(
                     {
                         "type": ri.get("RewardType", ""),
                         "name": rname,
                         "type_key": rtype_key,
+                        "translation_key": translation_key,
                         "count": ri.get("RewardCount", 0),
                     }
                 )
@@ -276,6 +311,7 @@ def _extract_npc_list(translator, extractor, quests):
                 dungeon_type = extractor.get_dungeon_type_translation(cd)
                 if dungeon_type:
                     item["dungeon_type"] = dungeon_type
+                    item["dungeon_translation_key"] = _get_dungeon_type_key(translator, cd)
                 if ct == "Kill":
                     kill_tag = cd.get("KillTag", {})
                     tag_name = kill_tag.get("TagName", "") if isinstance(kill_tag, dict) else ""
@@ -285,7 +321,8 @@ def _extract_npc_list(translator, extractor, quests):
                             monster = tag_name.split(".")[-1]
                         else:
                             monster = tag_name.split(".")[-1] if "." in tag_name else tag_name
-                    translated = translator.translate(f"Text_DesignData_Monster_Monster_{monster}") if monster else ""
+                    translation_key = f"Text_DesignData_Monster_Monster_{monster}"
+                    translated = translator.translate(translation_key) if monster else ""
                     if not translated and monster in HARDCODED_TRANSLATIONS:
                         translated = HARDCODED_TRANSLATIONS[monster]
                     # entity_index 兜底（如 SmallJellyfish → GiantJellyfish 翻译键）
@@ -293,17 +330,27 @@ def _extract_npc_list(translator, extractor, quests):
                         entity_key = _get_entity_key_map().get(monster, "")
                         if entity_key and entity_key != f"Text_DesignData_Monster_Monster_{monster}":
                             translated = translator.translate(entity_key) or ""
+                            if translated:
+                                translation_key = entity_key
                     item["target"] = translated or monster
+                    if translated:
+                        item["translation_key"] = translation_key
                     item["count"] = cd.get("ContentCount", 1)
                 elif ct == "Fetch":
                     item.update(_parse_fetch_content(translator, cd))
                 elif ct == "Explore":
                     item["target"] = extractor.get_explore_target_translation(ap) or ""
+                    key = extractor.get_source_string_from_asset_path(extractor.match_asset_path_to_module(ap))
+                    if key and translator.translate(key):
+                        item["translation_key"] = key
                     item["count"] = cd.get("ContentCount", 1)
                 elif ct == "Props":
                     props_tag = cd.get("PropsIdTag", {})
                     tag_name = props_tag.get("TagName", "") if isinstance(props_tag, dict) else ""
+                    key, _fallback = extractor.get_props_target_info(tag_name)
                     item["target"] = extractor.get_props_target_translation(tag_name) if tag_name else ""
+                    if key:
+                        item["translation_key"] = key
                     item["count"] = cd.get("ContentCount", 1)
                 elif ct == "UseItem":
                     item.update(_parse_fetch_content(translator, cd))
@@ -320,6 +367,7 @@ def _extract_npc_list(translator, extractor, quests):
                 {
                     "id": q.get("id", ""),
                     "title": q.get("title_display", ""),
+                    "translation_key": q.get("title_key", ""),
                     "quest_number": q.get("quest_number", 0),
                     "contents": contents,
                     "rewards": rewards,

@@ -43,6 +43,7 @@ from module_builder import (
 from pipeline import Pipeline
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
+from search_index_builder import build_search_index_files
 from translator import NameResolver, build_coord_out, resolve_group_label
 
 
@@ -572,7 +573,8 @@ def run():
 
         with pipe.step("locale export") as ctx:
             locale_langs = build_locale_files(db, OUTPUT_DIR, used_translation_keys)
-            ctx.set_result(f"{len(locale_langs)} languages")
+            search_index_langs = build_search_index_files(db, OUTPUT_DIR)
+            ctx.set_result(f"locale={len(locale_langs)}, search_index={len(search_index_langs)} languages")
 
         print(f"\n[DONE] Output written to {OUTPUT_DIR}")
         for entry in index_data:

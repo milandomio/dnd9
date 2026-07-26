@@ -633,7 +633,7 @@ class ContentRenderer:
 
             # 获取翻译后的名称和类型标签
             if self.quest_extractor:
-                name, type_key = self.quest_extractor.get_reward_item_info(reward)
+                name, type_key, _translation_key = self.quest_extractor.get_reward_item_info(reward)
             else:
                 name = reward_id
                 type_key = "item"

@@ -82,7 +82,8 @@ const REWARD_TYPE_KEY: Record<string, string> = {
 
 function formatRequired(
   allNpcs: NPCEntry[],
-  required: string
+  required: string,
+  translate: (key: string | undefined, fallback: string) => string
 ): { text: string; npcName?: string; questNum?: number } | null {
   if (!required) return null;
   const questId = required.replace('.json', '');
@@ -90,7 +91,7 @@ function formatRequired(
     for (const q of n.quests) {
       if (q.id === questId) {
         return {
-          text: `${n.npc_name_display}#${q.quest_number} ${q.title}`,
+          text: `${translate(n.translation_key, n.npc_name_display)}#${q.quest_number} ${translate(q.translation_key, q.title)}`,
           npcName: n.npc_name,
           questNum: q.quest_number,
         };
@@ -105,7 +106,7 @@ export default function QuestNPCDetailPage() {
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const { ut, lang } = useLocale();
+  const { t, ut, lang } = useLocale();
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
@@ -214,12 +215,12 @@ export default function QuestNPCDetailPage() {
       <Helmet>
         <title>
           {ssrLocalizedTitle() ??
-            `${npc.npc_name_display}${npc.npc_name} 任务列表QuestList`}{' '}
-          | 越来越黑暗闪电指南 DarkFlashNav
+            `${t(npc.translation_key, npc.npc_name_display)} ${ut('ui.quest_detail.task_list')}`}
+          | DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${npc.npc_name_display}的任务详情——查看所有任务、奖励、需求。`}
+          content={`${t(npc.translation_key, npc.npc_name_display)} - ${ut('ui.quest_detail.task_list')}`}
         />
       </Helmet>
 
@@ -283,7 +284,8 @@ export default function QuestNPCDetailPage() {
                 marginRight: 8,
               }}
             />
-            {npc.npc_name_display} - {ut('ui.quest_detail.task_list')}
+            {t(npc.translation_key, npc.npc_name_display)} -{' '}
+            {ut('ui.quest_detail.task_list')}
             <span style={{ color: tokens.muted, fontSize: 14 }}>
               {ut('ui.quest_detail.tasks_count').replace(
                 '{count}',
@@ -424,7 +426,7 @@ export default function QuestNPCDetailPage() {
                     textDecoration: questDone ? 'line-through' : 'none',
                   }}
                 >
-                  #{q.quest_number} {q.title}
+                  #{q.quest_number} {t(q.translation_key, q.title)}
                 </span>
               </div>
 
@@ -493,7 +495,7 @@ export default function QuestNPCDetailPage() {
                                     fontSize: 13,
                                   }}
                                 >
-                                  目标
+                                  {ut('ui.quest_detail.target')}
                                 </th>
                                 {hasDungeonType && (
                                   <th
@@ -599,7 +601,7 @@ export default function QuestNPCDetailPage() {
                                           marginRight: 4,
                                         }}
                                       />
-                                      {c.target}
+                                      {t(c.translation_key, c.target)}
                                       <SearchOutlined
                                         onClick={(e) => {
                                           e.stopPropagation();
@@ -607,7 +609,7 @@ export default function QuestNPCDetailPage() {
                                             state: { searchQuery: c.target },
                                           });
                                         }}
-                                        title={`搜索"${c.target}"`}
+                                        title={ut('ui.search.search')}
                                         style={{
                                           marginLeft: 6,
                                           cursor: 'pointer',
@@ -635,7 +637,10 @@ export default function QuestNPCDetailPage() {
                                           whiteSpace: 'nowrap',
                                         }}
                                       >
-                                        {c.dungeon_type || ''}
+                                        {t(
+                                          c.dungeon_translation_key,
+                                          c.dungeon_type || ''
+                                        )}
                                       </td>
                                     )}
                                     {hasLoot && (
@@ -647,7 +652,7 @@ export default function QuestNPCDetailPage() {
                                           whiteSpace: 'nowrap',
                                         }}
                                       >
-                                        {c.loot_state || ''}
+                                        {c.loot_state ? '✓' : ''}
                                       </td>
                                     )}
                                     {hasRarity && (
@@ -662,7 +667,10 @@ export default function QuestNPCDetailPage() {
                                           whiteSpace: 'nowrap',
                                         }}
                                       >
-                                        {c.rarity || ''}
+                                        {t(
+                                          c.rarity_translation_key,
+                                          c.rarity || ''
+                                        )}
                                       </td>
                                     )}
                                     <td
@@ -786,7 +794,7 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.text,
                                   }}
                                 >
-                                  {r.name}
+                                  {t(r.translation_key, r.name)}
                                 </td>
                                 <td
                                   style={{
@@ -833,7 +841,7 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.text,
                                   }}
                                 >
-                                  {r.name}
+                                  {t(r.translation_key, r.name)}
                                 </td>
                                 <td
                                   style={{
@@ -907,7 +915,7 @@ export default function QuestNPCDetailPage() {
 
                   {q.required &&
                     (() => {
-                      const req = formatRequired(allNpcs, q.required);
+                      const req = formatRequired(allNpcs, q.required, t);
                       if (!req) return null;
                       const isPrevSameNpc =
                         req.npcName === npc.npc_name &&

@@ -1,10 +1,23 @@
 """Locale dictionary export for frontend i18n."""
 
 import json
+import sqlite3
 from pathlib import Path
 
 from config import SUPERHOARD_I18N, SUPERHOARD_I18N_KEY
-from db._helpers import discover_languages
+
+SUPPORTED_LANGUAGES = (
+    "zh-Hans",
+    "en",
+    "de",
+    "es",
+    "fr",
+    "ja",
+    "ko",
+    "pt-BR",
+    "ru",
+    "zh-Hant",
+)
 
 # Always export: drop-rate mode labels (not entity translation_keys)
 FILTER_MODE_LOCALE_KEYS = (
@@ -18,9 +31,14 @@ FILTER_MODE_LOCALE_KEYS = (
 def _collect_keys(obj, used: set[str]):
     """Recursively collect translation_key values from a JSON structure."""
     if isinstance(obj, dict):
-        tk = obj.get("translation_key")
-        if tk and isinstance(tk, str):
-            used.add(tk)
+        for key in (
+            "translation_key",
+            "dungeon_translation_key",
+            "rarity_translation_key",
+        ):
+            tk = obj.get(key)
+            if tk and isinstance(tk, str):
+                used.add(tk)
         for v in obj.values():
             _collect_keys(v, used)
     elif isinstance(obj, list):
@@ -94,8 +112,11 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
     used_keys.update(FILTER_MODE_LOCALE_KEYS)
 
     exported: list[str] = []
-    for lang in discover_languages():
-        all_translations = db.get_translations_map(lang)
+    for lang in SUPPORTED_LANGUAGES:
+        try:
+            all_translations = db.get_translations_map(lang)
+        except sqlite3.OperationalError:
+            continue
         if not all_translations:
             continue
         if used_keys:
