@@ -1,5 +1,13 @@
 # 2026-07-26 会话修改记录
 
+## fix: Z 颜色说明 i18n
+
+- **原因**：`DetailPage` 底部颜色说明 `颜色说明 / 高于地面 / 正常高度 / 低于地面` 硬编码中文
+- **变更文件**：
+  - `web/src/i18n/uiLocale.ts` — 新增 `ui.detail.color_legend` / `z_above_ground` / `z_normal_height` / `z_below_ground` 10 语言键
+  - `web/src/pages/DetailPage.tsx` — 颜色说明改为 `ut('ui.detail.*')`
+  - `docs/plans/LOCATION_STATS_I18N.md` — 补记同区域颜色说明 i18n 范围
+
 ## fix: 参考爆率公共组件 + 掉落模式 i18n
 
 - **原因**：详情页/掉落页的「参考爆率」为硬编码，且 PVE/普通/豪客赛/逆袭赛模式名未按 Game.json 10 语翻译；en 页将 `Squire Royale` 错显示成 `Counter Raid`
