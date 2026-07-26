@@ -201,9 +201,11 @@ export default function QuestNPCDetailPage() {
     const s = search.toLowerCase();
     const found = npc.quests.find(
       (q) =>
-        q.title.toLowerCase().includes(s) ||
+        t(q.translation_key, q.title).toLowerCase().includes(s) ||
         q.id.toLowerCase().includes(s) ||
-        q.contents.some((c) => c.target.toLowerCase().includes(s))
+        q.contents.some((c) =>
+          t(c.translation_key, c.target).toLowerCase().includes(s)
+        )
     );
     return found?.quest_number ?? null;
   })();
@@ -238,9 +240,11 @@ export default function QuestNPCDetailPage() {
         <div style={{ width: '100%' }}>
           <QuestSearchBar
             allNpcs={allNpcs}
+            query={search}
+            onQueryChange={setSearch}
             onSelect={(r: QuestSearchResult) => {
               if (r.npc.npc_name === npc_name) {
-                setSearch(r.quest.title);
+                setSearch(t(r.quest.translation_key, r.quest.title));
                 requestAnimationFrame(() => {
                   const el = document.querySelector(
                     `[data-quest-num="${r.quest.quest_number}"]`
@@ -251,7 +255,7 @@ export default function QuestNPCDetailPage() {
                 navigate(`/${lang}/quest_npc/${r.npc.npc_name}`, {
                   state: {
                     questNumber: r.quest.quest_number,
-                    searchText: r.quest.title,
+                    searchText: t(r.quest.translation_key, r.quest.title),
                   },
                 });
               }
@@ -608,9 +612,9 @@ export default function QuestNPCDetailPage() {
                                         <SearchOutlined
                                           onClick={(e) => {
                                             e.stopPropagation();
-                                            navigate(location.pathname, {
-                                              state: { searchQuery: c.target },
-                                            });
+                                            setSearch(
+                                              t(c.translation_key, c.target)
+                                            );
                                           }}
                                           title={ut('ui.search.search')}
                                           style={{
