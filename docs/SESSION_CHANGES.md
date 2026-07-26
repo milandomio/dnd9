@@ -26,6 +26,7 @@
 - **补充**：Count 的 `5em` 作为最大宽度，而非最小宽度。
 - **补充**：Objective 的 Count 改为与 Reward 一致的内容收缩末列（`width: 1%`），固定在右侧，数值居中。
 - **回退**：移除 Count 的 `width: 1%`，该宽度会重新分配整张表的列宽并影响 Type、Target、Map；Count 保留末列位置与居中数值。
+- **补充**：Objective 的 Count 表头直接复用 Reward 的居中对齐规则，表头与数值均居中。
 
 ## perf: 消除 locale 掉落文件二次扫描
 
