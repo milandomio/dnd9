@@ -1915,6 +1915,13 @@ if (typeof window !== "undefined") {
 - **关键逻辑/映射关系**：构建扁平任务索引时，任务标题和每个目标优先按其 `translation_key` 从当前 locale 字典取值；locale 字典加载完成或语言切换时以 `dict` 依赖重建索引，缺失键继续回退中文字段。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
 
+## fix: 保留 Objective Target 与 Map 双行
+
+- **改动原因**：Count 独立为右列后，Target 与 Map 被排列到同一行，改变了原有的任务目标阅读顺序。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：左侧详情行改为 Type 跨两行，Target 位于第一行，Map、Loot 与 Rarity 位于第二行；右侧 Count 列保持独立且居中。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
 # 2026-07-27 会话修改记录
 
 ## fix: Objective Count 独立右侧列
