@@ -384,6 +384,7 @@ def build_and_save_module_coords(
             module_coords[mb]["entities"][ek] = {
                 "name": ek,
                 "translation": translation,
+                "translation_key": cls.get("translation_key", ""),
                 "type": entity_type,
                 "color": _MODULE_COLORS[color_idx % len(_MODULE_COLORS)],
                 "coords": [],
@@ -453,6 +454,7 @@ def build_and_save_module_coords(
                 {
                     "name": canonical["name"],
                     "translation": _trans,
+                    "translation_key": canonical.get("translation_key", ""),
                     "type": _type,
                     "color": canonical["color"],
                     "coords": deduped,

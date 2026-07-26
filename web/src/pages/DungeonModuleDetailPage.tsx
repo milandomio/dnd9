@@ -24,6 +24,7 @@ import MapPanel from '../components/MapPanel';
 interface CoordEntity {
   name: string;
   translation?: string;
+  translation_key?: string;
   type: string;
   color: string;
   mutually_exclusive?: boolean;
@@ -228,7 +229,10 @@ export default function DungeonModuleDetailPage() {
               y: d.y,
               z: d.z,
               color: d.entity.color,
-              title: d.entity.translation || d.entity.name,
+              title: t(
+                d.entity.translation_key,
+                d.entity.translation || d.entity.name
+              ),
             }))}
             offX={offX}
             offY={offY}
@@ -328,7 +332,7 @@ export default function DungeonModuleDetailPage() {
                             alignItems: 'center',
                           }}
                         >
-                          {e.translation || e.name}
+                          {t(e.translation_key, e.translation || e.name)}
                           <span style={{ fontSize: 14, marginLeft: 4 }}>
                             ({e.coords.length}
                             {e.mutually_exclusive
@@ -493,7 +497,7 @@ export default function DungeonModuleDetailPage() {
                 group: groupLabel,
                 monster: {
                   name: e.name,
-                  translation: e.name,
+                  translation: t(e.translation_key, e.translation || e.name),
                   color: e.color,
                   onToggle: () => toggle(e.name),
                 },
@@ -562,7 +566,10 @@ export default function DungeonModuleDetailPage() {
             <br />
             <strong>{ut('ui.module_detail.entities')}</strong>{' '}
             {entities
-              .map((e) => `${e.translation || e.name}(${e.coords.length})`)
+              .map(
+                (e) =>
+                  `${t(e.translation_key, e.translation || e.name)}(${e.coords.length})`
+              )
               .join('、')}
           </>
         )}

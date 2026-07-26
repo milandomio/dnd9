@@ -1742,3 +1742,10 @@ if (typeof window !== "undefined") {
 - **原因**：`/en/dungeon_modules/IceCavern` 分组页与模块详情页模块名仍用 `translation` 中文真值，未走 locale 字典。
 - **变更文件**：`web/src/pages/DungeonModuleGroupPage.tsx`、`web/src/pages/DungeonModuleDetailPage.tsx`
 - **关键逻辑/映射关系**：`mod.translation || mod.name` → `t(mod.translation_key, mod.translation || mod.name)`；详情页 `moduleDisplayName` 同理；debug 表 `mapLabel` 复用已 i18n 的 `moduleDisplayName`。数据侧 `dungeon_modules.json` 已有 `translation_key`，locale 含对应条目。
+
+## fix: 地图模块详情页 i18n 同步
+
+- **原因**：地图模块详情页沿用独立实现，面包屑硬编码中文分组名，模块坐标实体缺少 `translation_key`，导致模块详情的分组面包屑、分类按钮、地图 tooltip 和统计名称无法随语言切换。
+- **变更文件**：`web/src/components/NavBar.tsx`、`web/src/pages/DungeonModuleDetailPage.tsx`、`api/src/module_builder.py`、`docs/AGENT_REFERENCE.md`。
+- **关键逻辑/映射关系**：NavBar 删除 `GROUP_LABEL_MAP`，从 `dungeon_modules.json` 取对应模块并复用列表页的 `formatGroupLabel()`；`module_builder` 将 `entity_class.translation_key` 写进 `dungeon_modules_coords/*.json`（合并同名实体时保留 canonical key）；模块详情的分类按钮、地图 tooltip、调试表、实体统计统一通过 `t(translation_key, fallback)` 展示。`DungeonModuleDetailPage.tsx` 已标注为独立详情页，后续详情页 i18n 更新必须同步。
+- **验证**：`python api/main.py` 重建数据，`IceCave_Bridge.json` 内 Bandage/BlackRose 等实体含 `translation_key`；Black、Prettier 与 TypeScript 预检通过。

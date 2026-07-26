@@ -9,6 +9,7 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { useTheme } from '../hooks/useTheme';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSearchIndex, type SearchEntry } from '../hooks/useSearchIndex';
 import {
   SUPPORTED_LANGS,
@@ -19,6 +20,7 @@ import {
 import { useLanguage, stripLangPrefix } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
 import { useSSRData } from '../context/SSRDataContext';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 
 const NAV_LABEL_KEYS: Record<string, string> = {
   items: 'ui.nav.items',
@@ -43,17 +45,6 @@ const PAGE_TAG_KEYS: Record<string, string> = {
   _nav: 'ui.search.tag.nav',
 };
 
-const GROUP_LABEL_MAP: Record<string, string> = {
-  GoblinCave: '哥布林洞穴',
-  Crypt: '废墟2层地牢',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-  FireDeep: '哥布林洞穴2层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
-};
-
 const RECENT_KEY = 'recentSearches';
 const MAX_RECENT = 5;
 
@@ -71,6 +62,7 @@ export default function NavBar() {
   const { dark, tokens, toggle } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
   const { t, ut } = useLocale();
+  const { modules } = useDungeonModules();
   const isDetailTemplate = useSSRData<boolean>('__detailTemplate') === true;
   const { index: searchIndex, loading: searchLoading } = useSearchIndex();
   const contentPath = stripLangPrefix(location.pathname);
@@ -205,7 +197,10 @@ export default function NavBar() {
       const path = `/${lang}/${parts.slice(0, i + 1).join('/')}`;
 
       if (i === 1 && parts[0] === 'dungeon_modules') {
-        label = GROUP_LABEL_MAP[parts[1]] || parts[1];
+        const module = [...modules.values()].find(
+          (entry) => entry.group === parts[1]
+        );
+        label = module ? formatGroupLabel(module, t, ut) : parts[1];
       }
 
       breadcrumbs.push({ label, path: path + '/' });
