@@ -15,6 +15,7 @@
 - **补充**：Objective 的 Count 作为唯一固定宽度列，稳定停靠在任务卡片右侧；Target 仍由首行跨列显示。
 - **补充**：任务放大镜通过路由状态将当前 locale 的 Target 文本填入导航栏全局搜索框，而非页面内任务搜索框。
 - **补充**：导航栏使用 Ant Design Input 的原生输入节点滚动到可视区后再以 `preventScroll` 聚焦，兼容移动端键盘触发后的滚动位置。
+- **补充**：Objective 的辅助信息改为跨列弹性行，Count 用自动左边距固定最右；Type 列使用自然最小宽度并贴近 Target。Reward 的 Type 表头左对齐。
 
 ## perf: 消除 locale 掉落文件二次扫描
 

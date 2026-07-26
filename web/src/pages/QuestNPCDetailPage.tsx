@@ -571,10 +571,11 @@ export default function QuestNPCDetailPage() {
                                       <td
                                         rowSpan={2}
                                         style={{
-                                          padding: '3px 8px',
+                                          padding: '3px 0 3px 8px',
                                           color: dark ? '#ccc' : '#555',
                                           whiteSpace: 'nowrap',
                                           verticalAlign: 'top',
+                                          width: '1%',
                                         }}
                                       >
                                         {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
@@ -649,62 +650,77 @@ export default function QuestNPCDetailPage() {
                                           : 'none',
                                       }}
                                     >
-                                      <td style={{ padding: '3px 8px' }} />
-                                      {hasDungeonType && (
-                                        <td
-                                          style={{
-                                            padding: '3px 8px',
-                                            color: dark ? '#42a5f5' : '#1565c0',
-                                            fontSize: 12,
-                                            whiteSpace: 'normal',
-                                          }}
-                                        >
-                                          {t(
-                                            c.dungeon_translation_key,
-                                            c.dungeon_type || ''
-                                          )}
-                                        </td>
-                                      )}
-                                      {hasLoot && (
-                                        <td
-                                          style={{
-                                            padding: '3px 8px',
-                                            color: dark ? '#FFB74D' : '#E65100',
-                                            fontSize: 12,
-                                            whiteSpace: 'nowrap',
-                                          }}
-                                        >
-                                          {c.loot_state ? '✓' : ''}
-                                        </td>
-                                      )}
-                                      {hasRarity && (
-                                        <td
-                                          style={{
-                                            padding: '3px 8px',
-                                            color: getRarityColor(
-                                              c.rarity || '',
-                                              dark
-                                            ),
-                                            fontSize: 12,
-                                            whiteSpace: 'nowrap',
-                                          }}
-                                        >
-                                          {t(
-                                            c.rarity_translation_key,
-                                            c.rarity || ''
-                                          )}
-                                        </td>
-                                      )}
                                       <td
+                                        colSpan={detailColumnCount}
                                         style={{
                                           padding: '3px 8px',
-                                          color: dark ? '#ccc' : '#555',
-                                          textAlign: 'center',
-                                          whiteSpace: 'nowrap',
-                                          width: '3em',
                                         }}
                                       >
-                                        {c.count}
+                                        <div
+                                          style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 12,
+                                            minWidth: 0,
+                                          }}
+                                        >
+                                          {hasDungeonType && (
+                                            <span
+                                              style={{
+                                                color: dark
+                                                  ? '#42a5f5'
+                                                  : '#1565c0',
+                                                fontSize: 12,
+                                                whiteSpace: 'normal',
+                                              }}
+                                            >
+                                              {t(
+                                                c.dungeon_translation_key,
+                                                c.dungeon_type || ''
+                                              )}
+                                            </span>
+                                          )}
+                                          {hasLoot && c.loot_state && (
+                                            <span
+                                              style={{
+                                                color: dark
+                                                  ? '#FFB74D'
+                                                  : '#E65100',
+                                                fontSize: 12,
+                                              }}
+                                            >
+                                              ✓
+                                            </span>
+                                          )}
+                                          {hasRarity && c.rarity && (
+                                            <span
+                                              style={{
+                                                color: getRarityColor(
+                                                  c.rarity,
+                                                  dark
+                                                ),
+                                                fontSize: 12,
+                                                whiteSpace: 'nowrap',
+                                              }}
+                                            >
+                                              {t(
+                                                c.rarity_translation_key,
+                                                c.rarity
+                                              )}
+                                            </span>
+                                          )}
+                                          <span
+                                            style={{
+                                              color: dark ? '#ccc' : '#555',
+                                              marginLeft: 'auto',
+                                              minWidth: '3em',
+                                              textAlign: 'center',
+                                              whiteSpace: 'nowrap',
+                                            }}
+                                          >
+                                            {c.count}
+                                          </span>
+                                        </div>
                                       </td>
                                     </tr>
                                   </Fragment>
@@ -754,7 +770,7 @@ export default function QuestNPCDetailPage() {
                           >
                             <th
                               style={{
-                                textAlign: 'center',
+                                textAlign: 'left',
                                 padding: '4px 8px',
                                 color: tokens.muted,
                                 fontSize: 13,
