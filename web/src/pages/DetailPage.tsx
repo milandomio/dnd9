@@ -217,14 +217,9 @@ export default function DetailPage() {
     const eUndersea = t.includes('海底');
     const eSpecial = t.includes('特殊');
     const eRandom = t.includes('随机');
-    for (const { eF, lF } of [
-      { eF: eUndersea, lF: lUndersea },
-      { eF: eSpecial, lF: lSpecial },
-      { eF: eRandom, lF: lRandom },
-    ]) {
-      if (eF && !lF) return false;
-      if (!eF && lF) return false;
-    }
+    if (eUndersea && !lUndersea) return false;
+    if (eSpecial && !lSpecial) return false;
+    if (eRandom && !lRandom) return false;
     return true;
   }
   const sections: DetailSection[] = [];
