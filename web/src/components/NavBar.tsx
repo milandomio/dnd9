@@ -64,7 +64,7 @@ export default function NavBar() {
   const { t, ut } = useLocale();
   const { modules } = useDungeonModules();
   const isDetailTemplate = useSSRData<boolean>('__detailTemplate') === true;
-  const { index: searchIndex, loading: searchLoading } = useSearchIndex();
+  const { index: searchIndex, loading: searchLoading } = useSearchIndex(lang);
   const contentPath = stripLangPrefix(location.pathname);
   const parts = contentPath.split('/').filter(Boolean);
 

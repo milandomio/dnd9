@@ -1860,3 +1860,15 @@ if (typeof window !== "undefined") {
 - **原因**：GitHub Actions 的 `dev` 构建在 SSG 阶段报 `document.body.querySelectorAll is not a function`，导致部署未发布到 `gh-pages-dev`。
 - **变更文件**：`web/src/ssr.tsx`。
 - **关键逻辑/映射关系**：为 Node SSR 的 `document.body` mock 补充 `querySelectorAll: () => []`，与既有 `document`、`document.head` 的空查询行为一致，使 `@ant-design/cssinjs` 初始化样式缓存时可安全扫描已有样式标签。
+
+## fix: CI 从数据库导出 locale 字典
+
+- **原因**：GitHub Actions 不具备原始本地化目录，`discover_languages()` 返回空列表，即使数据库已有多语言翻译表，locale 导出仍为 0 个文件，导致 SSG 找不到 `locale/en.json`。
+- **变更文件**：`api/src/locale_builder.py`。
+- **关键逻辑/映射关系**：locale 导出改遍历前端支持的 10 种语言，并从数据库对应的 `translations` / `translations_<lang>` 表读取；若旧数据库缺少某语言表则跳过，兼容本地与 CI 数据源。
+
+## fix: Quest NPC 详情任务内容 i18n
+
+- **原因**：`/en/quest_npc/TavernMaster` 的任务标题、目标、地图、稀有度、随机奖励、好感度和前置任务仍直接显示中文提取值。
+- **变更文件**：`api/src/quest_collector.py`、`api/src/quest_extractor/quest_extractor.py`、`api/src/quest_extractor/content_renderer.py`、`api/src/locale_builder.py`、`web/src/pages/QuestNPCDetailPage.tsx`、`web/src/components/QuestSearchBar.tsx`、`web/src/types/quest.ts`。
+- **关键逻辑/映射关系**：任务、任务内容、奖励分别保留游戏 `translation_key`；地图和稀有度使用独立键并纳入 locale 键收集；物品解析补充版本后缀键。详情与任务搜索结果统一通过 `t(key, fallback)` 显示，战利品状态改为非文本标记。

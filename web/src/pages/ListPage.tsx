@@ -116,7 +116,7 @@ export default function ListPage() {
     if (!page || !['items', 'monsters', 'props', 'lootdrops'].includes(page))
       return;
     if (ssrData) return;
-    getPageEntries(dataVersion, page).then((entries) => {
+    getPageEntries(dataVersion, page, lang).then((entries) => {
       if (entries.length > 0) {
         setData(entries as IndexEntry[]);
       } else {
@@ -127,7 +127,7 @@ export default function ListPage() {
           .catch(console.error);
       }
     });
-  }, [page, dataVersion]);
+  }, [page, dataVersion, lang]);
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>

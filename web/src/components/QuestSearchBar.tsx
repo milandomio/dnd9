@@ -8,6 +8,7 @@ export interface QuestSearchResult {
   npc: NPCEntry;
   matchField: 'title' | 'id' | 'target';
   matchTarget?: string;
+  matchTargetTranslationKey?: string;
 }
 
 interface QuestSearchBarProps {
@@ -75,6 +76,8 @@ export default function QuestSearchBar({
             npc: entry.npc,
             matchField: 'target',
             matchTarget: entry.quest.contents[idx].target,
+            matchTargetTranslationKey:
+              entry.quest.contents[idx].translation_key,
           });
         }
       }
@@ -188,7 +191,8 @@ export default function QuestSearchBar({
               }}
             >
               <span style={{ color: tokens.text, fontSize: 14 }}>
-                #{hit.quest.quest_number} {hit.quest.title}
+                #{hit.quest.quest_number}{' '}
+                {t(hit.quest.translation_key, hit.quest.title)}
                 {hit.matchField === 'target' && hit.matchTarget && (
                   <span
                     style={{
@@ -197,7 +201,7 @@ export default function QuestSearchBar({
                       fontSize: 12,
                     }}
                   >
-                    ({hit.matchTarget})
+                    ({t(hit.matchTargetTranslationKey, hit.matchTarget)})
                   </span>
                 )}
               </span>
