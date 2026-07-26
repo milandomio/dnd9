@@ -1937,3 +1937,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：详情行复用表头的动态 CSS Grid 列定义；Target 的第二行空位固定为第二列，Map、Loot、Rarity 显式定位到第三列及其后续列。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: 合并 Objective Target 与 Map 列
+
+- **改动原因**：Map 独立列会迫使 Loot 与 Rarity 换到第二行，影响可读性。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：列头通过 `ui.quest_detail.target` 与 `ui.quest_detail.target_map` 显示本地化的 `Target / Map`；Map 值作为 Target 单元格的第二行，Loot 与 Rarity 保持独立同一行。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
