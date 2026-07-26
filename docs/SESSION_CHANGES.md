@@ -1,5 +1,14 @@
 # 2026-07-26 会话修改记录
 
+## fix: 列表页标题和有效项目数 i18n
+
+- **原因**：items、monsters、props、lootdrops 四个列表页共用的标题「点位」及统计「有效实体」为硬编码中文，英语页面仍显示个人风格中文文案。
+- **变更文件**：
+  - `web/src/pages/ListPage.tsx` — H1、浏览器标题、OG 标题和有效数量改用共享列表 i18n 词条；统计文字统一为「有效项目」。
+  - `web/src/i18n/uiLocale.ts` — 10 语言新增 `ui.list.locations`、`ui.list.valid_items`；英语分别映射为 `Locations`、`Valid items: {count}`。
+- **关键逻辑/映射关系**：四类 URL → `ListPage` → `ui.list.locations` / `ui.list.valid_items`；`data.length` 替换 `{count}`，简体中文呈现「有效项目478个」。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；`http://localhost:8090/en/lootdrops/` 返回 HTTP 200。
+
 ## fix: 开发模式清除 PWA 旧数据缓存
 
 - **原因**：`SWUpdateBanner` 在 Vite dev 模式仍注册 `/sw.js`；残留生产 Workbox 以 `StaleWhileRevalidate` 返回旧 `FlatChestLarge.json`/locale，同日数据重建后页面首次请求仍显示旧中文。
