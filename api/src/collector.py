@@ -27,6 +27,7 @@ from enrichment import enrich_all_entities
 from entity_export import export_items, export_monsters, export_props
 from image_utils import sync_webp_images
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
+from label_type import GOLDCHEST_SPECIAL, split_goldchest_special_coords
 from locale_builder import build_locale_files
 from lootdrop_builder import (
     build_and_save_lootdrop_details,
@@ -274,6 +275,9 @@ def run():
         pipe.log("[JSON] get_all_coordinates START")
         all_coords = db.get_all_coordinates()
         pipe.log(f"[JSON] get_all_coordinates DONE -> {len(all_coords)} entity keys")
+        _gc_n = split_goldchest_special_coords(all_coords)
+        if _gc_n:
+            pipe.log(f"[JSON] GoldChest_special split -> {_gc_n} special coords")
         _coord_variant_count = db.get_coord_variant_counts()
         pipe.log(f"[JSON] get_coord_variant_counts DONE -> {len(_coord_variant_count)} variant groups")
         _sub_pool_info_raw = db.get_sub_group_pool_info()
@@ -300,6 +304,28 @@ def run():
         _item_names = {r["item_name"] for r in items}
         _monster_names = {r["monster_name"] for r in monsters}
         _prop_names = {r["asset_name"] for r in props}
+        if GOLDCHEST_SPECIAL in all_coords:
+            _prop_names.add(GOLDCHEST_SPECIAL)
+            # synthetic props row for export / entity_class consumers
+            if not any(r["asset_name"] == GOLDCHEST_SPECIAL for r in props):
+                _gc_tk = next(
+                    (r["translation_key"] for r in props if r["asset_name"] in ("GoldChest", "GoldChest_UnderSea")),
+                    "Text_DesignData_Props_Props_GoldenChest",
+                )
+                props = list(props) + [
+                    {
+                        "asset_name": GOLDCHEST_SPECIAL,
+                        "raw_name": f"Id_Props_{GOLDCHEST_SPECIAL}",
+                        "translation_key": _gc_tk,
+                    }
+                ]
+            entity_class[GOLDCHEST_SPECIAL] = {
+                "types": ["props"],
+                "translation_key": next(
+                    (r["translation_key"] for r in props if r["asset_name"] == GOLDCHEST_SPECIAL),
+                    "Text_DesignData_Props_Props_GoldenChest",
+                ),
+            }
 
         print("\nExporting JSON files...")
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

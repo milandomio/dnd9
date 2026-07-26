@@ -1,11 +1,23 @@
 # 2026-07-26 会话修改记录
 
+## 实现：黄金宝箱(特殊) 拆独立 props 页
+
+- **原因**：`props/GoldChest` 混装 direct(100%) 与 `ChestSpecial_UnderSea`(17.5%)；lootdrop ref 整页导致 100% 误赋
+- **方案**：合成实体 `GoldChest_special`；`all_coords` 拆 special 点；enrichment/lootdrop 独立 gdi 与 ref
+- **变更文件**：
+  - `api/src/label_type.py` — 公共 `classify_label` + `split_goldchest_special_coords`
+  - `api/src/collector.py` — 导出前拆坐标；注入 synthetic props / entity_class
+  - `api/src/entity_export.py` — 导出 `props/GoldChest_special.json` + 索引
+  - `api/src/enrichment.py` — special 页 gdi 仅 17.5%；GoldChest 去掉 special 行
+  - `api/src/lootdrop_builder.py` — 注入 special 坐标；ref→`props/GoldChest_special`；变体率查 `GoldChest_UnderSea`
+  - `docs/plans/PLAN_GOLDCHEST_SPECIAL_SPLIT.md` — 状态已完成
+- **验证**：GoldChest 55 点无 Special；special 32 点 sr=17.5；Spellbook/CourtlyDress `_7001` 有「黄金宝箱(特殊)」ref 正确
+
 ## 计划：黄金宝箱(特殊) 拆独立 props 页
 
 - **原因**：`props/GoldChest` 混装 direct(100%) 与 `ChestSpecial_UnderSea`(17.5%)；gdi 虽列出「(海底)黄金宝箱(特殊)」但坐标/ref 仍绑整页，lootdrop 引用后爆率与分类按钮错乱
 - **方案**：仿宝藏堆/超级宝藏堆，导出合成实体 `props/GoldChest_special`（仅 special 坐标）；主页去掉 special 点与 gdi 行；lootdrop ref 指向新页
-- **变更文件**：`docs/plans/PLAN_GOLDCHEST_SPECIAL_SPLIT.md`（状态：待执行）
-- **未改代码**
+- **变更文件**：`docs/plans/PLAN_GOLDCHEST_SPECIAL_SPLIT.md`（状态：待执行→已完成见上）
 
 ## P002 降级：lootdrop gdi ↔ monsters 对齐（容器生成器子类）
 

@@ -5,7 +5,10 @@ from pathlib import Path
 
 from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
 from drop_rate import _round_rate
-from lootdrop_builder import _LABEL_TYPE_SUFFIX, _classify_label
+from label_type import GOLDCHEST_SPECIAL, LABEL_TYPE_SUFFIX, classify_label
+
+_LABEL_TYPE_SUFFIX = LABEL_TYPE_SUFFIX
+_classify_label = classify_label
 
 
 def enrich_all_entities(
@@ -162,6 +165,54 @@ def enrich_all_entities(
         with open(pfile) as f:
             edata = json.load(f)
         pname = edata["name"]
+        # GoldChest_special: synthetic page — rates from GoldChest_UnderSea + ChestSpecial*
+        if pname == GOLDCHEST_SPECIAL:
+            ldg_id = (
+                spawner_ldg.get("GoldChest_UnderSea")
+                or spawner_ldg.get("GoldChest")
+                or _spawner_ldg_lower.get("goldchest_undersea", "")
+                or _spawner_ldg_lower.get("goldchest", "")
+            )
+            if not ldg_id:
+                continue
+            coords = edata.get("coords", [])
+            if not coords:
+                continue
+            base_trans = edata["translation"]
+            # strip existing (特殊) if present for clean single entry
+            if base_trans.endswith("(特殊)"):
+                base_trans = base_trans[: -len("(特殊)")]
+            special_label = base_trans + _LABEL_TYPE_SUFFIX["special"]
+            best_sr = 0.0
+            for sk in entity_spawners.get("GoldChest_UnderSea", set()):
+                if _classify_label(sk, "GoldChest_UnderSea") != "special":
+                    continue
+                sr = spawn_rate_detail.get((sk, "GoldChest_UnderSea"), 0)
+                if sr > best_sr:
+                    best_sr = sr
+            if best_sr <= 0:
+                best_sr = 17.5
+            kw_entries = {(True, "special"): {"translation": special_label, "spawn_rate": _round_rate(best_sr)}}
+            seen_groups: set[str] = set()
+            for c in coords:
+                g = map_base_to_group.get(c["map"], "")
+                if g:
+                    seen_groups.add(g)
+            if not seen_groups:
+                continue
+            group_drop_info: dict[str, list[dict]] = {}
+            for g in seen_groups:
+                dr = drop_engine.compute_container_drop_rates(ldg_id, g)
+                if not dr:
+                    continue
+                group_drop_info[g] = [{**entry, "drop_rates": dr} for entry in kw_entries.values()]
+            if group_drop_info:
+                edata["group_drop_info"] = group_drop_info
+                with open(pfile, "w") as f:
+                    json.dump(edata, f, ensure_ascii=False, indent=2)
+                prop_update += 1
+            continue
+
         ldg_id = spawner_ldg.get(pname, "")
         if not ldg_id:
             ldg_id = _spawner_ldg_lower.get(pname.lower(), "")
@@ -184,6 +235,9 @@ def enrich_all_entities(
             combined = _round_rate(base + lock)
             if combined > 0:
                 typ = _classify_label(sk, pname)
+                # special coords moved to GoldChest_special — skip on base GoldChest page
+                if pname == "GoldChest" and typ == "special":
+                    continue
                 suffix = _LABEL_TYPE_SUFFIX.get(typ, "")
                 label = base_trans + suffix + ("(可能上锁)" if lock > 0 else "")
                 key = (False, typ)
@@ -196,6 +250,9 @@ def enrich_all_entities(
                 combined = _round_rate(base + lock)
                 if combined > 0:
                     typ = _classify_label(sk, undersea_name)
+                    # special → GoldChest_special page only
+                    if pname == "GoldChest" and typ == "special":
+                        continue
                     suffix = _LABEL_TYPE_SUFFIX.get(typ, "")
                     label = "(海底)" + base_trans + suffix + ("(可能上锁)" if lock > 0 else "")
                     key = (True, typ)
@@ -203,14 +260,14 @@ def enrich_all_entities(
                         kw_entries[key] = {"translation": label, "spawn_rate": combined}
         if not kw_entries:
             continue
-        seen_groups: set[str] = set()
+        seen_groups = set()
         for c in coords:
             g = map_base_to_group.get(c["map"], "")
             if g:
                 seen_groups.add(g)
         if not seen_groups:
             continue
-        group_drop_info: dict[str, list[dict]] = {}
+        group_drop_info = {}
         for g in seen_groups:
             dr = drop_engine.compute_container_drop_rates(ldg_id, g)
             if not dr:

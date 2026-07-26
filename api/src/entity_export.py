@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+from label_type import GOLDCHEST_SPECIAL, LABEL_TYPE_SUFFIX
 from translator import (
     ORE_ITEM_COORD_RE,
     ORE_QUALITY_RE,
@@ -161,6 +162,9 @@ def export_props(
     props_index = []
     props_by_translation: dict[str, list[dict]] = {}
     for r in sorted(props, key=lambda r: ore_quality_key(r["asset_name"])):
+        # synthetic special page exported separately (must not merge under 黄金宝箱)
+        if r["asset_name"] == GOLDCHEST_SPECIAL:
+            continue
         translation = resolve_name(r["asset_name"], r["translation_key"], "props")
         # Ore quality variants without translation: normalize to base ore name
         if translation == r["asset_name"]:
@@ -226,5 +230,37 @@ def export_props(
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
         _save(output_dir, f"props/{name_key}.json", entity_data)
+
+    # GoldChest_special: synthetic page (Special-generator coords only)
+    _gc_special_coords = all_coords.get(GOLDCHEST_SPECIAL) or []
+    if _gc_special_coords:
+        _gc_tk = ""
+        for r in props:
+            if r["asset_name"] in ("GoldChest", "GoldChest_UnderSea"):
+                _gc_tk = r.get("translation_key") or ""
+                break
+        _gc_base_trans = resolve_name("GoldChest", _gc_tk, "props") if _gc_tk else "黄金宝箱"
+        _gc_special_trans = _gc_base_trans + LABEL_TYPE_SUFFIX["special"]
+        _built = [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in _gc_special_coords]
+        props_index.append(
+            {
+                "name": GOLDCHEST_SPECIAL,
+                "translation": _gc_special_trans,
+                "translation_key": _gc_tk,
+                "coordCount": len(_built),
+                "type": "props",
+            }
+        )
+        _save(
+            output_dir,
+            f"props/{GOLDCHEST_SPECIAL}.json",
+            {
+                "name": GOLDCHEST_SPECIAL,
+                "translation": _gc_special_trans,
+                "translation_key": _gc_tk,
+                "coords": _built,
+            },
+        )
+
     _save(output_dir, "props.json", props_index)
     return props_index
