@@ -73,6 +73,14 @@ def _load_used_keys(output_dir: Path, lootdrop_keys: set[str] | None = None) -> 
         except (json.JSONDecodeError, OSError):
             pass
 
+    quest_npc_path = output_dir / "quest_npc.json"
+    if quest_npc_path.exists():
+        try:
+            with open(quest_npc_path, encoding="utf-8") as f:
+                _collect_keys(json.load(f), used)
+        except (json.JSONDecodeError, OSError):
+            pass
+
     return used
 
 

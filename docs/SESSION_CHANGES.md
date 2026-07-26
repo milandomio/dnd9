@@ -1848,6 +1848,13 @@ if (typeof window !== "undefined") {
 - **关键逻辑/映射关系**：列表页标题和 Helmet 元数据复用现有 UI 翻译键；非简体中文语言使用稳定的 `npc_name`，简体中文保持 `npc_name_display`；任务搜索框默认占位符改用 `ui.search.placeholder`，搜索结果 NPC 标签沿用相同语言映射。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；Playwright 访问 `http://127.0.0.1:8090/en/quest_npc`，标题为 `Quest NPCs | DarkFlashNav`，页面正文未检测到中文。
 
+## fix: Quest NPC 名称改用游戏 i18n 键
+
+- **原因**：英文 Quest NPC 列表此前将内部 `npc_name` 直接作为显示文本，未经过 locale 字典。
+- **变更文件**：`api/src/db/repositories/quests.py`、`api/src/locale_builder.py`、`web/src/types/quest.ts`、`web/src/pages/QuestNPCPage.tsx`、`web/src/components/QuestSearchBar.tsx`。
+- **关键逻辑/映射关系**：导出的每个 NPC 注入 `translation_key = Text_DesignData_Merchant_Merchant_{npc_name}`；locale 构建器递归收集 `quest_npc.json` 的键；列表与搜索结果统一使用 `t(translation_key, npc_name_display)`，由游戏 locale 提供目标语言名称。
+- **验证**：`python api/main.py` 数据管道完成；英文 locale 含 `Text_DesignData_Merchant_Merchant_Alchemist=Alchemist`；`api/lint.sh`、`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；Playwright 验证 `/en/quest_npc` 正文无中文。
+
 ## fix: SSG Ant Design body 查询 mock
 
 - **原因**：GitHub Actions 的 `dev` 构建在 SSG 阶段报 `document.body.querySelectorAll is not a function`，导致部署未发布到 `gh-pages-dev`。

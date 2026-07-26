@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
-import { DEFAULT_LANG } from '../i18n/locale';
 import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
@@ -50,7 +49,10 @@ export default function QuestNPCPage() {
   const seasonVersion = useSeasonVersion();
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
-  const { ut, lang } = useLocale();
+  const { t, ut, lang } = useLocale();
+
+  const npcDisplayName = (npc: NPCEntry) =>
+    t(npc.translation_key, npc.npc_name_display);
 
   useEffect(() => {
     if (ssrData) return;
@@ -89,13 +91,7 @@ export default function QuestNPCPage() {
         [
           cat,
           npcs.sort((a, b) =>
-            (lang === DEFAULT_LANG
-              ? a.npc_name_display
-              : a.npc_name
-            ).localeCompare(
-              lang === DEFAULT_LANG ? b.npc_name_display : b.npc_name,
-              lang
-            )
+            npcDisplayName(a).localeCompare(npcDisplayName(b), lang)
           ),
         ] as const
     );
@@ -236,9 +232,7 @@ export default function QuestNPCPage() {
                           textDecoration: npcDone ? 'line-through' : 'none',
                         }}
                       >
-                        {lang === DEFAULT_LANG
-                          ? npc.npc_name_display
-                          : npc.npc_name}
+                        {npcDisplayName(npc)}
                         <span
                           style={{
                             fontSize: 13,

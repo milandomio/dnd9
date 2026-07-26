@@ -35,7 +35,7 @@ export default function QuestSearchBar({
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const { dark, tokens } = useTheme();
-  const { lang, ut } = useLocale();
+  const { t, ut } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -213,9 +213,7 @@ export default function QuestSearchBar({
                   flexShrink: 0,
                 }}
               >
-                {lang === 'zh-Hans'
-                  ? hit.npc.npc_name_display
-                  : hit.npc.npc_name}
+                {t(hit.npc.translation_key, hit.npc.npc_name_display)}
               </span>
             </div>
           ))}
