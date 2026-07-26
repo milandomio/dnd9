@@ -1598,7 +1598,8 @@ export default function LootdropDetailPage() {
                           color: tokens.accent,
                         }}
                       >
-                        综合爆率 {parseFloat(sc.toFixed(4))}%
+                        {ut('ui.detail.composite_rate')}{' '}
+                        {parseFloat(sc.toFixed(4))}%
                       </div>
                     ) : null;
                   })()}

@@ -1,5 +1,10 @@
 # 2026-07-26 会话修改记录
 
+## fix: 地图模块「综合爆率」i18n
+
+- **原因**：DetailPage / LootdropDetailPage 地图卡片下硬编码「综合爆率」
+- **变更**：两处改为 `ut('ui.detail.composite_rate')`（字典 10 语言已有）
+
 ## fix: LocationStats / 底部地图模块名 i18n
 
 - **原因**：`/en/lootdrops/...` 底部「位置统计」「包含地图」硬编码中文；模块名用 `.translation` 未 `t(translation_key)`
