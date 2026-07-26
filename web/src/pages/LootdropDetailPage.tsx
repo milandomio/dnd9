@@ -1627,7 +1627,7 @@ export default function LootdropDetailPage() {
                 },
                 file: c.file,
                 mapName: c.map,
-                mapLabel: mod?.translation || c.map,
+                mapLabel: t(mod?.translation_key, mod?.translation || c.map),
                 label: c.label || '',
                 x: c.x,
                 y: c.y,
@@ -1681,9 +1681,8 @@ export default function LootdropDetailPage() {
       >
         <LocationStats
           count={bottomCount}
-          mapTranslations={[...visibleMapsSet].map(
-            (k) => modules.get(k)?.translation || k
-          )}
+          mapKeys={[...visibleMapsSet]}
+          modules={modules}
         />
       </div>
     </div>

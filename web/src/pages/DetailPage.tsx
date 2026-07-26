@@ -682,7 +682,7 @@ export default function DetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {mod?.translation || mapName}
+                    {t(mod?.translation_key, mod?.translation || mapName)}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -1185,9 +1185,8 @@ export default function DetailPage() {
         <br />
         <LocationStats
           count={bottomCount}
-          mapTranslations={[...bottomMapsSet].map(
-            (k) => modules.get(k)?.translation || k
-          )}
+          mapKeys={[...bottomMapsSet]}
+          modules={modules}
         />
       </div>
 
@@ -1208,7 +1207,7 @@ export default function DetailPage() {
               },
               file: c.file,
               mapName: c.map,
-              mapLabel: mod?.translation || c.map,
+              mapLabel: t(mod?.translation_key, mod?.translation || c.map),
               label: c.label || '',
               x: c.x,
               y: c.y,

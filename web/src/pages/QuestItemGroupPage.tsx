@@ -19,6 +19,7 @@ import {
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
+import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 
 interface Coord {
@@ -440,7 +441,7 @@ export default function QuestItemGroupPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {mod?.translation || mapName}
+                    {t(mod?.translation_key, mod?.translation || mapName)}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -746,7 +747,7 @@ export default function QuestItemGroupPage() {
                 },
                 file: c.file,
                 mapName: c.map,
-                mapLabel: mod?.translation || c.map,
+                mapLabel: t(mod?.translation_key, mod?.translation || c.map),
                 label: c.label || '',
                 x: c.x,
                 y: c.y,
@@ -798,17 +799,11 @@ export default function QuestItemGroupPage() {
           color: tokens.muted,
         }}
       >
-        <strong>
-          {ut('ui.quest_group.pos_stat').replace(
-            '{count}',
-            String(totalCoords)
-          )}
-        </strong>
-        <br />
-        <strong>{ut('ui.quest_group.map_includes')}</strong>{' '}
-        {[...new Set([...mapGroups.keys()])]
-          .map((k) => modules.get(k)?.translation || k)
-          .join('、')}
+        <LocationStats
+          count={totalCoords}
+          mapKeys={[...mapGroups.keys()]}
+          modules={modules}
+        />
       </div>
     </div>
   );

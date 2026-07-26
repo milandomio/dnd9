@@ -1,18 +1,32 @@
+import { useLocale } from '../i18n/useLocale';
+import type { DungeonModule } from '../types/data';
+
 interface LocationStatsProps {
   count: number;
-  mapTranslations: string[];
+  mapKeys: string[];
+  modules: Map<string, DungeonModule>;
 }
 
 export default function LocationStats({
   count,
-  mapTranslations,
+  mapKeys,
+  modules,
 }: LocationStatsProps) {
+  const { t, ut } = useLocale();
+  const sep = ut('ui.location.map_sep');
+  const names = mapKeys.map((k) => {
+    const mod = modules.get(k);
+    return t(mod?.translation_key, mod?.translation || k);
+  });
+
   return (
     <>
-      <strong>位置统计：共 {count} 个位置点</strong>
+      <strong>
+        {ut('ui.location.pos_stat').replace('{count}', String(count))}
+      </strong>
       <br />
-      <strong>包含地图：</strong>
-      {mapTranslations.join('、')}
+      <strong>{ut('ui.location.map_includes')}</strong>
+      {names.join(sep)}
     </>
   );
 }
