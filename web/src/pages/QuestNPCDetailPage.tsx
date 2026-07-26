@@ -542,7 +542,7 @@ export default function QuestNPCDetailPage() {
                                 )}
                                 <th
                                   style={{
-                                    textAlign: 'left',
+                                    textAlign: 'center',
                                     padding: '4px 8px',
                                     color: tokens.muted,
                                     fontSize: 13,
@@ -691,6 +691,7 @@ export default function QuestNPCDetailPage() {
                                         style={{
                                           padding: '3px 8px',
                                           color: dark ? '#ccc' : '#555',
+                                          textAlign: 'center',
                                           whiteSpace: 'nowrap',
                                         }}
                                       >
@@ -744,7 +745,7 @@ export default function QuestNPCDetailPage() {
                           >
                             <th
                               style={{
-                                textAlign: 'left',
+                                textAlign: 'center',
                                 padding: '4px 8px',
                                 color: tokens.muted,
                                 fontSize: 13,
@@ -796,6 +797,7 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     padding: '3px 8px',
                                     color: dark ? '#ccc' : '#555',
+                                    textAlign: 'center',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
