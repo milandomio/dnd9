@@ -483,7 +483,7 @@ export default function DetailPage() {
           margin: '0 0 12px',
         }}
       >
-        {entityLabel} 位置汇总
+        {entityLabel} {ut('ui.list.locations')}
       </h1>
 
       <DebugPanel

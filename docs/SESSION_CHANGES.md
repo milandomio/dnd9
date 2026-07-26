@@ -1730,3 +1730,9 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/scripts/ssg.mjs`、`web/src/pages/DetailPage.tsx`、`web/src/components/NavBar.tsx`、`web/src/types/data.ts`。
 - **关键逻辑/映射关系**：每种语言仅 `render()` 一次 `/:lang/props/GoldChest`；其 HTML 复用于三类详情页，内联数据改写为 `目标 page/name -> GoldChest 样板 + isDetailTemplate`，而 `<title>`、canonical、hreflang 与 JSON preload 保持目标路由。样板模块仅保留 GoldChest 引用模块，`MapPanel` 固定 `RareModule_1x1.webp`；客户端等待 data version 后请求目标 JSON 并替换实体与真实地图。样板期间隐藏路由相关面包屑，确保复用 HTML 与目标 URL 的首个组件树一致。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run build` 通过；`http://localhost:8080/en/items/Ale/` HTTP 200，Playwright 无 hydration error 且页面更新为 Ale；lootdrop 回归无浏览器错误。
+
+## fix: 详情页位置汇总改用 Locations i18n
+
+- **原因**：详情页 h1 硬编码「位置汇总」，需与列表页一致改为 Locations 并支持多语言。
+- **变更文件**：`web/src/pages/DetailPage.tsx`
+- **关键逻辑/映射关系**：`{entityLabel} 位置汇总` → `{entityLabel} {ut('ui.list.locations')}`，复用既有 `ui.list.locations`（zh-Hans 点位 / en Locations / 等 10 语）。列表页标题 Locations 保持不变。
