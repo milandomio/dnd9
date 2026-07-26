@@ -15,6 +15,8 @@
 
 地图卡片标题（h3）已正确：`t(mod?.translation_key, mod?.translation || …)`，仅底部统计区漏掉。
 
+补充：同一区域的 Z 颜色说明也曾硬编码中文：`颜色说明 / 高于地面 / 正常高度 / 低于地面`。
+
 ---
 
 ## 2. 根因
@@ -88,6 +90,10 @@ t(mod?.translation_key, mod?.translation || mod?.name || mapName)
 | `ui.location.pos_stat` | `位置统计：共 {count} 个位置点` |
 | `ui.location.map_includes` | `包含地图：` |
 | `ui.location.map_sep` | `、`（en: `, `） |
+| `ui.detail.color_legend` | `颜色说明：` |
+| `ui.detail.z_above_ground` | `Z > 299 (高于地面)` |
+| `ui.detail.z_normal_height` | `-299 ≤ Z ≤ 299 (正常高度)` |
+| `ui.detail.z_below_ground` | `Z < -299 (低于地面)` |
 
 可选：让 `ui.module_detail.pos_stat` / `ui.quest_group.pos_stat` 与 `ui.location.pos_stat` 同值，或逐步收敛到 `ui.location.*`，避免再复制。
 

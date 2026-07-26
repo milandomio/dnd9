@@ -1069,7 +1069,7 @@ export default function DetailPage() {
           color: tokens.muted,
         }}
       >
-        <strong>颜色说明：</strong>
+        <strong>{ut('ui.detail.color_legend')}</strong>
         <span
           style={{
             display: 'inline-block',
@@ -1080,7 +1080,7 @@ export default function DetailPage() {
             marginRight: 3,
           }}
         ></span>{' '}
-        Z &gt; 299 (高于地面)
+        {ut('ui.detail.z_above_ground')}
         <span
           style={{
             display: 'inline-block',
@@ -1091,7 +1091,7 @@ export default function DetailPage() {
             margin: '0 3px 0 12px',
           }}
         ></span>{' '}
-        -299 ≤ Z ≤ 299 (正常高度)
+        {ut('ui.detail.z_normal_height')}
         <span
           style={{
             display: 'inline-block',
@@ -1102,7 +1102,7 @@ export default function DetailPage() {
             margin: '0 3px 0 12px',
           }}
         ></span>{' '}
-        Z &lt; -299 (低于地面)
+        {ut('ui.detail.z_below_ground')}
         <br />
         <LocationStats
           count={bottomCount}
