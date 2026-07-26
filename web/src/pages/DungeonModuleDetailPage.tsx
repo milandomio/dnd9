@@ -101,7 +101,7 @@ export default function DungeonModuleDetailPage() {
     );
 
   const m = mod;
-  const moduleDisplayName = m.translation || m.name;
+  const moduleDisplayName = t(m.translation_key, m.translation || m.name);
   const groupLabel = formatGroupLabel(m, t, ut);
   const sx = m.size_x || 1;
   const sy = m.size_y || 1;
@@ -499,7 +499,7 @@ export default function DungeonModuleDetailPage() {
                 },
                 file: '',
                 mapName: m.name,
-                mapLabel: m.translation || m.name,
+                mapLabel: moduleDisplayName,
                 label: c.label || '',
                 x: c.x,
                 y: c.y,

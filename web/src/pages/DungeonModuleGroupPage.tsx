@@ -171,7 +171,7 @@ export default function DungeonModuleGroupPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {mod.translation || mod.name}
+                    {t(mod.translation_key, mod.translation || mod.name)}
                   </span>
                   <span
                     style={{ fontSize: 12, color: tokens.muted, flexShrink: 0 }}
