@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SearchOutlined } from '@ant-design/icons';
@@ -439,6 +439,11 @@ export default function QuestNPCDetailPage() {
                       const hasDungeonType = q.contents.some(
                         (c) => c.dungeon_type
                       );
+                      const detailColumnCount =
+                        2 +
+                        Number(hasDungeonType) +
+                        Number(hasLoot) +
+                        Number(hasRarity);
                       return (
                         <div
                           style={{
@@ -553,132 +558,146 @@ export default function QuestNPCDetailPage() {
                                 const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
                                 const contentDone = lsGet(contentKey);
                                 return (
-                                  <tr
-                                    key={i}
-                                    style={{
-                                      borderBottom: dark
-                                        ? '1px solid rgba(255,255,255,0.06)'
-                                        : '1px solid rgba(0,0,0,0.08)',
-                                      opacity: contentDone ? 0.4 : 1,
-                                      textDecoration: contentDone
-                                        ? 'line-through'
-                                        : 'none',
-                                    }}
-                                  >
-                                    <td
+                                  <Fragment key={i}>
+                                    <tr
                                       style={{
-                                        padding: '3px 8px',
-                                        color: dark ? '#ccc' : '#555',
-                                        whiteSpace: 'nowrap',
+                                        opacity: contentDone ? 0.4 : 1,
+                                        textDecoration: contentDone
+                                          ? 'line-through'
+                                          : 'none',
                                       }}
                                     >
-                                      {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
-                                    </td>
-                                    <td
-                                      style={{
-                                        padding: '3px 8px',
-                                        color: tokens.text,
-                                        whiteSpace: 'nowrap',
-                                      }}
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={contentDone}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          lsSet(contentKey, !contentDone);
-                                          refresh();
-                                        }}
-                                        onChange={() => {}}
-                                        style={{
-                                          ...checkboxStyle,
-                                          width: 16,
-                                          height: 16,
-                                          marginRight: 4,
-                                        }}
-                                      />
-                                      {t(c.translation_key, c.target)}
-                                      <SearchOutlined
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          navigate(location.pathname, {
-                                            state: { searchQuery: c.target },
-                                          });
-                                        }}
-                                        title={ut('ui.search.search')}
-                                        style={{
-                                          marginLeft: 6,
-                                          cursor: 'pointer',
-                                          fontSize: 13,
-                                          color: tokens.muted,
-                                          transition: 'color 0.2s',
-                                          verticalAlign: 'middle',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                          e.currentTarget.style.color =
-                                            tokens.accent;
-                                        }}
-                                        onMouseLeave={(e) => {
-                                          e.currentTarget.style.color =
-                                            tokens.muted;
-                                        }}
-                                      />
-                                    </td>
-                                    {hasDungeonType && (
                                       <td
+                                        rowSpan={2}
                                         style={{
                                           padding: '3px 8px',
-                                          color: dark ? '#42a5f5' : '#1565c0',
-                                          fontSize: 12,
-                                          whiteSpace: 'normal',
+                                          color: dark ? '#ccc' : '#555',
+                                          whiteSpace: 'nowrap',
+                                          verticalAlign: 'top',
                                         }}
                                       >
-                                        {t(
-                                          c.dungeon_translation_key,
-                                          c.dungeon_type || ''
-                                        )}
+                                        {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
                                       </td>
-                                    )}
-                                    {hasLoot && (
                                       <td
+                                        colSpan={detailColumnCount}
                                         style={{
                                           padding: '3px 8px',
-                                          color: dark ? '#FFB74D' : '#E65100',
-                                          fontSize: 12,
+                                          color: tokens.text,
                                           whiteSpace: 'nowrap',
                                         }}
                                       >
-                                        {c.loot_state ? '✓' : ''}
+                                        <input
+                                          type="checkbox"
+                                          checked={contentDone}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            lsSet(contentKey, !contentDone);
+                                            refresh();
+                                          }}
+                                          onChange={() => {}}
+                                          style={{
+                                            ...checkboxStyle,
+                                            width: 16,
+                                            height: 16,
+                                            marginRight: 4,
+                                          }}
+                                        />
+                                        {t(c.translation_key, c.target)}
+                                        <SearchOutlined
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(location.pathname, {
+                                              state: { searchQuery: c.target },
+                                            });
+                                          }}
+                                          title={ut('ui.search.search')}
+                                          style={{
+                                            marginLeft: 6,
+                                            cursor: 'pointer',
+                                            fontSize: 13,
+                                            color: tokens.muted,
+                                            transition: 'color 0.2s',
+                                            verticalAlign: 'middle',
+                                          }}
+                                          onMouseEnter={(e) => {
+                                            e.currentTarget.style.color =
+                                              tokens.accent;
+                                          }}
+                                          onMouseLeave={(e) => {
+                                            e.currentTarget.style.color =
+                                              tokens.muted;
+                                          }}
+                                        />
                                       </td>
-                                    )}
-                                    {hasRarity && (
+                                    </tr>
+                                    <tr
+                                      style={{
+                                        borderBottom: dark
+                                          ? '1px solid rgba(255,255,255,0.06)'
+                                          : '1px solid rgba(0,0,0,0.08)',
+                                        opacity: contentDone ? 0.4 : 1,
+                                        textDecoration: contentDone
+                                          ? 'line-through'
+                                          : 'none',
+                                      }}
+                                    >
+                                      <td style={{ padding: '3px 8px' }} />
+                                      {hasDungeonType && (
+                                        <td
+                                          style={{
+                                            padding: '3px 8px',
+                                            color: dark ? '#42a5f5' : '#1565c0',
+                                            fontSize: 12,
+                                            whiteSpace: 'normal',
+                                          }}
+                                        >
+                                          {t(
+                                            c.dungeon_translation_key,
+                                            c.dungeon_type || ''
+                                          )}
+                                        </td>
+                                      )}
+                                      {hasLoot && (
+                                        <td
+                                          style={{
+                                            padding: '3px 8px',
+                                            color: dark ? '#FFB74D' : '#E65100',
+                                            fontSize: 12,
+                                            whiteSpace: 'nowrap',
+                                          }}
+                                        >
+                                          {c.loot_state ? '✓' : ''}
+                                        </td>
+                                      )}
+                                      {hasRarity && (
+                                        <td
+                                          style={{
+                                            padding: '3px 8px',
+                                            color: getRarityColor(
+                                              c.rarity || '',
+                                              dark
+                                            ),
+                                            fontSize: 12,
+                                            whiteSpace: 'nowrap',
+                                          }}
+                                        >
+                                          {t(
+                                            c.rarity_translation_key,
+                                            c.rarity || ''
+                                          )}
+                                        </td>
+                                      )}
                                       <td
                                         style={{
                                           padding: '3px 8px',
-                                          color: getRarityColor(
-                                            c.rarity || '',
-                                            dark
-                                          ),
-                                          fontSize: 12,
+                                          color: dark ? '#ccc' : '#555',
                                           whiteSpace: 'nowrap',
                                         }}
                                       >
-                                        {t(
-                                          c.rarity_translation_key,
-                                          c.rarity || ''
-                                        )}
+                                        {c.count}
                                       </td>
-                                    )}
-                                    <td
-                                      style={{
-                                        padding: '3px 8px',
-                                        color: dark ? '#ccc' : '#555',
-                                        whiteSpace: 'nowrap',
-                                      }}
-                                    >
-                                      {c.count}
-                                    </td>
-                                  </tr>
+                                    </tr>
+                                  </Fragment>
                                 );
                               })}
                             </tbody>
