@@ -1,5 +1,12 @@
 # 2026-07-26 会话修改记录
 
+## 炼金术师归入装备NPC分组
+
+- **原因**：`Alchemist`（炼金术师）原先落在「可用NPC」，应与制甲匠等一并归入「装备NPC」
+- **变更文件**：`api/src/quest_collector.py` — `_get_npc_category` 的 `equipment` 集合加入 `"Alchemist"`
+- **即时数据**：本地 DB `quest_npcs` + `data/json/quest_npc.json` 已把 Alchemist 的 `category` 改为 `装备NPC`（下次全量 quest 提取也会按代码写入）
+- **验证**：DB 查询 `Alchemist` → `装备NPC`
+
 ## 修复 lootdrop 详情掉落源 translation_key 缺失（en 页仍中文）
 
 - **原因**：`build_and_save_lootdrop_details` 的 `m_tk_map` 只扫 `monster_entities`，宝箱/堆等 props 掉落源 `translation_key` 为空；前端 `t('', 中文)` 只能显示中文（如 Ruby_5001 的宝藏堆、黄金宝箱等）
