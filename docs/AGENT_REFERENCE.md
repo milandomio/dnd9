@@ -261,8 +261,9 @@ git update-index --skip-worktree api/data/darkfindv5.db
 | `MODULES_LOAD_PERF.md` | 地图模块加载性能 |
 | `NAVIGATION_FETCH_BUG.md` | 导航 fetch 路径 Bug |
 | `P001_AUDIT_FIX_PLAN.md` | 审计修复计划 P001 |
-| `PERF_LOOTDROPS_OPTIMIZATION.md` | lootdrops 性能优化 |
-| `PERF_VARIANT_DROP_RATE_CACHE.md` | 变体爆率缓存优化 |
+| `PERF_LOOTDROPS_OPTIMIZATION.md` | lootdrops 性能优化（历史已完成） |
+| `PERF_VARIANT_DROP_RATE_CACHE.md` | 变体爆率缓存（**废弃**） |
+| `plans/PERF_PIPELINE_AND_RUNTIME.md` | 管线+运行时性能优化草案（待执行） |
 | `PLAN_CONTAINER_GENERATOR_ENTITIES.md` | 容器生成器实体页计划 |
 | `PLAN_FIX_SPAWN_RATE.md` | 刷怪率修复计划 |
 | `PWA_SW_PLAN.md` | Service Worker 计划 |

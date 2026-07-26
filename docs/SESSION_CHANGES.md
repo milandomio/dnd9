@@ -1,5 +1,18 @@
 # 2026-07-27 会话修改记录
 
+## docs: 性能优化草案（管线 + 运行时）
+
+- **改动原因**：当前无时间执行优化；先固化热 DB 基线（~98s）与分阶段方案，供后续按阶段落地。
+- **变更文件**：`docs/plans/PERF_PIPELINE_AND_RUNTIME.md`（新建）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  - 基线 log：`api/logs/pipeline_20260727_005114.log` — lootdrops 79s / locale 14s
+  - **阶段 A**：locale 顺带收集 keys、`get_base_item_spawners` 反向索引、全实体 compact JSON
+  - **阶段 B**：变体 GDI/结构复用与外层结果缓存（主降 loot 耗时）
+  - **阶段 C**：LootdropDetail `useMemo`、MapPanel 密集点 canvas/SVG
+  - **阶段 D**：enrichment 合并写、冷 import 指纹、Workbox 大 JSON 策略
+  - 关联：`PERF_LOOTDROPS_OPTIMIZATION.md`（已完成）、`PERF_VARIANT_DROP_RATE_CACHE.md`（废弃勿实施）、P005 / CACHE_OPTIMIZATION
+- **验证**：仅文档，未改代码；状态为草案/待执行。
+
 ## fix: 无语言前缀详情页误匹配导致空白
 
 - **改动原因**：`/monsters/AncientStingray/` 等无 `/:lang` 前缀路径被 `/:lang/:page` 当成 `lang=monsters`，DetailPage 的 `page`/`name` 错位，页面空白；`LegacyRedirect` 在 `*` 路由上无法拦截已匹配路径。
