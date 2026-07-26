@@ -545,7 +545,7 @@ export default function QuestNPCDetailPage() {
                                 )}
                                 <th
                                   style={{
-                                    textAlign: 'center',
+                                    textAlign: 'right',
                                     padding: '4px 8px',
                                     color: tokens.muted,
                                     fontSize: 13,
