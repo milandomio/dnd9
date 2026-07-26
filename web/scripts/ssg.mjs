@@ -80,7 +80,7 @@ cpSync(join(DATA, "meta.json"), join(publicJsonDir, "meta.json"));
 
 // ---- step 2: build SSR bundle ----
 console.log("[ssg] building SSR bundle…");
-execSync("node node_modules/.bin/vite build --mode ssr", { cwd: WEB, stdio: "pipe" });
+execSync("VITE_SSR_BUILD=true node node_modules/.bin/vite build --mode production", { cwd: WEB, stdio: "pipe" });
 
 // ---- step 3: load SSR renderer ----
 const ssrMod = await import(join(SSR_OUT, "ssr.cjs"));

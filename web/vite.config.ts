@@ -4,8 +4,8 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { existsSync, statSync } from 'fs';
 
-export default defineConfig(({ mode }) => {
-  if (mode === 'ssr') {
+export default defineConfig(() => {
+  if (process.env.VITE_SSR_BUILD === 'true') {
     // SSR build: bundle src/ssr.tsx for Node.js
     return {
       plugins: [react()],
