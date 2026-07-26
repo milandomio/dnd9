@@ -498,6 +498,7 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.muted,
                                     fontSize: 13,
                                     width: '1%',
+                                    whiteSpace: 'nowrap',
                                   }}
                                 >
                                   {ut('ui.quest_detail.target')}
