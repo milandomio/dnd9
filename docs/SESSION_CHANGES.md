@@ -1972,3 +1972,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：Target 单元格设置相对定位和 `zIndex: 1`，Count 单元格设置 `zIndex: 0`，使重叠区域的点击优先交给 Target 中的放大镜。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: 合并 Objective Rarity 到 Target
+
+- **改动原因**：独立 Rarity 列未按期望合并，且较长 Target 文本会覆盖 Loot 内容；游戏原始目标名还带有重复的 Rarity 括号后缀。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Objective 改为 Type、`Target / Rarity`、Loot、Count 四列；Rarity 统一显示在 Target 单元格内。含 Rarity 的本地化目标名用 `/\s*\([^)]*\)/g` 移除括号内容；Target 列使用 `minmax(12em, 1fr)` 和断词换行保护 Loot。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
