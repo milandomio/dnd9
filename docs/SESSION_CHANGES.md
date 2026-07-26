@@ -1872,3 +1872,10 @@ if (typeof window !== "undefined") {
 - **原因**：`/en/quest_npc/TavernMaster` 的任务标题、目标、地图、稀有度、随机奖励、好感度和前置任务仍直接显示中文提取值。
 - **变更文件**：`api/src/quest_collector.py`、`api/src/quest_extractor/quest_extractor.py`、`api/src/quest_extractor/content_renderer.py`、`api/src/locale_builder.py`、`web/src/pages/QuestNPCDetailPage.tsx`、`web/src/components/QuestSearchBar.tsx`、`web/src/types/quest.ts`。
 - **关键逻辑/映射关系**：任务、任务内容、奖励分别保留游戏 `translation_key`；地图和稀有度使用独立键并纳入 locale 键收集；物品解析补充版本后缀键。详情与任务搜索结果统一通过 `t(key, fallback)` 显示，战利品状态改为非文本标记。
+
+## fix: Quest NPC 搜索使用当前语言索引
+
+- **改动原因**：任务列表和详情页可显示日文标题与目标，但搜索索引仍使用中文回退字段，导致日文输入无法命中。
+- **变更文件**：`web/src/components/QuestSearchBar.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：构建扁平任务索引时，任务标题和每个目标优先按其 `translation_key` 从当前 locale 字典取值；locale 字典加载完成或语言切换时以 `dict` 依赖重建索引，缺失键继续回退中文字段。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
