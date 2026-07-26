@@ -4,6 +4,7 @@
 
 - **原因**：`props/GoldChest_special` 页空白；coord label=`ChestSpecial_UnderSea` 含 UnderSea，GDI translation=`黄金宝箱(特殊)` 无海底；对称 `!eF && lF` 全否
 - **变更文件**：`web/src/pages/DetailPage.tsx` — `labelMatch` 仅要求 entry 标记出现在 label（entry 权威），允许多余 label 标记
+- **文档**：`docs/plans/PLAN_GOLDCHEST_SPECIAL_SPLIT.md` §10 回写 follow-up 根因/修复/提交
 - **验证**：format + tsc 通过；刷新 `/zh-Hans/props/GoldChest_special/` 应出 ShipGraveyard 分区
 
 ## 实现：黄金宝箱(特殊) 拆独立 props 页

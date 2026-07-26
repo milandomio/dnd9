@@ -1,8 +1,9 @@
 # 黄金宝箱(特殊) 拆成独立 props 页
 
 > 日期: 2026-07-26  
-> 状态: **已完成**  
-> 关联: `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md`（P002 降级仅做 gdi↔monsters 图例对齐，**未**解决 props 坐标混装与 100% 误赋）
+> 状态: **已完成**（含前端 follow-up）  
+> 关联: `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md`（P002 降级仅做 gdi↔monsters 图例对齐，**未**解决 props 坐标混装与 100% 误赋）  
+> 提交: `312f4f9e`（管道拆页）→ `155209f9`（DetailPage labelMatch 修复空白）
 
 ## 1. 问题
 
@@ -159,3 +160,31 @@ P002 计划保持「已完成（降级）」；**本文件为后续架构修复*
 - `GoldChest_group`（海底组 100%）  
 
 每类验收复制 §6 表格即可。
+
+## 10. Follow-up：props 页空白（labelMatch）
+
+管道拆页完成后，`props/GoldChest_special.json` 数据正确（32 点、gdi sr=17.5），但 `/zh-Hans/props/GoldChest_special/` **前端空白**。
+
+### 10.1 现象对比
+
+| URL | 组件 | 结果 |
+|-----|------|------|
+| `/lootdrops/HeaterShield_7001/` | `LootdropDetailPage` | 正常（无 `labelMatch`） |
+| `/props/GoldChest_special/` | `DetailPage` | 空白（`sections=[]`） |
+
+非「两页函数不统一」遗漏，而是 **DetailPage 独有** 的 GDI↔label 匹配逻辑。
+
+### 10.2 根因
+
+- coord `label` = `ChestSpecial_UnderSea` → `lUndersea=true`、`lSpecial=true`
+- gdi translation = `黄金宝箱(特殊)` → `eUndersea=false`、`eSpecial=true`
+- 旧 `labelMatch` **对称**检查 `!eF && lF` → UnderSea 不对称 → **全部 coord 否决** → sections 空
+
+### 10.3 修复
+
+`web/src/pages/DetailPage.tsx` — `labelMatch` 改为 **entry 权威、非对称**：
+
+- 仅当 entry 带标记而 label 没有时否决（`eF && !lF`）
+- label 多出 UnderSea 等标记 **允许**（asset 命名含地理后缀，不等于 gdi 分类）
+
+提交：`155209f9`。刷新 special 页应出 ShipGraveyard 分区与 17.5% 参考爆率。
