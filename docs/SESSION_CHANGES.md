@@ -1,5 +1,12 @@
 # 2026-07-26 会话修改记录
 
+## docs: 网站美化计划方案
+
+- **原因**：当前不适合直接改动前端，先记录不更换 Ant Design 的最小化美化路线，供后续逐阶段实施与回退。
+- **变更文件**：`docs/plans/WEBSITE_VISUAL_REFINEMENT.md` — 新增全局 token、导航、首页卡片、列表与详情页四阶段方案。
+- **关键逻辑/映射关系**：`useTheme.tsx` token → 页面内联样式；`App.tsx`/`ssr.tsx` 同步 `ConfigProvider` theme → 保持 SSR/client hydration 一致；每阶段单独提交，不纳入其他进程的前端 WIP。
+- **验证**：仅文档改动，待执行前端实现时按方案运行 format、format:check 与 TypeScript 检查。
+
 ## fix: 子池成员名称与模块生成率 i18n
 
 - **原因**：`/en/items/GrimveilCloak/` 的 ObjectLinker 子池直接输出中文 `sub_pool_names` 与“种选”文案；模块卡片的生成率名称和数值之间缺少冒号。
