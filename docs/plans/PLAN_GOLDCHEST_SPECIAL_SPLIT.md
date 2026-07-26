@@ -1,7 +1,7 @@
 # 黄金宝箱(特殊) 拆成独立 props 页
 
 > 日期: 2026-07-26  
-> 状态: **待执行**  
+> 状态: **已完成**  
 > 关联: `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md`（P002 降级仅做 gdi↔monsters 图例对齐，**未**解决 props 坐标混装与 100% 误赋）
 
 ## 1. 问题
