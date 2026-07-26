@@ -516,7 +516,7 @@ export default function QuestNPCDetailPage() {
                               const contentDone = lsGet(contentKey);
                               const target = t(c.translation_key, c.target);
                               const targetDisplay = c.rarity
-                                ? target.replace(/\s*\([^)]*\)/g, '')
+                                ? target.replace(/\s*[（(][^（）()]*[）)]/g, '')
                                 : target;
                               const rowStyle = {
                                 borderBottom: dark

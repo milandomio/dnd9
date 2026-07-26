@@ -1979,3 +1979,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：Objective 改为 Type、`Target / Rarity`、Loot、Count 四列；Rarity 统一显示在 Target 单元格内。含 Rarity 的本地化目标名用 `/\s*\([^)]*\)/g` 移除括号内容；Target 列使用 `minmax(12em, 1fr)` 和断词换行保护 Loot。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: 清理繁中 Objective Rarity 括号后缀
+
+- **改动原因**：目标名清理仅匹配半角括号，繁体中文 `鑽石（裂開）` 的全角后缀仍会显示。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Rarity 目标名的清理正则从仅匹配 `(...)` 扩展为匹配 `(...)` 与 `（...）`，保持所有语言只显示物品主名称。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
