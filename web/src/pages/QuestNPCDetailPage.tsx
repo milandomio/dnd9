@@ -522,7 +522,8 @@ export default function QuestNPCDetailPage() {
                                     style={{
                                       ...rowStyle,
                                       display: 'grid',
-                                      gridTemplateColumns: `auto minmax(0, 1fr)${hasDungeonType ? ' auto' : ''}${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
+                                      gridTemplateColumns:
+                                        'auto minmax(0, 1fr)',
                                       gap: '4px 16px',
                                       alignItems: 'center',
                                       padding: '6px 8px',
@@ -532,6 +533,7 @@ export default function QuestNPCDetailPage() {
                                       style={{
                                         color: dark ? '#ccc' : '#555',
                                         whiteSpace: 'nowrap',
+                                        gridRow: '1 / span 2',
                                       }}
                                     >
                                       {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
@@ -591,47 +593,55 @@ export default function QuestNPCDetailPage() {
                                         }}
                                       />
                                     </span>
-                                    {hasDungeonType && (
-                                      <span
-                                        style={{
-                                          color: dark ? '#42a5f5' : '#1565c0',
-                                          fontSize: 12,
-                                          whiteSpace: 'nowrap',
-                                        }}
-                                      >
-                                        {t(
-                                          c.dungeon_translation_key,
-                                          c.dungeon_type || ''
-                                        )}
-                                      </span>
-                                    )}
-                                    {hasLoot && (
-                                      <span
-                                        style={{
-                                          color: dark ? '#FFB74D' : '#E65100',
-                                          fontSize: 12,
-                                        }}
-                                      >
-                                        {c.loot_state ? '✓' : ''}
-                                      </span>
-                                    )}
-                                    {hasRarity && (
-                                      <span
-                                        style={{
-                                          color: getRarityColor(
-                                            c.rarity || '',
-                                            dark
-                                          ),
-                                          fontSize: 12,
-                                          whiteSpace: 'nowrap',
-                                        }}
-                                      >
-                                        {t(
-                                          c.rarity_translation_key,
-                                          c.rarity || ''
-                                        )}
-                                      </span>
-                                    )}
+                                    <div
+                                      style={{
+                                        display: 'flex',
+                                        gap: 16,
+                                        minHeight: 18,
+                                      }}
+                                    >
+                                      {hasDungeonType && (
+                                        <span
+                                          style={{
+                                            color: dark ? '#42a5f5' : '#1565c0',
+                                            fontSize: 12,
+                                            whiteSpace: 'nowrap',
+                                          }}
+                                        >
+                                          {t(
+                                            c.dungeon_translation_key,
+                                            c.dungeon_type || ''
+                                          )}
+                                        </span>
+                                      )}
+                                      {hasLoot && (
+                                        <span
+                                          style={{
+                                            color: dark ? '#FFB74D' : '#E65100',
+                                            fontSize: 12,
+                                          }}
+                                        >
+                                          {c.loot_state ? '✓' : ''}
+                                        </span>
+                                      )}
+                                      {hasRarity && (
+                                        <span
+                                          style={{
+                                            color: getRarityColor(
+                                              c.rarity || '',
+                                              dark
+                                            ),
+                                            fontSize: 12,
+                                            whiteSpace: 'nowrap',
+                                          }}
+                                        >
+                                          {t(
+                                            c.rarity_translation_key,
+                                            c.rarity || ''
+                                          )}
+                                        </span>
+                                      )}
+                                    </div>
                                   </div>
                                   <div
                                     style={{
