@@ -578,6 +578,7 @@ export default function QuestNPCDetailPage() {
                                       style={{
                                         padding: '3px 8px',
                                         color: tokens.text,
+                                        whiteSpace: 'nowrap',
                                       }}
                                     >
                                       <input
