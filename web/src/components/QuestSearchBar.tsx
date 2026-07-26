@@ -14,8 +14,6 @@ export interface QuestSearchResult {
 interface QuestSearchBarProps {
   allNpcs: NPCEntry[];
   onSelect: (result: QuestSearchResult) => void;
-  query?: string;
-  onQueryChange?: (query: string) => void;
   placeholder?: string;
 }
 
@@ -32,24 +30,15 @@ interface FlatEntry {
 export default function QuestSearchBar({
   allNpcs,
   onSelect,
-  query,
-  onQueryChange,
   placeholder,
 }: QuestSearchBarProps) {
-  const [internalQuery, setInternalQuery] = useState('');
+  const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const { dark, tokens } = useTheme();
   const { t, ut, dict } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const activeQuery = query ?? internalQuery;
-
-  const setQuery = (value: string) => {
-    setInternalQuery(value);
-    onQueryChange?.(value);
-  };
-
   // Rebuild when the entity locale loads so queries match the displayed language.
   const flatIndex = useMemo(() => {
     const entries: FlatEntry[] = [];
@@ -76,7 +65,7 @@ export default function QuestSearchBar({
 
   // Filter on query change
   const results = useMemo(() => {
-    const q = activeQuery.trim().toLowerCase();
+    const q = query.trim().toLowerCase();
     if (!q) return [];
     const hits: QuestSearchResult[] = [];
     for (const entry of flatIndex) {
@@ -100,7 +89,7 @@ export default function QuestSearchBar({
       if (hits.length >= 80) break;
     }
     return hits;
-  }, [activeQuery, flatIndex]);
+  }, [query, flatIndex]);
 
   useEffect(() => {
     setShowDropdown(results.length > 0);
@@ -151,7 +140,7 @@ export default function QuestSearchBar({
       <input
         ref={inputRef}
         type="text"
-        value={activeQuery}
+        value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => {
           if (results.length > 0) setShowDropdown(true);
