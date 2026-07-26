@@ -93,6 +93,7 @@ def enrich_all_entities(
             group_drop_info[g] = [
                 {
                     "translation": entity_data["translation"],
+                    "translation_key": entity_data.get("translation_key", ""),
                     "spawn_rate": 100,
                     "drop_rates": mode_rates,
                 }
@@ -145,6 +146,7 @@ def enrich_all_entities(
             group_drop_info[g] = [
                 {
                     "translation": edata["translation"],
+                    "translation_key": edata.get("translation_key", ""),
                     "spawn_rate": sr,
                     "drop_rates": dr,
                 }
@@ -242,7 +244,10 @@ def enrich_all_entities(
                 label = base_trans + suffix + ("(可能上锁)" if lock > 0 else "")
                 key = (False, typ)
                 if key not in kw_entries or combined > kw_entries[key]["spawn_rate"]:
-                    kw_entries[key] = {"translation": label, "spawn_rate": combined}
+                    entry = {"translation": label, "spawn_rate": combined}
+                    if label == base_trans and edata.get("translation_key"):
+                        entry["translation_key"] = edata["translation_key"]
+                    kw_entries[key] = entry
         if undersea_name in entity_spawners:
             for sk in entity_spawners[undersea_name]:
                 base = spawn_rate_detail.get((sk, undersea_name), 0)

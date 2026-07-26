@@ -1,5 +1,13 @@
 # 2026-07-26 会话修改记录
 
+## fix: 实体参考爆率名称 i18n
+
+- **原因**：`props/GoldChest` 的 `group_drop_info` 普通「黄金宝箱」条目没有 `translation_key`，`ReferenceDropRates` 只能回退显示中文，英语页面显示「黄金宝箱100%」。
+- **变更文件**：
+  - `api/src/enrichment.py` — 直接物品、怪物的 `group_drop_info` 写入实体 `translation_key`；props 仅当爆率名称等于实体基础译名时写入 key，避免「海底 / 特殊 / 可能上锁」组合标签丢失限定信息。
+- **关键逻辑/映射关系**：`GoldChest.group_drop_info[].translation_key` → `Text_DesignData_Props_Props_GoldenChest` → 英语 locale `Golden Chest`；locale_builder 递归收集该 key 后将其导出。
+- **验证**：重跑 `api/main.py`，生成条目与 `data/json/locale/en.json` 均包含该 key；`http://localhost:8090/en/props/GoldChest/` 返回 HTTP 200。
+
 ## fix: Z 颜色说明 i18n
 
 - **原因**：`DetailPage` 底部颜色说明 `颜色说明 / 高于地面 / 正常高度 / 低于地面` 硬编码中文
