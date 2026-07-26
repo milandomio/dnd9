@@ -1736,3 +1736,9 @@ if (typeof window !== "undefined") {
 - **原因**：详情页 h1 硬编码「位置汇总」，需与列表页一致改为 Locations 并支持多语言。
 - **变更文件**：`web/src/pages/DetailPage.tsx`
 - **关键逻辑/映射关系**：`{entityLabel} 位置汇总` → `{entityLabel} {ut('ui.list.locations')}`，复用既有 `ui.list.locations`（zh-Hans 点位 / en Locations / 等 10 语）。列表页标题 Locations 保持不变。
+
+## fix: 地图模块名称 i18n
+
+- **原因**：`/en/dungeon_modules/IceCavern` 分组页与模块详情页模块名仍用 `translation` 中文真值，未走 locale 字典。
+- **变更文件**：`web/src/pages/DungeonModuleGroupPage.tsx`、`web/src/pages/DungeonModuleDetailPage.tsx`
+- **关键逻辑/映射关系**：`mod.translation || mod.name` → `t(mod.translation_key, mod.translation || mod.name)`；详情页 `moduleDisplayName` 同理；debug 表 `mapLabel` 复用已 i18n 的 `moduleDisplayName`。数据侧 `dungeon_modules.json` 已有 `translation_key`，locale 含对应条目。
