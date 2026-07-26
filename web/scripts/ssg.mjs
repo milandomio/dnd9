@@ -470,7 +470,7 @@ function localizePage(page, route, routeData, localeDict, lang) {
     .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${canonicalHref}">`)
     .replace(HEAD_CLOSE, `    ${alternateLinks(route.path)}\n${HEAD_CLOSE}`);
   if (title) {
-    out = out.replace(/<title[^>]*>[^<]*<\/title>/, `<title>${escapeHtml(title)} | DarkFlashNav</title>`);
+    out = out.replace(/<title[^>]*>[^<]*<\/title>/, `<title>${escapeHtml(title)} | 越来越黑暗闪电指南 DarkFlashNav</title>`);
   }
   return out;
 }
@@ -532,7 +532,7 @@ for (let i = 0; i < routes.length; i++) {
 
   let page;
   if (r.redirect) {
-    const title = `${r.file.split("/")[1]} — DarkFlashNav`;
+    const title = `${r.file.split("/")[1]} | 越来越黑暗闪电指南 DarkFlashNav`;
     page = `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>${title}</title>

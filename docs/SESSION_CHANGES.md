@@ -1768,3 +1768,9 @@ if (typeof window !== "undefined") {
 - **原因**：SSR 构建未使用生产模式且未提取 Ant Design CSS-in-JS 样式，SSG 页面无法正确注入组件样式。
 - **变更文件**：`web/scripts/ssg.mjs`、`web/src/ssr.tsx`、`web/vite.config.ts`。
 - **关键逻辑/映射关系**：SSG 子构建改为 `VITE_SSR_BUILD=true` 的 production mode；Vite 以环境变量识别 SSR bundle；SSR 通过 `StyleProvider`/`extractStyle` 采集并将 Ant Design 样式写入页面 head。
+
+## fix: 统一 SEO 标题品牌结尾
+
+- **原因**：部分列表页、SSG 本地化页面、重定向页与离线页的 `<title>` 仅以 `DarkFlashNav` 结尾，未遵循统一品牌文案。
+- **变更文件**：`web/src/pages/ListPage.tsx`、`web/src/pages/DungeonModulesPage.tsx`、`web/scripts/ssg.mjs`、`web/index.html`、`web/public/offline.html`。
+- **关键逻辑/映射关系**：除主页外，所有页面 `<title>` 统一以 `| 越来越黑暗闪电指南 DarkFlashNav` 结尾；SSG 的非默认语言标题及重定向页使用同一结尾；主页入口标题保持 `越来越黑暗闪电指南 DarkFlashNav` 为开头。

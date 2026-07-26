@@ -132,7 +132,7 @@ export default function ListPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>{`【${pageLabel}】${locationsLabel} | DarkFlashNav`}</title>
+        <title>{`【${pageLabel}】${locationsLabel} | 越来越黑暗闪电指南 DarkFlashNav`}</title>
         <meta name="description" content={`${pageLabel} ${validItemCount}`} />
         <meta
           name="keywords"
