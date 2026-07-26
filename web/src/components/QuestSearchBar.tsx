@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 import type { NPCQuest, NPCEntry } from '../types/quest';
 
 export interface QuestSearchResult {
@@ -28,12 +29,13 @@ interface FlatEntry {
 export default function QuestSearchBar({
   allNpcs,
   onSelect,
-  placeholder = '搜索任务标题 / 目标物品...',
+  placeholder,
 }: QuestSearchBarProps) {
   const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const { dark, tokens } = useTheme();
+  const { lang, ut } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -136,7 +138,7 @@ export default function QuestSearchBar({
           if (results.length > 0) setShowDropdown(true);
         }}
         onKeyDown={handleKeyDown}
-        placeholder={placeholder}
+        placeholder={placeholder ?? ut('ui.search.placeholder')}
         style={{
           width: '100%',
           padding: '10px 15px',
@@ -211,7 +213,9 @@ export default function QuestSearchBar({
                   flexShrink: 0,
                 }}
               >
-                {hit.npc.npc_name_display}
+                {lang === 'zh-Hans'
+                  ? hit.npc.npc_name_display
+                  : hit.npc.npc_name}
               </span>
             </div>
           ))}
