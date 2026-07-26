@@ -104,6 +104,11 @@ export default function ListPage() {
   const { lang, withLangPrefix } = useLanguage();
   const { t, ut } = useLocale();
   const pageLabel = ut(NAV_KEY_LOOKUP[page!] || '') || page! || '';
+  const locationsLabel = ut('ui.list.locations');
+  const validItemCount = ut('ui.list.valid_items').replace(
+    '{count}',
+    String(data.length)
+  );
   const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
 
   useEffect(() => {
@@ -127,19 +132,17 @@ export default function ListPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>
-          {`【${pageLabel}】点位 | 越来越黑暗闪电指南 DarkFlashNav`}
-        </title>
-        <meta
-          name="description"
-          content={`${pageLabel} 共 ${data.length} 个实体，查询地图位置分布。`}
-        />
+        <title>{`【${pageLabel}】${locationsLabel} | DarkFlashNav`}</title>
+        <meta name="description" content={`${pageLabel} ${validItemCount}`} />
         <meta
           name="keywords"
           content="物品查询,怪物查询,装备查询,武器查询,防具查询,饰品查询,掉落查询,游戏攻略"
         />
-        <meta property="og:title" content={`【${pageLabel}】点位`} />
-        <meta property="og:description" content={`共 ${data.length} 个实体`} />
+        <meta
+          property="og:title"
+          content={`【${pageLabel}】${locationsLabel}`}
+        />
+        <meta property="og:description" content={validItemCount} />
       </Helmet>
       <h1
         style={{
@@ -149,7 +152,7 @@ export default function ListPage() {
           marginBottom: 20,
         }}
       >
-        【{pageLabel}】点位
+        【{pageLabel}】{locationsLabel}
       </h1>
       <div
         style={{
@@ -159,7 +162,7 @@ export default function ListPage() {
           marginBottom: 20,
         }}
       >
-        有效实体{data.length}个
+        {validItemCount}
       </div>
       <DebugPanel
         buttons={[
