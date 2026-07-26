@@ -299,8 +299,8 @@ HARDCODED_TRANSLATIONS = {
     "DungeonModule": "地牢模块",
     "DungeonInfiniteExitBase": "无限出口",
     "Ruins_DualBossTreasureRoom": "双boss宝藏室",
-    "ShipGraveyard_BladehandRefuge": "钉手岛",
-    "ShipGraveyard_ElephantIsland": "象岛",
+    "ShipGraveyard_BladehandRefuge": "1-1",
+    "ShipGraveyard_ElephantIsland": "3-6",
 }
 
 # SuperHoard* has no Game.json key — synthetic i18n key + 10-lang full phrases
