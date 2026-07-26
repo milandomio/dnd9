@@ -1,5 +1,13 @@
 # 2026-07-26 会话修改记录
 
+## HARDCODED 全量 10 语 i18n 计划（仅文档，未执行代码）
+
+- **原因**：`HARDCODED_TRANSLATIONS` 仅中文；空 `translation_key` 导致 en 等页 fallback 中文；用户担心扩 10 语时键冲突
+- **结论**：禁止裸名/中文作 locale key；用 `df5.hardcoded.{EntityName}`；有 `Text_*` 的不造 df5；locale 必须 used_keys + 赋 key 同步
+- **决策**：全量 230 条；AI 起草 10 语；SuperHoard 共用 key 保留
+- **变更文件**：`docs/plans/HARDCODED_I18N.md`（状态：仅计划，未执行）
+- **未改**：config / builders / locale 代码
+
 ## SuperHoard 超级宝藏堆 10 语硬编码 i18n
 
 - **原因**：`SuperHoard*` 无 Game.json key，en 页显示中文「超级宝藏堆」；历史「超级宝藏」与「超级宝藏堆」统一
