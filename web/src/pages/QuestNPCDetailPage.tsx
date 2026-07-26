@@ -470,7 +470,7 @@ export default function QuestNPCDetailPage() {
                             <div
                               style={{
                                 display: 'grid',
-                                gridTemplateColumns: `auto minmax(0, 1fr)${hasDungeonType ? ' auto' : ''}${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
+                                gridTemplateColumns: `auto minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
                                 gap: '4px 16px',
                                 alignItems: 'center',
                                 padding: '4px 8px',
@@ -481,10 +481,10 @@ export default function QuestNPCDetailPage() {
                               }}
                             >
                               <span>{ut('ui.quest_detail.type')}</span>
-                              <span>{ut('ui.quest_detail.target')}</span>
-                              {hasDungeonType && (
-                                <span>{ut('ui.quest_detail.target_map')}</span>
-                              )}
+                              <span>
+                                {ut('ui.quest_detail.target')} /{' '}
+                                {ut('ui.quest_detail.target_map')}
+                              </span>
                               {hasLoot && (
                                 <span>{ut('ui.quest_detail.loot')}</span>
                               )}
@@ -522,7 +522,7 @@ export default function QuestNPCDetailPage() {
                                     style={{
                                       ...rowStyle,
                                       display: 'grid',
-                                      gridTemplateColumns: `auto minmax(0, 1fr)${hasDungeonType ? ' auto' : ''}${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
+                                      gridTemplateColumns: `auto minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
                                       gap: '4px 16px',
                                       alignItems: 'center',
                                       padding: '6px 8px',
@@ -532,12 +532,11 @@ export default function QuestNPCDetailPage() {
                                       style={{
                                         color: dark ? '#ccc' : '#555',
                                         whiteSpace: 'nowrap',
-                                        gridRow: '1 / span 2',
                                       }}
                                     >
                                       {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
                                     </span>
-                                    <span
+                                    <div
                                       style={{
                                         color: tokens.text,
                                         minWidth: 0,
@@ -591,33 +590,25 @@ export default function QuestNPCDetailPage() {
                                             tokens.muted;
                                         }}
                                       />
-                                    </span>
-                                    <span
-                                      style={{ gridColumn: 2, gridRow: 2 }}
-                                    />
-                                    {hasDungeonType && (
-                                      <span
-                                        style={{
-                                          color: dark ? '#42a5f5' : '#1565c0',
-                                          fontSize: 12,
-                                          whiteSpace: 'nowrap',
-                                          gridColumn: 3,
-                                          gridRow: 2,
-                                        }}
-                                      >
-                                        {t(
-                                          c.dungeon_translation_key,
-                                          c.dungeon_type || ''
-                                        )}
-                                      </span>
-                                    )}
+                                      {hasDungeonType && (
+                                        <div
+                                          style={{
+                                            color: dark ? '#42a5f5' : '#1565c0',
+                                            fontSize: 12,
+                                          }}
+                                        >
+                                          {t(
+                                            c.dungeon_translation_key,
+                                            c.dungeon_type || ''
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
                                     {hasLoot && (
                                       <span
                                         style={{
                                           color: dark ? '#FFB74D' : '#E65100',
                                           fontSize: 12,
-                                          gridColumn: hasDungeonType ? 4 : 3,
-                                          gridRow: 2,
                                         }}
                                       >
                                         {c.loot_state ? '✓' : ''}
@@ -632,11 +623,6 @@ export default function QuestNPCDetailPage() {
                                           ),
                                           fontSize: 12,
                                           whiteSpace: 'nowrap',
-                                          gridColumn:
-                                            3 +
-                                            Number(hasDungeonType) +
-                                            Number(hasLoot),
-                                          gridRow: 2,
                                         }}
                                       >
                                         {t(
