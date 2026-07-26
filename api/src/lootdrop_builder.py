@@ -71,6 +71,92 @@ _LABEL_TYPE_SUFFIX = {
 
 MAX_COORDS_PER_PAGE = 3000
 
+# Translation suffixes used when matching base entity for legend ref
+_LEGEND_STRIP_SUFFIXES = ("(可能上锁)", "(特殊)", "(随机)")
+
+
+def _strip_legend_suffixes(trans: str) -> str:
+    base = trans
+    for s in _LEGEND_STRIP_SUFFIXES:
+        base = base.replace(s, "")
+    if base.endswith("组"):
+        base = base[:-1]
+    return base.strip()
+
+
+def _resolve_legend_ref(
+    trans: str,
+    entity_name: str,
+    monsters_out: list[dict],
+    entity_page_map: dict[str, str] | None,
+) -> str | None:
+    """Resolve ref page for a gdi-only legend entry. Prefer entity_page_map, then exact base match."""
+    if entity_page_map and entity_name:
+        page = entity_page_map.get(entity_name)
+        if page:
+            return page
+    base = _strip_legend_suffixes(trans)
+    if not base:
+        return None
+    for m in monsters_out:
+        if m.get("translation") != base:
+            continue
+        if m.get("ref"):
+            return m["ref"]
+        en = m.get("entity_name", m.get("name", ""))
+        if entity_page_map and en:
+            page = entity_page_map.get(en)
+            if page:
+                return page
+        if en:
+            return f"coords/{en}"
+    return None
+
+
+def _ensure_gdi_monster_entries(
+    monsters_out: list[dict],
+    group_drop_info: dict[str, list[dict]],
+    entity_page_map: dict[str, str] | None = None,
+    max_scores: dict[str, float] | None = None,
+    valid_translations: set[str] | None = None,
+) -> list[dict]:
+    """Ensure every group_drop_info translation has a monsters entry (legend / 参考爆率).
+
+    Orphans appear after coord budget trim or variant spawner filter drops the real entry.
+    Virtual entries carry empty coords and optional ref; frontend only needs matching translation.
+    """
+    existing = {m["translation"] for m in monsters_out}
+    for _g_entries in group_drop_info.values():
+        for _entry in _g_entries:
+            _trans = _entry["translation"]
+            if _trans in existing:
+                continue
+            if valid_translations is not None and _trans not in valid_translations:
+                continue
+            _en = _entry.get("_entity_name") or ""
+            _ref = _resolve_legend_ref(_trans, _en, monsters_out, entity_page_map)
+            _virtual: dict = {
+                "name": _en or _trans,
+                "entity_name": _en or _trans,
+                "translation": _trans,
+                "translation_key": _entry.get("translation_key", ""),
+                "color": _MONSTER_COLORS[len(monsters_out) % len(_MONSTER_COLORS)],
+                "coords": [],
+            }
+            if _ref:
+                _virtual["ref"] = _ref
+                _virtual["coord_count"] = 0
+            if max_scores is not None:
+                _virtual["max_score"] = max_scores.get(_trans, _NO_SCORE)
+            else:
+                _virtual["max_score"] = round(
+                    _entry.get("spawn_rate", 0) * _entry.get("drop_rates", {}).get("豪客赛", 0) / 100, 4
+                )
+            monsters_out.append(_virtual)
+            existing.add(_trans)
+    return monsters_out
+
+
 _SUFFIX_NUM_RE = re.compile(r"_(\d{4})$")
 
 _FALLBACK_RARITY = {
@@ -625,30 +711,8 @@ def build_and_save_lootdrop_details(
             if _bases and len(_bases) > 1:
                 _v["_multi_base"] = True
         monsters_out = list(merged.values())
-        # Add virtual entity entries for sub-category buttons
-        _existing_trans = {m["translation"] for m in monsters_out}
-        for _g_entries in _group_drop_info.values():
-            for _entry in _g_entries:
-                _trans = _entry["translation"]
-                if _trans not in _existing_trans:
-                    # Find base entity with same base translation for ref
-                    _base_name = _trans.split("(")[0] if "(" in _trans else _trans
-                    _ref_page = None
-                    for _m in monsters_out:
-                        _mt = _m.get("translation", "")
-                        if _mt == _base_name or _mt.startswith(_base_name):
-                            _ref_page = _m.get("ref") or f"monsters/{_m.get('entity_name', _m['name'])}"
-                            break
-                    _virtual = {
-                        "name": _entry.get("_entity_name", _trans),
-                        "translation": _trans,
-                        "coords": [],
-                    }
-                    if _ref_page:
-                        _virtual["ref"] = _ref_page
-                        _virtual["coord_count"] = 0
-                    monsters_out.append(_virtual)
-                    _existing_trans.add(_trans)
+        # gdi 子类图例：无坐标时仍保留 monsters 条目（预算/变体后再跑一遍）
+        monsters_out = _ensure_gdi_monster_entries(monsters_out, _group_drop_info, entity_page_map)
 
         # MERGE: Merge "组" suffix entries into their base translations
         # e.g. "黄金宝箱组" (5 coords) → merge into "黄金宝箱" (2 coords) → "黄金宝箱" (7 coords)
@@ -717,15 +781,19 @@ def build_and_save_lootdrop_details(
             monsters_out = [_m for _m in monsters_out if _m["translation"] in _trans_with_any_rate]
         # Limit total coords to MAX_COORDS_PER_PAGE (sort by max_score desc)
         # P005: Handle referenced entities (no inline coords)
+        # 0 坐标 / 仅 ref 条目始终保留（图例 + 参考爆率），不被 budget break 丢掉
         _total_coords = sum(len(_m.get("coords", [])) for _m in monsters_out)
         if _total_coords > MAX_COORDS_PER_PAGE:
             monsters_out.sort(key=lambda x: x.get("max_score", _NO_SCORE), reverse=True)
             _kept = []
             _budget = MAX_COORDS_PER_PAGE
             for _m in monsters_out:
-                if _budget <= 0:
-                    break
                 _coord_count = len(_m.get("coords", []))
+                if _coord_count == 0:
+                    _kept.append(_m)
+                    continue
+                if _budget <= 0:
+                    continue
                 if _coord_count <= _budget:
                     _kept.append(_m)
                     _budget -= _coord_count
@@ -735,6 +803,14 @@ def build_and_save_lootdrop_details(
                     _kept.append(_trimmed)
                     _budget = 0
             monsters_out = _kept
+        # 预算裁切后补齐 gdi 孤儿（遵守零爆率过滤）
+        monsters_out = _ensure_gdi_monster_entries(
+            monsters_out,
+            _group_drop_info,
+            entity_page_map,
+            _max_scores,
+            _trans_with_any_rate if _trans_with_any_rate else None,
+        )
         if monsters_out:
             detail = {
                 "name": item_name,
@@ -791,7 +867,8 @@ def build_and_save_lootdrop_details(
                             _vdr = drop_engine.get_variant_group_drop_rates(luck_grade, _en, _g, item_name=variant_name)
                             if not _vdr:
                                 _vdr = {"PVE": 0, "普通": 0, "豪客赛": 0}
-                            v_entry = {k: v for k, v in _entry.items() if not k.startswith("_")}
+                            # 保留 _entity_name 供后续 virtual 对齐，落盘前再剥
+                            v_entry = {k: v for k, v in _entry.items() if not k.startswith("_") or k == "_entity_name"}
                             v_entry["drop_rates"] = _vdr
                             v_entries.append(v_entry)
                         v_entries = [e for e in v_entries if e.get("drop_rates", {}).get("豪客赛", 0) > 0]
@@ -807,17 +884,30 @@ def build_and_save_lootdrop_details(
                         # P005: Handle referenced entities (no inline coords)
                         if "ref" in _m:
                             variant_monsters.append(dict(_m))
+                            continue
+                        filtered_coords = [
+                            _c
+                            for _c in _m.get("coords", [])
+                            if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
+                            in valid_spawners
+                        ]
+                        if filtered_coords:
+                            _m_copy = dict(_m)
+                            _m_copy["coords"] = filtered_coords
+                            variant_monsters.append(_m_copy)
                         else:
-                            filtered_coords = [
-                                _c
-                                for _c in _m.get("coords", [])
-                                if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
-                                in valid_spawners
-                            ]
-                            if filtered_coords:
-                                _m_copy = dict(_m)
-                                _m_copy["coords"] = filtered_coords
-                                variant_monsters.append(_m_copy)
+                            # 变体 spawner 滤空坐标：仍保留图例条目，避免 gdi 孤儿
+                            _m_copy = dict(_m)
+                            _m_copy["coords"] = []
+                            _en = _m.get("entity_name", _m.get("name", ""))
+                            if not _m_copy.get("ref") and entity_page_map and _en:
+                                _rp = entity_page_map.get(_en)
+                                if _rp:
+                                    _m_copy["ref"] = _rp
+                                    _m_copy["coord_count"] = 0
+                            variant_monsters.append(_m_copy)
+                    # variant_gdi 中仍缺 monsters 的翻译 → 虚拟条目
+                    variant_monsters = _ensure_gdi_monster_entries(variant_monsters, variant_gdi, entity_page_map)
                     # Recalculate per-coord scores from variant_gdi
                     _hk_map_v: dict[str, dict[str, float]] = {}
                     _sr_map_v: dict[str, dict[str, float]] = {}
@@ -845,6 +935,10 @@ def build_and_save_lootdrop_details(
                                 _v_max_scores[_vt] = _vs
                     for _vm in variant_monsters:
                         _vm["max_score"] = _v_max_scores.get(_vm["translation"], 0)
+                    # 落盘前剥内部键
+                    for _g_list in variant_gdi.values():
+                        for _e in _g_list:
+                            _e.pop("_entity_name", None)
                     variant_translation = resolve_name(variant_name, None, "item") or entry["translation"]
                     variant_detail = {
                         "name": variant_name,

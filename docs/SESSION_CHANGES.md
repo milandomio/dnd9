@@ -1,5 +1,14 @@
 # 2026-07-26 会话修改记录
 
+## P002 降级：lootdrop gdi ↔ monsters 对齐（容器生成器子类）
+
+- **原因**：`group_drop_info` 有子类翻译（如「黄金宝箱(特殊)」）但 `monsters` 缺失 → 前端参考爆率/图例被滤掉；原计划「实体详情页」过时且不做
+- **变更文件**：
+  - `api/src/lootdrop_builder.py` — `_ensure_gdi_monster_entries` / `_resolve_legend_ref`；预算对 0 坐标不 `break`；预算后+变体路径再 ensure；变体滤空仍留条目；`variant_gdi` 暂留 `_entity_name`
+  - `docs/PLAN_CONTAINER_GENERATOR_ENTITIES.md` — 降级范围与验收，状态已完成
+- **不做**：方案 B、props/monsters 列表补 UnderSea、独立详情页
+- **验证**：管道 EXIT:0；`*_7001` 共 267 文件 gdi orphan=0；Spellbook 黄金宝箱(特殊) 仍 32 坐标；CourtlyDress/GoldBangle2H 原孤儿已进 monsters
+
 ## 废弃 PERF 变体爆率缓存计划
 
 - **原因**：`docs/PERF_VARIANT_DROP_RATE_CACHE.md` 原「待执行」微缓存方案；现已有 `_variant_rate_cache`，计划仅减冷路径 dict/后缀查找，外层循环不变，收益不高
