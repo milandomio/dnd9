@@ -201,7 +201,7 @@ def _extract_fetch(translator, extractor, quests):
 
 
 def _get_npc_category(npc_en):
-    equipment = {"Armourer", "Goldsmith", "Leathersmith", "Tailor", "Weaponsmith"}
+    equipment = {"Alchemist", "Armourer", "Goldsmith", "Leathersmith", "Tailor", "Weaponsmith"}
     preferred = {"GoblinMerchant", "TavernMaster"}
     not_recommended = {"Squire", "Dealmaker", "Cockatrice", "Huntress"}
     if npc_en in equipment:
