@@ -1,5 +1,9 @@
 import { useLocale } from '../i18n/useLocale';
-import { formatDropRateSuffix, type DropRateEntry } from '../utils/dropRate';
+import {
+  formatDropRateEntryLabel,
+  formatDropRateSuffix,
+  type DropRateEntry,
+} from '../utils/dropRate';
 
 export type { DropRateEntry };
 
@@ -39,7 +43,7 @@ export default function ReferenceDropRates({
             ...entryStyle,
           }}
         >
-          {t(info.translation_key, info.translation)}
+          {formatDropRateEntryLabel(info, t, ut)}
           {formatDropRateSuffix(info, t, ut, {
             modeFilter,
             adjSpawnRate,

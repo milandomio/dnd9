@@ -42,9 +42,32 @@ export function dropRateModeLabel(
 export interface DropRateEntry {
   translation: string;
   translation_key?: string;
+  label_prefix?: 'undersea';
+  label_type?: 'direct' | 'special' | 'random' | 'other';
+  may_be_locked?: boolean;
   spawn_rate: number;
   spawn_rates?: Record<string, number>;
   drop_rates: Record<string, number>;
+}
+
+/** Localize generated props labels while preserving their spawn classification. */
+export function formatDropRateEntryLabel(
+  entry: DropRateEntry,
+  t: LocaleT,
+  ut: LocaleUt
+): string {
+  const base = t(entry.translation_key, '');
+  if (!base) return entry.translation;
+
+  const prefix = entry.label_prefix
+    ? ut(`ui.drop_label.${entry.label_prefix}_prefix`)
+    : '';
+  const type =
+    entry.label_type && entry.label_type !== 'direct'
+      ? ut(`ui.drop_label.${entry.label_type}_suffix`)
+      : '';
+  const locked = entry.may_be_locked ? ut('ui.drop_label.locked_suffix') : '';
+  return `${prefix}${base}${type}${locked}`;
 }
 
 export function filterDropRates(

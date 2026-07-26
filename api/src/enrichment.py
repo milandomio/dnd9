@@ -194,7 +194,14 @@ def enrich_all_entities(
                     best_sr = sr
             if best_sr <= 0:
                 best_sr = 17.5
-            kw_entries = {(True, "special"): {"translation": special_label, "spawn_rate": _round_rate(best_sr)}}
+            kw_entries = {
+                (True, "special"): {
+                    "translation": special_label,
+                    "translation_key": edata.get("translation_key", ""),
+                    "label_type": "special",
+                    "spawn_rate": _round_rate(best_sr),
+                }
+            }
             seen_groups: set[str] = set()
             for c in coords:
                 g = map_base_to_group.get(c["map"], "")
@@ -244,9 +251,13 @@ def enrich_all_entities(
                 label = base_trans + suffix + ("(可能上锁)" if lock > 0 else "")
                 key = (False, typ)
                 if key not in kw_entries or combined > kw_entries[key]["spawn_rate"]:
-                    entry = {"translation": label, "spawn_rate": combined}
-                    if label == base_trans and edata.get("translation_key"):
-                        entry["translation_key"] = edata["translation_key"]
+                    entry = {
+                        "translation": label,
+                        "translation_key": edata.get("translation_key", ""),
+                        "label_type": typ,
+                        "may_be_locked": lock > 0,
+                        "spawn_rate": combined,
+                    }
                     kw_entries[key] = entry
         if undersea_name in entity_spawners:
             for sk in entity_spawners[undersea_name]:
@@ -262,7 +273,14 @@ def enrich_all_entities(
                     label = "(海底)" + base_trans + suffix + ("(可能上锁)" if lock > 0 else "")
                     key = (True, typ)
                     if key not in kw_entries or combined > kw_entries[key]["spawn_rate"]:
-                        kw_entries[key] = {"translation": label, "spawn_rate": combined}
+                        kw_entries[key] = {
+                            "translation": label,
+                            "translation_key": edata.get("translation_key", ""),
+                            "label_prefix": "undersea",
+                            "label_type": typ,
+                            "may_be_locked": lock > 0,
+                            "spawn_rate": combined,
+                        }
         if not kw_entries:
             continue
         seen_groups = set()

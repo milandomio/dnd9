@@ -30,6 +30,9 @@ export interface Coord {
 export interface GroupDropInfo {
   translation: string;
   translation_key?: string;
+  label_prefix?: 'undersea';
+  label_type?: 'direct' | 'special' | 'random' | 'other';
+  may_be_locked?: boolean;
   spawn_rate: number;
   spawn_rates?: Record<string, number>;
   drop_rates: Record<string, number>;

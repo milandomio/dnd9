@@ -1,5 +1,16 @@
 # 2026-07-26 会话修改记录
 
+## fix: 派生宝箱参考爆率名称 i18n
+
+- **原因**：`FlatChestLarge` 等 props 的参考爆率名称由生成端拼接「海底 / 特殊 / 随机 / 组 / 可能上锁」，完整中文组合名没有 Game.json key，英语页面显示「方型宝箱(特殊)」。
+- **变更文件**：
+  - `api/src/enrichment.py` — props 的 `group_drop_info` 写入基础 `translation_key`、`label_prefix`、`label_type`、`may_be_locked` 结构化分类信息。
+  - `web/src/types/data.ts` / `web/src/utils/dropRate.ts` — 定义并格式化结构化分类标签；缺少基础译名时安全回退完整原始中文。
+  - `web/src/components/ReferenceDropRates.tsx` — 统一通过 `formatDropRateEntryLabel()` 显示名称。
+  - `web/src/i18n/uiLocale.ts` — 10 语言新增海底、特殊、随机、组、可能上锁的标签片段。
+- **关键逻辑/映射关系**：`方型宝箱(特殊)` → `Text_DesignData_Props_Props_FlatChestLarge` + `label_type=special` → `Flat Chest (Special)`；模式仍由 `formatDropRateSuffix()` 映射至 Game.json `FilterMode*` 文案。
+- **验证**：重跑 `api/main.py` 后，`FlatChestLarge.group_drop_info` 含 `translation_key` / `label_type`；英语 locale 含 `Flat Chest`；目标页 HTTP 200。
+
 ## fix: 实体参考爆率名称 i18n
 
 - **原因**：`props/GoldChest` 的 `group_drop_info` 普通「黄金宝箱」条目没有 `translation_key`，`ReferenceDropRates` 只能回退显示中文，英语页面显示「黄金宝箱100%」。
