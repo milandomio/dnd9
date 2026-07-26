@@ -1,5 +1,11 @@
 # 2026-07-27 会话修改记录
 
+## fix: 地图模块实体翻译键导出
+
+- **改动原因**：`Firedeep_Sinkhole` 的小型宝箱怪已使用官方 `Text_DesignData_Monster_Monster_Mimic_Small_Ornate`，但 locale 导出未扫描 `dungeon_modules_coords`，英文词典缺键后回退显示中文。
+- **变更文件**：`api/src/locale_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`dungeon_modules_coords/*.json` 内任意 `translation_key` → `_collect_keys()` → 每种语言的 locale JSON；`Mimic_Small_Ornate` → 官方 key → en `Mimic`。
+
 ## fix: 任务目标表格自适应列宽
 
 - **改动原因**：Tavern Master 英文任务卡片将目标、地图等列固定为少量字符宽度，长文本会互相覆盖。
