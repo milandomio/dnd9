@@ -1,3 +1,11 @@
+# 2026-07-27 会话修改记录
+
+## fix: 地图模块名称移除硬编码后缀
+
+- **改动原因**：4 个特殊地图模块名称包含硬编码中文“模块”，非中文 locale 无法翻译该后缀。
+- **变更文件**：`api/src/config.py` — 调整 `MODULE_NAME_OVERRIDE`；`docs/SESSION_CHANGES.md` — 登记本次修改。
+- **关键逻辑/映射关系**：`EmptyModule_1F_14` → `3-1`、`EmptyModule_1F_09` → `5-1`、`EmptyModule_1F_15` → `7-4`、`EmptyModule_1F_13` → `6-5`；纯数字标识不再依赖 i18n。
+
 # 2026-07-26 会话修改记录
 
 ## docs: 网站美化计划方案
