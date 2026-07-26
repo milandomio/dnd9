@@ -470,7 +470,7 @@ export default function QuestNPCDetailPage() {
                             <div
                               style={{
                                 display: 'grid',
-                                gridTemplateColumns: `auto minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
+                                gridTemplateColumns: `7em minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
                                 gap: '4px 16px',
                                 alignItems: 'center',
                                 padding: '4px 8px',
@@ -522,7 +522,7 @@ export default function QuestNPCDetailPage() {
                                     style={{
                                       ...rowStyle,
                                       display: 'grid',
-                                      gridTemplateColumns: `auto minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
+                                      gridTemplateColumns: `7em minmax(0, 1fr)${hasLoot ? ' auto' : ''}${hasRarity ? ' auto' : ''}`,
                                       gap: '4px 16px',
                                       alignItems: 'center',
                                       padding: '6px 8px',
