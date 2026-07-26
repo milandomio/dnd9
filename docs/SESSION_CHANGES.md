@@ -16,6 +16,7 @@
 - **补充**：任务放大镜通过路由状态将当前 locale 的 Target 文本填入导航栏全局搜索框，而非页面内任务搜索框。
 - **补充**：导航栏使用 Ant Design Input 的原生输入节点滚动到可视区后再以 `preventScroll` 聚焦，兼容移动端键盘触发后的滚动位置。
 - **补充**：Objective 的辅助信息改为跨列弹性行，Count 用自动左边距固定最右；Type 列使用自然最小宽度并贴近 Target。Reward 的 Type 表头左对齐。
+- **补充**：Objective 恢复 Target、地图、掉落、稀有度、Count 的真实列坐标；Target Map 贴近 Target，地图值与其表头左对齐。
 
 ## perf: 消除 locale 掉落文件二次扫描
 
