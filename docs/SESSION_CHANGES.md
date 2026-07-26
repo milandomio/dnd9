@@ -1958,3 +1958,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：Objective 容器直接定义 CSS Grid 的 `auto` Type 列；列头与所有内容单元格通过 `display: contents` 参与同一网格，最长 Type 值自动撑开该列并同步对齐全部行。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+## fix: 合并无地图目标的 Rarity 并强调 Loot
+
+- **改动原因**：无 Map 的 Rarity 仍占用独立列，Loot 标记的视觉权重不足。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：单条目标无 `dungeon_type` 且有 Rarity 时，将其作为 Target / Map 的第二行并在 Rarity 列保留空网格单元；Loot 内容居中并使用 `fontWeight: 900`。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
