@@ -91,6 +91,15 @@ def _load_used_keys(output_dir: Path, lootdrop_keys: set[str] | None = None) -> 
         except (json.JSONDecodeError, OSError):
             pass
 
+    module_coords_dir = output_dir / "dungeon_modules_coords"
+    if module_coords_dir.exists():
+        for fpath in module_coords_dir.glob("*.json"):
+            try:
+                with open(fpath, encoding="utf-8") as f:
+                    _collect_keys(json.load(f), used)
+            except (json.JSONDecodeError, OSError):
+                continue
+
     quest_npc_path = output_dir / "quest_npc.json"
     if quest_npc_path.exists():
         try:
