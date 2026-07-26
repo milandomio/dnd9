@@ -339,13 +339,17 @@ def run():
         resolver = NameResolver(translations)
 
         _monsters_lookup = {r["monster_name"]: r for r in monsters}
+        _props_lookup = {r["asset_name"]: r for r in props}
         for _vkey, (_vcnt, _vraw) in list(_coord_variant_count.items()):
             if _vraw:
                 _vtr: list[dict] = []
                 for _kw in _vraw:
                     _cls = entity_class.get(_kw, {})
-                    _mrow = _monsters_lookup.get(_kw)
-                    if _mrow:
+                    _mrow = _monsters_lookup.get(_kw) or _monsters_lookup.get(_kw.replace("Guardsman", "Guardman"))
+                    if "FromFakeDeath" in _kw:
+                        tk = "ui.pool.skeleton_guard_fake_death"
+                        _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, None, "props") or _kw})
+                    elif _mrow:
                         tk = _mrow["translation_key"]
                         _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, tk, "monster")})
                     elif _cls and "props" in _cls.get("types", []):
@@ -355,24 +359,36 @@ def run():
                         _vtr.append({"translation_key": "", "name": resolver.resolve(_kw, None, "props") or _kw})
                 _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
-        _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[str]]] = {}
+        _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[dict[str, str]]]] = {}
         for _sp_key, (_sp_cnt, _sp_raw_names) in _sub_pool_info_raw.items():
-            _sp_tr: list[str] = []
+            _sp_tr: list[dict[str, str]] = []
             for _kw in _sp_raw_names:
                 _cls = entity_class.get(_kw, {})
-                _mrow = _monsters_lookup.get(_kw)
-                if _mrow:
-                    _sp_tr.append(resolver.resolve(_kw, _mrow["translation_key"], "monster"))
+                _mrow = _monsters_lookup.get(_kw) or _monsters_lookup.get(_kw.replace("Guardsman", "Guardman"))
+                if "FromFakeDeath" in _kw:
+                    _tk = "ui.pool.skeleton_guard_fake_death"
+                    _name = resolver.resolve(_kw, None, "props") or _kw
+                elif _mrow:
+                    _tk = _mrow["translation_key"]
+                    _name = resolver.resolve(_kw, _tk, "monster")
+                elif _kw == "Ore_GoldOre":
+                    _tk = _props_lookup["Ore_GoldOre_VeryLow"]["translation_key"]
+                    _name = resolver.resolve(_kw, _tk, "props")
                 elif _cls:
                     _cls_types = _cls.get("types", [])
                     if "props" in _cls_types:
-                        _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                        _tk = _cls.get("translation_key", "")
+                        _name = resolver.resolve(_kw, _tk, "props")
                     elif "item" in _cls_types:
-                        _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "item"))
+                        _tk = _cls.get("translation_key", "")
+                        _name = resolver.resolve(_kw, _tk, "item")
                     else:
-                        _sp_tr.append(resolver.resolve(_kw, None, "props") or _kw)
+                        _tk = ""
+                        _name = resolver.resolve(_kw, None, "props") or _kw
                 else:
-                    _sp_tr.append(resolver.resolve(_kw, None, "props") or _kw)
+                    _tk = ""
+                    _name = resolver.resolve(_kw, None, "props") or _kw
+                _sp_tr.append({"translation_key": _tk, "name": _name})
             _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr)
 
         pipe.log("[JSON] building merged lootdrop map...")

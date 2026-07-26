@@ -1,5 +1,15 @@
 # 2026-07-26 会话修改记录
 
+## fix: 子池成员名称与模块生成率 i18n
+
+- **原因**：`/en/items/GrimveilCloak/` 的 ObjectLinker 子池直接输出中文 `sub_pool_names` 与“种选”文案；模块卡片的生成率名称和数值之间缺少冒号。
+- **变更文件**：
+  - `api/src/collector.py` / `api/src/translator.py` — 子池导出从纯名称数组改为含 `translation_key` 的 `sub_pool_entries`；金矿及装死骷髅卫兵补齐可本地化 key。
+  - `web/src/pages/DetailPage.tsx` / `web/src/pages/LootdropDetailPage.tsx` / `web/src/types/data.ts` — 逐项翻译并保留完整子池成员列表，按语言格式化“种选/点选”提示。
+  - `web/src/components/ReferenceDropRates.tsx` / `web/src/i18n/uiLocale.ts` — 模块级生成率显示为 `名称:生成率`，新增 10 语言子池提示及装死骷髅卫兵文案。
+- **关键逻辑/映射关系**：`sub_pool_entries[].translation_key` → `t(key, name)`；`SkeletonGuardsmanFromFakeDeath` → `ui.pool.skeleton_guard_fake_death`，简体中文仍为“骷髅卫兵（装死）”，英语为 `Skeleton Guardman (Feign Death)`。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`python main.py` 均通过；`http://localhost:8090/en/items/GrimveilCloak/` 返回 HTTP 200。
+
 ## fix: 列表页标题和有效项目数 i18n
 
 - **原因**：items、monsters、props、lootdrops 四个列表页共用的标题「点位」及统计「有效实体」为硬编码中文，英语页面仍显示个人风格中文文案。

@@ -799,6 +799,7 @@ export default function DetailPage() {
                           adjSpawnRate={adjRate}
                           showPrefix={false}
                           parenModes
+                          labelSeparator=":"
                         />
                         {hasVariant &&
                           (() => {
@@ -807,7 +808,9 @@ export default function DetailPage() {
                               {
                                 coords: Coord[];
                                 poolSize: number;
-                                poolNames: string[];
+                                poolEntries: NonNullable<
+                                  Coord['sub_pool_entries']
+                                >;
                               }
                             >();
                             for (const c of mapCoords) {
@@ -819,7 +822,7 @@ export default function DetailPage() {
                                 linkerGroups.set(key, {
                                   coords: [],
                                   poolSize: c.sub_pool_size ?? 0,
-                                  poolNames: c.sub_pool_names ?? [],
+                                  poolEntries: c.sub_pool_entries ?? [],
                                 });
                               }
                               linkerGroups.get(key)!.coords.push(c);
@@ -832,13 +835,25 @@ export default function DetailPage() {
                                   ).size;
                                   return (
                                     <span
-                                      key={g.poolNames.join(',')}
+                                      key={g.poolEntries
+                                        .map((e) => e.name)
+                                        .join(',')}
                                       style={{ color: tokens.muted }}
                                     >
-                                      ({g.poolNames.join('、')}
-                                      {g.poolSize}种选{uniquePos}
+                                      (
+                                      {g.poolEntries
+                                        .map((entry) =>
+                                          t(entry.translation_key, entry.name)
+                                        )
+                                        .join(ut('ui.location.map_sep'))}
+                                      {ut('ui.detail.pool_select')
+                                        .replace('{count}', String(g.poolSize))
+                                        .replace(
+                                          '{positions}',
+                                          String(uniquePos)
+                                        )}
                                       {uniquePos > 1
-                                        ? ` · ${uniquePos}点选1`
+                                        ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}`
                                         : ''}
                                       )
                                     </span>

@@ -15,6 +15,7 @@ interface ReferenceDropRatesProps {
   showPrefix?: boolean;
   /** wrap mode list in () when single spawn_rate (module style) */
   parenModes?: boolean;
+  labelSeparator?: string;
   style?: React.CSSProperties;
   entryStyle?: React.CSSProperties;
 }
@@ -25,6 +26,7 @@ export default function ReferenceDropRates({
   adjSpawnRate,
   showPrefix = true,
   parenModes = false,
+  labelSeparator,
   style,
   entryStyle,
 }: ReferenceDropRatesProps) {
@@ -44,6 +46,7 @@ export default function ReferenceDropRates({
           }}
         >
           {formatDropRateEntryLabel(info, t, ut)}
+          {labelSeparator}
           {formatDropRateSuffix(info, t, ut, {
             modeFilter,
             adjSpawnRate,
