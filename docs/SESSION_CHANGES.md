@@ -1,5 +1,15 @@
 # 2026-07-27 会话修改记录
 
+## fix: 钉手岛/象岛改为数字编号
+
+- **改动原因**：`ShipGraveyard_BladehandRefuge`/`ShipGraveyard_ElephantIsland` 硬编码中文名，与 EmptyModule 数字编号风格不一致且有 i18n 问题。
+- **变更文件**：`api/src/config.py` — `HARDCODED_TRANSLATIONS` 中两处显示名；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  - `ShipGraveyard_BladehandRefuge` → `1-1`（原「钉手岛」）
+  - `ShipGraveyard_ElephantIsland` → `3-6`（原「象岛」）
+  - 象岛额外绑定（**未改**）：`MODULE_DISPLAY_OVERRIDE` size 1x2；`MODULE_OFFSET_MAP` 偏移 `(-1600, 1600)`；钉手岛另有 size 2x2 / range 3200 / 偏移 `(-1600, -1600)`
+- **验证**：仅显示名映射，布局尺寸与偏移保持原值。
+
 ## fix: 地图模块名称移除硬编码后缀
 
 - **改动原因**：4 个特殊地图模块名称包含硬编码中文“模块”，非中文 locale 无法翻译该后缀。
