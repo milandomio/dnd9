@@ -20,6 +20,7 @@
 - **补充**：Objective 恢复 Target、地图、掉落、稀有度、Count 的真实列坐标；Target Map 贴近 Target，地图值与其表头左对齐。
 - **补充**：Target 列头禁止换行。
 - **补充**：Objective 的 Count 表头和内容右对齐，贴近卡片右边界。
+- **补充**：Objective 的 Count 列最小宽度扩展为 `5em`，列头禁止换行且数值居中。
 
 ## perf: 消除 locale 掉落文件二次扫描
 

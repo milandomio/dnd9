@@ -545,12 +545,12 @@ export default function QuestNPCDetailPage() {
                                 )}
                                 <th
                                   style={{
-                                    textAlign: 'right',
+                                    textAlign: 'center',
                                     padding: '4px 8px',
                                     color: tokens.muted,
                                     fontSize: 13,
                                     whiteSpace: 'nowrap',
-                                    width: '3em',
+                                    minWidth: '5em',
                                   }}
                                 >
                                   {ut('ui.quest_detail.count')}
@@ -729,9 +729,9 @@ export default function QuestNPCDetailPage() {
                                         style={{
                                           padding: '3px 8px',
                                           color: dark ? '#ccc' : '#555',
-                                          textAlign: 'right',
+                                          textAlign: 'center',
                                           whiteSpace: 'nowrap',
-                                          width: '3em',
+                                          minWidth: '5em',
                                         }}
                                       >
                                         {c.count}
