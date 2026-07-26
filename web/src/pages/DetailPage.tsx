@@ -26,6 +26,7 @@ import {
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
+import ReferenceDropRates from '../components/ReferenceDropRates';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
@@ -600,31 +601,15 @@ export default function DetailPage() {
                     </span>
                   ) : (
                     sec.gdi.length > 0 && (
-                      <span
+                      <ReferenceDropRates
+                        entries={sec.gdi}
+                        modeFilter={modeFilter}
                         style={{
                           fontSize: 13,
                           fontWeight: 'normal',
                           color: tokens.muted,
                         }}
-                      >
-                        参考爆率：
-                        {sec.gdi.map((info, gi) => (
-                          <span
-                            key={gi}
-                            style={{
-                              display: 'inline-block',
-                              marginRight: 8,
-                            }}
-                          >
-                            {info.translation}
-                            {info.spawn_rate}%
-                            {Object.entries(info.drop_rates)
-                              .filter(([k]) => !modeFilter || k === modeFilter)
-                              .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                              .join('')}
-                          </span>
-                        ))}
-                      </span>
+                      />
                     )
                   )}
                 </div>
@@ -808,78 +793,13 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        {filteredGdi.map((info, i) => (
-                          <span
-                            key={i}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 3,
-                              flexWrap: 'wrap',
-                            }}
-                          >
-                            <span
-                              style={{
-                                cursor: 'default',
-                              }}
-                            >
-                              {info.translation}
-                            </span>
-                            {info.spawn_rates &&
-                            Object.keys(info.spawn_rates).length > 1 ? (
-                              <span
-                                style={{
-                                  color: tokens.muted,
-                                  fontSize: 12,
-                                }}
-                              >
-                                {Object.entries(info.drop_rates)
-                                  .filter(
-                                    ([k]) => !modeFilter || k === modeFilter
-                                  )
-                                  .map(([mode, rate]) => {
-                                    const sRate = info.spawn_rates![mode];
-                                    return sRate != null
-                                      ? `[${mode}:${adjRate(sRate)}%×${rate}%]`
-                                      : `[${mode}:${rate}%]`;
-                                  })
-                                  .join('')}
-                              </span>
-                            ) : (
-                              <>
-                                <span
-                                  style={{
-                                    color: tokens.accent,
-                                    fontSize: 12,
-                                  }}
-                                >
-                                  {adjRate(info.spawn_rate)}%
-                                </span>
-                                {Object.entries(info.drop_rates).filter(
-                                  ([k]) => !modeFilter || k === modeFilter
-                                ).length > 0 && (
-                                  <span
-                                    style={{
-                                      color: tokens.muted,
-                                      fontSize: 12,
-                                    }}
-                                  >
-                                    (
-                                    {Object.entries(info.drop_rates)
-                                      .filter(
-                                        ([k]) => !modeFilter || k === modeFilter
-                                      )
-                                      .map(
-                                        ([mode, rate]) => `[${mode}:${rate}%]`
-                                      )
-                                      .join('')}
-                                    )
-                                  </span>
-                                )}
-                              </>
-                            )}
-                          </span>
-                        ))}
+                        <ReferenceDropRates
+                          entries={filteredGdi}
+                          modeFilter={modeFilter}
+                          adjSpawnRate={adjRate}
+                          showPrefix={false}
+                          parenModes
+                        />
                         {hasVariant &&
                           (() => {
                             const linkerGroups = new Map<

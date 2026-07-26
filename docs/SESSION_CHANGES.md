@@ -1,5 +1,22 @@
 # 2026-07-26 会话修改记录
 
+## fix: 参考爆率公共组件 + 掉落模式 i18n
+
+- **原因**：详情页/掉落页的「参考爆率」为硬编码，且 PVE/普通/豪客赛/逆袭赛模式名未按 Game.json 10 语翻译；en 页将 `Squire Royale` 错显示成 `Counter Raid`
+- **变更文件**：
+  - `web/src/components/ReferenceDropRates.tsx` — 抽出参考爆率公共组件，统一前缀/条目渲染
+  - `web/src/utils/dropRate.ts` — 掉落模式翻译键映射、模式名格式化、爆率后缀格式化
+  - `web/src/pages/DetailPage.tsx` / `web/src/pages/LootdropDetailPage.tsx` — 分组头与地图模块内联爆率改复用公共组件；模块行模式名也走 i18n
+  - `web/src/types/data.ts` — `GroupDropInfo` 补 `translation_key`
+  - `web/src/i18n/uiLocale.ts` — 新增 `ui.detail.ref_rate`，并将 filter 模式 fallback 同步为 Game.json 官方文案
+  - `api/src/locale_builder.py` — 强制导出 4 个 `FilterMode*` 翻译键到 locale 文件
+- **关键逻辑/映射关系**：
+  - `PVE` → `Text_Code_DCPartyFinderCreateWidget_FilterModePvE`
+  - `普通` → `Text_Code_DCPartyFinderCreateWidget_FilterModeNormal`
+  - `豪客赛` → `Text_Code_DCPartyFinderCreateWidget_FilterModeHighRoller`
+  - `逆袭赛` → `Text_Code_DCPartyFinderCreateWidget_FilterModeSquireRoyale`
+  - `dropRateModeLabel()` 优先读 locale 中的 `Text_Code_*`，缺失时才退回 `ui.filter.*`，最终再退原始数据 key
+
 ## fix: 地图模块「综合爆率」i18n
 
 - **原因**：DetailPage / LootdropDetailPage 地图卡片下硬编码「综合爆率」
