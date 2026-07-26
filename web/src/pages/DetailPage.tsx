@@ -791,6 +791,7 @@ export default function DetailPage() {
                             (1 - (1 - 1 / forcedVcN) ** groupCount)
                           ).toFixed(4)
                         : v;
+                    if (!hasVariant) return null;
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
                         (c) => c.label && labelMatch(c.label, info.translation)
@@ -818,87 +819,81 @@ export default function DetailPage() {
                           parenModes
                           labelSeparator=":"
                         />
-                        {hasVariant &&
-                          (() => {
-                            const linkerGroups = new Map<
-                              string,
-                              {
-                                coords: Coord[];
-                                poolSize: number;
-                                poolEntries: NonNullable<
-                                  Coord['sub_pool_entries']
-                                >;
-                              }
-                            >();
-                            for (const c of mapCoords) {
-                              const sgp = c.sub_group_parent;
-                              const gp = c.group_parent;
-                              if (!sgp || !gp) continue;
-                              const key = `${gp}::${sgp}`;
-                              if (!linkerGroups.has(key)) {
-                                linkerGroups.set(key, {
-                                  coords: [],
-                                  poolSize: c.sub_pool_size ?? 0,
-                                  poolEntries: c.sub_pool_entries ?? [],
-                                });
-                              }
-                              linkerGroups.get(key)!.coords.push(c);
+                        {(() => {
+                          const linkerGroups = new Map<
+                            string,
+                            {
+                              coords: Coord[];
+                              poolSize: number;
+                              poolEntries: NonNullable<
+                                Coord['sub_pool_entries']
+                              >;
                             }
-                            if (linkerGroups.size > 0) {
-                              return [...linkerGroups.entries()].map(
-                                ([, g]) => {
-                                  const uniquePos = new Set(
-                                    g.coords.map((c) => `${c.x},${c.y},${c.z}`)
-                                  ).size;
-                                  return (
-                                    <span
-                                      key={g.poolEntries
-                                        .map((e) => e.name)
-                                        .join(',')}
-                                      style={{ color: tokens.muted }}
-                                    >
-                                      (
-                                      {g.poolEntries
-                                        .map((entry) =>
-                                          t(entry.translation_key, entry.name)
-                                        )
-                                        .join(ut('ui.location.map_sep'))}
-                                      {ut('ui.detail.pool_select')
-                                        .replace('{count}', String(g.poolSize))
-                                        .replace(
-                                          '{positions}',
-                                          String(uniquePos)
-                                        )}
-                                      {uniquePos > 1
-                                        ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}`
-                                        : ''}
-                                      )
-                                    </span>
-                                  );
-                                }
+                          >();
+                          for (const c of mapCoords) {
+                            const sgp = c.sub_group_parent;
+                            const gp = c.group_parent;
+                            if (!sgp || !gp) continue;
+                            const key = `${gp}::${sgp}`;
+                            if (!linkerGroups.has(key)) {
+                              linkerGroups.set(key, {
+                                coords: [],
+                                poolSize: c.sub_pool_size ?? 0,
+                                poolEntries: c.sub_pool_entries ?? [],
+                              });
+                            }
+                            linkerGroups.get(key)!.coords.push(c);
+                          }
+                          if (linkerGroups.size > 0) {
+                            return [...linkerGroups.entries()].map(([, g]) => {
+                              const uniquePos = new Set(
+                                g.coords.map((c) => `${c.x},${c.y},${c.z}`)
+                              ).size;
+                              return (
+                                <span
+                                  key={g.poolEntries
+                                    .map((e) => e.name)
+                                    .join(',')}
+                                  style={{ color: tokens.muted }}
+                                >
+                                  (
+                                  {g.poolEntries
+                                    .map((entry) =>
+                                      t(entry.translation_key, entry.name)
+                                    )
+                                    .join(ut('ui.location.map_sep'))}
+                                  {ut('ui.detail.pool_select')
+                                    .replace('{count}', String(g.poolSize))
+                                    .replace('{positions}', String(uniquePos))}
+                                  {uniquePos > 1
+                                    ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}`
+                                    : ''}
+                                  )
+                                </span>
                               );
+                            });
+                          }
+                          const vc = forcedVc!;
+                          const names = vc.variant_names ?? [];
+                          const parts: string[] = [];
+                          if (regPosCount > 0) {
+                            parts.push(`(${regPosCount}点)`);
+                          }
+                          if (varPosCount > 0) {
+                            if (names.length > 0) {
+                              parts.push(
+                                `(${varPosCount}点选${vc.variant_count})`
+                              );
+                            } else {
+                              parts.push(`(${varPosCount}点)`);
                             }
-                            const vc = forcedVc!;
-                            const names = vc.variant_names ?? [];
-                            const parts: string[] = [];
-                            if (regPosCount > 0) {
-                              parts.push(`(${regPosCount}点)`);
-                            }
-                            if (varPosCount > 0) {
-                              if (names.length > 0) {
-                                parts.push(
-                                  `(${varPosCount}点选${vc.variant_count})`
-                                );
-                              } else {
-                                parts.push(`(${varPosCount}点)`);
-                              }
-                            }
-                            return (
-                              <span style={{ color: tokens.muted }}>
-                                {parts.join(' ')}
-                              </span>
-                            );
-                          })()}
+                          }
+                          return (
+                            <span style={{ color: tokens.muted }}>
+                              {parts.join(' ')}
+                            </span>
+                          );
+                        })()}
                       </div>
                     );
                   })()}
