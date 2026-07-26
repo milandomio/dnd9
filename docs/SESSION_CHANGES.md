@@ -1698,3 +1698,10 @@ if (typeof window !== "undefined") {
   - `web/src/i18n/uiLocale.ts` — 所有 10 种语言的 `ui.list.variant` 从纯 label 改为 `{count}变体`/`{count} Variants`/等模板格式
 - **关键逻辑/映射关系**：详情页 JSON 已有 `translation_key` per monster（`lootdrop_builder.py:404`），只需前端接口+渲染适配；列表页需后端补充 `monster_translation_keys` 到 search index
 - **验证**：管道输出含 `monster_translation_keys` 字段；TSC + Prettier + Black 通过
+
+## docs: GoldChest 详情页 SSG 样板计划
+
+- **原因**：当前多语言详情页复制中文 SSR 正文会与客户端按 URL 使用的语言 UI 发生 hydration 文本不一致；逐详情、逐语言完整 SSR 的成本过高。
+- **变更文件**：`docs/plans/SSG_DETAIL_TEMPLATE.md` — 新增详情 SSG 空壳样板设计。
+- **关键逻辑/映射关系**：每种语言 `props/GoldChest` → 一次 SSR 样板 → 复制至同语言 items/monsters/props 详情路由；每页独立替换目标实体 title；`isDetailTemplate` → 首屏固定 `RareModule_1x1.webp` → CSR 请求当前 `page/name` JSON 后替换真实内容。
+- **范围限制**：`LootdropDetailPage` 数据结构独立，不复用 GoldChest 样板，待后续确定专用样板。
