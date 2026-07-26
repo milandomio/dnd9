@@ -436,9 +436,6 @@ export default function QuestNPCDetailPage() {
                     (() => {
                       const hasLoot = q.contents.some((c) => c.loot_state);
                       const hasRarity = q.contents.some((c) => c.rarity);
-                      const hasDungeonType = q.contents.some(
-                        (c) => c.dungeon_type
-                      );
                       return (
                         <div
                           style={{
@@ -528,6 +525,8 @@ export default function QuestNPCDetailPage() {
                             {q.contents.map((c, i) => {
                               const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
                               const contentDone = lsGet(contentKey);
+                              const mergeRarityIntoTarget =
+                                !c.dungeon_type && Boolean(c.rarity);
                               const rowStyle = {
                                 borderBottom: dark
                                   ? '1px solid rgba(255,255,255,0.06)'
@@ -610,7 +609,7 @@ export default function QuestNPCDetailPage() {
                                             tokens.muted;
                                         }}
                                       />
-                                      {hasDungeonType && (
+                                      {c.dungeon_type && (
                                         <div
                                           style={{
                                             color: dark ? '#42a5f5' : '#1565c0',
@@ -623,6 +622,22 @@ export default function QuestNPCDetailPage() {
                                           )}
                                         </div>
                                       )}
+                                      {mergeRarityIntoTarget && (
+                                        <div
+                                          style={{
+                                            color: getRarityColor(
+                                              c.rarity || '',
+                                              dark
+                                            ),
+                                            fontSize: 12,
+                                          }}
+                                        >
+                                          {t(
+                                            c.rarity_translation_key,
+                                            c.rarity || ''
+                                          )}
+                                        </div>
+                                      )}
                                     </div>
                                     {hasLoot && (
                                       <span
@@ -631,12 +646,14 @@ export default function QuestNPCDetailPage() {
                                           color: dark ? '#FFB74D' : '#E65100',
                                           fontSize: 12,
                                           padding: '6px 8px',
+                                          textAlign: 'center',
+                                          fontWeight: 900,
                                         }}
                                       >
                                         {c.loot_state ? '✓' : ''}
                                       </span>
                                     )}
-                                    {hasRarity && (
+                                    {hasRarity && !mergeRarityIntoTarget && (
                                       <span
                                         style={{
                                           ...rowStyle,
@@ -654,6 +671,14 @@ export default function QuestNPCDetailPage() {
                                           c.rarity || ''
                                         )}
                                       </span>
+                                    )}
+                                    {hasRarity && mergeRarityIntoTarget && (
+                                      <span
+                                        style={{
+                                          ...rowStyle,
+                                          padding: '6px 8px',
+                                        }}
+                                      />
                                     )}
                                   </div>
                                   <div
