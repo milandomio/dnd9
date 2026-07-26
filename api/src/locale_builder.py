@@ -28,9 +28,9 @@ def _collect_keys(obj, used: set[str]):
             _collect_keys(item, used)
 
 
-def _load_used_keys(output_dir: Path) -> set[str]:
+def _load_used_keys(output_dir: Path, lootdrop_keys: set[str] | None = None) -> set[str]:
     """Load all translation_keys actually used in search_index + entity data files."""
-    used: set[str] = set()
+    used: set[str] = set(lootdrop_keys or ())
 
     si_path = output_dir / "search_index.json"
     if si_path.exists():
@@ -41,7 +41,10 @@ def _load_used_keys(output_dir: Path) -> set[str]:
             if tk:
                 used.add(tk)
 
-    for subdir in ("items", "monsters", "props", "lootdrops"):
+    subdirs = (
+        ("items", "monsters", "props") if lootdrop_keys is not None else ("items", "monsters", "props", "lootdrops")
+    )
+    for subdir in subdirs:
         dir_path = output_dir / subdir
         if not dir_path.exists():
             continue
@@ -73,12 +76,12 @@ def _load_used_keys(output_dir: Path) -> set[str]:
     return used
 
 
-def build_locale_files(db, output_dir: Path) -> list[str]:
+def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = None) -> list[str]:
     """Export DB translation tables filtered to used keys only."""
     locale_dir = output_dir / "locale"
     locale_dir.mkdir(parents=True, exist_ok=True)
 
-    used_keys = _load_used_keys(output_dir)
+    used_keys = _load_used_keys(output_dir, lootdrop_keys)
     used_keys.add(SUPERHOARD_I18N_KEY)
     used_keys.update(FILTER_MODE_LOCALE_KEYS)
 

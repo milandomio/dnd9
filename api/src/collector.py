@@ -516,6 +516,7 @@ def run():
             _save("lootdrops.json", loot_index)
             ctx.set_result(f"{len(loot_index)} items")
 
+        used_translation_keys: set[str] = set()
         build_and_save_lootdrop_details(
             loot_index,
             drop_engine,
@@ -530,6 +531,7 @@ def run():
             map_to_module,
             translations,
             entity_page_map,
+            used_translation_keys,
         )
         pipe.log("[JSON] lootdrops detail files DONE")
 
@@ -569,7 +571,7 @@ def run():
             ctx.set_result("DONE")
 
         with pipe.step("locale export") as ctx:
-            locale_langs = build_locale_files(db, OUTPUT_DIR)
+            locale_langs = build_locale_files(db, OUTPUT_DIR, used_translation_keys)
             ctx.set_result(f"{len(locale_langs)} languages")
 
         print(f"\n[DONE] Output written to {OUTPUT_DIR}")

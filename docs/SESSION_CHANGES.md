@@ -1,5 +1,13 @@
 # 2026-07-27 会话修改记录
 
+## perf: 消除 locale 掉落文件二次扫描
+
+- **改动原因**：热 DB 管线总计 98.18s，其中 locale 为收集 `translation_key` 二次读取约 670MB 掉落 JSON，耗时 14.16s；多变体导出还会重复扫描 7867 行 rate item 查找基础物品 spawner。
+- **变更文件**：`api/src/collector.py`；`api/src/drop_rate.py`；`api/src/locale_builder.py`；`api/src/lootdrop_builder.py`；`docs/plans/PERF_PIPELINE_AND_RUNTIME_DRAFT2.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：lootdrop 最终确认写盘时收集 item/entity/GDI/rarity `translation_key`，`collector` 将集合传给 locale 导出以跳过 `lootdrops/` 重读；未传集合的独立调用继续走旧扫描路径。`DropRateEngine.preload()` 预建 `base_item -> lootdrop_id -> group_id -> spawner_keyword`，`get_base_item_spawners()` 改为字典查询。
+- **实测结果**：`api/logs/pipeline_20260727_024506.log` 热 DB 总计 82.31s，较基线减少 15.87s；locale 14.16s → 0.48s，lootdrops 79.08s → 77.87s。A3 跨地图组批量爆率首次实测无收益，已撤回且记入草案2。
+- **验证**：API `compileall`、ruff、Black 通过；Web `npm run format`、`format:check`、`npx tsc --noEmit` 通过；10 种 locale 键和值完全一致；`HeaterShield_8001`、`Lifeleaf_5001` JSON 语义一致。
+
 ## fix: 区分同组多点与单点多实体的选择文案
 
 - **改动原因**：`FrostDemon` 的 HoundVale 同实体互斥组被显示为 `(2点)`，IceMaze 两实体互斥组被显示为 `(1点选2)`，均未表达实际选择关系。
