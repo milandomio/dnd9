@@ -1840,3 +1840,10 @@ if (typeof window !== "undefined") {
 - **原因**：部分列表页、SSG 本地化页面、重定向页与离线页的 `<title>` 仅以 `DarkFlashNav` 结尾，未遵循统一品牌文案。
 - **变更文件**：`web/src/pages/ListPage.tsx`、`web/src/pages/DungeonModulesPage.tsx`、`web/scripts/ssg.mjs`、`web/index.html`、`web/public/offline.html`。
 - **关键逻辑/映射关系**：除主页外，所有页面 `<title>` 统一以 `| 越来越黑暗闪电指南 DarkFlashNav` 结尾；SSG 的非默认语言标题及重定向页使用同一结尾；主页入口标题保持 `越来越黑暗闪电指南 DarkFlashNav` 为开头。
+
+## fix: Quest NPC 英文列表页 i18n
+
+- **原因**：`/en/quest_npc` 的标题、搜索框占位符和 NPC 展示名仍包含中文。
+- **变更文件**：`web/src/pages/QuestNPCPage.tsx`、`web/src/components/QuestSearchBar.tsx`。
+- **关键逻辑/映射关系**：列表页标题和 Helmet 元数据复用现有 UI 翻译键；非简体中文语言使用稳定的 `npc_name`，简体中文保持 `npc_name_display`；任务搜索框默认占位符改用 `ui.search.placeholder`，搜索结果 NPC 标签沿用相同语言映射。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；Playwright 访问 `http://127.0.0.1:8090/en/quest_npc`，标题为 `Quest NPCs | DarkFlashNav`，页面正文未检测到中文。

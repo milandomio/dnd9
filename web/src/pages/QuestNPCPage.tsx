@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { DEFAULT_LANG } from '../i18n/locale';
 import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
@@ -88,7 +89,13 @@ export default function QuestNPCPage() {
         [
           cat,
           npcs.sort((a, b) =>
-            a.npc_name_display.localeCompare(b.npc_name_display, 'zh-CN')
+            (lang === DEFAULT_LANG
+              ? a.npc_name_display
+              : a.npc_name
+            ).localeCompare(
+              lang === DEFAULT_LANG ? b.npc_name_display : b.npc_name,
+              lang
+            )
           ),
         ] as const
     );
@@ -98,12 +105,12 @@ export default function QuestNPCPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>任务NPC表 | 越来越黑暗闪电指南 DarkFlashNav</title>
+        <title>{ut('ui.nav.quest_npc')} | DarkFlashNav</title>
         <meta
           name="description"
-          content="NPC任务详情查询——查看各NPC的任务、奖励、需求。"
+          content={`${ut('ui.nav.quest_npc')} - ${ut('ui.quest_detail.task_list')}`}
         />
-        <meta name="keywords" content="任务NPC,NPC位置,任务攻略" />
+        <meta name="keywords" content={ut('ui.nav.quest_npc')} />
       </Helmet>
       <div
         style={{
@@ -135,7 +142,7 @@ export default function QuestNPCPage() {
               margin: 0,
             }}
           >
-            【任务NPC表】NPC任务详情
+            [{ut('ui.nav.quest_npc')}] {ut('ui.quest_detail.task_list')}
           </h1>
           <div
             style={{
@@ -229,7 +236,9 @@ export default function QuestNPCPage() {
                           textDecoration: npcDone ? 'line-through' : 'none',
                         }}
                       >
-                        {npc.npc_name_display}
+                        {lang === DEFAULT_LANG
+                          ? npc.npc_name_display
+                          : npc.npc_name}
                         <span
                           style={{
                             fontSize: 13,
