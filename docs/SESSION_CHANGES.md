@@ -2013,3 +2013,9 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/scripts/ssg.mjs`、`web/src/main.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：构建时由 `detailPlaceholder()` 直接写入每个 `dist/{lang}/{items|monsters|props}/{name}/index.html`，不保存独立样板文件；根节点 `data-detail-placeholder` 驱动 `createRoot`，语言继续从 URL 推导。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run build` 通过；`GoldChest` 输出 1814B，内联样式、hreflang 和 `__SSR_DATA__` 均为 0。
+
+## docs: 统一全部默认详情页 SSG 样板壳计划
+
+- **改动原因**：原计划以 GoldChest SSR 复用为核心且排除 lootdrops，已与当前轻量壳实现及“样板壳覆盖全部详情页”的目标不一致。
+- **变更文件**：`docs/plans/SSG_DETAIL_TEMPLATE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：计划将 `items`、`monsters`、`props`、`lootdrops` 统一映射到 `createTemplateDetailPage()`；lootdrop 基底 URL 保留变体重定向，实际变体详情使用 `data-detail-placeholder` + `createRoot()` 并 preload 对应详情 JSON。
