@@ -107,5 +107,6 @@
 - 提交前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 手动跑 format / format:check / tsc 预检。
 - 构建、启动 web、部署、DB 推送必须按 `docs/BUILD_AND_DEPLOY.md` 执行；构建完成后必须验证 HTTP 200。
 - 禁止直接执行实时输出的长流程命令；`python main.py`、`npm run build`、部署、全站测试等必须重定向到日志后单独读取，避免阻塞 TUI。
+- **WSL 非阻塞执行**：长流程即使重定向日志也必须后台启动（如 `nohup <command> > <log> 2>&1 &`），随后用短命令检查进程和读取日志；禁止等待构建、测试或服务器前台命令结束后才继续执行。
 - 不要直接改 `data/` 下的自动生成文件；修改 `api/src/collector.py` 等生成逻辑。
 - `python main.py` 必须在 `npm run build` 之前运行。

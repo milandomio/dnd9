@@ -97,6 +97,7 @@ export default function QuestItemGroupPage() {
       setLoading(false);
       return;
     }
+    if (!dataVersion) return;
     fetch(
       dataUrl(
         dataVersion,

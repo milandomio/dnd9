@@ -40,6 +40,7 @@ export default function QuestItemsPage() {
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/quest_items_groups.json'))
       .then((r) => r.json())
       .then(setGroups)

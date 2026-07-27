@@ -5,6 +5,8 @@ let cachedDate = '';
 let cachedSeason = 0;
 const listeners = new Set<(v: string) => void>();
 const seasonListeners = new Set<(v: number) => void>();
+let loadingPromise: Promise<void> | null = null;
+let retryTimer: ReturnType<typeof setTimeout> | null = null;
 
 function notify() {
   for (const fn of listeners) fn(cachedDate);
@@ -12,6 +14,44 @@ function notify() {
 
 function notifySeason() {
   for (const fn of seasonListeners) fn(cachedSeason);
+}
+
+function loadDataVersion() {
+  if (cachedDate || loadingPromise || typeof window === 'undefined') return;
+
+  loadingPromise = fetch('/data/json/meta.json')
+    .then((r) => {
+      if (!r.ok) throw new Error(`meta.json request failed: ${r.status}`);
+      return r.json();
+    })
+    .then((d: { dataDate?: string; seasonVersion?: number }) => {
+      const remote = d.dataDate || '';
+      cachedSeason = d.seasonVersion ?? 0;
+      notifySeason();
+      if (!remote) throw new Error('meta.json has no dataDate');
+
+      cachedDate = remote;
+      notify();
+      localStorage.setItem(STORAGE_KEY, remote);
+    })
+    .catch(() => {
+      // Keep retrying instead of allowing consumers to fall back to stale paths.
+      retryTimer ??= setTimeout(() => {
+        retryTimer = null;
+        loadDataVersion();
+      }, 5000);
+    })
+    .finally(() => {
+      loadingPromise = null;
+    });
+}
+
+/** Mounted by NavBar so every routed page shares one version bootstrap. */
+export function DataVersionLoader() {
+  useEffect(() => {
+    loadDataVersion();
+  }, []);
+  return null;
 }
 
 /**
@@ -24,6 +64,7 @@ export function useDataVersion(): string {
   useEffect(() => {
     listeners.add(setDate);
     if (cachedDate) setDate(cachedDate);
+    loadDataVersion();
     return () => {
       listeners.delete(setDate);
     };
@@ -48,24 +89,4 @@ export function useSeasonVersion(): number {
   }, []);
 
   return season;
-}
-
-// Single fetch — runs once on module load, served by SW (StaleWhileRevalidate, 5min TTL)
-if (typeof window !== 'undefined') {
-  fetch('/data/json/meta.json')
-    .then((r) => r.json())
-    .then((d: { dataDate?: string; seasonVersion?: number }) => {
-      const remote = d.dataDate || '';
-      const season = d.seasonVersion ?? 0;
-
-      cachedSeason = season;
-      notifySeason();
-
-      if (remote) {
-        cachedDate = remote;
-        notify();
-        localStorage.setItem(STORAGE_KEY, remote);
-      }
-    })
-    .catch(() => {});
 }

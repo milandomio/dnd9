@@ -32,6 +32,7 @@ export default function ExplorePage() {
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/explore.json'))
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)
