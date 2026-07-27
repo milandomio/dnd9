@@ -56,6 +56,7 @@ export default function QuestNPCPage() {
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/quest_npc.json'))
       .then<NPCEntry[]>((r) => r.json())
       .then(setData)

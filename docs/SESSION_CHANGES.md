@@ -2025,3 +2025,18 @@ if (typeof window !== "undefined") {
 - **改动原因**：统一壳范围不能只按四类实体详情定义；根据路由与网站地图，除主页和列表页外的任务分组、NPC、模块详情及 Explore 也应纳入。
 - **变更文件**：`docs/plans/SSG_DETAIL_TEMPLATE.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：计划以显式 `isTemplateShellRoute(path)` 分类排除主页、实体列表、任务/NPC/模块列表和模块分组列表；其余静态路由按类型映射目标 JSON preload，使用统一 `data-detail-placeholder` + `createRoot()` 接管。
+
+# 2026-07-27 会话修改记录
+
+## fix: 修复 Lootdrop 详情刷新失败
+
+- **改动原因**：非默认语言的 lootdrop 详情在 Quick SSG 中输出中文 SSR 正文，客户端按 URL 语言 hydration 时触发 #425/#418/#423；刷新时 `dataVersion` 未就绪便请求未版本化 JSON，生产预览返回 HTML，导致页面永久显示 Loading。
+- **变更文件**：`web/scripts/ssg.mjs`、`web/src/pages/LootdropDetailPage.tsx`、`web/src/hooks/useDataVersion.ts`、`web/src/components/NavBar.tsx`、`web/src/utils/dataUrl.ts`、`web/src/pages/{HomePage,ExplorePage,QuestItemsPage,QuestNPCPage,QuestItemGroupPage,DungeonModuleDetailPage}.tsx`、`web/index.html`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`lootdrops` 纳入 `DETAIL_TEMPLATE_PAGES`，变体详情与 items/monsters/props 一样输出 `data-detail-placeholder` 壳并由 `createRoot()` 接管；预加载路径映射到 `/data/{version}/json/lootdrops/{name}.json`。`NavBar` 挂载单例 `DataVersionLoader`，版本请求失败后重试；所有页面仅在 `useDataVersion()` 返回版本后请求数据，`dataUrl()` 拒绝空版本，避免 `/data/json/...` 被 SPA fallback 解析为 JSON。Cloudflare 统计脚本改用 `async`，不能阻塞应用模块执行。
+- **验证**：`npm run format`、`npm run format:check`、`npx prettier --check index.html scripts/ssg.mjs`、`npx tsc --noEmit`、`npm run build` 通过；8080 预览 HTTP 200，Playwright 直接打开 `/en/lootdrops/Spear_8001/` 与 `/ja/props/CobaltOre/` 均无 React hydration 错误，前者成功加载详情正文。
+
+## docs: 规范 WSL 长流程执行
+
+- **改动原因**：仅重定向日志仍可能等待前台构建或测试结束，阻塞后续命令执行。
+- **变更文件**：`CLAUDE.md`、`docs/BUILD_AND_DEPLOY.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：管道、构建、部署和全站测试必须通过 `nohup ... > log 2>&1 &` 后台启动，再以短命令轮询进程和日志；8080 预览服务器同样保持后台运行。

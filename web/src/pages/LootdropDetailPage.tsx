@@ -217,6 +217,7 @@ export default function LootdropDetailPage() {
       );
       return;
     }
+    if (!dataVersion) return;
     const fetchName =
       currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
     const lootUrl = dataUrl(

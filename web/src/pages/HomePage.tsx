@@ -106,6 +106,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/index.json'))
       .then((r) => r.json())
       .then(setData)

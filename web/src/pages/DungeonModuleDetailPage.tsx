@@ -72,6 +72,7 @@ export default function DungeonModuleDetailPage() {
       setHidden(new Set(effectiveCoords.entities.map((e) => e.name)));
       return;
     }
+    if (!dataVersion) return;
     const coordsUrl = dataUrl(
       dataVersion,
       `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`

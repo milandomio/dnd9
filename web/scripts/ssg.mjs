@@ -109,7 +109,12 @@ const index = readJSON(join(DATA, 'index.json'));
 const moduleData = readJSON(join(DATA, 'dungeon_modules.json'));
 
 const PAGES = ['items', 'monsters', 'props', 'lootdrops'];
-const DETAIL_TEMPLATE_PAGES = new Set(['items', 'monsters', 'props']);
+const DETAIL_TEMPLATE_PAGES = new Set([
+  'items',
+  'monsters',
+  'props',
+  'lootdrops',
+]);
 const SINGLE = ['explore', 'quest_items', 'quest_npc', 'dungeon_modules'];
 const DEFAULT_LANG = 'zh-Hans';
 const LANGS = [
@@ -559,7 +564,7 @@ function localizePage(
 
 function detailPreloads(urlPath) {
   const detailMatch = urlPath.match(
-    /^\/(?:[^/]+\/)?(items|monsters|props)\/(.+)$/
+    /^\/(?:[^/]+\/)?(items|monsters|props|lootdrops)\/(.+)$/
   );
   if (!detailMatch) return '';
   return `    <link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailMatch[2]}.json" as="fetch" crossorigin="anonymous">\n`;
