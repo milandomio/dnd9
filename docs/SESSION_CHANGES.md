@@ -2006,3 +2006,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`web/scripts/ssg.mjs`、`web/src/main.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：详情 SSG 改为纯静态壳，仅输出本地化标题、`#####` 模块名及三个 `RareModule_1x1.webp` 占位图；不再渲染 `GoldChest`、地图坐标或调试控件。`__detailTemplate` 标志使客户端以 `createRoot` 替换壳，再按当前路由请求实际 JSON。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run build` 通过；`GoldChest` 输出 3601B、内联样式 0B；预览首页和详情页 HTTP 200。
+
+## perf: 继续压缩详情 SSG 占位页
+
+- **改动原因**：详情占位页无需重复保留首页响应式样式、公共数据预加载、hreflang 集及 SSR 状态脚本。
+- **变更文件**：`web/scripts/ssg.mjs`、`web/src/main.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：构建时由 `detailPlaceholder()` 直接写入每个 `dist/{lang}/{items|monsters|props}/{name}/index.html`，不保存独立样板文件；根节点 `data-detail-placeholder` 驱动 `createRoot`，语言继续从 URL 推导。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run build` 通过；`GoldChest` 输出 1814B，内联样式、hreflang 和 `__SSR_DATA__` 均为 0。

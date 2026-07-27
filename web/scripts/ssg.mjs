@@ -526,7 +526,14 @@ function injectLocalizedData(page, lang, title) {
   });
 }
 
-function localizePage(page, route, routeData, localeDict, lang) {
+function localizePage(
+  page,
+  route,
+  routeData,
+  localeDict,
+  lang,
+  includeAlternates = true
+) {
   const canonicalHref = localizedPath(route.path, lang);
   const title = localizedTitle(routeData, localeDict);
   let out = injectLocalizedData(page, lang, title)
@@ -534,8 +541,13 @@ function localizePage(page, route, routeData, localeDict, lang) {
     .replace(
       /<link rel="canonical" href="[^"]*">/,
       `<link rel="canonical" href="${canonicalHref}">`
-    )
-    .replace(HEAD_CLOSE, `    ${alternateLinks(route.path)}\n${HEAD_CLOSE}`);
+    );
+  if (includeAlternates) {
+    out = out.replace(
+      HEAD_CLOSE,
+      `    ${alternateLinks(route.path)}\n${HEAD_CLOSE}`
+    );
+  }
   if (title) {
     out = out.replace(
       /<title[^>]*>[^<]*<\/title>/,
@@ -566,25 +578,33 @@ function detailPlaceholder(title) {
 </main>`;
 }
 
+function detailTemplate() {
+  return template
+    .replace(/\s*<style>[\s\S]*?<\/style>/, '')
+    .replace(
+      /\s*<link rel="preload" href="\/data\/(?:json\/meta\.json|[^"/]+\/json\/(?:dungeon_modules|index|search_index)\.json)" as="fetch" crossorigin="anonymous">/g,
+      ''
+    );
+}
+
 function createTemplateDetailPage(route, routeData, lang, localeDict) {
   const urlPath = route.path;
   const canonical = urlPath === '/' ? '/' : urlPath.replace(/\/?$/, '/');
-  const templated = template.replace(
+  const templated = detailTemplate().replace(
     '</title>',
     `</title>\n    <link rel="canonical" href="${canonical}">\n    <base href="${baseHrefFromFile(route.file)}">`
   );
   // Detail pages fetch their route data after the client starts. Rendering GoldChest
   // here copied its coordinates and Ant Design's SSR styles into every detail file.
-  const payload = { __detailTemplate: true };
   const title = localizedTitle(routeData, localeDict);
   const page = templated
     .replace(/<title>[^<]*<\/title>\s*/, '')
-    .replace(ROOT_MARKER, `<div id="root">${detailPlaceholder(title)}`)
     .replace(
-      HEAD_CLOSE,
-      `${detailPreloads(urlPath)}<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
-    );
-  return localizePage(page, route, routeData, localeDict, lang);
+      ROOT_MARKER,
+      `<div id="root" data-detail-placeholder>${detailPlaceholder(title)}`
+    )
+    .replace(HEAD_CLOSE, `${detailPreloads(urlPath)}</head>`);
+  return localizePage(page, route, routeData, localeDict, lang, false);
 }
 
 for (let i = 0; i < routes.length; i++) {
