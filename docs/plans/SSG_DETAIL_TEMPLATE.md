@@ -1,66 +1,109 @@
-# 统一详情页 SSG 样板壳计划
+# 全部非列表路由 SSG 样板壳计划
 
 ## 目标
 
-将轻量 SSG 样板壳统一用于项目定义的全部详情页：`items`、`monsters`、`props`、`lootdrops`。
+轻量 SSG 样板壳覆盖网站地图中除主页和列表页以外的全部静态路由。壳不执行页面正文 SSR；浏览器启动后以 `createRoot()` 接管，并由当前页面按 URL 请求真实数据。
 
-- 不再以 `GoldChest` 或其他实体执行详情正文 SSR。
-- 每个静态 HTML 仅保留目标路由的本地化标题、canonical、客户端资源、目标 JSON preload 及通用占位内容。
-- 首屏占位内容固定为标题、`#####` 模块名和三个 `RareModule_1x1.webp` 图片；不输出坐标、模块元数据、调试控件、地图图片或 Ant Design SSR 样式。
-- 浏览器以 `createRoot()` 接管占位壳，再按当前 URL 请求真实详情 JSON 并渲染完整页面。
-- 单页目标维持在 2KB 以内，不因实体坐标数量、掉落池规模或语言而显著增长。
+- 不以 `GoldChest` 或其他游戏实体作为 SSR 正文样板。
+- 每个壳只保留页面标题、canonical、客户端资源、必要的目标数据 preload 与通用占位内容。
+- 通用占位内容为标题、`#####` 和三个 `RareModule_1x1.webp` 图片；不得包含坐标、模块数据、掉落池、调试控件、真实地图图或 Ant Design SSR 样式。
+- 根节点使用 `data-detail-placeholder`，`main.tsx` 必须对其调用 `createRoot()` 而非 `hydrateRoot()`。
+- 页面大小目标为 2KB 以下，且不随实体点位、掉落池或语言线性增长。
 
-项目术语中的“详情页”默认仅指以下四类实体；任务 NPC、任务物品分组和地牢模块详情维持独立 SSG 策略。
+## 路由分类
 
-## 适用范围
+路由以 `AppInner.tsx` 与 `web/scripts/ssg.mjs` 的 `routes` 生成清单为准。语言副本沿用相同分类。
 
-| 路由                     | 页面组件                 | SSG 策略       |
-| ------------------------ | ------------------------ | -------------- |
-| `/:lang/items/:name`     | `DetailPage.tsx`         | 统一轻量样板壳 |
-| `/:lang/monsters/:name`  | `DetailPage.tsx`         | 统一轻量样板壳 |
-| `/:lang/props/:name`     | `DetailPage.tsx`         | 统一轻量样板壳 |
-| `/:lang/lootdrops/:name` | `LootdropDetailPage.tsx` | 统一轻量样板壳 |
+### 排除：主页与列表页
 
-lootdrop 的基底名称到默认变体重定向页继续保持最小重定向 HTML；实际变体路由（如 `HeaterShield_5001`、`HeaterShield_8001`）使用统一壳。
+| 路由                                                                  | 页面组件                     | 原因             |
+| --------------------------------------------------------------------- | ---------------------------- | ---------------- |
+| `/`、`/:lang`                                                         | `HomePage.tsx`               | 主页             |
+| `/:lang/items`、`/:lang/monsters`、`/:lang/props`、`/:lang/lootdrops` | `ListPage.tsx`               | 实体列表         |
+| `/:lang/quest_items`                                                  | `QuestItemsPage.tsx`         | 任务物品分组列表 |
+| `/:lang/quest_npc`                                                    | `QuestNPCPage.tsx`           | NPC 列表         |
+| `/:lang/dungeon_modules`                                              | `DungeonModulesPage.tsx`     | 地牢模块分组列表 |
+| `/:lang/dungeon_modules/:group`                                       | `DungeonModuleGroupPage.tsx` | 地牢模块列表     |
+
+这些页面保留现有 SSG/SSR 逻辑，不使用样板壳。
+
+### 纳入：全部非列表静态路由
+
+| 路由                                  | 页面组件                      | 客户端真实数据                                |
+| ------------------------------------- | ----------------------------- | --------------------------------------------- |
+| `/:lang/items/:name`                  | `DetailPage.tsx`              | `items/{name}.json`                           |
+| `/:lang/monsters/:name`               | `DetailPage.tsx`              | `monsters/{name}.json`                        |
+| `/:lang/props/:name`                  | `DetailPage.tsx`              | `props/{name}.json`                           |
+| `/:lang/lootdrops/:name`              | `LootdropDetailPage.tsx`      | `lootdrops/{name}.json`                       |
+| `/:lang/quest_items/:group`           | `QuestItemGroupPage.tsx`      | `quest_items_groups/{group}.json`             |
+| `/:lang/quest_npc/:npc_name`          | `QuestNPCDetailPage.tsx`      | `quest_npc.json`                              |
+| `/:lang/dungeon_modules/:group/:name` | `DungeonModuleDetailPage.tsx` | `dungeon_modules_coords/{name}.json` 与模块表 |
+| `/:lang/explore`                      | `ExplorePage.tsx`             | Explore 所需模块与索引数据                    |
+
+lootdrop 基底名称到默认变体的重定向（例如 `/:lang/lootdrops/HeaterShield`）继续生成最小重定向 HTML。实际变体路径（如 `HeaterShield_5001`、`HeaterShield_8001`）属于样板壳范围。
 
 ## 当前状态
 
-`items`、`monsters`、`props` 已通过 `createTemplateDetailPage()` 生成轻量壳：
+`items`、`monsters`、`props` 已由 `createTemplateDetailPage()` 生成轻量壳：
 
-- 由 `detailPlaceholder()` 在构建时直接生成，不保存独立 GoldChest 样板文件。
-- 根节点标记 `data-detail-placeholder`，`main.tsx` 据此使用 `createRoot()`，避免对静态占位内容执行 hydration。
-- 默认语言与九种非默认语言均写入目标路由的本地化标题；壳不含 `__SSR_DATA__`、hreflang 集、公共数据 preload 或内联样式。
-- `props/GoldChest` 壳当前约 1.8KB。
+- `detailPlaceholder()` 在构建期直接写入每个输出 HTML，不保存独立样板文件。
+- 默认语言与九种非默认语言均写入目标路由标题；壳不含 `__SSR_DATA__`、hreflang 集、公共数据 preload 或内联样式。
+- `props/GoldChest` 当前约 1.8KB。
 
-`lootdrops` 目前仍走 `render()` 全量 SSR，因此单页约 114KB，并且非默认语言的中文 SSR 正文与客户端目标语言可能发生 hydration 不一致。
+其余非列表路由仍走 `render()` 完整 SSR。特别是 lootdrop 详情页约 114KB，非默认语言会以中文 SSR 正文配合目标语言客户端首次渲染，可能产生 hydration 不一致。
 
-## 实施步骤
+## 实施方案
 
-1. 在 `web/scripts/ssg.mjs` 的 `DETAIL_TEMPLATE_PAGES` 中加入 `lootdrops`，让所有四类实体详情路由进入 `createTemplateDetailPage()`。
-2. 扩展 `detailPreloads()` 的实体匹配，将 `lootdrops` 映射到 `/data/{version}/json/lootdrops/{name}.json`。
-3. 保持 `r.redirect` 在样板路由分支之前处理，确保多变体 lootdrop 基底 URL 仍重定向到默认变体。
-4. 不向样板壳注入 `window.__SSR_DATA__`。`LootdropDetailPage.tsx` 在无 SSR 数据时应按当前 URL 请求对应的变体 JSON；现有 `currentSuffix`、变体切换及默认变体跳转逻辑必须保持不变。
-5. 继续以 `data-detail-placeholder` 标记驱动 `main.tsx` 的 `createRoot()`；不得为 lootdrop 壳恢复 `hydrateRoot()`，以消除非默认语言的 SSR 文本不一致。
+### 1. 用路由规则识别壳页
 
-## 数据与渲染约束
+在 `web/scripts/ssg.mjs` 以显式路径规则替代仅检查 `DETAIL_TEMPLATE_PAGES` 的实体白名单：
 
-- 样板标题由路由对应 `translation_key` 和当前 locale 字典生成；缺失时回退已有 translation 或实体 name。
-- 样板只 preload 当前详情 JSON，不 preload 全局索引、模块数据、坐标引用或真实地图图片。
-- 所有地图、掉落池、参考爆率、变体数据和调试控件只在客户端取得真实 JSON 后渲染。
-- 语言继续由 URL 路径推导；壳不依赖 `__SSR_DATA__.__lang`。
-- 不修改 `data/` 中自动生成的 JSON，样板行为仅在前端 SSG 层实现。
+1. 先处理 `r.redirect`，保持 lootdrop 变体重定向不变。
+2. 排除主页与上述所有列表页。
+3. 对其余 `routes` 统一调用 `createTemplateDetailPage()`。
+4. 不通过“路径段数大于一”这种宽泛判断，避免将 `/dungeon_modules/:group` 分组列表误判为详情页。
+
+建议将判断整理为单一 `isTemplateShellRoute(path)` 函数，并由该函数服务默认语言生成和九种语言副本生成，避免两条生成链路覆盖范围不一致。
+
+### 2. 按路由生成壳元数据和 preload
+
+`createTemplateDetailPage()` 接收路由类型和名称，统一生成：
+
+- 目标路由的本地化 `<title>`、`<html lang>`、canonical。
+- 当前数据资源的 versioned JSON preload；无需在壳中 preload 的页面可返回空字符串。
+- 带 `data-detail-placeholder` 的通用占位正文。
+
+preload 规则必须使用显式映射：
+
+| 路由类型                             | preload                                                   |
+| ------------------------------------ | --------------------------------------------------------- |
+| items / monsters / props / lootdrops | `/data/{version}/json/{type}/{name}.json`                 |
+| quest item group                     | `/data/{version}/json/quest_items_groups/{group}.json`    |
+| quest NPC detail                     | `/data/{version}/json/quest_npc.json`                     |
+| dungeon module detail                | `/data/{version}/json/dungeon_modules_coords/{name}.json` |
+| explore                              | 页面首次实际请求的模块/索引资源，或无 preload             |
+
+不得保留首页 `meta.json`、索引、模块表等公共 preload，也不得 preload 真实地图图片、引用坐标或 GoldChest 数据。
+
+### 3. 客户端接管与数据回退
+
+1. 所有壳均不注入 `window.__SSR_DATA__`；避免把任一路由的旧 SSR 数据传给客户端。
+2. `main.tsx` 检测 `data-detail-placeholder` 后使用 `createRoot()`，所有非壳 SSR 页面继续 `hydrateRoot()`。
+3. 每个纳入页面组件必须在 SSR 数据缺失时显示自身 loading 状态，并按当前 URL fetch 真实数据；不得把缺失 SSR 数据当作终态。
+4. 需要模块表或索引的页面继续通过现有 hooks 取得数据。若某组件当前仅在 SSR 数据存在时可初始化，应先补齐空壳客户端加载路径，再纳入壳规则。
+5. URL 语言继续由 `LanguageContext` 推导。壳没有跨语言正文，因此无需以 `__SSR_DATA__.__lang` 协调 hydration。
 
 ## 验证
 
-1. 执行 `npm run build`，确认完成全部路由与 10 种语言的静态输出。
-2. 量测 `/zh-Hans/items/Ale/`、`/en/monsters/.../`、`/ja/props/GoldChest/`、`/en/lootdrops/HeaterShield_8001/`：每个实际详情页 HTML 小于 2KB，且不存在内联 Ant Design CSS、`__SSR_DATA__` 或 `data-detail-placeholder` 以外的实体数据。
-3. 确认 lootdrop 基底 URL 仍返回重定向页，变体 URL 的 preload 指向对应的 `lootdrops/{name}.json`。
-4. 在生产预览中直接打开四类详情页的各语言 URL：HTTP 200，壳先显示，随后加载真实实体、地图、掉落池和变体切换内容。
-5. 使用 Playwright 检查直接打开 `/en/lootdrops/HeaterShield_8001/` 时无 hydration error、无永久 loading、无错误重定向。
-6. 执行 `npm run format`、`npm run format:check`、`npx tsc --noEmit` 后提交。
+1. 执行 `npm run build`，确认默认语言及九种语言副本均成功生成。
+2. 抽查四类实体详情、任务物品分组、任务 NPC 详情、地牢模块详情和 Explore 的中英文 URL：静态 HTML 小于 2KB，含 `data-detail-placeholder`，不含 Ant Design CSS、`__SSR_DATA__`、坐标或实体详情 JSON 内容。
+3. 抽查所有排除路由：首页、四类实体列表、任务物品列表、NPC 列表、模块列表与模块分组列表，确认继续保留既有 SSR 输出，未出现 `data-detail-placeholder`。
+4. 检查 lootdrop 基底路径仍重定向，变体路径的 preload 精确指向同名变体 JSON。
+5. 在生产预览直接打开每种纳入类型的英文 URL，确认 HTTP 200、无 hydration error、无永久 loading，随后出现真实标题、坐标、地图、任务或掉落内容。
+6. 执行 `npm run format`、`npm run format:check`、`npx tsc --noEmit` 后提交实现。
 
 ## 非目标
 
-- 不为每个实体或每种语言执行完整详情正文 SSR。
-- 不持久化任何 GoldChest、lootdrop 或模块样板数据。
-- 不改变列表页、首页、任务页、任务 NPC、任务物品分组或地牢模块详情的 SSG 策略。
+- 不为每个路由或每种语言执行完整正文 SSR。
+- 不修改 `data/` 下的自动生成 JSON，也不持久化 GoldChest、lootdrop、地图或坐标样板数据。
+- 不改变主页与列表页的 SSG/SSR 策略。
