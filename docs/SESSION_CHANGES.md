@@ -2040,3 +2040,11 @@ if (typeof window !== "undefined") {
 - **改动原因**：仅重定向日志仍可能等待前台构建或测试结束，阻塞后续命令执行。
 - **变更文件**：`CLAUDE.md`、`docs/BUILD_AND_DEPLOY.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：管道、构建、部署和全站测试必须通过 `nohup ... > log 2>&1 &` 后台启动，再以短命令轮询进程和日志；8080 预览服务器同样保持后台运行。
+
+# 2026-07-28 会话修改记录
+
+## chore: 同步包含多语言表的数据库
+
+- **改动原因**：GitHub Actions 使用的远程 DB 缺少多语言表，数据管道未生成 `data/json/locale/en.json`，导致 SSG 构建失败；本地 DB 原先被 `skip-worktree` 标记而未参与更新。
+- **变更文件**：`api/data/darkfindv5.db`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：取消 DB 的 `skip-worktree` 标记并提交本地 41.9 MB DB，包含 `translations_en`、`translations_de`、`translations_es`、`translations_fr`、`translations_ja`、`translations_ko`、`translations_pt_BR`、`translations_ru`、`translations_zh_Hant`，使管道可生成全部语言 locale 文件。
