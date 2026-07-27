@@ -2019,3 +2019,9 @@ if (typeof window !== "undefined") {
 - **改动原因**：原计划以 GoldChest SSR 复用为核心且排除 lootdrops，已与当前轻量壳实现及“样板壳覆盖全部详情页”的目标不一致。
 - **变更文件**：`docs/plans/SSG_DETAIL_TEMPLATE.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：计划将 `items`、`monsters`、`props`、`lootdrops` 统一映射到 `createTemplateDetailPage()`；lootdrop 基底 URL 保留变体重定向，实际变体详情使用 `data-detail-placeholder` + `createRoot()` 并 preload 对应详情 JSON。
+
+## docs: 扩大 SSG 壳至所有非列表路由
+
+- **改动原因**：统一壳范围不能只按四类实体详情定义；根据路由与网站地图，除主页和列表页外的任务分组、NPC、模块详情及 Explore 也应纳入。
+- **变更文件**：`docs/plans/SSG_DETAIL_TEMPLATE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：计划以显式 `isTemplateShellRoute(path)` 分类排除主页、实体列表、任务/NPC/模块列表和模块分组列表；其余静态路由按类型映射目标 JSON preload，使用统一 `data-detail-placeholder` + `createRoot()` 接管。
