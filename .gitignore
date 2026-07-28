@@ -21,7 +21,7 @@ api/output/
 api/logs/
 *.log
 
-# DB — use GitHub Releases for no-game deployment, not git
+# DB - normally ignored; temporarily force-add only during the documented push flow
 *.db
 *.csv
 
