@@ -27,7 +27,7 @@ export default defineConfig(() => {
         name: 'inject-versioned-preload',
         transformIndexHtml(html) {
           const ver = process.env.VITE_DATA_VERSION;
-          let out = html.replaceAll(' crossorigin', '');
+          const out = html.replaceAll(' crossorigin', '');
           if (!ver) return out;
           const short = Number(ver).toString(36);
           const preloads = [
@@ -63,12 +63,12 @@ export default defineConfig(() => {
               },
             },
             {
-              // meta.json: 5-minute TTL so version change is detected within reasonable time
+              // Always prefer the deployed version online; retain the last response for offline startup.
               urlPattern: ({ url }) => url.pathname === '/data/json/meta.json',
-              handler: 'StaleWhileRevalidate',
+              handler: 'NetworkFirst',
               options: {
                 cacheName: 'df5-meta',
-                expiration: { maxEntries: 1, maxAgeSeconds: 300 },
+                expiration: { maxEntries: 1 },
               },
             },
             {
