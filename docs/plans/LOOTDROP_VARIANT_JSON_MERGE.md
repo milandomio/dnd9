@@ -2,7 +2,7 @@
 
 ## 状态
 
-草案，未执行。当前 `_1001` 至 `_7001` 独立详情 JSON 与 Cloudflare `404.html` 接管保持不变，直到本计划完成数据语义验证。
+已完成（2026-07-29）。普通 `_1001` 至 `_7001` 独立详情 JSON 已删除，现有品质 URL 与 Cloudflare `404.html` 接管继续使用基底 JSON。
 
 ## 目标
 
@@ -99,3 +99,21 @@
 - 特别覆盖同一 `entity_name` 多逻辑来源、容器、宝藏堆、拟态怪、`ref` 怪物和独立 `_8001`。
 - 确认不存在 `lootdrops/{base}_{suffix}.json` 后，旧 URL 仍能加载对应品质数据。
 - 若地图分组过滤导致坐标语义偏离，或首开请求/传输明显回退，则停止删除旧变体文件并回退本计划。
+
+## 实施结果
+
+- 生成端输出 `sources[source_id]` 与 `variants[suffix].group_drop_info`；`source_id` 由规范实体名和逻辑来源类型组成，不再用翻译文本关联。
+- `entity_page_map` 支持品质实体规范基名、大小写差异和唯一 spawner → 实体反向映射；所有 source 必须指向实际存在的公开 JSON，否则管道失败。
+- 前端始终请求 `lootdrops/{base}.json`，仅加载当前品质有效 source 的 ref；坐标按模块所属地图分组过滤，并由当前 GDI 重算 `spawn_rate`、`score` 和 `max_score`。
+- SSG 的品质路由复用基底详情，preload 指向基底 JSON；独立 `_8001` 保持旧详情结构与独立请求。
+- 数据管道成功生成 478 个 lootdrop 详情；普通品质详情文件由 1,831 个降为 0，独立 `_8001` 文件保留。
+
+## 验收结果
+
+- 全量比较旧产物中的 267 个家族、1,831 个 `_1001` 至 `_7001` 文件：来源分组、spawn rate、各模式 drop rates、score 与 max_score 均无差异。
+- 全量检查 12,590 个 source ref，缺失数为 0；普通家族 source 内联坐标数为 0。
+- `HeaterShield` 家族由旧基底加 7 个品质文件共 3,059,536 B 降为单个 97,898 B，减少 2,961,638 B。
+- `HeaterShield_5001` 冷开抽样：33 请求 / 1,947,116 B → 40 请求 / 1,995,651 B；增加的 7 个实体请求符合计划预期，传输仅增加 48,535 B。
+- 同家族切换到 `_7001`：新增 5 请求 / 400,104 B → 4 请求 / 4,029 B；不再请求另一份 lootdrop JSON。
+- 再访问 `RoundShield_5001`：新增详情请求传输由 608,582 B 降至 97,462 B，共享实体 ref 继续命中全局缓存。
+- Playwright 验证原 `_5001` URL 仅请求 `HeaterShield.json`，切换 `_7001` 不新增 lootdrop 请求，`_8001` 独立请求 `HeaterShield_8001.json`；页面无应用错误，仅有 Cloudflare Insights 在 localhost 的既存 CORS 噪声。

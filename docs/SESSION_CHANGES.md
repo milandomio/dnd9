@@ -27,15 +27,15 @@
 - **关键逻辑/映射关系**：`lootdrops/{base}.json.sources[source_id].ref` → 实体坐标；`variants[suffix].group_drop_info` → 来源在有效地图分组的爆率 → 坐标过滤及 score/max_score 重算。普通 `_1001` 至 `_7001` 计划停止独立写盘，独立 `_8001` 保留。
 - **验证**：仅计划文档；以 `HeaterShield` 现有 53 来源、约 3,000 内联坐标、175 条分组爆率作为改造前基线，实施时必须做旧新语义与请求预算对比。
 
-## wip: lootdrop 品质变体 JSON 合并实施
+## feat: lootdrop 品质变体 JSON 合并
 
 - **改动原因**：执行品质变体合并计划，移除普通 `_1001` 至 `_7001` 详情 JSON 的重复来源元数据与内联坐标。
 - **变更文件**：`api/src/lootdrop_builder.py`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/types/data.ts`；`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：生成端改为 `sources[source_id].ref` + `variants[suffix].group_drop_info[].source_id`；客户端始终按基底名加载并从当前 suffix 选择来源，按实体坐标所属地图分组过滤后重算 `score/max_score`；SSG 品质路由复用基底详情并预载基底 JSON。
-- **当前阻断**：严格公开 `ref` 校验发现品质实体别名 `GoblinWarrior_Unique` 被回退为不存在的 `coords/GoblinWarrior_Unique.json`；应按规范基名映射到 `monsters/GoblinWarrior`，不能恢复内联坐标。
-- **已完成验证**：Python `compileall`、Black、ruff，前端 `format:check` 与 `tsc --noEmit` 通过；完整管道已准确阻断于上述缺失 `ref`。
-- **后续进展**：已实现无效 ref 后继续按坐标键、原实体名、规范基名查找实际存在的 JSON，`GoblinWarrior_Unique` 映射通过；同时从 GDI 的 `entity_name + source_kind` 补齐同翻译不同逻辑来源，修复 `Weapon_Rare` 被中文翻译去重的问题。
-- **剩余阻断**：管道继续运行后确认 `ProtectionPotion` 的 `TideWalkerShaman:direct` 既无实体页映射，也无可公开请求的 coords JSON。连续两次验证失败后按熔断规则停止，下一轮需先查明其真实坐标实体/别名或在实体导出阶段生成对应公开 ref。
+- **别名处理**：无效 ref 会继续按坐标键、原实体名、规范基名和大小写无关实体名查找实际 JSON；唯一 spawner → 实体反向映射覆盖 `PirateCrossbow → PirateCrossbowman`，`TideWalkerShaman → TidewalkerShaman` 使用已有 84 个坐标。GDI 按 `entity_name + source_kind` 补齐同翻译不同来源，避免 `Weapon_Rare` 被中文翻译去重。
+- **管道与数据验证**：热 DB 管道成功，lootdrop 阶段 34.90s、总计 39.25s；267 家族 / 1,831 旧品质文件的 GDI、score、max_score 全量对比 0 差异；12,590 个 source ref 全部存在，普通品质独立文件为 0。
+- **体积与请求验证**：`HeaterShield` 家族 3,059,536 B → 97,898 B；冷开 `_5001` 传输增加 48,535 B，同家族切换 `_7001` 由 400,104 B 降至 4,029 B，跨家族访问由 608,582 B 降至 97,462 B。
+- **前端验证**：Python `compileall` / Black / ruff、前端 `format:check` / Prettier / `tsc --noEmit`、SSG 脚本语法均通过；Playwright 确认 `_5001` 只请求基底、切换 `_7001` 不新增 lootdrop 请求、独立 `_8001` 请求自身 JSON。
 
 # 2026-07-27 会话修改记录
 

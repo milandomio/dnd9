@@ -454,6 +454,21 @@ def build_and_save_lootdrop_details(
     spawn_rate_detail = drop_engine.spawn_rate_detail
     spawn_rate_by_mode = drop_engine.spawn_rate_by_mode
     entity_spawners = drop_engine.entity_spawners
+    entity_page_map_ci = {name.casefold(): page for name, page in (entity_page_map or {}).items()}
+    spawner_public_entities: dict[str, set[str]] = {}
+    for entity_name, spawner_names in entity_spawners.items():
+        canonical_name = base_monster_name(entity_name.replace("_Locked", ""))
+        if not ((entity_page_map or {}).get(canonical_name) or entity_page_map_ci.get(canonical_name.casefold())):
+            continue
+        for spawner_name in spawner_names:
+            spawner_public_entities.setdefault(spawner_name.casefold(), set()).add(canonical_name)
+
+    def _public_source_entity(entity_name: str) -> str:
+        canonical_name = base_monster_name(entity_name.replace("_Locked", ""))
+        if (entity_page_map or {}).get(canonical_name) or entity_page_map_ci.get(canonical_name.casefold()):
+            return canonical_name
+        candidates = spawner_public_entities.get(entity_name.casefold(), set())
+        return next(iter(candidates)) if len(candidates) == 1 else canonical_name
 
     item_max_score: dict[str, float] = {}
     item_valid_names: dict[str, set[str]] = {}
@@ -969,17 +984,20 @@ def build_and_save_lootdrop_details(
                 unresolved_refs: list[str] = []
                 for _source in monsters_out:
                     _en = _source.get("entity_name", _source.get("name", ""))
+                    _public_en = _public_source_entity(_en)
                     _kind = _source.get("_source_kind", "direct")
-                    _sid = _source_id(_en, _kind)
+                    _sid = _source_id(_public_en, _kind)
                     _coord_key = _source.get("_coord_key")
-                    _canonical_en = base_monster_name(_en.replace("_Locked", ""))
                     _ref_candidates = [_source.get("ref")]
                     if entity_page_map:
                         _ref_candidates.extend(
                             [
                                 entity_page_map.get(_coord_key) if _coord_key else None,
+                                entity_page_map_ci.get(_coord_key.casefold()) if _coord_key else None,
                                 entity_page_map.get(_en),
-                                entity_page_map.get(_canonical_en),
+                                entity_page_map_ci.get(_en.casefold()),
+                                entity_page_map.get(_public_en),
+                                entity_page_map_ci.get(_public_en.casefold()),
                             ]
                         )
                     _ref_candidates.append(
@@ -998,7 +1016,7 @@ def build_and_save_lootdrop_details(
                         continue
                     _source_out = {
                         "name": _source.get("name", _en),
-                        "entity_name": _en,
+                        "entity_name": _public_en,
                         "translation": _source["translation"],
                         "translation_key": _source.get("translation_key", ""),
                         "color": _source["color"],
@@ -1015,14 +1033,21 @@ def build_and_save_lootdrop_details(
                 for _g_entries in _group_drop_info.values():
                     for _gdi_source in _g_entries:
                         _en = _gdi_source.get("_entity_name", "")
+                        _public_en = _public_source_entity(_en)
                         _kind = _gdi_source.get("_source_kind", "direct")
-                        _sid = _source_id(_en, _kind)
+                        _sid = _source_id(_public_en, _kind)
                         if _sid in sources:
                             continue
-                        _canonical_en = base_monster_name(_en.replace("_Locked", ""))
                         _ref_candidates = []
                         if entity_page_map:
-                            _ref_candidates.extend([entity_page_map.get(_en), entity_page_map.get(_canonical_en)])
+                            _ref_candidates.extend(
+                                [
+                                    entity_page_map.get(_en),
+                                    entity_page_map_ci.get(_en.casefold()),
+                                    entity_page_map.get(_public_en),
+                                    entity_page_map_ci.get(_public_en.casefold()),
+                                ]
+                            )
                         _ref_candidates.append(
                             _resolve_legend_ref(_gdi_source["translation"], _en, monsters_out, entity_page_map)
                         )
@@ -1038,8 +1063,8 @@ def build_and_save_lootdrop_details(
                             unresolved_refs.append(f"{_sid} ({_en}, ref=missing)")
                             continue
                         sources[_sid] = {
-                            "name": _en,
-                            "entity_name": _en,
+                            "name": _public_en,
+                            "entity_name": _public_en,
                             "translation": _gdi_source["translation"],
                             "translation_key": _gdi_source.get("translation_key", ""),
                             "color": _MONSTER_COLORS[len(sources) % len(_MONSTER_COLORS)],
@@ -1073,7 +1098,7 @@ def build_and_save_lootdrop_details(
                                 _vdr = {"PVE": 0, "普通": 0, "豪客赛": 0}
                             if _vdr.get("豪客赛", 0) <= 0:
                                 continue
-                            _sid = _source_id(_en, _entry.get("_source_kind", "direct"))
+                            _sid = _source_id(_public_source_entity(_en), _entry.get("_source_kind", "direct"))
                             if _sid not in sources:
                                 _translation_ids = source_ids_by_translation.get(_entry["translation"], set())
                                 if len(_translation_ids) == 1:
