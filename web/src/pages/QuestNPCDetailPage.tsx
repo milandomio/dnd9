@@ -475,6 +475,7 @@ export default function QuestNPCDetailPage() {
                                 style={{
                                   padding: '4px 8px',
                                   borderBottom: `1px solid ${tokens.border}`,
+                                  whiteSpace: 'nowrap',
                                 }}
                               >
                                 {ut('ui.quest_detail.type')}
@@ -483,6 +484,7 @@ export default function QuestNPCDetailPage() {
                                 style={{
                                   padding: '4px 8px',
                                   borderBottom: `1px solid ${tokens.border}`,
+                                  whiteSpace: 'nowrap',
                                 }}
                               >
                                 {ut('ui.quest_detail.target')} /{' '}
@@ -493,6 +495,7 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     padding: '4px 8px',
                                     borderBottom: `1px solid ${tokens.border}`,
+                                    whiteSpace: 'nowrap',
                                   }}
                                 >
                                   {ut('ui.quest_detail.loot')}
@@ -507,6 +510,7 @@ export default function QuestNPCDetailPage() {
                                 fontSize: 13,
                                 fontWeight: 'bold',
                                 textAlign: 'center',
+                                whiteSpace: 'nowrap',
                               }}
                             >
                               {ut('ui.quest_detail.count')}
@@ -721,6 +725,7 @@ export default function QuestNPCDetailPage() {
                                 padding: '4px 8px',
                                 color: tokens.muted,
                                 fontSize: 13,
+                                whiteSpace: 'nowrap',
                               }}
                             >
                               {ut('ui.quest_detail.item')}
@@ -857,6 +862,7 @@ export default function QuestNPCDetailPage() {
                               style={{
                                 padding: '3px 8px',
                                 color: dark ? '#FFD54F' : '#F57F17',
+                                whiteSpace: 'nowrap',
                               }}
                             >
                               {ut('ui.quest_detail.gold')}
@@ -873,6 +879,7 @@ export default function QuestNPCDetailPage() {
                               style={{
                                 padding: '3px 8px',
                                 color: dark ? '#4fc3f7' : '#0277BD',
+                                whiteSpace: 'nowrap',
                               }}
                             >
                               {ut('ui.quest_detail.exp')}
