@@ -4,9 +4,14 @@ import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
+import { useLocale } from '../i18n/useLocale';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 
 interface GroupSummary {
   group: string;
+  group_key?: string;
+  group_floor?: number;
+  group_sub_key?: string | null;
   group_display: string;
   module_count: number;
 }
@@ -39,15 +44,31 @@ export default function DungeonModulesPage() {
   const [loading, setLoading] = useState(!ssrGroups);
   const { tokens } = useTheme();
   const { modules } = useDungeonModules();
+  const { t, ut, lang } = useLocale();
 
   useEffect(() => {
     if (ssrGroups) return;
     if (modules.size === 0) return;
-    const map = new Map<string, { count: number; display: string }>();
+    const map = new Map<
+      string,
+      {
+        count: number;
+        group_key?: string;
+        group_floor?: number;
+        group_sub_key?: string | null;
+        group_display: string;
+      }
+    >();
     for (const m of new Set(modules.values())) {
       const g = m.group || '';
       if (!map.has(g)) {
-        map.set(g, { count: 0, display: m.group_display || g || '未分组' });
+        map.set(g, {
+          count: 0,
+          group_key: m.group_key,
+          group_floor: m.group_floor,
+          group_sub_key: m.group_sub_key,
+          group_display: m.group_display || g || '未分组',
+        });
       }
       map.get(g)!.count++;
     }
@@ -55,7 +76,10 @@ export default function DungeonModulesPage() {
       .sort(([a], [b]) => GROUP_ORDER.indexOf(a) - GROUP_ORDER.indexOf(b))
       .map(([group, info]) => ({
         group,
-        group_display: info.display,
+        group_key: info.group_key,
+        group_floor: info.group_floor,
+        group_sub_key: info.group_sub_key,
+        group_display: info.group_display,
         module_count: info.count,
       }));
     setGroups(sorted);
@@ -65,7 +89,7 @@ export default function DungeonModulesPage() {
   if (loading)
     return (
       <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
 
@@ -74,7 +98,7 @@ export default function DungeonModulesPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>地图模块表 | 越来越黑暗闪电指南 DarkFlashNav</title>
+        <title>{ut('ui.module.title')} | 越来越黑暗闪电指南 DarkFlashNav</title>
         <meta
           name="description"
           content="地图模块查询——按地图分组查看所有模块。"
@@ -89,7 +113,7 @@ export default function DungeonModulesPage() {
           marginBottom: 10,
         }}
       >
-        【地图模块表】地图模块汇总
+        {ut('ui.module.title')}
       </h1>
       <div
         style={{
@@ -99,7 +123,9 @@ export default function DungeonModulesPage() {
           marginBottom: 24,
         }}
       >
-        共 {groups.length} 个地图分组 | {totalMods} 个模块
+        {ut('ui.module.stat')
+          .replace('{groups}', String(groups.length))
+          .replace('{total}', String(totalMods))}
       </div>
       <div
         style={{
@@ -115,7 +141,7 @@ export default function DungeonModulesPage() {
           return (
             <Link
               key={g.group}
-              to={`/dungeon_modules/${g.group}`}
+              to={`/${lang}/dungeon_modules/${g.group}`}
               style={{ textDecoration: 'none' }}
             >
               <div
@@ -149,7 +175,7 @@ export default function DungeonModulesPage() {
                     marginBottom: 8,
                   }}
                 >
-                  {g.group_display}
+                  {formatGroupLabel(g, t, ut)}
                 </div>
                 <div
                   style={{
@@ -158,7 +184,10 @@ export default function DungeonModulesPage() {
                     lineHeight: 1.5,
                   }}
                 >
-                  {g.module_count} 个模块
+                  {ut('ui.module.count').replace(
+                    '{count}',
+                    String(g.module_count)
+                  )}
                 </div>
               </div>
             </Link>

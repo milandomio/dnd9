@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
@@ -25,6 +26,13 @@ function lsSet(key: string, val: boolean) {
   }
 }
 
+const CATEGORY_KEYS: Record<string, string> = {
+  装备NPC: 'ui.npc.equip',
+  优选NPC: 'ui.npc.pref',
+  可用NPC: 'ui.npc.avail',
+  不推荐NPC: 'ui.npc.norec',
+};
+
 const CATEGORY_ORDER = ['装备NPC', '优选NPC', '可用NPC', '不推荐NPC'];
 
 const checkboxStyle: React.CSSProperties = {
@@ -41,9 +49,14 @@ export default function QuestNPCPage() {
   const seasonVersion = useSeasonVersion();
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
+  const { t, ut, lang } = useLocale();
+
+  const npcDisplayName = (npc: NPCEntry) =>
+    t(npc.translation_key, npc.npc_name_display);
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/quest_npc.json'))
       .then<NPCEntry[]>((r) => r.json())
       .then(setData)
@@ -79,7 +92,7 @@ export default function QuestNPCPage() {
         [
           cat,
           npcs.sort((a, b) =>
-            a.npc_name_display.localeCompare(b.npc_name_display, 'zh-CN')
+            npcDisplayName(a).localeCompare(npcDisplayName(b), lang)
           ),
         ] as const
     );
@@ -89,12 +102,12 @@ export default function QuestNPCPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>任务NPC表 | 越来越黑暗闪电指南 DarkFlashNav</title>
+        <title>{ut('ui.nav.quest_npc')} | DarkFlashNav</title>
         <meta
           name="description"
-          content="NPC任务详情查询——查看各NPC的任务、奖励、需求。"
+          content={`${ut('ui.nav.quest_npc')} - ${ut('ui.quest_detail.task_list')}`}
         />
-        <meta name="keywords" content="任务NPC,NPC位置,任务攻略" />
+        <meta name="keywords" content={ut('ui.nav.quest_npc')} />
       </Helmet>
       <div
         style={{
@@ -109,7 +122,7 @@ export default function QuestNPCPage() {
           <QuestSearchBar
             allNpcs={data}
             onSelect={(r: QuestSearchResult) =>
-              navigate(`/quest_npc/${r.npc.npc_name}`, {
+              navigate(`/${lang}/quest_npc/${r.npc.npc_name}`, {
                 state: {
                   questNumber: r.quest.quest_number,
                   searchText: r.quest.title,
@@ -126,7 +139,7 @@ export default function QuestNPCPage() {
               margin: 0,
             }}
           >
-            【任务NPC表】NPC任务详情
+            [{ut('ui.nav.quest_npc')}] {ut('ui.quest_detail.task_list')}
           </h1>
           <div
             style={{
@@ -135,7 +148,7 @@ export default function QuestNPCPage() {
               marginTop: 4,
             }}
           >
-            共 {data.length} 个活跃NPC
+            {ut('ui.quest_npc.active').replace('{count}', String(data.length))}
           </div>
         </div>
       </div>
@@ -152,7 +165,7 @@ export default function QuestNPCPage() {
               marginTop: 24,
             }}
           >
-            {category} ({npcs.length})
+            {ut(CATEGORY_KEYS[category] || category)} ({npcs.length})
           </div>
           <div
             style={{
@@ -200,7 +213,7 @@ export default function QuestNPCPage() {
                       }}
                     />
                     <Link
-                      to={`/quest_npc/${npc.npc_name}`}
+                      to={`/${lang}/quest_npc/${npc.npc_name}`}
                       style={{
                         flex: 1,
                         minWidth: 0,
@@ -220,7 +233,7 @@ export default function QuestNPCPage() {
                           textDecoration: npcDone ? 'line-through' : 'none',
                         }}
                       >
-                        {npc.npc_name_display}
+                        {npcDisplayName(npc)}
                         <span
                           style={{
                             fontSize: 13,
@@ -228,7 +241,10 @@ export default function QuestNPCPage() {
                             fontWeight: 'normal',
                           }}
                         >
-                          {npc.quest_count} 个任务
+                          {ut('ui.quest_npc.task_count').replace(
+                            '{count}',
+                            String(npc.quest_count)
+                          )}
                         </span>
                       </div>
                     </Link>

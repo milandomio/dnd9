@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
 import { dataUrl } from '../utils/dataUrl';
 import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
+import { useLanguage } from '../i18n/LanguageContext';
+import { useLocale } from '../i18n/useLocale';
 
 type IndexEntry = SearchEntry & {
   category?: string;
@@ -14,8 +16,10 @@ type IndexEntry = SearchEntry & {
   type?: string;
   // lootdrops SSR data fields
   variant_count?: number;
+  translation_key?: string;
   monsters?: string[];
   monster_translations?: string[];
+  monster_translation_keys?: string[];
   max_score?: number;
   hr100?: boolean;
 };
@@ -26,11 +30,20 @@ type LootGroup = {
   items: IndexEntry[];
 };
 
-const LABEL_MAP: Record<string, string> = {
-  items: '物品表',
-  monsters: '怪物表',
-  props: '实体表',
-  lootdrops: '掉落表',
+const NAV_KEY_LOOKUP: Record<string, string> = {
+  items: 'ui.nav.items',
+  monsters: 'ui.nav.monsters',
+  props: 'ui.nav.props',
+  lootdrops: 'ui.nav.lootdrops',
+};
+
+const LOOT_GROUP_KEYS: Record<string, string> = {
+  ['神器']: 'ui.list.artifact',
+  ['小型神器']: 'ui.list.mini_artifact',
+  ['稀有掉落']: 'ui.list.rare_drop',
+  ['物品']: 'ui.list.item',
+  ['饰品']: 'ui.list.accessory',
+  ['武器装备']: 'ui.list.weapon',
 };
 
 function groupLootdrops(items: IndexEntry[]): LootGroup[] {
@@ -76,19 +89,34 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
 }
 
 export default function ListPage() {
-  const { page } = useParams<{ page: string }>();
+  const { page: paramPage } = useParams<{ page: string }>();
+  const { pathname } = useLocation();
+  const VALID_PAGES = ['items', 'monsters', 'props', 'lootdrops'];
+  // Explicit routes like /lootdrops have no :page param; derive from pathname
+  const lastSegment = pathname.split('/').filter(Boolean).pop() || '';
+  const page =
+    paramPage || (VALID_PAGES.includes(lastSegment) ? lastSegment : '');
   const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const [debug, setDebug] = useState(false);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
+  const { lang, withLangPrefix } = useLanguage();
+  const { t, ut } = useLocale();
+  const pageLabel = ut(NAV_KEY_LOOKUP[page!] || '') || page! || '';
+  const locationsLabel = ut('ui.list.locations');
+  const validItemCount = ut('ui.list.valid_items').replace(
+    '{count}',
+    String(data.length)
+  );
+  const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
 
   useEffect(() => {
     if (!dataVersion) return;
     if (!page || !['items', 'monsters', 'props', 'lootdrops'].includes(page))
       return;
     if (ssrData) return;
-    getPageEntries(dataVersion, page).then((entries) => {
+    getPageEntries(dataVersion, page, lang).then((entries) => {
       if (entries.length > 0) {
         setData(entries as IndexEntry[]);
       } else {
@@ -99,27 +127,22 @@ export default function ListPage() {
           .catch(console.error);
       }
     });
-  }, [page, dataVersion]);
+  }, [page, dataVersion, lang]);
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>
-          【{LABEL_MAP[page!] ?? page}】点位 | 越来越黑暗闪电指南 DarkFlashNav
-        </title>
-        <meta
-          name="description"
-          content={`${LABEL_MAP[page!] ?? page} 共 ${data.length} 个实体，查询地图位置分布。`}
-        />
+        <title>{`【${pageLabel}】${locationsLabel} | 越来越黑暗闪电指南 DarkFlashNav`}</title>
+        <meta name="description" content={`${pageLabel} ${validItemCount}`} />
         <meta
           name="keywords"
           content="物品查询,怪物查询,装备查询,武器查询,防具查询,饰品查询,掉落查询,游戏攻略"
         />
         <meta
           property="og:title"
-          content={`【${LABEL_MAP[page!] ?? page}】点位`}
+          content={`【${pageLabel}】${locationsLabel}`}
         />
-        <meta property="og:description" content={`共 ${data.length} 个实体`} />
+        <meta property="og:description" content={validItemCount} />
       </Helmet>
       <h1
         style={{
@@ -129,7 +152,7 @@ export default function ListPage() {
           marginBottom: 20,
         }}
       >
-        【{LABEL_MAP[page!] ?? page}】点位
+        【{pageLabel}】{locationsLabel}
       </h1>
       <div
         style={{
@@ -139,13 +162,13 @@ export default function ListPage() {
           marginBottom: 20,
         }}
       >
-        有效实体{data.length}个
+        {validItemCount}
       </div>
       <DebugPanel
         buttons={[
           {
-            label: '显示全部',
-            activeLabel: '退出调试',
+            label: ut('ui.common.show_all'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: () => setDebug(!debug),
           },
@@ -201,7 +224,7 @@ export default function ListPage() {
                     {group.items.map((entity) => (
                       <Link
                         key={entity.name}
-                        to={`/props/${entity.name}/`}
+                        to={withLangPrefix(`/props/${entity.name}/`, lang)}
                         style={{
                           textDecoration: 'none',
                           display: 'block',
@@ -229,7 +252,10 @@ export default function ListPage() {
                             fontWeight: 'bold',
                           }}
                         >
-                          {entity.translation || entity.name}
+                          {t(
+                            entity.translation_key,
+                            entity.translation || entity.name
+                          )}
                         </div>
                         {debug && (
                           <div
@@ -239,7 +265,8 @@ export default function ListPage() {
                               marginTop: 4,
                             }}
                           >
-                            {entity.translation}【{entity.name}】
+                            {t(entity.translation_key, entity.translation)}【
+                            {entity.name}】
                           </div>
                         )}
                       </Link>
@@ -262,7 +289,10 @@ export default function ListPage() {
                         paddingLeft: 4,
                       }}
                     >
-                      {group.icon} {group.label}（{group.items.length}）
+                      {group.icon}{' '}
+                      {ut(LOOT_GROUP_KEYS[group.label] || group.label) ||
+                        group.label}
+                      （{group.items.length}）
                     </div>
                     <div
                       style={{
@@ -283,7 +313,7 @@ export default function ListPage() {
                         return (
                           <Link
                             key={entity.name}
-                            to={`/lootdrops/${target}/`}
+                            to={withLangPrefix(`/lootdrops/${target}/`, lang)}
                             style={{
                               textDecoration: 'none',
                               display: 'block',
@@ -312,7 +342,10 @@ export default function ListPage() {
                                 fontWeight: 'bold',
                               }}
                             >
-                              {entity.translation || entity.name}
+                              {t(
+                                entity.translation_key,
+                                entity.translation || entity.name
+                              )}
                             </div>
                             {debug && (
                               <div
@@ -322,7 +355,8 @@ export default function ListPage() {
                                   marginTop: 4,
                                 }}
                               >
-                                {entity.translation}【{entity.name}】
+                                {t(entity.translation_key, entity.translation)}
+                                【{entity.name}】
                               </div>
                             )}
                             {entity.monsters && entity.monsters.length > 0 && (
@@ -334,14 +368,25 @@ export default function ListPage() {
                                   lineHeight: 1.5,
                                 }}
                               >
-                                <> -目标- </>
+                                {ut('ui.list.target')}{' '}
                                 <span style={{ color: tokens.muted }}>
                                   {entity.monster_translations &&
-                                  entity.monster_translations.length <= 6
-                                    ? entity.monster_translations.join('、')
-                                    : entity.monster_translations
-                                        ?.slice(0, 5)
-                                        .join('、') + '...'}
+                                    (entity.monster_translations.length <= 6
+                                      ? entity.monster_translations
+                                      : entity.monster_translations.slice(0, 5)
+                                    )
+                                      .map((mt, i) =>
+                                        t(
+                                          entity.monster_translation_keys?.[
+                                            i
+                                          ] ?? '',
+                                          mt
+                                        )
+                                      )
+                                      .join(delimiter)}
+                                  {entity.monster_translations &&
+                                    entity.monster_translations.length > 6 &&
+                                    '...'}
                                 </span>
                               </div>
                             )}
@@ -356,7 +401,7 @@ export default function ListPage() {
               data.map((entity) => (
                 <Link
                   key={entity.name}
-                  to={`/${page}/${entity.name}/`}
+                  to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
                   style={{
                     textDecoration: 'none',
                     display: 'block',
@@ -384,7 +429,10 @@ export default function ListPage() {
                       fontWeight: 'bold',
                     }}
                   >
-                    {entity.translation || entity.name}
+                    {t(
+                      entity.translation_key,
+                      entity.translation || entity.name
+                    )}
                   </div>
                   {debug && (
                     <div
@@ -394,7 +442,8 @@ export default function ListPage() {
                         marginTop: 4,
                       }}
                     >
-                      {entity.translation}【{entity.name}】
+                      {t(entity.translation_key, entity.translation)}【
+                      {entity.name}】
                     </div>
                   )}
                   {entity.monsters &&
@@ -409,17 +458,34 @@ export default function ListPage() {
                         }}
                       >
                         {entity.variant_count && entity.variant_count > 1 ? (
-                          <> [{entity.variant_count}变体] -目标- </>
+                          <>
+                            {' '}
+                            [
+                            {ut('ui.list.variant').replace(
+                              '{count}',
+                              String(entity.variant_count)
+                            )}
+                            ] {ut('ui.list.target')}{' '}
+                          </>
                         ) : (
-                          <> -目标- </>
+                          <> {ut('ui.list.target')} </>
                         )}
                         <span style={{ color: tokens.muted }}>
                           {entity.monster_translations &&
-                          entity.monster_translations.length <= 6
-                            ? entity.monster_translations.join('、')
-                            : entity.monster_translations
-                                ?.slice(0, 5)
-                                .join('、') + '...'}
+                            (entity.monster_translations.length <= 6
+                              ? entity.monster_translations
+                              : entity.monster_translations.slice(0, 5)
+                            )
+                              .map((mt, i) =>
+                                t(
+                                  entity.monster_translation_keys?.[i] ?? '',
+                                  mt
+                                )
+                              )
+                              .join(delimiter)}
+                          {entity.monster_translations &&
+                            entity.monster_translations.length > 6 &&
+                            '...'}
                         </span>
                       </div>
                     )}

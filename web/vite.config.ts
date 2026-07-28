@@ -4,8 +4,8 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { existsSync, statSync } from 'fs';
 
-export default defineConfig(({ mode }) => {
-  if (mode === 'ssr') {
+export default defineConfig(() => {
+  if (process.env.VITE_SSR_BUILD === 'true') {
     // SSR build: bundle src/ssr.tsx for Node.js
     return {
       plugins: [react()],
@@ -27,14 +27,12 @@ export default defineConfig(({ mode }) => {
         name: 'inject-versioned-preload',
         transformIndexHtml(html) {
           const ver = process.env.VITE_DATA_VERSION;
-          let out = html.replaceAll(' crossorigin', '');
+          const out = html.replaceAll(' crossorigin', '');
           if (!ver) return out;
           const short = Number(ver).toString(36);
           const preloads = [
             `<link rel="preload" href="/data/json/meta.json" as="fetch" crossorigin="anonymous">`,
             `<link rel="preload" href="/data/${short}/json/dungeon_modules.json" as="fetch" crossorigin="anonymous">`,
-            `<link rel="preload" href="/data/${short}/json/index.json" as="fetch" crossorigin="anonymous">`,
-            `<link rel="preload" href="/data/${short}/json/search_index.json" as="fetch" crossorigin="anonymous">`,
           ];
           return out.replace(
             '</title>',
@@ -65,12 +63,12 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              // meta.json: 5-minute TTL so version change is detected within reasonable time
+              // Always prefer the deployed version online; retain the last response for offline startup.
               urlPattern: ({ url }) => url.pathname === '/data/json/meta.json',
-              handler: 'StaleWhileRevalidate',
+              handler: 'NetworkFirst',
               options: {
                 cacheName: 'df5-meta',
-                expiration: { maxEntries: 1, maxAgeSeconds: 300 },
+                expiration: { maxEntries: 1 },
               },
             },
             {
@@ -147,8 +145,21 @@ export default defineConfig(({ mode }) => {
           });
         },
       },
+      {
+        name: 'dev-versioned-data',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            const match = req.url?.match(/^\/data\/[a-z0-9]+\/json\/(.+)/);
+            if (match) {
+              const originalUrl = `/data/json/${match[1]}`;
+              req.url = originalUrl;
+            }
+            next();
+          });
+        },
+      },
     ],
-    base: '/',
+    base: process.env.VITE_BASE || '/',
     server: {
       fs: {
         allow: ['.', '../data'],

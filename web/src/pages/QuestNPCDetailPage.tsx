@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
@@ -60,27 +62,28 @@ const checkboxStyle: React.CSSProperties = {
 
 const HIDDEN_QUESTS = new Set(['Id_Quest_Leathersmith_02']);
 
-const CONTENT_TYPE_LABEL: Record<string, string> = {
-  Kill: '击杀',
-  Fetch: '收集',
-  Explore: '探索',
-  Props: '道具',
-  UseItem: '使用',
-  Escape: '逃生',
-  Hold: '坚守',
-  Damage: '伤害',
+const CONTENT_TYPE_KEY: Record<string, string> = {
+  Kill: 'ui.content.kill',
+  Fetch: 'ui.content.collect',
+  Explore: 'ui.content.explore',
+  Props: 'ui.content.prop',
+  UseItem: 'ui.content.use',
+  Escape: 'ui.content.escape',
+  Hold: 'ui.content.hold',
+  Damage: 'ui.content.damage',
 };
 
-const REWARD_TYPE_LABEL: Record<string, string> = {
-  item: '物品',
-  exp: '经验值',
-  affinity: '好感度',
-  random: '随机奖励',
+const REWARD_TYPE_KEY: Record<string, string> = {
+  item: 'ui.quest_detail.item',
+  exp: 'ui.quest_detail.exp',
+  affinity: 'ui.quest_detail.affinity',
+  random: 'ui.quest_detail.random_reward',
 };
 
 function formatRequired(
   allNpcs: NPCEntry[],
-  required: string
+  required: string,
+  translate: (key: string | undefined, fallback: string) => string
 ): { text: string; npcName?: string; questNum?: number } | null {
   if (!required) return null;
   const questId = required.replace('.json', '');
@@ -88,7 +91,7 @@ function formatRequired(
     for (const q of n.quests) {
       if (q.id === questId) {
         return {
-          text: `${n.npc_name_display}#${q.quest_number} ${q.title}`,
+          text: `${translate(n.translation_key, n.npc_name_display)}#${q.quest_number} ${translate(q.translation_key, q.title)}`,
           npcName: n.npc_name,
           questNum: q.quest_number,
         };
@@ -103,6 +106,7 @@ export default function QuestNPCDetailPage() {
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, ut, lang } = useLocale();
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
@@ -171,7 +175,7 @@ export default function QuestNPCDetailPage() {
           color: tokens.muted,
         }}
       >
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
   }
@@ -210,13 +214,13 @@ export default function QuestNPCDetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {npc.npc_name_display}
-          {npc.translation_EN ?? npc.npc_name} 任务列表QuestList |
-          越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ??
+            `${t(npc.translation_key, npc.npc_name_display)} ${ut('ui.quest_detail.task_list')}`}
+          | DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${npc.npc_name_display}的任务详情——查看所有任务、奖励、需求。`}
+          content={`${t(npc.translation_key, npc.npc_name_display)} - ${ut('ui.quest_detail.task_list')}`}
         />
       </Helmet>
 
@@ -244,7 +248,7 @@ export default function QuestNPCDetailPage() {
                   el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 });
               } else {
-                navigate(`/quest_npc/${r.npc.npc_name}`, {
+                navigate(`/${lang}/quest_npc/${r.npc.npc_name}`, {
                   state: {
                     questNumber: r.quest.quest_number,
                     searchText: r.quest.title,
@@ -280,9 +284,13 @@ export default function QuestNPCDetailPage() {
                 marginRight: 8,
               }}
             />
-            {npc.npc_name_display} - 任务列表
+            {t(npc.translation_key, npc.npc_name_display)} -{' '}
+            {ut('ui.quest_detail.task_list')}
             <span style={{ color: tokens.muted, fontSize: 14 }}>
-              {quests.length}个任务
+              {ut('ui.quest_detail.tasks_count').replace(
+                '{count}',
+                String(quests.length)
+              )}
             </span>
           </h1>
         </div>
@@ -310,7 +318,7 @@ export default function QuestNPCDetailPage() {
               onChange={(e) => setOnlyFetch(e.target.checked)}
               style={{ ...checkboxStyle, width: 16, height: 16 }}
             />
-            仅显示收集任务
+            {ut('ui.quest_detail.fetch_only')}
           </label>
           {lastAffinityQuest && (
             <label
@@ -328,7 +336,8 @@ export default function QuestNPCDetailPage() {
                 onChange={(e) => setOnlySuggested(e.target.checked)}
                 style={{ ...checkboxStyle, width: 16, height: 16 }}
               />
-              建议完成至#{lastAffinityQuest.quest_number}
+              {ut('ui.quest_detail.suggest_to')}
+              {lastAffinityQuest.quest_number}
             </label>
           )}
         </div>
@@ -417,7 +426,7 @@ export default function QuestNPCDetailPage() {
                     textDecoration: questDone ? 'line-through' : 'none',
                   }}
                 >
-                  #{q.quest_number} {q.title}
+                  #{q.quest_number} {t(q.translation_key, q.title)}
                 </span>
               </div>
 
@@ -426,10 +435,6 @@ export default function QuestNPCDetailPage() {
                   {q.contents.length > 0 &&
                     (() => {
                       const hasLoot = q.contents.some((c) => c.loot_state);
-                      const hasRarity = q.contents.some((c) => c.rarity);
-                      const hasDungeonType = q.contents.some(
-                        (c) => c.dungeon_type
-                      );
                       return (
                         <div
                           style={{
@@ -449,131 +454,110 @@ export default function QuestNPCDetailPage() {
                               marginBottom: 4,
                             }}
                           >
-                            任务目标
+                            {ut('ui.quest_detail.objective')}
                           </div>
-                          <table
+                          <div
                             style={{
-                              width: '100%',
-                              borderCollapse: 'collapse',
+                              display: 'grid',
+                              gridTemplateColumns: `auto minmax(12em, 1fr)${hasLoot ? ' auto' : ''} 5em`,
                               fontSize: 14,
-                              tableLayout: 'fixed',
-                              wordBreak: 'break-word',
                             }}
                           >
-                            <thead>
-                              <tr
+                            <div
+                              style={{
+                                display: 'contents',
+                                color: tokens.muted,
+                                fontSize: 13,
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              <span
                                 style={{
+                                  padding: '4px 8px',
                                   borderBottom: `1px solid ${tokens.border}`,
+                                  whiteSpace: 'nowrap',
                                 }}
                               >
-                                <th
+                                {ut('ui.quest_detail.type')}
+                              </span>
+                              <span
+                                style={{
+                                  padding: '4px 8px',
+                                  borderBottom: `1px solid ${tokens.border}`,
+                                  whiteSpace: 'nowrap',
+                                }}
+                              >
+                                {ut('ui.quest_detail.target')} /{' '}
+                                {ut('ui.quest_detail.rarity')}
+                              </span>
+                              {hasLoot && (
+                                <span
                                   style={{
-                                    textAlign: 'left',
                                     padding: '4px 8px',
-                                    color: tokens.muted,
-                                    fontSize: 13,
+                                    borderBottom: `1px solid ${tokens.border}`,
                                     whiteSpace: 'nowrap',
-                                    width: '2em',
                                   }}
                                 >
-                                  类型
-                                </th>
-                                <th
-                                  style={{
-                                    textAlign: 'left',
-                                    padding: '4px 8px',
-                                    color: tokens.muted,
-                                    fontSize: 13,
-                                  }}
-                                >
-                                  目标
-                                </th>
-                                {hasDungeonType && (
-                                  <th
+                                  {ut('ui.quest_detail.loot')}
+                                </span>
+                              )}
+                            </div>
+                            <div
+                              style={{
+                                padding: '4px 8px',
+                                borderBottom: `1px solid ${tokens.border}`,
+                                color: tokens.muted,
+                                fontSize: 13,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              {ut('ui.quest_detail.count')}
+                            </div>
+                            {q.contents.map((c, i) => {
+                              const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
+                              const contentDone = lsGet(contentKey);
+                              const target = t(c.translation_key, c.target);
+                              const targetDisplay = c.rarity
+                                ? target.replace(/\s*[（(][^（）()]*[）)]/g, '')
+                                : target;
+                              const rowStyle = {
+                                borderBottom: dark
+                                  ? '1px solid rgba(255,255,255,0.06)'
+                                  : '1px solid rgba(0,0,0,0.08)',
+                                opacity: contentDone ? 0.4 : 1,
+                                textDecoration: contentDone
+                                  ? 'line-through'
+                                  : 'none',
+                              };
+                              return (
+                                <Fragment key={i}>
+                                  <div
                                     style={{
-                                      textAlign: 'left',
-                                      padding: '4px 8px',
-                                      color: tokens.muted,
-                                      fontSize: 13,
-                                      whiteSpace: 'nowrap',
-                                      width: '5em',
+                                      display: 'contents',
                                     }}
                                   >
-                                    目标地图
-                                  </th>
-                                )}
-                                {hasLoot && (
-                                  <th
-                                    style={{
-                                      textAlign: 'left',
-                                      padding: '4px 8px',
-                                      color: tokens.muted,
-                                      fontSize: 13,
-                                      whiteSpace: 'nowrap',
-                                      width: '3em',
-                                    }}
-                                  >
-                                    战利品
-                                  </th>
-                                )}
-                                {hasRarity && (
-                                  <th
-                                    style={{
-                                      textAlign: 'left',
-                                      padding: '4px 8px',
-                                      color: tokens.muted,
-                                      fontSize: 13,
-                                      whiteSpace: 'nowrap',
-                                      width: '3em',
-                                    }}
-                                  >
-                                    稀有度
-                                  </th>
-                                )}
-                                <th
-                                  style={{
-                                    textAlign: 'left',
-                                    padding: '4px 8px',
-                                    color: tokens.muted,
-                                    fontSize: 13,
-                                    whiteSpace: 'nowrap',
-                                    width: '2em',
-                                  }}
-                                >
-                                  数量
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {q.contents.map((c, i) => {
-                                const contentKey = `quest_npc_content_${npc.npc_name}_${q.quest_number}_${i}`;
-                                const contentDone = lsGet(contentKey);
-                                return (
-                                  <tr
-                                    key={i}
-                                    style={{
-                                      borderBottom: dark
-                                        ? '1px solid rgba(255,255,255,0.06)'
-                                        : '1px solid rgba(0,0,0,0.08)',
-                                      opacity: contentDone ? 0.4 : 1,
-                                      textDecoration: contentDone
-                                        ? 'line-through'
-                                        : 'none',
-                                    }}
-                                  >
-                                    <td
+                                    <span
                                       style={{
-                                        padding: '3px 8px',
+                                        ...rowStyle,
                                         color: dark ? '#ccc' : '#555',
-                                        whiteSpace: 'nowrap',
+                                        whiteSpace: 'normal',
+                                        overflowWrap: 'anywhere',
+                                        padding: '6px 8px',
                                       }}
                                     >
-                                      {CONTENT_TYPE_LABEL[c.type] || c.type}
-                                    </td>
-                                    <td
+                                      {ut(CONTENT_TYPE_KEY[c.type] || c.type)}
+                                    </span>
+                                    <div
                                       style={{
-                                        padding: '3px 8px',
+                                        ...rowStyle,
                                         color: tokens.text,
+                                        minWidth: 0,
+                                        whiteSpace: 'nowrap',
+                                        padding: '6px 8px',
+                                        position: 'relative',
+                                        zIndex: 1,
                                       }}
                                     >
                                       <input
@@ -592,15 +576,17 @@ export default function QuestNPCDetailPage() {
                                           marginRight: 4,
                                         }}
                                       />
-                                      {c.target}
+                                      {targetDisplay}
                                       <SearchOutlined
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           navigate(location.pathname, {
-                                            state: { searchQuery: c.target },
+                                            state: {
+                                              searchQuery: targetDisplay,
+                                            },
                                           });
                                         }}
-                                        title={`搜索"${c.target}"`}
+                                        title={ut('ui.search.search')}
                                         style={{
                                           marginLeft: 6,
                                           cursor: 'pointer',
@@ -618,60 +604,70 @@ export default function QuestNPCDetailPage() {
                                             tokens.muted;
                                         }}
                                       />
-                                    </td>
-                                    {hasDungeonType && (
-                                      <td
-                                        style={{
-                                          padding: '3px 8px',
-                                          color: dark ? '#42a5f5' : '#1565c0',
-                                          fontSize: 12,
-                                          whiteSpace: 'nowrap',
-                                        }}
-                                      >
-                                        {c.dungeon_type || ''}
-                                      </td>
-                                    )}
+                                      {c.dungeon_type && (
+                                        <div
+                                          style={{
+                                            color: dark ? '#42a5f5' : '#1565c0',
+                                            fontSize: 12,
+                                          }}
+                                        >
+                                          {t(
+                                            c.dungeon_translation_key,
+                                            c.dungeon_type || ''
+                                          )}
+                                        </div>
+                                      )}
+                                      {c.rarity && (
+                                        <div
+                                          style={{
+                                            color: getRarityColor(
+                                              c.rarity || '',
+                                              dark
+                                            ),
+                                            fontSize: 12,
+                                          }}
+                                        >
+                                          {t(
+                                            c.rarity_translation_key,
+                                            c.rarity || ''
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
                                     {hasLoot && (
-                                      <td
+                                      <span
                                         style={{
-                                          padding: '3px 8px',
+                                          ...rowStyle,
                                           color: dark ? '#FFB74D' : '#E65100',
                                           fontSize: 12,
-                                          whiteSpace: 'nowrap',
+                                          padding: '6px 8px',
+                                          textAlign: 'center',
+                                          fontWeight: 900,
                                         }}
                                       >
-                                        {c.loot_state || ''}
-                                      </td>
+                                        {c.loot_state ? '✓' : ''}
+                                      </span>
                                     )}
-                                    {hasRarity && (
-                                      <td
-                                        style={{
-                                          padding: '3px 8px',
-                                          color: getRarityColor(
-                                            c.rarity || '',
-                                            dark
-                                          ),
-                                          fontSize: 12,
-                                          whiteSpace: 'nowrap',
-                                        }}
-                                      >
-                                        {c.rarity || ''}
-                                      </td>
-                                    )}
-                                    <td
-                                      style={{
-                                        padding: '3px 8px',
-                                        color: dark ? '#ccc' : '#555',
-                                        whiteSpace: 'nowrap',
-                                      }}
-                                    >
-                                      {c.count}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
+                                  </div>
+                                  <div
+                                    style={{
+                                      ...rowStyle,
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      padding: '6px 8px',
+                                      color: dark ? '#ccc' : '#555',
+                                      whiteSpace: 'nowrap',
+                                      position: 'relative',
+                                      zIndex: 0,
+                                    }}
+                                  >
+                                    {c.count}
+                                  </div>
+                                </Fragment>
+                              );
+                            })}
+                          </div>
                         </div>
                       );
                     })()}
@@ -695,15 +691,15 @@ export default function QuestNPCDetailPage() {
                           marginBottom: 4,
                         }}
                       >
-                        任务奖励
+                        {ut('ui.quest_detail.reward')}
                       </div>
                       <table
                         style={{
                           width: '100%',
                           borderCollapse: 'collapse',
                           fontSize: 14,
-                          tableLayout: 'fixed',
-                          wordBreak: 'break-word',
+                          tableLayout: 'auto',
+                          overflowWrap: 'anywhere',
                         }}
                       >
                         <thead>
@@ -719,20 +715,9 @@ export default function QuestNPCDetailPage() {
                                 color: tokens.muted,
                                 fontSize: 13,
                                 whiteSpace: 'nowrap',
-                                width: '4em',
                               }}
                             >
-                              类型
-                            </th>
-                            <th
-                              style={{
-                                textAlign: 'left',
-                                padding: '4px 8px',
-                                color: tokens.muted,
-                                fontSize: 13,
-                              }}
-                            >
-                              物品
+                              {ut('ui.quest_detail.type')}
                             </th>
                             <th
                               style={{
@@ -741,10 +726,20 @@ export default function QuestNPCDetailPage() {
                                 color: tokens.muted,
                                 fontSize: 13,
                                 whiteSpace: 'nowrap',
-                                width: '2em',
                               }}
                             >
-                              数量
+                              {ut('ui.quest_detail.item')}
+                            </th>
+                            <th
+                              style={{
+                                textAlign: 'center',
+                                padding: '4px 8px',
+                                color: tokens.muted,
+                                fontSize: 13,
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              {ut('ui.quest_detail.count')}
                             </th>
                           </tr>
                         </thead>
@@ -766,10 +761,13 @@ export default function QuestNPCDetailPage() {
                                   style={{
                                     padding: '3px 8px',
                                     color: dark ? '#ccc' : '#555',
+                                    textAlign: 'center',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
-                                  {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
+                                  {ut(
+                                    REWARD_TYPE_KEY[r.type_key] || r.type_key
+                                  )}
                                 </td>
                                 <td
                                   style={{
@@ -777,12 +775,13 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.text,
                                   }}
                                 >
-                                  {r.name}
+                                  {t(r.translation_key, r.name)}
                                 </td>
                                 <td
                                   style={{
                                     padding: '3px 8px',
                                     color: dark ? '#ccc' : '#555',
+                                    textAlign: 'center',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
@@ -814,7 +813,9 @@ export default function QuestNPCDetailPage() {
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
-                                  {REWARD_TYPE_LABEL[r.type_key] || r.type_key}
+                                  {ut(
+                                    REWARD_TYPE_KEY[r.type_key] || r.type_key
+                                  )}
                                 </td>
                                 <td
                                   style={{
@@ -822,12 +823,13 @@ export default function QuestNPCDetailPage() {
                                     color: tokens.text,
                                   }}
                                 >
-                                  {r.name}
+                                  {t(r.translation_key, r.name)}
                                 </td>
                                 <td
                                   style={{
                                     padding: '3px 8px',
                                     color: dark ? '#ccc' : '#555',
+                                    textAlign: 'center',
                                     whiteSpace: 'nowrap',
                                   }}
                                 >
@@ -860,9 +862,10 @@ export default function QuestNPCDetailPage() {
                               style={{
                                 padding: '3px 8px',
                                 color: dark ? '#FFD54F' : '#F57F17',
+                                whiteSpace: 'nowrap',
                               }}
                             >
-                              金币
+                              {ut('ui.quest_detail.gold')}
                             </div>
                             <div
                               style={{
@@ -876,9 +879,10 @@ export default function QuestNPCDetailPage() {
                               style={{
                                 padding: '3px 8px',
                                 color: dark ? '#4fc3f7' : '#0277BD',
+                                whiteSpace: 'nowrap',
                               }}
                             >
-                              经验值
+                              {ut('ui.quest_detail.exp')}
                             </div>
                             <div
                               style={{
@@ -896,7 +900,7 @@ export default function QuestNPCDetailPage() {
 
                   {q.required &&
                     (() => {
-                      const req = formatRequired(allNpcs, q.required);
+                      const req = formatRequired(allNpcs, q.required, t);
                       if (!req) return null;
                       const isPrevSameNpc =
                         req.npcName === npc.npc_name &&
@@ -909,12 +913,14 @@ export default function QuestNPCDetailPage() {
                             marginTop: 6,
                           }}
                         >
-                          <span style={{ fontWeight: 'bold' }}>前置任务: </span>
+                          <span style={{ fontWeight: 'bold' }}>
+                            {ut('ui.quest_detail.prereq')}
+                          </span>
                           {isPrevSameNpc ? (
-                            <span>【上一个】</span>
+                            <span>{ut('ui.quest_detail.prev_quest')}</span>
                           ) : req.npcName ? (
                             <Link
-                              to={`/quest_npc/${req.npcName}`}
+                              to={`/${lang}/quest_npc/${req.npcName}`}
                               style={{
                                 color: tokens.accent,
                                 textDecoration: 'none',
@@ -944,7 +950,9 @@ export default function QuestNPCDetailPage() {
             marginTop: 40,
           }}
         >
-          {search ? '没有匹配的任务' : '该NPC暂无任务'}
+          {search
+            ? ut('ui.quest_detail.no_match')
+            : ut('ui.quest_detail.no_tasks')}
         </div>
       )}
     </div>

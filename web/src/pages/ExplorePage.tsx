@@ -5,7 +5,9 @@ import Disclaimer from '../components/Disclaimer';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 
 interface ExploreTarget {
   name: string;
@@ -26,9 +28,11 @@ export default function ExplorePage() {
   const { modules } = useDungeonModules();
   const dataVersion = useDataVersion();
   const { tokens, dark } = useTheme();
+  const { t, ut } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/explore.json'))
       .then<ExploreTarget[]>((r) => r.json())
       .then(setData)
@@ -60,7 +64,7 @@ export default function ExplorePage() {
           marginBottom: 20,
         }}
       >
-        【任务探索表】探索目标汇总
+        {ut('ui.explore.title')}
       </h1>
       <div
         style={{
@@ -70,7 +74,9 @@ export default function ExplorePage() {
           marginBottom: 20,
         }}
       >
-        共 {data.length} 个探索目标，分布在 {grouped.size} 个NPC
+        {ut('ui.explore.stat')
+          .replace('{count}', String(data.length))
+          .replace('{npcCount}', String(grouped.size))}
       </div>
       <Disclaimer />
       {[...grouped.entries()].map(([npcName, targets]) => {
@@ -98,12 +104,12 @@ export default function ExplorePage() {
                 gap: 8,
               }}
             >
-              {sorted.map((t, i) => {
-                const mk = modKey(t.module_name);
+              {sorted.map((target, i) => {
+                const mk = modKey(target.module_name);
                 const mod = modules.get(mk);
                 const sx = mod?.size_x ?? 1;
                 const sy = mod?.size_y ?? 1;
-                const groupLabel = mod?.group_display || '';
+                const groupLabel = mod ? formatGroupLabel(mod, t, ut) : '';
                 return (
                   <div
                     key={i}
@@ -141,7 +147,7 @@ export default function ExplorePage() {
                           [{groupLabel}]{' '}
                         </span>
                       )}
-                      {t.name || mk}
+                      {target.name || mk}
                     </h3>
                     <div
                       style={{
@@ -151,7 +157,8 @@ export default function ExplorePage() {
                         textAlign: 'center',
                       }}
                     >
-                      {npcName} - 任务: {t.quest_title || `#${t.quest_number}`}
+                      {npcName} - {ut('ui.explore.quest')}:{' '}
+                      {target.quest_title || `#${target.quest_number}`}
                     </div>
                     <div
                       style={{

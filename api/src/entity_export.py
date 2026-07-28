@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+from label_type import GOLDCHEST_SPECIAL, LABEL_TYPE_SUFFIX
 from translator import (
     ORE_ITEM_COORD_RE,
     ORE_QUALITY_RE,
@@ -32,7 +33,6 @@ def export_items(
     map_to_module: dict | None = None,
     item_coord_chain_map: dict[str, set[str]] | None = None,
     sub_pool_info: dict | None = None,
-    resolve_en_name=None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
     items_index = []
@@ -40,20 +40,14 @@ def export_items(
         name = r["item_name"]
         if name in skip_variants:
             continue
-        # Only keep ground loot items (have "Ground" in lootdrop relationships
-        # or no lootdrop relationships at all for decoration/quest items)
         _mons = merged_loot.get(name, [])
         if _mons and "Ground" not in _mons:
             continue
         coords = filter_coords(all_coords.get(name, []), item_names)
-        # Try ore name cleaning: GoldOres → GoldOre
         if not coords:
             m = ORE_ITEM_COORD_RE.match(name)
             if m:
                 coords = filter_coords(all_coords.get(m.group(1) + "Ore", []), item_names)
-        # Fallback: trace lootdrop chain item → lootdrop_group → spawner → coords
-        # Skip filter_coords here because the coord's keyword is the spawner name,
-        # not the item name, so the entity_names check would reject it.
         if not coords and item_coord_chain_map:
             for spawner_kw in item_coord_chain_map.get(name, []):
                 _raw = all_coords.get(spawner_kw, [])
@@ -63,13 +57,12 @@ def export_items(
         if not coords:
             continue
         translation = resolve_name(name, r["translation_key"], "item")
-        translation_en = resolve_en_name(name, r["translation_key"], "item") if resolve_en_name else name
         variant_count = r.get("variant_count", 1)
         items_index.append(
             {
                 "name": name,
                 "translation": translation,
-                "translation_EN": translation_en,
+                "translation_key": r["translation_key"],
                 "category": r["category"],
                 "variant_count": variant_count,
                 "monsters": merged_loot.get(name, []),
@@ -79,7 +72,7 @@ def export_items(
         entity_data = {
             "name": name,
             "translation": translation,
-            "translation_EN": translation_en,
+            "translation_key": r["translation_key"],
             "category": r["category"],
             "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
@@ -99,7 +92,6 @@ def export_monsters(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
-    resolve_en_name=None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
     _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
@@ -134,23 +126,18 @@ def export_monsters(
                     merged_coords_list.append(c)
         if not merged_coords_list:
             continue
-        translation_en = (
-            resolve_en_name(canonical["monster_name"], canonical["translation_key"], "monster")
-            if resolve_en_name
-            else canonical["monster_name"]
-        )
         monsters_index.append(
             {
                 "name": canonical["monster_name"],
                 "translation": translation,
-                "translation_EN": translation_en,
+                "translation_key": canonical["translation_key"],
                 "coordCount": len(merged_coords_list),
             }
         )
         entity_data = {
             "name": canonical["monster_name"],
             "translation": translation,
-            "translation_EN": translation_en,
+            "translation_key": canonical["translation_key"],
             "coords": [
                 build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
             ],
@@ -170,20 +157,23 @@ def export_props(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
-    resolve_en_name=None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
     props_index = []
-    props_by_translation: dict[str, list[dict]] = {}
+    props_by_translation: dict[tuple[str, bool], list[dict]] = {}
     for r in sorted(props, key=lambda r: ore_quality_key(r["asset_name"])):
+        # synthetic special page exported separately (must not merge under 黄金宝箱)
+        if r["asset_name"] == GOLDCHEST_SPECIAL:
+            continue
         translation = resolve_name(r["asset_name"], r["translation_key"], "props")
         # Ore quality variants without translation: normalize to base ore name
         if translation == r["asset_name"]:
             m = ORE_QUALITY_RE.match(r["asset_name"])
             if m:
                 translation = m.group(1) if m.group(1).startswith("Ore_") else "Ore_" + m.group(1)
-        props_by_translation.setdefault(translation, []).append(r)
-    for translation, group in props_by_translation.items():
+        has_lootdrop = bool((props_spawner_info.get(r["asset_name"]) or {}).get("has_lootdrop"))
+        props_by_translation.setdefault((translation, has_lootdrop), []).append(r)
+    for (translation, _has_lootdrop), group in props_by_translation.items():
         merged_coords = []
         seen_coords: set[tuple] = set()
         for r in group:
@@ -225,16 +215,11 @@ def export_props(
                 break
 
         canonical_prop = group[0]
-        translation_en = (
-            resolve_en_name(canonical_prop["asset_name"], canonical_prop["translation_key"], "props")
-            if resolve_en_name
-            else name_key
-        )
         props_index.append(
             {
                 "name": name_key,
                 "translation": translation,
-                "translation_EN": translation_en,
+                "translation_key": canonical_prop["translation_key"],
                 "coordCount": len(merged_coords),
                 "type": entity_type,
             }
@@ -242,9 +227,41 @@ def export_props(
         entity_data = {
             "name": name_key,
             "translation": translation,
-            "translation_EN": translation_en,
+            "translation_key": canonical_prop["translation_key"],
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
         _save(output_dir, f"props/{name_key}.json", entity_data)
+
+    # GoldChest_special: synthetic page (Special-generator coords only)
+    _gc_special_coords = all_coords.get(GOLDCHEST_SPECIAL) or []
+    if _gc_special_coords:
+        _gc_tk = ""
+        for r in props:
+            if r["asset_name"] in ("GoldChest", "GoldChest_UnderSea"):
+                _gc_tk = r.get("translation_key") or ""
+                break
+        _gc_base_trans = resolve_name("GoldChest", _gc_tk, "props") if _gc_tk else "黄金宝箱"
+        _gc_special_trans = _gc_base_trans + LABEL_TYPE_SUFFIX["special"]
+        _built = [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in _gc_special_coords]
+        props_index.append(
+            {
+                "name": GOLDCHEST_SPECIAL,
+                "translation": _gc_special_trans,
+                "translation_key": _gc_tk,
+                "coordCount": len(_built),
+                "type": "props",
+            }
+        )
+        _save(
+            output_dir,
+            f"props/{GOLDCHEST_SPECIAL}.json",
+            {
+                "name": GOLDCHEST_SPECIAL,
+                "translation": _gc_special_trans,
+                "translation_key": _gc_tk,
+                "coords": _built,
+            },
+        )
+
     _save(output_dir, "props.json", props_index)
     return props_index

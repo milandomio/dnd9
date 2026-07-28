@@ -34,13 +34,30 @@ jobs:
         run: npm ci
         working-directory: web
 
-      - name: Type check
-        run: npx tsc --noEmit
+      - name: Web quality checks
+        run: npm test
         working-directory: web
 
       - name: Build (SSG)
         run: npm run build
         working-directory: web
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+        working-directory: web
+
+      - name: Test localized pages
+        working-directory: web
+        env:
+          BASE_URL: http://127.0.0.1:8080
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 8080 > preview.log 2>&1 &
+          for i in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8080/ >/dev/null && break
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:8080/ >/dev/null
+          npm run test:i18n
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4

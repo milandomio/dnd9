@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from config import EN_GAME_JSON, GAME_JSON, GAME_ROOT
+from config import GAME_JSON, GAME_ROOT, LOCALIZATION_ROOT
 
 log = logging.getLogger(__name__)
 
@@ -54,8 +54,29 @@ def load_game_json(path: Path | None = None) -> dict[str, str]:
         return {}
 
 
-def load_en_game_json() -> dict[str, str]:
-    return load_game_json(EN_GAME_JSON)
+def discover_languages() -> list[str]:
+    if not LOCALIZATION_ROOT.exists():
+        return []
+    dirs = sorted(d.name for d in LOCALIZATION_ROOT.iterdir() if d.is_dir() and (d / "Game.json").exists())
+    return dirs
+
+
+_LOCALE_DISPLAY = {
+    "de": "German",
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "pt-BR": "Portuguese (Brazil)",
+    "ru": "Russian",
+    "zh-Hans": "Chinese (Simplified)",
+    "zh-Hant": "Chinese (Traditional)",
+}
+
+
+def locale_display_name(lang: str) -> str:
+    return _LOCALE_DISPLAY.get(lang, lang)
 
 
 VARIANT_RE = re.compile(r"_\d{4}$")

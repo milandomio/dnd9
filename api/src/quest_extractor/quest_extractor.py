@@ -357,13 +357,14 @@ class QuestExtractor:
             reward_item: 奖励项字典，包含 RewardType, RewardId, RewardCount
 
         Returns:
-            (translated_name, reward_type_key) 元组
+            (translated_name, reward_type_key, translation_key) 元组
             reward_type_key: "item" | "exp" | "affinity" | "random"
         """
         reward_type = reward_item.get("RewardType", "")
         reward_id = reward_item.get("RewardId", "")
         name = ""
         type_key = "item"
+        translation_key = ""
 
         if reward_type == "EDCRewardType::Exp":
             type_key = "exp"
@@ -374,7 +375,8 @@ class QuestExtractor:
             if reward_id and self.translator:
                 if "Id_Merchant_" in reward_id:
                     merchant_name = reward_id.split("Id_Merchant_")[-1]
-                    name = self.translator.translate(f"Text_DesignData_Merchant_Merchant_{merchant_name}")
+                    translation_key = f"Text_DesignData_Merchant_Merchant_{merchant_name}"
+                    name = self.translator.translate(translation_key)
                     if not name:
                         name = merchant_name
                 else:
@@ -398,8 +400,8 @@ class QuestExtractor:
                     category_raw = parts[3]  # Armor
                     rarity_raw = parts[4]  # Uncommon
                     category_plural = category_map.get(category_raw, category_raw + "s")
-                    key = f"Text_Reward_Quest_Random_{category_plural}_{rarity_raw}"
-                    name = self.translator.translate(key) or reward_id
+                    translation_key = f"Text_Reward_Quest_Random_{category_plural}_{rarity_raw}"
+                    name = self.translator.translate(translation_key) or reward_id
                 else:
                     name = reward_id
             else:
@@ -413,22 +415,26 @@ class QuestExtractor:
                     item_name = reward_id.split("Id_Item_")[-1]
                     key = f"Text_DesignData_Item_Item_{item_name}"
                     name = self.translator.translate(key)
+                    translation_key = key if name else ""
                     # 带后缀尝试
                     suffixes = ["_1001", "_2001", "_3001", "_4001", "_5001", "Pearl"]
                     if not name:
                         for suffix in suffixes:
                             name = self.translator.translate(f"{key}{suffix}")
                             if name:
+                                translation_key = f"{key}{suffix}"
                                 break
                     # 剥离 _NNNN 变体后缀重试（如 LuckPotion_3001 → LuckPotion）
                     if not name and (m := re.match(r"^(.+)_(\d{4})$", item_name)):
                         base_name = m.group(1)
                         base_key = f"Text_DesignData_Item_Item_{base_name}"
                         name = self.translator.translate(base_key)
+                        translation_key = base_key if name else ""
                         if not name:
                             for suffix in suffixes:
                                 name = self.translator.translate(f"{base_key}{suffix}")
                                 if name:
+                                    translation_key = f"{base_key}{suffix}"
                                     break
                     if not name:
                         name = item_name
@@ -436,27 +442,32 @@ class QuestExtractor:
                     props_name = reward_id.split("Id_Props_")[-1]
                     key = f"Text_DesignData_Props_Props_{props_name}"
                     name = self.translator.translate(key)
+                    translation_key = key if name else ""
                     if not name and (m := re.match(r"^(.+)_(\d{4})$", props_name)):
                         base_key = f"Text_DesignData_Props_Props_{m.group(1)}"
                         name = self.translator.translate(base_key)
+                        translation_key = base_key if name else ""
                     if not name:
                         name = props_name
                 elif "Id_ItemSkin_" in reward_id:
                     skin_name = reward_id.split("Id_ItemSkin_")[-1]
                     key = f"Text_DesignData_ItemSkin_ItemSkin_{skin_name}"
                     name = self.translator.translate(key)
+                    translation_key = key if name else ""
                     if not name:
                         name = skin_name
                 elif "Id_Emote_" in reward_id:
                     emote_name = reward_id.split("Id_Emote_")[-1]
                     key = f"Text_DesignData_Emote_Emote_{emote_name}"
                     name = self.translator.translate(key)
+                    translation_key = key if name else ""
                     if not name:
                         name = emote_name
                 elif "Id_ActionSkin_" in reward_id:
                     action_name = reward_id.split("Id_ActionSkin_")[-1]
                     key = f"Text_DesignData_ActionSkin_{action_name}"
                     name = self.translator.translate(key)
+                    translation_key = key if name else ""
                     if not name:
                         name = action_name
                 else:
@@ -464,7 +475,7 @@ class QuestExtractor:
             else:
                 name = reward_id
 
-        return name, type_key
+        return name, type_key, translation_key
 
     def get_gold_bag_npc_names(self):
         """
@@ -621,6 +632,13 @@ class QuestExtractor:
             if translated:
                 return translated
         return source or None
+
+    def get_props_target_info(self, props_id_tag):
+        """Return the Props target's translation key and zh-Hans fallback."""
+        if not props_id_tag:
+            return "", ""
+        self._ensure_props_index()
+        return self._props_tag_index.get(props_id_tag, ("", ""))
 
 
 def main():

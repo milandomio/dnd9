@@ -5,10 +5,15 @@ import { Spin, Card, Row, Col } from 'antd';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useSSRData } from '../context/SSRDataContext';
+import { useLocale } from '../i18n/useLocale';
 
 interface GroupEntry {
   group: string;
+  group_key?: string;
+  group_floor?: number;
+  group_sub_key?: string | null;
   group_display: string;
   entity_count: number;
   position_count: number;
@@ -31,9 +36,11 @@ export default function QuestItemsPage() {
   const [loading, setLoading] = useState(!ssrData);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
+  const { t, ut, lang } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/quest_items_groups.json'))
       .then((r) => r.json())
       .then(setGroups)
@@ -66,7 +73,7 @@ export default function QuestItemsPage() {
           marginBottom: 10,
         }}
       >
-        【任务物品表】任务物品汇总
+        {ut('ui.quest_items.title')}
       </h1>
       <div
         style={{
@@ -76,7 +83,9 @@ export default function QuestItemsPage() {
           marginBottom: 24,
         }}
       >
-        共 {groups.length} 个地图分组 | {totalPos} 个位置点
+        {ut('ui.quest_items.stat')
+          .replace('{groups}', String(groups.length))
+          .replace('{total}', String(totalPos))}
       </div>
       <Row gutter={[16, 16]} justify="center">
         {groups.map((g) => {
@@ -84,7 +93,7 @@ export default function QuestItemsPage() {
           return (
             <Col key={g.group} xs={24} sm={12} md={8} lg={6}>
               <Link
-                to={`/quest_items/${g.group}`}
+                to={`/${lang}/quest_items/${g.group}`}
                 style={{ textDecoration: 'none' }}
               >
                 <Card
@@ -108,7 +117,7 @@ export default function QuestItemsPage() {
                       marginBottom: 8,
                     }}
                   >
-                    {g.group_display}
+                    {formatGroupLabel(g, t, ut)}
                   </div>
                   <div
                     style={{
@@ -117,9 +126,15 @@ export default function QuestItemsPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    {g.entity_count} 个实体
+                    {ut('ui.quest_items.entity').replace(
+                      '{count}',
+                      String(g.entity_count)
+                    )}
                     <br />
-                    {g.position_count} 个位置
+                    {ut('ui.quest_items.pos').replace(
+                      '{count}',
+                      String(g.position_count)
+                    )}
                   </div>
                 </Card>
               </Link>
@@ -135,7 +150,7 @@ export default function QuestItemsPage() {
           fontSize: 14,
         }}
       >
-        数据来源于NPC的Fetch任务，按地图模块分组显示任务物品位置
+        {ut('ui.quest_items.footer')}
       </div>
     </div>
   );

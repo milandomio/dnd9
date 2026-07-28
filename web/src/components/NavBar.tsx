@@ -1,35 +1,49 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Input, Spin } from 'antd';
+import { Input, Select, Spin } from 'antd';
 import {
   BulbOutlined,
   ClockCircleOutlined,
+  GlobalOutlined,
   LoadingOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
 import { useTheme } from '../hooks/useTheme';
+import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSearchIndex, type SearchEntry } from '../hooks/useSearchIndex';
+import {
+  SUPPORTED_LANGS,
+  LANG_DISPLAY_NAME,
+  DEFAULT_LANG,
+  type SupportedLang,
+} from '../i18n/locale';
+import { useLanguage, stripLangPrefix } from '../i18n/LanguageContext';
+import { useLocale } from '../i18n/useLocale';
+import { useSSRData } from '../context/SSRDataContext';
+import { DataVersionLoader } from '../hooks/useDataVersion';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 
-const LABEL_MAP: Record<string, string> = {
-  items: '物品表',
-  monsters: '怪物表',
-  props: '实体表',
-  lootdrops: '掉落表',
-  explore: '任务探索表',
-  quest_items: '任务物品表',
-  quest_npc: '任务NPC表',
-  dungeon_modules: '地图模块表',
+const NAV_LABEL_KEYS: Record<string, string> = {
+  items: 'ui.nav.items',
+  monsters: 'ui.nav.monsters',
+  props: 'ui.nav.props',
+  lootdrops: 'ui.nav.lootdrops',
+  explore: 'ui.nav.explore',
+  quest_items: 'ui.nav.quest_items',
+  quest_npc: 'ui.nav.quest_npc',
+  dungeon_modules: 'ui.nav.dungeon_modules',
 };
 
-const GROUP_LABEL_MAP: Record<string, string> = {
-  GoblinCave: '哥布林洞穴',
-  Crypt: '废墟2层地牢',
-  Ruins: '废墟1层',
-  ShipGraveyard: '水图',
-  FireDeep: '哥布林洞穴2层',
-  IceAbyss: '冰图2层',
-  IceCavern: '冰图1层',
-  Inferno: '废墟3层炼狱',
+const PAGE_TAG_KEYS: Record<string, string> = {
+  items: 'ui.search.tag.item',
+  monsters: 'ui.search.tag.monster',
+  props: 'ui.search.tag.prop',
+  lootdrops: 'ui.search.tag.lootdrop',
+  explore: 'ui.search.tag.explore',
+  quest_npc: 'ui.search.tag.npc',
+  quest_items: 'ui.search.tag.quest',
+  dungeon_modules: 'ui.search.tag.module',
+  _nav: 'ui.search.tag.nav',
 };
 
 const RECENT_KEY = 'recentSearches';
@@ -43,24 +57,17 @@ function getRecent(): string[] {
   }
 }
 
-const PAGE_TAG: Record<string, string> = {
-  items: '物品',
-  monsters: '怪物',
-  props: '实体',
-  lootdrops: '掉落',
-  explore: '探索',
-  quest_npc: 'NPC',
-  quest_items: '任务',
-  dungeon_modules: '模块',
-  _nav: '导航',
-};
-
 export default function NavBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { dark, tokens, toggle } = useTheme();
-  const { index: searchIndex, loading: searchLoading } = useSearchIndex();
-  const parts = location.pathname.split('/').filter(Boolean);
+  const { lang, withLangPrefix } = useLanguage();
+  const { t, ut } = useLocale();
+  const { modules } = useDungeonModules();
+  const isDetailTemplate = useSSRData<boolean>('__detailTemplate') === true;
+  const { index: searchIndex, loading: searchLoading } = useSearchIndex(lang);
+  const contentPath = stripLangPrefix(location.pathname);
+  const parts = contentPath.split('/').filter(Boolean);
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchEntry[]>([]);
@@ -77,10 +84,13 @@ export default function NavBar() {
       setQuery(state.searchQuery);
       navigate(location.pathname, { replace: true, state: {} });
       requestAnimationFrame(() => {
-        inputRef.current?.focus();
-        inputRef.current?.scrollIntoView({
+        const searchInput = inputRef.current?.input ?? searchRef.current;
+        searchInput?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
+        });
+        requestAnimationFrame(() => {
+          inputRef.current?.focus({ preventScroll: true });
         });
       });
     }
@@ -140,7 +150,11 @@ export default function NavBar() {
     if (query.trim()) saveRecent(query.trim());
     setQuery('');
     setShowDropdown(false);
-    navigate(hit.url);
+    navigate(withLangPrefix(hit.url, lang));
+  };
+
+  const handleLangChange = (nextLang: SupportedLang) => {
+    window.location.href = withLangPrefix(location.pathname, nextLang);
   };
 
   const handleRecentClick = (term: string) => {
@@ -179,14 +193,18 @@ export default function NavBar() {
   };
 
   const breadcrumbs: { label: string; path: string }[] = [];
-  if (parts.length >= 2) {
+  if (!isDetailTemplate && parts.length >= 2) {
     for (let i = 0; i < parts.length - 1; i++) {
       const key = parts[i];
-      let label = LABEL_MAP[key] || key;
-      const path = '/' + parts.slice(0, i + 1).join('/');
+      const uiKey = NAV_LABEL_KEYS[key];
+      let label = uiKey ? ut(uiKey) : key;
+      const path = `/${lang}/${parts.slice(0, i + 1).join('/')}`;
 
       if (i === 1 && parts[0] === 'dungeon_modules') {
-        label = GROUP_LABEL_MAP[parts[1]] || parts[1];
+        const module = [...modules.values()].find(
+          (entry) => entry.group === parts[1]
+        );
+        label = module ? formatGroupLabel(module, t, ut) : parts[1];
       }
 
       breadcrumbs.push({ label, path: path + '/' });
@@ -194,218 +212,255 @@ export default function NavBar() {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: 8,
-        maxWidth: 1200,
-        margin: '0 auto 15px',
-        padding: '8px 20px',
-        background: tokens.surface,
-        borderRadius: 5,
-        flexWrap: 'wrap',
-        rowGap: 8,
-      }}
-    >
+    <>
+      <DataVersionLoader />
       <div
-        ref={searchRef}
-        style={{ position: 'relative', flex: '0 0 360px', minWidth: 0 }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 8,
+          maxWidth: 1200,
+          margin: '0 auto 15px',
+          padding: '8px 20px',
+          background: tokens.surface,
+          borderRadius: 5,
+          flexWrap: 'wrap',
+          rowGap: 8,
+        }}
       >
-        <Input
-          ref={inputRef}
-          prefix={<SearchOutlined style={{ color: tokens.muted }} />}
-          suffix={
-            searchLoading ? (
-              <Spin indicator={<LoadingOutlined spin />} size="small" />
-            ) : undefined
-          }
-          className="navbar-search-input"
-          placeholder={searchLoading ? '加载中...' : '搜索物品/怪物/实体...'}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => {
-            if (query.trim() && results.length > 0) setShowDropdown(true);
-            else if (!query.trim() && recentSearches.length > 0)
-              setShowDropdown(true);
-          }}
-          onKeyDown={handleKeyDown}
-          disabled={searchLoading}
-          allowClear
-          style={{
-            background: dark ? '#333' : '#fff',
-            borderColor: tokens.border,
-            color: tokens.text,
-            borderRadius: 6,
-          }}
-        />
-        <style>{`
+        <div
+          ref={searchRef}
+          style={{ position: 'relative', flex: '0 0 360px', minWidth: 0 }}
+        >
+          <Input
+            ref={inputRef}
+            prefix={<SearchOutlined style={{ color: tokens.muted }} />}
+            suffix={
+              searchLoading ? (
+                <Spin indicator={<LoadingOutlined spin />} size="small" />
+              ) : undefined
+            }
+            className="navbar-search-input"
+            placeholder={
+              searchLoading
+                ? ut('ui.common.loading')
+                : ut('ui.search.placeholder')
+            }
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => {
+              if (query.trim() && results.length > 0) setShowDropdown(true);
+              else if (!query.trim() && recentSearches.length > 0)
+                setShowDropdown(true);
+            }}
+            onKeyDown={handleKeyDown}
+            disabled={searchLoading}
+            allowClear
+            style={{
+              background: dark ? '#333' : '#fff',
+              borderColor: tokens.border,
+              color: tokens.text,
+              borderRadius: 6,
+            }}
+          />
+          <style>{`
           .ant-input-affix-wrapper.navbar-search-input .ant-input::placeholder {
             color: ${dark ? '#aaa' : '#888'} !important;
           }
         `}</style>
-        {showDropdown && (
-          <div
-            style={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              right: 0,
-              marginTop: 4,
-              background: dark ? '#2c2c2c' : '#fff',
-              border: `1px solid ${tokens.border}`,
-              borderRadius: 6,
-              maxHeight: 400,
-              overflowY: 'auto',
-              zIndex: 1000,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-            }}
-          >
-            {query.trim() ? (
-              results.map((hit, i) => (
-                <div
-                  key={`${hit.page}::${hit.name}`}
-                  onClick={() => handleSelect(hit)}
-                  onMouseEnter={() => setSelectedIdx(i)}
-                  style={{
-                    padding: '8px 12px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    background:
-                      i === selectedIdx
-                        ? dark
-                          ? '#444'
-                          : '#e6f4ff'
-                        : 'transparent',
-                    transition: 'background 0.1s',
-                  }}
-                >
-                  <span style={{ color: tokens.text, fontSize: 14 }}>
-                    {hit.translation || hit.name}
-                    {hit.translation && hit.translation !== hit.name && (
-                      <span
-                        style={{
-                          color: tokens.muted,
-                          marginLeft: 6,
-                          fontSize: 12,
-                        }}
-                      >
-                        ({hit.name})
-                      </span>
-                    )}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      padding: '1px 6px',
-                      borderRadius: 3,
-                      background: dark ? '#555' : '#eee',
-                      color: tokens.muted,
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {hit.tag || PAGE_TAG[hit.page] || hit.page}
-                  </span>
-                </div>
-              ))
-            ) : recentSearches.length > 0 ? (
-              <div>
-                <div
-                  style={{
-                    padding: '6px 12px 4px',
-                    fontSize: 12,
-                    color: tokens.muted,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 4,
-                  }}
-                >
-                  <ClockCircleOutlined />
-                  最近搜索
-                </div>
-                {recentSearches.map((term) => (
+          {showDropdown && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                right: 0,
+                marginTop: 4,
+                background: dark ? '#2c2c2c' : '#fff',
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 6,
+                maxHeight: 400,
+                overflowY: 'auto',
+                zIndex: 1000,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              }}
+            >
+              {query.trim() ? (
+                results.map((hit, i) => (
                   <div
-                    key={term}
-                    onClick={() => handleRecentClick(term)}
+                    key={`${hit.page}::${hit.name}`}
+                    onClick={() => handleSelect(hit)}
+                    onMouseEnter={() => setSelectedIdx(i)}
                     style={{
                       padding: '8px 12px',
                       cursor: 'pointer',
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      color: tokens.text,
-                      fontSize: 14,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = dark
-                        ? '#444'
-                        : '#e6f4ff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
+                      background:
+                        i === selectedIdx
+                          ? dark
+                            ? '#444'
+                            : '#e6f4ff'
+                          : 'transparent',
+                      transition: 'background 0.1s',
                     }}
                   >
-                    <span>{term}</span>
-                    <span style={{ fontSize: 11, color: tokens.muted }}>
-                      搜索
+                    <span style={{ color: tokens.text, fontSize: 14 }}>
+                      {t(hit.translation_key, hit.translation || hit.name)}
+                      {hit.translation && hit.translation !== hit.name && (
+                        <span
+                          style={{
+                            color: tokens.muted,
+                            marginLeft: 6,
+                            fontSize: 12,
+                          }}
+                        >
+                          ({hit.name})
+                        </span>
+                      )}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        padding: '1px 6px',
+                        borderRadius: 3,
+                        background: dark ? '#555' : '#eee',
+                        color: tokens.muted,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {hit.tag || ut(PAGE_TAG_KEYS[hit.page] || '') || hit.page}
                     </span>
                   </div>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        )}
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-          flexWrap: 'wrap',
-          rowGap: 6,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <BulbOutlined
-            style={{ color: dark ? '#ffd700' : '#333', fontSize: 16 }}
-          />
-          <button
-            onClick={toggle}
-            aria-label="切换主题"
-            style={{
-              width: 36,
-              height: 20,
-              borderRadius: 10,
-              border: 'none',
-              cursor: 'pointer',
-              position: 'relative',
-              background: dark ? '#555' : tokens.accent,
-              transition: 'background 0.2s',
-              padding: 0,
-            }}
-          >
-            <span
-              style={{
-                position: 'absolute',
-                top: 2,
-                left: dark ? 2 : 18,
-                width: 16,
-                height: 16,
-                borderRadius: '50%',
-                background: '#fff',
-                transition: 'left 0.2s',
-              }}
-            />
-          </button>
+                ))
+              ) : recentSearches.length > 0 ? (
+                <div>
+                  <div
+                    style={{
+                      padding: '6px 12px 4px',
+                      fontSize: 12,
+                      color: tokens.muted,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}
+                  >
+                    <ClockCircleOutlined />
+                    {ut('ui.search.recent')}
+                  </div>
+                  {recentSearches.map((term) => (
+                    <div
+                      key={term}
+                      onClick={() => handleRecentClick(term)}
+                      style={{
+                        padding: '8px 12px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        color: tokens.text,
+                        fontSize: 14,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = dark
+                          ? '#444'
+                          : '#e6f4ff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      <span>{term}</span>
+                      <span style={{ fontSize: 11, color: tokens.muted }}>
+                        {ut('ui.search.search')}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          )}
         </div>
-        {breadcrumbs.map((crumb) => (
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            flexWrap: 'wrap',
+            rowGap: 6,
+          }}
+        >
+          <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
+          <Select
+            size="small"
+            value={lang}
+            onChange={handleLangChange}
+            options={SUPPORTED_LANGS.map((value) => ({
+              value,
+              label: LANG_DISPLAY_NAME[value],
+            }))}
+            style={{ width: '7em' }}
+            virtual={false}
+            listHeight={320}
+            getPopupContainer={(triggerNode) =>
+              triggerNode.parentElement || document.body
+            }
+          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <BulbOutlined
+              style={{ color: dark ? '#ffd700' : '#333', fontSize: 16 }}
+            />
+            <button
+              onClick={toggle}
+              aria-label={ut('ui.common.toggle_theme')}
+              style={{
+                width: 36,
+                height: 20,
+                borderRadius: 10,
+                border: 'none',
+                cursor: 'pointer',
+                position: 'relative',
+                background: dark ? '#555' : tokens.accent,
+                transition: 'background 0.2s',
+                padding: 0,
+              }}
+            >
+              <span
+                style={{
+                  position: 'absolute',
+                  top: 2,
+                  left: dark ? 2 : 18,
+                  width: 16,
+                  height: 16,
+                  borderRadius: '50%',
+                  background: '#fff',
+                  transition: 'left 0.2s',
+                }}
+              />
+            </button>
+          </div>
+          {breadcrumbs.map((crumb) => (
+            <Link
+              key={crumb.path}
+              to={withLangPrefix(crumb.path, lang)}
+              style={linkStyle}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = tokens.accent;
+                e.currentTarget.style.color = dark ? '#2c2c2c' : '#fff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.color = tokens.accent;
+              }}
+            >
+              {crumb.label}
+            </Link>
+          ))}
           <Link
-            key={crumb.path}
-            to={crumb.path}
+            to={lang === DEFAULT_LANG ? '/' : `/${lang}/`}
             style={linkStyle}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = tokens.accent;
@@ -416,24 +471,10 @@ export default function NavBar() {
               e.currentTarget.style.color = tokens.accent;
             }}
           >
-            {crumb.label}
+            {ut('ui.common.home')}
           </Link>
-        ))}
-        <Link
-          to="/"
-          style={linkStyle}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = tokens.accent;
-            e.currentTarget.style.color = dark ? '#2c2c2c' : '#fff';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = tokens.accent;
-          }}
-        >
-          返回首页
-        </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
