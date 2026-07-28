@@ -19,7 +19,11 @@
 | 改代码、提交、预检、pre-commit/TS/Prettier 问题 | `docs/DEVELOPMENT_WORKFLOW.md` |
 | 数据管道、前端构建、启动 web、HTTP 200 验证、部署、DB 推送 | `docs/BUILD_AND_DEPLOY.md` |
 | 项目结构、页面布局、组件职责、Hydration 排障、数据管道细节、子池、PWA 缓存、文档索引 | `docs/AGENT_REFERENCE.md` |
-| 数据管道、数据库、地图模块详细规范 | `docs/REFERENCE.md` |
+| 数据管道、Spawner、坐标和实体分类 | `docs/REFERENCE_DATA_PIPELINE.md` |
+| 生成概率、物品爆率和掉落详情 | `docs/REFERENCE_DROP_RATES.md` |
+| 地图模块、Layout、旋转和图片 | `docs/REFERENCE_MAP_MODULES.md` |
+| SSR/SSG、JSON 加载和 Hydration | `docs/REFERENCE_FRONTEND_DATA.md` |
+| 技术参考索引与历史全文 | `docs/REFERENCE.md` / `docs/REFERENCE_ARCHIVE.md` |
 | 多语言 (i18n) 架构、locale 字典、语言路由、P8-P12 进度 | `docs/plans/MULTILANG_PLAN.md` |
 | PWA 架构规划 | `docs/PWA_ROADMAP.md` |
 | 前端水合错误 Playwright 排查 | `docs/DEBUG_HYDRATION_WITH_PLAYWRIGHT.md` |
