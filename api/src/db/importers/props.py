@@ -1,4 +1,4 @@
-from config import PROPS_DIR
+from config import PROPS_DIR, TRANSLATION_KEY_ALIAS_MAP
 
 from .._helpers import extract_props_name, load_json_dir
 
@@ -18,6 +18,7 @@ class PropsImporter:
             entry = data_list[0]
             props = entry.get("Properties", {}) or {}
             name_key = (props.get("Name") or {}).get("Key", "")
+            name_key = TRANSLATION_KEY_ALIAS_MAP.get(name_key, name_key)
             asset_name = extract_props_name(raw_name)
             rows.append((asset_name, raw_name, name_key))
         c.executemany(

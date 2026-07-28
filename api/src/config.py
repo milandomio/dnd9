@@ -56,6 +56,10 @@ TRANSLATION_ALIAS_MAP = {
     "BlueMarlin": "Bluemarlin",
 }
 
+TRANSLATION_KEY_ALIAS_MAP = {
+    "Text_DesignData_Props_Props_Ore_BrimstoneOre": "Text_DesignData_Item_Item_BrimstoneOres_5001",
+}
+
 HARDCODED_TRANSLATIONS = {
     "Barrel": "木桶",
     "Bones": "骸骨",

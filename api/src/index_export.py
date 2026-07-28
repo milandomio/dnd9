@@ -293,16 +293,22 @@ def build_and_save_indexes(
             {
                 "name": entry["npc_name"],
                 "translation": entry.get("npc_name_display", ""),
+                "translation_key": entry.get("translation_key", ""),
                 "page": "quest_npc",
                 "url": "/quest_npc/",
             }
         )
-    dm_groups = sorted({m.get("group") for m in modules_data if m.get("group")})
-    for g in dm_groups:
+    dm_groups = {}
+    for module in modules_data:
+        group = module.get("group")
+        if group and group not in dm_groups:
+            dm_groups[group] = module.get("group_key", "")
+    for g, group_key in sorted(dm_groups.items()):
         search_index.append(
             {
                 "name": g,
                 "translation": group_label_resolver(g) if group_label_resolver else g,
+                "translation_key": group_key,
                 "page": "dungeon_modules",
                 "url": f"/dungeon_modules/{urllib.parse.quote(g, safe='')}/",
             }
@@ -317,6 +323,7 @@ def build_and_save_indexes(
                 "tag": (
                     group_label_resolver(m.get("group", "")) if group_label_resolver else (m.get("group", "") or "模块")
                 ),
+                "tag_translation_key": m.get("group_key", ""),
                 "url": f"/dungeon_modules/{urllib.parse.quote(m.get('group', '') or '', safe='')}/{urllib.parse.quote(m['name'], safe='')}/",
             }
         )
