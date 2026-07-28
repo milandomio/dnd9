@@ -49,3 +49,10 @@
 - **改动原因**：误将 `.gitignore` 的 Release 注释当成当前部署入口；实际规范是本地构建 DB，推送时临时强制跟踪，推送后再取消本地跟踪。
 - **变更文件**：`.github/workflows/deploy.yml`；`.github/workflows/deploy-dev.yml`；`.gitignore`；`docs/BUILD_AND_DEPLOY.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：删除 Actions 中的 Release 下载步骤、对应错误文档和远程 `data-latest` Release/tag；`.gitignore` 注释改为指向既有的“本地 DB → 临时提交 → 推送 → 本地取消跟踪”流程。掉落翻译键同步过滤修复不回退。
+
+### fix: 恢复 Cloudflare 精确 404 fallback
+
+- **改动原因**：`/* /index.html 200` 通配 rewrite 会绕过构建生成的 `404.html`，使裁剪详情路径和任意错误路径都变成 soft 404。
+- **变更文件**：`web/public/_redirects`（删除）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：未知静态路径由 Cloudflare 返回根 `404.html` 和 HTTP 404；客户端保留原 URL 后加载对应详情 JSON，不再把所有未知路径 rewrite 为根首页 200。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`git diff --check` 通过。
