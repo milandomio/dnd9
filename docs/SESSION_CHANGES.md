@@ -22,3 +22,10 @@
 - **变更文件**：`web/scripts/ssg.mjs`；`docs/plans/SSG_DETAIL_TEMPLATE.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：模块详情路径 `/:lang/dungeon_modules/:group/:name` 纳入 `isTemplateDetailRoute()`；轻量壳仅 preload `/data/{version}/json/dungeon_modules_coords/{name}.json`，客户端继续通过 `useDungeonModules()` 加载模块表并渲染真实坐标。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`node --check scripts/ssg.mjs`、`npm run build` 通过；中英文示例路径均生成含 `data-detail-placeholder` 的 44 行 HTML，HTTP 200。
+
+### perf: 删除无效全局 JSON preload
+
+- **改动原因**：所有页面均预加载首页 `index.json` 和旧版非 i18n `search_index.json`；非首页不使用前者，导航搜索实际请求 `search_index/{lang}.json`，导致无效网络下载。
+- **变更文件**：`web/vite.config.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：全局 preload 仅保留版本检测所需的 `/data/json/meta.json` 和全局模块 Hook 使用的 `/data/{version}/json/dungeon_modules.json`；首页数据及语言搜索索引继续由现有组件按需 fetch。
+- **验证**：`npm run format`、`npm run format:check`、Prettier、`npx tsc --noEmit` 和 `npm run build` 通过；构建后的英语 lootdrops 列表仅保留上述两个 preload，页面 HTTP 200。
