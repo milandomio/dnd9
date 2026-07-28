@@ -56,3 +56,10 @@
 - **变更文件**：`web/public/_redirects`（删除）；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：未知静态路径由 Cloudflare 返回根 `404.html` 和 HTTP 404；客户端保留原 URL 后加载对应详情 JSON，不再把所有未知路径 rewrite 为根首页 200。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`git diff --check` 通过。
+
+### fix: 对齐多语言 SSG 首轮水合语言
+
+- **改动原因**：非中文 SSG 复制页的 body 仍由中文 SSR 生成，但客户端首轮按 URL 语言渲染，导致 hydration mismatch；Sitemap 声明的 `/zh-Hans/` 首页也没有静态文件。
+- **变更文件**：`web/scripts/ssg.mjs`；`web/src/i18n/LanguageContext.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`__lang` 表示目标 URL 语言，`__ssrLang` 表示 HTML body 的实际 SSR 语言；客户端首轮按 `__ssrLang` 水合，随后同步到 URL 语言。默认语言仅额外复制根首页到 `zh-Hans/index.html`，不重复生成其他页面。
+- **验证**：format、Prettier、TypeScript、Node 语法与 quick SSG 构建通过；十语言首页、`zh-Hans/index.html`、语言 canonical、`__lang`/`__ssrLang` 和详情轻量壳均已检查。
