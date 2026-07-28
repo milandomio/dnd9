@@ -2061,3 +2061,4 @@ if (typeof window !== "undefined") {
 - **改动原因**：CF Pages 部署上限为 20,000 个文件，Quick SSG 当前约 32,203 个产物；需要在不改变预览分支、根域名部署和所有语言 SEO 壳的前提下，减少重复 lootdrop 品质变体静态文件并避免关键词堆砌。
 - **变更文件**：`docs/plans/CF_PAGES_DETAIL_FALLBACK.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：计划保留所有语言现有 SSG SEO 壳；lootdrops 每种语言仅保留默认变体和 `8001` 神器变体的 SEO HTML，`1001` 至 `7001` 的其他重复变体交给 `404.html` + `BrowserRouter` 客户端请求同名版本化 JSON；普通实体、任务和模块详情不在本次裁剪范围内，同时验收 `gh-pages-dev` 预览分支确实是 CF Pages 的输入。
+- **执行边界**：本计划及后续实现默认只创建本地 commit checkpoint，不包含远程推送；远程推送必须等待用户单独指令。

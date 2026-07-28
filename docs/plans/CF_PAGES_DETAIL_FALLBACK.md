@@ -10,6 +10,7 @@
 - items、monsters、props 以及任务、模块等非 lootdrop 详情页不在本次裁剪范围内。
 - 不改变当前 CF 三级域名根目录部署，不引入 `/dnd9/` 二级路径。
 - 不改变 GitHub Actions 推送 `gh-pages-dev` 预览分支的流程；实现后验证 CF Pages 确实消费该预览分支产物。
+- 实现完成后只创建本地 commit checkpoint；不包含远程推送，除非用户单独明确要求。
 
 ## 当前问题
 
@@ -66,3 +67,4 @@
 - 不修改 CF Pages Dashboard 配置，除非验收确认其仍未使用 `gh-pages-dev`。
 - 不删除数据 JSON、地图图片或默认语言静态 HTML。
 - 不改变生产站点 `https://dnd9.icetar.com` 的根路径规则。
+- 不执行远程推送。
