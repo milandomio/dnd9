@@ -2062,3 +2062,10 @@ if (typeof window !== "undefined") {
 - **变更文件**：`docs/plans/CF_PAGES_DETAIL_FALLBACK.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：计划保留所有语言现有 SSG SEO 壳；lootdrops 每种语言仅保留默认变体和 `8001` 神器变体的 SEO HTML，`1001` 至 `7001` 的其他重复变体交给 `404.html` + `BrowserRouter` 客户端请求同名版本化 JSON；普通实体、任务和模块详情不在本次裁剪范围内，同时验收 `gh-pages-dev` 预览分支确实是 CF Pages 的输入。
 - **执行边界**：本计划及后续实现默认只创建本地 commit checkpoint，不包含远程推送；远程推送必须等待用户单独指令。
+
+## docs: 敲定 CF Pages 详情 fallback 执行细节
+
+- **改动原因**：原计划同时声称保留 `zh-Hans` 全路由和裁剪每种语言变体，且遗漏 Sitemap 中的 404 URL、Cloudflare 自定义 404 状态、实际 `createRoot()` 分支及文件安全余量，不能直接执行。
+- **变更文件**：`docs/plans/CF_PAGES_DETAIL_FALLBACK.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：仅给 9 个非默认语言跳过非默认品质变体 HTML；`zh-Hans` 全保留，默认品质按 `5001 -> variant_suffixes[0]` 选择，独立 `*_8001` 全语言保留；Sitemap 使用同一路由可用性标记同步过滤 URL 与 hreflang；`404.html` 文档预期 404 后由 `createRoot()`、`BrowserRouter` 和版本化 JSON 完成在线渲染。
+- **容量与验收**：当前 32,203 个文件预计减少 14,076 个至约 18,127；构建期硬阈值定为 19,000。远程验收以 `gh-pages-dev` commit SHA、分支根产物和 Cloudflare retained 200/fallback 404 为准，不把空 Build command 误判为错误。
