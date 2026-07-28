@@ -12,7 +12,14 @@ import SectionHeader from '../components/SectionHeader';
 import VariantSwitch from '../components/VariantSwitch';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
-import type { DungeonModule, VariantNameEntry } from '../types/data';
+import type {
+  DungeonModule,
+  GroupDropInfo,
+  LootdropCoord,
+  LootdropItem,
+  LootdropMonster,
+  VariantNameEntry,
+} from '../types/data';
 import {
   getAdj,
   useCtrlBtn,
@@ -27,58 +34,12 @@ import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
-interface LootdropCoord {
-  x: number;
-  y: number;
-  z: number;
-  map: string;
-  file: string;
-  version: string;
-  label?: string;
-  spawn_rate?: number;
-  variant_count?: number;
-  variant_names?: VariantNameEntry[];
-  score?: number;
-  group_parent?: string;
-  sub_group_parent?: string;
-  sub_pool_size?: number;
-  sub_pool_entries?: VariantNameEntry[];
-  quality?: string;
-}
-
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
 const _globalRefPending = new Map<string, Promise<LootdropCoord[]>>();
+const _globalLootCache = new Map<string, LootdropItem>();
+const _globalLootPending = new Map<string, Promise<LootdropItem>>();
 let _globalCacheVersion = '';
-
-interface LootdropMonster {
-  name: string;
-  translation: string;
-  translation_key?: string;
-  color: string;
-  coords?: LootdropCoord[];
-  ref?: string;
-  coord_count?: number;
-  drop_rates?: Record<string, number>;
-  max_score?: number;
-}
-
-interface GroupDropInfo {
-  translation: string;
-  translation_key?: string;
-  spawn_rate: number;
-  spawn_rates?: Record<string, number>;
-  drop_rates: Record<string, number>;
-}
-
-interface LootdropItem {
-  name: string;
-  translation: string;
-  translation_key?: string;
-  monsters: LootdropMonster[];
-  group_drop_info?: Record<string, GroupDropInfo[]>;
-  variant_rarity?: Record<string, { name: string; translation_key: string }>;
-}
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -116,6 +77,91 @@ function hasAnyRate(dr: Record<string, number>): boolean {
   return Object.values(dr).some((v) => v > 0);
 }
 
+function lootdropSourceKey(monster: LootdropMonster): string {
+  return monster.source_id ?? monster.translation;
+}
+
+function matchesGroupEntry(
+  entry: GroupDropInfo,
+  monster: LootdropMonster
+): boolean {
+  return entry.source_id
+    ? entry.source_id === monster.source_id
+    : entry.translation === monster.translation;
+}
+
+function hasLootdropDetail(item: LootdropItem | undefined): boolean {
+  return Boolean(item?.monsters || item?.sources);
+}
+
+function selectLootdropVariant(
+  item: LootdropItem,
+  requestedSuffix: string | null
+): LootdropItem {
+  if (!item.sources || !item.variants) return item;
+  const availableSuffixes = Object.keys(item.variants);
+  const suffix =
+    (requestedSuffix && item.variants[requestedSuffix]
+      ? requestedSuffix
+      : availableSuffixes.includes('5001')
+        ? '5001'
+        : availableSuffixes[0]) ?? '';
+  const variant = item.variants[suffix];
+  if (!variant) return { ...item, monsters: [], group_drop_info: {} };
+
+  const activeSourceIds = new Set<string>();
+  const groupDropInfo: Record<string, GroupDropInfo[]> = {};
+  for (const [group, entries] of Object.entries(variant.group_drop_info)) {
+    groupDropInfo[group] = entries.flatMap((entry) => {
+      const source = item.sources?.[entry.source_id];
+      if (!source) return [];
+      activeSourceIds.add(entry.source_id);
+      return [
+        {
+          ...entry,
+          translation: source.translation,
+          translation_key: source.translation_key,
+        },
+      ];
+    });
+  }
+
+  const maxScores = new Map<string, number>();
+  for (const entries of Object.values(groupDropInfo)) {
+    for (const entry of entries) {
+      const score =
+        Math.round(entry.spawn_rate * (entry.drop_rates['豪客赛'] ?? 0) * 100) /
+        10000;
+      maxScores.set(
+        entry.source_id!,
+        Math.max(maxScores.get(entry.source_id!) ?? -1, score)
+      );
+    }
+  }
+  const monsters = Object.entries(item.sources)
+    .filter(([sourceId]) => activeSourceIds.has(sourceId))
+    .map(([sourceId, source]) => ({
+      ...source,
+      source_id: sourceId,
+      max_score: maxScores.get(sourceId) ?? -1,
+    }));
+  return {
+    ...item,
+    name: suffix ? `${item.name}_${suffix}` : item.name,
+    monsters,
+    group_drop_info: groupDropInfo,
+  };
+}
+
+function resetGlobalCaches(dataVersion: string) {
+  if (!dataVersion || dataVersion === _globalCacheVersion) return;
+  _globalRefCache.clear();
+  _globalRefPending.clear();
+  _globalLootCache.clear();
+  _globalLootPending.clear();
+  _globalCacheVersion = dataVersion;
+}
+
 export default function LootdropDetailPage() {
   const { name } = useParams<{ name: string }>();
   const navigate = useNavigate();
@@ -140,9 +186,9 @@ export default function LootdropDetailPage() {
     item: LootdropItem;
     modules: DungeonModule[];
   }>(baseDataKey);
-  const effectiveSsrData = ssrData?.item?.monsters
+  const effectiveSsrData = hasLootdropDetail(ssrData?.item)
     ? ssrData
-    : baseSsrData?.item?.monsters
+    : hasLootdropDetail(baseSsrData?.item)
       ? baseSsrData
       : ssrData?.item?.name
         ? ssrData
@@ -150,8 +196,8 @@ export default function LootdropDetailPage() {
           ? baseSsrData
           : null;
   const [data, setData] = useState<LootdropItem | null>(
-    effectiveSsrData?.item?.monsters
-      ? effectiveSsrData.item
+    hasLootdropDetail(effectiveSsrData?.item)
+      ? selectLootdropVariant(effectiveSsrData!.item, currentSuffix)
       : effectiveSsrData?.item?.name
         ? (effectiveSsrData.item as LootdropItem)
         : null
@@ -186,8 +232,12 @@ export default function LootdropDetailPage() {
   const isArtifact = baseName.endsWith('_8001');
   const defaultThreshold = isArtifact ? 0.03 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
-    effectiveSsrData?.item?.monsters
-      ? defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
+    hasLootdropDetail(effectiveSsrData?.item)
+      ? defaultHidden(
+          selectLootdropVariant(effectiveSsrData!.item, currentSuffix)
+            .monsters ?? [],
+          defaultThreshold
+        )
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
@@ -201,40 +251,56 @@ export default function LootdropDetailPage() {
   const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
-  const lootFetchedRef = useRef(false);
-
-  // Reset fetch guard when name changes (e.g. navigation between lootdrops)
-  useEffect(() => {
-    lootFetchedRef.current = false;
-  }, [name]);
-
   useEffect(() => {
     if (!baseName) return;
-    if (effectiveSsrData?.item?.monsters) {
-      setData(effectiveSsrData.item);
-      setHidden(
-        defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
+    if (dataVersion) resetGlobalCaches(dataVersion);
+    if (hasLootdropDetail(effectiveSsrData?.item)) {
+      const selected = selectLootdropVariant(
+        effectiveSsrData!.item,
+        currentSuffix
       );
+      _globalLootCache.set(baseName, effectiveSsrData!.item);
+      setData(selected);
+      setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
       return;
     }
     if (!dataVersion) return;
-    const fetchName =
-      currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
-    const lootUrl = dataUrl(
-      dataVersion,
-      `/data/json/lootdrops/${fetchName}.json`
-    );
-    if (lootFetchedRef.current) return;
-    lootFetchedRef.current = true;
-    setData(null);
-    setHidden(new Set());
-    fetch(lootUrl)
-      .then<LootdropItem>((r) => r.json())
+    let cancelled = false;
+    const cached = _globalLootCache.get(baseName);
+    const pending = _globalLootPending.get(baseName);
+    const request = cached
+      ? Promise.resolve(cached)
+      : (pending ??
+        fetch(dataUrl(dataVersion, `/data/json/lootdrops/${baseName}.json`))
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`lootdrop HTTP ${response.status}`);
+            return response.json() as Promise<LootdropItem>;
+          })
+          .then((item) => {
+            _globalLootCache.set(baseName, item);
+            _globalLootPending.delete(baseName);
+            return item;
+          }));
+    if (!cached && !pending) _globalLootPending.set(baseName, request);
+    if (!cached) {
+      setData(null);
+      setHidden(new Set());
+    }
+    request
       .then((item) => {
-        setData(item);
-        setHidden(defaultHidden(item.monsters, defaultThreshold));
+        if (cancelled) return;
+        const selected = selectLootdropVariant(item, currentSuffix);
+        setData(selected);
+        setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
       })
-      .catch(console.error);
+      .catch((error) => {
+        _globalLootPending.delete(baseName);
+        if (!cancelled) console.error(error);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
 
   // Auto-redirect to default variant when visiting base URL
@@ -304,11 +370,7 @@ export default function LootdropDetailPage() {
     }
   );
   useEffect(() => {
-    if (dataVersion && dataVersion !== _globalCacheVersion) {
-      _globalRefCache.clear();
-      _globalRefPending.clear();
-      _globalCacheVersion = dataVersion;
-    }
+    if (dataVersion) resetGlobalCaches(dataVersion);
     const refsNeeded = monsters
       .filter((m) => m.ref && !refCoords.has(m.ref))
       .map((m) => m.ref!);
@@ -346,16 +408,52 @@ export default function LootdropDetailPage() {
     });
   }, [monsters, dataVersion]);
 
-  // P005: Merge referenced coordinates, filtered to only maps present in entity
+  const variantRatesBySource = useMemo(() => {
+    const lookup = new Map<string, Map<string, GroupDropInfo>>();
+    for (const [group, entries] of Object.entries(
+      data?.group_drop_info ?? {}
+    )) {
+      for (const entry of entries) {
+        if (!entry.source_id) continue;
+        if (!lookup.has(entry.source_id)) {
+          lookup.set(entry.source_id, new Map());
+        }
+        lookup.get(entry.source_id)!.set(group, entry);
+      }
+    }
+    return lookup;
+  }, [data?.group_drop_info]);
+
+  // Merged families use source-level group rates as the coordinate authority.
   const resolvedMonsters = useMemo(
     () =>
-      monsters.map((m) => ({
-        ...m,
-        coords: (m.coords ?? refCoords.get(m.ref!) ?? []).filter(
-          (c) => !m.ref || modules.size === 0 || modules.has(c.map)
-        ),
-      })),
-    [monsters, refCoords, modules]
+      monsters.map((m) => {
+        const sourceRates = m.source_id
+          ? variantRatesBySource.get(m.source_id)
+          : undefined;
+        const coords = (m.coords ?? refCoords.get(m.ref!) ?? []).flatMap(
+          (coord) => {
+            if (!m.ref || modules.size === 0) return [coord];
+            const group = modules.get(coord.map)?.group;
+            if (!group) return [];
+            if (!sourceRates) return [coord];
+            const rate = sourceRates.get(group);
+            if (!rate) return [];
+            return [
+              {
+                ...coord,
+                spawn_rate: rate.spawn_rate,
+                score:
+                  Math.round(
+                    rate.spawn_rate * (rate.drop_rates['豪客赛'] ?? 0) * 100
+                  ) / 10000,
+              },
+            ];
+          }
+        );
+        return { ...m, coords };
+      }),
+    [monsters, refCoords, modules, variantRatesBySource]
   );
 
   const orderedMonsters = useMemo(() => {
@@ -371,6 +469,11 @@ export default function LootdropDetailPage() {
     for (const [g, entries] of Object.entries(data.group_drop_info)) {
       const m = new Map<string, { sr: number; dr: number }>();
       for (const e of entries) {
+        m.set(e.source_id ?? e.translation, {
+          sr: e.spawn_rate,
+          dr: e.drop_rates['豪客赛'] ?? 0,
+        });
+        if (!e.source_id) continue;
         m.set(e.translation, {
           sr: e.spawn_rate,
           dr: e.drop_rates['豪客赛'] ?? 0,
@@ -517,7 +620,7 @@ export default function LootdropDetailPage() {
     let total = 0;
     const varGroups = new Map<
       string,
-      { translation: string; positions: Set<string>; vc: number }
+      { sourceKey: string; positions: Set<string>; vc: number }
     >();
     const regPositions = new Map<string, number>();
     for (const d of item.dots) {
@@ -530,7 +633,7 @@ export default function LootdropDetailPage() {
           existing.positions.add(posKey);
         } else {
           varGroups.set(key, {
-            translation: d.monster.translation,
+            sourceKey: lootdropSourceKey(d.monster),
             positions: new Set([posKey]),
             vc,
           });
@@ -539,7 +642,7 @@ export default function LootdropDetailPage() {
         const mKey = `${d.monster.translation}::${posKey}`;
         let s = d.score ?? 0;
         if (s === 0) {
-          const rate = _rateLookup.get(d.monster.translation);
+          const rate = _rateLookup.get(lootdropSourceKey(d.monster));
           if (rate) s = (rate.sr * rate.dr) / 100;
         }
         const prev = regPositions.get(mKey) ?? 0;
@@ -548,7 +651,7 @@ export default function LootdropDetailPage() {
     }
     for (const s of regPositions.values()) total += s;
     for (const [, g] of varGroups) {
-      const rate = _rateLookup.get(g.translation);
+      const rate = _rateLookup.get(g.sourceKey);
       if (rate) {
         const baseScore = (rate.sr * rate.dr) / 100;
         total +=
@@ -612,7 +715,7 @@ export default function LootdropDetailPage() {
         const mod = modules.get(c.map);
         const groupName = mod?.group || '';
         const gdi = data?.group_drop_info?.[groupName];
-        const entry = gdi?.find((e) => e.translation === m.translation);
+        const entry = gdi?.find((e) => matchesGroupEntry(e, m));
         if (entry) {
           if (modeFilter) {
             if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
@@ -641,9 +744,7 @@ export default function LootdropDetailPage() {
       for (const d of item.dots) {
         if (hideZeroRate) {
           const gdi = data?.group_drop_info?.[groupName];
-          const entry = gdi?.find(
-            (e) => e.translation === d.monster.translation
-          );
+          const entry = gdi?.find((e) => matchesGroupEntry(e, d.monster));
           if (entry) {
             if (modeFilter) {
               if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
@@ -1012,8 +1113,8 @@ export default function LootdropDetailPage() {
                 ? groupItems.some(({ dots }) =>
                     dots.some((d) => {
                       const gdi = data?.group_drop_info?.[groupName];
-                      const entry = gdi?.find(
-                        (e) => e.translation === d.monster.translation
+                      const entry = gdi?.find((e) =>
+                        matchesGroupEntry(e, d.monster)
                       );
                       if (!entry) return true;
                       if (modeFilter)
@@ -1058,8 +1159,8 @@ export default function LootdropDetailPage() {
                     <ReferenceDropRates
                       entries={data.group_drop_info[groupName]!.filter(
                         (info) => {
-                          const m = resolvedMonsters.find(
-                            (x) => x.translation === info.translation
+                          const m = resolvedMonsters.find((source) =>
+                            matchesGroupEntry(info, source)
                           );
                           return m && !hidden.has(m.translation);
                         }
@@ -1079,8 +1180,8 @@ export default function LootdropDetailPage() {
               const dots = hideZeroRate
                 ? rawDots.filter((d) => {
                     const gdi = data?.group_drop_info?.[groupName];
-                    const entry = gdi?.find(
-                      (e) => e.translation === d.monster.translation
+                    const entry = gdi?.find((e) =>
+                      matchesGroupEntry(e, d.monster)
                     );
                     if (!entry) return true;
                     if (modeFilter)
@@ -1383,205 +1484,200 @@ export default function LootdropDetailPage() {
                       alignItems: 'center',
                     }}
                   >
-                    {[...new Set(dots.map((d) => d.monster.translation))].map(
-                      (tl) => {
-                        const m = resolvedMonsters.find(
-                          (x) => x.translation === tl
-                        )!;
-                        const mDots = dots.filter(
-                          (d) => d.monster.translation === tl
-                        );
-                        if (hideZeroRate) {
-                          const gdi = data?.group_drop_info?.[groupName];
-                          const entry = gdi?.find((e) => e.translation === tl);
-                          if (entry) {
-                            if (
-                              modeFilter &&
-                              (entry.drop_rates[modeFilter] ?? 0) === 0
-                            )
-                              return null;
-                            if (!modeFilter && !hasAnyRate(entry.drop_rates))
-                              return null;
-                          }
+                    {[
+                      ...new Set(dots.map((d) => lootdropSourceKey(d.monster))),
+                    ].map((sourceId) => {
+                      const m = resolvedMonsters.find(
+                        (source) => lootdropSourceKey(source) === sourceId
+                      )!;
+                      const tl = m.translation;
+                      const mDots = dots.filter(
+                        (d) => lootdropSourceKey(d.monster) === sourceId
+                      );
+                      if (hideZeroRate) {
+                        const gdi = data?.group_drop_info?.[groupName];
+                        const entry = gdi?.find((e) => matchesGroupEntry(e, m));
+                        if (entry) {
+                          if (
+                            modeFilter &&
+                            (entry.drop_rates[modeFilter] ?? 0) === 0
+                          )
+                            return null;
+                          if (!modeFilter && !hasAnyRate(entry.drop_rates))
+                            return null;
                         }
-                        // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
-                        const sr = mDots.find(
-                          (d) => d.spawn_rate != null
-                        )?.spawn_rate;
-                        const dr = m.drop_rates;
-                        const filteredDr =
-                          dr && modeFilter && dr[modeFilter] != null
-                            ? { [modeFilter]: dr[modeFilter] }
-                            : dr;
-                        const hasRates =
-                          filteredDr && Object.keys(filteredDr).length > 0;
-                        return (
+                      }
+                      // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
+                      const sr = mDots.find(
+                        (d) => d.spawn_rate != null
+                      )?.spawn_rate;
+                      const dr = m.drop_rates;
+                      const filteredDr =
+                        dr && modeFilter && dr[modeFilter] != null
+                          ? { [modeFilter]: dr[modeFilter] }
+                          : dr;
+                      const hasRates =
+                        filteredDr && Object.keys(filteredDr).length > 0;
+                      return (
+                        <span
+                          key={sourceId}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 3,
+                            flexWrap: 'wrap',
+                          }}
+                        >
                           <span
-                            key={tl}
                             style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 3,
-                              flexWrap: 'wrap',
+                              width: 10,
+                              height: 10,
+                              borderRadius: '50%',
+                              background: m.color,
+                              flexShrink: 0,
                             }}
+                          ></span>
+                          <span
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => toggle(tl)}
                           >
+                            {t(m.translation_key, m.translation)}
+                          </span>
+                          {sr != null && sr !== 100 && (
                             <span
-                              style={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: '50%',
-                                background: m.color,
-                                flexShrink: 0,
-                              }}
-                            ></span>
-                            <span
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => toggle(tl)}
+                              style={{ color: tokens.accent, fontSize: 12 }}
                             >
-                              {t(m.translation_key, m.translation)}
+                              {sr}%
                             </span>
-                            {sr != null && sr !== 100 && (
-                              <span
-                                style={{ color: tokens.accent, fontSize: 12 }}
-                              >
-                                {sr}%
-                              </span>
-                            )}
-                            {hasRates && (
-                              <span
-                                style={{ color: tokens.muted, fontSize: 12 }}
-                              >
-                                (
-                                {Object.entries(filteredDr!)
-                                  .map(
-                                    ([mode, rate]) =>
-                                      `[${dropRateModeLabel(mode, t, ut)}:${rate}%]`
-                                  )
-                                  .join('')}
+                          )}
+                          {hasRates && (
+                            <span style={{ color: tokens.muted, fontSize: 12 }}>
+                              (
+                              {Object.entries(filteredDr!)
+                                .map(
+                                  ([mode, rate]) =>
+                                    `[${dropRateModeLabel(mode, t, ut)}:${rate}%]`
                                 )
-                              </span>
-                            )}
-                            <span style={{ color: tokens.muted }}>
-                              {(() => {
-                                const linkerGroups = new Map<
-                                  string,
-                                  {
-                                    dots: typeof mDots;
-                                    poolSize: number;
-                                    poolEntries: VariantNameEntry[];
-                                  }
-                                >();
-                                for (const d of mDots) {
-                                  const sgp = d.sub_group_parent;
-                                  const gp = d.group_parent;
-                                  if (!sgp || !gp) continue;
-                                  const key = `${gp}::${sgp}`;
-                                  if (!linkerGroups.has(key)) {
-                                    linkerGroups.set(key, {
-                                      dots: [],
-                                      poolSize: d.sub_pool_size ?? 0,
-                                      poolEntries: d.sub_pool_entries ?? [],
-                                    });
-                                  }
-                                  linkerGroups.get(key)!.dots.push(d);
+                                .join('')}
+                              )
+                            </span>
+                          )}
+                          <span style={{ color: tokens.muted }}>
+                            {(() => {
+                              const linkerGroups = new Map<
+                                string,
+                                {
+                                  dots: typeof mDots;
+                                  poolSize: number;
+                                  poolEntries: VariantNameEntry[];
                                 }
-                                const linkerKeys = new Set<string>();
-                                for (const [, g] of linkerGroups) {
-                                  for (const d of g.dots) {
-                                    linkerKeys.add(`${d.x},${d.y},${d.z}`);
-                                  }
-                                }
-                                const nonLinkerDots = mDots.filter(
-                                  (d) => !linkerKeys.has(`${d.x},${d.y},${d.z}`)
-                                );
-                                const varDots = nonLinkerDots.filter(
-                                  (d) => d.variant_count && d.variant_count > 1
-                                );
-                                const regDots = nonLinkerDots.filter(
-                                  (d) =>
-                                    !d.variant_count || d.variant_count <= 1
-                                );
-                                const dedupPos = (
-                                  arr: typeof regDots,
-                                  gp?: string
-                                ) => {
-                                  const seen = new Set<string>();
-                                  return arr.filter((d) => {
-                                    if (gp && d.group_parent !== gp)
-                                      return false;
-                                    const k = `${d.x},${d.y},${d.z}`;
-                                    if (seen.has(k)) return false;
-                                    seen.add(k);
-                                    return true;
+                              >();
+                              for (const d of mDots) {
+                                const sgp = d.sub_group_parent;
+                                const gp = d.group_parent;
+                                if (!sgp || !gp) continue;
+                                const key = `${gp}::${sgp}`;
+                                if (!linkerGroups.has(key)) {
+                                  linkerGroups.set(key, {
+                                    dots: [],
+                                    poolSize: d.sub_pool_size ?? 0,
+                                    poolEntries: d.sub_pool_entries ?? [],
                                   });
-                                };
-                                const parts: string[] = [];
-                                for (const [, g] of linkerGroups) {
-                                  const uniquePos = new Set(
-                                    g.dots.map((d) => `${d.x},${d.y},${d.z}`)
-                                  ).size;
-                                  parts.push(
-                                    `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}` : ''})`
-                                  );
                                 }
-                                const dedupedReg = dedupPos(regDots);
-                                if (dedupedReg.length > 0) {
-                                  parts.push(`(${dedupedReg.length}点)`);
+                                linkerGroups.get(key)!.dots.push(d);
+                              }
+                              const linkerKeys = new Set<string>();
+                              for (const [, g] of linkerGroups) {
+                                for (const d of g.dots) {
+                                  linkerKeys.add(`${d.x},${d.y},${d.z}`);
                                 }
-                                if (varDots.length > 0) {
-                                  const names = varDots[0].variant_names ?? [];
-                                  const varGps = [
-                                    ...new Set(
-                                      varDots
-                                        .map((d) => d.group_parent)
-                                        .filter(Boolean)
-                                    ),
-                                  ];
-                                  const varPosCounts = varGps.map((gp) => ({
-                                    gp,
-                                    count: dedupPos(varDots, gp).length,
-                                  }));
-                                  const totalVarPos = varPosCounts.reduce(
-                                    (s, v) => s + v.count,
-                                    0
-                                  );
-                                  if (names.length > 0) {
-                                    if (totalVarPos > 1) {
-                                      parts.push(
-                                        `(${totalVarPos}点选${varDots[0].variant_count})`
-                                      );
-                                    } else {
-                                      const nameStr = names
-                                        .map((entry) =>
-                                          t(entry.translation_key, entry.name)
-                                        )
-                                        .join(ut('ui.location.map_sep'));
-                                      parts.push(
-                                        `(${nameStr}${ut(
-                                          'ui.detail.pool_select'
-                                        )
-                                          .replace(
-                                            '{count}',
-                                            String(names.length)
-                                          )
-                                          .replace('{positions}', '1')})`
-                                      );
-                                    }
-                                  } else {
+                              }
+                              const nonLinkerDots = mDots.filter(
+                                (d) => !linkerKeys.has(`${d.x},${d.y},${d.z}`)
+                              );
+                              const varDots = nonLinkerDots.filter(
+                                (d) => d.variant_count && d.variant_count > 1
+                              );
+                              const regDots = nonLinkerDots.filter(
+                                (d) => !d.variant_count || d.variant_count <= 1
+                              );
+                              const dedupPos = (
+                                arr: typeof regDots,
+                                gp?: string
+                              ) => {
+                                const seen = new Set<string>();
+                                return arr.filter((d) => {
+                                  if (gp && d.group_parent !== gp) return false;
+                                  const k = `${d.x},${d.y},${d.z}`;
+                                  if (seen.has(k)) return false;
+                                  seen.add(k);
+                                  return true;
+                                });
+                              };
+                              const parts: string[] = [];
+                              for (const [, g] of linkerGroups) {
+                                const uniquePos = new Set(
+                                  g.dots.map((d) => `${d.x},${d.y},${d.z}`)
+                                ).size;
+                                parts.push(
+                                  `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}` : ''})`
+                                );
+                              }
+                              const dedupedReg = dedupPos(regDots);
+                              if (dedupedReg.length > 0) {
+                                parts.push(`(${dedupedReg.length}点)`);
+                              }
+                              if (varDots.length > 0) {
+                                const names = varDots[0].variant_names ?? [];
+                                const varGps = [
+                                  ...new Set(
+                                    varDots
+                                      .map((d) => d.group_parent)
+                                      .filter(Boolean)
+                                  ),
+                                ];
+                                const varPosCounts = varGps.map((gp) => ({
+                                  gp,
+                                  count: dedupPos(varDots, gp).length,
+                                }));
+                                const totalVarPos = varPosCounts.reduce(
+                                  (s, v) => s + v.count,
+                                  0
+                                );
+                                if (names.length > 0) {
+                                  if (totalVarPos > 1) {
                                     parts.push(
-                                      varGps.length === 1
-                                        ? `(${totalVarPos}点选1)`
-                                        : `(${totalVarPos}点)`
+                                      `(${totalVarPos}点选${varDots[0].variant_count})`
+                                    );
+                                  } else {
+                                    const nameStr = names
+                                      .map((entry) =>
+                                        t(entry.translation_key, entry.name)
+                                      )
+                                      .join(ut('ui.location.map_sep'));
+                                    parts.push(
+                                      `(${nameStr}${ut('ui.detail.pool_select')
+                                        .replace(
+                                          '{count}',
+                                          String(names.length)
+                                        )
+                                        .replace('{positions}', '1')})`
                                     );
                                   }
+                                } else {
+                                  parts.push(
+                                    varGps.length === 1
+                                      ? `(${totalVarPos}点选1)`
+                                      : `(${totalVarPos}点)`
+                                  );
                                 }
-                                return parts.join(' ');
-                              })()}
-                            </span>
+                              }
+                              return parts.join(' ');
+                            })()}
                           </span>
-                        );
-                      }
-                    )}
+                        </span>
+                      );
+                    })}
                   </div>
                   {(() => {
                     const _rl2 =
