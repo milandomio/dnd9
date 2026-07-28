@@ -1007,7 +1007,9 @@ export default function LootdropDetailPage() {
             transition: 'all 0.2s',
           }}
         >
-          {hidden.size === 0 ? '隐藏全部' : '全部显示'}
+          {hidden.size === 0
+            ? ut('ui.common.hide_all')
+            : ut('ui.common.show_all')}
         </button>
         {visibleMonsters.map((m) => (
           <button

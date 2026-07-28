@@ -1,3 +1,11 @@
+# 2026-07-29 会话修改记录
+
+## fix: 掉落详情分类按钮 i18n
+
+- **改动原因**：英语掉落详情页的来源分类按钮组仍有“隐藏全部/全部显示”硬编码中文。
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：分类按钮的全选状态文案改为 `ui.common.hide_all` / `ui.common.show_all`，英语分别显示 `Hide All` / `Show All`，其余语言复用现有 UI locale 映射。
+
 # 2026-07-28 会话修改记录
 
 ## feat: CF Pages 非默认语言掉落品质详情 404 接管
