@@ -27,6 +27,14 @@
 - **关键逻辑/映射关系**：`lootdrops/{base}.json.sources[source_id].ref` → 实体坐标；`variants[suffix].group_drop_info` → 来源在有效地图分组的爆率 → 坐标过滤及 score/max_score 重算。普通 `_1001` 至 `_7001` 计划停止独立写盘，独立 `_8001` 保留。
 - **验证**：仅计划文档；以 `HeaterShield` 现有 53 来源、约 3,000 内联坐标、175 条分组爆率作为改造前基线，实施时必须做旧新语义与请求预算对比。
 
+## wip: lootdrop 品质变体 JSON 合并实施
+
+- **改动原因**：执行品质变体合并计划，移除普通 `_1001` 至 `_7001` 详情 JSON 的重复来源元数据与内联坐标。
+- **变更文件**：`api/src/lootdrop_builder.py`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/types/data.ts`；`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：生成端改为 `sources[source_id].ref` + `variants[suffix].group_drop_info[].source_id`；客户端始终按基底名加载并从当前 suffix 选择来源，按实体坐标所属地图分组过滤后重算 `score/max_score`；SSG 品质路由复用基底详情并预载基底 JSON。
+- **当前阻断**：严格公开 `ref` 校验发现品质实体别名 `GoblinWarrior_Unique` 被回退为不存在的 `coords/GoblinWarrior_Unique.json`；应按规范基名映射到 `monsters/GoblinWarrior`，不能恢复内联坐标。
+- **已完成验证**：Python `compileall`、Black、ruff，前端 `format:check` 与 `tsc --noEmit` 通过；完整管道已准确阻断于上述缺失 `ref`。
+
 # 2026-07-27 会话修改记录
 
 ## fix: SSG 后导航栏 Ant Design 样式失效

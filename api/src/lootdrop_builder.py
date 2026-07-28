@@ -131,6 +131,7 @@ def _ensure_gdi_monster_entries(
                 "translation_key": _entry.get("translation_key", ""),
                 "color": _MONSTER_COLORS[len(monsters_out) % len(_MONSTER_COLORS)],
                 "coords": [],
+                "_source_kind": _entry.get("_source_kind", "direct"),
             }
             if _ref:
                 _virtual["ref"] = _ref
@@ -180,6 +181,29 @@ def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[
             key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{rarity_name}"
             result[suffix] = {"name": translations.get(key, rarity_name), "translation_key": key}
     return result
+
+
+def _detail_variant_suffixes(entry: dict) -> list[str]:
+    variant_count = entry.get("variant_count", 1)
+    if variant_count <= 1:
+        return []
+    if entry["name"].endswith("_8001"):
+        return ["1001", "2001", "3001", "4001", "5001", "6001", "7001", "8001"]
+    match = _SUFFIX_NUM_RE.search(entry.get("raw_name", ""))
+    if not match:
+        return []
+    first_num = int(match.group(1))
+    suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
+    if variant_count >= 8 and "8001" not in suffixes:
+        suffixes.append("8001")
+    return suffixes
+
+
+def _source_id(entity_name: str, source_kind: str) -> str:
+    canonical_name = base_monster_name(entity_name.replace("_Locked", ""))
+    if not canonical_name:
+        raise ValueError("lootdrop source has no entity_name")
+    return f"{canonical_name}:{source_kind}"
 
 
 def _save(output_dir: Path, filename: str, data: list | dict, compact: bool = False):
@@ -449,6 +473,8 @@ def build_and_save_lootdrop_details(
 
     for entry in loot_index:
         item_name = entry["name"]
+        variant_suffixes = _detail_variant_suffixes(entry)
+        is_variant_family = bool(variant_suffixes) and not item_name.endswith("_8001")
         merged: dict[str, dict] = {}
         _entry_mtk = entry.get("monster_translation_keys") or []
         for _i, m_name in enumerate(entry["monsters"]):
@@ -527,6 +553,7 @@ def build_and_save_lootdrop_details(
                         "_has_locked": False,
                         "_bases": {base, m_name, _bucket_name},
                         "_coord_key": _bucket_ck,
+                        "_source_kind": _type,
                     }
                 if is_locked:
                     merged[_merge_key]["_has_locked"] = True
@@ -600,6 +627,7 @@ def build_and_save_lootdrop_details(
                         "_has_locked": False,
                         "_bases": {GOLDCHEST_SPECIAL, "GoldChest_UnderSea"},
                         "_coord_key": GOLDCHEST_SPECIAL,
+                        "_source_kind": "special",
                     }
                 else:
                     merged[_gc_merge_key]["name"] = GOLDCHEST_SPECIAL
@@ -706,6 +734,7 @@ def build_and_save_lootdrop_details(
                         "drop_rates": _dr,
                         # keep real entity for variant drop lookup; synthetic stays as special id
                         "_variant": _en if _en == GOLDCHEST_SPECIAL else _m_data.get("entity_name", _m_data["name"]),
+                        "_source_kind": _m_data.get("_source_kind", "direct"),
                     }
                 )
                 if _has_varied_spawn:
@@ -819,7 +848,7 @@ def build_and_save_lootdrop_details(
             _trans = _m.get("translation", "")
             if any(_s in _trans for _s in _type_suffixes):
                 _split_entities.add(_m.get("entity_name", _m["name"]))
-        if entity_page_map:
+        if entity_page_map and not is_variant_family:
             for _m in monsters_out:
                 _en = _m.get("entity_name", _m["name"])
                 # GoldChest_special: always ref dedicated props page when available
@@ -922,151 +951,130 @@ def build_and_save_lootdrop_details(
                 "monsters": monsters_out,
                 "group_drop_info": _group_drop_info,
             }
-            # Generate per-variant detail files with variant-specific drop rates
-            variant_count = entry.get("variant_count", 1)
-            vs = None
-            if variant_count > 1:
-                if item_name.endswith("_8001"):
-                    # _8001 items: include all 8 variants (1001-7001 + 8001)
-                    vs = ["1001", "2001", "3001", "4001", "5001", "6001", "7001", "8001"]
-                else:
-                    raw_name = entry.get("raw_name", "")
-                    m = _SUFFIX_NUM_RE.search(raw_name)
-                    if m:
-                        first_num = int(m.group(1))
-                        vs = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
-                        # Include 8001 if item has artifact variant (variant_count >= 8)
-                        if variant_count >= 8 and "8001" not in vs:
-                            vs.append("8001")
-            if vs and len(vs) > 1:
-                if not item_name.endswith("_8001"):
-                    # variant_suffixes only for base items; _8001 has its own entry
-                    _vs_out = [s for s in vs if s != "8001"]
+            if variant_suffixes:
+                if is_variant_family:
+                    _vs_out = [s for s in variant_suffixes if s != "8001"]
                     detail["variant_suffixes"] = _vs_out
                     item_variant_suffixes[item_name] = _vs_out
                 if translations:
-                    detail["variant_rarity"] = _get_variant_rarity(item_name, vs, translations)
+                    detail["variant_rarity"] = _get_variant_rarity(item_name, variant_suffixes, translations)
                     if used_translation_keys is not None:
                         used_translation_keys.update(
                             _rarity["translation_key"] for _rarity in detail["variant_rarity"].values()
                         )
-                # Pre-compute base item spawners (union of all variants) as fallback
-                base_spawners = drop_engine.get_base_item_spawners(item_name)
-                for suffix in vs:
-                    # Skip _8001 — it has its own independent entry
-                    if suffix == "8001":
+
+            if is_variant_family:
+                sources: dict[str, dict] = {}
+                source_ids_by_translation: dict[str, set[str]] = {}
+                unresolved_refs: list[str] = []
+                for _source in monsters_out:
+                    _en = _source.get("entity_name", _source.get("name", ""))
+                    _kind = _source.get("_source_kind", "direct")
+                    _sid = _source_id(_en, _kind)
+                    _coord_key = _source.get("_coord_key")
+                    _ref = _source.get("ref")
+                    if not _ref and entity_page_map:
+                        _ref = (entity_page_map.get(_coord_key) if _coord_key else None) or entity_page_map.get(_en)
+                    if not _ref:
+                        _ref = _resolve_legend_ref(_source.get("translation", ""), _en, monsters_out, entity_page_map)
+                    if not _ref or not (output_dir / f"{_ref}.json").is_file():
+                        unresolved_refs.append(f"{_sid} ({_en}, ref={_ref or 'missing'})")
                         continue
-                    # When processing the 8001 entry, only the 8001 suffix itself is relevant;
-                    # other suffixes (1001-7001) are already handled by the base entry.
-                    if item_name.endswith("_8001"):
-                        continue
+                    _source_out = {
+                        "name": _source.get("name", _en),
+                        "entity_name": _en,
+                        "translation": _source["translation"],
+                        "translation_key": _source.get("translation_key", ""),
+                        "color": _source["color"],
+                        "ref": _ref,
+                    }
+                    _existing_source = sources.get(_sid)
+                    if _existing_source and _existing_source != _source_out:
+                        raise RuntimeError(f"lootdrop source_id collision for {item_name}: {_sid}")
+                    sources[_sid] = _source_out
+                    source_ids_by_translation.setdefault(_source["translation"], set()).add(_sid)
+                if unresolved_refs:
+                    raise RuntimeError(
+                        f"lootdrop sources without public refs for {item_name}: " + ", ".join(unresolved_refs)
+                    )
+
+                variants: dict[str, dict] = {}
+                used_source_ids: set[str] = set()
+                for suffix in detail["variant_suffixes"]:
                     variant_name = f"{item_name}_{suffix}"
                     luck_grade = int(suffix[0]) if suffix and suffix[0].isdigit() else 0
-                    # Get spawners for this variant; fallback to base item spawners
-                    valid_spawners = drop_engine.get_variant_spawners(variant_name) or base_spawners
-                    if not valid_spawners:
-                        continue
                     variant_gdi: dict[str, list[dict]] = {}
                     for _g, _entries in _group_drop_info.items():
                         v_entries = []
                         for _entry in _entries:
                             _en = _entry.get("_entity_name", _entry["translation"])
-                            # synthetic special page → real entity for variant rate lookup
-                            if _en == GOLDCHEST_SPECIAL:
-                                _en = "GoldChest_UnderSea"
-                            _vdr = drop_engine.get_variant_group_drop_rates(luck_grade, _en, _g, item_name=variant_name)
+                            _rate_en = "GoldChest_UnderSea" if _en == GOLDCHEST_SPECIAL else _en
+                            _vdr = drop_engine.get_variant_group_drop_rates(
+                                luck_grade, _rate_en, _g, item_name=variant_name
+                            )
                             if not _vdr:
                                 _vdr = drop_engine.get_variant_group_drop_rates(
                                     luck_grade, "GoldChest", _g, item_name=variant_name
                                 )
                             if not _vdr:
                                 _vdr = {"PVE": 0, "普通": 0, "豪客赛": 0}
-                            # 保留 _entity_name 供后续 virtual 对齐，落盘前再剥
-                            v_entry = {k: v for k, v in _entry.items() if not k.startswith("_") or k == "_entity_name"}
-                            v_entry["drop_rates"] = _vdr
+                            if _vdr.get("豪客赛", 0) <= 0:
+                                continue
+                            _sid = _source_id(_en, _entry.get("_source_kind", "direct"))
+                            if _sid not in sources:
+                                _translation_ids = source_ids_by_translation.get(_entry["translation"], set())
+                                if len(_translation_ids) == 1:
+                                    _sid = next(iter(_translation_ids))
+                            if _sid not in sources:
+                                raise RuntimeError(
+                                    f"lootdrop variant source mismatch for {variant_name}: "
+                                    f"{_entry['translation']} ({_en})"
+                                )
+                            v_entry = {
+                                "source_id": _sid,
+                                "spawn_rate": _entry["spawn_rate"],
+                                "drop_rates": _vdr,
+                            }
+                            if _entry.get("spawn_rates"):
+                                v_entry["spawn_rates"] = _entry["spawn_rates"]
                             v_entries.append(v_entry)
-                        v_entries = [e for e in v_entries if e.get("drop_rates", {}).get("豪客赛", 0) > 0]
+                            used_source_ids.add(_sid)
                         if v_entries:
                             variant_gdi[_g] = v_entries
-                    # Collect translations that have variant-specific drop rates
-                    _variant_valid_trans: set[str] = {e["translation"] for _el in variant_gdi.values() for e in _el}
-                    variant_monsters = []
-                    for _m in monsters_out:
-                        # Skip monsters with no drop rates in this variant
-                        if _m["translation"] not in _variant_valid_trans:
-                            continue
-                        # P005: Handle referenced entities (no inline coords)
-                        if "ref" in _m:
-                            variant_monsters.append(dict(_m))
-                            continue
-                        filtered_coords = [
-                            _c
-                            for _c in _m.get("coords", [])
-                            if (_c.get("label", "") or _c.get("keyword", "") or _c.get("original_keyword", ""))
-                            in valid_spawners
-                        ]
-                        if filtered_coords:
-                            _m_copy = dict(_m)
-                            _m_copy["coords"] = filtered_coords
-                            variant_monsters.append(_m_copy)
-                        else:
-                            # 变体 spawner 滤空坐标：仍保留图例条目，避免 gdi 孤儿
-                            _m_copy = dict(_m)
-                            _m_copy["coords"] = []
-                            _en = _m.get("entity_name", _m.get("name", ""))
-                            if not _m_copy.get("ref") and entity_page_map and _en:
-                                _rp = entity_page_map.get(_en)
-                                if _rp:
-                                    _m_copy["ref"] = _rp
-                                    _m_copy["coord_count"] = 0
-                            variant_monsters.append(_m_copy)
-                    # variant_gdi 中仍缺 monsters 的翻译 → 虚拟条目
-                    variant_monsters = _ensure_gdi_monster_entries(variant_monsters, variant_gdi, entity_page_map)
-                    # Recalculate per-coord scores from variant_gdi
-                    _hk_map_v: dict[str, dict[str, float]] = {}
-                    _sr_map_v: dict[str, dict[str, float]] = {}
-                    for _g, _entries in variant_gdi.items():
-                        for _e in _entries:
-                            _t = _e["translation"]
-                            _hk_map_v.setdefault(_t, {})[_g] = _e["drop_rates"].get("豪客赛", 0)
-                            _sr_map_v.setdefault(_t, {})[_g] = _e["spawn_rate"]
-                    for _vm in variant_monsters:
-                        _trans = _vm.get("translation", "")
-                        _hk_t = _hk_map_v.get(_trans, {})
-                        _sr_t = _sr_map_v.get(_trans, {})
-                        for _c in _vm.get("coords", []):
-                            _g = map_base_to_group.get(_c["map"], "")
-                            _hk = _hk_t.get(_g, 0)
-                            _sr = _sr_t.get(_g, 100)
-                            _c["score"] = round(_sr * _hk / 100, 4)
-                    # Compute variant-specific max_scores from variant_gdi
-                    _v_max_scores: dict[str, float] = {}
-                    for _vg_list in variant_gdi.values():
-                        for _ve in _vg_list:
-                            _vt = _ve["translation"]
-                            _vs = round(_ve["spawn_rate"] * _ve["drop_rates"].get("豪客赛", 0) / 100, 4)
-                            if _vt not in _v_max_scores or _vs > _v_max_scores[_vt]:
-                                _v_max_scores[_vt] = _vs
-                    for _vm in variant_monsters:
-                        _vm["max_score"] = _v_max_scores.get(_vm["translation"], 0)
-                    # 落盘前剥内部键
-                    for _g_list in variant_gdi.values():
-                        for _e in _g_list:
-                            _e.pop("_entity_name", None)
-                    variant_translation = resolve_name(variant_name, None, "item") or entry["translation"]
-                    variant_detail = {
-                        "name": variant_name,
-                        "translation": variant_translation,
-                        "translation_key": entry.get("translation_key", ""),
-                        "monsters": variant_monsters,
-                        "group_drop_info": variant_gdi,
-                        "variant_rarity": detail.get("variant_rarity", {}),
-                    }
-                    _save(output_dir, f"lootdrops/{variant_name}.json", variant_detail, compact=True)
+                    variants[suffix] = {"group_drop_info": variant_gdi}
+                    if log_fn:
+                        _variant_groups = len(variant_gdi)
+                        _variant_sources = len({e["source_id"] for entries in variant_gdi.values() for e in entries})
+                        _variant_max = max(
+                            (
+                                round(e["spawn_rate"] * e["drop_rates"].get("豪客赛", 0) / 100, 4)
+                                for entries in variant_gdi.values()
+                                for e in entries
+                            ),
+                            default=0.0,
+                        )
+                        log_fn(
+                            f"[JSON] {variant_name}: sources={_variant_sources}, "
+                            f"groups={_variant_groups}, max_score={_variant_max}"
+                        )
+                    stale_variant = output_dir / "lootdrops" / f"{variant_name}.json"
+                    stale_variant.unlink(missing_ok=True)
+
+                detail["sources"] = {sid: source for sid, source in sources.items() if sid in used_source_ids}
+                detail["variants"] = variants
+                detail.pop("monsters", None)
+                detail.pop("group_drop_info", None)
+                if not detail["sources"] or not detail["variants"]:
+                    raise RuntimeError(f"empty merged lootdrop family: {item_name}")
             # Clean internal keys from group_drop_info before saving base detail
             for _g_list in _group_drop_info.values():
                 for _e in _g_list:
                     _e.pop("_entity_name", None)
+                    _e.pop("_source_kind", None)
+            if not is_variant_family:
+                for _monster in monsters_out:
+                    for _internal_key in ("_coord_key", "_multi_base", "_source_kind"):
+                        _monster.pop(_internal_key, None)
             _save(output_dir, f"lootdrops/{item_name}.json", detail, compact=True)
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}

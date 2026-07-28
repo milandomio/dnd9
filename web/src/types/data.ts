@@ -27,7 +27,14 @@ export interface Coord {
   sub_pool_entries?: VariantNameEntry[];
 }
 
+export interface LootdropCoord extends Omit<Coord, 'label'> {
+  yaw?: number;
+  label?: string;
+  quality?: string;
+}
+
 export interface GroupDropInfo {
+  source_id?: string;
   translation: string;
   translation_key?: string;
   label_prefix?: 'undersea';
@@ -36,6 +43,47 @@ export interface GroupDropInfo {
   spawn_rate: number;
   spawn_rates?: Record<string, number>;
   drop_rates: Record<string, number>;
+}
+
+export interface LootdropVariantGroupDropInfo {
+  source_id: string;
+  spawn_rate: number;
+  spawn_rates?: Record<string, number>;
+  drop_rates: Record<string, number>;
+}
+
+export interface LootdropSource {
+  name: string;
+  entity_name: string;
+  translation: string;
+  translation_key?: string;
+  color: string;
+  ref: string;
+}
+
+export interface LootdropVariantData {
+  group_drop_info: Record<string, LootdropVariantGroupDropInfo[]>;
+}
+
+export interface LootdropMonster extends Omit<LootdropSource, 'ref'> {
+  source_id?: string;
+  ref?: string;
+  coords?: LootdropCoord[];
+  coord_count?: number;
+  drop_rates?: Record<string, number>;
+  max_score?: number;
+}
+
+export interface LootdropItem {
+  name: string;
+  translation: string;
+  translation_key?: string;
+  monsters?: LootdropMonster[];
+  group_drop_info?: Record<string, GroupDropInfo[]>;
+  sources?: Record<string, LootdropSource>;
+  variants?: Record<string, LootdropVariantData>;
+  variant_suffixes?: string[];
+  variant_rarity?: Record<string, { name: string; translation_key: string }>;
 }
 
 export interface ItemEntity {

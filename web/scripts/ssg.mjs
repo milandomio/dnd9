@@ -307,22 +307,13 @@ for (const p of PAGES) {
         if (p === 'lootdrops') {
           const itemData = { item: readJSON(filePath), modules: moduleData };
           ssrDataMap[`lootdrops/${name}`] = itemData;
-          // Read variant-specific detail files
+          // Variant routes select from the same merged base detail in memory.
           if (e.variant_suffixes && e.variant_suffixes.length > 1) {
             for (const suffix of e.variant_suffixes) {
-              const variantFile = join(
-                DATA,
-                'lootdrops',
-                `${name}_${suffix}.json`
-              );
-              try {
-                ssrDataMap[`lootdrops/${name}_${suffix}`] = {
-                  item: readJSON(variantFile),
-                  modules: moduleData,
-                };
-              } catch {
-                ssrDataMap[`lootdrops/${name}_${suffix}`] = itemData;
-              }
+              ssrDataMap[`lootdrops/${name}_${suffix}`] = {
+                item: itemData.item,
+                modules: moduleData,
+              };
             }
           }
         } else {
@@ -394,15 +385,34 @@ if (!QUICK) {
   for (const [key, data] of Object.entries(ssrDataMap)) {
     if (!key.startsWith('lootdrops/')) continue;
     const item = data.item;
-    if (!item?.monsters) continue;
+    if (!item?.monsters && !item?.sources) continue;
 
     const refCoordsMap = {};
-    for (const m of item.monsters) {
-      if (!m.ref) continue;
-      const refFile = join(DATA, `${m.ref}.json`);
+    let refs =
+      item.monsters?.map((monster) => monster.ref).filter(Boolean) ?? [];
+    if (item.sources && item.variants) {
+      const routeName = key.slice('lootdrops/'.length);
+      const suffixMatch = routeName.match(/_(\d{4})$/);
+      const suffix =
+        suffixMatch && suffixMatch[1] !== '8001'
+          ? suffixMatch[1]
+          : Object.keys(item.variants).includes('5001')
+            ? '5001'
+            : Object.keys(item.variants)[0];
+      const sourceIds = new Set(
+        Object.values(item.variants[suffix]?.group_drop_info ?? {}).flatMap(
+          (entries) => entries.map((entry) => entry.source_id)
+        )
+      );
+      refs = [...sourceIds]
+        .map((sourceId) => item.sources[sourceId]?.ref)
+        .filter(Boolean);
+    }
+    for (const ref of new Set(refs)) {
+      const refFile = join(DATA, `${ref}.json`);
       try {
         const refEntity = readJSON(refFile);
-        refCoordsMap[m.ref] = Array.isArray(refEntity)
+        refCoordsMap[ref] = Array.isArray(refEntity)
           ? refEntity
           : refEntity.coords || [];
         refCount++;
@@ -568,7 +578,16 @@ function detailPreloads(urlPath) {
     /^\/(?:[^/]+\/)?(items|monsters|props|lootdrops)\/(.+)$/
   );
   if (!detailMatch) return '';
-  return `    <link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailMatch[2]}.json" as="fetch" crossorigin="anonymous">\n`;
+  let detailName = detailMatch[2];
+  if (detailMatch[1] === 'lootdrops') {
+    detailName = lootdropBaseName(detailName);
+  }
+  return `    <link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailName}.json" as="fetch" crossorigin="anonymous">\n`;
+}
+
+function lootdropBaseName(name) {
+  const match = name.match(/^(.+)_(\d{4})$/);
+  return match && match[2] !== '8001' ? match[1] : name;
 }
 
 function detailPlaceholder(title) {
@@ -643,7 +662,7 @@ for (let i = 0; i < routes.length; i++) {
   const lootdropMatch = urlPath.match(/^\/(?:[^/]+\/)?lootdrops\/(.+)$/);
   if (lootdropMatch) {
     detailPreloads.push(
-      `<link rel="preload" href="/data/${shortVer}/json/lootdrops/${lootdropMatch[1]}.json" as="fetch" crossorigin="anonymous">`
+      `<link rel="preload" href="/data/${shortVer}/json/lootdrops/${lootdropBaseName(lootdropMatch[1])}.json" as="fetch" crossorigin="anonymous">`
     );
   }
   const moduleMatch = urlPath.match(
