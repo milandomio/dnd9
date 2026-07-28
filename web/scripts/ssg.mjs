@@ -438,7 +438,8 @@ const HEAD_CLOSE = '</head>';
 const SSR_SCRIPT_RE = /<script>window\.__SSR_DATA__=(.*?)<\/script>/s;
 function isTemplateDetailRoute(path) {
   const match = path.match(/^\/(?:[^/]+\/)?([^/]+)\/[^/]+$/);
-  return Boolean(match && DETAIL_TEMPLATE_PAGES.has(match[1]));
+  if (match && DETAIL_TEMPLATE_PAGES.has(match[1])) return true;
+  return /^\/(?:[^/]+\/)?dungeon_modules\/[^/]+\/[^/]+$/.test(path);
 }
 
 /**
@@ -588,12 +589,18 @@ function detailPreloads(urlPath) {
   const detailMatch = urlPath.match(
     /^\/(?:[^/]+\/)?(items|monsters|props|lootdrops)\/(.+)$/
   );
-  if (!detailMatch) return '';
-  let detailName = detailMatch[2];
-  if (detailMatch[1] === 'lootdrops') {
-    detailName = lootdropBaseName(detailName);
+  if (detailMatch) {
+    let detailName = detailMatch[2];
+    if (detailMatch[1] === 'lootdrops') {
+      detailName = lootdropBaseName(detailName);
+    }
+    return `    <link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailName}.json" as="fetch" crossorigin="anonymous">\n`;
   }
-  return `    <link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailName}.json" as="fetch" crossorigin="anonymous">\n`;
+  const moduleMatch = urlPath.match(
+    /^\/(?:[^/]+\/)?dungeon_modules\/[^/]+\/(.+)$/
+  );
+  if (!moduleMatch) return '';
+  return `    <link rel="preload" href="/data/${shortVer}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">\n`;
 }
 
 function lootdropBaseName(name) {

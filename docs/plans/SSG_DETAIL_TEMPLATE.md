@@ -44,13 +44,13 @@ lootdrop 基底名称到默认变体的重定向（例如 `/:lang/lootdrops/Heat
 
 ## 当前状态
 
-`items`、`monsters`、`props` 已由 `createTemplateDetailPage()` 生成轻量壳：
+`items`、`monsters`、`props`、`lootdrops` 和地牢模块详情已由 `createTemplateDetailPage()` 生成轻量壳：
 
 - `detailPlaceholder()` 在构建期直接写入每个输出 HTML，不保存独立样板文件。
-- 默认语言与九种非默认语言均写入目标路由标题；壳不含 `__SSR_DATA__`、hreflang 集、公共数据 preload 或内联样式。
+- 默认语言与九种非默认语言均写入目标路由标题；壳不含 `__SSR_DATA__`、hreflang 集、公共数据 preload 或内联样式，仅保留当前详情所需的 JSON preload。
 - `props/GoldChest` 当前约 1.8KB。
 
-其余非列表路由仍走 `render()` 完整 SSR。特别是 lootdrop 详情页约 114KB，非默认语言会以中文 SSR 正文配合目标语言客户端首次渲染，可能产生 hydration 不一致。
+其余非列表路由仍走 `render()` 完整 SSR，包括任务物品分组、任务 NPC、Explore 和地牢模块分组页。
 
 ## 实施方案
 
