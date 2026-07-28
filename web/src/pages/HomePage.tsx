@@ -103,6 +103,7 @@ export default function HomePage() {
   const dataVersion = useDataVersion();
   const { ut } = useLocale();
   const { lang } = useLanguage();
+  const homeDescription = ut('ui.home.description');
 
   useEffect(() => {
     if (ssrData) return;
@@ -116,13 +117,10 @@ export default function HomePage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>
-          越来越黑暗闪电指南 DarkFlashNav |
-          游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱
-        </title>
+        <title>越来越黑暗闪电指南 DarkFlashNav | {homeDescription}</title>
         <meta
           name="description"
-          content="越来越黑暗闪电指南 DarkFlashNav——游戏地图、任务攻略、BOSS掉落、资源点位、寻找宝箱，一站式查询工具。"
+          content={`越来越黑暗闪电指南 DarkFlashNav——${homeDescription}，一站式查询工具。`}
         />
         <meta
           name="keywords"
@@ -130,12 +128,9 @@ export default function HomePage() {
         />
         <meta
           property="og:title"
-          content="越来越黑暗闪电指南 - 游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱"
+          content={`越来越黑暗闪电指南 - ${homeDescription}`}
         />
-        <meta
-          property="og:description"
-          content="游戏地图、任务攻略、BOSS掉落、资源点位、寻找宝箱"
-        />
+        <meta property="og:description" content={homeDescription} />
         <meta property="og:type" content="website" />
       </Helmet>
       <AppName />

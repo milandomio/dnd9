@@ -34,6 +34,19 @@ const SSR_OUT = join(WEB, 'dist-ssr');
 const DATA = join(ROOT, 'data', 'json');
 const SITE = 'https://dnd9.icetar.com';
 const BASE = process.env.VITE_BASE || '/';
+const HOME_TITLE_DESCRIPTIONS = {
+  'zh-Hans': '游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱',
+  en: 'Game Maps · Quest Guides · Boss Drops · Resource Locations · Find Chests',
+  de: 'Spielkarten · Quest-Guides · Boss-Drops · Ressourcenfundorte · Truhen finden',
+  es: 'Mapas del juego · Guías de misiones · Botín de jefes · Ubicaciones de recursos · Encontrar cofres',
+  fr: 'Cartes du jeu · Guides de quêtes · Butin des boss · Emplacements des ressources · Trouver des coffres',
+  ja: 'ゲームマップ · クエスト攻略 · ボスドロップ · 資源ポイント · 宝箱を探す',
+  ko: '게임 지도 · 퀘스트 공략 · 보스 드롭 · 자원 위치 · 보물상자 찾기',
+  'pt-BR':
+    'Mapas do jogo · Guias de missões · Drops de chefes · Localizações de recursos · Encontrar baús',
+  ru: 'Карты игры · Гайды по заданиям · Добыча с боссов · Места ресурсов · Поиск сундуков',
+  'zh-Hant': '遊戲地圖 · 任務攻略 · BOSS掉落 · 資源點位 · 尋找寶箱',
+};
 
 // ---- helpers ----
 function readJSON(p) {
@@ -527,7 +540,17 @@ function stripTrailingParenthetical(value) {
     .trim();
 }
 
-function localizedTitle(routeData, localeDict, routePath = '') {
+function localizedTitle(
+  routeData,
+  localeDict,
+  routePath = '',
+  lang = DEFAULT_LANG
+) {
+  if (routePath === '/') {
+    return (
+      HOME_TITLE_DESCRIPTIONS[lang] || HOME_TITLE_DESCRIPTIONS[DEFAULT_LANG]
+    );
+  }
   const entity = firstTranslatable(routeData);
   if (!entity) return '';
   const title = entity.translation_key
@@ -564,7 +587,7 @@ function localizePage(
   includeAlternates = true
 ) {
   const canonicalHref = localizedPath(route.path, lang);
-  const title = localizedTitle(routeData, localeDict, route.path);
+  const title = localizedTitle(routeData, localeDict, route.path, lang);
   let out = injectLocalizedData(page, lang, title)
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
     .replace(
@@ -578,10 +601,14 @@ function localizePage(
     );
   }
   if (title) {
-    out = out.replace(
-      /<title[^>]*>[^<]*<\/title>/,
-      `<title>${escapeHtml(title)} | 越来越黑暗闪电指南 DarkFlashNav</title>`
-    );
+    const pageTitle =
+      route.path === '/'
+        ? `越来越黑暗闪电指南 DarkFlashNav | ${title}`
+        : `${title} | 越来越黑暗闪电指南 DarkFlashNav`;
+    const titleTag = `<title>${escapeHtml(pageTitle)}</title>`;
+    out = /<title[^>]*>[^<]*<\/title>/.test(out)
+      ? out.replace(/<title[^>]*>[^<]*<\/title>/, titleTag)
+      : out.replace(HEAD_CLOSE, `    ${titleTag}\n${HEAD_CLOSE}`);
   }
   return out;
 }
@@ -731,6 +758,13 @@ for (let i = 0; i < routes.length; i++) {
     }
   } else {
     page = templated.replace(HEAD_CLOSE, `${preloadHtml}\n</head>`);
+  }
+
+  if (urlPath === '/' && !/<title[^>]*>[^<]*<\/title>/.test(page)) {
+    page = page.replace(
+      HEAD_CLOSE,
+      `    <title>越来越黑暗闪电指南 DarkFlashNav | ${HOME_TITLE_DESCRIPTIONS[DEFAULT_LANG]}</title>\n${HEAD_CLOSE}`
+    );
   }
 
   mkdirSync(dirname(outPath), { recursive: true });
