@@ -98,6 +98,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}种实体',
     'ui.detail.mode': '模式',
     'ui.home.title': '越来越黑暗闪电指南',
+    'ui.home.description': '游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱',
     'ui.home.view_items': '查看物品位置',
     'ui.home.view_monsters': '查看怪物位置',
     'ui.home.view_props': '查看实体位置',
@@ -282,6 +283,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entities',
     'ui.detail.mode': 'Mode',
     'ui.home.title': 'DarkFlashNav Guide',
+    'ui.home.description':
+      'Game Maps · Quest Guides · Boss Drops · Resource Locations · Find Chests',
     'ui.home.view_items': 'View Item Locations',
     'ui.home.view_monsters': 'View Monster Locations',
     'ui.home.view_props': 'View Prop Locations',
@@ -468,6 +471,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} Entitäten',
     'ui.detail.mode': 'Modus',
     'ui.home.title': 'DarkFlashNav Leitfaden',
+    'ui.home.description':
+      'Spielkarten · Quest-Guides · Boss-Drops · Ressourcenfundorte · Truhen finden',
     'ui.home.view_items': 'Gegenstandsorte anzeigen',
     'ui.home.view_monsters': 'Monsterorte anzeigen',
     'ui.home.view_props': 'Objektorte anzeigen',
@@ -654,6 +659,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entidades',
     'ui.detail.mode': 'Modo',
     'ui.home.title': 'Guía DarkFlashNav',
+    'ui.home.description':
+      'Mapas del juego · Guías de misiones · Botín de jefes · Ubicaciones de recursos · Encontrar cofres',
     'ui.home.view_items': 'Ver ubicaciones de objetos',
     'ui.home.view_monsters': 'Ver ubicaciones de monstruos',
     'ui.home.view_props': 'Ver ubicaciones de objetos',
@@ -840,6 +847,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entités',
     'ui.detail.mode': 'Mode',
     'ui.home.title': 'Guide DarkFlashNav',
+    'ui.home.description':
+      'Cartes du jeu · Guides de quêtes · Butin des boss · Emplacements des ressources · Trouver des coffres',
     'ui.home.view_items': "Voir les emplacements d'objets",
     'ui.home.view_monsters': 'Voir les emplacements de monstres',
     'ui.home.view_props': "Voir les emplacements d'accessoires",
@@ -1025,6 +1034,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}種のオブジェクト',
     'ui.detail.mode': 'モード',
     'ui.home.title': 'DarkFlashNav ガイド',
+    'ui.home.description':
+      'ゲームマップ · クエスト攻略 · ボスドロップ · 資源ポイント · 宝箱を探す',
     'ui.home.view_items': 'アイテムの場所を見る',
     'ui.home.view_monsters': 'モンスターの場所を見る',
     'ui.home.view_props': 'オブジェクトの場所を見る',
@@ -1208,6 +1219,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}종 엔티티',
     'ui.detail.mode': '모드',
     'ui.home.title': 'DarkFlashNav 가이드',
+    'ui.home.description':
+      '게임 지도 · 퀘스트 공략 · 보스 드롭 · 자원 위치 · 보물상자 찾기',
     'ui.home.view_items': '아이템 위치 보기',
     'ui.home.view_monsters': '몬스터 위치 보기',
     'ui.home.view_props': '오브젝트 위치 보기',
@@ -1392,6 +1405,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entidades',
     'ui.detail.mode': 'Modo',
     'ui.home.title': 'Guia DarkFlashNav',
+    'ui.home.description':
+      'Mapas do jogo · Guias de missões · Drops de chefes · Localizações de recursos · Encontrar baús',
     'ui.home.view_items': 'Ver locais de itens',
     'ui.home.view_monsters': 'Ver locais de monstros',
     'ui.home.view_props': 'Ver locais de objetos',
@@ -1577,6 +1592,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} сущностей',
     'ui.detail.mode': 'Режим',
     'ui.home.title': 'Гайд DarkFlashNav',
+    'ui.home.description':
+      'Карты игры · Гайды по заданиям · Добыча с боссов · Места ресурсов · Поиск сундуков',
     'ui.home.view_items': 'Смотреть предметы',
     'ui.home.view_monsters': 'Смотреть монстров',
     'ui.home.view_props': 'Смотреть объекты',
@@ -1760,6 +1777,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}種實體',
     'ui.detail.mode': '模式',
     'ui.home.title': '越來越黑暗閃電指南',
+    'ui.home.description':
+      '遊戲地圖 · 任務攻略 · BOSS掉落 · 資源點位 · 尋找寶箱',
     'ui.home.view_items': '查看物品位置',
     'ui.home.view_monsters': '查看怪物位置',
     'ui.home.view_props': '查看實體位置',

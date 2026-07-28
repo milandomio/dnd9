@@ -91,3 +91,10 @@
 - **变更文件**：`main` 分支合并 `dev` 全部已提交差异；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：使用 `--no-ff` 保留 dev 开发历史；`api/data/darkfindv5.db` 继续作为本地忽略文件保留，后续部署按 `BUILD_AND_DEPLOY.md` 本地构建并临时加入推送，不纳入常规分支跟踪。
 - **验证**：合并前完整管道、`npm test`、SSG、HTTP 200、Workbox 与 15 页 Playwright 通过；合并无文件冲突，提交 hook 全通过。
+
+### feat: 增加主页标题简介多语言
+
+- **改动原因**：主页 `<title>` 后半部分“游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱”此前固定为简体中文，非中文页面的 SEO 标题和 Open Graph 描述未本地化。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；`web/src/pages/HomePage.tsx`；`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：新增 `ui.home.description` 覆盖 10 种语言；主页 Helmet 的 title、description、og:title、og:description 使用该 key；SSG 同步写入各语言首页静态 title，避免仅客户端切换。
+- **验证**：标题简介 key 已覆盖 10 种语言；SSG 静态首页 title、`__localizedTitle` 与客户端 Helmet 均使用对应语言；`npm test`、Node 语法、quick SSG 构建及中英日 15 页 Playwright 通过，10 个语言首页标题逐一验证。
