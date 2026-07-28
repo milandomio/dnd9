@@ -112,6 +112,10 @@ function hasLootdropDetail(item: LootdropItem | undefined): boolean {
   return Boolean(item?.monsters || item?.sources);
 }
 
+function stripTrailingParenthetical(value: string): string {
+  return value.replace(/\s*[（(][^（）()]*[）)]\s*$/, '').trim();
+}
+
 function selectLootdropVariant(
   item: LootdropItem,
   requestedSuffix: string | null
@@ -783,7 +787,9 @@ export default function LootdropDetailPage() {
   const visibleCount = resolvedMonsters.filter(
     (m) => !hidden.has(m.translation)
   ).length;
-  const itemLabel = t(data.translation_key, data.translation || data.name);
+  const itemLabel = stripTrailingParenthetical(
+    t(data.translation_key, data.translation || data.name)
+  );
   const rarityLabel =
     currentSuffix && data.variant_rarity?.[currentSuffix]
       ? `(${t(data.variant_rarity[currentSuffix].translation_key, data.variant_rarity[currentSuffix].name)})`
