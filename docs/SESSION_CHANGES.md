@@ -1,5 +1,12 @@
 # 2026-07-29 会话修改记录
 
+## fix: 拆分同名巨蚌陷阱与宝箱坐标
+
+- **改动原因**：`GiantClam_Trap` 与 `GiantClam_Chest` 使用相同翻译文本“巨蚌”，Props 导出按翻译文本合并，导致陷阱坐标进入宝箱页面，并被红宝石等掉落详情间接展示。
+- **变更文件**：`api/src/entity_export.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Props 分组键由翻译文本改为“翻译文本 + 是否存在掉落配置”；同类质量变体仍可合并，但有掉落配置的 `GiantClam_Chest` 与无掉落配置的 `GiantClam_Trap` 分离导出。
+- **验证**：数据管道成功；Chest 与 Trap 分别生成独立 Props 文件且互不包含对方坐标；`lootdrops/Ruby.json` 中 `GiantClam_Trap` 出现次数为 0；Python 语法、ruff、black、`npm run format`、`npm run format:check`、`npx tsc --noEmit` 检查通过。
+
 ## fix: 独立神器与多语言物品名清洗
 
 - **改动原因**：`WarMaul_8001` 等神器被错误暴露为普通品质变体；非中文语言的掉落详情物品名仍保留 `Triple Gem Bangle (Cracked)`、`トリプルジェム・バングル (ひび割れ)` 等末尾品质括号。
