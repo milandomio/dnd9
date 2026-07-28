@@ -2048,3 +2048,9 @@ if (typeof window !== "undefined") {
 - **改动原因**：GitHub Actions 使用的远程 DB 缺少多语言表，数据管道未生成 `data/json/locale/en.json`，导致 SSG 构建失败；本地 DB 原先被 `skip-worktree` 标记而未参与更新。
 - **变更文件**：`api/data/darkfindv5.db`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：取消 DB 的 `skip-worktree` 标记并提交本地 41.9 MB DB，包含 `translations_en`、`translations_de`、`translations_es`、`translations_fr`、`translations_ja`、`translations_ko`、`translations_pt_BR`、`translations_ru`、`translations_zh_Hant`，使管道可生成全部语言 locale 文件。
+
+## fix: 拆分 Sitemap 以适配 Cloudflare Pages
+
+- **改动原因**：CF Pages 单文件限制为 25 MiB，原始 `sitemap.xml` 约 35.9 MiB；同时当前部署使用 CF 三级域名根目录，不需要 `/dnd9/` 二级路径。
+- **变更文件**：`web/scripts/ssg.mjs`、`docs/BUILD_AND_DEPLOY.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SSG 按 10 种语言生成 `sitemap-{lang}.xml`，每个文件保留该语言 URL 及 hreflang 互链；`sitemap.xml` 改为引用 10 个语言文件的 sitemap index。部署 URL 继续使用 `https://dnd9.icetar.com` 根路径。
