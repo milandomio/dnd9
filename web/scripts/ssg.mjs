@@ -779,13 +779,14 @@ function sitemapPriority(path) {
   return ['0.3', 'monthly'];
 }
 
-let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-sitemap +=
-  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
-for (const r of routes) {
-  if (r.redirect) continue;
-  const [prio, freq] = sitemapPriority(r.path);
-  for (const lang of LANGS) {
+const sitemapFiles = [];
+for (const lang of LANGS) {
+  let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  sitemap +=
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+  for (const r of routes) {
+    if (r.redirect) continue;
+    const [prio, freq] = sitemapPriority(r.path);
     const loc = SITE + localizedPath(r.path, lang);
     const alts = LANGS.map(
       (altLang) =>
@@ -793,11 +794,22 @@ for (const r of routes) {
     ).join('\n');
     sitemap += `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
   }
+  sitemap += '</urlset>\n';
+  const filename = `sitemap-${lang}.xml`;
+  writeFileSync(join(DIST, filename), sitemap, 'utf-8');
+  sitemapFiles.push(filename);
 }
-sitemap += '</urlset>\n';
-writeFileSync(join(DIST, 'sitemap.xml'), sitemap, 'utf-8');
+
+let sitemapIndex = '<?xml version="1.0" encoding="UTF-8"?>\n';
+sitemapIndex +=
+  '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+for (const filename of sitemapFiles) {
+  sitemapIndex += `  <sitemap>\n    <loc>${SITE}/${filename}</loc>\n    <lastmod>${dataDateStr}</lastmod>\n  </sitemap>\n`;
+}
+sitemapIndex += '</sitemapindex>\n';
+writeFileSync(join(DIST, 'sitemap.xml'), sitemapIndex, 'utf-8');
 console.log(
-  `[ssg] sitemap.xml generated (${routes.length - routes.filter((r) => r.redirect).length} URLs)`
+  `[ssg] sitemap.xml index + ${sitemapFiles.length} language files generated (${routes.length - routes.filter((r) => r.redirect).length} URLs per language)`
 );
 
 const total = ((Date.now() - t0) / 1000).toFixed(1);
