@@ -160,7 +160,7 @@ def export_props(
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
     props_index = []
-    props_by_translation: dict[str, list[dict]] = {}
+    props_by_translation: dict[tuple[str, bool], list[dict]] = {}
     for r in sorted(props, key=lambda r: ore_quality_key(r["asset_name"])):
         # synthetic special page exported separately (must not merge under 黄金宝箱)
         if r["asset_name"] == GOLDCHEST_SPECIAL:
@@ -171,8 +171,9 @@ def export_props(
             m = ORE_QUALITY_RE.match(r["asset_name"])
             if m:
                 translation = m.group(1) if m.group(1).startswith("Ore_") else "Ore_" + m.group(1)
-        props_by_translation.setdefault(translation, []).append(r)
-    for translation, group in props_by_translation.items():
+        has_lootdrop = bool((props_spawner_info.get(r["asset_name"]) or {}).get("has_lootdrop"))
+        props_by_translation.setdefault((translation, has_lootdrop), []).append(r)
+    for (translation, _has_lootdrop), group in props_by_translation.items():
         merged_coords = []
         seen_coords: set[tuple] = set()
         for r in group:
