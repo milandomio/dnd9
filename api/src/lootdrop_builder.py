@@ -1182,14 +1182,19 @@ def build_and_save_lootdrop_details(
         _valid = item_valid_names.get(_iname)
         if _valid:
             _filtered = [
-                (mn, mt)
-                for mn, mt in zip(_entry["monsters"], _entry["monster_translations"], strict=False)
+                (mn, mt, mtk)
+                for mn, mt, mtk in zip(
+                    _entry["monsters"],
+                    _entry["monster_translations"],
+                    _entry["monster_translation_keys"],
+                    strict=True,
+                )
                 if mn in _valid
             ]
             if _filtered:
-                _entry["monsters"], _entry["monster_translations"] = zip(*_filtered, strict=False)
-                _entry["monsters"] = list(_entry["monsters"])
-                _entry["monster_translations"] = list(_entry["monster_translations"])
+                _entry["monsters"], _entry["monster_translations"], _entry["monster_translation_keys"] = map(
+                    list, zip(*_filtered, strict=True)
+                )
     _save(output_dir, "lootdrops.json", loot_index)
 
     return item_max_score

@@ -47,6 +47,8 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 
 无游戏文件部署：DB 含全部数据，`python main.py` 可直接生成所有 JSON。
 
+GitHub Actions 从当前仓库的 `data-latest` Release 下载名为 `darkfindv5.db` 的资产到 `api/data/`，校验文件非空后再运行管道。更新数据时必须同步替换该 Release 资产；DB 不在常规分支中长期跟踪。
+
 ## 远端
 
 - **GitHub**: `https://github.com/milandomio/dnd9.git`

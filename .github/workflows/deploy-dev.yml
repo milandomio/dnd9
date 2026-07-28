@@ -27,6 +27,14 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
 
+      - name: Download database
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p api/data
+          gh release download data-latest --pattern darkfindv5.db --dir api/data
+          test -s api/data/darkfindv5.db
+
       - name: Run data pipeline
         run: python api/main.py
 
