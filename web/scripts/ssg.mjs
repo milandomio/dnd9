@@ -192,7 +192,7 @@ for (const p of PAGES) {
         routes.push({
           path: `/${DEFAULT_LANG}/lootdrops/${encodeURIComponent(variantName)}`,
           file: `${DEFAULT_LANG}/lootdrops/${variantName}/index.html`,
-          localized: suffix === defaultSuffix || suffix === '8001',
+          generateStatic: suffix === defaultSuffix || suffix === '8001',
         });
       }
     } else {
@@ -615,6 +615,7 @@ function createTemplateDetailPage(route, routeData, lang, localeDict) {
 
 for (let i = 0; i < routes.length; i++) {
   const r = routes[i];
+  if (r.generateStatic === false) continue;
   const outPath = join(DIST, r.file);
   const urlPath = r.path;
   const baseHref = baseHrefFromFile(r.file);
@@ -717,7 +718,7 @@ for (const lang of LANGS) {
   if (lang === DEFAULT_LANG) continue;
   for (const r of routes) {
     if (r.redirect) continue;
-    if (r.localized === false) continue;
+    if (r.generateStatic === false) continue;
     const dataKey = routeDataKey(r.path);
     const routeData = ssrDataMap[dataKey];
     const srcPath = join(DIST, r.file);
@@ -784,16 +785,13 @@ for (const lang of LANGS) {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
   for (const r of routes) {
     if (r.redirect) continue;
-    if (lang !== DEFAULT_LANG && r.localized === false) continue;
+    if (r.generateStatic === false) continue;
     const [prio, freq] = sitemapPriority(r.path);
     const loc = SITE + localizedPath(r.path, lang);
-    const availableLangs = r.localized === false ? [DEFAULT_LANG] : LANGS;
-    const alts = availableLangs
-      .map(
-        (altLang) =>
-          `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${SITE + localizedPath(r.path, altLang)}" />`
-      )
-      .join('\n');
+    const alts = LANGS.map(
+      (altLang) =>
+        `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${SITE + localizedPath(r.path, altLang)}" />`
+    ).join('\n');
     sitemap += `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
   }
   sitemap += '</urlset>\n';

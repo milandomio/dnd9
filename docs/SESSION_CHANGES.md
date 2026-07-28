@@ -7,6 +7,19 @@
 - **关键逻辑/映射关系**：多变体基底条目以 `5001`（否则首个 suffix）标记默认品质；仅默认品质和 `8001` 写入非默认语言 HTML，`zh-Hans` 保留全部。相同标记过滤非默认语言 Sitemap，并令裁剪路由的 hreflang 仅指向 `zh-Hans`。根 `404.html` 写入 Vite 空根模板，`main.tsx` 因而使用既有 `createRoot()`，再按原 URL 请求版本化详情 JSON。构建递归统计 `dist` 文件和 HTML 数，超过 19,000 即失败。
 - **验证**：`npm run format`、`npm run format:check`、`npx prettier --check scripts/ssg.mjs`、`npx tsc --noEmit`、`npm run build` 通过；产物为 18,127 文件（14,493 HTML）。保留/裁剪文件与 10 个 Sitemap 符合规则；生产预览首页 HTTP 200，Playwright 确认 `404.html` 根节点为空、保留详情无 React 错误且版本化 JSON 返回 200。Vite preview 对不存在路径返回 `index.html` 200，不能模拟 Cloudflare 的 404 文档状态。
 
+## feat: 默认语言同步裁剪品质静态页
+
+- **改动原因**：默认语言的非默认品质详情与其他语言一样可由 `404.html` 在线接管，继续生成只增加 SSG 与部署文件数。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/plans/CF_PAGES_DETAIL_FALLBACK.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：多变体路由统一使用 `generateStatic` 标记；默认语言首次写盘、非默认语言复制及全部语言 Sitemap 均跳过 `false`。默认品质与独立 `_8001` 条目保持静态页，其他品质由原 URL 的 `404.html` → SPA → 版本化 JSON 链路处理。
+- **验证**：`npm run format`、`npm run format:check`、`npx prettier --check scripts/ssg.mjs`、`npx tsc --noEmit`、`npm run build` 通过；产物为 16,563 文件（12,929 HTML）。
+
+## docs: 稀有度变体改造草案
+
+- **改动原因**：记录以默认品质静态页加 `?r=1001` 承载其他品质的可选方向，避免未确定 URL 设计时直接改动站内链接。
+- **变更文件**：`docs/plans/RARITY_VARIANT_REFACTOR_DRAFT.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`Spear_5001` 静态壳 + `r=1001` → 客户端读取实际品质 → `Spear_1001.json`；草案状态为未决定执行，当前 404 接管保持不变。
+
 # 2026-07-27 会话修改记录
 
 ## fix: SSG 后导航栏 Ant Design 样式失效
