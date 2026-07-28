@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { DEFAULT_LANG, isSupportedLang, type SupportedLang } from './locale';
 
@@ -31,11 +31,26 @@ const LanguageContext = createContext<LanguageContextValue>({
   withLangPrefix,
 });
 
+function initialRenderedLang(routeLang: SupportedLang): SupportedLang {
+  if (typeof window === 'undefined') return routeLang;
+  const ssrData = (
+    window as typeof window & {
+      __SSR_DATA__?: { __ssrLang?: string };
+    }
+  ).__SSR_DATA__;
+  return isSupportedLang(ssrData?.__ssrLang) ? ssrData.__ssrLang : routeLang;
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
-  const routeLang = location.pathname.split('/').filter(Boolean)[0];
-  const hasLangPrefix = isSupportedLang(routeLang);
-  const lang = hasLangPrefix ? routeLang : DEFAULT_LANG;
+  const routeSegment = location.pathname.split('/').filter(Boolean)[0];
+  const hasLangPrefix = isSupportedLang(routeSegment);
+  const routeLang = hasLangPrefix ? routeSegment : DEFAULT_LANG;
+  const [lang, setLang] = useState(() => initialRenderedLang(routeLang));
+
+  useEffect(() => {
+    setLang(routeLang);
+  }, [routeLang]);
 
   return (
     <LanguageContext.Provider

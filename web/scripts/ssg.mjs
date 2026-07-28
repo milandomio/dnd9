@@ -546,6 +546,7 @@ function injectLocalizedData(page, lang, title) {
     try {
       const payload = JSON.parse(jsonText);
       payload.__lang = lang;
+      payload.__ssrLang = DEFAULT_LANG;
       if (title) payload.__localizedTitle = title;
       return `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>`;
     } catch {
@@ -745,15 +746,15 @@ for (let i = 0; i < routes.length; i++) {
 console.log(
   `[ssg] generating localized HTML copies for ${LANGS.filter((l) => l !== DEFAULT_LANG).length} non-default languages…`
 );
-const localeDicts = {};
+const localeDicts = { [DEFAULT_LANG]: {} };
 for (const lang of LANGS) {
   if (lang === DEFAULT_LANG) continue;
   localeDicts[lang] = readJSON(join(DATA, 'locale', `${lang}.json`));
 }
 let localizedCount = 0;
 for (const lang of LANGS) {
-  if (lang === DEFAULT_LANG) continue;
   for (const r of routes) {
+    if (lang === DEFAULT_LANG && r.path !== '/') continue;
     if (r.redirect) continue;
     if (r.generateStatic === false) continue;
     const dataKey = routeDataKey(r.path);
