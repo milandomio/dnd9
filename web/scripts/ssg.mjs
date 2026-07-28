@@ -520,13 +520,24 @@ function firstTranslatable(data) {
   return null;
 }
 
-function localizedTitle(routeData, localeDict) {
+function stripTrailingParenthetical(value) {
+  return String(value ?? '')
+    .replace(/\s*[（(][^（）()]*[）)]\s*$/, '')
+    .trim();
+}
+
+function localizedTitle(routeData, localeDict, routePath = '') {
   const entity = firstTranslatable(routeData);
   if (!entity) return '';
   const title = entity.translation_key
     ? localeDict[entity.translation_key]
     : '';
-  return title || entity.translation || entity.name || 'DarkFlashNav';
+  const localized =
+    title || entity.translation || entity.name || 'DarkFlashNav';
+  const lootdropVariant = routePath.match(/\/lootdrops\/[^/]+_(\d{4})\/?$/);
+  return lootdropVariant && lootdropVariant[1] !== '8001'
+    ? stripTrailingParenthetical(localized)
+    : localized;
 }
 
 function injectLocalizedData(page, lang, title) {
@@ -551,7 +562,7 @@ function localizePage(
   includeAlternates = true
 ) {
   const canonicalHref = localizedPath(route.path, lang);
-  const title = localizedTitle(routeData, localeDict);
+  const title = localizedTitle(routeData, localeDict, route.path);
   let out = injectLocalizedData(page, lang, title)
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
     .replace(
@@ -621,7 +632,7 @@ function createTemplateDetailPage(route, routeData, lang, localeDict) {
   );
   // Detail pages fetch their route data after the client starts. Rendering GoldChest
   // here copied its coordinates and Ant Design's SSR styles into every detail file.
-  const title = localizedTitle(routeData, localeDict);
+  const title = localizedTitle(routeData, localeDict, route.path);
   const page = templated
     .replace(/<title>[^<]*<\/title>\s*/, '')
     .replace(

@@ -188,7 +188,9 @@ def _detail_variant_suffixes(entry: dict) -> list[str]:
     if variant_count <= 1:
         return []
     if entry["name"].endswith("_8001"):
-        return ["1001", "2001", "3001", "4001", "5001", "6001", "7001", "8001"]
+        # Artifact entries are standalone items. Keep only their own rarity
+        # metadata instead of exposing the base item's ordinary variants.
+        return ["8001"]
     match = _SUFFIX_NUM_RE.search(entry.get("raw_name", ""))
     if not match:
         return []

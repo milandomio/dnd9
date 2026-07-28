@@ -1,5 +1,12 @@
 # 2026-07-29 会话修改记录
 
+## fix: 独立神器与多语言物品名清洗
+
+- **改动原因**：`WarMaul_8001` 等神器被错误暴露为普通品质变体；非中文语言的掉落详情物品名仍保留 `Triple Gem Bangle (Cracked)`、`トリプルジェム・バングル (ひび割れ)` 等末尾品质括号。
+- **变更文件**：`api/src/lootdrop_builder.py`；`web/src/pages/LootdropDetailPage.tsx`；`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：独立 `_8001` 条目只生成 `variant_rarity.8001`，不再生成 `1001~7001` 或变体切换按钮；掉落详情客户端及 SSG 多语言标题统一移除末尾半角/全角括号及其内容，`_8001` 独立神器标题保留自身 `translation_key`，例如 `WarMaul_8001` 在繁中显示 `利維坦`。
+- **验证**：数据管道成功（locale/search_index 各 10 种语言）；`WarMaul_8001` 仅保留 `8001` 稀有度；Quick SSG 成功生成 14,732 个文件；英语 `GoldBangle1I_5001` 静态标题为 `Triple Gem Bangle`，繁中神器静态标题为 `利維坦`；`npm run format`、`npm run format:check`、`npx tsc --noEmit`、Python/SSG 语法检查通过。
+
 ## fix: 任务详情表头禁止换行
 
 - **改动原因**：日语任务详情页在窄任务卡片中会将目标表的“タイプ”“戦利品”等标题拆行，奖励表的 Item 列名也缺少不换行约束。
