@@ -36,3 +36,10 @@
 - **变更文件**：`api/data/darkfindv5.db`（仅取消 Git 跟踪，本地文件保留）；`which`（删除）；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：遵循 `BUILD_AND_DEPLOY.md` 的 DB 交付规则，数据库默认不跟踪，仅在明确推送部署时临时加入；构建输出目录继续由 `.gitignore` 排除。
 - **验证**：`git ls-files -ci --exclude-standard` 确认误跟踪 DB；`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+### fix: 修复合并前 DB 获取与掉落翻译键错位
+
+- **改动原因**：取消 DB 跟踪后 Actions 缺少管道数据源；掉落索引过滤无有效坐标来源时只同步更新名称和中文翻译，导致多语言翻译键与来源错位。
+- **变更文件**：`.github/workflows/deploy.yml`；`.github/workflows/deploy-dev.yml`；`api/src/lootdrop_builder.py`；`docs/BUILD_AND_DEPLOY.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：两套部署工作流均从 `data-latest` Release 下载 `darkfindv5.db` 并校验非空；`monsters`、`monster_translations`、`monster_translation_keys` 作为严格等长三元组按有效来源同步过滤。
+- **验证**：完整数据管道通过，478 条掉落索引三组来源字段全部等长，`HeaterShield_8001` 的三个翻译键与来源一致；Release 资产回下载后的 SHA-256 与本地 DB 一致。
