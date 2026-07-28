@@ -1,7 +1,6 @@
 """Locale dictionary export for frontend i18n."""
 
 import json
-import sqlite3
 from pathlib import Path
 
 from config import SUPERHOARD_I18N, SUPERHOARD_I18N_KEY
@@ -119,17 +118,15 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
     used_keys = _load_used_keys(output_dir, lootdrop_keys)
     used_keys.add(SUPERHOARD_I18N_KEY)
     used_keys.update(FILTER_MODE_LOCALE_KEYS)
+    fallback_translations = db.get_translations_map("zh-Hans")
 
     exported: list[str] = []
     for lang in SUPPORTED_LANGUAGES:
-        try:
-            all_translations = db.get_translations_map(lang)
-        except sqlite3.OperationalError:
-            continue
+        all_translations = db.get_translations_map(lang)
         if not all_translations:
-            continue
+            raise RuntimeError(f"empty translation table for {lang}")
         if used_keys:
-            filtered = {k: v for k, v in all_translations.items() if k in used_keys}
+            filtered = {key: all_translations.get(key, fallback_translations.get(key, key)) for key in used_keys}
         else:
             filtered = dict(all_translations)
         # Inject SuperHoard synthetic key (no Game.json entry)

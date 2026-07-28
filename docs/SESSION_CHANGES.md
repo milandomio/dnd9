@@ -77,3 +77,10 @@
 - **变更文件**：`web/eslint.config.js`；`web/package.json`；`web/package-lock.json`；`web/tests/i18n.mjs`；`.github/workflows/deploy.yml`；`.github/workflows/deploy-dev.yml`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`npm test` 统一执行 lint、全范围 Prettier 和 TypeScript；Node 脚本使用显式 Node globals；两套 Actions 在 SSG 后启动 preview，并运行多语言 HTTP、资源、文案、hydration 与 Loading 回归。
 - **验证**：`npm test` 通过（0 error）；quick SSG 生成 12,940 个 HTML、总文件数 14,741；Workbox 产物确认 `meta.json` 使用 `NetworkFirst`；preview HTTP 200；15 个中英日页面 Playwright 回归全通过且无 hydration/资源错误。
+
+### fix: 补齐本地化搜索与 locale 键集合
+
+- **改动原因**：非中文搜索索引的 NPC、地图分组、tag 和嵌套掉落来源仍可能回退中文；各语言 locale 缺失键时输出集合不一致；硫磺矿 props key 仅少数语言存在。
+- **变更文件**：`api/src/config.py`；`api/src/db/importers/props.py`；`api/src/db/repositories/props.py`；`api/src/index_export.py`；`api/src/search_index_builder.py`；`api/src/locale_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：搜索条目携带并消费 NPC/group/tag/source 翻译键；locale 与搜索均按目标语言、中文、原值顺序显式回退且缺表立即失败；`Text_DesignData_Props_Props_Ore_BrimstoneOre` 统一映射到多语言覆盖更完整的 `Text_DesignData_Item_Item_BrimstoneOres_5001`。
+- **验证**：完整管道、Python lint/Black、`npm test` 与差异空白检查通过；10 种 locale 均为 1,672 个相同键；NPC 搜索中文残留清零；硫磺矿实体输出新 key。
