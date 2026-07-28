@@ -466,7 +466,7 @@
   - `web/src/pages/DungeonModuleDetailPage.tsx` — 标题/实体类型标签/选1点/位置统计/包含实体接入 `ut()`
   - `web/src/pages/QuestNPCDetailPage.tsx` — 任务列表/奖励类型(CONTENT_TYPE_KEY/REWARD_TYPE_KEY → locale)/任务目标/奖励/前置任务/金币经验值标签全部接入 `ut()`
   - `web/src/pages/LootdropDetailPage.tsx` — GDI 条目怪物名改用 `t(translation_key)`；模块名改用 `t(translation_key)`；GroupDropInfo 接口补充 `translation_key` 字段
-- **关键逻辑/映射**: 
+- **关键逻辑/映射**:
   - 新增 `CATEGORY_KEYS` 映射（NPC 分类中文→locale key），`CONTENT_TYPE_KEY`（内容类型→locale key），`REWARD_TYPE_KEY`（奖励类型→locale key）
   - 所有页面的 `const { t, ut }` 拆分为：用到 `t` 的页面保留两者，只用 `ut` 的页面只解构 `ut`
   - 模板字符串（含 `{count}` 占位符）使用 `.replace()` 替换后传入，避免引入模板引擎依赖
@@ -607,9 +607,9 @@
   - `api/src/db/_helpers.py` — 添加 `discover_languages()` 自动发现所有语言目录、`locale_display_name()` 友好名
   - `api/src/db/schema.py` — 添加 `ensure_translation_table(lang)` 为每种语言创建独立表
   - `api/src/db/__init__.py` — `import_translations()` 导入所有 10 种语言到对应表（`translations_en`、`translations_de` 等）zh-Hans 保持 `translations` 表不变；`get_translations_map(lang)` 支持按语言查询
-   - `api/src/collector.py` — EN 改为 `db.get_translations_map("en")`，移除文件直读；`LOCALIZATION_ROOT` 加入 `_SOURCE_PATHS` 触发 DB 更新
-   - `api/src/config.py` — 移除未使用的 `LOCALIZATION_EN_DIR`/`EN_GAME_JSON`
-   - `api/src/db/_helpers.py` — 移除未使用的 `load_en_game_json()`
+  - `api/src/collector.py` — EN 改为 `db.get_translations_map("en")`，移除文件直读；`LOCALIZATION_ROOT` 加入 `_SOURCE_PATHS` 触发 DB 更新
+  - `api/src/config.py` — 移除未使用的 `LOCALIZATION_EN_DIR`/`EN_GAME_JSON`
+  - `api/src/db/_helpers.py` — 移除未使用的 `load_en_game_json()`
 - **DB 结果**：10 张翻译表，各 1.2-1.3 万条记录
 - **效果**：英文名显示不变（`Heater Shield`、`Soul-Devoted Folio`），流水线 107s 运行正常
 - **验证**：3096 pages 构建通过
@@ -1830,6 +1830,7 @@ if (typeof window !== "undefined") {
 - **变更文件**：`docs/plans/SSG_DETAIL_TEMPLATE.md` — 新增详情 SSG 空壳样板设计。
 - **关键逻辑/映射关系**：每种语言 `props/GoldChest` → 一次 SSR 样板 → 复制至同语言 items/monsters/props 详情路由；每页独立替换目标实体 title；`isDetailTemplate` → 首屏固定 `RareModule_1x1.webp` → CSR 请求当前 `page/name` JSON 后替换真实内容。
 - **范围限制**：`LootdropDetailPage` 数据结构独立，不复用 GoldChest 样板，待后续确定专用样板。
+
 # 2026-07-27 会话修改记录
 
 ## feat: 详情页 GoldChest SSG 样板
@@ -2054,3 +2055,9 @@ if (typeof window !== "undefined") {
 - **改动原因**：CF Pages 单文件限制为 25 MiB，原始 `sitemap.xml` 约 35.9 MiB；同时当前部署使用 CF 三级域名根目录，不需要 `/dnd9/` 二级路径。
 - **变更文件**：`web/scripts/ssg.mjs`、`docs/BUILD_AND_DEPLOY.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：SSG 按 10 种语言生成 `sitemap-{lang}.xml`，每个文件保留该语言 URL 及 hreflang 互链；`sitemap.xml` 改为引用 10 个语言文件的 sitemap index。部署 URL 继续使用 `https://dnd9.icetar.com` 根路径。
+
+## docs: 规划 CF Pages lootdrop 重复变体 404 接管
+
+- **改动原因**：CF Pages 部署上限为 20,000 个文件，Quick SSG 当前约 32,203 个产物；需要在不改变预览分支、根域名部署和所有语言 SEO 壳的前提下，减少重复 lootdrop 品质变体静态文件并避免关键词堆砌。
+- **变更文件**：`docs/plans/CF_PAGES_DETAIL_FALLBACK.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：计划保留所有语言现有 SSG SEO 壳；lootdrops 每种语言仅保留默认变体和 `8001` 神器变体的 SEO HTML，`1001` 至 `7001` 的其他重复变体交给 `404.html` + `BrowserRouter` 客户端请求同名版本化 JSON；普通实体、任务和模块详情不在本次裁剪范围内，同时验收 `gh-pages-dev` 预览分支确实是 CF Pages 的输入。
