@@ -1,5 +1,12 @@
 # 2026-07-29 会话修改记录
 
+## fix: 任务详情表头禁止换行
+
+- **改动原因**：日语任务详情页在窄任务卡片中会将目标表的“タイプ”“戦利品”等标题拆行，奖励表的 Item 列名也缺少不换行约束。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：目标表 Type、Target / Rarity、Loot、Count 表头统一使用 `whiteSpace: 'nowrap'`；奖励表 Item 表头及底部 Gold、EXP 标签同步禁止换行，Type、Count 延续已有单行规则。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；按用户要求不继续执行浏览器验证。
+
 ## fix: 掉落详情分类按钮 i18n
 
 - **改动原因**：英语掉落详情页的来源分类按钮组仍有“隐藏全部/全部显示”硬编码中文。
