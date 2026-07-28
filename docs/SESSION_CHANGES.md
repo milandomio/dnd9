@@ -13,6 +13,13 @@
 - **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：分类按钮的全选状态文案改为 `ui.common.hide_all` / `ui.common.show_all`，英语分别显示 `Hide All` / `Show All`，其余语言复用现有 UI locale 映射。
 
+## docs: Sitemap 全量 URL 水合验证计划
+
+- **改动原因**：需要验证全部语言 Sitemap URL 是否仍存在 React #425 水合错误；当前 10 个语言 Sitemap 每个 1,266 个 URL，共 12,660 个 URL。
+- **变更文件**：`docs/plans/SITEMAP_HYDRATION_425_AUDIT.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：计划使用 Playwright 逐 URL 捕获 `pageerror`、控制台错误、#425/#418/#423、持续 Loading、资源状态和路由结果；Cloudflare Insights localhost CORS 单独归类，不掩盖应用错误。计划阶段不执行全量扫描、不修改业务代码。
+- **验证**：仅创建计划文档，尚未执行全量 URL 验证。
+
 # 2026-07-28 会话修改记录
 
 ## feat: CF Pages 非默认语言掉落品质详情 404 接管
