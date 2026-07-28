@@ -192,6 +192,7 @@ for (const p of PAGES) {
         routes.push({
           path: `/${DEFAULT_LANG}/lootdrops/${encodeURIComponent(variantName)}`,
           file: `${DEFAULT_LANG}/lootdrops/${variantName}/index.html`,
+          localized: suffix === defaultSuffix || suffix === '8001',
         });
       }
     } else {
@@ -716,6 +717,7 @@ for (const lang of LANGS) {
   if (lang === DEFAULT_LANG) continue;
   for (const r of routes) {
     if (r.redirect) continue;
+    if (r.localized === false) continue;
     const dataKey = routeDataKey(r.path);
     const routeData = ssrDataMap[dataKey];
     const srcPath = join(DIST, r.file);
@@ -744,11 +746,7 @@ for (const lang of LANGS) {
 console.log(`[ssg] localized HTML generated: ${localizedCount}`);
 
 // ---- step 6: 404.html ----
-writeFileSync(
-  join(DIST, '404.html'),
-  readFileSync(join(DIST, 'index.html'), 'utf-8'),
-  'utf-8'
-);
+writeFileSync(join(DIST, '404.html'), template, 'utf-8');
 
 // ---- step 7: cleanup SSR bundle and manifest ----
 rmSync(SSR_OUT, { recursive: true, force: true });
@@ -786,12 +784,16 @@ for (const lang of LANGS) {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
   for (const r of routes) {
     if (r.redirect) continue;
+    if (lang !== DEFAULT_LANG && r.localized === false) continue;
     const [prio, freq] = sitemapPriority(r.path);
     const loc = SITE + localizedPath(r.path, lang);
-    const alts = LANGS.map(
-      (altLang) =>
-        `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${SITE + localizedPath(r.path, altLang)}" />`
-    ).join('\n');
+    const availableLangs = r.localized === false ? [DEFAULT_LANG] : LANGS;
+    const alts = availableLangs
+      .map(
+        (altLang) =>
+          `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${SITE + localizedPath(r.path, altLang)}" />`
+      )
+      .join('\n');
     sitemap += `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
   }
   sitemap += '</urlset>\n';
@@ -811,6 +813,33 @@ writeFileSync(join(DIST, 'sitemap.xml'), sitemapIndex, 'utf-8');
 console.log(
   `[ssg] sitemap.xml index + ${sitemapFiles.length} language files generated (${routes.length - routes.filter((r) => r.redirect).length} URLs per language)`
 );
+
+function countDistFiles(dir) {
+  let files = 0;
+  let html = 0;
+  for (const name of readdirSync(dir)) {
+    const path = join(dir, name);
+    if (statSync(path).isDirectory()) {
+      const nested = countDistFiles(path);
+      files += nested.files;
+      html += nested.html;
+    } else {
+      files++;
+      if (name.endsWith('.html')) html++;
+    }
+  }
+  return { files, html };
+}
+
+const distCounts = countDistFiles(DIST);
+console.log(
+  `[ssg] dist files: ${distCounts.files} (${distCounts.html} HTML, limit 19000)`
+);
+if (distCounts.files > 19000) {
+  throw new Error(
+    `[ssg] dist file budget exceeded: ${distCounts.files} > 19000. Reassess the generated route set before deployment.`
+  );
+}
 
 const total = ((Date.now() - t0) / 1000).toFixed(1);
 console.log(
