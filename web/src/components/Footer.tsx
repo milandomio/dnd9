@@ -1,7 +1,9 @@
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 
 export default function Footer() {
   const { tokens } = useTheme();
+  const { ut } = useLocale();
   return (
     <footer
       style={{
@@ -25,21 +27,21 @@ export default function Footer() {
         </a>
         {' · '}
         <a
-          href="https://discord.spellsandguns.com/"
+          href="https://darkanddarker.wiki.spellsandguns.com/Dark_and_Darker_Wiki"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: tokens.accent, textDecoration: 'none' }}
         >
-          Wiki社区
+          WIKI
         </a>
         {' · '}
         <a
-          href="https://chatglm.cn/"
+          href="https://chatglm.cn/main/alltoolsdetail?lang=en"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: tokens.accent, textDecoration: 'none' }}
         >
-          智谱清言
+          ChatGLM
         </a>
         {' · '}
         <a
@@ -70,7 +72,7 @@ export default function Footer() {
         </a>
       </p>
       <p style={{ margin: '4px 0 0' }}>
-        本应用为社区爱好者制作的非官方项目，数据来源及图片版权归属于{' '}
+        {ut('ui.footer.attribution')}{' '}
         <a
           href="https://darkanddarker.com/"
           target="_blank"

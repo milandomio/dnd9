@@ -5,6 +5,7 @@ import urllib.parse
 from pathlib import Path
 
 from config import HARDCODED_TRANSLATIONS
+from translator import resolve_group_label
 
 
 def _save(output_dir: Path, filename: str, data: list | dict):
@@ -36,7 +37,6 @@ def generate_quest_items_groups(
     modules,
     output_dir: Path,
     group_label_resolver=None,
-    resolve_en_name=None,
 ):
     """Generate quest items groups with coordinates."""
     import logging
@@ -172,6 +172,10 @@ def generate_quest_items_groups(
     for gname in sorted(groups):
         g = groups[gname]
         g["group_display"] = group_label_resolver(gname) if group_label_resolver else gname
+        gl = resolve_group_label(gname)
+        group_key = gl["slot_key"] if gl else gname
+        group_floor = gl["floor"] if gl else 1
+        group_sub_key = gl["sub_key"] if gl else None
         entities = list(g["entities"].values())
         for e in entities:
             e.pop("_seen_coords", None)
@@ -180,6 +184,9 @@ def generate_quest_items_groups(
             {
                 "group": gname,
                 "group_display": g["group_display"],
+                "group_key": group_key,
+                "group_floor": group_floor,
+                "group_sub_key": group_sub_key,
                 "entity_count": len(entities),
                 "position_count": pos_count,
             }
@@ -190,6 +197,9 @@ def generate_quest_items_groups(
             {
                 "group": gname,
                 "group_display": g["group_display"],
+                "group_key": group_key,
+                "group_floor": group_floor,
+                "group_sub_key": group_sub_key,
                 "entities": entities,
             },
         )
@@ -232,6 +242,7 @@ def build_and_save_indexes(
             {
                 "name": entry["name"],
                 "translation": entry.get("translation", ""),
+                "translation_key": entry.get("translation_key", ""),
                 "page": "items",
                 "url": f"/items/{urllib.parse.quote(entry['name'], safe='')}/",
             }
@@ -241,6 +252,7 @@ def build_and_save_indexes(
             {
                 "name": entry["name"],
                 "translation": entry.get("translation", ""),
+                "translation_key": entry.get("translation_key", ""),
                 "page": "monsters",
                 "url": f"/monsters/{urllib.parse.quote(entry['name'], safe='')}/",
             }
@@ -249,6 +261,7 @@ def build_and_save_indexes(
         si_entry = {
             "name": entry["name"],
             "translation": entry.get("translation", ""),
+            "translation_key": entry.get("translation_key", ""),
             "page": "props",
             "url": f"/props/{urllib.parse.quote(entry['name'], safe='')}/",
         }
@@ -259,6 +272,7 @@ def build_and_save_indexes(
         si_entry = {
             "name": entry["name"],
             "translation": entry.get("translation", ""),
+            "translation_key": entry.get("translation_key", ""),
             "page": "lootdrops",
             "url": f"/lootdrops/{urllib.parse.quote(entry['name'], safe='')}/",
         }
@@ -268,6 +282,8 @@ def build_and_save_indexes(
             si_entry["monsters"] = entry["monsters"]
         if entry.get("monster_translations"):
             si_entry["monster_translations"] = entry["monster_translations"]
+        if entry.get("monster_translation_keys"):
+            si_entry["monster_translation_keys"] = entry["monster_translation_keys"]
         si_entry["max_score"] = entry.get("max_score", 0.0)
         if entry.get("hr100"):
             si_entry["hr100"] = True
@@ -277,16 +293,22 @@ def build_and_save_indexes(
             {
                 "name": entry["npc_name"],
                 "translation": entry.get("npc_name_display", ""),
+                "translation_key": entry.get("translation_key", ""),
                 "page": "quest_npc",
                 "url": "/quest_npc/",
             }
         )
-    dm_groups = sorted({m.get("group") for m in modules_data if m.get("group")})
-    for g in dm_groups:
+    dm_groups = {}
+    for module in modules_data:
+        group = module.get("group")
+        if group and group not in dm_groups:
+            dm_groups[group] = module.get("group_key", "")
+    for g, group_key in sorted(dm_groups.items()):
         search_index.append(
             {
                 "name": g,
                 "translation": group_label_resolver(g) if group_label_resolver else g,
+                "translation_key": group_key,
                 "page": "dungeon_modules",
                 "url": f"/dungeon_modules/{urllib.parse.quote(g, safe='')}/",
             }
@@ -296,10 +318,12 @@ def build_and_save_indexes(
             {
                 "name": m["name"],
                 "translation": m.get("translation", m["name"]),
+                "translation_key": m.get("translation_key", ""),
                 "page": "dungeon_modules",
                 "tag": (
                     group_label_resolver(m.get("group", "")) if group_label_resolver else (m.get("group", "") or "模块")
                 ),
+                "tag_translation_key": m.get("group_key", ""),
                 "url": f"/dungeon_modules/{urllib.parse.quote(m.get('group', '') or '', safe='')}/{urllib.parse.quote(m['name'], safe='')}/",
             }
         )

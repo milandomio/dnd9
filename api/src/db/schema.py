@@ -159,6 +159,18 @@ class SchemaManager:
         self._migrate_spawners_table()
         self.conn.commit()
 
+    def ensure_translation_table(self, lang: str):
+        c = self.conn.cursor()
+        table = f"translations_{lang.replace('-', '_')}"
+        c.execute(f"""
+            CREATE TABLE IF NOT EXISTS {table} (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL DEFAULT ''
+            )
+        """)
+        self.conn.commit()
+        return table
+
     def _migrate_spawners_table(self):
         c = self.conn.cursor()
         c.execute("PRAGMA table_info(spawners)")

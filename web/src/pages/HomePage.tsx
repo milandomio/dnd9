@@ -3,10 +3,13 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
 import Disclaimer from '../components/Disclaimer';
+import AppName from '../components/AppName';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
+import { useLanguage } from '../i18n/LanguageContext';
 
 type CardTheme = {
   border: string;
@@ -98,9 +101,12 @@ export default function HomePage() {
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const { tokens, dark } = useTheme();
   const dataVersion = useDataVersion();
+  const { ut } = useLocale();
+  const { lang } = useLanguage();
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/index.json'))
       .then((r) => r.json())
       .then(setData)
@@ -132,19 +138,7 @@ export default function HomePage() {
         />
         <meta property="og:type" content="website" />
       </Helmet>
-      <h1
-        style={{
-          textAlign: 'center',
-          color: tokens.accent,
-          fontSize: 26,
-          marginBottom: 4,
-        }}
-      >
-        越来越黑暗闪电指南
-        <div style={{ fontSize: 14, color: tokens.muted, marginTop: 4 }}>
-          DarkFlashNav
-        </div>
-      </h1>
+      <AppName />
       <Disclaimer />
       <div
         style={{
@@ -160,7 +154,7 @@ export default function HomePage() {
             return (
               <Link
                 key={entry.page}
-                to={`/${entry.page}/`}
+                to={`/${lang}/${entry.page}/`}
                 style={{
                   textDecoration: 'none',
                   display: 'block',
@@ -210,25 +204,34 @@ export default function HomePage() {
                     marginBottom: 2,
                   }}
                 >
-                  【{entry.label}】
+                  【{ut(`ui.home.card_labels.${entry.page}`)}】
                 </div>
                 <div style={{ color: t.titleColor, fontSize: 13 }}>
                   {entry.page === 'quest_items' || entry.page === 'quest_npc'
-                    ? `任务${entry.count}个`
-                    : `${entry.label}${entry.count}个`}
+                    ? ut('ui.home.quest_count').replace(
+                        '{count}',
+                        String(entry.count)
+                      )
+                    : ut('ui.home.card_subtitle')
+                        .replace(
+                          '{label}',
+                          ut(`ui.home.card_labels.${entry.page}`)
+                        )
+                        .replace('{count}', String(entry.count))}
                 </div>
                 <div
                   style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}
                 >
-                  {entry.page === 'items' && '查看物品位置'}
-                  {entry.page === 'monsters' && '查看怪物位置'}
-                  {entry.page === 'props' && '查看实体位置'}
-                  {entry.page === 'lootdrops' && '查看物品掉落怪物'}
-                  {entry.page === 'explore' && '地图模块预览（暂停维护）'}
+                  {entry.page === 'items' && ut('ui.home.view_items')}
+                  {entry.page === 'monsters' && ut('ui.home.view_monsters')}
+                  {entry.page === 'props' && ut('ui.home.view_props')}
+                  {entry.page === 'lootdrops' && ut('ui.home.view_lootdrops')}
+                  {entry.page === 'explore' && ut('ui.home.view_explore')}
                   {entry.page === 'quest_items' &&
-                    '按地图分组查看任务物品（暂停维护）'}
-                  {entry.page === 'quest_npc' && '查看NPC任务详情'}
-                  {entry.page === 'dungeon_modules' && '按地图分组查看所有模块'}
+                    ut('ui.home.view_quest_items')}
+                  {entry.page === 'quest_npc' && ut('ui.home.view_quest_npc')}
+                  {entry.page === 'dungeon_modules' &&
+                    ut('ui.home.view_dungeon_modules')}
                 </div>
               </Link>
             );

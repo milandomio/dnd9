@@ -16,6 +16,25 @@ export default function SWUpdateBanner() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (!('serviceWorker' in navigator)) return;
+    if (import.meta.env.DEV) {
+      // A production SW can persist on the dev origin and serve stale JSON.
+      void navigator.serviceWorker
+        .getRegistrations()
+        .then((registrations) =>
+          Promise.all(
+            registrations.map((registration) => registration.unregister())
+          )
+        )
+        .then(() => caches.keys())
+        .then((keys) =>
+          Promise.all(
+            keys
+              .filter((key) => key.startsWith('df5-'))
+              .map((key) => caches.delete(key))
+          )
+        );
+      return;
+    }
 
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (refreshing.current) return;

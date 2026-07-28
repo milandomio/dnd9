@@ -3,7 +3,8 @@
  * Used by SSR (ssr.tsx) for server-side rendering.
  * Client entry (App.tsx) uses React.lazy for code splitting instead.
  */
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
 import { useTheme } from './hooks/useTheme';
 import { useDungeonModules } from './hooks/useDungeonModules';
 import HomePage from './pages/HomePage';
@@ -23,47 +24,87 @@ import Footer from './components/Footer';
 import SWUpdateBanner from './components/SWUpdateBanner';
 import OfflineDetector from './components/OfflineDetector';
 import InstallPrompt from './components/InstallPrompt';
+import { LanguageProvider } from './i18n/LanguageContext';
+import { DEFAULT_LANG, isSupportedLang } from './i18n/locale';
+import { useAntdLocale } from './i18n/antdLocale';
+import type { ReactNode } from 'react';
+
+function AntdLocaleProvider({ children }: { children: ReactNode }) {
+  const locale = useAntdLocale();
+  return <ConfigProvider locale={locale}>{children}</ConfigProvider>;
+}
+
+/**
+ * Paths without a supported lang prefix (e.g. /monsters/X/) would otherwise
+ * match /:lang/:page with lang="monsters". Redirect before Routes match.
+ */
+function AppRoutes() {
+  const location = useLocation();
+  const segment = location.pathname.split('/').filter(Boolean)[0];
+  if (segment && !isSupportedLang(segment)) {
+    return (
+      <Navigate
+        to={`/${DEFAULT_LANG}${location.pathname}${location.search}${location.hash}`}
+        replace
+      />
+    );
+  }
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/:lang" element={<HomePage />} />
+      <Route path="/:lang/explore" element={<ExplorePage />} />
+      <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
+      <Route
+        path="/:lang/quest_items/:group"
+        element={<QuestItemGroupPage />}
+      />
+      <Route path="/:lang/quest_npc" element={<QuestNPCPage />} />
+      <Route
+        path="/:lang/quest_npc/:npc_name"
+        element={<QuestNPCDetailPage />}
+      />
+      <Route path="/:lang/dungeon_modules" element={<DungeonModulesPage />} />
+      <Route
+        path="/:lang/dungeon_modules/:group"
+        element={<DungeonModuleGroupPage />}
+      />
+      <Route
+        path="/:lang/dungeon_modules/:group/:name"
+        element={<DungeonModuleDetailPage />}
+      />
+      <Route path="/:lang/lootdrops/:name" element={<LootdropDetailPage />} />
+      <Route path="/:lang/:page" element={<ListPage />} />
+      <Route path="/:lang/:page/:name" element={<DetailPage />} />
+    </Routes>
+  );
+}
 
 /** Shared page content (routes only, no router wrapper). */
 export function AppInner() {
   const { tokens } = useTheme();
   useDungeonModules(); // preload module data eagerly
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        padding: '16px',
-        background: tokens.bg,
-        boxSizing: 'border-box',
-        maxWidth: 1200,
-        margin: '0 auto',
-      }}
-    >
-      <SWUpdateBanner />
-      <OfflineDetector />
-      <InstallPrompt />
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/quest_items" element={<QuestItemsPage />} />
-        <Route path="/quest_items/:group" element={<QuestItemGroupPage />} />
-        <Route path="/quest_npc" element={<QuestNPCPage />} />
-        <Route path="/quest_npc/:npc_name" element={<QuestNPCDetailPage />} />
-        <Route path="/dungeon_modules" element={<DungeonModulesPage />} />
-        <Route
-          path="/dungeon_modules/:group"
-          element={<DungeonModuleGroupPage />}
-        />
-        <Route
-          path="/dungeon_modules/:group/:name"
-          element={<DungeonModuleDetailPage />}
-        />
-        <Route path="/lootdrops/:name" element={<LootdropDetailPage />} />
-        <Route path="/:page" element={<ListPage />} />
-        <Route path="/:page/:name" element={<DetailPage />} />
-      </Routes>
-      <Footer />
-    </div>
+    <LanguageProvider>
+      <AntdLocaleProvider>
+        <div
+          style={{
+            minHeight: '100vh',
+            padding: '16px',
+            background: tokens.bg,
+            boxSizing: 'border-box',
+            maxWidth: 1200,
+            margin: '0 auto',
+          }}
+        >
+          <SWUpdateBanner />
+          <OfflineDetector />
+          <InstallPrompt />
+          <NavBar />
+          <AppRoutes />
+          <Footer />
+        </div>
+      </AntdLocaleProvider>
+    </LanguageProvider>
   );
 }

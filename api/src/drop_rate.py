@@ -45,6 +45,7 @@ class DropRateEngine:
         # base_entity_name → combined spawn rate across quality variants
         self._combined_spawn_rate_cache: dict[str, float] = {}
         self._item_to_ld_ids: dict[str, set[str]] = {}
+        self._base_item_spawners: dict[str, set[str]] = {}
         self._variant_rate_cache: dict[tuple, float] = {}
         self._candidate_ids_cache: dict[str, set[str]] = {}
         self._all_groups_cache: dict[tuple, dict[str, dict[str, float]]] = {}
@@ -131,6 +132,16 @@ class DropRateEngine:
             for _grade_data in _grades.values():
                 for _ld_id, _lr_id, _ in _grade_data:
                     self._ld_id_to_groups.setdefault(_ld_id, set()).add(_gid)
+
+        # Build base item → spawner keywords once instead of scanning all rate
+        # items for every variant family during lootdrop export.
+        for _item_name, _ld_ids in self._item_to_ld_ids.items():
+            _m = _VARIANT_RE.match(_item_name)
+            _base = _m.group(1) if _m else _item_name
+            _spawners = self._base_item_spawners.setdefault(_base, set())
+            for _ld_id in _ld_ids:
+                for _gid in self._ld_id_to_groups.get(_ld_id, set()):
+                    _spawners.update(self._group_to_spawners.get(_gid, set()))
 
         # Build existing variant suffixes from _ld_rate_items
         for _items in self._ld_rate_items.values():
@@ -285,16 +296,7 @@ class DropRateEngine:
 
         Used as fallback when a specific variant has no spawner data.
         """
-        result: set[str] = set()
-        for _ld_id, _items in self._ld_rate_items.items():
-            for _item_name in _items:
-                _m = _VARIANT_RE.match(_item_name)
-                _base = _m.group(1) if _m else _item_name
-                if _base == base_item_name:
-                    _groups = self._ld_id_to_groups.get(_ld_id, set())
-                    for _gid in _groups:
-                        result.update(self._group_to_spawners.get(_gid, set()))
-        return result
+        return self._base_item_spawners.get(base_item_name, set())
 
     def get_quality_variants(self, entity_name: str) -> list[str]:
         """Generate all quality variant names for a given entity.

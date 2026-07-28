@@ -14,8 +14,7 @@ MAPS_DIR = GAME_ROOT / "Maps" / "Dungeon" / "Modules"
 LOCALIZATION_DIR = GAME_ROOT.parent / "Localization" / "Game" / "zh-Hans"
 GAME_JSON = LOCALIZATION_DIR / "Game.json"
 
-LOCALIZATION_EN_DIR = GAME_ROOT.parent / "Localization" / "Game" / "en"
-EN_GAME_JSON = LOCALIZATION_EN_DIR / "Game.json"
+LOCALIZATION_ROOT = GAME_ROOT.parent / "Localization" / "Game"
 
 ITEM_DIR = DATA_DIR / "Item" / "Item"
 MONSTER_DIR = DATA_DIR / "Monster" / "Monster"
@@ -57,6 +56,10 @@ TRANSLATION_ALIAS_MAP = {
     "BlueMarlin": "Bluemarlin",
 }
 
+TRANSLATION_KEY_ALIAS_MAP = {
+    "Text_DesignData_Props_Props_Ore_BrimstoneOre": "Text_DesignData_Item_Item_BrimstoneOres_5001",
+}
+
 HARDCODED_TRANSLATIONS = {
     "Barrel": "木桶",
     "Bones": "骸骨",
@@ -72,9 +75,9 @@ HARDCODED_TRANSLATIONS = {
     "Coffin_Poor": "破旧棺材",
     "Coffin_Royal": "皇家棺材",
     "Gems": "宝石",
-    "SuperHoard": "超级宝藏",
-    "SuperHoardChest": "超级宝藏",
-    "SuperHoardChest01": "超级宝藏",
+    "SuperHoard": "超级宝藏堆",
+    "SuperHoardChest": "超级宝藏堆",
+    "SuperHoardChest01": "超级宝藏堆",
     "SuperHoard01_9": "超级宝藏堆",
     "SuperHoardChest01_9": "超级宝藏堆",
     "Trinkets": "小饰品",
@@ -300,15 +303,47 @@ HARDCODED_TRANSLATIONS = {
     "DungeonModule": "地牢模块",
     "DungeonInfiniteExitBase": "无限出口",
     "Ruins_DualBossTreasureRoom": "双boss宝藏室",
-    "ShipGraveyard_BladehandRefuge": "钉手岛",
-    "ShipGraveyard_ElephantIsland": "象岛",
+    "ShipGraveyard_BladehandRefuge": "1-1",
+    "ShipGraveyard_ElephantIsland": "3-6",
 }
 
+# SuperHoard* has no Game.json key — synthetic i18n key + 10-lang full phrases
+SUPERHOARD_I18N_KEY = "df5.hardcoded.SuperHoard"
+SUPERHOARD_ENTITY_NAMES = frozenset(
+    {
+        "SuperHoard",
+        "SuperHoardChest",
+        "SuperHoardChest01",
+        "SuperHoard01_9",
+        "SuperHoardChest01_9",
+    }
+)
+SUPERHOARD_I18N: dict[str, str] = {
+    "zh-Hans": "超级宝藏堆",
+    "zh-Hant": "超級寶藏堆",
+    "en": "Super Treasure Hoard",
+    "de": "Super-Schatzhort",
+    "es": "Super Pila del Tesoro",
+    "fr": "Super Pile de Trésors",
+    "ja": "スーパー財宝の山",
+    "ko": "슈퍼 보물 더미",
+    "pt-BR": "Super Pilha de Tesouros",
+    "ru": "Супер Гора Сокровищ",
+}
+
+
+def superhoard_translation_key(name: str) -> str | None:
+    """Return synthetic i18n key if name is a SuperHoard* entity."""
+    if name in SUPERHOARD_ENTITY_NAMES or name.startswith("SuperHoard"):
+        return SUPERHOARD_I18N_KEY
+    return None
+
+
 MODULE_NAME_OVERRIDE = {
-    "EmptyModule_1F_14": "3-1模块",
-    "EmptyModule_1F_09": "5-1模块",
-    "EmptyModule_1F_15": "7-4模块",
-    "EmptyModule_1F_13": "6-5模块",
+    "EmptyModule_1F_14": "3-1",
+    "EmptyModule_1F_09": "5-1",
+    "EmptyModule_1F_15": "7-4",
+    "EmptyModule_1F_13": "6-5",
 }
 
 MODULE_DISPLAY_OVERRIDE = {

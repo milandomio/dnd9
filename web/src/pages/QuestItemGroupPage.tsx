@@ -7,7 +7,9 @@ import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
+import { useLocale } from '../i18n/useLocale';
 import type { DungeonModule } from '../types/data';
 import {
   getAdj,
@@ -17,6 +19,7 @@ import {
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
+import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
 
 interface Coord {
@@ -46,6 +49,9 @@ interface Entity {
 
 interface GroupData {
   group: string;
+  group_key?: string;
+  group_floor?: number;
+  group_sub_key?: string | null;
   group_display: string;
   entities: Entity[];
 }
@@ -81,6 +87,7 @@ export default function QuestItemGroupPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
+  const { t, ut } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -90,6 +97,7 @@ export default function QuestItemGroupPage() {
       setLoading(false);
       return;
     }
+    if (!dataVersion) return;
     fetch(
       dataUrl(
         dataVersion,
@@ -108,7 +116,7 @@ export default function QuestItemGroupPage() {
   if (loading)
     return (
       <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
   if (!data)
@@ -225,14 +233,15 @@ export default function QuestItemGroupPage() {
     0
   );
   const visibleCount = entities.filter((e) => !hidden.has(e.name)).length;
+  const groupLabel = formatGroupLabel(data, t, ut);
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggleDebug,
           },
@@ -241,12 +250,12 @@ export default function QuestItemGroupPage() {
 
       <Helmet>
         <title>
-          {data.group_display}
+          {groupLabel}
           {group} 任务物品QuestItem | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${data.group_display} 任务物品位置，${visibleCount} 个实体，${totalCoords} 个位置点。`}
+          content={`${groupLabel} 任务物品位置，${visibleCount} 个实体，${totalCoords} 个位置点。`}
         />
       </Helmet>
       <h1
@@ -257,9 +266,11 @@ export default function QuestItemGroupPage() {
           margin: '0 0 8px',
         }}
       >
-        【{data.group_display}】任务物品
+        【{groupLabel}】{ut('ui.quest_group.title').replace('{group}', '')}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
-          {entities.length}种实体 {totalCoords}个位置
+          {ut('ui.quest_group.stat')
+            .replace('{entities}', String(entities.length))
+            .replace('{coords}', String(totalCoords))}
         </span>
       </h1>
 
@@ -297,7 +308,9 @@ export default function QuestItemGroupPage() {
             transition: 'all 0.2s',
           }}
         >
-          {hidden.size === 0 ? '隐藏全部' : '全部显示'}
+          {hidden.size === 0
+            ? ut('ui.common.hide_all')
+            : ut('ui.common.show_all')}
         </button>
         {entities.map((e) => (
           <button
@@ -337,7 +350,9 @@ export default function QuestItemGroupPage() {
             color: tokens.muted,
           }}
         >
-          <strong style={{ color: tokens.text }}>实体图例：</strong>
+          <strong style={{ color: tokens.text }}>
+            {ut('ui.quest_group.legend')}
+          </strong>
           {entities.map((e) => (
             <span
               key={e.name}
@@ -389,7 +404,7 @@ export default function QuestItemGroupPage() {
                     : '2px solid #F57F17',
                 }}
               >
-                {groupItems[0]?.mod?.group_display || groupName}
+                {formatGroupLabel(groupItems[0]?.mod, t, ut) || groupName}
               </div>
             )}
             {groupItems.map(({ mapName, mod, dots }) => {
@@ -427,7 +442,7 @@ export default function QuestItemGroupPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {mod?.translation || mapName}
+                    {t(mod?.translation_key, mod?.translation || mapName)}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -701,7 +716,8 @@ export default function QuestItemGroupPage() {
                           </span>
                           <span style={{ color: tokens.muted }}>
                             ({dots.filter((d) => d.entity.name === en).length}
-                            点)
+                            {ut('ui.quest_group.points').replace('{count}', '')}
+                            )
                           </span>
                         </span>
                       );
@@ -723,7 +739,7 @@ export default function QuestItemGroupPage() {
               const rowKey = `${e.name}-${j}`;
               return {
                 key: rowKey,
-                group: mod?.group_display || g,
+                group: formatGroupLabel(mod, t, ut) || g,
                 monster: {
                   name: e.name,
                   translation: e.translation,
@@ -732,7 +748,7 @@ export default function QuestItemGroupPage() {
                 },
                 file: c.file,
                 mapName: c.map,
-                mapLabel: mod?.translation || c.map,
+                mapLabel: t(mod?.translation_key, mod?.translation || c.map),
                 label: c.label || '',
                 x: c.x,
                 y: c.y,
@@ -784,12 +800,11 @@ export default function QuestItemGroupPage() {
           color: tokens.muted,
         }}
       >
-        <strong>位置统计：共 {totalCoords} 个位置点</strong>
-        <br />
-        <strong>包含地图：</strong>{' '}
-        {[...new Set([...mapGroups.keys()])]
-          .map((k) => modules.get(k)?.translation || k)
-          .join('、')}
+        <LocationStats
+          count={totalCoords}
+          mapKeys={[...mapGroups.keys()]}
+          modules={modules}
+        />
       </div>
     </div>
   );

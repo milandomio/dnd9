@@ -6,11 +6,11 @@ from pathlib import Path
 from config import (
     DB_PATH,
     DUNGEON_MODULE_DIR,
-    EN_GAME_JSON,
     GAME_JSON,
     GAME_ROOT,
     ITEM_DIR,
     LAYOUT_DIR,
+    LOCALIZATION_ROOT,
     LOG_DIR,
     LOOTDROP_DIR,
     LOOTDROP_GROUP_DIR,
@@ -27,6 +27,8 @@ from enrichment import enrich_all_entities
 from entity_export import export_items, export_monsters, export_props
 from image_utils import sync_webp_images
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
+from label_type import GOLDCHEST_SPECIAL, split_goldchest_special_coords
+from locale_builder import build_locale_files
 from lootdrop_builder import (
     build_and_save_lootdrop_details,
     build_loot_index,
@@ -41,7 +43,23 @@ from module_builder import (
 from pipeline import Pipeline
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
+from search_index_builder import build_search_index_files
 from translator import NameResolver, build_coord_out, resolve_group_label
+
+
+def _resolve_group_display(group: str, translations: dict[str, str]) -> str:
+    """Construct Chinese display string from group name, for JSON fallback."""
+    result = resolve_group_label(group)
+    if not result:
+        return group
+    base = translations.get(result["slot_key"], group)
+    floor = result["floor"]
+    sub_key = result["sub_key"]
+    if sub_key:
+        sub_name = translations.get(sub_key, "")
+        return f"{base}{floor}层（{sub_name}）"
+    return f"{base}{floor}层"
+
 
 _SOURCE_PATHS = [
     GAME_JSON,
@@ -55,6 +73,7 @@ _SOURCE_PATHS = [
     SPAWNER_DIR,
     MAPS_DIR,
     LAYOUT_DIR,
+    LOCALIZATION_ROOT,
 ]
 
 
@@ -257,6 +276,9 @@ def run():
         pipe.log("[JSON] get_all_coordinates START")
         all_coords = db.get_all_coordinates()
         pipe.log(f"[JSON] get_all_coordinates DONE -> {len(all_coords)} entity keys")
+        _gc_n = split_goldchest_special_coords(all_coords)
+        if _gc_n:
+            pipe.log(f"[JSON] GoldChest_special split -> {_gc_n} special coords")
         _coord_variant_count = db.get_coord_variant_counts()
         pipe.log(f"[JSON] get_coord_variant_counts DONE -> {len(_coord_variant_count)} variant groups")
         _sub_pool_info_raw = db.get_sub_group_pool_info()
@@ -283,6 +305,28 @@ def run():
         _item_names = {r["item_name"] for r in items}
         _monster_names = {r["monster_name"] for r in monsters}
         _prop_names = {r["asset_name"] for r in props}
+        if GOLDCHEST_SPECIAL in all_coords:
+            _prop_names.add(GOLDCHEST_SPECIAL)
+            # synthetic props row for export / entity_class consumers
+            if not any(r["asset_name"] == GOLDCHEST_SPECIAL for r in props):
+                _gc_tk = next(
+                    (r["translation_key"] for r in props if r["asset_name"] in ("GoldChest", "GoldChest_UnderSea")),
+                    "Text_DesignData_Props_Props_GoldenChest",
+                )
+                props = list(props) + [
+                    {
+                        "asset_name": GOLDCHEST_SPECIAL,
+                        "raw_name": f"Id_Props_{GOLDCHEST_SPECIAL}",
+                        "translation_key": _gc_tk,
+                    }
+                ]
+            entity_class[GOLDCHEST_SPECIAL] = {
+                "types": ["props"],
+                "translation_key": next(
+                    (r["translation_key"] for r in props if r["asset_name"] == GOLDCHEST_SPECIAL),
+                    "Text_DesignData_Props_Props_GoldenChest",
+                ),
+            }
 
         print("\nExporting JSON files...")
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -295,47 +339,57 @@ def run():
 
         resolver = NameResolver(translations)
 
-        en_translations: dict[str, str] = {}
-        if EN_GAME_JSON.exists():
-            from db._helpers import load_game_json
-
-            en_translations = load_game_json(EN_GAME_JSON)
-        resolver_en = NameResolver(en_translations) if en_translations else resolver
-        en_resolve = resolver_en.resolve
-
         _monsters_lookup = {r["monster_name"]: r for r in monsters}
+        _props_lookup = {r["asset_name"]: r for r in props}
         for _vkey, (_vcnt, _vraw) in list(_coord_variant_count.items()):
             if _vraw:
-                _vtr: list[str] = []
+                _vtr: list[dict] = []
                 for _kw in _vraw:
                     _cls = entity_class.get(_kw, {})
-                    _mrow = _monsters_lookup.get(_kw)
-                    if _mrow:
-                        _vtr.append(resolver.resolve(_kw, _mrow["translation_key"], "monster"))
+                    _mrow = _monsters_lookup.get(_kw) or _monsters_lookup.get(_kw.replace("Guardsman", "Guardman"))
+                    if "FromFakeDeath" in _kw:
+                        tk = "ui.pool.skeleton_guard_fake_death"
+                        _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, None, "props") or _kw})
+                    elif _mrow:
+                        tk = _mrow["translation_key"]
+                        _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, tk, "monster")})
                     elif _cls and "props" in _cls.get("types", []):
-                        _vtr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                        tk = _cls.get("translation_key", "")
+                        _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, tk, "props")})
                     else:
-                        _vtr.append(resolver.resolve(_kw, None, "props") or _kw)
+                        _vtr.append({"translation_key": "", "name": resolver.resolve(_kw, None, "props") or _kw})
                 _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
-        _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[str]]] = {}
+        _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[dict[str, str]]]] = {}
         for _sp_key, (_sp_cnt, _sp_raw_names) in _sub_pool_info_raw.items():
-            _sp_tr: list[str] = []
+            _sp_tr: list[dict[str, str]] = []
             for _kw in _sp_raw_names:
                 _cls = entity_class.get(_kw, {})
-                _mrow = _monsters_lookup.get(_kw)
-                if _mrow:
-                    _sp_tr.append(resolver.resolve(_kw, _mrow["translation_key"], "monster"))
+                _mrow = _monsters_lookup.get(_kw) or _monsters_lookup.get(_kw.replace("Guardsman", "Guardman"))
+                if "FromFakeDeath" in _kw:
+                    _tk = "ui.pool.skeleton_guard_fake_death"
+                    _name = resolver.resolve(_kw, None, "props") or _kw
+                elif _mrow:
+                    _tk = _mrow["translation_key"]
+                    _name = resolver.resolve(_kw, _tk, "monster")
+                elif _kw == "Ore_GoldOre":
+                    _tk = _props_lookup["Ore_GoldOre_VeryLow"]["translation_key"]
+                    _name = resolver.resolve(_kw, _tk, "props")
                 elif _cls:
                     _cls_types = _cls.get("types", [])
                     if "props" in _cls_types:
-                        _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "props"))
+                        _tk = _cls.get("translation_key", "")
+                        _name = resolver.resolve(_kw, _tk, "props")
                     elif "item" in _cls_types:
-                        _sp_tr.append(resolver.resolve(_kw, _cls.get("translation_key", ""), "item"))
+                        _tk = _cls.get("translation_key", "")
+                        _name = resolver.resolve(_kw, _tk, "item")
                     else:
-                        _sp_tr.append(resolver.resolve(_kw, None, "props") or _kw)
+                        _tk = ""
+                        _name = resolver.resolve(_kw, None, "props") or _kw
                 else:
-                    _sp_tr.append(resolver.resolve(_kw, None, "props") or _kw)
+                    _tk = ""
+                    _name = resolver.resolve(_kw, None, "props") or _kw
+                _sp_tr.append({"translation_key": _tk, "name": _name})
             _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr)
 
         pipe.log("[JSON] building merged lootdrop map...")
@@ -360,12 +414,21 @@ def run():
 
         pipe.log("[JSON] building modules_map...")
         modules = db.get_dungeon_modules()
-        modules_map = build_modules_map(db, resolver.resolve, module_rotations=None, resolve_en_name=en_resolve)
+        modules_map = build_modules_map(db, resolver.resolve, module_rotations=None)
         map_to_module, module_to_maps = build_map_mappings(modules_map)
         # 注入分组显示名
         for _mod in modules_map.values():
             _g = _mod.get("group", "")
-            _mod["group_display"] = resolve_group_label(_g, translations)
+            result = resolve_group_label(_g)
+            if result:
+                _mod["group_key"] = result["slot_key"]
+                _mod["group_floor"] = result["floor"]
+                _mod["group_sub_key"] = result["sub_key"]
+            else:
+                _mod["group_key"] = _g
+                _mod["group_floor"] = 1
+                _mod["group_sub_key"] = None
+            _mod["group_display"] = _resolve_group_display(_g, translations)
 
         # P005: Build ENTITY_PAGE_MAP for coord reference
         entity_page_map: dict[str, str] = {}
@@ -383,7 +446,6 @@ def run():
                 map_to_module,
                 item_coord_chain_map,
                 _sub_pool_info,
-                en_resolve,
             )
             # P005: Build from actual exported files, not raw DB data
             for e in items_index:
@@ -400,7 +462,6 @@ def run():
                 OUTPUT_DIR,
                 map_to_module,
                 _sub_pool_info,
-                en_resolve,
             )
             for e in monsters_index:
                 entity_page_map[e["name"]] = f"monsters/{e['name']}"
@@ -417,7 +478,6 @@ def run():
                 OUTPUT_DIR,
                 map_to_module,
                 _sub_pool_info,
-                en_resolve,
             )
             for e in props_index:
                 entity_page_map[e["name"]] = f"props/{e['name']}"
@@ -442,7 +502,7 @@ def run():
 
         with pipe.step("dungeon_modules export") as ctx:
             merged_coords = build_and_save_module_coords(
-                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR, en_resolve
+                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR
             )
             modules_data = build_and_save_modules_data(modules_map, module_to_maps, merged_coords, OUTPUT_DIR)
             ctx.set_result(f"{len(modules_data)} modules")
@@ -453,10 +513,11 @@ def run():
         pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
 
         with pipe.step("lootdrops") as ctx:
-            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve, en_resolve)
+            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve)
             _save("lootdrops.json", loot_index)
             ctx.set_result(f"{len(loot_index)} items")
 
+        used_translation_keys: set[str] = set()
         build_and_save_lootdrop_details(
             loot_index,
             drop_engine,
@@ -471,7 +532,7 @@ def run():
             map_to_module,
             translations,
             entity_page_map,
-            en_resolve,
+            used_translation_keys,
         )
         pipe.log("[JSON] lootdrops detail files DONE")
 
@@ -491,8 +552,7 @@ def run():
                 all_coords,
                 modules,
                 OUTPUT_DIR,
-                group_label_resolver=lambda g: resolve_group_label(g, translations),
-                resolve_en_name=en_resolve,
+                group_label_resolver=lambda g: _resolve_group_display(g, translations),
             )
 
         with pipe.step("search_index") as ctx:
@@ -507,9 +567,14 @@ def run():
                 quest_npc_count,
                 quest_npcs_data,
                 OUTPUT_DIR,
-                group_label_resolver=lambda g: resolve_group_label(g, translations),
+                group_label_resolver=lambda g: _resolve_group_display(g, translations),
             )
             ctx.set_result("DONE")
+
+        with pipe.step("locale export") as ctx:
+            locale_langs = build_locale_files(db, OUTPUT_DIR, used_translation_keys)
+            search_index_langs = build_search_index_files(db, OUTPUT_DIR)
+            ctx.set_result(f"locale={len(locale_langs)}, search_index={len(search_index_langs)} languages")
 
         print(f"\n[DONE] Output written to {OUTPUT_DIR}")
         for entry in index_data:

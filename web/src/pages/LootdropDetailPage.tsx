@@ -6,11 +6,20 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
+import { dropRateModeLabel } from '../utils/dropRate';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import SectionHeader from '../components/SectionHeader';
 import VariantSwitch from '../components/VariantSwitch';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
-import type { DungeonModule } from '../types/data';
+import type {
+  DungeonModule,
+  GroupDropInfo,
+  LootdropCoord,
+  LootdropItem,
+  LootdropMonster,
+  VariantNameEntry,
+} from '../types/data';
 import {
   getAdj,
   useCtrlBtn,
@@ -20,55 +29,17 @@ import {
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
+import ReferenceDropRates from '../components/ReferenceDropRates';
 import MapPanel from '../components/MapPanel';
-
-interface LootdropCoord {
-  x: number;
-  y: number;
-  z: number;
-  map: string;
-  file: string;
-  version: string;
-  label?: string;
-  spawn_rate?: number;
-  variant_count?: number;
-  variant_names?: string[];
-  score?: number;
-  group_parent?: string;
-  quality?: string;
-}
+import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
 const _globalRefPending = new Map<string, Promise<LootdropCoord[]>>();
+const _globalLootCache = new Map<string, LootdropItem>();
+const _globalLootPending = new Map<string, Promise<LootdropItem>>();
 let _globalCacheVersion = '';
-
-interface LootdropMonster {
-  name: string;
-  translation: string;
-  color: string;
-  coords?: LootdropCoord[];
-  ref?: string;
-  coord_count?: number;
-  drop_rates?: Record<string, number>;
-  max_score?: number;
-}
-
-interface GroupDropInfo {
-  translation: string;
-  spawn_rate: number;
-  spawn_rates?: Record<string, number>;
-  drop_rates: Record<string, number>;
-}
-
-interface LootdropItem {
-  name: string;
-  translation: string;
-  translation_EN?: string;
-  monsters: LootdropMonster[];
-  group_drop_info?: Record<string, GroupDropInfo[]>;
-  variant_rarity?: Record<string, string>;
-}
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -82,18 +53,136 @@ const GROUP_ORDER = [
 ];
 
 const VARIANT_RE = /^(.+?)_(\d{4})$/;
-const RARITY_COLORS: Record<string, string> = {
-  粗糙: '#9E9E9E',
-  普通: '#BDBDBD',
-  优秀: '#2ECC71',
-  罕见: '#3498DB',
-  史诗: '#9B59B6',
-  传奇: '#F39C12',
-  独特: '#FFD700',
+const LOOT_SOURCE_UI_KEYS: Record<string, string> = {
+  Weapon_DualBoss: 'ui.loot_source.dual_boss_weapon',
+  Weapon_MysticalTreasureRoom: 'ui.loot_source.mystical_treasure_weapon',
+  Weapon: 'ui.loot_source.weapon',
+  Weapon_GoldenRoom: 'ui.loot_source.golden_room_weapon',
+  DwarfSecretWeapon: 'ui.loot_source.dwarf_secret_weapon',
+  Weapon_FrozenRoom: 'ui.loot_source.frozen_room_weapon',
+  Weapon_SkullRoom: 'ui.loot_source.skull_room_weapon',
 };
+const RARITY_COLORS: Record<string, string> = {
+  Poor: '#9E9E9E',
+  Common: '#BDBDBD',
+  Uncommon: '#2ECC71',
+  Rare: '#3498DB',
+  Epic: '#9B59B6',
+  Legend: '#F39C12',
+  Unique: '#FFD700',
+  Artifact: '#FF4500',
+};
+
+function getRarityColor(
+  vr: { name: string; translation_key: string } | undefined,
+  fallback: string
+): string {
+  if (!vr) return fallback;
+  const rn = vr.translation_key.split('_').pop() || '';
+  return RARITY_COLORS[rn] ?? fallback;
+}
 
 function hasAnyRate(dr: Record<string, number>): boolean {
   return Object.values(dr).some((v) => v > 0);
+}
+
+function lootdropSourceKey(monster: LootdropMonster): string {
+  return monster.source_id ?? monster.translation;
+}
+
+function lootdropSourceTranslationKey(
+  source: Pick<LootdropMonster, 'name' | 'entity_name' | 'translation_key'>
+): string | undefined {
+  return (
+    source.translation_key ||
+    LOOT_SOURCE_UI_KEYS[source.entity_name ?? source.name]
+  );
+}
+
+function matchesGroupEntry(
+  entry: GroupDropInfo,
+  monster: LootdropMonster
+): boolean {
+  return entry.source_id
+    ? entry.source_id === monster.source_id
+    : entry.translation === monster.translation;
+}
+
+function hasLootdropDetail(item: LootdropItem | undefined): boolean {
+  return Boolean(item?.monsters || item?.sources);
+}
+
+function stripTrailingParenthetical(value: string): string {
+  return value.replace(/\s*[（(][^（）()]*[）)]\s*$/, '').trim();
+}
+
+function selectLootdropVariant(
+  item: LootdropItem,
+  requestedSuffix: string | null
+): LootdropItem {
+  if (!item.sources || !item.variants) return item;
+  const availableSuffixes = Object.keys(item.variants);
+  const suffix =
+    (requestedSuffix && item.variants[requestedSuffix]
+      ? requestedSuffix
+      : availableSuffixes.includes('5001')
+        ? '5001'
+        : availableSuffixes[0]) ?? '';
+  const variant = item.variants[suffix];
+  if (!variant) return { ...item, monsters: [], group_drop_info: {} };
+
+  const activeSourceIds = new Set<string>();
+  const groupDropInfo: Record<string, GroupDropInfo[]> = {};
+  for (const [group, entries] of Object.entries(variant.group_drop_info)) {
+    groupDropInfo[group] = entries.flatMap((entry) => {
+      const source = item.sources?.[entry.source_id];
+      if (!source) return [];
+      activeSourceIds.add(entry.source_id);
+      return [
+        {
+          ...entry,
+          translation: source.translation,
+          translation_key: lootdropSourceTranslationKey(source),
+        },
+      ];
+    });
+  }
+
+  const maxScores = new Map<string, number>();
+  for (const entries of Object.values(groupDropInfo)) {
+    for (const entry of entries) {
+      const score =
+        Math.round(entry.spawn_rate * (entry.drop_rates['豪客赛'] ?? 0) * 100) /
+        10000;
+      maxScores.set(
+        entry.source_id!,
+        Math.max(maxScores.get(entry.source_id!) ?? -1, score)
+      );
+    }
+  }
+  const monsters = Object.entries(item.sources)
+    .filter(([sourceId]) => activeSourceIds.has(sourceId))
+    .map(([sourceId, source]) => ({
+      ...source,
+      source_id: sourceId,
+      translation_key: lootdropSourceTranslationKey(source),
+      max_score: maxScores.get(sourceId) ?? -1,
+    }));
+  return {
+    ...item,
+    name: suffix ? `${item.name}_${suffix}` : item.name,
+    monsters,
+    group_drop_info: groupDropInfo,
+  };
+}
+
+function resetGlobalCaches(dataVersion: string) {
+  if (!dataVersion || dataVersion === _globalCacheVersion) return;
+  _globalRefCache.clear();
+  _globalRefPending.clear();
+  _globalLootCache.clear();
+  _globalLootPending.clear();
+  _globalCacheVersion = dataVersion;
 }
 
 export default function LootdropDetailPage() {
@@ -120,9 +209,9 @@ export default function LootdropDetailPage() {
     item: LootdropItem;
     modules: DungeonModule[];
   }>(baseDataKey);
-  const effectiveSsrData = ssrData?.item?.monsters
+  const effectiveSsrData = hasLootdropDetail(ssrData?.item)
     ? ssrData
-    : baseSsrData?.item?.monsters
+    : hasLootdropDetail(baseSsrData?.item)
       ? baseSsrData
       : ssrData?.item?.name
         ? ssrData
@@ -130,8 +219,8 @@ export default function LootdropDetailPage() {
           ? baseSsrData
           : null;
   const [data, setData] = useState<LootdropItem | null>(
-    effectiveSsrData?.item?.monsters
-      ? effectiveSsrData.item
+    hasLootdropDetail(effectiveSsrData?.item)
+      ? selectLootdropVariant(effectiveSsrData!.item, currentSuffix)
       : effectiveSsrData?.item?.name
         ? (effectiveSsrData.item as LootdropItem)
         : null
@@ -166,8 +255,12 @@ export default function LootdropDetailPage() {
   const isArtifact = baseName.endsWith('_8001');
   const defaultThreshold = isArtifact ? 0.03 : 2.5;
   const [hidden, setHidden] = useState<Set<string>>(() =>
-    effectiveSsrData?.item?.monsters
-      ? defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
+    hasLootdropDetail(effectiveSsrData?.item)
+      ? defaultHidden(
+          selectLootdropVariant(effectiveSsrData!.item, currentSuffix)
+            .monsters ?? [],
+          defaultThreshold
+        )
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
@@ -177,41 +270,60 @@ export default function LootdropDetailPage() {
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
+  const { t, ut, lang } = useLocale();
+  const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
-  const lootFetchedRef = useRef(false);
-
-  // Reset fetch guard when name changes (e.g. navigation between lootdrops)
-  useEffect(() => {
-    lootFetchedRef.current = false;
-  }, [name]);
-
   useEffect(() => {
     if (!baseName) return;
-    if (effectiveSsrData?.item?.monsters) {
-      setData(effectiveSsrData.item);
-      setHidden(
-        defaultHidden(effectiveSsrData.item.monsters, defaultThreshold)
+    if (dataVersion) resetGlobalCaches(dataVersion);
+    if (hasLootdropDetail(effectiveSsrData?.item)) {
+      const selected = selectLootdropVariant(
+        effectiveSsrData!.item,
+        currentSuffix
       );
+      _globalLootCache.set(baseName, effectiveSsrData!.item);
+      setData(selected);
+      setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
       return;
     }
-    const fetchName =
-      currentSuffix && !isArtifact ? `${baseName}_${currentSuffix}` : baseName;
-    const lootUrl = dataUrl(
-      dataVersion,
-      `/data/json/lootdrops/${fetchName}.json`
-    );
-    if (lootFetchedRef.current) return;
-    lootFetchedRef.current = true;
-    setData(null);
-    setHidden(new Set());
-    fetch(lootUrl)
-      .then<LootdropItem>((r) => r.json())
+    if (!dataVersion) return;
+    let cancelled = false;
+    const cached = _globalLootCache.get(baseName);
+    const pending = _globalLootPending.get(baseName);
+    const request = cached
+      ? Promise.resolve(cached)
+      : (pending ??
+        fetch(dataUrl(dataVersion, `/data/json/lootdrops/${baseName}.json`))
+          .then((response) => {
+            if (!response.ok)
+              throw new Error(`lootdrop HTTP ${response.status}`);
+            return response.json() as Promise<LootdropItem>;
+          })
+          .then((item) => {
+            _globalLootCache.set(baseName, item);
+            _globalLootPending.delete(baseName);
+            return item;
+          }));
+    if (!cached && !pending) _globalLootPending.set(baseName, request);
+    if (!cached) {
+      setData(null);
+      setHidden(new Set());
+    }
+    request
       .then((item) => {
-        setData(item);
-        setHidden(defaultHidden(item.monsters, defaultThreshold));
+        if (cancelled) return;
+        const selected = selectLootdropVariant(item, currentSuffix);
+        setData(selected);
+        setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
       })
-      .catch(console.error);
+      .catch((error) => {
+        _globalLootPending.delete(baseName);
+        if (!cancelled) console.error(error);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
 
   // Auto-redirect to default variant when visiting base URL
@@ -222,7 +334,9 @@ export default function LootdropDetailPage() {
     if (suffixes.length <= 1) return;
     if (currentSuffix) return; // already on a variant URL
     const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
-    navigate(`/lootdrops/${itemName}_${defaultSuffix}/`, { replace: true });
+    navigate(`/${lang}/lootdrops/${itemName}_${defaultSuffix}/`, {
+      replace: true,
+    });
   }, [data, currentSuffix, itemName, navigate]);
 
   // 在调试模式下实时响应阈值变化
@@ -279,11 +393,7 @@ export default function LootdropDetailPage() {
     }
   );
   useEffect(() => {
-    if (dataVersion && dataVersion !== _globalCacheVersion) {
-      _globalRefCache.clear();
-      _globalRefPending.clear();
-      _globalCacheVersion = dataVersion;
-    }
+    if (dataVersion) resetGlobalCaches(dataVersion);
     const refsNeeded = monsters
       .filter((m) => m.ref && !refCoords.has(m.ref))
       .map((m) => m.ref!);
@@ -321,16 +431,52 @@ export default function LootdropDetailPage() {
     });
   }, [monsters, dataVersion]);
 
-  // P005: Merge referenced coordinates, filtered to only maps present in entity
+  const variantRatesBySource = useMemo(() => {
+    const lookup = new Map<string, Map<string, GroupDropInfo>>();
+    for (const [group, entries] of Object.entries(
+      data?.group_drop_info ?? {}
+    )) {
+      for (const entry of entries) {
+        if (!entry.source_id) continue;
+        if (!lookup.has(entry.source_id)) {
+          lookup.set(entry.source_id, new Map());
+        }
+        lookup.get(entry.source_id)!.set(group, entry);
+      }
+    }
+    return lookup;
+  }, [data?.group_drop_info]);
+
+  // Merged families use source-level group rates as the coordinate authority.
   const resolvedMonsters = useMemo(
     () =>
-      monsters.map((m) => ({
-        ...m,
-        coords: (m.coords ?? refCoords.get(m.ref!) ?? []).filter(
-          (c) => !m.ref || modules.size === 0 || modules.has(c.map)
-        ),
-      })),
-    [monsters, refCoords, modules]
+      monsters.map((m) => {
+        const sourceRates = m.source_id
+          ? variantRatesBySource.get(m.source_id)
+          : undefined;
+        const coords = (m.coords ?? refCoords.get(m.ref!) ?? []).flatMap(
+          (coord) => {
+            if (!m.ref || modules.size === 0) return [coord];
+            const group = modules.get(coord.map)?.group;
+            if (!group) return [];
+            if (!sourceRates) return [coord];
+            const rate = sourceRates.get(group);
+            if (!rate) return [];
+            return [
+              {
+                ...coord,
+                spawn_rate: rate.spawn_rate,
+                score:
+                  Math.round(
+                    rate.spawn_rate * (rate.drop_rates['豪客赛'] ?? 0) * 100
+                  ) / 10000,
+              },
+            ];
+          }
+        );
+        return { ...m, coords };
+      }),
+    [monsters, refCoords, modules, variantRatesBySource]
   );
 
   const orderedMonsters = useMemo(() => {
@@ -346,6 +492,11 @@ export default function LootdropDetailPage() {
     for (const [g, entries] of Object.entries(data.group_drop_info)) {
       const m = new Map<string, { sr: number; dr: number }>();
       for (const e of entries) {
+        m.set(e.source_id ?? e.translation, {
+          sr: e.spawn_rate,
+          dr: e.drop_rates['豪客赛'] ?? 0,
+        });
+        if (!e.source_id) continue;
         m.set(e.translation, {
           sr: e.spawn_rate,
           dr: e.drop_rates['豪客赛'] ?? 0,
@@ -364,7 +515,7 @@ export default function LootdropDetailPage() {
   if (!data || !refsLoaded)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        数据加载中...
+        {ut('ui.common.loading')}
       </div>
     );
 
@@ -421,9 +572,12 @@ export default function LootdropDetailPage() {
         idx: number;
         spawn_rate?: number;
         variant_count?: number;
-        variant_names?: string[];
+        variant_names?: VariantNameEntry[];
         score?: number;
         group_parent?: string;
+        sub_group_parent?: string;
+        sub_pool_size?: number;
+        sub_pool_entries?: VariantNameEntry[];
         quality?: string;
       }[];
     }
@@ -447,6 +601,9 @@ export default function LootdropDetailPage() {
         variant_names: c.variant_names,
         score: c.score,
         group_parent: c.group_parent,
+        sub_group_parent: c.sub_group_parent,
+        sub_pool_size: c.sub_pool_size,
+        sub_pool_entries: c.sub_pool_entries,
         quality: c.quality,
       });
     });
@@ -474,7 +631,7 @@ export default function LootdropDetailPage() {
         y: number;
         z: number;
         variant_count?: number;
-        variant_names?: string[];
+        variant_names?: VariantNameEntry[];
         score?: number;
         file: string;
         group_parent?: string;
@@ -486,7 +643,7 @@ export default function LootdropDetailPage() {
     let total = 0;
     const varGroups = new Map<
       string,
-      { translation: string; positions: Set<string>; vc: number }
+      { sourceKey: string; positions: Set<string>; vc: number }
     >();
     const regPositions = new Map<string, number>();
     for (const d of item.dots) {
@@ -499,21 +656,25 @@ export default function LootdropDetailPage() {
           existing.positions.add(posKey);
         } else {
           varGroups.set(key, {
-            translation: d.monster.translation,
+            sourceKey: lootdropSourceKey(d.monster),
             positions: new Set([posKey]),
             vc,
           });
         }
       } else {
         const mKey = `${d.monster.translation}::${posKey}`;
-        const s = d.score ?? 0;
+        let s = d.score ?? 0;
+        if (s === 0) {
+          const rate = _rateLookup.get(lootdropSourceKey(d.monster));
+          if (rate) s = (rate.sr * rate.dr) / 100;
+        }
         const prev = regPositions.get(mKey) ?? 0;
         if (s > prev) regPositions.set(mKey, s);
       }
     }
     for (const s of regPositions.values()) total += s;
     for (const [, g] of varGroups) {
-      const rate = _rateLookup.get(g.translation);
+      const rate = _rateLookup.get(g.sourceKey);
       if (rate) {
         const baseScore = (rate.sr * rate.dr) / 100;
         total +=
@@ -577,7 +738,7 @@ export default function LootdropDetailPage() {
         const mod = modules.get(c.map);
         const groupName = mod?.group || '';
         const gdi = data?.group_drop_info?.[groupName];
-        const entry = gdi?.find((e) => e.translation === m.translation);
+        const entry = gdi?.find((e) => matchesGroupEntry(e, m));
         if (entry) {
           if (modeFilter) {
             if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
@@ -606,9 +767,7 @@ export default function LootdropDetailPage() {
       for (const d of item.dots) {
         if (hideZeroRate) {
           const gdi = data?.group_drop_info?.[groupName];
-          const entry = gdi?.find(
-            (e) => e.translation === d.monster.translation
-          );
+          const entry = gdi?.find((e) => matchesGroupEntry(e, d.monster));
           if (entry) {
             if (modeFilter) {
               if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
@@ -628,14 +787,23 @@ export default function LootdropDetailPage() {
   const visibleCount = resolvedMonsters.filter(
     (m) => !hidden.has(m.translation)
   ).length;
+  const itemLabel = stripTrailingParenthetical(
+    t(data.translation_key, data.translation || data.name)
+  );
+  const rarityLabel =
+    currentSuffix && data.variant_rarity?.[currentSuffix]
+      ? `(${t(data.variant_rarity[currentSuffix].translation_key, data.variant_rarity[currentSuffix].name)})`
+      : '';
+  const pageLabel = ut('ui.nav.lootdrops');
+  const helmetTitle = `${itemLabel}${rarityLabel} -${pageLabel}`;
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggleDebug,
           },
@@ -644,13 +812,11 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {data.translation}
-          {data.translation_EN ?? data.name} 掉落来源Source | 越来越黑暗闪电指南
-          DarkFlashNav
+          {ssrLocalizedTitle() ?? helmetTitle} | 越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落，共 ${bottomCount} 个位置点。`}
+          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落，共 ${bottomCount} 个位置点。`}
         />
         <meta
           name="keywords"
@@ -658,11 +824,11 @@ export default function LootdropDetailPage() {
         />
         <meta
           property="og:title"
-          content={`${data.translation}${data.translation_EN ?? data.name} 掉落来源Source | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? helmetTitle} | DarkFlashNav`}
         />
         <meta
           property="og:description"
-          content={`${data.translation || data.name} 由 ${visibleCount} 个怪物掉落`}
+          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落`}
         />
       </Helmet>
       <h1
@@ -673,24 +839,30 @@ export default function LootdropDetailPage() {
           margin: '0 0 8px',
         }}
       >
-        {data.translation}
+        {itemLabel}
         {currentSuffix && data.variant_rarity?.[currentSuffix] && (
           <span
             style={{
-              color:
-                RARITY_COLORS[data.variant_rarity[currentSuffix]] ??
-                tokens.muted,
+              color: getRarityColor(
+                data.variant_rarity[currentSuffix],
+                tokens.muted
+              ),
               marginLeft: 8,
             }}
           >
-            ({data.variant_rarity[currentSuffix]})
+            (
+            {t(
+              data.variant_rarity[currentSuffix].translation_key,
+              data.variant_rarity[currentSuffix].name
+            )}
+            )
           </span>
         )}
         {' >> '}
         {resolvedMonsters
           .filter((m) => !hidden.has(m.translation))
-          .map((m) => m.translation)
-          .join('、')}
+          .map((m) => t(lootdropSourceTranslationKey(m), m.translation))
+          .join(delimiter)}
         {resolvedMonsters.length - visibleCount > 0 && (
           <span style={{ color: tokens.muted, fontSize: 16 }}>
             {' '}
@@ -698,7 +870,10 @@ export default function LootdropDetailPage() {
           </span>
         )}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
-          {resolvedMonsters.length}种坐标汇总
+          {ut('ui.detail.coord_summary').replace(
+            '{count}',
+            String(resolvedMonsters.length)
+          )}
         </span>
       </h1>
 
@@ -720,7 +895,9 @@ export default function LootdropDetailPage() {
             alignItems: 'center',
           }}
         >
-          <span style={{ color: tokens.muted }}>爆率显示：</span>
+          <span style={{ color: tokens.muted }}>
+            {ut('ui.filter.drop_rate')}：
+          </span>
           <select
             value={modeFilter}
             onChange={(e) => setModeFilter(e.target.value)}
@@ -734,11 +911,11 @@ export default function LootdropDetailPage() {
               cursor: 'pointer',
             }}
           >
-            <option value="">全部</option>
-            <option value="PVE">PVE</option>
-            <option value="普通">普通</option>
-            <option value="豪客赛">豪客赛</option>
-            <option value="逆袭赛">逆袭赛</option>
+            <option value="">{ut('ui.filter.all')}</option>
+            <option value="PVE">{ut('ui.filter.pve')}</option>
+            <option value="普通">{ut('ui.filter.normal')}</option>
+            <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
+            <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
           </select>
           <label style={{ cursor: 'pointer', userSelect: 'none' }}>
             <input
@@ -747,7 +924,7 @@ export default function LootdropDetailPage() {
               onChange={(e) => setHideZeroRate(e.target.checked)}
               style={{ marginRight: 3, cursor: 'pointer' }}
             />
-            隐藏0爆率坐标
+            {ut('ui.filter.hide_zero_rate')}
           </label>
         </div>
       )}
@@ -763,10 +940,10 @@ export default function LootdropDetailPage() {
         if (!hasQuality) return null;
         const QUALITY_CONFIG: Record<string, { label: string; color: string }> =
           {
-            VeryLow: { label: '极低(PVE100%)', color: '#9E9E9E' },
-            Low: { label: '低(普通90%)', color: '#BDBDBD' },
-            Med: { label: '中(普通10%)', color: '#2ECC71' },
-            High: { label: '高品质(豪客赛100%)', color: '#3498DB' },
+            VeryLow: { label: ut('ui.rate.very_low'), color: '#9E9E9E' },
+            Low: { label: ut('ui.rate.low'), color: '#BDBDBD' },
+            Med: { label: ut('ui.rate.medium'), color: '#2ECC71' },
+            High: { label: ut('ui.rate.high'), color: '#3498DB' },
           };
         return (
           <div
@@ -855,7 +1032,9 @@ export default function LootdropDetailPage() {
             transition: 'all 0.2s',
           }}
         >
-          {hidden.size === 0 ? '隐藏全部' : '全部显示'}
+          {hidden.size === 0
+            ? ut('ui.common.hide_all')
+            : ut('ui.common.show_all')}
         </button>
         {visibleMonsters.map((m) => (
           <button
@@ -874,7 +1053,8 @@ export default function LootdropDetailPage() {
               transition: 'all 0.2s',
             }}
           >
-            {m.translation} ({visibleCountByMonster.get(m.translation) ?? 0})
+            {t(lootdropSourceTranslationKey(m), m.translation)} (
+            {visibleCountByMonster.get(m.translation) ?? 0})
           </button>
         ))}
       </div>
@@ -960,8 +1140,8 @@ export default function LootdropDetailPage() {
                 ? groupItems.some(({ dots }) =>
                     dots.some((d) => {
                       const gdi = data?.group_drop_info?.[groupName];
-                      const entry = gdi?.find(
-                        (e) => e.translation === d.monster.translation
+                      const entry = gdi?.find((e) =>
+                        matchesGroupEntry(e, d.monster)
                       );
                       if (!entry) return true;
                       if (modeFilter)
@@ -1000,55 +1180,25 @@ export default function LootdropDetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {groupItems[0]?.mod?.group_display || groupName}
+                    {formatGroupLabel(groupItems[0]?.mod, t, ut) || groupName}
                   </span>
                   {data?.group_drop_info?.[groupName] && (
-                    <span
+                    <ReferenceDropRates
+                      entries={data.group_drop_info[groupName]!.filter(
+                        (info) => {
+                          const m = resolvedMonsters.find((source) =>
+                            matchesGroupEntry(info, source)
+                          );
+                          return m && !hidden.has(m.translation);
+                        }
+                      )}
+                      modeFilter={modeFilter}
                       style={{
                         fontSize: 13,
                         fontWeight: 'normal',
                         color: tokens.muted,
                       }}
-                    >
-                      参考爆率：
-                      {data.group_drop_info[groupName]!.filter((info) => {
-                        const m = resolvedMonsters.find(
-                          (x) => x.translation === info.translation
-                        );
-                        return m && !hidden.has(m.translation);
-                      }).map((info, gi) => (
-                        <span
-                          key={gi}
-                          style={{
-                            display: 'inline-block',
-                            marginRight: 8,
-                          }}
-                        >
-                          {info.translation}
-                          {info.spawn_rates &&
-                          Object.keys(info.spawn_rates).length > 1
-                            ? Object.entries(info.drop_rates)
-                                .filter(
-                                  ([k]) => !modeFilter || k === modeFilter
-                                )
-                                .map(([mode, rate]) => {
-                                  const sRate = info.spawn_rates![mode];
-                                  return sRate != null
-                                    ? `[${mode}:${sRate}%×${rate}%]`
-                                    : `[${mode}:${rate}%]`;
-                                })
-                                .join('')
-                            : `${info.spawn_rate}%${Object.entries(
-                                info.drop_rates
-                              )
-                                .filter(
-                                  ([k]) => !modeFilter || k === modeFilter
-                                )
-                                .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                                .join('')}`}
-                        </span>
-                      ))}
-                    </span>
+                    />
                   )}
                 </div>
               </div>
@@ -1057,8 +1207,8 @@ export default function LootdropDetailPage() {
               const dots = hideZeroRate
                 ? rawDots.filter((d) => {
                     const gdi = data?.group_drop_info?.[groupName];
-                    const entry = gdi?.find(
-                      (e) => e.translation === d.monster.translation
+                    const entry = gdi?.find((e) =>
+                      matchesGroupEntry(e, d.monster)
                     );
                     if (!entry) return true;
                     if (modeFilter)
@@ -1101,7 +1251,10 @@ export default function LootdropDetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {mod?.translation || mapName}
+                    {t(
+                      mod?.translation_key,
+                      mod?.translation || mod?.name || mapName
+                    )}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -1358,146 +1511,200 @@ export default function LootdropDetailPage() {
                       alignItems: 'center',
                     }}
                   >
-                    {[...new Set(dots.map((d) => d.monster.translation))].map(
-                      (tl) => {
-                        const m = resolvedMonsters.find(
-                          (x) => x.translation === tl
-                        )!;
-                        const mDots = dots.filter(
-                          (d) => d.monster.translation === tl
-                        );
-                        if (hideZeroRate) {
-                          const gdi = data?.group_drop_info?.[groupName];
-                          const entry = gdi?.find((e) => e.translation === tl);
-                          if (entry) {
-                            if (
-                              modeFilter &&
-                              (entry.drop_rates[modeFilter] ?? 0) === 0
-                            )
-                              return null;
-                            if (!modeFilter && !hasAnyRate(entry.drop_rates))
-                              return null;
-                          }
+                    {[
+                      ...new Set(dots.map((d) => lootdropSourceKey(d.monster))),
+                    ].map((sourceId) => {
+                      const m = resolvedMonsters.find(
+                        (source) => lootdropSourceKey(source) === sourceId
+                      )!;
+                      const tl = m.translation;
+                      const mDots = dots.filter(
+                        (d) => lootdropSourceKey(d.monster) === sourceId
+                      );
+                      if (hideZeroRate) {
+                        const gdi = data?.group_drop_info?.[groupName];
+                        const entry = gdi?.find((e) => matchesGroupEntry(e, m));
+                        if (entry) {
+                          if (
+                            modeFilter &&
+                            (entry.drop_rates[modeFilter] ?? 0) === 0
+                          )
+                            return null;
+                          if (!modeFilter && !hasAnyRate(entry.drop_rates))
+                            return null;
                         }
-                        // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
-                        const sr = mDots.find(
-                          (d) => d.spawn_rate != null
-                        )?.spawn_rate;
-                        const dr = m.drop_rates;
-                        const filteredDr =
-                          dr && modeFilter && dr[modeFilter] != null
-                            ? { [modeFilter]: dr[modeFilter] }
-                            : dr;
-                        const hasRates =
-                          filteredDr && Object.keys(filteredDr).length > 0;
-                        return (
+                      }
+                      // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
+                      const sr = mDots.find(
+                        (d) => d.spawn_rate != null
+                      )?.spawn_rate;
+                      const dr = m.drop_rates;
+                      const filteredDr =
+                        dr && modeFilter && dr[modeFilter] != null
+                          ? { [modeFilter]: dr[modeFilter] }
+                          : dr;
+                      const hasRates =
+                        filteredDr && Object.keys(filteredDr).length > 0;
+                      return (
+                        <span
+                          key={sourceId}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 3,
+                            flexWrap: 'wrap',
+                          }}
+                        >
                           <span
-                            key={tl}
                             style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 3,
-                              flexWrap: 'wrap',
+                              width: 10,
+                              height: 10,
+                              borderRadius: '50%',
+                              background: m.color,
+                              flexShrink: 0,
                             }}
+                          ></span>
+                          <span
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => toggle(tl)}
                           >
+                            {t(lootdropSourceTranslationKey(m), m.translation)}
+                          </span>
+                          {sr != null && sr !== 100 && (
                             <span
-                              style={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: '50%',
-                                background: m.color,
-                                flexShrink: 0,
-                              }}
-                            ></span>
-                            <span
-                              style={{ cursor: 'pointer' }}
-                              onClick={() => toggle(tl)}
+                              style={{ color: tokens.accent, fontSize: 12 }}
                             >
-                              {m.translation}
+                              {sr}%
                             </span>
-                            {sr != null && sr !== 100 && (
-                              <span
-                                style={{ color: tokens.accent, fontSize: 12 }}
-                              >
-                                {sr}%
-                              </span>
-                            )}
-                            {hasRates && (
-                              <span
-                                style={{ color: tokens.muted, fontSize: 12 }}
-                              >
-                                (
-                                {Object.entries(filteredDr!)
-                                  .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                                  .join('')}
+                          )}
+                          {hasRates && (
+                            <span style={{ color: tokens.muted, fontSize: 12 }}>
+                              (
+                              {Object.entries(filteredDr!)
+                                .map(
+                                  ([mode, rate]) =>
+                                    `[${dropRateModeLabel(mode, t, ut)}:${rate}%]`
                                 )
-                              </span>
-                            )}
-                            <span style={{ color: tokens.muted }}>
-                              {(() => {
-                                const varDots = mDots.filter(
-                                  (d) => d.variant_count && d.variant_count > 1
-                                );
-                                const regDots = mDots.filter(
-                                  (d) =>
-                                    !d.variant_count || d.variant_count <= 1
-                                );
-                                const dedupPos = (
-                                  arr: typeof regDots,
-                                  gp?: string
-                                ) => {
-                                  const seen = new Set<string>();
-                                  return arr.filter((d) => {
-                                    if (gp && d.group_parent !== gp)
-                                      return false;
-                                    const k = `${d.x},${d.y},${d.z}`;
-                                    if (seen.has(k)) return false;
-                                    seen.add(k);
-                                    return true;
-                                  });
-                                };
-                                const parts: string[] = [];
-                                const dedupedReg = dedupPos(regDots);
-                                if (dedupedReg.length > 0) {
-                                  parts.push(`(${dedupedReg.length}点)`);
+                                .join('')}
+                              )
+                            </span>
+                          )}
+                          <span style={{ color: tokens.muted }}>
+                            {(() => {
+                              const linkerGroups = new Map<
+                                string,
+                                {
+                                  dots: typeof mDots;
+                                  poolSize: number;
+                                  poolEntries: VariantNameEntry[];
                                 }
-                                if (varDots.length > 0) {
-                                  const names = varDots[0].variant_names ?? [];
-                                  const varGps = [
-                                    ...new Set(
-                                      varDots
-                                        .map((d) => d.group_parent)
-                                        .filter(Boolean)
-                                    ),
-                                  ];
-                                  const varPosCounts = varGps.map((gp) => ({
-                                    gp,
-                                    count: dedupPos(varDots, gp).length,
-                                  }));
-                                  const totalVarPos = varPosCounts.reduce(
-                                    (s, v) => s + v.count,
-                                    0
-                                  );
-                                  const groupCount = varPosCounts.filter(
-                                    (v) => v.count > 0
-                                  ).length;
-                                  if (names.length > 0) {
+                              >();
+                              for (const d of mDots) {
+                                const sgp = d.sub_group_parent;
+                                const gp = d.group_parent;
+                                if (!sgp || !gp) continue;
+                                const key = `${gp}::${sgp}`;
+                                if (!linkerGroups.has(key)) {
+                                  linkerGroups.set(key, {
+                                    dots: [],
+                                    poolSize: d.sub_pool_size ?? 0,
+                                    poolEntries: d.sub_pool_entries ?? [],
+                                  });
+                                }
+                                linkerGroups.get(key)!.dots.push(d);
+                              }
+                              const linkerKeys = new Set<string>();
+                              for (const [, g] of linkerGroups) {
+                                for (const d of g.dots) {
+                                  linkerKeys.add(`${d.x},${d.y},${d.z}`);
+                                }
+                              }
+                              const nonLinkerDots = mDots.filter(
+                                (d) => !linkerKeys.has(`${d.x},${d.y},${d.z}`)
+                              );
+                              const varDots = nonLinkerDots.filter(
+                                (d) => d.variant_count && d.variant_count > 1
+                              );
+                              const regDots = nonLinkerDots.filter(
+                                (d) => !d.variant_count || d.variant_count <= 1
+                              );
+                              const dedupPos = (
+                                arr: typeof regDots,
+                                gp?: string
+                              ) => {
+                                const seen = new Set<string>();
+                                return arr.filter((d) => {
+                                  if (gp && d.group_parent !== gp) return false;
+                                  const k = `${d.x},${d.y},${d.z}`;
+                                  if (seen.has(k)) return false;
+                                  seen.add(k);
+                                  return true;
+                                });
+                              };
+                              const parts: string[] = [];
+                              for (const [, g] of linkerGroups) {
+                                const uniquePos = new Set(
+                                  g.dots.map((d) => `${d.x},${d.y},${d.z}`)
+                                ).size;
+                                parts.push(
+                                  `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}` : ''})`
+                                );
+                              }
+                              const dedupedReg = dedupPos(regDots);
+                              if (dedupedReg.length > 0) {
+                                parts.push(`(${dedupedReg.length}点)`);
+                              }
+                              if (varDots.length > 0) {
+                                const names = varDots[0].variant_names ?? [];
+                                const varGps = [
+                                  ...new Set(
+                                    varDots
+                                      .map((d) => d.group_parent)
+                                      .filter(Boolean)
+                                  ),
+                                ];
+                                const varPosCounts = varGps.map((gp) => ({
+                                  gp,
+                                  count: dedupPos(varDots, gp).length,
+                                }));
+                                const totalVarPos = varPosCounts.reduce(
+                                  (s, v) => s + v.count,
+                                  0
+                                );
+                                if (names.length > 0) {
+                                  if (totalVarPos > 1) {
                                     parts.push(
-                                      `(${names.join('、')}${varDots[0].variant_count}种选${groupCount})`
+                                      `(${totalVarPos}点选${varDots[0].variant_count})`
                                     );
                                   } else {
+                                    const nameStr = names
+                                      .map((entry) =>
+                                        t(entry.translation_key, entry.name)
+                                      )
+                                      .join(ut('ui.location.map_sep'));
                                     parts.push(
-                                      `(${totalVarPos}点选${groupCount})`
+                                      `(${nameStr}${ut('ui.detail.pool_select')
+                                        .replace(
+                                          '{count}',
+                                          String(names.length)
+                                        )
+                                        .replace('{positions}', '1')})`
                                     );
                                   }
+                                } else {
+                                  parts.push(
+                                    varGps.length === 1
+                                      ? `(${totalVarPos}点选1)`
+                                      : `(${totalVarPos}点)`
+                                  );
                                 }
-                                return parts.join(' ');
-                              })()}
-                            </span>
+                              }
+                              return parts.join(' ');
+                            })()}
                           </span>
-                        );
-                      }
-                    )}
+                        </span>
+                      );
+                    })}
                   </div>
                   {(() => {
                     const _rl2 =
@@ -1512,7 +1719,8 @@ export default function LootdropDetailPage() {
                           color: tokens.accent,
                         }}
                       >
-                        综合爆率 {parseFloat(sc.toFixed(4))}%
+                        {ut('ui.detail.composite_rate')}{' '}
+                        {parseFloat(sc.toFixed(4))}%
                       </div>
                     ) : null;
                   })()}
@@ -1532,7 +1740,7 @@ export default function LootdropDetailPage() {
               const rowKey = `${m.translation}-${j}`;
               return {
                 key: rowKey,
-                group: mod?.group_display || g,
+                group: formatGroupLabel(mod, t, ut) || g,
                 monster: {
                   name: m.name,
                   translation: m.translation,
@@ -1541,7 +1749,7 @@ export default function LootdropDetailPage() {
                 },
                 file: c.file,
                 mapName: c.map,
-                mapLabel: mod?.translation || c.map,
+                mapLabel: t(mod?.translation_key, mod?.translation || c.map),
                 label: c.label || '',
                 x: c.x,
                 y: c.y,
@@ -1595,9 +1803,8 @@ export default function LootdropDetailPage() {
       >
         <LocationStats
           count={bottomCount}
-          mapTranslations={[...visibleMapsSet].map(
-            (k) => modules.get(k)?.translation || k
-          )}
+          mapKeys={[...visibleMapsSet]}
+          modules={modules}
         />
       </div>
     </div>

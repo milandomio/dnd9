@@ -1,0 +1,68 @@
+name: Build & Deploy (dev)
+
+on:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Run data pipeline
+        run: python api/main.py
+
+      - name: Install web deps
+        run: npm ci
+        working-directory: web
+
+      - name: Web quality checks
+        run: npm test
+        working-directory: web
+
+      - name: Build (SSG)
+        run: npm run build
+        working-directory: web
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+        working-directory: web
+
+      - name: Test localized pages
+        working-directory: web
+        env:
+          BASE_URL: http://127.0.0.1:8080
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 8080 > preview.log 2>&1 &
+          for i in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8080/ >/dev/null && break
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:8080/ >/dev/null
+          npm run test:i18n
+
+      - name: Deploy dev to gh-pages-dev
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages-dev
+          publish_dir: ./web/dist
+          force_orphan: true

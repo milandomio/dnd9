@@ -51,6 +51,7 @@ class QuestsRepository:
         results = []
         for r in c.fetchall():
             d = dict(r)
+            d["translation_key"] = f"Text_DesignData_Merchant_Merchant_{d['npc_name']}"
             d["quests"] = json.loads(d.pop("quests_json", "[]") or "[]")
             results.append(d)
         return results

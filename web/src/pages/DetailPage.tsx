@@ -26,8 +26,12 @@ import {
 import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
+import ReferenceDropRates from '../components/ReferenceDropRates';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -45,9 +49,11 @@ type Entity = ItemEntity | MonsterEntity | PropsEntity;
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
   const dataKey = `${page}/${name ? decodeURIComponent(name) : ''}`;
-  const ssrData = useSSRData<{ entity: Entity; modules: DungeonModule[] }>(
-    dataKey
-  );
+  const ssrData = useSSRData<{
+    entity: Entity;
+    modules: DungeonModule[];
+    isDetailTemplate?: boolean;
+  }>(dataKey);
   const [entity, setEntity] = useState<Entity | null>(
     ssrData?.entity?.coords
       ? ssrData.entity
@@ -55,18 +61,32 @@ export default function DetailPage() {
         ? (ssrData.entity as Entity)
         : null
   );
+  const isDetailTemplate =
+    ssrData?.isDetailTemplate && entity?.isDetailTemplate;
   const { modules: globalModules } = useDungeonModules();
   // Resolve module by coord's map field (now resolved module name)
   const modules = useMemo(() => {
     const mm = new Map<string, DungeonModule>();
     if (!entity?.coords) return mm;
+    const sourceModules =
+      globalModules.size > 0 ? globalModules : ssrData?.modules;
     for (const c of entity.coords) {
       if (mm.has(c.map)) continue;
-      const mod = globalModules.get(c.map);
+      const mod =
+        sourceModules instanceof Map
+          ? sourceModules.get(c.map)
+          : sourceModules?.find((m) =>
+              [
+                m.name,
+                ...(m.names ?? []),
+                m.sl_base_name,
+                ...(m.all_sl_base_names ?? []),
+              ].includes(c.map)
+            );
       if (mod) mm.set(c.map, mod);
     }
     return mm;
-  }, [entity?.coords, globalModules]);
+  }, [entity?.coords, globalModules, ssrData?.modules]);
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
@@ -81,6 +101,7 @@ export default function DetailPage() {
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
+  const { t, ut } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -117,10 +138,11 @@ export default function DetailPage() {
 
   useEffect(() => {
     if (!page || !name) return;
-    if (ssrData?.entity?.coords) {
+    if (ssrData?.entity?.coords && !ssrData.isDetailTemplate) {
       setEntity(ssrData.entity);
       return;
     }
+    if (!dataVersion) return;
     const decoded = decodeURIComponent(name!);
     const url = dataUrl(dataVersion, `/data/json/${page}/${decoded}.json`);
     if (fetchedRef.current) return;
@@ -134,7 +156,15 @@ export default function DetailPage() {
   }, [page, name, ssrData, dataVersion]);
 
   if (!entity)
-    return <Typography.Text type="danger">数据加载中...</Typography.Text>;
+    return (
+      <Typography.Text type="danger">{ut('ui.common.loading')}</Typography.Text>
+    );
+
+  const entityLabel = t(
+    entity.translation_key,
+    entity.translation || entity.name
+  );
+  const pageLabel = ut(`ui.nav.${page}`);
 
   const coords = entity.coords ?? [];
   const visibleCoords = coords.filter(
@@ -205,14 +235,9 @@ export default function DetailPage() {
     const eUndersea = t.includes('海底');
     const eSpecial = t.includes('特殊');
     const eRandom = t.includes('随机');
-    for (const { eF, lF } of [
-      { eF: eUndersea, lF: lUndersea },
-      { eF: eSpecial, lF: lSpecial },
-      { eF: eRandom, lF: lRandom },
-    ]) {
-      if (eF && !lF) return false;
-      if (!eF && lF) return false;
-    }
+    if (eUndersea && !lUndersea) return false;
+    if (eSpecial && !lSpecial) return false;
+    if (eRandom && !lRandom) return false;
     return true;
   }
   const sections: DetailSection[] = [];
@@ -430,13 +455,12 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {entity.translation}
-          {entity.translation_EN ?? entity.name} 位置汇总Location |
-          越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`}
+          {' | 越来越黑暗闪电指南 DarkFlashNav'}
         </title>
         <meta
           name="description"
-          content={`${entity.translation || entity.name}（${entity.name}）在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
+          content={`${entityLabel}在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
         />
         <meta
           name="keywords"
@@ -444,11 +468,11 @@ export default function DetailPage() {
         />
         <meta
           property="og:title"
-          content={`${entity.translation}${entity.translation_EN ?? entity.name} 位置汇总Location | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | DarkFlashNav`}
         />
         <meta
           property="og:description"
-          content={`${entity.translation || entity.name} 共 ${coords.length} 个位置点`}
+          content={`${entityLabel} 共 ${coords.length} 个位置点`}
         />
       </Helmet>
       <h1
@@ -459,14 +483,14 @@ export default function DetailPage() {
           margin: '0 0 12px',
         }}
       >
-        {entity.translation || entity.name} 位置汇总
+        {entityLabel} {ut('ui.list.locations')}
       </h1>
 
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggle,
           },
@@ -489,7 +513,9 @@ export default function DetailPage() {
             alignItems: 'center',
           }}
         >
-          <span style={{ color: tokens.muted }}>爆率显示：</span>
+          <span style={{ color: tokens.muted }}>
+            {ut('ui.filter.drop_rate')}：
+          </span>
           <select
             value={modeFilter}
             onChange={(e) => setModeFilter(e.target.value)}
@@ -503,11 +529,11 @@ export default function DetailPage() {
               cursor: 'pointer',
             }}
           >
-            <option value="">全部</option>
-            <option value="PVE">PVE</option>
-            <option value="普通">普通</option>
-            <option value="豪客赛">豪客赛</option>
-            <option value="逆袭赛">逆袭赛</option>
+            <option value="">{ut('ui.filter.all')}</option>
+            <option value="PVE">{ut('ui.filter.pve')}</option>
+            <option value="普通">{ut('ui.filter.normal')}</option>
+            <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
+            <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
           </select>
           <label style={{ cursor: 'pointer', userSelect: 'none' }}>
             <input
@@ -516,7 +542,7 @@ export default function DetailPage() {
               onChange={(e) => setHideZeroRate(e.target.checked)}
               style={{ marginRight: 3, cursor: 'pointer' }}
             />
-            隐藏0爆率坐标
+            {ut('ui.filter.hide_zero_rate')}
           </label>
         </div>
       )}
@@ -577,7 +603,8 @@ export default function DetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {sec.items[0]?.mod?.group_display || sec.groupName}
+                    {formatGroupLabel(sec.items[0]?.mod, t, ut) ||
+                      sec.groupName}
                   </span>
                   {sec.subLabel ? (
                     <span
@@ -591,31 +618,15 @@ export default function DetailPage() {
                     </span>
                   ) : (
                     sec.gdi.length > 0 && (
-                      <span
+                      <ReferenceDropRates
+                        entries={sec.gdi}
+                        modeFilter={modeFilter}
                         style={{
                           fontSize: 13,
                           fontWeight: 'normal',
                           color: tokens.muted,
                         }}
-                      >
-                        参考爆率：
-                        {sec.gdi.map((info, gi) => (
-                          <span
-                            key={gi}
-                            style={{
-                              display: 'inline-block',
-                              marginRight: 8,
-                            }}
-                          >
-                            {info.translation}
-                            {info.spawn_rate}%
-                            {Object.entries(info.drop_rates)
-                              .filter(([k]) => !modeFilter || k === modeFilter)
-                              .map(([mode, rate]) => `[${mode}:${rate}%]`)
-                              .join('')}
-                          </span>
-                        ))}
-                      </span>
+                      />
                     )
                   )}
                 </div>
@@ -673,7 +684,7 @@ export default function DetailPage() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {mod?.translation || mapName}
+                    {t(mod?.translation_key, mod?.translation || mapName)}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -712,7 +723,7 @@ export default function DetailPage() {
                   )}
 
                   <MapPanel
-                    imageSrc={`/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
+                    imageSrc={`/data/img/${isDetailTemplate ? 'RareModule_1x1' : mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
                     sx={sx}
                     sy={sy}
                     dots={filteredDots}
@@ -735,7 +746,8 @@ export default function DetailPage() {
                             color: tokens.accent,
                           }}
                         >
-                          综合爆率 {parseFloat(sc.toFixed(4))}%
+                          {ut('ui.detail.composite_rate')}{' '}
+                          {parseFloat(sc.toFixed(4))}%
                         </div>
                       ) : null;
                     })()}
@@ -743,17 +755,22 @@ export default function DetailPage() {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
                     if (!gdi || gdi.length === 0) return null;
-                    const forcedVc = mapCoords.find(
+                    const varCoords = mapCoords.filter((c) => c.group_parent);
+                    const regCoords = mapCoords.filter((c) => !c.group_parent);
+                    const forcedVc = varCoords.find(
                       (c) => c.variant_count && c.variant_count > 1
                     );
                     const hasVariant = !!forcedVc;
-                    const posCount = new Set(
-                      mapCoords.map((c) => `${c.x},${c.y},${c.z}`)
+                    const regPosCount = new Set(
+                      regCoords.map((c) => `${c.x},${c.y},${c.z}`)
+                    ).size;
+                    const varPosCount = new Set(
+                      varCoords.map((c) => `${c.x},${c.y},${c.z}`)
                     ).size;
                     const forcedVcN = hasVariant
                       ? forcedVc!.variant_names?.length
                         ? (forcedVc!.variant_count as number)
-                        : posCount
+                        : varPosCount || 1
                       : 1;
                     const varGpKeys = [
                       ...new Set(
@@ -774,6 +791,7 @@ export default function DetailPage() {
                             (1 - (1 - 1 / forcedVcN) ** groupCount)
                           ).toFixed(4)
                         : v;
+                    if (!hasVariant) return null;
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
                         (c) => c.label && labelMatch(c.label, info.translation)
@@ -793,144 +811,109 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        {filteredGdi.map((info, i) => (
-                          <span
-                            key={i}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 3,
-                              flexWrap: 'wrap',
-                            }}
-                          >
-                            <span
-                              style={{
-                                cursor: 'default',
-                              }}
-                            >
-                              {info.translation}
-                            </span>
-                            {info.spawn_rates &&
-                            Object.keys(info.spawn_rates).length > 1 ? (
-                              <span
-                                style={{
-                                  color: tokens.muted,
-                                  fontSize: 12,
-                                }}
-                              >
-                                {Object.entries(info.drop_rates)
-                                  .filter(
-                                    ([k]) => !modeFilter || k === modeFilter
-                                  )
-                                  .map(([mode, rate]) => {
-                                    const sRate = info.spawn_rates![mode];
-                                    return sRate != null
-                                      ? `[${mode}:${adjRate(sRate)}%×${rate}%]`
-                                      : `[${mode}:${rate}%]`;
-                                  })
-                                  .join('')}
-                              </span>
-                            ) : (
-                              <>
-                                <span
-                                  style={{
-                                    color: tokens.accent,
-                                    fontSize: 12,
-                                  }}
-                                >
-                                  {adjRate(info.spawn_rate)}%
-                                </span>
-                                {Object.entries(info.drop_rates).filter(
-                                  ([k]) => !modeFilter || k === modeFilter
-                                ).length > 0 && (
-                                  <span
-                                    style={{
-                                      color: tokens.muted,
-                                      fontSize: 12,
-                                    }}
-                                  >
-                                    (
-                                    {Object.entries(info.drop_rates)
-                                      .filter(
-                                        ([k]) => !modeFilter || k === modeFilter
-                                      )
-                                      .map(
-                                        ([mode, rate]) => `[${mode}:${rate}%]`
-                                      )
-                                      .join('')}
-                                    )
-                                  </span>
-                                )}
-                              </>
-                            )}
-                          </span>
-                        ))}
-                        {hasVariant &&
-                          (() => {
-                            const linkerGroups = new Map<
-                              string,
-                              {
-                                coords: Coord[];
-                                poolSize: number;
-                                poolNames: string[];
-                              }
-                            >();
-                            for (const c of mapCoords) {
-                              const sgp = c.sub_group_parent;
-                              const gp = c.group_parent;
-                              if (!sgp || !gp) continue;
-                              const key = `${gp}::${sgp}`;
-                              if (!linkerGroups.has(key)) {
-                                linkerGroups.set(key, {
-                                  coords: [],
-                                  poolSize: c.sub_pool_size ?? 0,
-                                  poolNames: c.sub_pool_names ?? [],
-                                });
-                              }
-                              linkerGroups.get(key)!.coords.push(c);
+                        <ReferenceDropRates
+                          entries={filteredGdi}
+                          modeFilter={modeFilter}
+                          adjSpawnRate={adjRate}
+                          showPrefix={false}
+                          parenModes
+                          labelSeparator=":"
+                        />
+                        {(() => {
+                          const linkerGroups = new Map<
+                            string,
+                            {
+                              coords: Coord[];
+                              poolSize: number;
+                              poolEntries: NonNullable<
+                                Coord['sub_pool_entries']
+                              >;
                             }
-                            if (linkerGroups.size > 0) {
-                              return [...linkerGroups.entries()].map(
-                                ([, g]) => {
-                                  const uniquePos = new Set(
-                                    g.coords.map((c) => `${c.x},${c.y},${c.z}`)
-                                  ).size;
-                                  return (
-                                    <span
-                                      key={g.poolNames.join(',')}
-                                      style={{ color: tokens.muted }}
-                                    >
-                                      ({g.poolNames.join('、')}
-                                      {g.poolSize}种选{uniquePos}
-                                      {uniquePos > 1
-                                        ? ` · ${uniquePos}点选1`
-                                        : ''}
-                                      )
-                                    </span>
-                                  );
-                                }
-                              );
+                          >();
+                          for (const c of mapCoords) {
+                            const sgp = c.sub_group_parent;
+                            const gp = c.group_parent;
+                            if (!sgp || !gp) continue;
+                            const key = `${gp}::${sgp}`;
+                            if (!linkerGroups.has(key)) {
+                              linkerGroups.set(key, {
+                                coords: [],
+                                poolSize: c.sub_pool_size ?? 0,
+                                poolEntries: c.sub_pool_entries ?? [],
+                              });
                             }
-                            const vc = forcedVc!;
-                            const names = vc.variant_names ?? [];
-                            if (names.length > 0) {
+                            linkerGroups.get(key)!.coords.push(c);
+                          }
+                          if (linkerGroups.size > 0) {
+                            return [...linkerGroups.entries()].map(([, g]) => {
+                              const uniquePos = new Set(
+                                g.coords.map((c) => `${c.x},${c.y},${c.z}`)
+                              ).size;
                               return (
-                                <span style={{ color: tokens.muted }}>
-                                  ({names.join('、')}
-                                  {vc.variant_count}种选{groupCount}
-                                  {posCount > 1
-                                    ? ` · ${posCount}点选${groupCount}`
+                                <span
+                                  key={g.poolEntries
+                                    .map((e) => e.name)
+                                    .join(',')}
+                                  style={{ color: tokens.muted }}
+                                >
+                                  (
+                                  {g.poolEntries
+                                    .map((entry) =>
+                                      t(entry.translation_key, entry.name)
+                                    )
+                                    .join(ut('ui.location.map_sep'))}
+                                  {ut('ui.detail.pool_select')
+                                    .replace('{count}', String(g.poolSize))
+                                    .replace('{positions}', String(uniquePos))}
+                                  {uniquePos > 1
+                                    ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}`
                                     : ''}
                                   )
                                 </span>
                               );
+                            });
+                          }
+                          const vc = forcedVc!;
+                          const names = vc.variant_names ?? [];
+                          const parts: string[] = [];
+                          if (regPosCount > 0) {
+                            parts.push(`(${regPosCount}点)`);
+                          }
+                          if (varPosCount > 0) {
+                            if (names.length > 0) {
+                              if (varPosCount > 1) {
+                                parts.push(
+                                  `(${varPosCount}点选${vc.variant_count})`
+                                );
+                              } else {
+                                const nameStr = names
+                                  .map((entry) =>
+                                    t(entry.translation_key, entry.name)
+                                  )
+                                  .join(ut('ui.location.map_sep'));
+                                parts.push(
+                                  `(${nameStr}${ut('ui.detail.pool_select')
+                                    .replace('{count}', String(names.length))
+                                    .replace('{positions}', '1')})`
+                                );
+                              }
+                            } else {
+                              const groupPosCount = new Set(
+                                varCoords.map((c) => c.group_parent)
+                              ).size;
+                              parts.push(
+                                groupPosCount === 1
+                                  ? `(${varPosCount}点选1)`
+                                  : `(${varPosCount}点)`
+                              );
                             }
-                            return (
-                              <span style={{ color: tokens.muted }}>
-                                ({posCount}点选{groupCount})
-                              </span>
-                            );
-                          })()}
+                          }
+                          return (
+                            <span style={{ color: tokens.muted }}>
+                              {parts.join(' ')}
+                            </span>
+                          );
+                        })()}
                       </div>
                     );
                   })()}
@@ -1133,7 +1116,7 @@ export default function DetailPage() {
           color: tokens.muted,
         }}
       >
-        <strong>颜色说明：</strong>
+        <strong>{ut('ui.detail.color_legend')}</strong>
         <span
           style={{
             display: 'inline-block',
@@ -1144,7 +1127,7 @@ export default function DetailPage() {
             marginRight: 3,
           }}
         ></span>{' '}
-        Z &gt; 299 (高于地面)
+        {ut('ui.detail.z_above_ground')}
         <span
           style={{
             display: 'inline-block',
@@ -1155,7 +1138,7 @@ export default function DetailPage() {
             margin: '0 3px 0 12px',
           }}
         ></span>{' '}
-        -299 ≤ Z ≤ 299 (正常高度)
+        {ut('ui.detail.z_normal_height')}
         <span
           style={{
             display: 'inline-block',
@@ -1166,13 +1149,12 @@ export default function DetailPage() {
             margin: '0 3px 0 12px',
           }}
         ></span>{' '}
-        Z &lt; -299 (低于地面)
+        {ut('ui.detail.z_below_ground')}
         <br />
         <LocationStats
           count={bottomCount}
-          mapTranslations={[...bottomMapsSet].map(
-            (k) => modules.get(k)?.translation || k
-          )}
+          mapKeys={[...bottomMapsSet]}
+          modules={modules}
         />
       </div>
 
@@ -1184,7 +1166,7 @@ export default function DetailPage() {
             const rowKey = `${c.file}-${i}`;
             return {
               key: rowKey,
-              group: mod?.group_display || g,
+              group: formatGroupLabel(mod, t, ut) || g,
               groupKey: g,
               monster: {
                 name: name || '',
@@ -1193,7 +1175,7 @@ export default function DetailPage() {
               },
               file: c.file,
               mapName: c.map,
-              mapLabel: mod?.translation || c.map,
+              mapLabel: t(mod?.translation_key, mod?.translation || c.map),
               label: c.label || '',
               x: c.x,
               y: c.y,

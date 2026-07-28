@@ -4,7 +4,6 @@ from pathlib import Path
 
 from config import DB_PATH
 
-from ._helpers import load_game_json
 from .importers import ImporterRegistry
 from .repositories import RepositoryRegistry
 from .schema import SchemaManager
@@ -43,25 +42,46 @@ class DatabaseManager:
     # ─── Translation ───
 
     def import_translations(self):
-        data = load_game_json()
+        from config import GAME_JSON as _GJ
+
+        from ._helpers import discover_languages
+        from ._helpers import load_game_json as _load_game_json
+
+        data = _load_game_json()
         if not data:
             return 0
         c = self.conn.cursor()
         c.execute("DELETE FROM translations")
         rows = [(k, self._CRACKED_RE.sub("", v)) for k, v in data.items() if k and v]
         c.executemany("INSERT OR REPLACE INTO translations (key, value) VALUES (?, ?)", rows)
+        total = len(rows)
+        langs = discover_languages()
+        for lang in langs:
+            if lang == "zh-Hans":
+                continue
+            lang_path = _GJ.parent.parent / lang / "Game.json"
+            lang_data = _load_game_json(lang_path)
+            if not lang_data:
+                continue
+            table_name = self.schema.ensure_translation_table(lang)
+            c.execute(f"DELETE FROM {table_name}")
+            lang_rows = [(k, v) for k, v in lang_data.items() if k and v]
+            c.executemany(f"INSERT OR REPLACE INTO {table_name} (key, value) VALUES (?, ?)", lang_rows)
+            total += len(lang_rows)
         self.conn.commit()
-        return len(rows)
+        return total
 
-    def get_translation(self, key: str) -> str:
+    def get_translation(self, key: str, lang: str = "zh-Hans") -> str:
         c = self.conn.cursor()
-        c.execute("SELECT value FROM translations WHERE key = ?", (key,))
+        table = "translations" if lang == "zh-Hans" else f"translations_{lang.replace('-', '_')}"
+        c.execute(f"SELECT value FROM {table} WHERE key = ?", (key,))
         row = c.fetchone()
         return row["value"] if row else ""
 
-    def get_translations_map(self) -> dict[str, str]:
+    def get_translations_map(self, lang: str = "zh-Hans") -> dict[str, str]:
         c = self.conn.cursor()
-        c.execute("SELECT key, value FROM translations")
+        table = "translations" if lang == "zh-Hans" else f"translations_{lang.replace('-', '_')}"
+        c.execute(f"SELECT key, value FROM {table}")
         return {r["key"]: r["value"] for r in c.fetchall()}
 
     # ─── Entity Classification (composite) ───

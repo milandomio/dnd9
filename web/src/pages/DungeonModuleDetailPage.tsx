@@ -5,9 +5,12 @@ import { useDataVersion } from '../hooks/useDataVersion';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
+import { formatGroupLabel } from '../utils/formatGroupLabel';
 import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
+import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import type { DungeonModule } from '../types/data';
 import {
   getAdj,
@@ -21,6 +24,7 @@ import MapPanel from '../components/MapPanel';
 interface CoordEntity {
   name: string;
   translation?: string;
+  translation_key?: string;
   type: string;
   color: string;
   mutually_exclusive?: boolean;
@@ -54,6 +58,7 @@ export default function DungeonModuleDetailPage() {
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
+  const { t, ut } = useLocale();
 
   const dataVersion = useDataVersion();
 
@@ -67,6 +72,7 @@ export default function DungeonModuleDetailPage() {
       setHidden(new Set(effectiveCoords.entities.map((e) => e.name)));
       return;
     }
+    if (!dataVersion) return;
     const coordsUrl = dataUrl(
       dataVersion,
       `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
@@ -86,7 +92,7 @@ export default function DungeonModuleDetailPage() {
   if (loading)
     return (
       <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        加载中...
+        {ut('ui.common.loading')}
       </div>
     );
   if (!mod)
@@ -97,7 +103,8 @@ export default function DungeonModuleDetailPage() {
     );
 
   const m = mod;
-  const groupLabel = m.group_display || m.group || '未分组';
+  const moduleDisplayName = t(m.translation_key, m.translation || m.name);
+  const groupLabel = formatGroupLabel(m, t, ut);
   const sx = m.size_x || 1;
   const sy = m.size_y || 1;
   const baseRange = m.range || Math.max(sx, sy) * 1600 || 1600;
@@ -164,8 +171,8 @@ export default function DungeonModuleDetailPage() {
       <DebugPanel
         buttons={[
           {
-            label: '显示调试信息',
-            activeLabel: '退出调试',
+            label: ut('ui.common.debug_on'),
+            activeLabel: ut('ui.common.debug_off'),
             active: debug,
             onClick: toggleDebug,
           },
@@ -174,13 +181,12 @@ export default function DungeonModuleDetailPage() {
 
       <Helmet>
         <title>
-          {m.translation}
-          {m.translation_EN ?? m.name} 地图模块Module | 越来越黑暗闪电指南
-          DarkFlashNav
+          {ssrLocalizedTitle() ?? moduleDisplayName} 地图模块Module |
+          越来越黑暗闪电指南 DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${m.translation} 地图模块详情，${sx}x${sy}，分组 ${groupLabel}，${entities.length} 个实体，${totalCoords} 个位置。`}
+          content={`${moduleDisplayName} 地图模块详情，${sx}x${sy}，分组 ${groupLabel}，${entities.length} 个实体，${totalCoords} 个位置。`}
         />
       </Helmet>
       <h1
@@ -191,7 +197,8 @@ export default function DungeonModuleDetailPage() {
           margin: '0 0 8px',
         }}
       >
-        【{m.translation}】地图模块
+        【{moduleDisplayName}】
+        {ut('ui.module_detail.title').replace('{name}', '')}
         <span style={{ color: tokens.muted, fontSize: 14, marginLeft: 12 }}>
           {groupLabel} | {sx}x{sy}
         </span>
@@ -223,7 +230,10 @@ export default function DungeonModuleDetailPage() {
               y: d.y,
               z: d.z,
               color: d.entity.color,
-              title: d.entity.translation || d.entity.name,
+              title: t(
+                d.entity.translation_key,
+                d.entity.translation || d.entity.name
+              ),
             }))}
             offX={offX}
             offY={offY}
@@ -266,20 +276,27 @@ export default function DungeonModuleDetailPage() {
                 width: '100%',
               }}
             >
-              {hidden.size === 0 ? '隐藏全部' : '全部显示'}
+              {hidden.size === 0
+                ? ut('ui.common.hide_all')
+                : ut('ui.common.show_all')}
             </button>
             {(['monster', 'item', 'props', 'decoration'] as const).map(
               (type) => {
                 const group = entities.filter((e) => e.type === type);
                 if (!group.length) return null;
-                const labels: Record<string, { icon: string; label: string }> =
-                  {
-                    monster: { icon: '👹', label: '怪物' },
-                    item: { icon: '📦', label: '物品' },
-                    decoration: { icon: '🔥', label: '装饰' },
-                    props: { icon: '🏛️', label: '实体' },
-                  };
-                const { icon, label } = labels[type];
+                const labels: Record<
+                  string,
+                  { icon: string; labelKey: string }
+                > = {
+                  monster: { icon: '👹', labelKey: 'ui.module_detail.monster' },
+                  item: { icon: '📦', labelKey: 'ui.module_detail.item' },
+                  decoration: {
+                    icon: '🔥',
+                    labelKey: 'ui.module_detail.decoration',
+                  },
+                  props: { icon: '🏛️', labelKey: 'ui.module_detail.prop' },
+                };
+                const { icon, labelKey } = labels[type];
                 return (
                   <div key={type}>
                     <div
@@ -291,7 +308,7 @@ export default function DungeonModuleDetailPage() {
                         paddingLeft: 2,
                       }}
                     >
-                      {icon} {label}
+                      {icon} {ut(labelKey)}
                     </div>
                     <div>
                       {group.map((e) => (
@@ -316,10 +333,13 @@ export default function DungeonModuleDetailPage() {
                             alignItems: 'center',
                           }}
                         >
-                          {e.translation || e.name}
+                          {t(e.translation_key, e.translation || e.name)}
                           <span style={{ fontSize: 14, marginLeft: 4 }}>
                             ({e.coords.length}
-                            {e.mutually_exclusive ? '选1' : '点'})
+                            {e.mutually_exclusive
+                              ? ut('ui.module_detail.select_one')
+                              : ut('ui.module_detail.points')}
+                            )
                           </span>
                         </button>
                       ))}
@@ -478,13 +498,13 @@ export default function DungeonModuleDetailPage() {
                 group: groupLabel,
                 monster: {
                   name: e.name,
-                  translation: e.name,
+                  translation: t(e.translation_key, e.translation || e.name),
                   color: e.color,
                   onToggle: () => toggle(e.name),
                 },
                 file: '',
                 mapName: m.name,
-                mapLabel: m.translation || m.name,
+                mapLabel: moduleDisplayName,
                 label: c.label || '',
                 x: c.x,
                 y: c.y,
@@ -536,13 +556,21 @@ export default function DungeonModuleDetailPage() {
           color: tokens.muted,
         }}
       >
-        <strong>位置统计：共 {totalCoords} 个位置点</strong>
+        <strong>
+          {ut('ui.module_detail.pos_stat').replace(
+            '{count}',
+            String(totalCoords)
+          )}
+        </strong>
         {entities.length > 0 && (
           <>
             <br />
-            <strong>包含实体：</strong>{' '}
+            <strong>{ut('ui.module_detail.entities')}</strong>{' '}
             {entities
-              .map((e) => `${e.translation || e.name}(${e.coords.length})`)
+              .map(
+                (e) =>
+                  `${t(e.translation_key, e.translation || e.name)}(${e.coords.length})`
+              )
               .join('、')}
           </>
         )}

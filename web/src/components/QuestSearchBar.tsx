@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 import type { NPCQuest, NPCEntry } from '../types/quest';
 
 export interface QuestSearchResult {
@@ -7,6 +8,7 @@ export interface QuestSearchResult {
   npc: NPCEntry;
   matchField: 'title' | 'id' | 'target';
   matchTarget?: string;
+  matchTargetTranslationKey?: string;
 }
 
 interface QuestSearchBarProps {
@@ -28,16 +30,16 @@ interface FlatEntry {
 export default function QuestSearchBar({
   allNpcs,
   onSelect,
-  placeholder = '搜索任务标题 / 目标物品...',
+  placeholder,
 }: QuestSearchBarProps) {
   const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const { dark, tokens } = useTheme();
+  const { t, ut, dict } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // Pre-build flat search index (once per allNpcs change)
+  // Rebuild when the entity locale loads so queries match the displayed language.
   const flatIndex = useMemo(() => {
     const entries: FlatEntry[] = [];
     for (const npc of allNpcs) {
@@ -46,14 +48,20 @@ export default function QuestSearchBar({
         entries.push({
           quest,
           npc,
-          titleLower: quest.title.toLowerCase(),
+          titleLower: (
+            dict?.[quest.translation_key] ?? quest.title
+          ).toLowerCase(),
           idLower: quest.id.toLowerCase(),
-          targetsLower: quest.contents.map((c) => c.target.toLowerCase()),
+          targetsLower: quest.contents.map((content) =>
+            (
+              dict?.[content.translation_key ?? ''] ?? content.target
+            ).toLowerCase()
+          ),
         });
       }
     }
     return entries;
-  }, [allNpcs]);
+  }, [allNpcs, dict]);
 
   // Filter on query change
   const results = useMemo(() => {
@@ -73,6 +81,8 @@ export default function QuestSearchBar({
             npc: entry.npc,
             matchField: 'target',
             matchTarget: entry.quest.contents[idx].target,
+            matchTargetTranslationKey:
+              entry.quest.contents[idx].translation_key,
           });
         }
       }
@@ -136,7 +146,7 @@ export default function QuestSearchBar({
           if (results.length > 0) setShowDropdown(true);
         }}
         onKeyDown={handleKeyDown}
-        placeholder={placeholder}
+        placeholder={placeholder ?? ut('ui.search.placeholder')}
         style={{
           width: '100%',
           padding: '10px 15px',
@@ -186,7 +196,8 @@ export default function QuestSearchBar({
               }}
             >
               <span style={{ color: tokens.text, fontSize: 14 }}>
-                #{hit.quest.quest_number} {hit.quest.title}
+                #{hit.quest.quest_number}{' '}
+                {t(hit.quest.translation_key, hit.quest.title)}
                 {hit.matchField === 'target' && hit.matchTarget && (
                   <span
                     style={{
@@ -195,7 +206,7 @@ export default function QuestSearchBar({
                       fontSize: 12,
                     }}
                   >
-                    ({hit.matchTarget})
+                    ({t(hit.matchTargetTranslationKey, hit.matchTarget)})
                   </span>
                 )}
               </span>
@@ -211,7 +222,7 @@ export default function QuestSearchBar({
                   flexShrink: 0,
                 }}
               >
-                {hit.npc.npc_name_display}
+                {t(hit.npc.translation_key, hit.npc.npc_name_display)}
               </span>
             </div>
           ))}
