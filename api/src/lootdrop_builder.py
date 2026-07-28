@@ -972,12 +972,28 @@ def build_and_save_lootdrop_details(
                     _kind = _source.get("_source_kind", "direct")
                     _sid = _source_id(_en, _kind)
                     _coord_key = _source.get("_coord_key")
-                    _ref = _source.get("ref")
-                    if not _ref and entity_page_map:
-                        _ref = (entity_page_map.get(_coord_key) if _coord_key else None) or entity_page_map.get(_en)
+                    _canonical_en = base_monster_name(_en.replace("_Locked", ""))
+                    _ref_candidates = [_source.get("ref")]
+                    if entity_page_map:
+                        _ref_candidates.extend(
+                            [
+                                entity_page_map.get(_coord_key) if _coord_key else None,
+                                entity_page_map.get(_en),
+                                entity_page_map.get(_canonical_en),
+                            ]
+                        )
+                    _ref_candidates.append(
+                        _resolve_legend_ref(_source.get("translation", ""), _en, monsters_out, entity_page_map)
+                    )
+                    _ref = next(
+                        (
+                            candidate
+                            for candidate in _ref_candidates
+                            if candidate and (output_dir / f"{candidate}.json").is_file()
+                        ),
+                        None,
+                    )
                     if not _ref:
-                        _ref = _resolve_legend_ref(_source.get("translation", ""), _en, monsters_out, entity_page_map)
-                    if not _ref or not (output_dir / f"{_ref}.json").is_file():
                         unresolved_refs.append(f"{_sid} ({_en}, ref={_ref or 'missing'})")
                         continue
                     _source_out = {
@@ -993,6 +1009,43 @@ def build_and_save_lootdrop_details(
                         raise RuntimeError(f"lootdrop source_id collision for {item_name}: {_sid}")
                     sources[_sid] = _source_out
                     source_ids_by_translation.setdefault(_source["translation"], set()).add(_sid)
+
+                # Legacy legend completion deduplicates by translated text. Restore
+                # distinct logical sources directly from stable GDI identity.
+                for _g_entries in _group_drop_info.values():
+                    for _gdi_source in _g_entries:
+                        _en = _gdi_source.get("_entity_name", "")
+                        _kind = _gdi_source.get("_source_kind", "direct")
+                        _sid = _source_id(_en, _kind)
+                        if _sid in sources:
+                            continue
+                        _canonical_en = base_monster_name(_en.replace("_Locked", ""))
+                        _ref_candidates = []
+                        if entity_page_map:
+                            _ref_candidates.extend([entity_page_map.get(_en), entity_page_map.get(_canonical_en)])
+                        _ref_candidates.append(
+                            _resolve_legend_ref(_gdi_source["translation"], _en, monsters_out, entity_page_map)
+                        )
+                        _ref = next(
+                            (
+                                candidate
+                                for candidate in _ref_candidates
+                                if candidate and (output_dir / f"{candidate}.json").is_file()
+                            ),
+                            None,
+                        )
+                        if not _ref:
+                            unresolved_refs.append(f"{_sid} ({_en}, ref=missing)")
+                            continue
+                        sources[_sid] = {
+                            "name": _en,
+                            "entity_name": _en,
+                            "translation": _gdi_source["translation"],
+                            "translation_key": _gdi_source.get("translation_key", ""),
+                            "color": _MONSTER_COLORS[len(sources) % len(_MONSTER_COLORS)],
+                            "ref": _ref,
+                        }
+                        source_ids_by_translation.setdefault(_gdi_source["translation"], set()).add(_sid)
                 if unresolved_refs:
                     raise RuntimeError(
                         f"lootdrop sources without public refs for {item_name}: " + ", ".join(unresolved_refs)

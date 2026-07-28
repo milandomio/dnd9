@@ -34,6 +34,8 @@
 - **关键逻辑/映射关系**：生成端改为 `sources[source_id].ref` + `variants[suffix].group_drop_info[].source_id`；客户端始终按基底名加载并从当前 suffix 选择来源，按实体坐标所属地图分组过滤后重算 `score/max_score`；SSG 品质路由复用基底详情并预载基底 JSON。
 - **当前阻断**：严格公开 `ref` 校验发现品质实体别名 `GoblinWarrior_Unique` 被回退为不存在的 `coords/GoblinWarrior_Unique.json`；应按规范基名映射到 `monsters/GoblinWarrior`，不能恢复内联坐标。
 - **已完成验证**：Python `compileall`、Black、ruff，前端 `format:check` 与 `tsc --noEmit` 通过；完整管道已准确阻断于上述缺失 `ref`。
+- **后续进展**：已实现无效 ref 后继续按坐标键、原实体名、规范基名查找实际存在的 JSON，`GoblinWarrior_Unique` 映射通过；同时从 GDI 的 `entity_name + source_kind` 补齐同翻译不同逻辑来源，修复 `Weapon_Rare` 被中文翻译去重的问题。
+- **剩余阻断**：管道继续运行后确认 `ProtectionPotion` 的 `TideWalkerShaman:direct` 既无实体页映射，也无可公开请求的 coords JSON。连续两次验证失败后按熔断规则停止，下一轮需先查明其真实坐标实体/别名或在实体导出阶段生成对应公开 ref。
 
 # 2026-07-27 会话修改记录
 
