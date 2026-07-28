@@ -20,6 +20,13 @@
 - **变更文件**：`docs/plans/RARITY_VARIANT_REFACTOR_DRAFT.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`Spear_5001` 静态壳 + `r=1001` → 客户端读取实际品质 → `Spear_1001.json`；草案状态为未决定执行，当前 404 接管保持不变。
 
+## docs: lootdrop 品质变体 JSON 合并计划
+
+- **改动原因**：普通品质变体重复导出完整怪物、容器和坐标数据；明确改为基底 JSON 内按“来源实体 × 地图分组”保存品质爆率，坐标从实体 JSON 引用并在客户端按分组筛选。
+- **变更文件**：`docs/plans/LOOTDROP_VARIANT_JSON_MERGE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`lootdrops/{base}.json.sources[source_id].ref` → 实体坐标；`variants[suffix].group_drop_info` → 来源在有效地图分组的爆率 → 坐标过滤及 score/max_score 重算。普通 `_1001` 至 `_7001` 计划停止独立写盘，独立 `_8001` 保留。
+- **验证**：仅计划文档；以 `HeaterShield` 现有 53 来源、约 3,000 内联坐标、175 条分组爆率作为改造前基线，实施时必须做旧新语义与请求预算对比。
+
 # 2026-07-27 会话修改记录
 
 ## fix: SSG 后导航栏 Ant Design 样式失效
