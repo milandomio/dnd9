@@ -53,6 +53,15 @@ const GROUP_ORDER = [
 ];
 
 const VARIANT_RE = /^(.+?)_(\d{4})$/;
+const LOOT_SOURCE_UI_KEYS: Record<string, string> = {
+  Weapon_DualBoss: 'ui.loot_source.dual_boss_weapon',
+  Weapon_MysticalTreasureRoom: 'ui.loot_source.mystical_treasure_weapon',
+  Weapon: 'ui.loot_source.weapon',
+  Weapon_GoldenRoom: 'ui.loot_source.golden_room_weapon',
+  DwarfSecretWeapon: 'ui.loot_source.dwarf_secret_weapon',
+  Weapon_FrozenRoom: 'ui.loot_source.frozen_room_weapon',
+  Weapon_SkullRoom: 'ui.loot_source.skull_room_weapon',
+};
 const RARITY_COLORS: Record<string, string> = {
   Poor: '#9E9E9E',
   Common: '#BDBDBD',
@@ -79,6 +88,15 @@ function hasAnyRate(dr: Record<string, number>): boolean {
 
 function lootdropSourceKey(monster: LootdropMonster): string {
   return monster.source_id ?? monster.translation;
+}
+
+function lootdropSourceTranslationKey(
+  source: Pick<LootdropMonster, 'name' | 'entity_name' | 'translation_key'>
+): string | undefined {
+  return (
+    source.translation_key ||
+    LOOT_SOURCE_UI_KEYS[source.entity_name ?? source.name]
+  );
 }
 
 function matchesGroupEntry(
@@ -120,7 +138,7 @@ function selectLootdropVariant(
         {
           ...entry,
           translation: source.translation,
-          translation_key: source.translation_key,
+          translation_key: lootdropSourceTranslationKey(source),
         },
       ];
     });
@@ -143,6 +161,7 @@ function selectLootdropVariant(
     .map(([sourceId, source]) => ({
       ...source,
       source_id: sourceId,
+      translation_key: lootdropSourceTranslationKey(source),
       max_score: maxScores.get(sourceId) ?? -1,
     }));
   return {
@@ -836,7 +855,7 @@ export default function LootdropDetailPage() {
         {' >> '}
         {resolvedMonsters
           .filter((m) => !hidden.has(m.translation))
-          .map((m) => t(m.translation_key, m.translation))
+          .map((m) => t(lootdropSourceTranslationKey(m), m.translation))
           .join(delimiter)}
         {resolvedMonsters.length - visibleCount > 0 && (
           <span style={{ color: tokens.muted, fontSize: 16 }}>
@@ -1028,7 +1047,7 @@ export default function LootdropDetailPage() {
               transition: 'all 0.2s',
             }}
           >
-            {t(m.translation_key, m.translation)} (
+            {t(lootdropSourceTranslationKey(m), m.translation)} (
             {visibleCountByMonster.get(m.translation) ?? 0})
           </button>
         ))}
@@ -1543,7 +1562,7 @@ export default function LootdropDetailPage() {
                             style={{ cursor: 'pointer' }}
                             onClick={() => toggle(tl)}
                           >
-                            {t(m.translation_key, m.translation)}
+                            {t(lootdropSourceTranslationKey(m), m.translation)}
                           </span>
                           {sr != null && sr !== 100 && (
                             <span

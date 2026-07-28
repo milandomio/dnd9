@@ -20,6 +20,12 @@
 - **关键逻辑/映射关系**：计划使用 Playwright 逐 URL 捕获 `pageerror`、控制台错误、#425/#418/#423、持续 Loading、资源状态和路由结果；Cloudflare Insights localhost CORS 单独归类，不掩盖应用错误。计划阶段不执行全量扫描、不修改业务代码。
 - **验证**：仅创建计划文档，尚未执行全量 URL 验证。
 
+## fix: 掉落来源分类名称 i18n
+
+- **改动原因**：`Spear` 掉落详情中的生成型来源没有游戏官方 `translation_key`，英语页面的“矮人秘密武器”等分类按钮仍回退为中文，单纯重建无法翻译。
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`DwarfSecretWeapon` → `ui.loot_source.dwarf_secret_weapon` → en `Dwarven Secret Weapon`；同时覆盖 `Weapon`、`Weapon_DualBoss`、`Weapon_MysticalTreasureRoom`、`Weapon_GoldenRoom`、`Weapon_FrozenRoom`、`Weapon_SkullRoom`，10 种语言共用合成翻译键。来源标题、筛选按钮和参考爆率均使用该键；全选按钮继续使用 `ui.common.hide_all` / `ui.common.show_all`。
+
 # 2026-07-28 会话修改记录
 
 ## feat: CF Pages 非默认语言掉落品质详情 404 接管
