@@ -19,7 +19,7 @@ function notifySeason() {
 function loadDataVersion() {
   if (cachedDate || loadingPromise || typeof window === 'undefined') return;
 
-  loadingPromise = fetch('/data/json/meta.json')
+  loadingPromise = fetch('/data/json/meta.json', { cache: 'no-store' })
     .then((r) => {
       if (!r.ok) throw new Error(`meta.json request failed: ${r.status}`);
       return r.json();
