@@ -70,3 +70,10 @@
 - **变更文件**：`web/vite.config.ts`；`web/src/hooks/useDataVersion.ts`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：Service Worker 对 `meta.json` 使用 `NetworkFirst`，在线读取当前版本、离线回退最后缓存；应用 fetch 使用 `no-store` 绕过浏览器 HTTP 缓存，版本化业务 JSON 仍使用现有缓存策略。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、目标文件 ESLint 与差异空白检查通过；最终 Workbox 产物随完整构建统一复核。
+
+### test: 接入前端质量与多语言浏览器门禁
+
+- **改动原因**：Playwright 脚本未被 npm/CI 调用，Husky 又调用不存在的 `npm test`；ESLint 缺少 Node globals，格式脚本未覆盖构建配置和测试。
+- **变更文件**：`web/eslint.config.js`；`web/package.json`；`web/package-lock.json`；`web/tests/i18n.mjs`；`.github/workflows/deploy.yml`；`.github/workflows/deploy-dev.yml`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`npm test` 统一执行 lint、全范围 Prettier 和 TypeScript；Node 脚本使用显式 Node globals；两套 Actions 在 SSG 后启动 preview，并运行多语言 HTTP、资源、文案、hydration 与 Loading 回归。
+- **验证**：`npm test` 通过（0 error）；quick SSG 生成 12,940 个 HTML、总文件数 14,741；Workbox 产物确认 `meta.json` 使用 `NetworkFirst`；preview HTTP 200；15 个中英日页面 Playwright 回归全通过且无 hydration/资源错误。
