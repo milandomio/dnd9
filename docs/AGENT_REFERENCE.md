@@ -243,11 +243,22 @@ git update-index --skip-worktree api/data/darkfindv5.db
 | `DEVELOPMENT_WORKFLOW.md` | 日常改动、预检、提交规则 |
 | `BUILD_AND_DEPLOY.md` | 构建、预览验证、部署、DB 推送 |
 | `AGENT_REFERENCE.md` | 低频架构/页面/排障/文档索引归档 |
-| `REFERENCE.md` | 数据管道/DB/地图模块详细规范 |
+| `REFERENCE.md` | 技术参考索引 |
+| `REFERENCE_DATA_PIPELINE.md` | 数据管道、Spawner、坐标和实体分类 |
+| `REFERENCE_DROP_RATES.md` | 生成概率、物品爆率和变体显示 |
+| `REFERENCE_MAP_MODULES.md` | 地图模块、Layout、旋转和图片 |
+| `REFERENCE_FRONTEND_DATA.md` | SSR/SSG、JSON 加载和 Hydration |
+| `REFERENCE_ARCHIVE.md` | 技术参考历史全文，只读 |
+| `plans/MULTILANG_PLAN.md` | 多语言文档索引 |
+| `plans/MULTILANG_ARCHITECTURE.md` | 多语言路由、翻译键和 Provider |
+| `plans/MULTILANG_BUILD_AND_TEST.md` | 多语言构建、PWA 和验收 |
+| `plans/MULTILANG_STATUS.md` | 多语言阶段状态和已知问题 |
+| `plans/MULTILANG_PLAN_ARCHIVE.md` | 多语言原计划历史全文，只读 |
 | `PWA_ROADMAP.md` | PWA 架构规划 |
 | `DEBUG_HYDRATION.md` | Hydration #310 错误修复记录 |
 | `DEBUG_HYDRATION_WITH_PLAYWRIGHT.md` | 前端水合错误 Playwright 排错方案 |
-| `SESSION_CHANGES.md` | 会话修改记录（按日期追加） |
+| `SESSION_CHANGES.md` | 当前会话修改记录（按日期追加） |
+| `SESSION_CHANGES_ARCHIVE.md` | 历史会话修改记录，只读 |
 | `ALIAS_ROTATION_OVERWRITE.md` | 别名旋转覆盖修复 |
 | `BACKEND_AUDIT_FIX_PLAN.md` | 后端审计修复计划 |
 | `CACHE_FIXES.md` | 缓存修复记录 |
