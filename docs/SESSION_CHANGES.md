@@ -25,6 +25,7 @@
 - **改动原因**：`Spear` 掉落详情中的生成型来源没有游戏官方 `translation_key`，英语页面的“矮人秘密武器”等分类按钮仍回退为中文，单纯重建无法翻译。
 - **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`DwarfSecretWeapon` → `ui.loot_source.dwarf_secret_weapon` → en `Dwarven Secret Weapon`；同时覆盖 `Weapon`、`Weapon_DualBoss`、`Weapon_MysticalTreasureRoom`、`Weapon_GoldenRoom`、`Weapon_FrozenRoom`、`Weapon_SkullRoom`，10 种语言共用合成翻译键。来源标题、筛选按钮和参考爆率均使用该键；全选按钮继续使用 `ui.common.hide_all` / `ui.common.show_all`。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 和 pre-commit 通过；Quick SSG 构建完成（12,929 HTML），`8080` 首页及目标页 HTTP 200。Playwright 确认 7 个来源分类均显示英文，`Dwarven Secret Weapon` 存在、“矮人秘密武器”不存在，全选按钮显示 `Show All`；仅有已知 Cloudflare Insights localhost CORS 噪声。
 
 # 2026-07-28 会话修改记录
 
