@@ -1,3 +1,12 @@
+# 2026-07-28 会话修改记录
+
+## feat: CF Pages 非默认语言掉落品质详情 404 接管
+
+- **改动原因**：10 种语言完整生成 lootdrop 品质变体会使 Cloudflare Pages 部署文件数超过 Free 计划 20,000 上限；非默认语言的非默认品质改由 CF `404.html` 启动客户端加载。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：多变体基底条目以 `5001`（否则首个 suffix）标记默认品质；仅默认品质和 `8001` 写入非默认语言 HTML，`zh-Hans` 保留全部。相同标记过滤非默认语言 Sitemap，并令裁剪路由的 hreflang 仅指向 `zh-Hans`。根 `404.html` 写入 Vite 空根模板，`main.tsx` 因而使用既有 `createRoot()`，再按原 URL 请求版本化详情 JSON。构建递归统计 `dist` 文件和 HTML 数，超过 19,000 即失败。
+- **验证**：`npm run format`、`npm run format:check`、`npx prettier --check scripts/ssg.mjs`、`npx tsc --noEmit`、`npm run build` 通过；产物为 18,127 文件（14,493 HTML）。保留/裁剪文件与 10 个 Sitemap 符合规则；生产预览首页 HTTP 200，Playwright 确认 `404.html` 根节点为空、保留详情无 React 错误且版本化 JSON 返回 200。Vite preview 对不存在路径返回 `index.html` 200，不能模拟 Cloudflare 的 404 文档状态。
+
 # 2026-07-27 会话修改记录
 
 ## fix: SSG 后导航栏 Ant Design 样式失效
