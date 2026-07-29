@@ -858,10 +858,24 @@ function sitemapPriority(path) {
 }
 
 const sitemapFiles = [];
+const sitemapEntries = new Map();
+const SITEMAP_HEADER =
+  '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+const SITEMAP_FOOTER = '</urlset>\n';
+const SITEMAP_MAX_BYTES = 25 * 1024 * 1024;
+const SITEMAP_MAX_URLS = 50_000;
+const SITEMAP_DETACH_ORDER = [
+  'ru',
+  'pt-BR',
+  'ko',
+  'ja',
+  'de',
+  'fr',
+  'es',
+  'zh-Hant',
+];
 for (const lang of LANGS) {
-  let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  sitemap +=
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+  let entries = '';
   for (const r of routes) {
     if (r.redirect) continue;
     if (r.generateStatic === false) continue;
@@ -871,24 +885,55 @@ for (const lang of LANGS) {
       (altLang) =>
         `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${SITE + localizedPath(r.path, altLang)}" />`
     ).join('\n');
-    sitemap += `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
+    entries += `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
   }
-  sitemap += '</urlset>\n';
+  const sitemap = `${SITEMAP_HEADER}${entries}${SITEMAP_FOOTER}`;
   const filename = `sitemap-${lang}.xml`;
   writeFileSync(join(DIST, filename), sitemap, 'utf-8');
   sitemapFiles.push(filename);
+  sitemapEntries.set(lang, entries);
 }
 
-let sitemapIndex = '<?xml version="1.0" encoding="UTF-8"?>\n';
-sitemapIndex +=
-  '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-for (const filename of sitemapFiles) {
-  sitemapIndex += `  <sitemap>\n    <loc>${SITE}/${filename}</loc>\n    <lastmod>${dataDateStr}</lastmod>\n  </sitemap>\n`;
+function buildCombinedSitemap(langs) {
+  return `${SITEMAP_HEADER}${langs.map((lang) => sitemapEntries.get(lang)).join('')}${SITEMAP_FOOTER}`;
 }
-sitemapIndex += '</sitemapindex>\n';
-writeFileSync(join(DIST, 'sitemap.xml'), sitemapIndex, 'utf-8');
+
+function countSitemapUrls(langs) {
+  return langs.reduce(
+    (count, lang) =>
+      count + (sitemapEntries.get(lang)?.match(/<url>/g) ?? []).length,
+    0
+  );
+}
+
+const rootSitemapLanguages = [...LANGS];
+const detachedSitemapLanguages = [];
+let combinedSitemap = buildCombinedSitemap(rootSitemapLanguages);
+while (
+  (Buffer.byteLength(combinedSitemap, 'utf8') > SITEMAP_MAX_BYTES ||
+    countSitemapUrls(rootSitemapLanguages) > SITEMAP_MAX_URLS) &&
+  rootSitemapLanguages.length > 1
+) {
+  const lang =
+    SITEMAP_DETACH_ORDER.find((candidate) =>
+      rootSitemapLanguages.includes(candidate)
+    ) || rootSitemapLanguages[rootSitemapLanguages.length - 1];
+  rootSitemapLanguages.splice(rootSitemapLanguages.indexOf(lang), 1);
+  detachedSitemapLanguages.push(lang);
+  combinedSitemap = buildCombinedSitemap(rootSitemapLanguages);
+}
+
+writeFileSync(join(DIST, 'sitemap.xml'), combinedSitemap, 'utf-8');
 console.log(
-  `[ssg] sitemap.xml index + ${sitemapFiles.length} language files generated (${routes.length - routes.filter((r) => r.redirect).length} URLs per language)`
+  `[ssg] sitemap.xml combined ${rootSitemapLanguages.join(',')} (${Buffer.byteLength(combinedSitemap, 'utf8')} bytes, ${countSitemapUrls(rootSitemapLanguages)} URLs)`
+);
+if (detachedSitemapLanguages.length > 0) {
+  console.log(
+    `[ssg] detached language sitemaps: ${detachedSitemapLanguages.join(', ')}`
+  );
+}
+console.log(
+  `[ssg] ${sitemapFiles.length} language sitemap files generated (${routes.length - routes.filter((r) => r.redirect).length} URLs per language)`
 );
 
 function countDistFiles(dir) {

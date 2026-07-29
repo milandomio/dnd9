@@ -217,3 +217,10 @@
 - **变更文件**：`web/scripts/submit-indexnow.mjs`；`web/package.json`；`.github/workflows/deploy.yml`；`docs/BUILD_AND_DEPLOY.md`；`web/scripts/prepare-indexnow.mjs`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：提交脚本自动扫描 `dist` 中唯一的 `{key}.txt`，校验文件名与内容一致后用于 `key` 和 `keyLocation`；移除 Secret 及构建前写入步骤，静态 `web/public/{key}.txt` 由 Vite 随站点发布。
 - **验证**：`npm run format`、`npm test`、Node 语法、mock IndexNow `202` 响应和 `git diff --check` 通过；未设置 Secret 时成功提交 `10,000 + 3,370` 个 URL。
+
+### feat: 按容量逐个拆出低优先级语言 sitemap
+
+- **改动原因**：当前 10 个语言 sitemap 合计约 17.8 MiB，低于 Cloudflare Pages 的 25 MiB 文件限制；未来超限时应优先拆出低优先级语言，而不是让根文件退回仅含 10 个子 sitemap 的索引格式。
+- **变更文件**：`web/scripts/ssg.mjs`；`web/public/robots.txt`；`docs/BUILD_AND_DEPLOY.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：根 `sitemap.xml` 始终保持 `urlset`；超过 25 MiB 或 50,000 URL 时按 `ru → pt-BR → ko → ja → de → fr → es → zh-Hant` 顺序逐个移出，移出语言保留独立 `sitemap-{lang}.xml`，所有语言子 sitemap 通过 `robots.txt` 声明。
+- **验证**：quick SSG 生成根 `urlset`，大小为 17,791,164 bytes、包含 13,370 个条目；根、robots 和站点首页 HTTP 200；`npm test`、Prettier、TypeScript、Node 语法、IndexNow mock 提交和差异空白检查通过。
