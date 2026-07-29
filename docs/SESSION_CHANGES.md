@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-07-30
+
+### docs: 建立日语详情页实体翻译待办
+
+- **改动原因**：日语详情页审计发现主实体标题仍有英文、中文或中英混合残留，需要将缺少 locale 覆盖和缺少 `translation_key` 的实体固定为可执行清单。
+- **变更文件**：`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/plans/MULTILANG_PLAN.md`；`docs/plans/MULTILANG_STATUS.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：按主实体标题过滤坐标地图名等噪声，记录 88 个已有 `df5.hardcoded.*` key 但日语值等于英文的实体，以及 42 个空 `translation_key` 实体；后续分别走十语言 override、官方 Game.json key 或新 synthetic key。
+- **验证**：清单共 130 项，按 monsters、props、dungeon_modules 分类；当前用户未提交的 `api/data/darkfindv5.db` 未修改。
+
 ## 2026-07-29
 
 ### fix: 清理日语详情页的英文额外文案
