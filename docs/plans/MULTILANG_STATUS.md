@@ -21,6 +21,8 @@ URL 前缀 -> LanguageProvider -> locale fetch -> t()/ut()
 
 详情页标题和 ModuleDetail 标题重复问题已有修复，相关历史验证见 [`MULTILANG_PLAN_ARCHIVE.md`](MULTILANG_PLAN_ARCHIVE.md) 第 10 节。
 
+日语详情页实体标题仍有 130 个翻译候选：88 个已有 synthetic key 但日语值等于英文，42 个缺少 `translation_key` 并使用原始标识或中文兜底。完整清单和处理顺序见 [`JA_DETAIL_I18N_BACKLOG.md`](JA_DETAIL_I18N_BACKLOG.md)。
+
 ## 后续原则
 
 - 新页面接入必须同时补 UI key、实体 key、SSG 标题和 Playwright 断言。
