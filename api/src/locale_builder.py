@@ -120,6 +120,7 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
     locale_dir.mkdir(parents=True, exist_ok=True)
 
     used_keys = _load_used_keys(output_dir, lootdrop_keys)
+    used_keys = {key for key in used_keys if not key.startswith("ui.")}
     used_keys.add(SUPERHOARD_I18N_KEY)
     used_keys.update(FILTER_MODE_LOCALE_KEYS)
     fallback_translations = db.get_translations_map("zh-Hans")

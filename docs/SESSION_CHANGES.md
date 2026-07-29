@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 修复日语子池节点显示翻译键
+
+- **改动原因**：`ja/items/GrimveilCloak/` 的骷髅卫兵装死节点因数据 locale 导出的同名兜底键覆盖静态 UI 字典，页面显示 `ui.pool.skeleton_guard_fake_death`。
+- **变更文件**：`web/src/i18n/useLocale.ts`；`api/src/locale_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：合并 locale 时由静态 `ui.*` 字典优先，确保 `ui.pool.skeleton_guard_fake_death` 使用日语文案“スケルトン衛兵（死んだふり）”；locale 构建器过滤 `ui.` 键，避免将 UI 键再次导出为实体翻译。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，18 条既有 warning）、`python3 -m py_compile api/src/locale_builder.py`、quick SSG 构建和 `git diff --check` 通过；多语言回归 16/16；目标页 HTTP 200，Playwright 确认日语文案显示且原始 UI 键不可见。
+
 ### fix: 忽略多语言冒烟测试中的 Cloudflare 外部噪声
 
 - **改动原因**：GitHub Actions `30449448730` 的数据管道、质量检查和 SSG 构建均成功，但 `Test localized pages` 的 16 个页面都因 Cloudflare Analytics 请求返回 `Failed to load resource: net::ERR_FAILED` 而失败，阻止 gh-pages 部署。
