@@ -69,6 +69,10 @@ function isIgnoredExternal(url) {
   return url.includes('cloudflareinsights.com');
 }
 
+function isGenericResourceError(message) {
+  return /^Failed to load resource:/i.test(message);
+}
+
 async function testPage(
   browser,
   { path, desc, lang, textChecks = [], expectedHrefs = [], forbiddenHrefs = [] }
@@ -77,6 +81,7 @@ async function testPage(
   const consoleErrors = [];
   const pageErrors = [];
   const resourceErrors = [];
+  const ignoredExternalFailures = new Set();
 
   page.on('console', (msg) => {
     if (msg.type() === 'error' && !isIgnoredExternal(msg.text())) {
@@ -86,7 +91,9 @@ async function testPage(
   page.on('pageerror', (err) => pageErrors.push(err.message));
   page.on('requestfailed', (request) => {
     const url = request.url();
-    if (url.startsWith(BASE) && !isIgnoredExternal(url)) {
+    if (isIgnoredExternal(url)) {
+      ignoredExternalFailures.add(url);
+    } else if (url.startsWith(BASE)) {
       resourceErrors.push(
         `${url}: ${request.failure()?.errorText ?? 'failed'}`
       );
@@ -129,7 +136,11 @@ async function testPage(
     const hydrationErrors = [...pageErrors, ...consoleErrors].filter((error) =>
       HYDRATION_RE.test(error)
     );
-    const errors = [...pageErrors, ...consoleErrors, ...resourceErrors];
+    const filteredConsoleErrors = consoleErrors.filter(
+      (error) =>
+        !(isGenericResourceError(error) && ignoredExternalFailures.size > 0)
+    );
+    const errors = [...pageErrors, ...filteredConsoleErrors, ...resourceErrors];
     const hasTitle = title.length > 0 && title !== 'DarkFlashNav';
 
     if (htmlLang !== lang) throw new Error(`html lang=${htmlLang}`);
