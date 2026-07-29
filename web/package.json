@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "node scripts/ssg.mjs --quick",
     "build:full": "NODE_OPTIONS='--max-old-space-size=4096' node scripts/ssg.mjs",
+    "indexnow:prepare": "node scripts/prepare-indexnow.mjs",
+    "indexnow:submit": "node scripts/submit-indexnow.mjs",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "prepare": "husky",

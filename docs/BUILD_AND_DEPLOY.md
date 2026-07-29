@@ -14,6 +14,18 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 
 `python main.py` 在 search_index 步骤后自动运行 `build_locale_files`，生成 `data/json/locale/{lang}.json`（10种语言）。`npm run build` 中的 `ssg.mjs` 使用这些 locale 字典为每种语言生成 HTML 副本（dist/{lang}/...）。完整构建产物约 1.28 GB。
 
+## IndexNow
+
+IndexNow 已接入主站 GitHub Actions：构建后把 `INDEXNOW_KEY` 写入 `dist/{key}.txt`，发布到 `gh-pages` 后读取各语言 sitemap，向 IndexNow API 批量提交 URL。
+
+首次配置：
+
+1. 本地生成密钥：`openssl rand -hex 16`。
+2. 在 GitHub 仓库 `Settings → Secrets and variables → Actions` 新建 Repository secret，名称为 `INDEXNOW_KEY`，值为上一步密钥。
+3. 推送一次 `main`，确认 `https://dnd9.icetar.com/{key}.txt` 返回该密钥文本。
+
+密钥不写入仓库。未配置 Secret 时，构建和部署仍会正常完成，但 IndexNow 步骤会跳过。
+
 禁止直接执行实时输出的长流程命令。`python main.py`、`npm run build`、`./deploy.sh`、Playwright 全站测试等在 WSL 中必须使用 `nohup <command> > 日志文件 2>&1 &` 后台启动；随后用短命令检查进程和单独读取日志，避免等待前台流程结束而阻塞 TUI。
 
 构建完成后必须验证 web 服务可用（HTTP 200），不可跳过。若返回非 200，必须排查错误并修复至返回 200 为止。
