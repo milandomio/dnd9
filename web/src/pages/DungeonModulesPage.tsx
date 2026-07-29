@@ -99,7 +99,7 @@ export default function DungeonModulesPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.module.title')} | {ut('ui.brand.name')} DarkFlashNav
+          {ut('ui.module.title')} | {ut('ui.brand.name')}
         </title>
         <meta name="description" content={ut('ui.home.view_dungeon_modules')} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />

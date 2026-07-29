@@ -14,9 +14,6 @@ export default function AppName() {
       }}
     >
       {ut('ui.brand.name')}
-      <div style={{ fontSize: 14, color: tokens.muted, marginTop: 4 }}>
-        DarkFlashNav
-      </div>
     </h1>
   );
 }

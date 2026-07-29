@@ -102,7 +102,9 @@ export default function QuestNPCPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>{ut('ui.nav.quest_npc')} | DarkFlashNav</title>
+        <title>
+          {ut('ui.nav.quest_npc')} | {ut('ui.brand.name')}
+        </title>
         <meta
           name="description"
           content={`${ut('ui.nav.quest_npc')} - ${ut('ui.quest_detail.task_list')}`}

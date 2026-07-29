@@ -59,7 +59,7 @@ export default function QuestItemsPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.quest_items.title')} | {ut('ui.brand.name')} DarkFlashNav
+          {ut('ui.quest_items.title')} | {ut('ui.brand.name')}
         </title>
         <meta name="description" content={ut('ui.quest_items.footer')} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />

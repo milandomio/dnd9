@@ -813,23 +813,26 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? helmetTitle} | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? helmetTitle} | {ut('ui.brand.name')}
         </title>
         <meta
           name="description"
-          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落，共 ${bottomCount} 个位置点。`}
+          content={ut('ui.seo.lootdrop_description')
+            .replace('{name}', itemLabel)
+            .replace('{sources}', String(visibleCount))
+            .replace('{positions}', String(bottomCount))}
         />
-        <meta
-          name="keywords"
-          content="掉落查询,爆率查询,怪物掉落,物品掉落,地图坐标,掉落位置"
-        />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? helmetTitle} | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? helmetTitle} | ${ut('ui.brand.name')}`}
         />
         <meta
           property="og:description"
-          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落`}
+          content={ut('ui.seo.lootdrop_description')
+            .replace('{name}', itemLabel)
+            .replace('{sources}', String(visibleCount))
+            .replace('{positions}', String(bottomCount))}
         />
       </Helmet>
       <h1
@@ -1090,7 +1093,10 @@ export default function LootdropDetailPage() {
             <label
               style={{ color: tokens.text, fontSize: 13, whiteSpace: 'nowrap' }}
             >
-              默认显示阈值（综合爆率%）：{threshold}%
+              {ut('ui.debug.default_threshold').replace(
+                '{threshold}',
+                String(threshold)
+              )}
             </label>
             <input
               type="range"
@@ -1119,7 +1125,10 @@ export default function LootdropDetailPage() {
               }}
             />
             <span style={{ color: tokens.muted, fontSize: 11 }}>
-              spawn_rate × 豪客赛爆率 ≥ {threshold}% 则默认显示
+              {ut('ui.debug.threshold_hint').replace(
+                '{threshold}',
+                String(threshold)
+              )}
             </span>
           </div>
         </div>
@@ -1273,7 +1282,9 @@ export default function LootdropDetailPage() {
                       }}
                     >
                       {mod?.img_name || mod?.sl_base_name || mapName}.webp |
-                      找到 {dots.length} 个位置 | 范围: ±{range}
+                      {ut('ui.debug.map_summary')
+                        .replace('{count}', String(dots.length))
+                        .replace('{range}', String(range))}
                     </div>
                   )}
                   {debug && (
@@ -1288,8 +1299,12 @@ export default function LootdropDetailPage() {
                     >
                       {dots[0]?.file || ''}
                       <br />
-                      旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},
-                      {mod?.offset_y ?? 0}) 大小:{sx}x{sy}
+                      {ut('ui.debug.transform')
+                        .replace('{rotation}', String(mod?.rotate ?? 0))
+                        .replace('{x}', String(mod?.offset_x ?? 0))
+                        .replace('{y}', String(mod?.offset_y ?? 0))
+                        .replace('{sx}', String(sx))
+                        .replace('{sy}', String(sy))}
                     </div>
                   )}
                   {debug && (
@@ -1310,7 +1325,9 @@ export default function LootdropDetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>范围:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.range')}
+                        </span>
                         <button
                           onClick={() =>
                             setAdj(
@@ -1361,7 +1378,9 @@ export default function LootdropDetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>偏移:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.offset')}
+                        </span>
                         <button
                           onClick={() => setAdj(mapName, 'y', adj.y - 50)}
                           style={ctrlBtn}
@@ -1434,7 +1453,7 @@ export default function LootdropDetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↻ 旋转
+                          ↻ {ut('ui.debug.rotate')}
                         </button>
                         <button
                           onClick={() =>
@@ -1445,7 +1464,7 @@ export default function LootdropDetailPage() {
                             background: adj.mirrorX ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇄ 左右
+                          ⇄ {ut('ui.debug.mirror_horizontal')}
                         </button>
                         <button
                           onClick={() =>
@@ -1456,7 +1475,7 @@ export default function LootdropDetailPage() {
                             background: adj.mirrorY ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇅ 上下
+                          ⇅ {ut('ui.debug.mirror_vertical')}
                         </button>
                         <button
                           onClick={() =>
@@ -1468,7 +1487,7 @@ export default function LootdropDetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↺ 重置
+                          ↺ {ut('ui.debug.reset')}
                         </button>
                       </div>
                     </div>

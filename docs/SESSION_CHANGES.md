@@ -11,6 +11,20 @@
 - **关键逻辑/映射关系**：`HARDCODED_TRANSLATIONS[name]` 统一映射为 `df5.hardcoded.{name}`，中文 locale 保留人工名称，非中文缺少游戏官方翻译时由实体英文标识生成可读名称；实体详情、掉落来源、模块实体、任务分组、搜索索引和 locale 导出共用 `resolve_translation_key()`。实际展示的 PWA、调试和 SEO 文案统一使用 `ui.*` 键，简繁中文提供对应文本，其余语言缺少新增专门译文时回退英文。
 - **验证**：合成键及中英文示例断言、Python compileall、Prettier、TypeScript、ESLint（0 error，18 条既有 warning）和 `git diff --check` 通过；完整数据管道与 locale 产物验证待 checkpoint 后执行。
 
+### fix: 固定十语言 SEO 品牌标识
+
+- **改动原因**：`越来越黑暗闪电指南 DarkFlashNav` 是不可翻译的品牌标识，不能随页面语言切换；所有 sitemap 页面标题都必须携带完整品牌名。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；所有包含 Helmet 标题的页面；`docs/plans/MULTILANG_ARCHITECTURE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`ui.brand.name` 在十种语言下固定返回 `越来越黑暗闪电指南 DarkFlashNav`；普通页面使用 `页面标题 | 品牌名`，十语言首页使用 `品牌名 | 页面描述`，已有 `og:title` 同步追加完整品牌名。
+- **验证**：全部 12 个 Helmet 页面标题均引用 `ui.brand.name`；SSG 多语言后处理继续使用同一固定品牌文本；Prettier、TypeScript、ESLint（0 error，18 条既有 warning）通过。
+
+### test: 验证硬编码实体 locale 产物
+
+- **改动原因**：完整管道需确认坐标子池中的硬编码名称也带合成键，而不只验证顶层实体。
+- **变更文件**：`api/src/collector.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`variant_names`、`sub_pool_entries` 和掉落索引来源在写出前统一调用 `resolve_translation_key()`；产物中“哥布林近战/远程”分别对应 `df5.hardcoded.GoblinMelee/GoblinRanged`。
+- **验证**：`GoblinWarrior.json`、`Mummy.json` 产物键正确；隔离 locale 构建验证 `zh-Hans` 输出中文、`en` 输出 `Goblin Melee/Goblin Ranged`。完整管道在既有变体 WIP 的 `empty merged lootdrop family: Ball` 校验处中止，本任务未修改或提交该 WIP。
+
 ### fix: 任务目标类型列禁止换行
 
 - **改动原因**：`zh-Hans/quest_npc/Alchemist` 详情页的任务目标表中，“类型”列的“收集”会被拆分换行，影响内容识别。

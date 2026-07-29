@@ -118,11 +118,11 @@ export default function HomePage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.brand.name')} DarkFlashNav | {homeDescription}
+          {ut('ui.brand.name')} | {homeDescription}
         </title>
         <meta
           name="description"
-          content={`${ut('ui.brand.name')} DarkFlashNav - ${homeDescription}`}
+          content={`${ut('ui.brand.name')} - ${homeDescription}`}
         />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
