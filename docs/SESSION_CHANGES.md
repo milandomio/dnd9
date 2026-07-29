@@ -310,3 +310,10 @@
 - **变更文件**：`api/src/search_engine.py`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：多实体分组和展开统一调用 `strip_variant_suffixes()`，恢复旧扫描逻辑的 `keyword → 基础实体` 映射；掉落组映射仍保留上一修复的 ID 前缀规范化。
 - **验证**：定向 Black、Ruff、`py_compile` 和现有 5 个掉落率单元测试通过；等待第三次完整管道确认。
+
+### test: 完整 DB-only 数据管道验证通过
+
+- **改动原因**：确认两次 spawner 映射修复没有继续影响掉落来源、任务导出和多语言派生产物。
+- **变更文件**：`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：第三次管道使用 DB-backed spawner lookup 和 importer 坐标扫描；多实体基础名、掉落组前缀、实体坐标页和 public ref 全部重新对齐。
+- **验证**：`api/main.py` 后台运行成功；96,402 坐标入库；146 个怪物页、478 个掉落详情、72 个探索目标、346 个任务物品、476 个任务 NPC、260 个模块和 10 语言 locale/search index 全部生成；模块图片校验通过。
