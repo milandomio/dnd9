@@ -15,11 +15,13 @@
 - `DetailPage.tsx`、`LootdropDetailPage.tsx`、地图模块页和任务页分别使用短模板，部分只说明数量，没有说明查询内容和页面价值。
 - `web/src/i18n/uiLocale.ts` 已有部分 `ui.seo.*` 键，但任务页、探索页、列表页等页面仍直接复用普通 UI 文案或拼接短字符串。
 - `web/scripts/ssg.mjs` 的多语言复制流程会重写 `<title>`、`lang`、canonical 和 hreflang；当前 `localizePage()` 没有同等的 description 本地化逻辑。必须以生成后的 HTML 为准检查非默认语言页面，避免把简体中文描述带入其他语言页面。
-- 当前请求未附具体 URL 清单。执行时默认读取当前构建生成的 `sitemap.xml` 及 10 个语言 Sitemap；如果用户补充 URL，则优先覆盖这些 URL，并继续检查其所属页面模板的全量影响。
+- 当前请求未附具体 URL 清单。执行时以 10 个 `sitemap-{lang}.xml` 的 URL 并集为权威清单；根 `sitemap.xml` 可能是直接 `urlset`、`sitemapindex` 或受容量限制的语言子集，审计器必须兼容三种结构。如果用户补充 URL，则优先覆盖这些 URL，并继续检查其所属页面模板的全量影响。
 
 ## 审计范围
 
 以 Sitemap 中的可索引 URL 为准，覆盖默认语言和以下 10 种语言：`zh-Hans`、`en`、`de`、`es`、`fr`、`ja`、`ko`、`pt-BR`、`ru`、`zh-Hant`。
+
+- `/` 作为未带语言前缀的首页兜底页单独检查，确认其 description、canonical 和页面语言不意外扩大索引范围；Sitemap URL 和 canonical 策略不在本任务中修改。
 
 页面类型：
 
@@ -37,7 +39,7 @@
 
 ### 1. 建立 URL 与现状报告
 
-- 按 `docs/BUILD_AND_DEPLOY.md` 生成与当前数据对应的前端产物，再解析 Sitemap，去重并按语言、页面类型分组。
+- 按 `docs/BUILD_AND_DEPLOY.md` 生成与当前数据对应的前端产物，解析全部语言 Sitemap 的 URL 并集，去重后按语言、页面类型分组。
 - 逐页读取最终 HTML，而不是只检查 React 源码，记录 URL、页面类型、语言、`title`、`meta description`、`og:description` 和 canonical。
 - 统计 description 的 Unicode 字符数，并额外检查过短、过长、空值、重复、未替换占位符、语言不匹配和 `og:description` 不一致。
 - 输出问题清单，标记“只需改文案”和“需要修复 SSG 元数据注入”的页面，保存到临时日志，不把审计产物写入 `data/` 或 `web/public/`。
@@ -63,7 +65,7 @@
 文案规则：
 
 - 每种语言单独撰写自然文案，不通过拼接英文关键词或重复句子强行填充长度。
-- 以 150–160 个 Unicode 字符作为默认目标区间；若中文、日文、韩文因搜索引擎像素宽度会明显提前截断，执行审计时单独报告并在确认后采用更合适的 CJK 长度，不用无意义内容填充。
+- 以 150–160 个 Unicode 字符作为拉丁语言的参考目标，而非所有 URL 的硬性验收线；CJK、长实体名和无法安全补足动态事实的页面按语言、页面类型设定合理区间，并在审计报告中列出例外原因，不用无意义内容填充。
 - 描述中的名称、数量、尺寸和变体必须来自页面实际数据；数据为空时使用稳定的本地化兜底句，不输出 `undefined`、内部 key 或原始占位符。
 - `og:description` 与 `meta[name="description"]` 使用同一最终字符串，避免社交分享和搜索摘要内容分叉。
 
@@ -76,9 +78,17 @@
 - `web/scripts/ssg.mjs` 及必要的 SSR/SEO 辅助模块：确保每种语言的静态副本都写入本地化 description，而不仅重写 title；同时保留 canonical、hreflang 和现有详情页壳策略。
 - 仅在审计发现确有必要时修改 `web/index.html` 的模板兜底描述，不把模板描述当成所有页面的最终 SEO 内容。
 
+元数据一致性契约：
+
+- 描述模板、占位符替换和兜底规则必须来自浏览器与 `ssg.mjs` 都能加载的纯数据/纯函数入口；不得只在 TypeScript 页面组件中实现后再由 MJS 复制一份字符串拼接逻辑。
+- 非默认语言的 SSG 页面除 `__localizedTitle` 外还必须注入 `__localizedDescription`。客户端首轮 Helmet 优先读取此值，待 locale 数据加载完成后以相同的模板和事实字段重算，避免当前 `__ssrLang=zh-Hans` 水合策略将静态本地化 description 短暂覆盖为简体中文。
+- `meta[name="description"]` 和 `og:description` 均从同一个最终字符串输出；页面切换时由同一 SEO 入口覆盖前一路由标签。
+- 描述统计只能使用原始、稳定的页面事实，例如实体原始坐标数、当前掉落变体的全部来源/唯一位置数、任务总数或模块原始实体数。不得使用调试开关、默认隐藏、品质、掉率或用户筛选后的可见数量。
+- Quick SSG 无法取得完整事实时使用已本地化的保守描述，不伪造 `0`、坐标数、来源数或变体统计；客户端取得完整数据后仅以真实原始事实更新。
+
 实现时需要特别验证：
 
-- Quick SSG 详情页的最小 SSR 数据不足时，description 不读取不存在的坐标、来源或数量字段。
+- Quick SSG 详情页的最小 SSR 数据不足时，description 不读取不存在的坐标、来源或数量字段，并保留与客户端首轮一致的本地化兜底。
 - 掉落物变体 URL 使用当前变体的名称和统计，不把基础条目或其他品质的文案误用于当前 URL。
 - 多语言页面的首屏静态 HTML 和客户端 Helmet 最终值一致，不引入 hydration 错误。
 - 页面切换时 Helmet 不残留前一个路由的 description。
@@ -88,7 +98,8 @@
 - 重新审计全部 Sitemap URL，确认每个可索引页面只有一个最终 description。
 - 抽样检查 10 种语言的主页、列表、实体详情、掉落详情、任务页和地图模块详情；对所有短描述页面保留完整清单。
 - 验证 description 与 `og:description` 一致、语言正确、占位符已替换、动态计数与页面正文一致。
-- 用 Playwright 检查页面加载、Hydration #418/#423/#425、持续 Loading、关键 JSON 请求和 meta 标签最终值。
+- 静态审计直接读取生成 HTML，验证原始响应中的 description、`og:description`、canonical、`lang` 和重复标签；不以执行 JavaScript 后的 DOM 代替静态验证。
+- 用 Playwright 检查页面加载、Hydration #418/#423/#425、持续 Loading、关键 JSON 请求，以及 locale 加载完成后的 meta 标签。新增或扩展自动化测试，覆盖全部语言的代表页面和同一标签页路由切换，断言首轮与最终 description/OG 描述一致。
 - 按项目流程执行 `npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`、`npm run test:i18n`，再执行前端构建。
 - 启动生产预览并验证首页、每类页面和关键语言 URL 返回 HTTP 200；长流程遵守 WSL 后台日志规则。
 
@@ -102,9 +113,9 @@
 ## 验收标准
 
 - Sitemap 中所有可索引 URL 均有非空、与页面语言一致的 `meta[name="description"]`。
-- 目标页面的 description 达到 150–160 字符；CJK 特殊长度例外必须在审计报告中明确列出并经确认。
+- 描述符合对应语言和页面类型的目标长度区间；未达到拉丁语言参考区间或采用 CJK/长名称例外时，审计报告必须说明原因并确认内容仍准确、自然。
 - description 不含内部 key、未替换占位符、`undefined`、重复填充语句或与页面不符的统计。
-- `og:description` 与 description 完全一致，静态 HTML、SSR 和客户端最终值一致。
+- `og:description` 与 description 完全一致；静态 HTML、客户端首轮和 locale/详情数据稳定后的最终值一致。
 - 10 种语言的文案键集合完整，页面切换和 SSG 生成无新增 hydration 或运行时错误。
 - 质量检查、前端构建、预览 HTTP 200 和关键页面浏览器验证全部通过。
 - Bing Webmaster Tools 的监测作为发布后动作，不阻塞本地代码验收；无凭据时不伪造结果。
@@ -114,6 +125,7 @@
 - 搜索引擎可能按像素宽度截断，不保证字符数等于最终展示宽度；通过报告同时记录字符数和内容类型，必要时按语言调整。
 - 详情页统计依赖 JSON 数据，若 Quick SSG 无法取得完整数据，必须使用保守兜底而不是错误数量。
 - 如果多语言静态后处理改动引发水合差异，回退到上一个稳定的 SSG 注入方式，保留审计报告并另开修复任务。
+- 根首页与 `zh-Hans` 首页当前有不同的 URL/Canonical 语义；本任务只报告其元数据和索引暴露状态，不在未获额外确认时改变路由或 canonical。
 - 本计划不改变路由、Sitemap URL、数据结构或掉落/地图业务逻辑。
 
 ## 确认门
