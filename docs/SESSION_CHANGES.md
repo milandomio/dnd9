@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 补齐地图模块装饰实体十语言翻译
+
+- **改动原因**：地图模块详情页的 `Ladder_*`、`Inferno_PlaneFog`、`IceWall_*`、`IceFloor_01`、`IciclesWall_01` 没有 `translation_key`，英文及其他非中文页面回退显示中文实体名。
+- **变更文件**：`api/src/config.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：新增 13 个模块实体变体到 `df5.hardcoded.{Ladder|PlaneFog|IceWall|IceFloor|IciclesWall}` 的 key 映射，并为简中、英文、德语、西语、法语、日语、韩语、巴西葡语、俄语、繁中提供显式 locale 文案；生成数据只保存 synthetic key，前端继续通过 `t()` 解析。
+- **验证**：完整数据管道成功；260 个模块详情页目标实体均带翻译键；十种 locale 文案均存在；quick SSG 生成 3070 路由；模块详情页 HTTP 200；`npm run test:i18n` 16/16；Python Ruff/Black、Prettier 和 TypeScript 检查通过。
+
 ### fix: 修复日语子池节点显示翻译键
 
 - **改动原因**：`ja/items/GrimveilCloak/` 的骷髅卫兵装死节点因数据 locale 导出的同名兜底键覆盖静态 UI 字典，页面显示 `ui.pool.skeleton_guard_fake_death`。
@@ -87,6 +94,13 @@
 - **变更文件**：`docs/REFERENCE.md`；`docs/REFERENCE_DATA_PIPELINE.md`；`docs/REFERENCE_DROP_RATES.md`；`docs/REFERENCE_MAP_MODULES.md`；`docs/REFERENCE_FRONTEND_DATA.md`；`docs/REFERENCE_ARCHIVE.md`；`docs/plans/MULTILANG_PLAN.md`；`docs/plans/MULTILANG_ARCHITECTURE.md`；`docs/plans/MULTILANG_BUILD_AND_TEST.md`；`docs/plans/MULTILANG_STATUS.md`；`docs/plans/MULTILANG_PLAN_ARCHIVE.md`；`docs/SESSION_CHANGES.md`；`docs/SESSION_CHANGES_ARCHIVE.md`；`docs/AGENT_REFERENCE.md`；`CLAUDE.md`。
 - **关键逻辑/映射关系**：主题文档承载当前可执行规则，`*_ARCHIVE.md` 只读保存完整历史；`CLAUDE.md` 与 `AGENT_REFERENCE.md` 指向小文档入口。后续会话仍追加本文件，历史不再混入日常入口。
 - **验证**：Markdown 链接目标、差异空白和文件体量检查通过；日常入口均不超过 62 行，完整历史内容保留在三个 archive 文件中；`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过。
+
+### fix: 清理 SSG 页面重复 description 元标记
+
+- **改动原因**：主页和列表页的页面源代码同时包含 HTML 模板静态描述与 React Helmet 动态描述，导致重复的 `<meta name="description">`。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SSG 注入 Helmet head 前仅从可替换模板移除静态 `description`，保留页面 Helmet 的本地化描述；详情轻量壳和渲染异常回退路径不经过该替换，继续保留一份模板兜底描述。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、ESLint（0 error，18 条既有 warning）通过；quick SSG 生成 13,636 个 HTML，抽检首页、列表页和详情页均为 1 个 description，全部 HTML 无重复；preview 根路径及上述页面 HTTP 200。
 
 ## 追加规则
 
