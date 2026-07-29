@@ -49,7 +49,7 @@ def load_all_spawner_data(
             ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
 
     for keyword, keyword_entries in grouped.items():
-        entity_names = {row["entity_name"] for row in keyword_entries if row["entity_name"]}
+        entity_names = {strip_variant_suffixes(row["entity_name"]) for row in keyword_entries if row["entity_name"]}
         need_expand = len(entity_names) >= 2
         need_redirect = len(entity_names) == 1 and keyword != next(iter(entity_names))
         if need_redirect and keyword.startswith("SuperHoard"):
@@ -59,7 +59,7 @@ def load_all_spawner_data(
 
         expanded = []
         for row in keyword_entries:
-            entity_name = row["entity_name"]
+            entity_name = strip_variant_suffixes(row["entity_name"])
             if not entity_name:
                 continue
             spawner_type = (

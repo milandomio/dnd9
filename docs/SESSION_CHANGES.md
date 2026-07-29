@@ -303,3 +303,10 @@
 - **变更文件**：`api/src/search_engine.py`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：保留 `spawner_entries.lootdrop_group_id` 原值供多实体展开，同时在生成 `lootdrop_monster` 映射时按旧逻辑剥离 `ID_LootDropGroup_` / `Id_LootDropGroup_`，与 `LootdropsImporter` 的 group 名称对齐。
 - **验证**：定向 Black、Ruff、`py_compile` 和现有 5 个掉落率单元测试通过；等待重新运行完整管道确认掉落详情校验。
+
+### fix: 恢复多实体 spawner 的基础实体键
+
+- **改动原因**：第二次完整管道仍在掉落详情校验处失败；`spawner_entries.entity_name` 带品质后缀时，DB lookup 没有在多实体展开前规范化，坐标键变成 `BlazeToad_Common` 等质量变体，基础怪物页没有公共 ref。
+- **变更文件**：`api/src/search_engine.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：多实体分组和展开统一调用 `strip_variant_suffixes()`，恢复旧扫描逻辑的 `keyword → 基础实体` 映射；掉落组映射仍保留上一修复的 ID 前缀规范化。
+- **验证**：定向 Black、Ruff、`py_compile` 和现有 5 个掉落率单元测试通过；等待第三次完整管道确认。
