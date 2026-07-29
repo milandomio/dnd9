@@ -27,6 +27,7 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
+import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
@@ -733,24 +734,11 @@ export default function DetailPage() {
                     range={range}
                     singleCategory
                   />
-                  {debug &&
-                    sec.gdi.length > 0 &&
-                    (() => {
-                      const sc = itemScore({ coords: mapCoords }, sec.gdi);
-                      return sc > 0 ? (
-                        <div
-                          style={{
-                            marginTop: 4,
-                            fontSize: 12,
-                            textAlign: 'center',
-                            color: tokens.accent,
-                          }}
-                        >
-                          {ut('ui.detail.composite_rate')}{' '}
-                          {parseFloat(sc.toFixed(4))}%
-                        </div>
-                      ) : null;
-                    })()}
+                  {debug && sec.gdi.length > 0 && (
+                    <CompositeRate
+                      rate={itemScore({ coords: mapCoords }, sec.gdi)}
+                    />
+                  )}
                   {(() => {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
@@ -879,7 +867,9 @@ export default function DetailPage() {
                           const names = vc.variant_names ?? [];
                           const parts: string[] = [];
                           if (regPosCount > 0) {
-                            parts.push(`(${regPosCount}点)`);
+                            parts.push(
+                              `(${ut('ui.detail.position_count').replace('{count}', String(regPosCount))})`
+                            );
                           }
                           if (varPosCount > 0) {
                             if (names.length > 0) {
@@ -913,7 +903,7 @@ export default function DetailPage() {
                                   ? `(${ut('ui.detail.pool_positions')
                                       .replace('{count}', String(varPosCount))
                                       .replace('{select}', '1')})`
-                                  : `(${varPosCount}点)`
+                                  : `(${ut('ui.detail.position_count').replace('{count}', String(varPosCount))})`
                               );
                             }
                           }

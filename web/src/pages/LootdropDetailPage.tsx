@@ -30,6 +30,7 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
+import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -1652,7 +1653,9 @@ export default function LootdropDetailPage() {
                               }
                               const dedupedReg = dedupPos(regDots);
                               if (dedupedReg.length > 0) {
-                                parts.push(`(${dedupedReg.length}点)`);
+                                parts.push(
+                                  `(${ut('ui.detail.position_count').replace('{count}', String(dedupedReg.length))})`
+                                );
                               }
                               if (varDots.length > 0) {
                                 const names = varDots[0].variant_names ?? [];
@@ -1705,7 +1708,7 @@ export default function LootdropDetailPage() {
                                             String(totalVarPos)
                                           )
                                           .replace('{select}', '1')})`
-                                      : `(${totalVarPos}点)`
+                                      : `(${ut('ui.detail.position_count').replace('{count}', String(totalVarPos))})`
                                   );
                                 }
                               }
@@ -1716,24 +1719,12 @@ export default function LootdropDetailPage() {
                       );
                     })}
                   </div>
-                  {(() => {
-                    const _rl2 =
-                      groupDropRateLookup.get(groupName) ?? new Map();
-                    const sc = computeModuleScore({ mod, dots }, _rl2);
-                    return sc > 0 ? (
-                      <div
-                        style={{
-                          marginTop: 4,
-                          fontSize: 12,
-                          textAlign: 'center',
-                          color: tokens.accent,
-                        }}
-                      >
-                        {ut('ui.detail.composite_rate')}{' '}
-                        {parseFloat(sc.toFixed(4))}%
-                      </div>
-                    ) : null;
-                  })()}
+                  <CompositeRate
+                    rate={computeModuleScore(
+                      { mod, dots },
+                      groupDropRateLookup.get(groupName) ?? new Map()
+                    )}
+                  />
                 </div>
               );
             })}

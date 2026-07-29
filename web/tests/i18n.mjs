@@ -34,6 +34,17 @@ const PAGES = [
     lang: 'ja',
   },
   {
+    path: '/en/lootdrops/Bandage_5001/',
+    desc: 'LootdropDetail(Bandage)(en)',
+    lang: 'en',
+    textChecks: [
+      { pattern: /\(\d+ positions\)/, expected: true },
+      { pattern: /\(\d+ positions choose \d+\)/, expected: true },
+      { pattern: /Composite Rate \d/, expected: true },
+      { pattern: /\(\d+点(?:选\d+)?\)/, expected: false },
+    ],
+  },
+  {
     path: '/zh-Hans/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
     desc: 'ModuleDetail',
     lang: 'zh-Hans',
@@ -57,7 +68,7 @@ function isIgnoredExternal(url) {
   return url.includes('cloudflareinsights.com');
 }
 
-async function testPage(browser, { path, desc, lang }) {
+async function testPage(browser, { path, desc, lang, textChecks = [] }) {
   const page = await browser.newPage();
   const consoleErrors = [];
   const pageErrors = [];
@@ -120,6 +131,11 @@ async function testPage(browser, { path, desc, lang }) {
     if (htmlLang !== lang) throw new Error(`html lang=${htmlLang}`);
     if (!hasTitle) throw new Error(`invalid title=${JSON.stringify(title)}`);
     if (!rootText) throw new Error('empty root');
+    for (const { pattern, expected } of textChecks) {
+      if (pattern.test(rootText) !== expected) {
+        throw new Error(`text check failed: ${pattern} expected=${expected}`);
+      }
+    }
     if (hydrationErrors.length)
       throw new Error(`hydration: ${hydrationErrors.join(' | ')}`);
     if (errors.length) throw new Error(errors.join(' | '));
