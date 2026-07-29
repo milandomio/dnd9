@@ -528,7 +528,14 @@ def run():
         pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
 
         with pipe.step("lootdrops") as ctx:
-            loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve)
+            loot_index = build_loot_index(
+                merged_loot,
+                items,
+                monsters,
+                entity_class,
+                resolver.resolve,
+                translations,
+            )
             for entry in loot_index:
                 entry["translation_key"] = resolve_translation_key(entry["name"], entry.get("translation_key"))
                 entry["monster_translation_keys"] = [

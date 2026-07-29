@@ -6,6 +6,7 @@
 
 `api/src/collector.py` 负责协调 DB 导入、Spawner 解析、实体导出、地图模块构建、掉落详情和 locale 导出。
 
+- **数据访问边界**：游戏解包 JSON 只能在导入阶段批量写入 `darkfindv5.db`；`collector.py`、各 builder、exporter、locale 生成和部署构建只能读取 DB/repository 返回的数据，禁止在生成阶段直接读取解包 JSON。这样 CI、部署与本地运行使用相同的数据源。
 - `_is_db_stale()` 必须在 `DatabaseManager()` 构造之前调用，避免 SQLite 建空文件后把 mtime 更新为当前时间。
 - 删除 DB 的部署测试使用 `rm api/data/darkfindv5.db` 后运行 `python main.py`，确认从零导入。
 - `modules_map` 必须在 items、monsters、props 导出前构建，供实体 JSON 的 `_modules` 或共享模块数据使用。
@@ -24,7 +25,7 @@ Spawner 坐标必须沿 `AttachParent` 链递归累加，并按父级累计 Yaw 
 
 - 分类映射通过 `db.get_entity_classification()` 从 items、monsters、props 表构建，不再扫描数千个 JSON。
 - 坐标实体名优先取 `PreviewData.AssetPathName`，再退回 `SpawnerDataAsset.ObjectName`。
-- 翻译键从实体 JSON 的 `Properties.Name.Key` 获取并写入实体表；后续导出和 locale 收集都使用该 key。
+- 翻译键从实体 JSON 的 `Properties.Name.Key` 在导入阶段获取并写入实体表/翻译表；后续导出和 locale 收集只使用 DB 中的 key。
 - `_Hard`、`_VeryHard`、`_Unique` 等掉落实体后缀在 lootdrop 解析阶段合并，避免重复掉落源。
 - 怪物质量变体优先按翻译键合并；翻译失败时才对 `_Common`、`_Elite`、`_Nightmare`、`_Unique` 使用基础名兜底。
 
