@@ -47,6 +47,31 @@ const GROUP_ORDER = [
 
 type Entity = ItemEntity | MonsterEntity | PropsEntity;
 
+function subPoolGenerationRate(coords: Coord[]): number {
+  const poolSizes = new Map<string, number>();
+  for (const coord of coords) {
+    if (
+      !coord.group_parent ||
+      !coord.sub_group_parent ||
+      !coord.sub_pool_size ||
+      coord.sub_pool_size <= 0
+    ) {
+      continue;
+    }
+    poolSizes.set(
+      `${coord.group_parent}::${coord.sub_group_parent}`,
+      coord.sub_pool_size
+    );
+  }
+  if (poolSizes.size === 0) return 0;
+
+  const missAll = [...poolSizes.values()].reduce(
+    (probability, poolSize) => probability * (1 - 1 / poolSize),
+    1
+  );
+  return Math.round((1 - missAll) * 10000) / 100;
+}
+
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
   const dataKey = `${page}/${name ? decodeURIComponent(name) : ''}`;
@@ -647,6 +672,7 @@ export default function DetailPage() {
                     return hasAnyRate(match.drop_rates);
                   })
                 : rawCoords;
+              const subPoolRate = subPoolGenerationRate(mapCoords);
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600;
@@ -747,6 +773,11 @@ export default function DetailPage() {
                       rate={itemScore({ coords: mapCoords }, sec.gdi)}
                     />
                   )}
+                  <CompositeRate
+                    rate={subPoolRate}
+                    labelKey="ui.detail.composite_spawn_rate"
+                    precision={2}
+                  />
                   {(() => {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
@@ -781,12 +812,14 @@ export default function DetailPage() {
                     ];
                     const groupCount = varGpKeys.length || 1;
                     const adjRate = (v: number) =>
-                      hasVariant
-                        ? +(
-                            v *
-                            (1 - (1 - 1 / forcedVcN) ** groupCount)
-                          ).toFixed(4)
-                        : v;
+                      subPoolRate > 0
+                        ? v
+                        : hasVariant
+                          ? +(
+                              v *
+                              (1 - (1 - 1 / forcedVcN) ** groupCount)
+                            ).toFixed(4)
+                          : v;
                     if (!hasVariant) return null;
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(

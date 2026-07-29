@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 子池实体显示原始生成率并补充综合生成率
+
+- **改动原因**：`GrimveilCloak` 模块页原先用全组 `11` 种变体和 `6` 个子组的简化公式显示 `43.5526%`，不能反映实际子池 `3/2/2/5/3/7` 的联合生成概率；模块条目本身应继续显示原始 `spawn_rate=100%`。
+- **变更文件**：`web/src/components/CompositeRate.tsx`；`web/src/pages/DetailPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：详情页按唯一 `group_parent::sub_group_parent` 收集 `sub_pool_size`，使用 `1 - Π(1 - 1/N)` 计算至少一个子池选中目标实体的联合概率；`GrimveilCloak` 得到 `92.38%`。有实际子池时模块条目保留原始 `spawn_rate`，并通过公共 `CompositeRate` 显示“综合生成率”；无子池实体不显示该行。组件新增标题键和精度参数，原有综合爆率调用保持兼容。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，18 条既有 warning）、`npm run test:i18n` 16/16、quick SSG 构建通过；8080 页面 HTTP 200，Playwright 确认显示 `阴森帷幕披风:100%` 与 `综合生成率 92.38%`，旧 `43.5526%` 消失，子池文本完整且无控制台错误。
+
 ### feat: 完成硬编码实体与前端文案 i18n
 
 - **改动原因**：`GoblinMelee`、`GoblinRanged` 等无 Game.json 键的实体只能显示“哥布林近战”“哥布林远程”等中文兜底；PWA、调试控件、页面空状态和 SEO 元数据仍有直接渲染的中文。

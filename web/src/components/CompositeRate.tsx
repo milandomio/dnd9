@@ -5,9 +5,16 @@ import { useTheme } from '../hooks/useTheme';
 interface CompositeRateProps {
   rate: number;
   style?: CSSProperties;
+  labelKey?: string;
+  precision?: number;
 }
 
-export default function CompositeRate({ rate, style }: CompositeRateProps) {
+export default function CompositeRate({
+  rate,
+  style,
+  labelKey = 'ui.detail.composite_rate',
+  precision = 4,
+}: CompositeRateProps) {
   const { ut } = useLocale();
   const { tokens } = useTheme();
   if (rate <= 0) return null;
@@ -22,7 +29,7 @@ export default function CompositeRate({ rate, style }: CompositeRateProps) {
         ...style,
       }}
     >
-      {ut('ui.detail.composite_rate')} {parseFloat(rate.toFixed(4))}%
+      {ut(labelKey)} {parseFloat(rate.toFixed(precision))}%
     </div>
   );
 }
