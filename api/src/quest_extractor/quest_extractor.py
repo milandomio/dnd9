@@ -268,7 +268,7 @@ class QuestExtractor:
         json_path = f"{QuestExtractor.DEFAULT_EXPORT_ROOT}/{relative_path}.json"
         return json_path
 
-    def match_asset_path_to_module(self, asset_path):
+    def match_asset_path_to_module(self, asset_path, content_data=None):
         """
         将AssetPathName匹配到对应的JSON文件，并返回ModuleId的AssetPathName
         """
@@ -276,7 +276,11 @@ class QuestExtractor:
             return asset_path
 
         if self.db is not None:
-            return asset_path
+            module_id = (content_data or {}).get("ModuleId", {})
+            if isinstance(module_id, dict) and module_id.get("AssetPathName"):
+                return module_id["AssetPathName"]
+            module = self._get_module_record(asset_path)
+            return module.get("module_name", "") if module else self._module_name_from_asset_path(asset_path)
 
         filename_part = asset_path.split("/")[-1]
         if "." in filename_part:

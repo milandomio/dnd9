@@ -115,8 +115,10 @@ def _extract_explore(translator, extractor, quests):
             asset_path = content.get("asset_path", "")
             if not asset_path:
                 continue
-            translation = extractor.get_explore_target_translation(asset_path) or ""
-            module_name = extractor.match_asset_path_to_module(asset_path) or ""
+            content_data = content.get("content_data") or {}
+            module_asset_path = extractor.match_asset_path_to_module(asset_path, content_data) or ""
+            translation = extractor.get_explore_target_translation(module_asset_path) or ""
+            module_name = module_asset_path
             if not translation and not module_name:
                 continue
             clean_module = (
@@ -136,11 +138,15 @@ def _extract_explore(translator, extractor, quests):
                 {
                     "name": translation,
                     "module_name": clean_module,
+                    "module_translation_key": extractor.get_source_string_from_asset_path(module_asset_path)
+                    or content.get("translation_key", ""),
                     "quest_id": quest.get("id", ""),
                     "quest_title": quest.get("title_display", ""),
+                    "quest_translation_key": quest.get("title_key", ""),
                     "quest_number": quest.get("quest_number", 0),
                     "npc_name": npc_name,
                     "npc_name_display": quest.get("npc_name_display", npc_name),
+                    "npc_translation_key": f"Text_DesignData_Merchant_Merchant_{npc_name}",
                 }
             )
     explore_targets.sort(key=lambda x: (x["quest_number"], x["npc_name"]))

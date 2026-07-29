@@ -54,16 +54,19 @@ class QuestsImporter:
             (
                 t.get("name", ""),
                 t.get("module_name", ""),
+                t.get("module_translation_key", ""),
                 t.get("quest_id", ""),
                 t.get("quest_title", ""),
+                t.get("quest_translation_key", ""),
                 t.get("quest_number", 0),
                 t.get("npc_name", ""),
                 t.get("npc_name_display", ""),
+                t.get("npc_translation_key", ""),
             )
             for t in targets
         ]
         c.executemany(
-            "INSERT INTO explore_targets (name, module_name, quest_id, quest_title, quest_number, npc_name, npc_name_display) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO explore_targets (name, module_name, module_translation_key, quest_id, quest_title, quest_translation_key, quest_number, npc_name, npc_name_display, npc_translation_key) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
         self.conn.commit()

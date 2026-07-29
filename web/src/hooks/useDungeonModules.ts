@@ -27,6 +27,8 @@ function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
         names.forEach((n) => mm.set(n, m));
         // 注册 sl_base_name
         mm.set(m.sl_base_name, m);
+        // Quest explore targets carry the module translation key rather than the canonical name.
+        if (m.translation_key) mm.set(m.translation_key, m);
         // 注册所有 sl_base_names（合并后的模块）
         if (m.all_sl_base_names) {
           m.all_sl_base_names.forEach((sl) => mm.set(sl, m));

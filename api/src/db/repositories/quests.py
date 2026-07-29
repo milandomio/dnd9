@@ -24,11 +24,14 @@ class QuestNpc(TypedDict):
 class ExploreTarget(TypedDict):
     name: str
     module_name: str
+    module_translation_key: str
     quest_id: str
     quest_title: str
+    quest_translation_key: str
     quest_number: int
     npc_name: str
     npc_name_display: str
+    npc_translation_key: str
 
 
 class QuestsRepository:
@@ -59,7 +62,8 @@ class QuestsRepository:
     def get_explore_targets(self) -> list[ExploreTarget]:
         c = self.conn.cursor()
         c.execute(
-            "SELECT name, module_name, quest_id, quest_title, quest_number, npc_name, npc_name_display "
+            "SELECT name, module_name, module_translation_key, quest_id, quest_title, quest_translation_key, "
+            "quest_number, npc_name, npc_name_display, npc_translation_key "
             "FROM explore_targets ORDER BY quest_number, npc_name"
         )
         return [dict(r) for r in c.fetchall()]

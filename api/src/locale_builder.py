@@ -36,6 +36,9 @@ def _collect_keys(obj, used: set[str]):
     if isinstance(obj, dict):
         for key in (
             "translation_key",
+            "module_translation_key",
+            "quest_translation_key",
+            "npc_translation_key",
             "dungeon_translation_key",
             "rarity_translation_key",
         ):
