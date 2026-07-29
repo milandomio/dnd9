@@ -64,7 +64,7 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 - **GitHub**: `https://github.com/milandomio/dnd9.git`
 - **Token**: `.github_token`（`.gitignore` 中）
 - **部署**: Actions → `gh-pages` 分支 → Cloudflare Pages（使用 CF 提供的三级域名根目录；不使用 `/dnd9/` 二级路径，也不需要 CNAME 文件）
-- **Sitemap**: `sitemap.xml` 为索引文件，按语言拆分为 `sitemap-{lang}.xml`，避免单个 Sitemap 超过 Cloudflare Pages 的 25 MiB 文件限制。
+- **Sitemap**: SSG 默认将全部语言 URL 合并到直接包含页面 URL 的 `sitemap.xml`；超过 Cloudflare Pages 的 25 MiB 或 Sitemap 50,000 URL 限制时，按低优先级语言逐个保留为 `sitemap-{lang}.xml`，根文件仍保持 `urlset`。所有语言子 sitemap 同时由 `robots.txt` 声明。
 
 ## 推送到 dnd9（含 DB）
 
