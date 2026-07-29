@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
+import { defaultVariantSuffix } from '../utils/variant';
 
 const RARITY_COLORS: Record<string, string> = {
   Poor: '#9E9E9E',
@@ -25,21 +26,22 @@ function getRarityColor(
 
 interface VariantSwitchProps {
   variantRarity: Record<string, { name: string; translation_key: string }>;
+  suffixes: string[];
   itemName: string;
   currentSuffix: string | null;
 }
 
 export default function VariantSwitch({
   variantRarity,
+  suffixes,
   itemName,
   currentSuffix,
 }: VariantSwitchProps) {
   const { tokens } = useTheme();
   const { lang } = useLanguage();
   const { t } = useLocale();
-  const suffixes = Object.keys(variantRarity);
   if (suffixes.length <= 1) return null;
-  const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
+  const defaultSuffix = defaultVariantSuffix(suffixes);
 
   return (
     <div

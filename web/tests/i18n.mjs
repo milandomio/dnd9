@@ -38,11 +38,12 @@ const PAGES = [
     desc: 'LootdropDetail(Bandage)(en)',
     lang: 'en',
     textChecks: [
-      { pattern: /\(\d+ positions\)/, expected: true },
-      { pattern: /\(\d+ positions choose \d+\)/, expected: true },
-      { pattern: /Composite Rate \d/, expected: true },
+      { pattern: /Drop rate: 0%/, expected: true },
+      { pattern: /\(\d+ positions\)/, expected: false },
       { pattern: /\(\d+点(?:选\d+)?\)/, expected: false },
     ],
+    expectedHrefs: ['/en/lootdrops/Bandage_4001/'],
+    forbiddenHrefs: ['/en/lootdrops/Bandage_5001/'],
   },
   {
     path: '/zh-Hans/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
@@ -68,7 +69,10 @@ function isIgnoredExternal(url) {
   return url.includes('cloudflareinsights.com');
 }
 
-async function testPage(browser, { path, desc, lang, textChecks = [] }) {
+async function testPage(
+  browser,
+  { path, desc, lang, textChecks = [], expectedHrefs = [], forbiddenHrefs = [] }
+) {
   const page = await browser.newPage();
   const consoleErrors = [];
   const pageErrors = [];
@@ -134,6 +138,18 @@ async function testPage(browser, { path, desc, lang, textChecks = [] }) {
     for (const { pattern, expected } of textChecks) {
       if (pattern.test(rootText) !== expected) {
         throw new Error(`text check failed: ${pattern} expected=${expected}`);
+      }
+    }
+    for (const href of expectedHrefs) {
+      if (
+        (await page.locator(`a[href=${JSON.stringify(href)}]`).count()) === 0
+      ) {
+        throw new Error(`missing link: ${href}`);
+      }
+    }
+    for (const href of forbiddenHrefs) {
+      if ((await page.locator(`a[href=${JSON.stringify(href)}]`).count()) > 0) {
+        throw new Error(`unexpected link: ${href}`);
       }
     }
     if (hydrationErrors.length)

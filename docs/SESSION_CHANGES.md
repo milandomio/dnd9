@@ -46,6 +46,13 @@
 - **关键逻辑/映射关系**：新增覆盖十种语言的 `ui.detail.position_count`，替换两个详情页全部 4 处普通 `(n点)` 拼接；新增 `CompositeRate` 公共组件，统一综合爆率标签、四位小数裁剪、百分号和样式，两个详情页仅保留各自的爆率计算。
 - **验证**：quick SSG 构建生成 12,940 个 HTML，目标页 HTTP 200；Bandage 英文页实测显示 `(4 positions) (8 positions choose 2)` 且无 `(n点)`；`npm run test:i18n` 16/16 通过；Prettier、TypeScript、ESLint（0 error，18 条既有 warning）及 `git diff --check` 通过。
 
+### fix: 禁止不存在品质继承错误爆率
+
+- **改动原因**：`Bandage_5001` 不在游戏 LootDrop 数组中，却因变体 fallback 和请求品质 LuckGrade 替换逻辑继承 `Bandage_4001` 权重，错误显示 Mummy 等来源的正爆率。
+- **变更文件**：`api/src/db/importers/spawners.py`；`api/src/drop_rate.py`；`api/src/lootdrop_builder.py`；`api/tests/test_drop_rate.py`；`web/scripts/ssg.mjs`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/components/VariantSwitch.tsx`；`web/src/utils/variant.ts`；`web/src/types/data.ts`；`web/src/i18n/uiLocale.ts`；`web/tests/i18n.mjs`；`docs/REFERENCE_DROP_RATES.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`lootdrop_rate_items` 保留每个实际品质；带后缀查询必须精确命中，找不到时返回 0，不再把调用方 LuckGrade 套到回退条目。基底名只在真实后缀中优先选择 `5001`，否则选择最高真实品质。`Bandage` 实际集合为 `1001/2001/3001/4001`，`5001/6001/7001` 只作为零爆率路由，不写入列表或 `VariantSwitch`。
+- **验证**：完整数据管道成功；DB 中 Bandage 仅有 4 个实际后缀；SSG 生成 `en/lootdrops/Bandage_5001/`；页面显示英文 `Drop rate: 0%`、无 Mummy、切换按钮仅含 `1001–4001`；`npm run test:i18n` 16/16、后端 3 个单元测试通过；前端 Prettier、TypeScript、ESLint（0 error，18 条既有 warning）通过；任务文件定向 Ruff/Black 通过。全量 Black 仍被无关既有 `api/src/translator.py` 格式差异阻断。
+
 ### docs: 拆分大型项目文档
 
 - **改动原因**：`REFERENCE.md`、`SESSION_CHANGES.md` 和 `MULTILANG_PLAN.md` 过长，日常查阅需要加载大量历史内容，主题边界不清。
