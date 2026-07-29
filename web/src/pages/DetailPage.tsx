@@ -33,6 +33,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -673,6 +674,17 @@ export default function DetailPage() {
                   })
                 : rawCoords;
               const subPoolRate = subPoolGenerationRate(mapCoords);
+              const matchedDropRate = sec.gdi.find((entry) =>
+                mapCoords.some((coord) =>
+                  labelMatch(coord.label || '', entry.translation)
+                )
+              );
+              const moduleCompositeRate =
+                subPoolRate > 0 && matchedDropRate
+                  ? (subPoolRate *
+                      (matchedDropRate.drop_rates['豪客赛'] ?? 0)) /
+                    100
+                  : itemScore({ coords: mapCoords }, sec.gdi);
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600;
@@ -714,6 +726,24 @@ export default function DetailPage() {
                     }}
                   >
                     {t(mod?.translation_key, mod?.translation || mapName)}
+                    {getRareModuleSpawnRate(mod?.name || mapName) > 0 && (
+                      <>
+                        {' '}
+                        <span
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 13,
+                            fontWeight: 'normal',
+                            color: tokens.muted,
+                          }}
+                        >
+                          {ut('ui.detail.module_spawn_rate').replace(
+                            '{rate}',
+                            String(getRareModuleSpawnRate(mod?.name || mapName))
+                          )}
+                        </span>
+                      </>
+                    )}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -768,11 +798,6 @@ export default function DetailPage() {
                     range={range}
                     singleCategory
                   />
-                  {debug && sec.gdi.length > 0 && (
-                    <CompositeRate
-                      rate={itemScore({ coords: mapCoords }, sec.gdi)}
-                    />
-                  )}
                   <CompositeRate
                     rate={subPoolRate}
                     labelKey="ui.detail.composite_spawn_rate"
@@ -957,6 +982,7 @@ export default function DetailPage() {
                       </div>
                     );
                   })()}
+                  <CompositeRate rate={moduleCompositeRate} />
                   {debug && (
                     <div
                       style={{

@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 统一模块综合爆率位置并显示稀有模块生成率
+
+- **改动原因**：实体详情页与掉落详情页的模块综合爆率显示条件和位置不一致；`Crypt_BlindfallPit` 是文档记录的 Crypt 稀有模块，模块标题需要显示其 `1%` 出现概率。
+- **变更文件**：`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/utils/moduleSpawnRate.ts`；`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：实体详情页与掉落详情页共用稀有模块映射，Crypt 五个稀有模块按 `1%` 显示在模块标题旁；模块综合爆率统一放在地图、生成率、子池说明之后。`GrimveilCloak` 综合爆率使用 `92.38% × 豪客赛掉率 2.5% = 2.3095%`，原始实体 `spawn_rate=100%` 保持独立显示。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，18 条既有 warning）、`npm run test:i18n` 16/16、quick SSG 构建通过；`/zh-Hans/items/GrimveilCloak/` HTTP 200，Playwright 确认 `盲坑 1%`、`综合生成率 92.38%`、底部 `综合爆率 2.3095%` 均显示且无控制台错误。
+
 ### fix: 子池实体显示原始生成率并补充综合生成率
 
 - **改动原因**：`GrimveilCloak` 模块页原先用全组 `11` 种变体和 `6` 个子组的简化公式显示 `43.5526%`，不能反映实际子池 `3/2/2/5/3/7` 的联合生成概率；模块条目本身应继续显示原始 `spawn_rate=100%`。
