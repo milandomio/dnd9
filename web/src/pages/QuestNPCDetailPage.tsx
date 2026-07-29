@@ -542,8 +542,7 @@ export default function QuestNPCDetailPage() {
                                       style={{
                                         ...rowStyle,
                                         color: dark ? '#ccc' : '#555',
-                                        whiteSpace: 'normal',
-                                        overflowWrap: 'anywhere',
+                                        whiteSpace: 'nowrap',
                                         padding: '6px 8px',
                                       }}
                                     >
