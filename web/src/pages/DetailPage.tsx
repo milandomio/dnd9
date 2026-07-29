@@ -864,6 +864,28 @@ export default function DetailPage() {
                       )
                     );
                     if (filteredGdi.length === 0) return null;
+                    const sameDropRates = (
+                      a: Record<string, number>,
+                      b: Record<string, number>
+                    ) => {
+                      const modes = new Set([
+                        ...Object.keys(a),
+                        ...Object.keys(b),
+                      ]);
+                      return [...modes].every((mode) => a[mode] === b[mode]);
+                    };
+                    const hideModes = filteredGdi.every((info) => {
+                      const groupInfo = sec.gdi.find(
+                        (entry) =>
+                          entry.translation === info.translation &&
+                          entry.label_type === info.label_type &&
+                          entry.label_prefix === info.label_prefix
+                      );
+                      return (
+                        !!groupInfo &&
+                        sameDropRates(info.drop_rates, groupInfo.drop_rates)
+                      );
+                    });
                     return (
                       <div
                         style={{
@@ -883,6 +905,7 @@ export default function DetailPage() {
                           adjSpawnRate={adjRate}
                           showPrefix={false}
                           parenModes
+                          hideModes={hideModes}
                           labelSeparator=":"
                         />
                         {(() => {

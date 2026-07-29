@@ -15,6 +15,8 @@ interface ReferenceDropRatesProps {
   showPrefix?: boolean;
   /** wrap mode list in () when single spawn_rate (module style) */
   parenModes?: boolean;
+  /** hide mode rates when they duplicate the map group reference */
+  hideModes?: boolean;
   labelSeparator?: string;
   style?: React.CSSProperties;
   entryStyle?: React.CSSProperties;
@@ -26,6 +28,7 @@ export default function ReferenceDropRates({
   adjSpawnRate,
   showPrefix = true,
   parenModes = false,
+  hideModes = false,
   labelSeparator,
   style,
   entryStyle,
@@ -51,6 +54,7 @@ export default function ReferenceDropRates({
             modeFilter,
             adjSpawnRate,
             parenModes,
+            hideModes,
           })}
         </span>
       ))}
