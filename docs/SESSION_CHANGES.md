@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 部署环境无游戏源时保留数据库数据
+
+- **改动原因**：`main` 部署的 Actions 工作区没有游戏解包目录，但 collector 将源数据可用性硬编码为真，导致导入器清空已提交 DB 后导出空 JSON，站点无数据。
+- **变更文件**：`api/src/collector.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：仅在 `GAME_ROOT` 存在时执行解包 JSON → DB 的导入链；Actions 无游戏源时直接以已跟踪的 `api/data/darkfindv5.db` 导出 `data/json`，本地有游戏源时维持原有导入行为。
+- **验证**：`python3 -m py_compile api/src/collector.py`、运行时 I/O 守卫、Prettier、TypeScript 与 `git diff --check` 通过；本地未安装 `pytest`，守卫测试以标准 Python 直接执行。
+
 ### chore: 同步 main 数据库快照
 
 - **改动原因**：按请求将本地已更新的运行时 SQLite 数据库快照提交并推送至 `main`。
