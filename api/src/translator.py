@@ -6,6 +6,8 @@ from config import (
     HARDCODED_TRANSLATIONS,
     MODULE_NAME_OVERRIDE,
     TRANSLATION_ALIAS_MAP,
+    hardcoded_translation_key,
+    superhoard_translation_key,
 )
 
 # ── Regex constants ──
@@ -219,6 +221,11 @@ class NameResolver:
                         return translations[bare_key]
                 break
         return name
+
+
+def resolve_translation_key(name: str, translation_key: str | None = None) -> str:
+    """Keep game keys and assign synthetic keys to hardcoded fallback names."""
+    return translation_key or superhoard_translation_key(name) or hardcoded_translation_key(name) or ""
 
 
 def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_pool_info: dict | None = None) -> dict:

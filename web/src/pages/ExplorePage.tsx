@@ -49,12 +49,16 @@ export default function ExplorePage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>任务探索表 | 越来越黑暗闪电指南 DarkFlashNav</title>
+        <title>
+          {ut('ui.explore.title')} | {ut('ui.brand.name')} DarkFlashNav
+        </title>
         <meta
           name="description"
-          content={`探索目标汇总——${data.length} 个探索目标，分布在 ${grouped.size} 个NPC。`}
+          content={ut('ui.explore.stat')
+            .replace('{count}', String(data.length))
+            .replace('{npcCount}', String(grouped.size))}
         />
-        <meta name="keywords" content="任务探索,探索任务,地牢探索" />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
       </Helmet>
       <h1
         style={{

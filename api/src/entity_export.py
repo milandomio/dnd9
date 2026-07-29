@@ -11,6 +11,7 @@ from translator import (
     build_coord_out,
     filter_coords,
     ore_quality_key,
+    resolve_translation_key,
 )
 
 
@@ -56,13 +57,14 @@ def export_items(
                     break
         if not coords:
             continue
+        translation_key = resolve_translation_key(name, r["translation_key"])
         translation = resolve_name(name, r["translation_key"], "item")
         variant_count = r.get("variant_count", 1)
         items_index.append(
             {
                 "name": name,
                 "translation": translation,
-                "translation_key": r["translation_key"],
+                "translation_key": translation_key,
                 "category": r["category"],
                 "variant_count": variant_count,
                 "monsters": merged_loot.get(name, []),
@@ -72,7 +74,7 @@ def export_items(
         entity_data = {
             "name": name,
             "translation": translation,
-            "translation_key": r["translation_key"],
+            "translation_key": translation_key,
             "category": r["category"],
             "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
@@ -115,6 +117,7 @@ def export_monsters(
     monsters_index = []
     for translation, group in monsters_by_translation.items():
         canonical = next((r for r in group if r["translation_key"]), group[0])
+        translation_key = resolve_translation_key(canonical["monster_name"], canonical["translation_key"])
         seen_coords: set[tuple] = set()
         merged_coords_list = []
         for r in group:
@@ -130,14 +133,14 @@ def export_monsters(
             {
                 "name": canonical["monster_name"],
                 "translation": translation,
-                "translation_key": canonical["translation_key"],
+                "translation_key": translation_key,
                 "coordCount": len(merged_coords_list),
             }
         )
         entity_data = {
             "name": canonical["monster_name"],
             "translation": translation,
-            "translation_key": canonical["translation_key"],
+            "translation_key": translation_key,
             "coords": [
                 build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
             ],
@@ -215,11 +218,12 @@ def export_props(
                 break
 
         canonical_prop = group[0]
+        translation_key = resolve_translation_key(canonical_prop["asset_name"], canonical_prop["translation_key"])
         props_index.append(
             {
                 "name": name_key,
                 "translation": translation,
-                "translation_key": canonical_prop["translation_key"],
+                "translation_key": translation_key,
                 "coordCount": len(merged_coords),
                 "type": entity_type,
             }
@@ -227,7 +231,7 @@ def export_props(
         entity_data = {
             "name": name_key,
             "translation": translation,
-            "translation_key": canonical_prop["translation_key"],
+            "translation_key": translation_key,
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
         _save(output_dir, f"props/{name_key}.json", entity_data)

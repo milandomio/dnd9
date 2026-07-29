@@ -1,7 +1,9 @@
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 
 export default function AppName() {
   const { tokens } = useTheme();
+  const { ut } = useLocale();
   return (
     <h1
       style={{
@@ -11,7 +13,7 @@ export default function AppName() {
         marginBottom: 4,
       }}
     >
-      越来越黑暗闪电指南
+      {ut('ui.brand.name')}
       <div style={{ fontSize: 14, color: tokens.muted, marginTop: 4 }}>
         DarkFlashNav
       </div>

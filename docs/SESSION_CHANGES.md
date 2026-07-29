@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### feat: 完成硬编码实体与前端文案 i18n
+
+- **改动原因**：`GoblinMelee`、`GoblinRanged` 等无 Game.json 键的实体只能显示“哥布林近战”“哥布林远程”等中文兜底；PWA、调试控件、页面空状态和 SEO 元数据仍有直接渲染的中文。
+- **变更文件**：`api/src/config.py`；`api/src/entity_export.py`；`api/src/index_export.py`；`api/src/locale_builder.py`；`api/src/lootdrop_builder.py`；`api/src/module_builder.py`；`api/src/quest_collector.py`；`api/src/search_index_builder.py`；`api/src/translator.py`；`web/src/components/AppName.tsx`；`web/src/components/DebugCoordTable.tsx`；`web/src/components/InstallPrompt.tsx`；`web/src/components/OfflineDetector.tsx`；`web/src/components/SWUpdateBanner.tsx`；`web/src/i18n/uiLocale.ts`；详情、模块、列表、首页、探索与任务物品页面；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`HARDCODED_TRANSLATIONS[name]` 统一映射为 `df5.hardcoded.{name}`，中文 locale 保留人工名称，非中文缺少游戏官方翻译时由实体英文标识生成可读名称；实体详情、掉落来源、模块实体、任务分组、搜索索引和 locale 导出共用 `resolve_translation_key()`。实际展示的 PWA、调试和 SEO 文案统一使用 `ui.*` 键，简繁中文提供对应文本，其余语言缺少新增专门译文时回退英文。
+- **验证**：合成键及中英文示例断言、Python compileall、Prettier、TypeScript、ESLint（0 error，18 条既有 warning）和 `git diff --check` 通过；完整数据管道与 locale 产物验证待 checkpoint 后执行。
+
 ### fix: 任务目标类型列禁止换行
 
 - **改动原因**：`zh-Hans/quest_npc/Alchemist` 详情页的任务目标表中，“类型”列的“收集”会被拆分换行，影响内容识别。

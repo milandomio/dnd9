@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocale } from '../i18n/useLocale';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -10,6 +11,7 @@ export default function InstallPrompt() {
     useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const { ut } = useLocale();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -84,9 +86,11 @@ export default function InstallPrompt() {
       </button>
       <span style={{ fontSize: 20 }}>📱</span>
       <div style={{ flex: 1 }}>
-        <div style={{ fontWeight: 600, marginBottom: 2 }}>安装 DND闪电指南</div>
+        <div style={{ fontWeight: 600, marginBottom: 2 }}>
+          {ut('ui.pwa.install_title')}
+        </div>
         <div style={{ fontSize: 12, color: '#999' }}>
-          添加到主屏幕，随时访问
+          {ut('ui.pwa.install_description')}
         </div>
       </div>
       <button
@@ -102,7 +106,7 @@ export default function InstallPrompt() {
           whiteSpace: 'nowrap',
         }}
       >
-        安装
+        {ut('ui.pwa.install')}
       </button>
     </div>
   );

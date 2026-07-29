@@ -58,12 +58,11 @@ export default function QuestItemsPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>任务物品表 | 越来越黑暗闪电指南 DarkFlashNav</title>
-        <meta
-          name="description"
-          content="任务物品查询——按地图分组查看任务物品分布。"
-        />
-        <meta name="keywords" content="任务物品,任务攻略,任务查询" />
+        <title>
+          {ut('ui.quest_items.title')} | {ut('ui.brand.name')} DarkFlashNav
+        </title>
+        <meta name="description" content={ut('ui.quest_items.footer')} />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
       </Helmet>
       <h1
         style={{

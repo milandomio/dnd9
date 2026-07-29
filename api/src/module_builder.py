@@ -14,7 +14,12 @@ from config import (
     MODULE_OFFSET_MAP,
     SUPERHOARD_I18N_KEY,
 )
-from translator import DEBUG_VARIANT_RE, DUMMY_AS_MONSTER, QUALITY_RE
+from translator import (
+    DEBUG_VARIANT_RE,
+    DUMMY_AS_MONSTER,
+    QUALITY_RE,
+    resolve_translation_key,
+)
 
 _dir_cache: dict[Path, list[Path]] = {}
 
@@ -384,7 +389,7 @@ def build_and_save_module_coords(
             module_coords[mb]["entities"][ek] = {
                 "name": ek,
                 "translation": translation,
-                "translation_key": cls.get("translation_key", ""),
+                "translation_key": resolve_translation_key(ek, cls.get("translation_key", "")),
                 "type": entity_type,
                 "color": _MODULE_COLORS[color_idx % len(_MODULE_COLORS)],
                 "coords": [],

@@ -60,7 +60,7 @@ export default function DungeonModuleGroupPage() {
   if (!modules.length)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        数据加载中...
+        {ut('ui.common.loading')}
       </div>
     );
 
@@ -71,12 +71,14 @@ export default function DungeonModuleGroupPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {groupLabel}
-          {group} 地图模块Module | 越来越黑暗闪电指南 DarkFlashNav
+          {groupLabel} | {ut('ui.module.title')} | {ut('ui.brand.name')}{' '}
+          DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${groupLabel} 地图模块，共 ${modules.length} 个模块。`}
+          content={ut('ui.seo.module_group_description')
+            .replace('{name}', groupLabel)
+            .replace('{count}', String(modules.length))}
         />
       </Helmet>
       <div style={{ textAlign: 'center', marginBottom: 8 }}>
