@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 任务目标类型列禁止换行
+
+- **改动原因**：`zh-Hans/quest_npc/Alchemist` 详情页的任务目标表中，“类型”列的“收集”会被拆分换行，影响内容识别。
+- **变更文件**：`web/src/pages/QuestNPCDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：任务目标类型单元格改用 `whiteSpace: 'nowrap'`，仅禁止类型内容换行，不改变目标、稀有度和数量列的布局。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`git diff --check` 通过。
+
 ### docs: 拆分大型项目文档
 
 - **改动原因**：`REFERENCE.md`、`SESSION_CHANGES.md` 和 `MULTILANG_PLAN.md` 过长，日常查阅需要加载大量历史内容，主题边界不清。
