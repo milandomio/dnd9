@@ -296,3 +296,10 @@
 - **变更文件**：`api/src/db/_helpers.py`；`api/src/db/__init__.py`；`api/src/db/schema.py`；`api/src/db/importers/__init__.py`；`api/src/db/importers/translations.py`；`api/src/db/importers/props.py`；`api/src/db/importers/spawners.py`；`api/src/db/importers/spawner_coordinates.py`；`api/src/db/importers/modules.py`；`api/src/db/repositories/props.py`；`api/src/search_engine.py`；`api/src/layout_utils.py`；`api/src/module_builder.py`；`api/src/image_utils.py`；`api/src/quest_collector.py`；`api/src/quest_extractor/translator.py`；`api/src/quest_extractor/quest_extractor.py`；`api/src/collector.py`；`api/tests/test_runtime_io_guard.py`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：翻译 JSON 读取移入 `db/importers/translations.py`；props `IdTag → translation_key/source_string` 写入 `props_tag_index` 后由 repository 查询；`search_engine` 只从 `spawner_entries` 和实体表生成 lookup，地图坐标解析移到 `db/importers/spawner_coordinates.py`；layout 旋转扫描移到模块 importer；模块图片只匹配 DB 元数据和已交付 WebP；collector 移除解包目录时间扫描并通过 DB/importer 链执行；quest extractor 的翻译、模块目标和 props 目标优先走 DB。
 - **验证**：变更 Python 文件 `py_compile` 通过；现有 `api/tests/test_drop_rate.py` 5/5 通过；runtime guard 直接执行通过；collector/DB 模块导入通过；`git diff --check` 通过。环境未安装 `pytest`，未运行 pytest 入口；未执行完整数据管道和前端构建。
+
+### fix: 保持 DB spawner 掉落组键与导入器一致
+
+- **改动原因**：首次完整管道在掉落详情校验处报 `lootdrop sources without public refs`；DB-backed `load_all_spawner_data` 未剥离 `Id_LootDropGroup_` 前缀，导致 `lootdrop_items` 的公开来源映射键不一致。
+- **变更文件**：`api/src/search_engine.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：保留 `spawner_entries.lootdrop_group_id` 原值供多实体展开，同时在生成 `lootdrop_monster` 映射时按旧逻辑剥离 `ID_LootDropGroup_` / `Id_LootDropGroup_`，与 `LootdropsImporter` 的 group 名称对齐。
+- **验证**：定向 Black、Ruff、`py_compile` 和现有 5 个掉落率单元测试通过；等待重新运行完整管道确认掉落详情校验。

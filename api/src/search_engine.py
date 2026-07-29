@@ -3,6 +3,7 @@ import re
 _VARIANT_RE = re.compile(r"_\d{4}$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
+_LOOTDROP_GROUP_PREFIXES = ("ID_LootDropGroup_", "Id_LootDropGroup_")
 
 
 def strip_variant_suffixes(name: str) -> str:
@@ -40,7 +41,12 @@ def load_all_spawner_data(
             if not canonical:
                 stripped = strip_variant_suffixes(entity_name)
                 canonical = (monster_name_map or {}).get(stripped.lower(), entity_name)
-            ldg_to_monsters.setdefault(row["lootdrop_group_id"], set()).add(canonical)
+            ldg_name = row["lootdrop_group_id"]
+            for prefix in _LOOTDROP_GROUP_PREFIXES:
+                if ldg_name.startswith(prefix):
+                    ldg_name = ldg_name[len(prefix) :]
+                    break
+            ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
 
     for keyword, keyword_entries in grouped.items():
         entity_names = {row["entity_name"] for row in keyword_entries if row["entity_name"]}
