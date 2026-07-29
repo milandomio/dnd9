@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### feat: 多语言实体列表页独立 SSR
+
+- **改动原因**：SEO 需要各语言的 items、monsters、props、lootdrops 列表页静态正文使用目标语言，不能继续复制简中 SSR HTML 后只替换 metadata。
+- **变更文件**：`web/scripts/ssg.mjs`；`web/src/i18n/useLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SSG 为九个非默认语言的四类实体列表页以目标语言路由重新调用 SSR，并将对应 `locale/{lang}.json` 注入 `__locale`；`useLocale()` 首轮读取 SSR 字典，服务端和 hydration 都以同一语言解析 `translation_key`。
+- **验证**：Prettier、TypeScript、`node --check scripts/ssg.mjs` 与 quick SSG 通过；生成 3,074 个基础路由和 12,070 个多语言 HTML，`en/items` 静态标题为 `【Items】Locations`，不再是简中的 `【物品表】点位`。
+
 ### fix: 部署环境无游戏源时保留数据库数据
 
 - **改动原因**：`main` 部署的 Actions 工作区没有游戏解包目录，但 collector 将源数据可用性硬编码为真，导致导入器清空已提交 DB 后导出空 JSON，站点无数据。

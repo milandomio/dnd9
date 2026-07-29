@@ -572,12 +572,19 @@ function localizedTitle(
     : localized;
 }
 
-function injectLocalizedData(page, lang, title) {
+function injectLocalizedData(
+  page,
+  lang,
+  title,
+  ssrLang = DEFAULT_LANG,
+  localeDict
+) {
   return page.replace(SSR_SCRIPT_RE, (match, jsonText) => {
     try {
       const payload = JSON.parse(jsonText);
       payload.__lang = lang;
-      payload.__ssrLang = DEFAULT_LANG;
+      payload.__ssrLang = ssrLang;
+      if (localeDict) payload.__locale = localeDict;
       if (title) payload.__localizedTitle = title;
       return `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>`;
     } catch {
@@ -592,11 +599,13 @@ function localizePage(
   routeData,
   localeDict,
   lang,
-  includeAlternates = true
+  includeAlternates = true,
+  ssrLang = DEFAULT_LANG,
+  ssrLocaleDict
 ) {
   const canonicalHref = localizedPath(route.path, lang);
   const title = localizedTitle(routeData, localeDict, route.path, lang);
-  let out = injectLocalizedData(page, lang, title)
+  let out = injectLocalizedData(page, lang, title, ssrLang, ssrLocaleDict)
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
     .replace(
       /<link rel="canonical" href="[^"]*">/,
@@ -619,6 +628,37 @@ function localizePage(
       : out.replace(HEAD_CLOSE, `    ${titleTag}\n${HEAD_CLOSE}`);
   }
   return out;
+}
+
+function renderLocalizedListPage(route, lang, localeDict) {
+  const urlPath = localizedPath(route.path, lang);
+  const dataKey = routeDataKey(route.path);
+  const routeData = ssrDataMap[dataKey];
+  const canonical = urlPath.replace(/\/?$/, '/');
+  const templated = template.replace(
+    '</title>',
+    `</title>\n    <link rel="canonical" href="${canonical}">\n    <base href="${baseHrefFromFile(route.file)}">`
+  );
+  const payload = { [dataKey]: routeData };
+  const result = render(urlPath, { ...ssrDataMap, __locale: localeDict });
+  const page = templated
+    .replace(/<title>[^<]*<\/title>\s*/, '')
+    .replace(DESCRIPTION_META_RE, '')
+    .replace(ROOT_MARKER, `<div id="root">${result.html}`)
+    .replace(
+      HEAD_CLOSE,
+      `${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
+    );
+  return localizePage(
+    page,
+    route,
+    routeData,
+    localeDict,
+    lang,
+    true,
+    lang,
+    localeDict
+  );
 }
 
 function detailPreloads(urlPath) {
@@ -809,15 +849,20 @@ for (const lang of LANGS) {
     const dstFile =
       relFile === 'index.html' ? `${lang}/index.html` : join(lang, relFile);
     const dstPath = join(DIST, dstFile);
-    const page = isTemplateDetailRoute(r.path)
-      ? createTemplateDetailPage(r, routeData, lang, localeDicts[lang])
-      : localizePage(
-          readFileSync(srcPath, 'utf-8'),
-          r,
-          routeData,
-          localeDicts[lang],
-          lang
-        );
+    const isEntityList = PAGES.some(
+      (page) => r.path === `/${DEFAULT_LANG}/${page}`
+    );
+    const page = isEntityList
+      ? renderLocalizedListPage(r, lang, localeDicts[lang])
+      : isTemplateDetailRoute(r.path)
+        ? createTemplateDetailPage(r, routeData, lang, localeDicts[lang])
+        : localizePage(
+            readFileSync(srcPath, 'utf-8'),
+            r,
+            routeData,
+            localeDicts[lang],
+            lang
+          );
     mkdirSync(dirname(dstPath), { recursive: true });
     writeFileSync(dstPath, page, 'utf-8');
     localizedCount++;
