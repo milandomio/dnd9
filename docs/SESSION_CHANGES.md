@@ -196,3 +196,10 @@
 - **变更文件**：`web/scripts/prepare-indexnow.mjs`；`web/scripts/submit-indexnow.mjs`；`web/package.json`；`.github/workflows/deploy.yml`；`web/public/robots.txt`；`docs/BUILD_AND_DEPLOY.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：GitHub Actions 使用 `INDEXNOW_KEY` Secret 在 `dist/{key}.txt` 提供根目录验证文件；发布后读取 10 个语言 sitemap，去重并按每批最多 10,000 个 URL POST 到 `https://api.indexnow.org/indexnow`，未配置 Secret 时安全跳过；robots 增加站点 sitemap 声明。
 - **验证**：Node 语法、`npm test`、Prettier、TypeScript、`git diff --check` 通过；mock IndexNow 接口验证 `202` 响应下 `10,000 + 3,370` URL 分批提交；quick SSG、key 文件生成和预览服务 `/`、`/robots.txt`、`/sitemap.xml` 均 HTTP 200。
+
+### chore: 添加 IndexNow 站点验证文件
+
+- **改动原因**：IndexNow 已分配固定密钥，需要将根目录验证文件随站点静态资源发布。
+- **变更文件**：`web/public/09768a3493c942a88206d625961e75b7.txt`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：文件名和文件内容均为 `09768a3493c942a88206d625961e75b7`，Vite/SSG 构建后发布为 `https://dnd9.icetar.com/09768a3493c942a88206d625961e75b7.txt`。
+- **验证**：quick SSG 完成，`dist` 文件数为 15438，验证文件内容与密钥一致。
