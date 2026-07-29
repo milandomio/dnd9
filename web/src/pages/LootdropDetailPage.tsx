@@ -1647,7 +1647,7 @@ export default function LootdropDetailPage() {
                                   g.dots.map((d) => `${d.x},${d.y},${d.z}`)
                                 ).size;
                                 parts.push(
-                                  `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}` : ''})`
+                                  `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos)).replace('{select}', '1')}` : ''})`
                                 );
                               }
                               const dedupedReg = dedupPos(regDots);
@@ -1674,7 +1674,12 @@ export default function LootdropDetailPage() {
                                 if (names.length > 0) {
                                   if (totalVarPos > 1) {
                                     parts.push(
-                                      `(${totalVarPos}点选${varDots[0].variant_count})`
+                                      `(${ut('ui.detail.pool_positions')
+                                        .replace('{count}', String(totalVarPos))
+                                        .replace(
+                                          '{select}',
+                                          String(varDots[0].variant_count)
+                                        )})`
                                     );
                                   } else {
                                     const nameStr = names
@@ -1694,7 +1699,12 @@ export default function LootdropDetailPage() {
                                 } else {
                                   parts.push(
                                     varGps.length === 1
-                                      ? `(${totalVarPos}点选1)`
+                                      ? `(${ut('ui.detail.pool_positions')
+                                          .replace(
+                                            '{count}',
+                                            String(totalVarPos)
+                                          )
+                                          .replace('{select}', '1')})`
                                       : `(${totalVarPos}点)`
                                   );
                                 }

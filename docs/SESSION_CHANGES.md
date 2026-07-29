@@ -11,6 +11,13 @@
 - **关键逻辑/映射关系**：任务目标类型单元格改用 `whiteSpace: 'nowrap'`，仅禁止类型内容换行，不改变目标、稀有度和数量列的布局。
 - **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`git diff --check` 通过。
 
+### fix: 补齐点选数量多语言
+
+- **改动原因**：`en/monsters/FlameButterfly/` 等详情页的 `n点选m` 由页面直接拼接中文，非中文路由未本地化；需同时复核 `n点选m` 与 `n种选m` 的全部生成分支。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：十种语言的 `ui.detail.pool_positions` 从固定“选1”泛化为 `{count}` 个位置选 `{select}` 个；实体详情与掉落详情中的 4 处 `点选` 拼接全部改用该键。`n种选m` 继续统一使用已覆盖十种语言的 `ui.detail.pool_select`。
+- **验证**：页面及组件源码中无 `点选`、`种选` 硬编码；`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，18 条既有 warning）、`git diff --check` 通过。
+
 ### docs: 拆分大型项目文档
 
 - **改动原因**：`REFERENCE.md`、`SESSION_CHANGES.md` 和 `MULTILANG_PLAN.md` 过长，日常查阅需要加载大量历史内容，主题边界不清。
