@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocale } from '../i18n/useLocale';
 
 type BannerState = null | 'offline' | 'update';
 
 export default function SWUpdateBanner() {
+  const { ut } = useLocale();
   const [state, setState] = useState<BannerState>(null);
   const refreshing = useRef(false);
 
@@ -88,10 +90,10 @@ export default function SWUpdateBanner() {
         fontSize: 14,
       }}
     >
-      {state === 'offline' && '离线模式已就绪'}
+      {state === 'offline' && ut('ui.pwa.offline_ready')}
       {state === 'update' && (
         <>
-          新版本已下载
+          {ut('ui.pwa.update_ready')}
           <button
             onClick={handleRefresh}
             style={{
@@ -104,7 +106,7 @@ export default function SWUpdateBanner() {
               fontSize: 13,
             }}
           >
-            刷新以应用
+            {ut('ui.pwa.apply_update')}
           </button>
         </>
       )}

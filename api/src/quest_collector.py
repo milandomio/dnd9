@@ -4,7 +4,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from config import HARDCODED_TRANSLATIONS, OUTPUT_DIR
+from config import HARDCODED_TRANSLATIONS, OUTPUT_DIR, hardcoded_translation_key
 from quest_extractor.quest_extractor import QuestExtractor
 from quest_extractor.translator import Translator
 
@@ -294,6 +294,7 @@ def _get_kill_target_info(translator, tag_name: str) -> tuple[str, str]:
             translation_key = type_key
     if not translated and monster in HARDCODED_TRANSLATIONS:
         translated = HARDCODED_TRANSLATIONS[monster]
+        translation_key = hardcoded_translation_key(monster) or ""
     # entity_index fallback (for example SmallJellyfish -> GiantJellyfish key)
     if not translated and monster:
         entity_key = _get_entity_key_map().get(monster, "")

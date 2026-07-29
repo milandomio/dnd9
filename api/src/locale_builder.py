@@ -3,7 +3,11 @@
 import json
 from pathlib import Path
 
-from config import SUPERHOARD_I18N, SUPERHOARD_I18N_KEY
+from config import (
+    SUPERHOARD_I18N,
+    SUPERHOARD_I18N_KEY,
+    hardcoded_locale_entries,
+)
 
 SUPPORTED_LANGUAGES = (
     "zh-Hans",
@@ -133,6 +137,7 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
         sh_val = SUPERHOARD_I18N.get(lang) or SUPERHOARD_I18N.get("zh-Hans")
         if sh_val:
             filtered[SUPERHOARD_I18N_KEY] = sh_val
+        filtered.update(hardcoded_locale_entries(lang, used_keys))
         dest = locale_dir / f"{lang}.json"
         with open(dest, "w", encoding="utf-8") as f:
             json.dump(filtered, f, ensure_ascii=False, separators=(",", ":"))

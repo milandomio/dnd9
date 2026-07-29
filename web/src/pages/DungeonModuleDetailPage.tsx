@@ -98,7 +98,7 @@ export default function DungeonModuleDetailPage() {
   if (!mod)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        数据加载中...
+        {ut('ui.common.loading')}
       </div>
     );
 
@@ -181,12 +181,17 @@ export default function DungeonModuleDetailPage() {
 
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? moduleDisplayName} 地图模块Module |
-          越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? moduleDisplayName} | {ut('ui.module.title')} |{' '}
+          {ut('ui.brand.name')} DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${moduleDisplayName} 地图模块详情，${sx}x${sy}，分组 ${groupLabel}，${entities.length} 个实体，${totalCoords} 个位置。`}
+          content={ut('ui.seo.module_description')
+            .replace('{name}', moduleDisplayName)
+            .replace('{sx}', String(sx))
+            .replace('{sy}', String(sy))
+            .replace('{entities}', String(entities.length))
+            .replace('{positions}', String(totalCoords))}
         />
       </Helmet>
       <h1
@@ -367,7 +372,9 @@ export default function DungeonModuleDetailPage() {
             }}
           >
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <span style={{ color: tokens.muted }}>范围:</span>
+              <span style={{ color: tokens.muted }}>
+                {ut('ui.debug.range')}
+              </span>
               <button
                 onClick={() =>
                   setAdjField('range', Math.round(range / 2) - baseRange)
@@ -398,7 +405,9 @@ export default function DungeonModuleDetailPage() {
               </span>
             </div>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <span style={{ color: tokens.muted }}>偏移:</span>
+              <span style={{ color: tokens.muted }}>
+                {ut('ui.debug.offset')}
+              </span>
               <button
                 onClick={() => setAdjField('y', adj.y - 50)}
                 style={ctrlBtn}
@@ -451,7 +460,7 @@ export default function DungeonModuleDetailPage() {
                 }
                 style={ctrlBtn}
               >
-                ↻ 旋转
+                ↻ {ut('ui.debug.rotate')}
               </button>
               <button
                 onClick={() => setAdjField('mirrorX', !adj.mirrorX)}
@@ -460,7 +469,7 @@ export default function DungeonModuleDetailPage() {
                   background: adj.mirrorX ? '#4CAF50' : '#555',
                 }}
               >
-                ⇄ 左右
+                ⇄ {ut('ui.debug.mirror_horizontal')}
               </button>
               <button
                 onClick={() => setAdjField('mirrorY', !adj.mirrorY)}
@@ -469,7 +478,7 @@ export default function DungeonModuleDetailPage() {
                   background: adj.mirrorY ? '#4CAF50' : '#555',
                 }}
               >
-                ⇅ 上下
+                ⇅ {ut('ui.debug.mirror_vertical')}
               </button>
               <button
                 onClick={() =>
@@ -481,7 +490,7 @@ export default function DungeonModuleDetailPage() {
                 }
                 style={ctrlBtn}
               >
-                ↺ 重置
+                ↺ {ut('ui.debug.reset')}
               </button>
             </div>
           </div>

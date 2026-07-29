@@ -132,12 +132,9 @@ export default function ListPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>{`【${pageLabel}】${locationsLabel} | 越来越黑暗闪电指南 DarkFlashNav`}</title>
+        <title>{`【${pageLabel}】${locationsLabel} | ${ut('ui.brand.name')} DarkFlashNav`}</title>
         <meta name="description" content={`${pageLabel} ${validItemCount}`} />
-        <meta
-          name="keywords"
-          content="物品查询,怪物查询,装备查询,武器查询,防具查询,饰品查询,掉落查询,游戏攻略"
-        />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
           content={`【${pageLabel}】${locationsLabel}`}
@@ -194,12 +191,16 @@ export default function ListPage() {
               }[] = [];
               if (propsEntities.length > 0)
                 groups.push({
-                  label: '实体',
+                  label: ut('ui.list.prop'),
                   icon: '🏛️',
                   items: propsEntities,
                 });
               if (decorations.length > 0)
-                groups.push({ label: '装饰', icon: '🔥', items: decorations });
+                groups.push({
+                  label: ut('ui.list.decoration'),
+                  icon: '🔥',
+                  items: decorations,
+                });
 
               return groups.map((group) => (
                 <div key={group.label} style={{ gridColumn: '1 / -1' }}>

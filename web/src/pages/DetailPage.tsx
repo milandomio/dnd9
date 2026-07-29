@@ -457,23 +457,25 @@ export default function DetailPage() {
       <Helmet>
         <title>
           {ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`}
-          {' | 越来越黑暗闪电指南 DarkFlashNav'}
+          {' | '}
+          {ut('ui.brand.name')} DarkFlashNav
         </title>
         <meta
           name="description"
-          content={`${entityLabel}在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
+          content={ut('ui.seo.entity_description')
+            .replace('{name}', entityLabel)
+            .replace('{count}', String(coords.length))}
         />
-        <meta
-          name="keywords"
-          content="物品详情,怪物详情,装备属性,武器属性,防具属性,饰品属性"
-        />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
           content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | DarkFlashNav`}
         />
         <meta
           property="og:description"
-          content={`${entityLabel} 共 ${coords.length} 个位置点`}
+          content={ut('ui.seo.entity_description')
+            .replace('{name}', entityLabel)
+            .replace('{count}', String(coords.length))}
         />
       </Helmet>
       <h1
@@ -703,7 +705,9 @@ export default function DetailPage() {
                       }}
                     >
                       {mod?.img_name || mod?.sl_base_name || mapName}.webp |
-                      找到 {mapCoords.length} 个位置 | 范围: ±{range}
+                      {ut('ui.debug.map_summary')
+                        .replace('{count}', String(mapCoords.length))
+                        .replace('{range}', String(range))}
                     </div>
                   )}
                   {debug && (
@@ -718,8 +722,12 @@ export default function DetailPage() {
                     >
                       {mapCoords[0].file}
                       <br />
-                      旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},
-                      {mod?.offset_y ?? 0}) 大小:{sx}x{sy}
+                      {ut('ui.debug.transform')
+                        .replace('{rotation}', String(mod?.rotate ?? 0))
+                        .replace('{x}', String(mod?.offset_x ?? 0))
+                        .replace('{y}', String(mod?.offset_y ?? 0))
+                        .replace('{sx}', String(sx))
+                        .replace('{sy}', String(sy))}
                     </div>
                   )}
 
@@ -934,7 +942,9 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>范围:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.range')}
+                        </span>
                         <button
                           onClick={() =>
                             setAdj(
@@ -985,7 +995,9 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>偏移:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.offset')}
+                        </span>
                         <button
                           onClick={() => setAdj(mapName, 'y', adj.y - 50)}
                           style={ctrlBtn}
@@ -1058,7 +1070,7 @@ export default function DetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↻ 旋转
+                          ↻ {ut('ui.debug.rotate')}
                         </button>
                         <button
                           onClick={() =>
@@ -1069,7 +1081,7 @@ export default function DetailPage() {
                             background: adj.mirrorX ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇄ 左右
+                          ⇄ {ut('ui.debug.mirror_horizontal')}
                         </button>
                         <button
                           onClick={() =>
@@ -1080,7 +1092,7 @@ export default function DetailPage() {
                             background: adj.mirrorY ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇅ 上下
+                          ⇅ {ut('ui.debug.mirror_vertical')}
                         </button>
                         <button
                           onClick={() =>
@@ -1092,7 +1104,7 @@ export default function DetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↺ 重置
+                          ↺ {ut('ui.debug.reset')}
                         </button>
                       </div>
                     </div>

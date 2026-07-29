@@ -117,18 +117,17 @@ export default function HomePage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>越来越黑暗闪电指南 DarkFlashNav | {homeDescription}</title>
+        <title>
+          {ut('ui.brand.name')} DarkFlashNav | {homeDescription}
+        </title>
         <meta
           name="description"
-          content={`越来越黑暗闪电指南 DarkFlashNav——${homeDescription}，一站式查询工具。`}
+          content={`${ut('ui.brand.name')} DarkFlashNav - ${homeDescription}`}
         />
-        <meta
-          name="keywords"
-          content="越来越黑暗,越来越黑暗玩家指南,越来越黑暗闪电指南,DarkFlashNav,Dark and Darker,darkanddarker,暗黑地牢,地牢探索,DND,游戏攻略,物品查询,怪物位置,掉落查询,地图坐标,装备属性,武器查询,防具查询,饰品查询,任务攻略,NPC位置,宝箱位置,地牢模块"
-        />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
-          content={`越来越黑暗闪电指南 - ${homeDescription}`}
+          content={`${ut('ui.brand.name')} - ${homeDescription}`}
         />
         <meta property="og:description" content={homeDescription} />
         <meta property="og:type" content="website" />

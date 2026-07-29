@@ -1879,10 +1879,135 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
   },
 };
 
+const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
+  'zh-Hans': {
+    'ui.brand.name': '越来越黑暗闪电指南',
+    'ui.pwa.install_title': '安装 DND闪电指南',
+    'ui.pwa.install_description': '添加到主屏幕，随时访问',
+    'ui.pwa.install': '安装',
+    'ui.pwa.offline_notice': '当前离线，已缓存的页面可正常浏览',
+    'ui.pwa.offline_ready': '离线模式已就绪',
+    'ui.pwa.update_ready': '新版本已下载',
+    'ui.pwa.apply_update': '刷新以应用',
+    'ui.debug.coords_title': '所有坐标详情',
+    'ui.debug.group': '分组',
+    'ui.debug.coord_name': '坐标名称',
+    'ui.debug.map_file': '地图文件',
+    'ui.debug.map': '地图',
+    'ui.debug.label': '标签',
+    'ui.debug.map_summary': '找到 {count} 个位置 | 范围: ±{range}',
+    'ui.debug.transform': '旋转:{rotation} 偏移:({x},{y}) 大小:{sx}x{sy}',
+    'ui.debug.range': '范围:',
+    'ui.debug.offset': '偏移:',
+    'ui.debug.rotate': '旋转',
+    'ui.debug.mirror_horizontal': '左右',
+    'ui.debug.mirror_vertical': '上下',
+    'ui.debug.reset': '重置',
+    'ui.debug.default_threshold': '默认显示阈值（综合爆率%）：{threshold}%',
+    'ui.debug.threshold_hint':
+      'spawn_rate × 豪客赛爆率 ≥ {threshold}% 则默认显示',
+    'ui.seo.keywords': '越来越黑暗,Dark and Darker,DarkFlashNav,DND,游戏攻略',
+    'ui.seo.entity_description': '{name}在游戏内共有 {count} 个地图位置。',
+    'ui.seo.lootdrop_description':
+      '{name}由 {sources} 个来源掉落，共 {positions} 个位置点。',
+    'ui.seo.module_description':
+      '{name}地图模块，大小 {sx}x{sy}，包含 {entities} 个实体、{positions} 个位置。',
+    'ui.seo.module_group_description': '{name}地图模块，共 {count} 个模块。',
+  },
+  en: {
+    'ui.brand.name': 'DarkFlashNav Guide',
+    'ui.pwa.install_title': 'Install DarkFlashNav',
+    'ui.pwa.install_description': 'Add to your home screen for quick access',
+    'ui.pwa.install': 'Install',
+    'ui.pwa.offline_notice': 'You are offline. Cached pages remain available.',
+    'ui.pwa.offline_ready': 'Offline mode is ready',
+    'ui.pwa.update_ready': 'A new version has been downloaded',
+    'ui.pwa.apply_update': 'Refresh to update',
+    'ui.debug.coords_title': 'All Coordinate Details',
+    'ui.debug.group': 'Group',
+    'ui.debug.coord_name': 'Coordinate Name',
+    'ui.debug.map_file': 'Map File',
+    'ui.debug.map': 'Map',
+    'ui.debug.label': 'Label',
+    'ui.debug.map_summary': '{count} positions | Range: ±{range}',
+    'ui.debug.transform':
+      'Rotation: {rotation} Offset: ({x},{y}) Size: {sx}x{sy}',
+    'ui.debug.range': 'Range:',
+    'ui.debug.offset': 'Offset:',
+    'ui.debug.rotate': 'Rotate',
+    'ui.debug.mirror_horizontal': 'Horizontal',
+    'ui.debug.mirror_vertical': 'Vertical',
+    'ui.debug.reset': 'Reset',
+    'ui.debug.default_threshold':
+      'Default display threshold (composite rate %): {threshold}%',
+    'ui.debug.threshold_hint':
+      'Show by default when spawn_rate × High-Roller drop rate ≥ {threshold}%',
+    'ui.seo.keywords': 'Dark and Darker,DarkFlashNav,DND,game guide',
+    'ui.seo.entity_description':
+      '{name} has {count} map positions in the game.',
+    'ui.seo.lootdrop_description':
+      '{name} drops from {sources} sources across {positions} positions.',
+    'ui.seo.module_description':
+      '{name} module, size {sx}x{sy}, with {entities} entities and {positions} positions.',
+    'ui.seo.module_group_description':
+      '{name} modules, {count} modules in total.',
+  },
+  'zh-Hant': {
+    'ui.brand.name': '越來越黑暗閃電指南',
+    'ui.pwa.install_title': '安裝 DND閃電指南',
+    'ui.pwa.install_description': '新增至主畫面，隨時存取',
+    'ui.pwa.install': '安裝',
+    'ui.pwa.offline_notice': '目前離線，已快取的頁面仍可正常瀏覽',
+    'ui.pwa.offline_ready': '離線模式已就緒',
+    'ui.pwa.update_ready': '新版本已下載',
+    'ui.pwa.apply_update': '重新整理以套用',
+    'ui.debug.coords_title': '所有座標詳情',
+    'ui.debug.group': '分組',
+    'ui.debug.coord_name': '座標名稱',
+    'ui.debug.map_file': '地圖檔案',
+    'ui.debug.map': '地圖',
+    'ui.debug.label': '標籤',
+    'ui.debug.map_summary': '找到 {count} 個位置 | 範圍: ±{range}',
+    'ui.debug.transform': '旋轉:{rotation} 偏移:({x},{y}) 大小:{sx}x{sy}',
+    'ui.debug.range': '範圍:',
+    'ui.debug.offset': '偏移:',
+    'ui.debug.rotate': '旋轉',
+    'ui.debug.mirror_horizontal': '左右',
+    'ui.debug.mirror_vertical': '上下',
+    'ui.debug.reset': '重設',
+    'ui.debug.default_threshold': '預設顯示閾值（綜合掉落率%）：{threshold}%',
+    'ui.debug.threshold_hint':
+      'spawn_rate × 豪客賽掉落率 ≥ {threshold}% 時預設顯示',
+    'ui.seo.keywords': '越來越黑暗,Dark and Darker,DarkFlashNav,DND,遊戲攻略',
+    'ui.seo.entity_description': '{name}在遊戲內共有 {count} 個地圖位置。',
+    'ui.seo.lootdrop_description':
+      '{name}由 {sources} 個來源掉落，共 {positions} 個位置點。',
+    'ui.seo.module_description':
+      '{name}地圖模組，大小 {sx}x{sy}，包含 {entities} 個實體、{positions} 個位置。',
+    'ui.seo.module_group_description': '{name}地圖模組，共 {count} 個模組。',
+  },
+};
+
+function extraUiDict(lang: SupportedLang): UILocaleDict {
+  return (
+    UI_EXTRA_LOCALE[lang] ??
+    (lang.startsWith('zh') ? UI_EXTRA_LOCALE['zh-Hans'] : UI_EXTRA_LOCALE.en) ??
+    {}
+  );
+}
+
 export function uiT(lang: SupportedLang, key: string): string {
-  return UI_LOCALE[lang]?.[key] ?? UI_LOCALE['zh-Hans']?.[key] ?? key;
+  return (
+    extraUiDict(lang)[key] ??
+    UI_LOCALE[lang]?.[key] ??
+    UI_LOCALE['zh-Hans']?.[key] ??
+    key
+  );
 }
 
 export function uiDict(lang: SupportedLang): UILocaleDict {
-  return UI_LOCALE[lang] ?? UI_LOCALE['zh-Hans'] ?? {};
+  return {
+    ...(UI_LOCALE[lang] ?? UI_LOCALE['zh-Hans'] ?? {}),
+    ...extraUiDict(lang),
+  };
 }

@@ -5,7 +5,7 @@ import urllib.parse
 from pathlib import Path
 
 from config import HARDCODED_TRANSLATIONS
-from translator import resolve_group_label
+from translator import resolve_group_label, resolve_translation_key
 
 
 def _save(output_dir: Path, filename: str, data: list | dict):
@@ -100,6 +100,7 @@ def generate_quest_items_groups(
                 groups[mt]["entities"][ek] = {
                     "name": item_name,
                     "translation": trans,
+                    "translation_key": resolve_translation_key(item_name),
                     "type": "item",
                     "color": _COLORS[ci % len(_COLORS)],
                     "coords": [],
@@ -142,6 +143,7 @@ def generate_quest_items_groups(
                     groups[mt]["entities"][ek] = {
                         "name": mn,
                         "translation": mtrans,
+                        "translation_key": resolve_translation_key(mn),
                         "type": "monster",
                         "color": _COLORS[ci % len(_COLORS)],
                         "coords": [],

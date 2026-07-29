@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 # api/src/
@@ -306,6 +307,34 @@ HARDCODED_TRANSLATIONS = {
     "ShipGraveyard_BladehandRefuge": "1-1",
     "ShipGraveyard_ElephantIsland": "3-6",
 }
+
+# Synthetic keys make fallback entity names available to the locale exporter.
+HARDCODED_I18N_PREFIX = "df5.hardcoded."
+
+
+def _english_hardcoded_name(name: str) -> str:
+    """Produce a readable non-Chinese fallback when the game has no locale key."""
+    spaced = name.replace("_", " ")
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", spaced)
+    spaced = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", spaced)
+    return re.sub(r"\s+", " ", spaced).strip().title()
+
+
+def hardcoded_translation_key(name: str) -> str | None:
+    """Return a stable synthetic locale key for an entity without a Game.json key."""
+    if name in HARDCODED_TRANSLATIONS:
+        return f"{HARDCODED_I18N_PREFIX}{name}"
+    return None
+
+
+def hardcoded_locale_entries(lang: str, used_keys: set[str]) -> dict[str, str]:
+    """Build synthetic locale entries only for hardcoded entities present in output."""
+    return {
+        key: value if lang == "zh-Hans" else _english_hardcoded_name(name)
+        for name, value in HARDCODED_TRANSLATIONS.items()
+        if (key := hardcoded_translation_key(name)) in used_keys
+    }
+
 
 # SuperHoard* has no Game.json key — synthetic i18n key + 10-lang full phrases
 SUPERHOARD_I18N_KEY = "df5.hardcoded.SuperHoard"
