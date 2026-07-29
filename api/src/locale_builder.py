@@ -134,11 +134,11 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
             filtered = {key: all_translations.get(key, fallback_translations.get(key, key)) for key in used_keys}
         else:
             filtered = dict(all_translations)
-        # Inject SuperHoard synthetic key (no Game.json entry)
+        filtered.update(hardcoded_locale_entries(lang, used_keys))
+        # Re-apply SuperHoard after hardcoded overrides because it shares the same synthetic key.
         sh_val = SUPERHOARD_I18N.get(lang) or SUPERHOARD_I18N.get("zh-Hans")
         if sh_val:
             filtered[SUPERHOARD_I18N_KEY] = sh_val
-        filtered.update(hardcoded_locale_entries(lang, used_keys))
         dest = locale_dir / f"{lang}.json"
         with open(dest, "w", encoding="utf-8") as f:
             json.dump(filtered, f, ensure_ascii=False, separators=(",", ":"))
