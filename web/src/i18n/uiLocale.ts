@@ -75,6 +75,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': '缩放',
     'ui.detail.composite_rate': '综合爆率',
     'ui.detail.composite_spawn_rate': '综合生成率',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate': '该品质未配置掉落，爆率：0%',
     'ui.detail.ref_rate': '参考爆率：',
     'ui.detail.color_legend': '颜色说明：',
@@ -263,6 +264,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': 'Scale',
     'ui.detail.composite_rate': 'Composite Rate',
     'ui.detail.composite_spawn_rate': 'Composite Spawn Rate',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       'This rarity is not configured to drop. Drop rate: 0%',
     'ui.detail.ref_rate': 'Reference rates: ',
@@ -455,6 +457,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': 'Skalierung',
     'ui.detail.composite_rate': 'Gesamtrate',
     'ui.detail.composite_spawn_rate': 'Gesamte Spawn-Rate',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       'Diese Seltenheit ist nicht als Drop konfiguriert. Droprate: 0%',
     'ui.detail.ref_rate': 'Referenzraten: ',
@@ -647,6 +650,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': 'Escala',
     'ui.detail.composite_rate': 'Tasa compuesta',
     'ui.detail.composite_spawn_rate': 'Tasa de generación compuesta',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       'Esta rareza no esta configurada como botin. Probabilidad: 0%',
     'ui.detail.ref_rate': 'Tasas de referencia: ',
@@ -839,6 +843,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': 'Échelle',
     'ui.detail.composite_rate': 'Taux composite',
     'ui.detail.composite_spawn_rate': 'Taux de génération composite',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       "Cette rarete n'est pas configuree comme butin. Taux: 0%",
     'ui.detail.ref_rate': 'Taux de référence : ',
@@ -1030,6 +1035,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': 'スケール',
     'ui.detail.composite_rate': '総合確率',
     'ui.detail.composite_spawn_rate': '総合生成率',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       'このレアリティはドロップに設定されていません。ドロップ率: 0%',
     'ui.detail.ref_rate': '参考ドロップ率: ',
@@ -1219,6 +1225,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': '크기',
     'ui.detail.composite_rate': '종합 확률',
     'ui.detail.composite_spawn_rate': '종합 생성 확률',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       '이 등급은 드롭으로 설정되지 않았습니다. 드롭률: 0%',
     'ui.detail.ref_rate': '참고 드롭률: ',
@@ -1409,6 +1416,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': 'Escala',
     'ui.detail.composite_rate': 'Taxa composta',
     'ui.detail.composite_spawn_rate': 'Taxa composta de geração',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       'Esta raridade nao esta configurada para cair. Taxa: 0%',
     'ui.detail.ref_rate': 'Taxas de referência: ',
@@ -1600,6 +1608,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': 'Масштаб',
     'ui.detail.composite_rate': 'Общий шанс',
     'ui.detail.composite_spawn_rate': 'Общий шанс появления',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate':
       'Эта редкость не настроена для выпадения. Шанс: 0%',
     'ui.detail.ref_rate': 'Справочные шансы: ',
@@ -1789,6 +1798,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.scale': '縮放',
     'ui.detail.composite_rate': '綜合爆率',
     'ui.detail.composite_spawn_rate': '綜合生成率',
+    'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate': '此稀有度未設定掉落。掉落率：0%',
     'ui.detail.ref_rate': '參考爆率：',
     'ui.detail.color_legend': '顏色說明：',

@@ -34,6 +34,7 @@ import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
 import { defaultVariantSuffix } from '../utils/variant';
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
@@ -1285,6 +1286,24 @@ export default function LootdropDetailPage() {
                     {t(
                       mod?.translation_key,
                       mod?.translation || mod?.name || mapName
+                    )}
+                    {getRareModuleSpawnRate(mod?.name || mapName) > 0 && (
+                      <>
+                        {' '}
+                        <span
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 13,
+                            fontWeight: 'normal',
+                            color: tokens.muted,
+                          }}
+                        >
+                          {ut('ui.detail.module_spawn_rate').replace(
+                            '{rate}',
+                            String(getRareModuleSpawnRate(mod?.name || mapName))
+                          )}
+                        </span>
+                      </>
                     )}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
