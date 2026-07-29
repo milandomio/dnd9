@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### docs: 拆出 DB-only 运行时 I/O 修复计划
+
+- **改动原因**：确认后端仍有多处运行时直接扫描 `Output/Exports`、`Localization/Game`、`MAPS_DIR`、`LAYOUT_DIR`、`SPAWNER_DIR` 等解包目录的行为，需要先固化修复顺序，再逐项收口。
+- **变更文件**：`docs/plans/DB_ONLY_RUNTIME_IO_PLAN.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：将 `api/src/db/importers/*` 保留为唯一允许的预载入入口，运行时只允许读 `api/data/darkfindv5.db` 和由 DB 生成的 `data/json` 派生产物；计划按 `db/_helpers` → `quest_extractor` → `search_engine/layout_utils` → `module_builder/image_utils` → `collector/locale_builder/search_index_builder/enrichment` 的顺序逐项修复。
+- **验证**：已完成源码盘点并形成计划列表，后续逐项修复时按此顺序做 checkpoint 和提交。
+
 ### fix: 补齐掉落来源合成实体十语言翻译
 
 - **改动原因**：`ja/lootdrops/AdventurerCloak_5001/` 等非中文页面中，`Dwarf Hand Cannoneer`、`Armor Dual Boss` 等来源按钮因合成实体只配置中文名称，其他九种语言统一回退为英文。
@@ -17,6 +24,34 @@
 - **变更文件**：`api/src/lootdrop_builder.py`；`api/src/collector.py`；`api/tests/test_drop_rate.py`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`*_8001` 仅按 `Text_DesignData_Item_Item_{item_name}` 在数据库翻译表中解析专用键，规范键不存在时才回退基础物品键；稀有度同样由后缀映射和 DB 翻译表生成，导出阶段不读取解包 JSON，部署与本地数据产物一致。
 - **验证**：线上旧版本 JSON 已复现基础键，数据库确认同时存在 `HeaterShield_1001` 与 `HeaterShield_8001` 的日语词条；Python 单元测试、Black 和 Ruff 通过。
+
+### fix: 回填模块坐标实体的缺失翻译键
+
+- **改动原因**：`en/dungeon_modules/FireDeep/Firedeep_SunderedPassage/` 的模块坐标实体 `Bookshelf` 只有中文 `translation=书架`，`translation_key` 为空，导致英文模块页显示中文。
+- **变更文件**：`api/src/module_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：模块构建阶段建立“已解析实体翻译 → 官方 `translation_key`”回退表；当 spawner 规范名没有直接实体记录时，按同翻译的 item/monster/props 记录回填，例如 `书架 → Text_DesignData_Props_Props_Bookshelf`，所有语言由前端 locale 正常解析。
+- **验证**：完整数据管道成功，`dungeon_modules_coords/Firedeep_SunderedPassage.json` 已写入 Bookshelf 翻译键；quick SSG、`npm run format:check`、`npx tsc --noEmit`、`npm run test:i18n` 16/16 和 Python compileall 通过；英文模块页 HTTP 200，显示 `Bookshelf` 且不含“书架”。
+
+### fix: 隐藏模块中重复的地图分组模式爆率
+
+- **改动原因**：`GoldChest` 的 `Inferno_Hellcrossbridge_HR_D.json` 模块行显示 `黄金宝箱:25%([PvE:100%]...)`，括号内模式掉率与地图分组参考爆率完全重复。
+- **变更文件**：`web/src/components/ReferenceDropRates.tsx`；`web/src/utils/dropRate.ts`；`web/src/pages/DetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：模块爆率行比较模块条目的 `drop_rates` 与当前地图分组条目；完全一致时仅隐藏模式括号，保留模块生成率 `25%`，不一致时继续显示完整模式掉率。
+- **验证**：quick SSG 构建、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，18 条既有 warning）、`npm run test:i18n` 16/16 通过；GoldChest 页面 HTTP 200，目标文本为 `黄金宝箱:25%` 且不含模式括号。
+
+### fix: 综合爆率叠加变体模块全部点位
+
+- **改动原因**：`en/props/GoldChest/` 的四点变体模块错误按同一 `group_parent` 只计入一次，显示 `Composite Rate 25%`；四个点各承担 `100% / 4`，模块综合率应叠加为 `100%`。
+- **变更文件**：`web/src/pages/DetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`itemScore()` 对变体组按唯一坐标统计 `positions.size`，使用 `spawn_rate × 豪客赛掉率 / 100 × positions.size / variant_count`；普通点位继续逐点累加，子池模块仍使用独立的联合生成概率逻辑。
+- **验证**：quick SSG 构建、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，18 条既有 warning）、`npm run test:i18n` 16/16 通过；Playwright 确认 GoldChest 页面 HTTP 200、四点模块为 `Composite Rate 100%`，无 `Composite Rate 25%`。
+
+### chore: 将多语言 Playwright 冒烟测试限定在 dev
+
+- **改动原因**：生产 `main` 部署不应因浏览器、外部分析脚本或环境网络噪声阻断；该测试用于开发环境回归，不属于生产构建和发布的必要步骤。
+- **变更文件**：`.github/workflows/deploy.yml`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`main` 工作流保留数据管道、`npm test` 和 SSG 构建，移除 Chromium 安装与 `Test localized pages`；`dev` 工作流继续保留 Chromium 和 `npm run test:i18n`，生产部署直接进入 `Deploy to gh-pages`。
+- **验证**：确认 `deploy-dev.yml` 仍包含 `Install Chromium`、`Test localized pages` 和 `npm run test:i18n`；生产工作流不再包含这些步骤，YAML 差异检查和 `git diff --check` 通过。
 
 ### fix: 补齐地图模块装饰实体十语言翻译
 
