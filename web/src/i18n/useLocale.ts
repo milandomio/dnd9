@@ -31,7 +31,7 @@ export function useLocale() {
   const mergedDict = useMemo(() => {
     const ui = uiDict(lang);
     if (!dict) return ui;
-    return { ...ui, ...dict };
+    return { ...dict, ...ui };
   }, [dict, lang]);
 
   const t = (key: string | undefined, fallback: string) => {
