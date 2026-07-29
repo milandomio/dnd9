@@ -251,9 +251,7 @@ export default function QuestItemGroupPage() {
 
       <Helmet>
         <title>
-          {groupLabel}
-          {groupLabel} | {ut('ui.quest_items.title')} | {ut('ui.brand.name')}{' '}
-          DarkFlashNav
+          {groupLabel} | {ut('ui.quest_items.title')} | {ut('ui.brand.name')}
         </title>
         <meta
           name="description"

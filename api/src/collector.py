@@ -44,7 +44,12 @@ from pipeline import Pipeline
 from quest_collector import run_quest_extraction
 from search_engine import extract_all_spawners, load_all_spawner_data
 from search_index_builder import build_search_index_files
-from translator import NameResolver, build_coord_out, resolve_group_label
+from translator import (
+    NameResolver,
+    build_coord_out,
+    resolve_group_label,
+    resolve_translation_key,
+)
 
 
 def _resolve_group_display(group: str, translations: dict[str, str]) -> str:
@@ -357,7 +362,12 @@ def run():
                         tk = _cls.get("translation_key", "")
                         _vtr.append({"translation_key": tk, "name": resolver.resolve(_kw, tk, "props")})
                     else:
-                        _vtr.append({"translation_key": "", "name": resolver.resolve(_kw, None, "props") or _kw})
+                        _vtr.append(
+                            {
+                                "translation_key": resolve_translation_key(_kw),
+                                "name": resolver.resolve(_kw, None, "props") or _kw,
+                            }
+                        )
                 _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
         _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[dict[str, str]]]] = {}
@@ -389,7 +399,12 @@ def run():
                 else:
                     _tk = ""
                     _name = resolver.resolve(_kw, None, "props") or _kw
-                _sp_tr.append({"translation_key": _tk, "name": _name})
+                _sp_tr.append(
+                    {
+                        "translation_key": resolve_translation_key(_kw, _tk),
+                        "name": _name,
+                    }
+                )
             _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr)
 
         pipe.log("[JSON] building merged lootdrop map...")
@@ -514,6 +529,16 @@ def run():
 
         with pipe.step("lootdrops") as ctx:
             loot_index = build_loot_index(merged_loot, items, monsters, entity_class, resolver.resolve)
+            for entry in loot_index:
+                entry["translation_key"] = resolve_translation_key(entry["name"], entry.get("translation_key"))
+                entry["monster_translation_keys"] = [
+                    resolve_translation_key(name, key)
+                    for name, key in zip(
+                        entry.get("monsters", []),
+                        entry.get("monster_translation_keys", []),
+                        strict=False,
+                    )
+                ]
             _save("lootdrops.json", loot_index)
             ctx.set_result(f"{len(loot_index)} items")
 

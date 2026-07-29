@@ -458,7 +458,7 @@ export default function DetailPage() {
         <title>
           {ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`}
           {' | '}
-          {ut('ui.brand.name')} DarkFlashNav
+          {ut('ui.brand.name')}
         </title>
         <meta
           name="description"
@@ -469,7 +469,7 @@ export default function DetailPage() {
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | DarkFlashNav`}
+          content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | ${ut('ui.brand.name')}`}
         />
         <meta
           property="og:description"

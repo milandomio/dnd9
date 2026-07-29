@@ -216,7 +216,7 @@ export default function QuestNPCDetailPage() {
         <title>
           {ssrLocalizedTitle() ??
             `${t(npc.translation_key, npc.npc_name_display)} ${ut('ui.quest_detail.task_list')}`}
-          | DarkFlashNav
+          | {ut('ui.brand.name')}
         </title>
         <meta
           name="description"

@@ -71,8 +71,7 @@ export default function DungeonModuleGroupPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {groupLabel} | {ut('ui.module.title')} | {ut('ui.brand.name')}{' '}
-          DarkFlashNav
+          {groupLabel} | {ut('ui.module.title')} | {ut('ui.brand.name')}
         </title>
         <meta
           name="description"

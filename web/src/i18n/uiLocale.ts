@@ -2,6 +2,8 @@ import type { SupportedLang } from './locale';
 
 type UILocaleDict = Record<string, string>;
 
+const BRAND_NAME = '越来越黑暗闪电指南 DarkFlashNav';
+
 const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
   'zh-Hans': {
     'ui.nav.items': '物品表',
@@ -1881,7 +1883,6 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
 
 const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
   'zh-Hans': {
-    'ui.brand.name': '越来越黑暗闪电指南',
     'ui.pwa.install_title': '安装 DND闪电指南',
     'ui.pwa.install_description': '添加到主屏幕，随时访问',
     'ui.pwa.install': '安装',
@@ -1915,7 +1916,6 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.seo.module_group_description': '{name}地图模块，共 {count} 个模块。',
   },
   en: {
-    'ui.brand.name': 'DarkFlashNav Guide',
     'ui.pwa.install_title': 'Install DarkFlashNav',
     'ui.pwa.install_description': 'Add to your home screen for quick access',
     'ui.pwa.install': 'Install',
@@ -1953,7 +1953,6 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '{name} modules, {count} modules in total.',
   },
   'zh-Hant': {
-    'ui.brand.name': '越來越黑暗閃電指南',
     'ui.pwa.install_title': '安裝 DND閃電指南',
     'ui.pwa.install_description': '新增至主畫面，隨時存取',
     'ui.pwa.install': '安裝',
@@ -1989,11 +1988,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
 };
 
 function extraUiDict(lang: SupportedLang): UILocaleDict {
-  return (
+  const localized =
     UI_EXTRA_LOCALE[lang] ??
     (lang.startsWith('zh') ? UI_EXTRA_LOCALE['zh-Hans'] : UI_EXTRA_LOCALE.en) ??
-    {}
-  );
+    {};
+  return { ...localized, 'ui.brand.name': BRAND_NAME };
 }
 
 export function uiT(lang: SupportedLang, key: string): string {

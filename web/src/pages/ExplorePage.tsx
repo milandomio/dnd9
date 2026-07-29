@@ -50,7 +50,7 @@ export default function ExplorePage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.explore.title')} | {ut('ui.brand.name')} DarkFlashNav
+          {ut('ui.explore.title')} | {ut('ui.brand.name')}
         </title>
         <meta
           name="description"

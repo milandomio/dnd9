@@ -182,7 +182,7 @@ export default function DungeonModuleDetailPage() {
       <Helmet>
         <title>
           {ssrLocalizedTitle() ?? moduleDisplayName} | {ut('ui.module.title')} |{' '}
-          {ut('ui.brand.name')} DarkFlashNav
+          {ut('ui.brand.name')}
         </title>
         <meta
           name="description"
