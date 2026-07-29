@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 血刃掉落页恢复战争遗骨坐标引用
+
+- **改动原因**：`BloodsapBlade` 的“战争遗骨组”来源引用了不存在的 `coords/SkeletonFootmanFromFakeDeath_Unique.json`，前端等待该请求时无法渲染坐标。
+- **变更文件**：`api/src/lootdrop_builder.py`；`api/tests/test_drop_rate.py`；`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：GDI 图例来源解析 `entity_page_map` 时，质量后缀实体先尝试精确名，再以 `base_monster_name()` 回退；`SkeletonFootmanFromFakeDeath_Unique` 因此映射到实际存在的 `coords/SkeletonFootmanFromFakeDeath.json`。
+- **验证**：6 个 Python 单元测试、Python 编译、Prettier、TypeScript、quick SSG 和 `git diff --check` 通过；完整管道（126.49 秒）重新生成 DB 与 JSON，目标 ref 已解析为存在的基础坐标文件，目标详情路由 HTTP 200；DB 中对应基础实体有 265 个坐标。
+
 ### feat: 多语言实体列表页独立 SSR
 
 - **改动原因**：SEO 需要各语言的 items、monsters、props、lootdrops 列表页静态正文使用目标语言，不能继续复制简中 SSR HTML 后只替换 metadata。

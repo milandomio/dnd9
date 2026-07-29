@@ -9,6 +9,7 @@ from lootdrop_builder import (  # noqa: E402
     _artifact_translation_key,
     _detail_variant_suffixes,
     _get_variant_rarity,
+    _resolve_legend_ref,
 )
 
 
@@ -55,6 +56,17 @@ class DropRateVariantTest(unittest.TestCase):
         self.assertEqual(
             _get_variant_rarity("HeaterShield", ["8001"], {key: "神器"}),
             {"8001": {"name": "神器", "translation_key": key}},
+        )
+
+    def test_gdi_legend_ref_uses_exported_base_entity_coords(self):
+        self.assertEqual(
+            _resolve_legend_ref(
+                "战争遗骨组",
+                "SkeletonFootmanFromFakeDeath_Unique",
+                [],
+                {"SkeletonFootmanFromFakeDeath": "coords/SkeletonFootmanFromFakeDeath"},
+            ),
+            "coords/SkeletonFootmanFromFakeDeath",
         )
 
 
