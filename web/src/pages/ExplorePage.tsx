@@ -12,9 +12,12 @@ import { formatGroupLabel } from '../utils/formatGroupLabel';
 interface ExploreTarget {
   name: string;
   module_name: string;
+  module_translation_key: string;
   quest_title: string;
+  quest_translation_key: string;
   npc_name: string;
   npc_name_display: string;
+  npc_translation_key: string;
   quest_number: number;
 }
 
@@ -40,10 +43,10 @@ export default function ExplorePage() {
   }, [ssrData, dataVersion]);
 
   const grouped = new Map<string, ExploreTarget[]>();
-  for (const t of data) {
-    const key = t.npc_name_display || t.npc_name;
+  for (const target of data) {
+    const key = target.npc_name;
     if (!grouped.has(key)) grouped.set(key, []);
-    grouped.get(key)!.push(t);
+    grouped.get(key)!.push(target);
   }
 
   return (
@@ -87,6 +90,10 @@ export default function ExplorePage() {
         const sorted = [...targets].sort(
           (a, b) => a.quest_number - b.quest_number
         );
+        const npcDisplayName = t(
+          targets[0].npc_translation_key,
+          targets[0].npc_name_display || npcName
+        );
         return (
           <div key={npcName} style={{ marginBottom: 24 }}>
             <div
@@ -99,7 +106,7 @@ export default function ExplorePage() {
                 marginBottom: 12,
               }}
             >
-              {npcName} ({targets.length})
+              {npcDisplayName} ({targets.length})
             </div>
             <div
               style={{
@@ -114,6 +121,14 @@ export default function ExplorePage() {
                 const sx = mod?.size_x ?? 1;
                 const sy = mod?.size_y ?? 1;
                 const groupLabel = mod ? formatGroupLabel(mod, t, ut) : '';
+                const moduleDisplayName = t(
+                  mod?.translation_key || target.module_translation_key,
+                  target.name || mod?.translation || mk
+                );
+                const questDisplayName = t(
+                  target.quest_translation_key,
+                  target.quest_title || `#${target.quest_number}`
+                );
                 return (
                   <div
                     key={i}
@@ -151,7 +166,7 @@ export default function ExplorePage() {
                           [{groupLabel}]{' '}
                         </span>
                       )}
-                      {target.name || mk}
+                      {moduleDisplayName}
                     </h3>
                     <div
                       style={{
@@ -161,8 +176,8 @@ export default function ExplorePage() {
                         textAlign: 'center',
                       }}
                     >
-                      {npcName} - {ut('ui.explore.quest')}:{' '}
-                      {target.quest_title || `#${target.quest_number}`}
+                      {npcDisplayName} - {ut('ui.explore.quest')}:{' '}
+                      {questDisplayName}
                     </div>
                     <div
                       style={{

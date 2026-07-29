@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 修复探索页模块图片与多语言名称
+
+- **改动原因**：`/en/explore/` 的探索目标仍使用任务内容资产路径，无法命中地图模块图片；探索导出同时缺少任务标题、模块和 NPC 的翻译键。
+- **变更文件**：`api/src/quest_extractor/quest_extractor.py`；`api/src/quest_collector.py`；`api/src/db/schema.py`；`api/src/db/importers/quests.py`；`api/src/db/repositories/quests.py`；`api/src/locale_builder.py`；`web/src/hooks/useDungeonModules.ts`；`web/src/pages/ExplorePage.tsx`；`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：管道从探索内容的 `ModuleId` 解析规范 `Id_DungeonModule_*`，映射到 DB 模块的 `names`、`img_name` 和 `translation_key`；探索目标新增 `module_translation_key`、`quest_translation_key`、`npc_translation_key` 并纳入 locale 收集；前端按稳定 NPC 内部名分组，所有显示名称通过 `t()` 渲染，模块索引同时支持翻译键。
+- **验证**：数据管道生成 65 个探索目标；Prettier、TypeScript、Python compileall、quick SSG、`test:i18n`（16/16）通过；`/en/explore/` HTTP 200，Playwright 无控制台错误，65 个模块图片请求全部 HTTP 200。
+
 ### fix: 血刃掉落页恢复战争遗骨坐标引用
 
 - **改动原因**：`BloodsapBlade` 的“战争遗骨组”来源引用了不存在的 `coords/SkeletonFootmanFromFakeDeath_Unique.json`，前端等待该请求时无法渲染坐标。
