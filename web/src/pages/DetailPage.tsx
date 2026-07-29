@@ -866,7 +866,9 @@ export default function DetailPage() {
                                     .replace('{count}', String(g.poolSize))
                                     .replace('{positions}', String(uniquePos))}
                                   {uniquePos > 1
-                                    ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}`
+                                    ? ` · ${ut('ui.detail.pool_positions')
+                                        .replace('{count}', String(uniquePos))
+                                        .replace('{select}', '1')}`
                                     : ''}
                                   )
                                 </span>
@@ -883,7 +885,12 @@ export default function DetailPage() {
                             if (names.length > 0) {
                               if (varPosCount > 1) {
                                 parts.push(
-                                  `(${varPosCount}点选${vc.variant_count})`
+                                  `(${ut('ui.detail.pool_positions')
+                                    .replace('{count}', String(varPosCount))
+                                    .replace(
+                                      '{select}',
+                                      String(vc.variant_count)
+                                    )})`
                                 );
                               } else {
                                 const nameStr = names
@@ -903,7 +910,9 @@ export default function DetailPage() {
                               ).size;
                               parts.push(
                                 groupPosCount === 1
-                                  ? `(${varPosCount}点选1)`
+                                  ? `(${ut('ui.detail.pool_positions')
+                                      .replace('{count}', String(varPosCount))
+                                      .replace('{select}', '1')})`
                                   : `(${varPosCount}点)`
                               );
                             }
