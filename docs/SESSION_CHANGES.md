@@ -317,3 +317,10 @@
 - **变更文件**：`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：第三次管道使用 DB-backed spawner lookup 和 importer 坐标扫描；多实体基础名、掉落组前缀、实体坐标页和 public ref 全部重新对齐。
 - **验证**：`api/main.py` 后台运行成功；96,402 坐标入库；146 个怪物页、478 个掉落详情、72 个探索目标、346 个任务物品、476 个任务 NPC、260 个模块和 10 语言 locale/search index 全部生成；模块图片校验通过。
+
+### test: DB 派生产物通过 SSG 与 HTTP 验收
+
+- **改动原因**：确认前端构建只消费 DB 导出的 `data/json` 和已交付图片，不依赖解包目录。
+- **变更文件**：`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`npm run build` 使用管道生成的版本化 JSON、locale 和搜索索引完成多语言 SSG；预览服务只提供 `web/dist` 静态产物。
+- **验证**：quick SSG 成功生成 3,074 路由、12,070 个本地化 HTML、15,848 个 dist 文件和 10 语言 sitemap；`http://localhost:8080/` 返回 HTTP 200；Prettier、TypeScript、Black、Ruff、Python 单元测试和 runtime guard 均通过。
