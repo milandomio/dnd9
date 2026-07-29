@@ -16,15 +16,15 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 
 ## IndexNow
 
-IndexNow 已接入主站 GitHub Actions：构建后把 `INDEXNOW_KEY` 写入 `dist/{key}.txt`，发布到 `gh-pages` 后读取各语言 sitemap，向 IndexNow API 批量提交 URL。
+IndexNow 已接入主站 GitHub Actions：静态密钥文件随构建发布到 `dist/{key}.txt`，发布到 `gh-pages` 后自动读取该文件和各语言 sitemap，向 IndexNow API 批量提交 URL。
 
 首次配置：
 
-1. 本地生成密钥：`openssl rand -hex 16`。
-2. 在 GitHub 仓库 `Settings → Secrets and variables → Actions` 新建 Repository secret，名称为 `INDEXNOW_KEY`，值为上一步密钥。
-3. 推送一次 `main`，确认 `https://dnd9.icetar.com/{key}.txt` 返回该密钥文本。
+1. 将 IndexNow 提供的 `{key}.txt` 文件放入 `web/public/`，文件名和内容都必须是同一个密钥。
+2. 推送一次 `main`，确认 `https://dnd9.icetar.com/{key}.txt` 返回该密钥文本。
+3. 查看 Actions 日志，确认 URL 批次提交返回 `200` 或 `202`。
 
-密钥不写入仓库。未配置 Secret 时，构建和部署仍会正常完成，但 IndexNow 步骤会跳过。
+不需要配置 GitHub Secret。更换密钥时同步替换 `web/public/` 中的验证文件。
 
 禁止直接执行实时输出的长流程命令。`python main.py`、`npm run build`、`./deploy.sh`、Playwright 全站测试等在 WSL 中必须使用 `nohup <command> > 日志文件 2>&1 &` 后台启动；随后用短命令检查进程和单独读取日志，避免等待前台流程结束而阻塞 TUI。
 
