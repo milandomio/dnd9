@@ -315,12 +315,22 @@ def build_and_save_module_coords(
 
     # Build translation lookup from DB entity tables (covers all names including props variants)
     trans_lookup = {}
+    translation_key_lookup = {}
     for r in items:
-        trans_lookup[r["item_name"]] = resolve_name(r["item_name"], r["translation_key"], "item")
+        translation = resolve_name(r["item_name"], r["translation_key"], "item")
+        trans_lookup[r["item_name"]] = translation
+        if r["translation_key"]:
+            translation_key_lookup.setdefault(translation, r["translation_key"])
     for r in monsters:
-        trans_lookup[r["monster_name"]] = resolve_name(r["monster_name"], r["translation_key"], "monster")
+        translation = resolve_name(r["monster_name"], r["translation_key"], "monster")
+        trans_lookup[r["monster_name"]] = translation
+        if r["translation_key"]:
+            translation_key_lookup.setdefault(translation, r["translation_key"])
     for r in props:
-        trans_lookup[r["asset_name"]] = resolve_name(r["asset_name"], r["translation_key"], "props")
+        translation = resolve_name(r["asset_name"], r["translation_key"], "props")
+        trans_lookup[r["asset_name"]] = translation
+        if r["translation_key"]:
+            translation_key_lookup.setdefault(translation, r["translation_key"])
 
     _MODULE_COLORS = [  # noqa: N806
         "#E74C3C",
@@ -386,10 +396,13 @@ def build_and_save_module_coords(
             else:
                 entity_type = mapped_st
             translation = trans_lookup.get(ek) or resolve_name(ek, None, entity_type)
+            translation_key = resolve_translation_key(ek, cls.get("translation_key", ""))
+            if not translation_key:
+                translation_key = translation_key_lookup.get(translation, "")
             module_coords[mb]["entities"][ek] = {
                 "name": ek,
                 "translation": translation,
-                "translation_key": resolve_translation_key(ek, cls.get("translation_key", "")),
+                "translation_key": translation_key,
                 "type": entity_type,
                 "color": _MODULE_COLORS[color_idx % len(_MODULE_COLORS)],
                 "coords": [],
