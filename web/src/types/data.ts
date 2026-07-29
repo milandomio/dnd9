@@ -84,6 +84,7 @@ export interface LootdropItem {
   variants?: Record<string, LootdropVariantData>;
   variant_suffixes?: string[];
   variant_rarity?: Record<string, { name: string; translation_key: string }>;
+  unavailableVariantSuffix?: string;
 }
 
 export interface ItemEntity {

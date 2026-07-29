@@ -183,22 +183,25 @@ def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[
     return result
 
 
-def _detail_variant_suffixes(entry: dict) -> list[str]:
-    variant_count = entry.get("variant_count", 1)
-    if variant_count <= 1:
-        return []
+def _detail_variant_suffixes(entry: dict, drop_engine) -> list[str]:
+    item_name = entry["name"]
+    base_name = item_name.removesuffix("_8001")
+    suffixes = sorted(drop_engine.get_existing_variant_suffixes(base_name))
+    if item_name.endswith("_8001"):
+        return suffixes
+    return [suffix for suffix in suffixes if suffix != "8001"]
+
+
+def _possible_variant_suffixes(entry: dict) -> list[str]:
+    """Return game-defined quality suffixes, including qualities with no drop weight."""
     if entry["name"].endswith("_8001"):
-        # Artifact entries are standalone pages, but retain all rarity metadata
-        # so the page can navigate to the ordinary variants of the base item.
-        return ["1001", "2001", "3001", "4001", "5001", "6001", "7001", "8001"]
+        return ["8001"]
     match = _SUFFIX_NUM_RE.search(entry.get("raw_name", ""))
     if not match:
         return []
     first_num = int(match.group(1))
-    suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
-    if variant_count >= 8 and "8001" not in suffixes:
-        suffixes.append("8001")
-    return suffixes
+    count = entry.get("variant_count", 1)
+    return [str(first_num + 1000 * i).zfill(4) for i in range(count)]
 
 
 def _source_id(entity_name: str, source_kind: str) -> str:
@@ -490,8 +493,8 @@ def build_and_save_lootdrop_details(
 
     for entry in loot_index:
         item_name = entry["name"]
-        variant_suffixes = _detail_variant_suffixes(entry)
-        is_variant_family = bool(variant_suffixes) and not item_name.endswith("_8001")
+        variant_suffixes = _detail_variant_suffixes(entry, drop_engine)
+        is_variant_family = len(variant_suffixes) > 1 and not item_name.endswith("_8001")
         merged: dict[str, dict] = {}
         _entry_mtk = entry.get("monster_translation_keys") or []
         for _i, m_name in enumerate(entry["monsters"]):
@@ -1178,7 +1181,12 @@ def build_and_save_lootdrop_details(
             _entry["hr100"] = True
         _vs = item_variant_suffixes.get(_iname)
         if _vs:
+            _possible = _possible_variant_suffixes(_entry)
             _entry["variant_suffixes"] = _vs
+            _entry["variant_count"] = len(_vs)
+            _unavailable = [suffix for suffix in _possible if suffix not in _vs and suffix != "8001"]
+            if _unavailable:
+                _entry["unavailable_variant_suffixes"] = _unavailable
         _valid = item_valid_names.get(_iname)
         if _valid:
             _filtered = [

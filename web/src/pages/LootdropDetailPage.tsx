@@ -34,6 +34,7 @@ import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { defaultVariantSuffix } from '../utils/variant';
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
@@ -123,12 +124,17 @@ function selectLootdropVariant(
 ): LootdropItem {
   if (!item.sources || !item.variants) return item;
   const availableSuffixes = Object.keys(item.variants);
+  if (requestedSuffix && !item.variants[requestedSuffix]) {
+    return {
+      ...item,
+      name: `${item.name}_${requestedSuffix}`,
+      monsters: [],
+      group_drop_info: {},
+      unavailableVariantSuffix: requestedSuffix,
+    };
+  }
   const suffix =
-    (requestedSuffix && item.variants[requestedSuffix]
-      ? requestedSuffix
-      : availableSuffixes.includes('5001')
-        ? '5001'
-        : availableSuffixes[0]) ?? '';
+    requestedSuffix ?? defaultVariantSuffix(availableSuffixes) ?? '';
   const variant = item.variants[suffix];
   if (!variant) return { ...item, monsters: [], group_drop_info: {} };
 
@@ -327,18 +333,17 @@ export default function LootdropDetailPage() {
     };
   }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
 
-  // Auto-redirect to default variant when visiting base URL
+  // Base URLs redirect to a real variant; explicit unavailable variants stay at 0%.
   useEffect(() => {
-    const suffixes = data?.variant_rarity
-      ? Object.keys(data.variant_rarity)
-      : [];
+    const suffixes = data?.variants ? Object.keys(data.variants) : [];
     if (suffixes.length <= 1) return;
-    if (currentSuffix) return; // already on a variant URL
-    const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
+    if (currentSuffix) return;
+    const defaultSuffix = defaultVariantSuffix(suffixes);
+    if (!defaultSuffix) return;
     navigate(`/${lang}/lootdrops/${itemName}_${defaultSuffix}/`, {
       replace: true,
     });
-  }, [data, currentSuffix, itemName, navigate]);
+  }, [data, currentSuffix, itemName, lang, navigate]);
 
   // 在调试模式下实时响应阈值变化
   useEffect(() => {
@@ -993,12 +998,28 @@ export default function LootdropDetailPage() {
         );
       })()}
 
-      {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
+      {data.variant_rarity && data.variants && (
         <VariantSwitch
           variantRarity={data.variant_rarity}
+          suffixes={Object.keys(data.variants)}
           itemName={itemName}
           currentSuffix={currentSuffix}
         />
+      )}
+
+      {data.unavailableVariantSuffix && (
+        <div
+          style={{
+            margin: '15px 0',
+            padding: 10,
+            textAlign: 'center',
+            color: tokens.muted,
+            background: tokens.surface,
+            borderRadius: 5,
+          }}
+        >
+          {ut('ui.detail.no_drop_rate')}
+        </div>
       )}
 
       <div

@@ -184,28 +184,30 @@ for (const m of moduleData) {
 for (const p of PAGES) {
   const list = readJSON(join(DATA, `${p}.json`));
   for (const e of list) {
-    if (
-      p === 'lootdrops' &&
-      e.variant_suffixes &&
-      e.variant_suffixes.length > 1
-    ) {
+    const availableSuffixes = e.variant_suffixes ?? [];
+    const unavailableSuffixes = e.unavailable_variant_suffixes ?? [];
+    const routeSuffixes = [...availableSuffixes, ...unavailableSuffixes];
+    if (p === 'lootdrops' && routeSuffixes.length > 1) {
       // Base lootdrop entry (e.g. "HeaterShield") redirects to default variant;
       // generate a minimal redirect page, then create per-suffix variant pages.
-      const defaultSuffix = e.variant_suffixes.includes('5001')
+      const defaultSuffix = availableSuffixes.includes('5001')
         ? '5001'
-        : e.variant_suffixes[0];
+        : availableSuffixes[availableSuffixes.length - 1];
       const target = `/${DEFAULT_LANG}/lootdrops/${e.name}_${defaultSuffix}/`;
       routes.push({
         path: `/${DEFAULT_LANG}/${p}/${encodeURIComponent(e.name)}`,
         file: `${DEFAULT_LANG}/${p}/${e.name}/index.html`,
         redirect: target,
       });
-      for (const suffix of e.variant_suffixes) {
+      for (const suffix of routeSuffixes) {
         const variantName = `${e.name}_${suffix}`;
         routes.push({
           path: `/${DEFAULT_LANG}/lootdrops/${encodeURIComponent(variantName)}`,
           file: `${DEFAULT_LANG}/lootdrops/${variantName}/index.html`,
-          generateStatic: suffix === defaultSuffix || suffix === '8001',
+          generateStatic:
+            unavailableSuffixes.includes(suffix) ||
+            suffix === defaultSuffix ||
+            suffix === '8001',
         });
       }
     } else {
@@ -311,6 +313,10 @@ for (const p of PAGES) {
   const list = readJSON(join(DATA, `${p}.json`));
   for (const e of list) {
     const name = e.name;
+    const routeSuffixes = [
+      ...(e.variant_suffixes ?? []),
+      ...(e.unavailable_variant_suffixes ?? []),
+    ];
     if (!QUICK) {
       const filePath =
         p === 'lootdrops'
@@ -321,8 +327,8 @@ for (const p of PAGES) {
           const itemData = { item: readJSON(filePath), modules: moduleData };
           ssrDataMap[`lootdrops/${name}`] = itemData;
           // Variant routes select from the same merged base detail in memory.
-          if (e.variant_suffixes && e.variant_suffixes.length > 1) {
-            for (const suffix of e.variant_suffixes) {
+          if (routeSuffixes.length > 1) {
+            for (const suffix of routeSuffixes) {
               ssrDataMap[`lootdrops/${name}_${suffix}`] = {
                 item: itemData.item,
                 modules: moduleData,
@@ -349,8 +355,8 @@ for (const p of PAGES) {
           },
         };
         ssrDataMap[`lootdrops/${name}`] = minimalItem;
-        if (e.variant_suffixes && e.variant_suffixes.length > 1) {
-          for (const suffix of e.variant_suffixes) {
+        if (routeSuffixes.length > 1) {
+          for (const suffix of routeSuffixes) {
             ssrDataMap[`lootdrops/${name}_${suffix}`] = minimalItem;
           }
         }

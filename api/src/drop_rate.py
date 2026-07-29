@@ -7,7 +7,6 @@ from decimal import ROUND_HALF_UP, Decimal
 from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
 from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE, base_monster_name
 
-_VARIANT_SUFFIXES = ["_5001", "_6001", "_7001", "_8001", "_4001", "_3001", "_2001", "_1001"]
 _VARIANT_RE = VARIANT_RE
 
 _QUALITY_VARIANT_SUFFIXES = ["", "_Common", "_Elite", "_Nightmare", "_Unique"]
@@ -16,6 +15,25 @@ _QUALITY_VARIANT_SUFFIXES = ["", "_Common", "_Elite", "_Nightmare", "_Unique"]
 def _round_rate(v: float) -> float:
     d = Decimal(str(v)).quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)
     return float(d)
+
+
+def _find_rate_item(rate_items: dict[str, tuple[int, int]], item_name: str) -> tuple[int, int] | None:
+    """Find an exact item, or the preferred real variant for an unsuffixed family."""
+    item_info = rate_items.get(item_name)
+    if item_info is not None or _VARIANT_RE.match(item_name):
+        return item_info
+
+    variants = [
+        (name, info)
+        for name, info in rate_items.items()
+        if (match := _VARIANT_RE.match(name)) and match.group(1) == item_name and not name.endswith("_8001")
+    ]
+    if not variants:
+        return None
+    preferred = next((info for name, info in variants if name.endswith("_5001")), None)
+    if preferred is not None:
+        return preferred
+    return max(variants, key=lambda entry: int(entry[0][-4:]))[1]
 
 
 class DropRateEngine:
@@ -324,35 +342,14 @@ class DropRateEngine:
             return 0.0
         total_weight = 0.0
         found = False
-        # Pre-compute base name for variant fallback (e.g. Mitre_7001 -> Mitre)
-        _base = _VARIANT_RE.sub(r"\1", item_name) if _VARIANT_RE.match(item_name) else None
-        # Extract variant luck_grade from item_name suffix (e.g. _8001 -> 8)
-        _vluck_m = re.search(r"_(\d)\d{3}$", item_name) if item_name else None
-        _variant_luck_grade = int(_vluck_m.group(1)) if _vluck_m else None
         for ld_id, lr_id, _ in grade_data:
             rate_items = self._ld_rate_items.get(ld_id, {})
-            item_info = rate_items.get(item_name)
-            if item_info is None:
-                for _suffix in _VARIANT_SUFFIXES:
-                    item_info = rate_items.get(item_name + _suffix)
-                    if item_info is not None:
-                        break
-            # Fallback: strip variant suffix and try base name
-            if item_info is None and _base:
-                item_info = rate_items.get(_base)
-                if item_info is None:
-                    for _suffix in _VARIANT_SUFFIXES:
-                        item_info = rate_items.get(_base + _suffix)
-                        if item_info is not None:
-                            break
+            item_info = _find_rate_item(rate_items, item_name)
             if item_info is None:
                 continue
             found = True
             luck_grade, item_count = item_info
-            # Use variant's luck_grade for pool weight (artifact=8, legendary=6, etc.)
-            # but base item's luck_grade for shared count (item lives at base grade)
-            _pool_lg = _variant_luck_grade if _variant_luck_grade is not None else luck_grade
-            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(_pool_lg, 0)
+            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
             _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
             _rate_total = self._ld_rate_totals.get(lr_id, 10000)
             total_weight += _pool_weight / _shared / _rate_total
@@ -608,33 +605,19 @@ class DropRateEngine:
             return 0.0
         total_weight = 0.0
         found = False
-        _base = _VARIANT_RE.sub(r"\1", item_name) if item_name and _VARIANT_RE.match(item_name) else None
         for ld_id, lr_id, _ in grade_data:
             if target_ld_id and ld_id != target_ld_id:
                 continue
             _found_lg = None
             if item_name:
                 rate_items = self._ld_rate_items.get(ld_id, {})
-                item_info = rate_items.get(item_name)
-                if item_info is None:
-                    for _sfx in _VARIANT_SUFFIXES:
-                        item_info = rate_items.get(item_name + _sfx)
-                        if item_info is not None:
-                            break
-                if item_info is None and _base:
-                    item_info = rate_items.get(_base)
-                    if item_info is None:
-                        for _sfx in _VARIANT_SUFFIXES:
-                            item_info = rate_items.get(_base + _sfx)
-                            if item_info is not None:
-                                break
+                item_info = _find_rate_item(rate_items, item_name)
                 if item_info is None:
                     continue
-                # Use caller's luck_grade for weight (higher grade = rarer pool),
-                # but found item's luck_grade for shared count (the item lives there).
                 _found_lg = item_info[0]
             found = True
-            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+            _pool_lg = _found_lg if _found_lg is not None else luck_grade
+            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(_pool_lg, 0)
             if _pool_weight == 0:
                 continue
             _shared_lg = _found_lg if _found_lg is not None else luck_grade
