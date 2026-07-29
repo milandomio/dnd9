@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'fs';
+import { existsSync, readFileSync, readdirSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -8,21 +8,45 @@ const SITE = (process.env.INDEXNOW_SITE || 'https://dnd9.icetar.com').replace(
 );
 const API =
   process.env.INDEXNOW_ENDPOINT || 'https://api.indexnow.org/indexnow';
-const key = process.env.INDEXNOW_KEY?.trim();
 const dist = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const BATCH_SIZE = 10_000;
 const MAX_ATTEMPTS = 3;
 const RETRY_DELAY_MS = 5_000;
+const KEY_FILE_RE = /^([A-Za-z0-9-]{8,128})\.txt$/;
 
-if (!key) {
-  console.log('[indexnow] INDEXNOW_KEY is not set; skipping URL submission');
-  process.exit(0);
+function validateKey(key) {
+  if (!/^[A-Za-z0-9-]{8,128}$/.test(key)) {
+    throw new Error(
+      '[indexnow] key must contain 8-128 letters, numbers, or dashes'
+    );
+  }
+  return key;
 }
 
-if (!/^[A-Za-z0-9-]{8,128}$/.test(key)) {
-  throw new Error(
-    '[indexnow] INDEXNOW_KEY must contain 8-128 letters, numbers, or dashes'
-  );
+function discoverKey() {
+  if (!existsSync(dist)) return null;
+  const keyFiles = readdirSync(dist).filter((file) => KEY_FILE_RE.test(file));
+  if (keyFiles.length === 0) return null;
+  if (keyFiles.length > 1) {
+    throw new Error(
+      `[indexnow] expected one key file in dist, found ${keyFiles.length}`
+    );
+  }
+
+  const [, key] = keyFiles[0].match(KEY_FILE_RE);
+  const content = readFileSync(join(dist, keyFiles[0]), 'utf8').trim();
+  if (content !== key) {
+    throw new Error(
+      `[indexnow] key file ${keyFiles[0]} content does not match`
+    );
+  }
+  return validateKey(key);
+}
+
+const key = discoverKey();
+if (!key) {
+  console.log('[indexnow] no key file found; skipping URL submission');
+  process.exit(0);
 }
 
 function sleep(ms) {
