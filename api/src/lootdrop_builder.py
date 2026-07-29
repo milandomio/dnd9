@@ -81,7 +81,7 @@ def _resolve_legend_ref(
             return entity_page_map[GOLDCHEST_SPECIAL]
         return f"props/{GOLDCHEST_SPECIAL}"
     if entity_page_map and entity_name:
-        page = entity_page_map.get(entity_name)
+        page = entity_page_map.get(entity_name) or entity_page_map.get(base_monster_name(entity_name))
         if page:
             return page
     base = _strip_legend_suffixes(trans)
@@ -94,11 +94,11 @@ def _resolve_legend_ref(
             return m["ref"]
         en = m.get("entity_name", m.get("name", ""))
         if entity_page_map and en:
-            page = entity_page_map.get(en)
+            page = entity_page_map.get(en) or entity_page_map.get(base_monster_name(en))
             if page:
                 return page
         if en:
-            return f"coords/{en}"
+            return f"coords/{base_monster_name(en)}"
     return None
 
 
