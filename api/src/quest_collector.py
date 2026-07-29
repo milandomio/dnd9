@@ -77,15 +77,15 @@ def _translate_item(translator, name_en: str) -> str:
     return name_en
 
 
-def run_quest_extraction(entity_classification=None):
+def run_quest_extraction(db, entity_classification=None):
     print("\n--- Quest Extraction ---")
     if hasattr(_get_entity_key_map, "_cache"):
         _get_entity_key_map._cache = {}  # reset cache
     if entity_classification:
         _get_entity_key_map(entity_classification)
 
-    translator = Translator(language="zh-Hans")
-    extractor = QuestExtractor(translator=translator)
+    translator = Translator(language="zh-Hans", db=db)
+    extractor = QuestExtractor(translator=translator, db=db)
     quests = extractor.load_all_quests()
     print(f"  loaded {len(quests)} quests")
 
@@ -348,7 +348,7 @@ def _extract_npc_list(translator, extractor, quests):
                     item.update(_parse_fetch_content(translator, cd))
                 elif ct == "Explore":
                     item["target"] = extractor.get_explore_target_translation(ap) or ""
-                    key = extractor.get_source_string_from_asset_path(extractor.match_asset_path_to_module(ap))
+                    key = extractor.get_source_string_from_asset_path(ap)
                     if key and translator.translate(key):
                         item["translation_key"] = key
                     item["count"] = cd.get("ContentCount", 1)

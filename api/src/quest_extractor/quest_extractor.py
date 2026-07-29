@@ -38,7 +38,7 @@ class QuestExtractor:
     DEFAULT_PROPS_PATH = os.path.join(BASE_DATA_PATH, "Props", "Props")
     DEFAULT_REWARD_PATH = os.path.join(BASE_DATA_PATH, "Quest", "QuestReward")
 
-    def __init__(self, quest_directory=None, translator=None, content_directory=None):
+    def __init__(self, quest_directory=None, translator=None, content_directory=None, db=None):
         """
         初始化任务提取器
 
@@ -47,7 +47,8 @@ class QuestExtractor:
             translator: 翻译器实例
             content_directory: 任务内容JSON文件目录路径
         """
-        self.translator = translator or Translator()
+        self.db = db
+        self.translator = translator or Translator(db=db)
         self.quest_directory = quest_directory or self.DEFAULT_QUEST_PATH
         self.content_directory = content_directory or self.DEFAULT_CONTENT_PATH
         self.reward_directory = self.DEFAULT_REWARD_PATH
@@ -61,6 +62,7 @@ class QuestExtractor:
         self.quests_data = []
         self.quest_id_map = {}
         self._props_tag_index: dict[str, tuple[str, str]] | None = None
+        self._module_index: dict[str, dict] | None = None
 
     def load_all_quests(self):
         """
@@ -198,6 +200,58 @@ class QuestExtractor:
                 results.append(quest)
         return results
 
+    @staticmethod
+    def _module_name_from_asset_path(asset_path):
+        if not asset_path:
+            return ""
+        name = asset_path.rsplit("/", 1)[-1].split(".", 1)[0]
+        for prefix in (
+            "Id_DungeonModule_",
+            "Id_QuestContent_Explore_",
+            "Id_QuestContent_Hold_",
+            "QuestContentExplore_",
+            "QuestContentHold_",
+        ):
+            if name.startswith(prefix):
+                name = name[len(prefix) :]
+                break
+        for suffix in ("_HR_D", "_HR", "_D", "_A", "_S"):
+            if name.endswith(suffix):
+                name = name[: -len(suffix)]
+                break
+        return re.sub(r"_\d+$", "", name)
+
+    def _get_module_index(self):
+        if self._module_index is None:
+            self._module_index = {}
+            if self.db is not None:
+                for module in self.db.get_dungeon_modules():
+                    for key in [
+                        module.get("module_name", ""),
+                        module.get("sl_base_name", ""),
+                        *module.get("aliases", []),
+                    ]:
+                        if key:
+                            self._module_index[key] = module
+        return self._module_index
+
+    def _get_module_record(self, asset_path):
+        module_name = self._module_name_from_asset_path(asset_path)
+        if not module_name:
+            return None
+        return self._get_module_index().get(module_name)
+
+    def _translate_module_target(self, asset_path):
+        module_name = self._module_name_from_asset_path(asset_path)
+        if not module_name:
+            return None
+        module = self._get_module_record(asset_path)
+        key = module.get("translation_key", "") if module else ""
+        if not key:
+            key = f"Text_DesignData_Dungeon_DungeonModule_{module_name}"
+        translated = self.translator.translate(key) if self.translator else ""
+        return translated or module_name
+
     # 路径转换方法（保持不变）
     @staticmethod
     def AssetPathName_to_json(asset_path):  # noqa: N802
@@ -219,6 +273,9 @@ class QuestExtractor:
         将AssetPathName匹配到对应的JSON文件，并返回ModuleId的AssetPathName
         """
         if not asset_path:
+            return asset_path
+
+        if self.db is not None:
             return asset_path
 
         filename_part = asset_path.split("/")[-1]
@@ -259,6 +316,12 @@ class QuestExtractor:
         """从AssetPathName对应的JSON文件中提取SourceString"""
         if not asset_path:
             return None
+        if self.db is not None:
+            module = self._get_module_record(asset_path)
+            if module and module.get("translation_key"):
+                return module["translation_key"]
+            module_name = self._module_name_from_asset_path(asset_path)
+            return f"Text_DesignData_Dungeon_DungeonModule_{module_name}" if module_name else None
         json_path = self.AssetPathName_to_json(asset_path)
         if not json_path or not os.path.exists(json_path):
             return None
@@ -295,6 +358,8 @@ class QuestExtractor:
 
     def get_explore_target_translation(self, explore_asset_path):
         """获取探索任务的翻译目标"""
+        if self.db is not None:
+            return self._translate_module_target(explore_asset_path)
         module_asset_path = self.match_asset_path_to_module(explore_asset_path)
         if not module_asset_path or module_asset_path == explore_asset_path:
             return None
@@ -525,6 +590,8 @@ class QuestExtractor:
         asset_path = module_id.get("AssetPathName", "")
         if not asset_path:
             return None
+        if self.db is not None:
+            return self._translate_module_target(asset_path)
         # 从AssetPathName提取模块名: /Game/.../Id_DungeonModule_IceCave_Maze.Id_DungeonModule_IceCave_Maze
         # -> Id_DungeonModule_IceCave_Maze -> IceCave_Maze
         parts = asset_path.rsplit("/", 1)[-1].split(".")[0]
@@ -559,6 +626,12 @@ class QuestExtractor:
         """从DungeonModule JSON读取Name字段的翻译键和显示名"""
         if not asset_path:
             return None, None
+        if self.db is not None:
+            module = self._get_module_record(asset_path)
+            if module:
+                key = module.get("translation_key", "")
+                return key, self.translator.translate(key) if key and self.translator else module.get("module_name", "")
+            return None, self._module_name_from_asset_path(asset_path)
         json_path = self.AssetPathName_to_json(asset_path)
         if not json_path or not os.path.exists(json_path):
             return None, None
@@ -621,6 +694,14 @@ class QuestExtractor:
         if not props_id_tag:
             return None
 
+        if self.db is not None:
+            info = self.db.get_props_tag_info(props_id_tag)
+            if not info:
+                return None
+            key = info.get("translation_key", "")
+            translated = self.translator.translate(key) if key and self.translator else ""
+            return translated or info.get("source_string", "") or None
+
         self._ensure_props_index()
         entry = self._props_tag_index.get(props_id_tag)
         if not entry:
@@ -637,6 +718,11 @@ class QuestExtractor:
         """Return the Props target's translation key and zh-Hans fallback."""
         if not props_id_tag:
             return "", ""
+        if self.db is not None:
+            info = self.db.get_props_tag_info(props_id_tag)
+            if not info:
+                return "", ""
+            return info.get("translation_key", ""), info.get("source_string", "")
         self._ensure_props_index()
         return self._props_tag_index.get(props_id_tag, ("", ""))
 

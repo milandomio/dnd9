@@ -1,10 +1,11 @@
 import json
 from decimal import Decimal
 
-from config import LOOTDROP_DIR, LOOTDROP_GROUP_DIR, LOOTDROP_RATE_DIR, SPAWNER_DIR
+from config import LOOTDROP_DIR, LOOTDROP_GROUP_DIR, LOOTDROP_RATE_DIR, MAPS_DIR, SPAWNER_DIR
 from drop_rate import _round_rate
 
 from .._helpers import load_json_dir, ue_asset_base_name
+from .spawner_coordinates import extract_all_spawners
 
 _SPAWNER_PREFIXES = [
     "Id_Spawner_New_Monster_",
@@ -152,6 +153,15 @@ class SpawnersImporter:
         )
         self.conn.commit()
         return len(rows)
+
+    def extract_spawners(
+        self, has_lootdrop_map: dict[str, bool], multi_entity_spawners: dict[str, list[dict]]
+    ) -> list[dict]:
+        return extract_all_spawners(
+            MAPS_DIR,
+            has_lootdrop_map=has_lootdrop_map,
+            multi_entity_spawners=multi_entity_spawners,
+        )
 
     def import_lootdrop_groups(self) -> int:
         c = self.conn.cursor()

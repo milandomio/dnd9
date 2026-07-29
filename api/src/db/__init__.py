@@ -1,4 +1,3 @@
-import re
 import sqlite3
 from pathlib import Path
 
@@ -18,8 +17,6 @@ class DatabaseManager:
         self.schema.create_tables()
         self.importers = ImporterRegistry(self.conn)
         self.repos = RepositoryRegistry(self.conn)
-
-    _CRACKED_RE = re.compile(r"（裂开）")
 
     def connect(self):
         return self.conn
@@ -42,34 +39,7 @@ class DatabaseManager:
     # ─── Translation ───
 
     def import_translations(self):
-        from config import GAME_JSON as _GJ
-
-        from ._helpers import discover_languages
-        from ._helpers import load_game_json as _load_game_json
-
-        data = _load_game_json()
-        if not data:
-            return 0
-        c = self.conn.cursor()
-        c.execute("DELETE FROM translations")
-        rows = [(k, self._CRACKED_RE.sub("", v)) for k, v in data.items() if k and v]
-        c.executemany("INSERT OR REPLACE INTO translations (key, value) VALUES (?, ?)", rows)
-        total = len(rows)
-        langs = discover_languages()
-        for lang in langs:
-            if lang == "zh-Hans":
-                continue
-            lang_path = _GJ.parent.parent / lang / "Game.json"
-            lang_data = _load_game_json(lang_path)
-            if not lang_data:
-                continue
-            table_name = self.schema.ensure_translation_table(lang)
-            c.execute(f"DELETE FROM {table_name}")
-            lang_rows = [(k, v) for k, v in lang_data.items() if k and v]
-            c.executemany(f"INSERT OR REPLACE INTO {table_name} (key, value) VALUES (?, ?)", lang_rows)
-            total += len(lang_rows)
-        self.conn.commit()
-        return total
+        return self.importers.translations.import_all()
 
     def get_translation(self, key: str, lang: str = "zh-Hans") -> str:
         c = self.conn.cursor()
@@ -137,6 +107,11 @@ class DatabaseManager:
     def import_spawner_entries(self) -> int:
         return self.importers.spawners.import_spawner_entries()
 
+    def extract_spawners(
+        self, has_lootdrop_map: dict[str, bool], multi_entity_spawners: dict[str, list[dict]]
+    ) -> list[dict]:
+        return self.importers.spawners.extract_spawners(has_lootdrop_map, multi_entity_spawners)
+
     def import_lootdrop_groups(self) -> int:
         return self.importers.spawners.import_lootdrop_groups()
 
@@ -168,6 +143,9 @@ class DatabaseManager:
 
     def get_props_entities(self) -> list[dict]:
         return self.repos.props.get_all()
+
+    def get_props_tag_info(self, tag_name: str) -> dict | None:
+        return self.repos.props.get_tag_info(tag_name)
 
     def get_dungeon_modules(self) -> list[dict]:
         return self.repos.modules.get_all()

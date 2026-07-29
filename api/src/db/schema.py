@@ -28,6 +28,12 @@ class SchemaManager:
                 translation_key TEXT NOT NULL DEFAULT ''
             );
 
+            CREATE TABLE IF NOT EXISTS props_tag_index (
+                tag_name TEXT PRIMARY KEY,
+                translation_key TEXT NOT NULL DEFAULT '',
+                source_string TEXT NOT NULL DEFAULT ''
+            );
+
             CREATE TABLE IF NOT EXISTS dungeon_modules (
                 module_name TEXT PRIMARY KEY,
                 translation_key TEXT NOT NULL DEFAULT '',

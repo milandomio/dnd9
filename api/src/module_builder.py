@@ -6,7 +6,6 @@ from collections import defaultdict
 from pathlib import Path
 
 from config import (
-    GROUP_TO_ART_DIR,
     HARDCODED_TRANSLATIONS,
     IMG_SRC,
     MODULE_DISPLAY_OVERRIDE,
@@ -79,83 +78,20 @@ def _match_in_dir(directory: Path, sl: str):
 
 def _resolve_img(art_root: Path, group: str, sl: str, webp_cache: Path | None = None):
     """Return (resolved_name, status).
-    Priority: webp cache first (already processed), then Art directory (raw PNG).
+    Resolve only against already delivered WebP assets.
     status: 'found', 'not_found' (searched, no match), 'no_art' (no source available).
     """
-    # 1. Always check webp cache first — if a cached webp exists, use it directly
+    del art_root, group
     if webp_cache and webp_cache.exists():
         cached, cache_status = _match_in_dir(webp_cache, sl)
         if cache_status == "found":
             return cached, "found"
-
-    # 2. Fall back to Art directory (raw PNG files)
-    if not art_root.exists() or not group:
-        return sl, "no_art"
-    art_dir_name = GROUP_TO_ART_DIR.get(group, group)
-    group_dir = art_root / art_dir_name
-    if not group_dir.exists():
-        return sl, "no_art"
-    # Try exact match (case-insensitive)
-    png = group_dir / f"{sl}.png"
-    if png.exists():
-        return sl, "found"
-    for p in _list_dir_files(group_dir):
-        if p.stem.lower() == sl.lower():
-            return p.stem, "found"
-    # Try tail match (part after first underscore)
-    tail = sl.split("_", 1)[-1] if "_" in sl else sl
-    png = group_dir / f"{tail}.png"
-    if png.exists():
-        return tail, "found"
-    for p in _list_dir_files(group_dir):
-        if p.stem.lower() == tail.lower():
-            return p.stem, "found"
-    # Try stripping numeric suffix (_01, _02 etc.)
-    sl_stripped = re.sub(r"_\d{2,4}$", "", sl)
-    if sl_stripped != sl:
-        for p in _list_dir_files(group_dir):
-            if p.stem.lower() == sl_stripped.lower():
-                return p.stem, "found"
-        tail_stripped = re.sub(r"_\d{2,4}$", "", tail)
-        if tail_stripped != tail:
-            for p in _list_dir_files(group_dir):
-                if p.stem.lower() == tail_stripped.lower():
-                    return p.stem, "found"
-    # Try stripping _Center / _Corner / _Passage suffix (keep trailing _NN)
-    sl_center_stripped = re.sub(r"_(?:Center|Corner|Passage)(?=_\d|$)", "", sl)
-    if sl_center_stripped != sl:
-        for p in _list_dir_files(group_dir):
-            if p.stem.lower() == sl_center_stripped.lower():
-                return p.stem, "found"
-    # Try stripping _Resize / _Test / _BossTest / _DistantView debug suffixes
-    sl_debug_stripped = re.sub(r"_(?:Resize|Test|BossTest|DistantView)$", "", sl)
-    if sl_debug_stripped != sl:
-        for p in _list_dir_files(group_dir):
-            if p.stem.lower() == sl_debug_stripped.lower():
-                return p.stem, "found"
-    # Try numeric prefix match: after stripping _\d{2,4}$, find any file starting with the stripped prefix
-    if sl_stripped != sl:
-        prefix = sl_stripped.lower()
-        for p in _list_dir_files(group_dir):
-            if p.stem.lower().startswith(prefix):
-                return p.stem, "found"
-    return sl, "not_found"
+    return sl, "no_art"
 
 
 def build_modules_map(db, resolve_name, module_rotations: dict | None = None) -> dict[str, dict]:
     """Build modules_map from DB dungeon modules. Rotation is read from DB."""
     modules = db.get_dungeon_modules()
-    art_root = (
-        Path(__file__).parent.parent.parent.parent
-        / "Output"
-        / "Exports"
-        / "DungeonCrawler"
-        / "Content"
-        / "DungeonCrawler"
-        / "Data"
-        / "Art"
-        / "DungeonModuleMapImage"
-    )
     modules_map: dict[str, dict] = {}
     for r in modules:
         override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
@@ -171,7 +107,7 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
 
         def _try_resolve(name: str):
             """Return (resolved_name, status). status: 'found'|'not_found'|'no_art'."""
-            resolved, status = _resolve_img(art_root, r["module_group"], name, IMG_SRC)  # noqa: B023
+            resolved, status = _resolve_img(None, r["module_group"], name, IMG_SRC)  # noqa: B023
             if resolved in PLACEHOLDERS:  # noqa: B023
                 return resolved, status  # placeholder — don't accept
             return resolved, status
@@ -229,7 +165,7 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:
-            resolved_name, _ = _resolve_img(art_root, "", override_name, IMG_SRC)
+            resolved_name, _ = _resolve_img(None, "", override_name, IMG_SRC)
             modules_map[override_name] = {
                 "name": override_name,
                 "translation": override_translation,

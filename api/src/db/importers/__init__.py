@@ -5,6 +5,7 @@ from .monsters import MonstersImporter
 from .props import PropsImporter
 from .quests import QuestsImporter
 from .spawners import SpawnersImporter
+from .translations import TranslationsImporter
 
 
 class ImporterRegistry:
@@ -16,3 +17,4 @@ class ImporterRegistry:
         self.lootdrops = LootdropsImporter(conn)
         self.quests = QuestsImporter(conn)
         self.spawners = SpawnersImporter(conn)
+        self.translations = TranslationsImporter(conn)
