@@ -287,3 +287,12 @@
 - **变更文件**：`docs/plans/META_DESCRIPTION_OPTIMIZATION.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：计划要求浏览器与 SSG 共用描述模板契约，SSG 注入 `__localizedDescription` 供客户端首轮 Helmet 使用；统计统一取未筛选的原始事实，Quick SSG 缺数据时使用本地化保守兜底；静态 HTML、首轮客户端、最终客户端及同标签路由切换均纳入验证。Sitemap 审计以十个语言 Sitemap 的 URL 并集为准，并兼容根文件不同结构。
 - **验证**：仅修订计划与会话记录，未执行 URL 审计、构建、业务代码修改或部署。
+
+## 2026-07-30
+
+### feat: 按 DB-only runtime I/O 计划收口后端解包访问
+
+- **改动原因**：运行时共享层、搜索/布局工具、模块图片构建和 collector 仍直接依赖解包目录；需要把可复用查询切到 DB，并将地图/翻译/props 原始读取限制在 importer 阶段。
+- **变更文件**：`api/src/db/_helpers.py`；`api/src/db/__init__.py`；`api/src/db/schema.py`；`api/src/db/importers/__init__.py`；`api/src/db/importers/translations.py`；`api/src/db/importers/props.py`；`api/src/db/importers/spawners.py`；`api/src/db/importers/spawner_coordinates.py`；`api/src/db/importers/modules.py`；`api/src/db/repositories/props.py`；`api/src/search_engine.py`；`api/src/layout_utils.py`；`api/src/module_builder.py`；`api/src/image_utils.py`；`api/src/quest_collector.py`；`api/src/quest_extractor/translator.py`；`api/src/quest_extractor/quest_extractor.py`；`api/src/collector.py`；`api/tests/test_runtime_io_guard.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：翻译 JSON 读取移入 `db/importers/translations.py`；props `IdTag → translation_key/source_string` 写入 `props_tag_index` 后由 repository 查询；`search_engine` 只从 `spawner_entries` 和实体表生成 lookup，地图坐标解析移到 `db/importers/spawner_coordinates.py`；layout 旋转扫描移到模块 importer；模块图片只匹配 DB 元数据和已交付 WebP；collector 移除解包目录时间扫描并通过 DB/importer 链执行；quest extractor 的翻译、模块目标和 props 目标优先走 DB。
+- **验证**：变更 Python 文件 `py_compile` 通过；现有 `api/tests/test_drop_rate.py` 5/5 通过；runtime guard 直接执行通过；collector/DB 模块导入通过；`git diff --check` 通过。环境未安装 `pytest`，未运行 pytest 入口；未执行完整数据管道和前端构建。

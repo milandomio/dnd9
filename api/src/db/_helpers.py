@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from config import GAME_JSON, GAME_ROOT, LOCALIZATION_ROOT
+from config import GAME_ROOT
 
 log = logging.getLogger(__name__)
 
@@ -20,45 +20,6 @@ def load_json_dir(directory: Path) -> dict[str, Any]:
         except Exception as e:
             log.warning("failed to load %s: %s", fp.name, e)
     return result
-
-
-LOAD_GAME_JSON_CACHE: dict[str, dict[str, str]] = {}
-
-
-def load_game_json(path: Path | None = None) -> dict[str, str]:
-    target = path or GAME_JSON
-    cache_key = str(target)
-    if cache_key in LOAD_GAME_JSON_CACHE:
-        return LOAD_GAME_JSON_CACHE[cache_key]
-    if not target.exists():
-        return {}
-    try:
-        with open(target, encoding="utf-8") as f:
-            raw = json.load(f)
-        if isinstance(raw, dict):
-            if "DC" in raw and isinstance(raw["DC"], dict):
-                result = raw["DC"]
-            else:
-                for v in raw.values():
-                    if isinstance(v, dict):
-                        result = v
-                        break
-                else:
-                    result = {}
-        else:
-            result = {}
-        LOAD_GAME_JSON_CACHE[cache_key] = result
-        return result
-    except Exception as e:
-        log.warning("failed to load game JSON %s: %s", target, e)
-        return {}
-
-
-def discover_languages() -> list[str]:
-    if not LOCALIZATION_ROOT.exists():
-        return []
-    dirs = sorted(d.name for d in LOCALIZATION_ROOT.iterdir() if d.is_dir() and (d / "Game.json").exists())
-    return dirs
 
 
 _LOCALE_DISPLAY = {

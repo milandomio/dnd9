@@ -1,25 +1,10 @@
 import json
-import os
 import re
-from pathlib import Path
 
 from config import (
     DB_PATH,
-    DUNGEON_MODULE_DIR,
-    GAME_JSON,
-    GAME_ROOT,
-    ITEM_DIR,
-    LAYOUT_DIR,
-    LOCALIZATION_ROOT,
     LOG_DIR,
-    LOOTDROP_DIR,
-    LOOTDROP_GROUP_DIR,
-    LOOTDROP_RATE_DIR,
-    MAPS_DIR,
-    MONSTER_DIR,
     OUTPUT_DIR,
-    PROPS_DIR,
-    SPAWNER_DIR,
 )
 from db_manager import DatabaseManager
 from drop_rate import DropRateEngine
@@ -42,7 +27,7 @@ from module_builder import (
 )
 from pipeline import Pipeline
 from quest_collector import run_quest_extraction
-from search_engine import extract_all_spawners, load_all_spawner_data
+from search_engine import load_all_spawner_data
 from search_index_builder import build_search_index_files
 from translator import (
     NameResolver,
@@ -66,55 +51,6 @@ def _resolve_group_display(group: str, translations: dict[str, str]) -> str:
     return f"{base}{floor}层"
 
 
-_SOURCE_PATHS = [
-    GAME_JSON,
-    ITEM_DIR,
-    MONSTER_DIR,
-    PROPS_DIR,
-    DUNGEON_MODULE_DIR,
-    LOOTDROP_DIR,
-    LOOTDROP_GROUP_DIR,
-    LOOTDROP_RATE_DIR,
-    SPAWNER_DIR,
-    MAPS_DIR,
-    LAYOUT_DIR,
-    LOCALIZATION_ROOT,
-]
-
-
-def _get_newest_mtime(paths: list[Path]) -> float:
-    newest = 0.0
-    for p in paths:
-        if not p.exists():
-            continue
-        if p.is_file():
-            try:
-                mtime = p.stat().st_mtime
-                if mtime > newest:
-                    newest = mtime
-            except OSError:
-                continue
-        elif p.is_dir():
-            for dirpath, _dirnames, filenames in os.walk(p):
-                for fn in filenames:
-                    try:
-                        fp = Path(dirpath) / fn
-                        mtime = fp.stat().st_mtime
-                        if mtime > newest:
-                            newest = mtime
-                    except OSError:
-                        continue
-    return newest
-
-
-def _is_db_stale(db_path: Path) -> bool:
-    if not db_path.exists():
-        return True
-    db_mtime = db_path.stat().st_mtime
-    latest_source = _get_newest_mtime(_SOURCE_PATHS)
-    return db_mtime < latest_source
-
-
 def run():
     print("=" * 50)
     print("  DarkFindV5 - Data Collector")
@@ -125,15 +61,11 @@ def run():
 
     try:
 
-        pipe.log("checking DB staleness...")
-        db_stale = _is_db_stale(DB_PATH)
-        if db_stale and DB_PATH.exists():
-            DB_PATH.unlink()
-        pipe.log(f"DB stale={db_stale}, creating DatabaseManager...")
+        pipe.log("creating DatabaseManager...")
         db = DatabaseManager(DB_PATH)
         pipe.log("DatabaseManager ready")
 
-        game_available = GAME_ROOT.exists() and db_stale
+        game_available = True
 
         pipe.log("get_entity_classification START")
         entity_class = db.get_entity_classification()
@@ -160,13 +92,17 @@ def run():
                 count = db.import_dungeon_modules()
                 ctx.set_result(f"{count}")
 
+            with pipe.phase("import_spawner_entries", 11) as ctx:
+                count = db.import_spawner_entries()
+                ctx.set_result(f"{count}")
+
             with pipe.phase("get_monster_name_map", 11) as ctx:
                 monster_name_map = db.get_monster_name_map()
                 ctx.set_result(f"{len(monster_name_map)}")
 
             with pipe.phase("load_all_spawner_data", 11) as ctx:
                 spawner_has_lootdrop, spawner_multi_entity, spawner_monster_map = load_all_spawner_data(
-                    monster_name_map
+                    db, monster_name_map
                 )
                 ctx.set_result(
                     f"has_lootdrop={len(spawner_has_lootdrop)}, multi_entity={len(spawner_multi_entity)}, monster_map={len(spawner_monster_map)}"
@@ -177,7 +113,7 @@ def run():
                 ctx.set_result(f"{count}")
 
             with pipe.phase("extract_and_store_spawners", 11):
-                spawners = extract_all_spawners(
+                spawners = db.extract_spawners(
                     has_lootdrop_map=spawner_has_lootdrop, multi_entity_spawners=spawner_multi_entity
                 )
                 pipe.log(f"extract_all_spawners DONE -> {len(spawners)} spawners")
@@ -252,7 +188,7 @@ def run():
 
             with pipe.phase("quest_extraction", 11) as ctx:
                 explore_data, quest_items_data, quest_npcs_data = run_quest_extraction(
-                    entity_classification=entity_class
+                    db, entity_classification=entity_class
                 )
                 ctx.set_result(
                     f"explore={len(explore_data)}, items={len(quest_items_data)}, npcs={len(quest_npcs_data)}"
@@ -263,16 +199,9 @@ def run():
                 pipe.log("quest data imported to DB")
 
             with pipe.phase("import_lootdrop_rates", 11):
-                db.import_spawner_entries()
                 db.import_lootdrop_groups()
                 db.import_lootdrop_rate_items()
                 db.import_lootdrop_rate_weights()
-        else:
-            if not GAME_ROOT.exists():
-                print("\n[SKIP] Game data not found, using existing DB")
-            else:
-                print("\n[SKIP] DB is up to date (newest source file older than DB), using existing DB")
-
         pipe.log("[JSON] loading entities from DB...")
         items = db.get_item_entities()
         monsters = db.get_monster_entities()
@@ -336,9 +265,8 @@ def run():
         print("\nExporting JSON files...")
         OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-        if GAME_ROOT.exists():
-            pipe.log("[JSON] syncing webp images...")
-            sync_webp_images(pipe.log)
+        pipe.log("[JSON] checking delivered webp images...")
+        sync_webp_images(pipe.log)
 
         translations = db.get_translations_map()
 
