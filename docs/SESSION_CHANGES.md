@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 忽略多语言冒烟测试中的 Cloudflare 外部噪声
+
+- **改动原因**：GitHub Actions `30449448730` 的数据管道、质量检查和 SSG 构建均成功，但 `Test localized pages` 的 16 个页面都因 Cloudflare Analytics 请求返回 `Failed to load resource: net::ERR_FAILED` 而失败，阻止 gh-pages 部署。
+- **变更文件**：`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：测试记录 `cloudflareinsights.com` 的失败请求，并仅过滤与该外部请求对应的通用资源错误控制台消息；同源 `/assets`、`/data` 请求仍由 `requestfailed` 和 HTTP 状态检查报告，hydration、pageerror、标题、语言、链接和文案断言保持不变。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，18 条既有 warning）、`npm run test:i18n` 16/16 通过；本地阻断 Cloudflare Analytics 可复现原始通用错误，过滤逻辑覆盖该场景。
+
 ### fix: 统一模块综合爆率位置并显示稀有模块生成率
 
 - **改动原因**：实体详情页与掉落详情页的模块综合爆率显示条件和位置不一致；`Crypt_BlindfallPit` 是文档记录的 Crypt 稀有模块，模块标题需要显示其 `1%` 出现概率。
