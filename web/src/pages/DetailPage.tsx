@@ -375,7 +375,10 @@ export default function DetailPage() {
   // Score each item by spawn_rate × 豪客赛 drop_rate, same as lootdrop pages
   function itemScore(item: { coords: Coord[] }, gdi: GroupDropInfo[]): number {
     let total = 0;
-    const varGroups = new Map<string, boolean>();
+    const varGroups = new Map<
+      string,
+      { score: number; positions: Set<string>; variantCount: number }
+    >();
     for (const c of item.coords) {
       const label = c.label || '';
       const vc = c.variant_count ?? 1;
@@ -386,13 +389,22 @@ export default function DetailPage() {
       const s = (sr * dr) / 100;
       if (vc > 1) {
         const key = c.group_parent || `${c.file}::${vc}`;
-        if (!varGroups.has(key)) {
-          varGroups.set(key, true);
-          total += s / vc;
+        const group = varGroups.get(key);
+        if (group) {
+          group.positions.add(`${c.x},${c.y},${c.z}`);
+        } else {
+          varGroups.set(key, {
+            score: s,
+            positions: new Set([`${c.x},${c.y},${c.z}`]),
+            variantCount: vc,
+          });
         }
       } else {
         total += s;
       }
+    }
+    for (const group of varGroups.values()) {
+      total += (group.score * group.positions.size) / group.variantCount;
     }
     return Math.round(total * 10000) / 10000;
   }
