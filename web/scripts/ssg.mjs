@@ -454,6 +454,8 @@ const t0 = Date.now();
 console.log(`[ssg] mode=${QUICK ? 'quick' : 'full'} — ${routes.length} routes`);
 const ROOT_MARKER = '<div id="root">';
 const HEAD_CLOSE = '</head>';
+const DESCRIPTION_META_RE =
+  /\s*<meta\s+name=["']description["']\s+content=["'][^"']*["']\s*\/?\s*>/i;
 const SSR_SCRIPT_RE = /<script>window\.__SSR_DATA__=(.*?)<\/script>/s;
 function isTemplateDetailRoute(path) {
   const match = path.match(/^\/(?:[^/]+\/)?([^/]+)\/[^/]+$/);
@@ -745,10 +747,9 @@ for (let i = 0; i < routes.length; i++) {
     const payload = { [dataKey]: routeData };
     try {
       const result = render(urlPath, ssrDataMap);
-      const headlessTemplate = templated.replace(
-        /<title>[^<]*<\/title>\s*/,
-        ''
-      );
+      const headlessTemplate = templated
+        .replace(/<title>[^<]*<\/title>\s*/, '')
+        .replace(DESCRIPTION_META_RE, '');
       page = headlessTemplate
         .replace(ROOT_MARKER, `<div id="root">${result.html}`)
         .replace(

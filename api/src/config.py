@@ -308,8 +308,89 @@ HARDCODED_TRANSLATIONS = {
     "ShipGraveyard_ElephantIsland": "3-6",
 }
 
+# Module spawners use numbered or dungeon-prefixed names while their display
+# names resolve to these base hardcoded entities.
+HARDCODED_TRANSLATION_KEY_ALIASES = {
+    "Ladder_01": "Ladder",
+    "Ladder_02": "Ladder",
+    "Ladder_03": "Ladder",
+    "Ladder_04": "Ladder",
+    "Inferno_PlaneFog": "PlaneFog",
+    "IceWall_01": "IceWall",
+    "IceWall_02": "IceWall",
+    "IceWall_05": "IceWall",
+    "IceWall_06": "IceWall",
+    "IceWall_08": "IceWall",
+    "IceWall_09": "IceWall",
+    "IceFloor_01": "IceFloor",
+    "IciclesWall_01": "IciclesWall",
+}
+
 # Synthetic keys make fallback entity names available to the locale exporter.
 HARDCODED_I18N_PREFIX = "df5.hardcoded."
+
+HARDCODED_LOCALE_OVERRIDES: dict[str, dict[str, str]] = {
+    "Ladder": {
+        "zh-Hans": "梯子",
+        "en": "Ladder",
+        "de": "Leiter",
+        "es": "Escalera",
+        "fr": "Échelle",
+        "ja": "はしご",
+        "ko": "사다리",
+        "pt-BR": "Escada",
+        "ru": "Лестница",
+        "zh-Hant": "梯子",
+    },
+    "PlaneFog": {
+        "zh-Hans": "平面雾",
+        "en": "Plane Fog",
+        "de": "Flächennebel",
+        "es": "Niebla plana",
+        "fr": "Brouillard plan",
+        "ja": "平面フォグ",
+        "ko": "평면 안개",
+        "pt-BR": "Névoa plana",
+        "ru": "Плоский туман",
+        "zh-Hant": "平面霧",
+    },
+    "IceWall": {
+        "zh-Hans": "冰墙",
+        "en": "Ice Wall",
+        "de": "Eiswand",
+        "es": "Pared de hielo",
+        "fr": "Mur de glace",
+        "ja": "氷の壁",
+        "ko": "얼음벽",
+        "pt-BR": "Parede de gelo",
+        "ru": "Ледяная стена",
+        "zh-Hant": "冰牆",
+    },
+    "IceFloor": {
+        "zh-Hans": "冰面",
+        "en": "Ice Floor",
+        "de": "Eisfläche",
+        "es": "Suelo de hielo",
+        "fr": "Sol de glace",
+        "ja": "氷の床",
+        "ko": "얼음 바닥",
+        "pt-BR": "Piso de gelo",
+        "ru": "Ледяной пол",
+        "zh-Hant": "冰面",
+    },
+    "IciclesWall": {
+        "zh-Hans": "冰柱墙",
+        "en": "Icicle Wall",
+        "de": "Eiszapfenwand",
+        "es": "Pared de carámbanos",
+        "fr": "Mur de stalactites de glace",
+        "ja": "つららの壁",
+        "ko": "고드름 벽",
+        "pt-BR": "Parede de estalactites de gelo",
+        "ru": "Стена с сосульками",
+        "zh-Hant": "冰柱牆",
+    },
+}
 
 
 def _english_hardcoded_name(name: str) -> str:
@@ -322,15 +403,17 @@ def _english_hardcoded_name(name: str) -> str:
 
 def hardcoded_translation_key(name: str) -> str | None:
     """Return a stable synthetic locale key for an entity without a Game.json key."""
-    if name in HARDCODED_TRANSLATIONS:
-        return f"{HARDCODED_I18N_PREFIX}{name}"
+    canonical_name = HARDCODED_TRANSLATION_KEY_ALIASES.get(name, name)
+    if canonical_name in HARDCODED_TRANSLATIONS:
+        return f"{HARDCODED_I18N_PREFIX}{canonical_name}"
     return None
 
 
 def hardcoded_locale_entries(lang: str, used_keys: set[str]) -> dict[str, str]:
     """Build synthetic locale entries only for hardcoded entities present in output."""
     return {
-        key: value if lang == "zh-Hans" else _english_hardcoded_name(name)
+        key: HARDCODED_LOCALE_OVERRIDES.get(name, {}).get(lang)
+        or (value if lang == "zh-Hans" else _english_hardcoded_name(name))
         for name, value in HARDCODED_TRANSLATIONS.items()
         if (key := hardcoded_translation_key(name)) in used_keys
     }
