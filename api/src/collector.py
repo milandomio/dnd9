@@ -3,6 +3,7 @@ import re
 
 from config import (
     DB_PATH,
+    GAME_ROOT,
     LOG_DIR,
     OUTPUT_DIR,
 )
@@ -65,7 +66,7 @@ def run():
         db = DatabaseManager(DB_PATH)
         pipe.log("DatabaseManager ready")
 
-        game_available = True
+        game_available = GAME_ROOT.exists()
 
         pipe.log("get_entity_classification START")
         entity_class = db.get_entity_classification()
@@ -202,6 +203,8 @@ def run():
                 db.import_lootdrop_groups()
                 db.import_lootdrop_rate_items()
                 db.import_lootdrop_rate_weights()
+        else:
+            print("\n[SKIP] Game data not found, using existing DB")
         pipe.log("[JSON] loading entities from DB...")
         items = db.get_item_entities()
         monsters = db.get_monster_entities()
