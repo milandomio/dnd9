@@ -1990,6 +1990,42 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.seo.module_group_description':
       '{name} modules, {count} modules in total.',
   },
+  ja: {
+    'ui.pwa.install_title': 'DarkFlashNavをインストール',
+    'ui.pwa.install_description': 'ホーム画面に追加してすぐに開けます',
+    'ui.pwa.install': 'インストール',
+    'ui.pwa.offline_notice':
+      '現在オフラインです。キャッシュ済みのページは閲覧できます。',
+    'ui.pwa.offline_ready': 'オフラインモードの準備ができました',
+    'ui.pwa.update_ready': '新しいバージョンをダウンロードしました',
+    'ui.pwa.apply_update': '更新を適用するには再読み込みしてください',
+    'ui.debug.coords_title': 'すべての座標詳細',
+    'ui.debug.group': 'グループ',
+    'ui.debug.coord_name': '座標名',
+    'ui.debug.map_file': 'マップファイル',
+    'ui.debug.map': 'マップ',
+    'ui.debug.label': 'ラベル',
+    'ui.debug.map_summary': '{count}件の位置 | 範囲: ±{range}',
+    'ui.debug.transform':
+      '回転:{rotation} オフセット:({x},{y}) サイズ:{sx}x{sy}',
+    'ui.debug.range': '範囲:',
+    'ui.debug.offset': 'オフセット:',
+    'ui.debug.rotate': '回転',
+    'ui.debug.mirror_horizontal': '左右反転',
+    'ui.debug.mirror_vertical': '上下反転',
+    'ui.debug.reset': 'リセット',
+    'ui.debug.default_threshold':
+      'デフォルト表示しきい値（総合爆率%）：{threshold}%',
+    'ui.debug.threshold_hint':
+      'spawn_rate × ハイローラーのドロップ率 ≥ {threshold}% でデフォルト表示',
+    'ui.seo.keywords': 'ダーク・アンド・ダーカー,DarkFlashNav,DND,ゲーム攻略',
+    'ui.seo.entity_description': '{name}はゲーム内に{count}か所あります。',
+    'ui.seo.lootdrop_description':
+      '{name}は{sources}種類の供給源からドロップし、{positions}か所にあります。',
+    'ui.seo.module_description':
+      '{name}モジュール、サイズ {sx}x{sy}、{entities}個の実体と{positions}か所の位置があります。',
+    'ui.seo.module_group_description': '{name}モジュール、合計{count}件です。',
+  },
   'zh-Hant': {
     'ui.pwa.install_title': '安裝 DND閃電指南',
     'ui.pwa.install_description': '新增至主畫面，隨時存取',

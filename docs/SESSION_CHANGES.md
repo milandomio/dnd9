@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 清理日语详情页的英文额外文案
+
+- **改动原因**：日语详情页仍会显示 `Super Hoard`、`Offline mode is ready`，且 `meta description` 继续回退英文；原因分别是 SuperHoard 共享 synthetic key 时被硬编码兜底覆盖，以及 `ui.seo/ui.pwa/ui.debug` 只有中英/繁中额外字典。
+- **变更文件**：`api/src/locale_builder.py`；`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`df5.hardcoded.SuperHoard` 先走 `hardcoded_locale_entries()` 再回填 `SUPERHOARD_I18N`，避免与硬编码兜底同键冲突；日语额外 UI 字典补齐 `ui.pwa.*`、`ui.debug.*`、`ui.seo.*`，让详情页标题旁、PWA 提示和 SEO 文案都走日语而不是英文回退。
+- **验证/剩余清单**：1320 个日语详情路由中，统一 UI/SEO 回退已清除；仍有 123 页含非品牌英文，主要是 118 个技术型 props，另有 `ExpressmanOtto`、2 个模块页和 2 个任务 NPC 页，需后续逐项补 `translation_key` 或实体硬编码翻译。
+
 ### docs: 拆出 DB-only 运行时 I/O 修复计划
 
 - **改动原因**：确认后端仍有多处运行时直接扫描 `Output/Exports`、`Localization/Game`、`MAPS_DIR`、`LAYOUT_DIR`、`SPAWNER_DIR` 等解包目录的行为，需要先固化修复顺序，再逐项收口。
