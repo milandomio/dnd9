@@ -4,6 +4,13 @@
 
 ## 2026-07-29
 
+### fix: 补齐掉落来源合成实体十语言翻译
+
+- **改动原因**：`ja/lootdrops/AdventurerCloak_5001/` 等非中文页面中，`Dwarf Hand Cannoneer`、`Armor Dual Boss` 等来源按钮因合成实体只配置中文名称，其他九种语言统一回退为英文。
+- **变更文件**：`api/src/config.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：为 `df5.hardcoded.DwarfHandCannoneer`、`df5.hardcoded.Armor_DualBoss`、`df5.hardcoded.Armor_Armory`、`df5.hardcoded.Armor_GoldenRoom` 增加十种语言显式映射；locale 构建器继续按产物实际使用键注入，前端无需改变 `t(translation_key, fallback)` 消费逻辑。
+- **验证**：数据管道成功生成 10 个 locale；SSG 生成 3070 路由；目标日语页面 HTTP 200，4 个来源名称均已本地化且无英文泄漏；`npm run test:i18n` 16/16、Prettier、TypeScript、Ruff 和 Black 通过。
+
 ### fix: CI 构建保留神器 _8001 专用翻译键
 
 - **改动原因**：线上 `ja/lootdrops/HeaterShield_8001/` 的版本化数据将神器错误写为基础物品键 `Text_DesignData_Item_Item_HeaterShield_1001`，显示“ヒーターシールド”而非“イージス”；本地因有游戏解包 JSON 不复现，GitHub Actions 无解包目录时静默回退基础键。
