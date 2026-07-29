@@ -63,5 +63,6 @@ git add <本任务文件...> && git commit -m "feat: ..."
 ## 重要警告
 
 - 不要直接改 `data/` 下的自动生成文件，修改 `api/src/collector.py` 中的生成逻辑。
+- 解包 JSON 只能用于批量导入 DB；导出、构建与部署代码只能从 DB 读取，不能因本地存在解包目录而增加 JSON 回退读取。
 - `python main.py` 必须在 `npm run build` 之前运行。
 - TypeScript 类型检查：`npx tsc --noEmit`（构建中自动执行）。

@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-from config import ITEM_DIR, TRANSLATION_ALIAS_MAP, superhoard_translation_key
+from config import TRANSLATION_ALIAS_MAP, superhoard_translation_key
 from label_type import (
     GOLDCHEST_FAMILY,
     GOLDCHEST_SPECIAL,
@@ -162,21 +162,10 @@ _FALLBACK_RARITY = {
 
 
 def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[str, str]) -> dict[str, dict]:
-    """Read RarityType from game JSON, translate via DB translations table."""
+    """Resolve rarity from the variant suffix and DB-backed translation map."""
     result: dict[str, dict] = {}
     for suffix in suffixes:
-        rarity_name: str | None = None
-        json_path = ITEM_DIR / f"Id_Item_{item_name}_{suffix}.json"
-        if json_path.exists():
-            try:
-                data = json.loads(json_path.read_text(encoding="utf-8"))
-                if isinstance(data, list) and data:
-                    tag = data[0].get("Properties", {}).get("RarityType", {}).get("TagName", "")
-                    rarity_name = tag.split(".")[-1] if tag else None
-            except Exception:
-                pass
-        if not rarity_name:
-            rarity_name = _FALLBACK_RARITY.get(suffix)
+        rarity_name = _FALLBACK_RARITY.get(suffix)
         if rarity_name:
             key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{rarity_name}"
             result[suffix] = {"name": translations.get(key, rarity_name), "translation_key": key}
@@ -190,6 +179,12 @@ def _detail_variant_suffixes(entry: dict, drop_engine) -> list[str]:
     if item_name.endswith("_8001"):
         return suffixes
     return [suffix for suffix in suffixes if suffix != "8001"]
+
+
+def _artifact_translation_key(item_name: str, translations: dict[str, str]) -> str:
+    """Resolve an artifact key exclusively from the DB-backed translation map."""
+    expected_key = f"Text_DesignData_Item_Item_{item_name}"
+    return expected_key if expected_key in translations else ""
 
 
 def _possible_variant_suffixes(entry: dict) -> list[str]:
@@ -299,6 +294,7 @@ def build_loot_index(
     monsters: list[dict],
     entity_class: dict,
     resolve_name,
+    translations: dict[str, str],
 ) -> list[dict]:
     """Build lootdrops.json index (grouped by item for list page)."""
     items_lookup = {r["item_name"]: r for r in items}
@@ -386,22 +382,12 @@ def build_loot_index(
             mon_translations.append(resolve_name(m, None, "monster") or m)
             mon_translation_keys.append("")
         variant_count = item_row.get("variant_count", 1) if item_row else 1
-        translation_key = ""
-        if item_row and item_row.get("translation_key"):
-            translation_key = item_row["translation_key"]
-            # For 8001 variants, read variant's game JSON to get correct Name key
-            if item_name.endswith("_8001"):
-                _vj = ITEM_DIR / f"Id_Item_{item_name}.json"
-                if _vj.exists():
-                    try:
-                        _vd = json.loads(_vj.read_text("utf-8"))
-                        if isinstance(_vd, list) and _vd:
-                            _nk = _vd[0].get("Properties", {}).get("Name", {}).get("Key", "")
-                            if _nk:
-                                translation_key = _nk
-                    except Exception:
-                        pass
-        elif item_name.endswith("_8001"):
+        translation_key = (
+            _artifact_translation_key(item_name, translations)
+            if item_name.endswith("_8001")
+            else item_row.get("translation_key", "") if item_row else ""
+        )
+        if not translation_key and item_name.endswith("_8001"):
             base_row = items_lookup.get(item_name.removesuffix("_8001"))
             if base_row:
                 translation_key = base_row.get("translation_key", "")

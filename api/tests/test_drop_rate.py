@@ -5,7 +5,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from drop_rate import DropRateEngine  # noqa: E402
-from lootdrop_builder import _detail_variant_suffixes  # noqa: E402
+from lootdrop_builder import (  # noqa: E402
+    _artifact_translation_key,
+    _detail_variant_suffixes,
+    _get_variant_rarity,
+)
 
 
 class DropRateVariantTest(unittest.TestCase):
@@ -37,6 +41,20 @@ class DropRateVariantTest(unittest.TestCase):
         self.assertEqual(
             _detail_variant_suffixes(entry, self.engine),
             ["1001", "2001", "3001", "4001"],
+        )
+
+    def test_artifact_translation_key_does_not_require_game_json(self):
+        key = "Text_DesignData_Item_Item_HeaterShield_8001"
+        self.assertEqual(
+            _artifact_translation_key("HeaterShield_8001", {key: "不朽神盾"}),
+            key,
+        )
+
+    def test_variant_rarity_uses_suffix_and_db_translations(self):
+        key = "Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_Artifact"
+        self.assertEqual(
+            _get_variant_rarity("HeaterShield", ["8001"], {key: "神器"}),
+            {"8001": {"name": "神器", "translation_key": key}},
         )
 
 
