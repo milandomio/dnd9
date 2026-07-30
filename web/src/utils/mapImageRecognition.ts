@@ -20,7 +20,7 @@ export interface MapImageMatch {
   width: number;
   height: number;
   score: number;
-  method: 'template' | 'orb';
+  method: 'template' | 'template-inner' | 'orb';
 }
 
 export interface MapImageRecognitionOutput {
@@ -117,7 +117,7 @@ interface TemplatePrefilterResult {
 const MAX_WORKING_EDGE = 600;
 const TEMPLATE_SCALES = [0.32, 0.4, 0.44, 0.48, 0.6, 0.75, 1, 1.25];
 const GRID_TEMPLATE_SCALES = {
-  '5x5': [0.4, 0.44, 0.48],
+  '5x5': [0.4, 0.44, 0.48, 0.52],
   '7x7': [0.36, 0.4, 0.44],
 } as const;
 const TEMPLATE_ROTATIONS = [0, 90, 180, 270] as const;
@@ -177,6 +177,31 @@ function resizeCanvas(
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Canvas 2D context is unavailable');
   context.drawImage(source, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+
+function cropCanvas(
+  source: HTMLCanvasElement,
+  insetX: number,
+  insetY: number
+): HTMLCanvasElement {
+  const canvas = createCanvas(
+    source.width - insetX * 2,
+    source.height - insetY * 2
+  );
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('Canvas 2D context is unavailable');
+  context.drawImage(
+    source,
+    insetX,
+    insetY,
+    canvas.width,
+    canvas.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
   return canvas;
 }
 
@@ -409,7 +434,7 @@ function inferMapGridType(
   if (searchRegion.gridHint) return searchRegion.gridHint;
   if (searchRegion.x === 0 && searchRegion.y === 0) return null;
   const reliable = matches.filter(
-    (match) => match.method === 'template' && match.score >= 0.58
+    (match) => match.method !== 'orb' && match.score >= 0.58
   );
   const candidates = reliable.length >= 3 ? reliable : matches;
   if (candidates.length < 3) return null;
@@ -435,7 +460,14 @@ function collectTemplatePeaks(
   templateWidth: number,
   templateHeight: number,
   template: LoadedMapImageTemplate,
-  matchThreshold: number
+  matchThreshold: number,
+  options: {
+    boxWidth?: number;
+    boxHeight?: number;
+    offsetX?: number;
+    offsetY?: number;
+    method?: MapImageMatch['method'];
+  } = {}
 ): { matches: WorkingMatch[]; bestScore: number } {
   const candidates: Array<{ x: number; y: number; score: number }> = [];
   let bestScore = -Infinity;
@@ -467,17 +499,33 @@ function collectTemplatePeaks(
   }
   candidates.sort((a, b) => b.score - a.score);
   const peaks: WorkingMatch[] = [];
+  const boxWidth = options.boxWidth ?? templateWidth;
+  const boxHeight = options.boxHeight ?? templateHeight;
+  const offsetX = options.offsetX ?? 0;
+  const offsetY = options.offsetY ?? 0;
+  const sceneWidth = result.cols + templateWidth - 1;
+  const sceneHeight = result.rows + templateHeight - 1;
   for (const candidate of candidates) {
     if (candidate.score < threshold) break;
+    const x = candidate.x - offsetX;
+    const y = candidate.y - offsetY;
+    if (
+      x < 0 ||
+      y < 0 ||
+      x + boxWidth > sceneWidth ||
+      y + boxHeight > sceneHeight
+    ) {
+      continue;
+    }
     const match: WorkingMatch = {
       templateId: template.id,
       label: template.label,
-      x: candidate.x,
-      y: candidate.y,
-      width: templateWidth,
-      height: templateHeight,
+      x,
+      y,
+      width: boxWidth,
+      height: boxHeight,
       score: candidate.score,
-      method: 'template',
+      method: options.method ?? 'template',
     };
     if (
       !peaks.some((existing) => intersectionOverUnion(existing, match) > 0.3)
@@ -870,6 +918,57 @@ export async function recognizeMapScreenshot(
               )
             );
             rawMatches.push(...peakResult.matches);
+            if (
+              peakResult.matches.length === 0 &&
+              peakResult.bestScore >= matchThreshold - 0.12
+            ) {
+              const insetX = Math.max(2, Math.round(scaledCanvas.width * 0.12));
+              const insetY = Math.max(
+                2,
+                Math.round(scaledCanvas.height * 0.12)
+              );
+              const innerCanvas = cropCanvas(scaledCanvas, insetX, insetY);
+              if (innerCanvas.width >= 24 && innerCanvas.height >= 24) {
+                const innerRgba = cv.imread(innerCanvas);
+                const innerGray = new cv.Mat();
+                const innerResult = new cv.Mat();
+                try {
+                  cv.cvtColor(innerRgba, innerGray, cv.COLOR_RGBA2GRAY);
+                  cv.matchTemplate(
+                    screenshotGray,
+                    innerGray,
+                    innerResult,
+                    cv.TM_CCOEFF_NORMED
+                  );
+                  const innerPeaks = collectTemplatePeaks(
+                    innerResult,
+                    innerCanvas.width,
+                    innerCanvas.height,
+                    template,
+                    matchThreshold,
+                    {
+                      boxWidth: scaledCanvas.width,
+                      boxHeight: scaledCanvas.height,
+                      offsetX: insetX,
+                      offsetY: insetY,
+                      method: 'template-inner',
+                    }
+                  );
+                  fineScores.set(
+                    template.id,
+                    Math.max(
+                      fineScores.get(template.id) ?? -Infinity,
+                      innerPeaks.bestScore
+                    )
+                  );
+                  rawMatches.push(...innerPeaks.matches);
+                } finally {
+                  innerRgba.delete();
+                  innerGray.delete();
+                  innerResult.delete();
+                }
+              }
+            }
           } finally {
             templateRgba.delete();
             templateGray.delete();
