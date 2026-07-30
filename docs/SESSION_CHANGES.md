@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 为无语言前缀旧 URL 生成默认语言跳转壳
+
+- **改动原因**：历史 `props/Lifeleaf/` 等静态实体页仍可能被 CDN 或搜索引擎命中，物理 HTML 会先于客户端 `Navigate` 返回，导致没有跳到默认语言路径。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SSG 在多语言副本后遍历可生成路由，将 `zh-Hans/<route>/index.html` 映射为旧 `<route>/index.html`；旧页写入 canonical、零秒 meta refresh 与保留查询串/hash 的 JavaScript 跳转，统一目标为 `/zh-Hans/<route>/`，已有掉落变体重定向继续使用其默认变体目标。
+- **验证**：Prettier、TypeScript、quick SSG（生成 1,603 个旧 URL 跳转壳）、`test:i18n`（16/16）通过；Playwright 从 `/props/Lifeleaf/` 实际跳转到 `/zh-Hans/props/Lifeleaf/` 并加载 32 个位置点，目标路由 HTTP 200。
+
 ### fix: 注入全站 SSG 多语言标题
 
 - **改动原因**：`/en/dungeon_modules/ShipGraveyard/` 等数组型路由没有实体 `translation_key` 可供旧 SSG 标题函数解析，保留了简中 SSR `<title>`；模板详情壳也未内联 `__localizedTitle`，客户端首轮会回写中文标题。

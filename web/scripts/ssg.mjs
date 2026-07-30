@@ -898,6 +898,29 @@ for (const lang of LANGS) {
 }
 console.log(`[ssg] localized HTML generated: ${localizedCount}`);
 
+// ---- step 5c: preserve legacy URLs with static default-language redirects ----
+let legacyRedirectCount = 0;
+for (const r of routes) {
+  if (r.path === '/' || r.generateStatic === false) continue;
+  const legacyFile = r.file.replace(new RegExp(`^${DEFAULT_LANG}/`), '');
+  const target = r.redirect || `${r.path.replace(/\/?$/, '/')}`;
+  const redirectPage = `<!doctype html>
+<html lang="${DEFAULT_LANG}">
+<head>
+  <meta charset="utf-8">
+  <link rel="canonical" href="${target}">
+  <meta http-equiv="refresh" content="0;url=${target}">
+  <script>window.location.replace(${JSON.stringify(target)} + window.location.search + window.location.hash);</script>
+</head>
+<body></body>
+</html>`;
+  const legacyPath = join(DIST, legacyFile);
+  mkdirSync(dirname(legacyPath), { recursive: true });
+  writeFileSync(legacyPath, redirectPage, 'utf-8');
+  legacyRedirectCount++;
+}
+console.log(`[ssg] legacy redirects generated: ${legacyRedirectCount}`);
+
 // ---- step 6: 404.html ----
 writeFileSync(join(DIST, '404.html'), template, 'utf-8');
 
