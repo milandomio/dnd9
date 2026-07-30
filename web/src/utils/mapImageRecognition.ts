@@ -29,10 +29,35 @@ export interface MapImageRecognitionOutput {
   width: number;
   height: number;
   gridType: '5x5' | '7x7' | null;
+  debug: MapImageRecognitionDebug;
+}
+
+export interface MapImageRecognitionDebug {
+  version: 1;
+  generatedAt: string;
+  group: string | null;
+  threshold: number;
+  gridType: MapImageRecognitionOutput['gridType'];
+  source: { width: number; height: number };
+  workingScale: number;
+  searchRegion: { x: number; y: number; width: number; height: number };
+  templateCount: number;
+  candidateTemplateCount: number;
+  templateScores: Array<{
+    templateId: string;
+    label: string;
+    selected: boolean;
+    coarseScore: number | null;
+    fineScore: number | null;
+  }>;
+  matchesBeforeNms: MapImageMatch[];
+  matchesAfterNms: MapImageMatch[];
+  timingsMs: { prefilter: number; matching: number; total: number };
 }
 
 export interface MapImageRecognitionOptions {
   threshold?: number;
+  group?: string;
 }
 
 interface OpenCvModule {
@@ -82,6 +107,11 @@ interface SearchRegion {
   x: number;
   y: number;
   gridHint: MapImageRecognitionOutput['gridType'];
+}
+
+interface TemplatePrefilterResult {
+  templates: LoadedMapImageTemplate[];
+  scores: Map<string, number>;
 }
 
 const MAX_WORKING_EDGE = 600;
@@ -406,7 +436,7 @@ function collectTemplatePeaks(
   templateHeight: number,
   template: LoadedMapImageTemplate,
   matchThreshold: number
-): WorkingMatch[] {
+): { matches: WorkingMatch[]; bestScore: number } {
   const candidates: Array<{ x: number; y: number; score: number }> = [];
   let bestScore = -Infinity;
   const stride = result.cols * result.rows > 900000 ? 2 : 1;
@@ -416,7 +446,7 @@ function collectTemplatePeaks(
       if (score > bestScore) bestScore = score;
     }
   }
-  if (bestScore < matchThreshold) return [];
+  if (bestScore < matchThreshold) return { matches: [], bestScore };
   const threshold = Math.max(matchThreshold, bestScore - 0.08);
   for (let y = 0; y < result.rows; y += stride) {
     for (let x = 0; x < result.cols; x += stride) {
@@ -456,7 +486,7 @@ function collectTemplatePeaks(
     }
     if (peaks.length >= MAX_PEAKS_PER_TEMPLATE) break;
   }
-  return peaks;
+  return { matches: peaks, bestScore };
 }
 
 function maxMatScore(result: InstanceType<CV['Mat']>): number {
@@ -475,8 +505,10 @@ async function prefilterTemplates(
   templates: LoadedMapImageTemplate[],
   workingScale: number,
   templateScales: readonly number[]
-): Promise<LoadedMapImageTemplate[]> {
-  if (templates.length <= MAX_FINE_TEMPLATE_CANDIDATES) return templates;
+): Promise<TemplatePrefilterResult> {
+  if (templates.length <= MAX_FINE_TEMPLATE_CANDIDATES) {
+    return { templates, scores: new Map() };
+  }
   const coarseFactor = 0.5;
   const coarseScene = resizeCanvas(scene, coarseFactor);
   const sceneRgba = cv.imread(coarseScene);
@@ -530,10 +562,13 @@ async function prefilterTemplates(
     sceneRgba.delete();
     sceneGray.delete();
   }
-  return scores
-    .sort((a, b) => b.score - a.score)
-    .slice(0, MAX_FINE_TEMPLATE_CANDIDATES)
-    .map(({ template }) => template);
+  return {
+    templates: scores
+      .sort((a, b) => b.score - a.score)
+      .slice(0, MAX_FINE_TEMPLATE_CANDIDATES)
+      .map(({ template }) => template),
+    scores: new Map(scores.map(({ template, score }) => [template.id, score])),
+  };
 }
 
 function getKeyPointPoint(keyPoint: OpenCvKeyPoint): { x: number; y: number } {
@@ -762,6 +797,7 @@ export async function recognizeMapScreenshot(
   cv: CV,
   options: MapImageRecognitionOptions = {}
 ): Promise<MapImageRecognitionOutput> {
+  const startedAt = performance.now();
   if (templates.length === 0) throw new Error('No map templates are available');
   const matchThreshold = Math.min(
     0.9,
@@ -776,16 +812,20 @@ export async function recognizeMapScreenshot(
   const templateScales = searchRegion.gridHint
     ? GRID_TEMPLATE_SCALES[searchRegion.gridHint]
     : TEMPLATE_SCALES;
-  const candidateTemplates = await prefilterTemplates(
+  const prefilterStartedAt = performance.now();
+  const prefilter = await prefilterTemplates(
     cv,
     searchRegion.canvas,
     templates,
     workingScale,
     templateScales
   );
+  const prefilterFinishedAt = performance.now();
+  const candidateTemplates = prefilter.templates;
   const screenshotRgba = cv.imread(searchRegion.canvas);
   const screenshotGray = new cv.Mat();
   const rawMatches: WorkingMatch[] = [];
+  const fineScores = new Map<string, number>();
   try {
     cv.cvtColor(screenshotRgba, screenshotGray, cv.COLOR_RGBA2GRAY);
     for (const template of candidateTemplates) {
@@ -815,15 +855,21 @@ export async function recognizeMapScreenshot(
               result,
               cv.TM_CCOEFF_NORMED
             );
-            rawMatches.push(
-              ...collectTemplatePeaks(
-                result,
-                scaledCanvas.width,
-                scaledCanvas.height,
-                template,
-                matchThreshold
+            const peakResult = collectTemplatePeaks(
+              result,
+              scaledCanvas.width,
+              scaledCanvas.height,
+              template,
+              matchThreshold
+            );
+            fineScores.set(
+              template.id,
+              Math.max(
+                fineScores.get(template.id) ?? -Infinity,
+                peakResult.bestScore
               )
             );
+            rawMatches.push(...peakResult.matches);
           } finally {
             templateRgba.delete();
             templateGray.delete();
@@ -862,24 +908,68 @@ export async function recognizeMapScreenshot(
 
   const localMatches = mergeMatches(rawMatches);
   const gridType = inferMapGridType(localMatches, searchRegion);
-  const matches = localMatches.map((match) => ({
+  const withSearchRegionOffset = (match: WorkingMatch): WorkingMatch => ({
     ...match,
     x: match.x + searchRegion.x,
     y: match.y + searchRegion.y,
-  }));
-  const outputCanvas = drawAnnotation(screenshot, matches, workingScale);
+  });
+  const toSourceCoordinates = (match: WorkingMatch): MapImageMatch => ({
+    ...match,
+    x: match.x / workingScale,
+    y: match.y / workingScale,
+    width: match.width / workingScale,
+    height: match.height / workingScale,
+  });
+  const workingMatches = localMatches.map(withSearchRegionOffset);
+  const matches = workingMatches.map(toSourceCoordinates);
+  const matchesBeforeNms = rawMatches
+    .map(withSearchRegionOffset)
+    .map(toSourceCoordinates);
+  const outputCanvas = drawAnnotation(screenshot, workingMatches, workingScale);
+  const matchingFinishedAt = performance.now();
+  const normalizedScore = (score: number | undefined) =>
+    score !== undefined && Number.isFinite(score) ? score : null;
+  const selectedTemplateIds = new Set(
+    candidateTemplates.map((template) => template.id)
+  );
+  const debug: MapImageRecognitionDebug = {
+    version: 1,
+    generatedAt: new Date().toISOString(),
+    group: options.group || null,
+    threshold: matchThreshold,
+    gridType,
+    source: { width: screenshot.width, height: screenshot.height },
+    workingScale,
+    searchRegion: {
+      x: searchRegion.x / workingScale,
+      y: searchRegion.y / workingScale,
+      width: searchRegion.canvas.width / workingScale,
+      height: searchRegion.canvas.height / workingScale,
+    },
+    templateCount: templates.length,
+    candidateTemplateCount: candidateTemplates.length,
+    templateScores: templates.map((template) => ({
+      templateId: template.id,
+      label: template.label,
+      selected: selectedTemplateIds.has(template.id),
+      coarseScore: normalizedScore(prefilter.scores.get(template.id)),
+      fineScore: normalizedScore(fineScores.get(template.id)),
+    })),
+    matchesBeforeNms,
+    matchesAfterNms: matches,
+    timingsMs: {
+      prefilter: prefilterFinishedAt - prefilterStartedAt,
+      matching: matchingFinishedAt - prefilterFinishedAt,
+      total: matchingFinishedAt - startedAt,
+    },
+  };
   return {
     blob: await canvasToBlob(outputCanvas),
-    matches: matches.map((match) => ({
-      ...match,
-      x: match.x / workingScale,
-      y: match.y / workingScale,
-      width: match.width / workingScale,
-      height: match.height / workingScale,
-    })),
+    matches,
     width: screenshot.width,
     height: screenshot.height,
     gridType,
+    debug,
   };
 }
 
