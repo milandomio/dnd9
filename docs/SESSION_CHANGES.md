@@ -9,7 +9,7 @@
 - **改动原因**：按请求核对线上 `origin/main` 与本地 `main`；远程数据库哈希为 `13e6c6b2ea8be492de3ee3c3b5860ce8c4fe8725`，本地数据库哈希为 `ea3b6fcc1e110a3539bb3b78a60cdb8b5372c180`，存在差异，需要将本地新快照随 `main` 推送。
 - **变更文件**：`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：数据库按 `BUILD_AND_DEPLOY.md` 规则临时纳入提交并推送到 `origin/main`，推送后恢复本地 `skip-worktree` 状态；数据库仍是 Actions 无游戏源时导出前端数据的唯一来源。
-- **验证**：已通过 Git 远程对象哈希确认线上线下数据库不同；推送后复核 `origin/main` 与本地 `main` 指向一致。
+- **验证**：已通过 Git 远程对象哈希确认线上线下数据库不同；推送后复核远程 `refs/heads/main` 已更新，远程数据库哈希与本地新快照一致；本地按规则保留在临时 DB 提交之前并恢复 `skip-worktree`。
 
 ### fix: 将超级宝藏堆箱体坐标纳入掉落分组爆率
 
