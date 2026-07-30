@@ -923,6 +923,7 @@ async function refineGridMatches(
     const cellCanvas = cropCanvasRegion(scene, x, y, width, height);
     const cellRgba = cv.imread(cellCanvas);
     const cellGray = new cv.Mat();
+    const cellMatches: WorkingMatch[] = [];
     try {
       cv.cvtColor(cellRgba, cellGray, cv.COLOR_RGBA2GRAY);
       const baseScale = seed.width / template.canvas.width;
@@ -959,7 +960,7 @@ async function refineGridMatches(
               template,
               threshold
             );
-            matches.push(
+            cellMatches.push(
               ...peaks.matches.map((match) => ({
                 ...match,
                 x: match.x + x,
@@ -977,6 +978,7 @@ async function refineGridMatches(
       cellRgba.delete();
       cellGray.delete();
     }
+    matches.push(...(cellMatches.length > 0 ? cellMatches : [seed]));
     await yieldToBrowser();
   }
   return mergeMatches(
