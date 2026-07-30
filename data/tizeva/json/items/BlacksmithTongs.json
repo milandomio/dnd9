@@ -1,0 +1,35 @@
+{
+  "name": "BlacksmithTongs",
+  "translation": "铁匠钳",
+  "translation_key": "Text_DesignData_Item_Item_BlacksmithTongs",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": -429.06357,
+      "y": 686.1331,
+      "z": 27.09568,
+      "yaw": 296.8,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_D.json",
+      "version": "(D)",
+      "label": "BlacksmithTongs"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "铁匠钳",
+        "translation_key": "Text_DesignData_Item_Item_BlacksmithTongs",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}
