@@ -807,11 +807,6 @@ export default function DetailPage() {
                     range={range}
                     singleCategory
                   />
-                  <CompositeRate
-                    rate={subPoolRate}
-                    labelKey="ui.detail.composite_spawn_rate"
-                    precision={2}
-                  />
                   {(() => {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
@@ -1014,7 +1009,10 @@ export default function DetailPage() {
                       </div>
                     );
                   })()}
-                  <CompositeRate rate={moduleCompositeRate} />
+                  <CompositeRate
+                    rate={moduleCompositeRate}
+                    spawnRate={subPoolRate}
+                  />
                   {debug && (
                     <div
                       style={{
