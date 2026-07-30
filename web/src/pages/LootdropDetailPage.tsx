@@ -36,6 +36,7 @@ import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
 import { defaultVariantSuffix } from '../utils/variant';
+import { localizedSeoDescription } from '../i18n/seo';
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
@@ -278,7 +279,7 @@ export default function LootdropDetailPage() {
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
   const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
@@ -794,6 +795,10 @@ export default function LootdropDetailPage() {
   const visibleCount = resolvedMonsters.filter(
     (m) => !hidden.has(m.translation)
   ).length;
+  const rawLocationCount = resolvedMonsters.reduce(
+    (count, monster) => count + monster.coords.length,
+    0
+  );
   const itemLabel = stripTrailingParenthetical(
     t(data.translation_key, data.translation || data.name)
   );
@@ -803,6 +808,11 @@ export default function LootdropDetailPage() {
       : '';
   const pageLabel = ut('ui.nav.lootdrops');
   const helmetTitle = `${itemLabel}${rarityLabel} -${pageLabel}`;
+  const description = localizedSeoDescription(lang, dict, 'lootdrop', {
+    name: itemLabel,
+    sources: monsters.length || undefined,
+    locations: rawLocationCount || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -821,13 +831,7 @@ export default function LootdropDetailPage() {
         <title>
           {ssrLocalizedTitle() ?? `${helmetTitle} | ${ut('ui.brand.name')}`}
         </title>
-        <meta
-          name="description"
-          content={ut('ui.seo.lootdrop_description')
-            .replace('{name}', itemLabel)
-            .replace('{sources}', String(visibleCount))
-            .replace('{positions}', String(bottomCount))}
-        />
+        <meta name="description" content={description} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
@@ -835,13 +839,7 @@ export default function LootdropDetailPage() {
             ssrLocalizedTitle() ?? `${helmetTitle} | ${ut('ui.brand.name')}`
           }
         />
-        <meta
-          property="og:description"
-          content={ut('ui.seo.lootdrop_description')
-            .replace('{name}', itemLabel)
-            .replace('{sources}', String(visibleCount))
-            .replace('{positions}', String(bottomCount))}
-        />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

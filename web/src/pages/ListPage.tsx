@@ -10,6 +10,7 @@ import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { localizedSeoDescription } from '../i18n/seo';
 
 type IndexEntry = SearchEntry & {
   category?: string;
@@ -103,7 +104,7 @@ export default function ListPage() {
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
-  const { t, ut } = useLocale();
+  const { t, ut, dict } = useLocale();
   const pageLabel = ut(NAV_KEY_LOOKUP[page!] || '') || page! || '';
   const locationsLabel = ut('ui.list.locations');
   const validItemCount = ut('ui.list.valid_items').replace(
@@ -111,6 +112,10 @@ export default function ListPage() {
     String(data.length)
   );
   const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
+  const description = localizedSeoDescription(lang, dict, 'list', {
+    category: page,
+    count: data.length || undefined,
+  });
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -137,13 +142,13 @@ export default function ListPage() {
           {ssrLocalizedTitle() ??
             `【${pageLabel}】${locationsLabel} | ${ut('ui.brand.name')}`}
         </title>
-        <meta name="description" content={`${pageLabel} ${validItemCount}`} />
+        <meta name="description" content={description} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
           content={`【${pageLabel}】${locationsLabel} | ${ut('ui.brand.name')}`}
         />
-        <meta property="og:description" content={validItemCount} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

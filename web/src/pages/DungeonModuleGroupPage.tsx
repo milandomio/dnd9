@@ -10,6 +10,7 @@ import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import type { DungeonModule } from '../types/data';
+import { localizedSeoDescription } from '../i18n/seo';
 
 export default function DungeonModuleGroupPage() {
   const { group } = useParams<{ group: string }>();
@@ -18,7 +19,7 @@ export default function DungeonModuleGroupPage() {
   const { modules: allModules } = useDungeonModules();
   const [loading, setLoading] = useState(!ssrModules);
   const { tokens } = useTheme();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   const modules = useMemo(() => {
     // Prefer SSR data (pre-filtered for this group)
@@ -67,6 +68,10 @@ export default function DungeonModuleGroupPage() {
 
   const groupLabel =
     formatGroupLabel(modules[0], t, ut) || group || ut('ui.common.ungrouped');
+  const description = localizedSeoDescription(lang, dict, 'moduleGroup', {
+    name: groupLabel,
+    modules: modules.length || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -75,12 +80,8 @@ export default function DungeonModuleGroupPage() {
           {ssrLocalizedTitle() ??
             `${groupLabel} | ${ut('ui.module.title')} | ${ut('ui.brand.name')}`}
         </title>
-        <meta
-          name="description"
-          content={ut('ui.seo.module_group_description')
-            .replace('{name}', groupLabel)
-            .replace('{count}', String(modules.length))}
-        />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <div style={{ textAlign: 'center', marginBottom: 8 }}>
         <h1

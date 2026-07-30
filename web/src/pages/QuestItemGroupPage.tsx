@@ -22,6 +22,7 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
+import { localizedSeoDescription } from '../i18n/seo';
 
 interface Coord {
   x: number;
@@ -89,7 +90,7 @@ export default function QuestItemGroupPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t, ut } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -234,8 +235,14 @@ export default function QuestItemGroupPage() {
     (s, mg) => s + mg.dots.length,
     0
   );
-  const visibleCount = entities.filter((e) => !hidden.has(e.name)).length;
   const groupLabel = formatGroupLabel(data, t, ut);
+  const description = localizedSeoDescription(lang, dict, 'questGroup', {
+    name: groupLabel,
+    entities: entities.length || undefined,
+    locations:
+      entities.reduce((count, entity) => count + entity.coords.length, 0) ||
+      undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -255,12 +262,8 @@ export default function QuestItemGroupPage() {
           {ssrLocalizedTitle() ??
             `${groupLabel} | ${ut('ui.quest_items.title')} | ${ut('ui.brand.name')}`}
         </title>
-        <meta
-          name="description"
-          content={ut('ui.quest_group.stat')
-            .replace('{entities}', String(visibleCount))
-            .replace('{coords}', String(totalCoords))}
-        />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

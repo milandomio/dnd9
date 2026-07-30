@@ -9,6 +9,7 @@ import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { localizedSeoDescription } from '../i18n/seo';
 
 interface ExploreTarget {
   name: string;
@@ -32,7 +33,7 @@ export default function ExplorePage() {
   const { modules } = useDungeonModules();
   const dataVersion = useDataVersion();
   const { tokens, dark } = useTheme();
-  const { t, ut } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -49,6 +50,10 @@ export default function ExplorePage() {
     if (!grouped.has(key)) grouped.set(key, []);
     grouped.get(key)!.push(target);
   }
+  const description = localizedSeoDescription(lang, dict, 'explore', {
+    targets: data.length || undefined,
+    npcs: grouped.size || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -57,13 +62,9 @@ export default function ExplorePage() {
           {ssrLocalizedTitle() ??
             `${ut('ui.explore.title')} | ${ut('ui.brand.name')}`}
         </title>
-        <meta
-          name="description"
-          content={ut('ui.explore.stat')
-            .replace('{count}', String(data.length))
-            .replace('{npcCount}', String(grouped.size))}
-        />
+        <meta name="description" content={description} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{
