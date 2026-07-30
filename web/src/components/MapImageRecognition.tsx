@@ -579,8 +579,10 @@ export default function MapImageRecognition({
                         fontVariantNumeric: 'tabular-nums',
                       }}
                     >
-                      {ut(`ui.map_recognition.method_${match.method}`)} ·{' '}
-                      {match.score.toFixed(3)}
+                      {match.method === 'template-inner'
+                        ? `${ut('ui.map_recognition.method_template')} (inner)`
+                        : ut(`ui.map_recognition.method_${match.method}`)}{' '}
+                      · {match.score.toFixed(3)}
                       <br />x {Math.round(match.x)}, y {Math.round(match.y)}, w{' '}
                       {Math.round(match.width)}, h {Math.round(match.height)}
                     </span>

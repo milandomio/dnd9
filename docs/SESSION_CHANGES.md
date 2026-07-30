@@ -25,6 +25,13 @@
 - **关键逻辑/映射关系**：每个最终结果显示模块名、模板/ORB 方法、置信度和原图边界；调试 JSON 版本 1 记录分组、阈值、网格、原图/ROI、粗筛与精匹配模板分数、NMS 前后框及阶段耗时。算法内部坐标先补 ROI 偏移，再统一换算为原图像素。
 - **验证**：GoldChest + Inferno + `test-cap-dy.png` 极高召回导出 5 个已知模块，NMS 由 9 个候选归并为 5 个真值框，算法约 1.1 秒；桌面与 390px 移动视口明细正常，移动明细宽度 336px 且自身无横向溢出；Prettier、TypeScript、i18n 23/23、ESLint 0 error、quick SSG 15,290 HTML、目标路由 HTTP 200 通过。
 
+### wip: 调查 InfernoMouth 标准档漏报
+
+- **改动原因**：用户确认炼狱截图包含 `InfernoMouth_HR_D.json` 对应的恶魔之口模块，但标准 `0.52` 未识别；DB 和原始资产确认该子关卡正确共用 `InfernoMouth` 地图模板。
+- **变更文件**：`web/src/utils/mapImageRecognition.ts`；`web/src/components/MapImageRecognition.tsx`；`docs/plans/游戏内地图识别优化.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：接近阈值的完整模板增加忽略 12% 外圈的内区匹配，并按完整模板边界回写；5x5 尺度增加 `0.52`。当前结果方法区分 `template`、`template-inner`、`orb`。
+- **验证与阻塞**：quick SSG 生成 15,290 HTML，TypeScript 和 Prettier 通过；标准档由 2 个增至 3 个，但恶魔之口分数仍为 `0.432`，扩展尺度没有改善。连续两次修改未解决目标漏报，按熔断规则停止；后续必须先采集每个旋转/尺度/裁剪的分数矩阵，当前改动作为 WIP checkpoint，不视为修复完成。
+
 ### perf: 增加地图识别 ROI、网格与动态分组筛选
 
 - **改动原因**：完整截图全屏遍历所有模板、旋转和尺度约需 51 秒；通用 GoldChest 页面包含 40 张模板，还需要用户按当前截图地图分组缩小识别范围，并区分 5x5/7x7 地图。
