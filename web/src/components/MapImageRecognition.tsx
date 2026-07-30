@@ -48,12 +48,23 @@ export default function MapImageRecognition({
   const { tokens } = useTheme();
   const { ut } = useLocale();
   const utRef = useRef(ut);
-  const templatesRef = useRef(templates);
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const groupOptions = [
+    ...new Map(
+      templates
+        .filter((template) => template.group)
+        .map((template) => [template.group, template.groupLabel])
+    ).entries(),
+  ].sort((a, b) => a[1].localeCompare(b[1]));
+  const activeTemplates = selectedGroup
+    ? templates.filter((template) => template.group === selectedGroup)
+    : templates;
+  const templatesRef = useRef(activeTemplates);
   const cvRef = useRef<CV | null>(null);
   const loadedTemplatesRef = useRef<LoadedMapImageTemplate[]>([]);
   const previewUrlRef = useRef<string | null>(null);
   const pasteAreaRef = useRef<HTMLDivElement>(null);
-  const templateSignature = templates
+  const templateSignature = activeTemplates
     .map((template) => `${template.id}:${template.url}:${template.label}`)
     .join('|');
   const [status, setStatus] = useState<RecognitionStatus>('idle');
@@ -65,10 +76,20 @@ export default function MapImageRecognition({
   const [templateFailures, setTemplateFailures] = useState(0);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [matches, setMatches] = useState<MapImageMatch[]>([]);
+  const [gridType, setGridType] = useState<'5x5' | '7x7' | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  templatesRef.current = templates;
+  templatesRef.current = activeTemplates;
   utRef.current = ut;
+
+  useEffect(() => {
+    if (
+      selectedGroup &&
+      !templates.some((template) => template.group === selectedGroup)
+    ) {
+      setSelectedGroup('');
+    }
+  }, [selectedGroup, templates]);
 
   useEffect(() => {
     if (!enabled) {
@@ -82,8 +103,11 @@ export default function MapImageRecognition({
 
     let cancelled = false;
     const currentTemplates = templatesRef.current;
+    loadedTemplatesRef.current = [];
     setStatus('loading');
     setErrorMessage(null);
+    setTemplateCount(0);
+    setTemplateFailures(0);
     setTemplateProgress({ loaded: 0, total: currentTemplates.length });
 
     Promise.all([
@@ -127,6 +151,7 @@ export default function MapImageRecognition({
     previewUrlRef.current = null;
     setPreviewUrl(null);
     setMatches([]);
+    setGridType(null);
     setErrorMessage(null);
     if (enabled && cvRef.current && loadedTemplatesRef.current.length > 0) {
       setStatus('ready');
@@ -136,6 +161,11 @@ export default function MapImageRecognition({
   function handleEnabledChange(nextEnabled: boolean) {
     if (!nextEnabled) clearResult();
     onEnabledChange(nextEnabled);
+  }
+
+  function handleGroupChange(group: string) {
+    clearResult();
+    setSelectedGroup(group);
   }
 
   async function handlePaste(event: React.ClipboardEvent<HTMLDivElement>) {
@@ -170,6 +200,7 @@ export default function MapImageRecognition({
       previewUrlRef.current = nextPreviewUrl;
       setPreviewUrl(nextPreviewUrl);
       setMatches(output.matches);
+      setGridType(output.gridType);
       setStatus('done');
     } catch {
       setStatus('error');
@@ -177,7 +208,7 @@ export default function MapImageRecognition({
     }
   }
 
-  const statusText =
+  const baseStatusText =
     status === 'loading'
       ? ut('ui.map_recognition.loading')
       : status === 'recognizing'
@@ -194,6 +225,10 @@ export default function MapImageRecognition({
             : status === 'ready'
               ? ut('ui.map_recognition.ready')
               : ut('ui.map_recognition.paste_area');
+  const statusText =
+    status === 'done' && gridType
+      ? `${baseStatusText} · ${ut('ui.map_recognition.grid_type').replace('{grid}', gridType)}`
+      : baseStatusText;
 
   return (
     <>
@@ -274,11 +309,40 @@ export default function MapImageRecognition({
               <ScanOutlined />
               {ut('ui.map_recognition.title')}
             </span>
-            <span style={{ color: tokens.muted, fontSize: 11 }}>
-              {ut('ui.map_recognition.template_count').replace(
-                '{count}',
-                String(templateCount)
-              )}
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <select
+                aria-label={ut('ui.map_recognition.group_select')}
+                value={selectedGroup}
+                onChange={(event) => handleGroupChange(event.target.value)}
+                style={{
+                  maxWidth: 180,
+                  padding: '2px 5px',
+                  border: `1px solid ${tokens.border}`,
+                  borderRadius: 3,
+                  color: tokens.text,
+                  background: tokens.bg,
+                  fontSize: 11,
+                }}
+              >
+                <option value="">{ut('ui.filter.all')}</option>
+                {groupOptions.map(([group, label]) => (
+                  <option key={group} value={group}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+              <span style={{ color: tokens.muted, fontSize: 11 }}>
+                {ut('ui.map_recognition.template_count').replace(
+                  '{count}',
+                  String(templateCount)
+                )}
+              </span>
             </span>
           </div>
 
