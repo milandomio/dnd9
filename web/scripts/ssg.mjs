@@ -683,14 +683,7 @@ function localizePage(
   const title = localizedDocumentTitle(route, routeData, localeDict, lang);
   const description = pageDescription(page, route, routeData, localeDict, lang);
   let out = replaceDescriptionMeta(
-    injectLocalizedData(
-      page,
-      lang,
-      title,
-      description,
-      ssrLang,
-      ssrLocaleDict
-    ),
+    injectLocalizedData(page, lang, title, description, ssrLang, ssrLocaleDict),
     description
   )
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
@@ -883,7 +876,7 @@ for (let i = 0; i < routes.length; i++) {
   if (!r.redirect) {
     page = replaceDescriptionMeta(
       page,
-      routeDescription(r, routeData, {}, DEFAULT_LANG)
+      pageDescription(page, r, routeData, {}, DEFAULT_LANG)
     );
   }
 
