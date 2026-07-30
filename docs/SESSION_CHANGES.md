@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 将稀有模块出现率计入综合爆率
+
+- **改动原因**：稀有模块标题虽显示 1% 出现率，但 Composite Rate 未乘入该前置概率，导致全局综合爆率被高估。
+- **变更文件**：`web/src/utils/moduleSpawnRate.ts`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`applyModuleSpawnRate()` 对已配置稀有模块按 `综合爆率 × 模块出现率 / 100` 折算，普通模块保持原值；物品详情与掉落详情共用该函数，掉落详情的模块排序也同步使用折算结果。
+- **验证**：Prettier、TypeScript 和 ESLint（0 error、19 条既有 warning）通过；quick SSG 生成 15,290 个 HTML；`/en/items/GrimveilCloak/` HTTP 200，Playwright hydration 后为 `Composite Spawn Rate 92.38%`、`Composite Rate 0.6005%`，顺序正确。
+
 ### fix: 紧邻显示综合生成率和综合爆率
 
 - **改动原因**：物品详情页的 Composite Spawn Rate 位于模块地图后，而 Composite Rate 位于参考爆率后，难以直接对照两项概率。

@@ -33,7 +33,10 @@ import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
-import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
+import {
+  applyModuleSpawnRate,
+  getRareModuleSpawnRate,
+} from '../utils/moduleSpawnRate';
 import { localizedSeoDescription } from '../i18n/seo';
 
 const GROUP_ORDER = [
@@ -688,12 +691,19 @@ export default function DetailPage() {
                   labelMatch(coord.label || '', entry.translation)
                 )
               );
-              const moduleCompositeRate =
+              const rareModuleSpawnRate = getRareModuleSpawnRate(
+                mod?.name || mapName
+              );
+              const baseModuleCompositeRate =
                 subPoolRate > 0 && matchedDropRate
                   ? (subPoolRate *
                       (matchedDropRate.drop_rates['豪客赛'] ?? 0)) /
                     100
                   : itemScore({ coords: mapCoords }, sec.gdi);
+              const moduleCompositeRate = applyModuleSpawnRate(
+                baseModuleCompositeRate,
+                mod?.name || mapName
+              );
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600;
@@ -735,7 +745,7 @@ export default function DetailPage() {
                     }}
                   >
                     {t(mod?.translation_key, mod?.translation || mapName)}
-                    {getRareModuleSpawnRate(mod?.name || mapName) > 0 && (
+                    {rareModuleSpawnRate > 0 && (
                       <>
                         {' '}
                         <span
@@ -748,7 +758,7 @@ export default function DetailPage() {
                         >
                           {ut('ui.detail.module_spawn_rate').replace(
                             '{rate}',
-                            String(getRareModuleSpawnRate(mod?.name || mapName))
+                            String(rareModuleSpawnRate)
                           )}
                         </span>
                       </>
