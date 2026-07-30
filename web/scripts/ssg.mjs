@@ -880,6 +880,12 @@ for (let i = 0; i < routes.length; i++) {
   } else {
     page = templated.replace(HEAD_CLOSE, `${preloadHtml}\n</head>`);
   }
+  if (!r.redirect) {
+    page = replaceDescriptionMeta(
+      page,
+      routeDescription(r, routeData, {}, DEFAULT_LANG)
+    );
+  }
 
   if (urlPath === '/' && !/<title[^>]*>[^<]*<\/title>/.test(page)) {
     page = page.replace(
