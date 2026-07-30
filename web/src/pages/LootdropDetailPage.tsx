@@ -30,9 +30,12 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
+import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
+import { defaultVariantSuffix } from '../utils/variant';
 import { localizedSeoDescription } from '../i18n/seo';
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
@@ -123,12 +126,17 @@ function selectLootdropVariant(
 ): LootdropItem {
   if (!item.sources || !item.variants) return item;
   const availableSuffixes = Object.keys(item.variants);
+  if (requestedSuffix && !item.variants[requestedSuffix]) {
+    return {
+      ...item,
+      name: `${item.name}_${requestedSuffix}`,
+      monsters: [],
+      group_drop_info: {},
+      unavailableVariantSuffix: requestedSuffix,
+    };
+  }
   const suffix =
-    (requestedSuffix && item.variants[requestedSuffix]
-      ? requestedSuffix
-      : availableSuffixes.includes('5001')
-        ? '5001'
-        : availableSuffixes[0]) ?? '';
+    requestedSuffix ?? defaultVariantSuffix(availableSuffixes) ?? '';
   const variant = item.variants[suffix];
   if (!variant) return { ...item, monsters: [], group_drop_info: {} };
 
@@ -327,18 +335,17 @@ export default function LootdropDetailPage() {
     };
   }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
 
-  // Auto-redirect to default variant when visiting base URL
+  // Base URLs redirect to a real variant; explicit unavailable variants stay at 0%.
   useEffect(() => {
-    const suffixes = data?.variant_rarity
-      ? Object.keys(data.variant_rarity)
-      : [];
+    const suffixes = data?.variants ? Object.keys(data.variants) : [];
     if (suffixes.length <= 1) return;
-    if (currentSuffix) return; // already on a variant URL
-    const defaultSuffix = suffixes.includes('5001') ? '5001' : suffixes[0];
+    if (currentSuffix) return;
+    const defaultSuffix = defaultVariantSuffix(suffixes);
+    if (!defaultSuffix) return;
     navigate(`/${lang}/lootdrops/${itemName}_${defaultSuffix}/`, {
       replace: true,
     });
-  }, [data, currentSuffix, itemName, navigate]);
+  }, [data, currentSuffix, itemName, lang, navigate]);
 
   // 在调试模式下实时响应阈值变化
   useEffect(() => {
@@ -822,16 +829,15 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? helmetTitle} | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ?? `${helmetTitle} | ${ut('ui.brand.name')}`}
         </title>
         <meta name="description" content={description} />
-        <meta
-          name="keywords"
-          content="掉落查询,爆率查询,怪物掉落,物品掉落,地图坐标,掉落位置"
-        />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? helmetTitle} | DarkFlashNav`}
+          content={
+            ssrLocalizedTitle() ?? `${helmetTitle} | ${ut('ui.brand.name')}`
+          }
         />
         <meta property="og:description" content={description} />
       </Helmet>
@@ -993,12 +999,28 @@ export default function LootdropDetailPage() {
         );
       })()}
 
-      {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
+      {data.variant_rarity && data.variants && (
         <VariantSwitch
           variantRarity={data.variant_rarity}
+          suffixes={Object.keys(data.variants)}
           itemName={itemName}
           currentSuffix={currentSuffix}
         />
+      )}
+
+      {data.unavailableVariantSuffix && (
+        <div
+          style={{
+            margin: '15px 0',
+            padding: 10,
+            textAlign: 'center',
+            color: tokens.muted,
+            background: tokens.surface,
+            borderRadius: 5,
+          }}
+        >
+          {ut('ui.detail.no_drop_rate')}
+        </div>
       )}
 
       <div
@@ -1093,7 +1115,10 @@ export default function LootdropDetailPage() {
             <label
               style={{ color: tokens.text, fontSize: 13, whiteSpace: 'nowrap' }}
             >
-              默认显示阈值（综合爆率%）：{threshold}%
+              {ut('ui.debug.default_threshold').replace(
+                '{threshold}',
+                String(threshold)
+              )}
             </label>
             <input
               type="range"
@@ -1122,7 +1147,10 @@ export default function LootdropDetailPage() {
               }}
             />
             <span style={{ color: tokens.muted, fontSize: 11 }}>
-              spawn_rate × 豪客赛爆率 ≥ {threshold}% 则默认显示
+              {ut('ui.debug.threshold_hint').replace(
+                '{threshold}',
+                String(threshold)
+              )}
             </span>
           </div>
         </div>
@@ -1259,6 +1287,24 @@ export default function LootdropDetailPage() {
                       mod?.translation_key,
                       mod?.translation || mod?.name || mapName
                     )}
+                    {getRareModuleSpawnRate(mod?.name || mapName) > 0 && (
+                      <>
+                        {' '}
+                        <span
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 13,
+                            fontWeight: 'normal',
+                            color: tokens.muted,
+                          }}
+                        >
+                          {ut('ui.detail.module_spawn_rate').replace(
+                            '{rate}',
+                            String(getRareModuleSpawnRate(mod?.name || mapName))
+                          )}
+                        </span>
+                      </>
+                    )}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -1276,7 +1322,9 @@ export default function LootdropDetailPage() {
                       }}
                     >
                       {mod?.img_name || mod?.sl_base_name || mapName}.webp |
-                      找到 {dots.length} 个位置 | 范围: ±{range}
+                      {ut('ui.debug.map_summary')
+                        .replace('{count}', String(dots.length))
+                        .replace('{range}', String(range))}
                     </div>
                   )}
                   {debug && (
@@ -1291,8 +1339,12 @@ export default function LootdropDetailPage() {
                     >
                       {dots[0]?.file || ''}
                       <br />
-                      旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},
-                      {mod?.offset_y ?? 0}) 大小:{sx}x{sy}
+                      {ut('ui.debug.transform')
+                        .replace('{rotation}', String(mod?.rotate ?? 0))
+                        .replace('{x}', String(mod?.offset_x ?? 0))
+                        .replace('{y}', String(mod?.offset_y ?? 0))
+                        .replace('{sx}', String(sx))
+                        .replace('{sy}', String(sy))}
                     </div>
                   )}
                   {debug && (
@@ -1313,7 +1365,9 @@ export default function LootdropDetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>范围:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.range')}
+                        </span>
                         <button
                           onClick={() =>
                             setAdj(
@@ -1364,7 +1418,9 @@ export default function LootdropDetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>偏移:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.offset')}
+                        </span>
                         <button
                           onClick={() => setAdj(mapName, 'y', adj.y - 50)}
                           style={ctrlBtn}
@@ -1437,7 +1493,7 @@ export default function LootdropDetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↻ 旋转
+                          ↻ {ut('ui.debug.rotate')}
                         </button>
                         <button
                           onClick={() =>
@@ -1448,7 +1504,7 @@ export default function LootdropDetailPage() {
                             background: adj.mirrorX ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇄ 左右
+                          ⇄ {ut('ui.debug.mirror_horizontal')}
                         </button>
                         <button
                           onClick={() =>
@@ -1459,7 +1515,7 @@ export default function LootdropDetailPage() {
                             background: adj.mirrorY ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇅ 上下
+                          ⇅ {ut('ui.debug.mirror_vertical')}
                         </button>
                         <button
                           onClick={() =>
@@ -1471,7 +1527,7 @@ export default function LootdropDetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↺ 重置
+                          ↺ {ut('ui.debug.reset')}
                         </button>
                       </div>
                     </div>
@@ -1651,12 +1707,14 @@ export default function LootdropDetailPage() {
                                   g.dots.map((d) => `${d.x},${d.y},${d.z}`)
                                 ).size;
                                 parts.push(
-                                  `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}` : ''})`
+                                  `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos)).replace('{select}', '1')}` : ''})`
                                 );
                               }
                               const dedupedReg = dedupPos(regDots);
                               if (dedupedReg.length > 0) {
-                                parts.push(`(${dedupedReg.length}点)`);
+                                parts.push(
+                                  `(${ut('ui.detail.position_count').replace('{count}', String(dedupedReg.length))})`
+                                );
                               }
                               if (varDots.length > 0) {
                                 const names = varDots[0].variant_names ?? [];
@@ -1678,7 +1736,12 @@ export default function LootdropDetailPage() {
                                 if (names.length > 0) {
                                   if (totalVarPos > 1) {
                                     parts.push(
-                                      `(${totalVarPos}点选${varDots[0].variant_count})`
+                                      `(${ut('ui.detail.pool_positions')
+                                        .replace('{count}', String(totalVarPos))
+                                        .replace(
+                                          '{select}',
+                                          String(varDots[0].variant_count)
+                                        )})`
                                     );
                                   } else {
                                     const nameStr = names
@@ -1698,8 +1761,13 @@ export default function LootdropDetailPage() {
                                 } else {
                                   parts.push(
                                     varGps.length === 1
-                                      ? `(${totalVarPos}点选1)`
-                                      : `(${totalVarPos}点)`
+                                      ? `(${ut('ui.detail.pool_positions')
+                                          .replace(
+                                            '{count}',
+                                            String(totalVarPos)
+                                          )
+                                          .replace('{select}', '1')})`
+                                      : `(${ut('ui.detail.position_count').replace('{count}', String(totalVarPos))})`
                                   );
                                 }
                               }
@@ -1710,24 +1778,12 @@ export default function LootdropDetailPage() {
                       );
                     })}
                   </div>
-                  {(() => {
-                    const _rl2 =
-                      groupDropRateLookup.get(groupName) ?? new Map();
-                    const sc = computeModuleScore({ mod, dots }, _rl2);
-                    return sc > 0 ? (
-                      <div
-                        style={{
-                          marginTop: 4,
-                          fontSize: 12,
-                          textAlign: 'center',
-                          color: tokens.accent,
-                        }}
-                      >
-                        {ut('ui.detail.composite_rate')}{' '}
-                        {parseFloat(sc.toFixed(4))}%
-                      </div>
-                    ) : null;
-                  })()}
+                  <CompositeRate
+                    rate={computeModuleScore(
+                      { mod, dots },
+                      groupDropRateLookup.get(groupName) ?? new Map()
+                    )}
+                  />
                 </div>
               );
             })}

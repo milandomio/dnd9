@@ -57,6 +57,18 @@ const PAGES = [
     lang: 'ja',
   },
   {
+    path: '/en/lootdrops/Bandage_5001/',
+    desc: 'LootdropDetail(Bandage)(en)',
+    lang: 'en',
+    textChecks: [
+      { pattern: /Drop rate: 0%/, expected: true },
+      { pattern: /\(\d+ positions\)/, expected: false },
+      { pattern: /\(\d+点(?:选\d+)?\)/, expected: false },
+    ],
+    expectedHrefs: ['/en/lootdrops/Bandage_4001/'],
+    forbiddenHrefs: ['/en/lootdrops/Bandage_5001/'],
+  },
+  {
     path: '/zh-Hans/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
     desc: 'ModuleDetail',
     lang: 'zh-Hans',
@@ -80,11 +92,19 @@ function isIgnoredExternal(url) {
   return url.includes('cloudflareinsights.com');
 }
 
-async function testPage(browser, { path, desc, lang }) {
+function isGenericResourceError(message) {
+  return /^Failed to load resource:/i.test(message);
+}
+
+async function testPage(
+  browser,
+  { path, desc, lang, textChecks = [], expectedHrefs = [], forbiddenHrefs = [] }
+) {
   const page = await browser.newPage();
   const consoleErrors = [];
   const pageErrors = [];
   const resourceErrors = [];
+  const ignoredExternalFailures = new Set();
 
   page.on('console', (msg) => {
     if (msg.type() === 'error' && !isIgnoredExternal(msg.text())) {
@@ -94,7 +114,9 @@ async function testPage(browser, { path, desc, lang }) {
   page.on('pageerror', (err) => pageErrors.push(err.message));
   page.on('requestfailed', (request) => {
     const url = request.url();
-    if (url.startsWith(BASE) && !isIgnoredExternal(url)) {
+    if (isIgnoredExternal(url)) {
+      ignoredExternalFailures.add(url);
+    } else if (url.startsWith(BASE)) {
       resourceErrors.push(
         `${url}: ${request.failure()?.errorText ?? 'failed'}`
       );
@@ -157,12 +179,33 @@ async function testPage(browser, { path, desc, lang }) {
     const hydrationErrors = [...pageErrors, ...consoleErrors].filter((error) =>
       HYDRATION_RE.test(error)
     );
-    const errors = [...pageErrors, ...consoleErrors, ...resourceErrors];
+    const filteredConsoleErrors = consoleErrors.filter(
+      (error) =>
+        !(isGenericResourceError(error) && ignoredExternalFailures.size > 0)
+    );
+    const errors = [...pageErrors, ...filteredConsoleErrors, ...resourceErrors];
     const hasTitle = title.length > 0 && title !== 'DarkFlashNav';
 
     if (htmlLang !== lang) throw new Error(`html lang=${htmlLang}`);
     if (!hasTitle) throw new Error(`invalid title=${JSON.stringify(title)}`);
     if (!rootText) throw new Error('empty root');
+    for (const { pattern, expected } of textChecks) {
+      if (pattern.test(rootText) !== expected) {
+        throw new Error(`text check failed: ${pattern} expected=${expected}`);
+      }
+    }
+    for (const href of expectedHrefs) {
+      if (
+        (await page.locator(`a[href=${JSON.stringify(href)}]`).count()) === 0
+      ) {
+        throw new Error(`missing link: ${href}`);
+      }
+    }
+    for (const href of forbiddenHrefs) {
+      if ((await page.locator(`a[href=${JSON.stringify(href)}]`).count()) > 0) {
+        throw new Error(`unexpected link: ${href}`);
+      }
+    }
     if (!description || !ogDescription)
       throw new Error('missing client description metadata');
     if (description !== ogDescription)

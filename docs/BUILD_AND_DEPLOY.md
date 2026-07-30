@@ -14,6 +14,18 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 
 `python main.py` 在 search_index 步骤后自动运行 `build_locale_files`，生成 `data/json/locale/{lang}.json`（10种语言）。`npm run build` 中的 `ssg.mjs` 使用这些 locale 字典为每种语言生成 HTML 副本（dist/{lang}/...）。完整构建产物约 1.28 GB。
 
+## IndexNow
+
+IndexNow 已接入主站 GitHub Actions：静态密钥文件随构建发布到 `dist/{key}.txt`，发布到 `gh-pages` 后自动读取该文件和各语言 sitemap，向 IndexNow API 批量提交 URL。
+
+首次配置：
+
+1. 将 IndexNow 提供的 `{key}.txt` 文件放入 `web/public/`，文件名和内容都必须是同一个密钥。
+2. 推送一次 `main`，确认 `https://dnd9.icetar.com/{key}.txt` 返回该密钥文本。
+3. 查看 Actions 日志，确认 URL 批次提交返回 `200` 或 `202`。
+
+不需要配置 GitHub Secret。更换密钥时同步替换 `web/public/` 中的验证文件。
+
 禁止直接执行实时输出的长流程命令。`python main.py`、`npm run build`、`./deploy.sh`、Playwright 全站测试等在 WSL 中必须使用 `nohup <command> > 日志文件 2>&1 &` 后台启动；随后用短命令检查进程和单独读取日志，避免等待前台流程结束而阻塞 TUI。
 
 构建完成后必须验证 web 服务可用（HTTP 200），不可跳过。若返回非 200，必须排查错误并修复至返回 200 为止。
@@ -52,7 +64,7 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 - **GitHub**: `https://github.com/milandomio/dnd9.git`
 - **Token**: `.github_token`（`.gitignore` 中）
 - **部署**: Actions → `gh-pages` 分支 → Cloudflare Pages（使用 CF 提供的三级域名根目录；不使用 `/dnd9/` 二级路径，也不需要 CNAME 文件）
-- **Sitemap**: `sitemap.xml` 为索引文件，按语言拆分为 `sitemap-{lang}.xml`，避免单个 Sitemap 超过 Cloudflare Pages 的 25 MiB 文件限制。
+- **Sitemap**: SSG 默认将全部语言 URL 合并到直接包含页面 URL 的 `sitemap.xml`；超过 Cloudflare Pages 的 25 MiB 或 Sitemap 50,000 URL 限制时，按低优先级语言逐个保留为 `sitemap-{lang}.xml`，根文件仍保持 `urlset`。所有语言子 sitemap 同时由 `robots.txt` 声明。
 
 ## 推送到 dnd9（含 DB）
 

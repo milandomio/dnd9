@@ -27,11 +27,13 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
+import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
 import { localizedSeoDescription } from '../i18n/seo';
 
 const GROUP_ORDER = [
@@ -46,6 +48,31 @@ const GROUP_ORDER = [
 ];
 
 type Entity = ItemEntity | MonsterEntity | PropsEntity;
+
+function subPoolGenerationRate(coords: Coord[]): number {
+  const poolSizes = new Map<string, number>();
+  for (const coord of coords) {
+    if (
+      !coord.group_parent ||
+      !coord.sub_group_parent ||
+      !coord.sub_pool_size ||
+      coord.sub_pool_size <= 0
+    ) {
+      continue;
+    }
+    poolSizes.set(
+      `${coord.group_parent}::${coord.sub_group_parent}`,
+      coord.sub_pool_size
+    );
+  }
+  if (poolSizes.size === 0) return 0;
+
+  const missAll = [...poolSizes.values()].reduce(
+    (probability, poolSize) => probability * (1 - 1 / poolSize),
+    1
+  );
+  return Math.round((1 - missAll) * 10000) / 100;
+}
 
 export default function DetailPage() {
   const { page, name } = useParams<{ page: string; name: string }>();
@@ -353,7 +380,10 @@ export default function DetailPage() {
   // Score each item by spawn_rate × 豪客赛 drop_rate, same as lootdrop pages
   function itemScore(item: { coords: Coord[] }, gdi: GroupDropInfo[]): number {
     let total = 0;
-    const varGroups = new Map<string, boolean>();
+    const varGroups = new Map<
+      string,
+      { score: number; positions: Set<string>; variantCount: number }
+    >();
     for (const c of item.coords) {
       const label = c.label || '';
       const vc = c.variant_count ?? 1;
@@ -364,13 +394,22 @@ export default function DetailPage() {
       const s = (sr * dr) / 100;
       if (vc > 1) {
         const key = c.group_parent || `${c.file}::${vc}`;
-        if (!varGroups.has(key)) {
-          varGroups.set(key, true);
-          total += s / vc;
+        const group = varGroups.get(key);
+        if (group) {
+          group.positions.add(`${c.x},${c.y},${c.z}`);
+        } else {
+          varGroups.set(key, {
+            score: s,
+            positions: new Set([`${c.x},${c.y},${c.z}`]),
+            variantCount: vc,
+          });
         }
       } else {
         total += s;
       }
+    }
+    for (const group of varGroups.values()) {
+      total += (group.score * group.positions.size) / group.variantCount;
     }
     return Math.round(total * 10000) / 10000;
   }
@@ -460,17 +499,17 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`}
-          {' | 越来越黑暗闪电指南 DarkFlashNav'}
+          {ssrLocalizedTitle() ??
+            `${entityLabel} -${pageLabel} | ${ut('ui.brand.name')}`}
         </title>
         <meta name="description" content={description} />
-        <meta
-          name="keywords"
-          content="物品详情,怪物详情,装备属性,武器属性,防具属性,饰品属性"
-        />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | DarkFlashNav`}
+          content={
+            ssrLocalizedTitle() ??
+            `${entityLabel} -${pageLabel} | ${ut('ui.brand.name')}`
+          }
         />
         <meta property="og:description" content={description} />
       </Helmet>
@@ -643,6 +682,18 @@ export default function DetailPage() {
                     return hasAnyRate(match.drop_rates);
                   })
                 : rawCoords;
+              const subPoolRate = subPoolGenerationRate(mapCoords);
+              const matchedDropRate = sec.gdi.find((entry) =>
+                mapCoords.some((coord) =>
+                  labelMatch(coord.label || '', entry.translation)
+                )
+              );
+              const moduleCompositeRate =
+                subPoolRate > 0 && matchedDropRate
+                  ? (subPoolRate *
+                      (matchedDropRate.drop_rates['豪客赛'] ?? 0)) /
+                    100
+                  : itemScore({ coords: mapCoords }, sec.gdi);
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
               const baseRange = mod?.range || Math.max(sx, sy) * 1600;
@@ -684,6 +735,24 @@ export default function DetailPage() {
                     }}
                   >
                     {t(mod?.translation_key, mod?.translation || mapName)}
+                    {getRareModuleSpawnRate(mod?.name || mapName) > 0 && (
+                      <>
+                        {' '}
+                        <span
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 13,
+                            fontWeight: 'normal',
+                            color: tokens.muted,
+                          }}
+                        >
+                          {ut('ui.detail.module_spawn_rate').replace(
+                            '{rate}',
+                            String(getRareModuleSpawnRate(mod?.name || mapName))
+                          )}
+                        </span>
+                      </>
+                    )}
                     {debug && (
                       <span style={{ color: tokens.muted, fontSize: 11 }}>
                         {' '}
@@ -701,7 +770,9 @@ export default function DetailPage() {
                       }}
                     >
                       {mod?.img_name || mod?.sl_base_name || mapName}.webp |
-                      找到 {mapCoords.length} 个位置 | 范围: ±{range}
+                      {ut('ui.debug.map_summary')
+                        .replace('{count}', String(mapCoords.length))
+                        .replace('{range}', String(range))}
                     </div>
                   )}
                   {debug && (
@@ -716,8 +787,12 @@ export default function DetailPage() {
                     >
                       {mapCoords[0].file}
                       <br />
-                      旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},
-                      {mod?.offset_y ?? 0}) 大小:{sx}x{sy}
+                      {ut('ui.debug.transform')
+                        .replace('{rotation}', String(mod?.rotate ?? 0))
+                        .replace('{x}', String(mod?.offset_x ?? 0))
+                        .replace('{y}', String(mod?.offset_y ?? 0))
+                        .replace('{sx}', String(sx))
+                        .replace('{sy}', String(sy))}
                     </div>
                   )}
 
@@ -732,24 +807,11 @@ export default function DetailPage() {
                     range={range}
                     singleCategory
                   />
-                  {debug &&
-                    sec.gdi.length > 0 &&
-                    (() => {
-                      const sc = itemScore({ coords: mapCoords }, sec.gdi);
-                      return sc > 0 ? (
-                        <div
-                          style={{
-                            marginTop: 4,
-                            fontSize: 12,
-                            textAlign: 'center',
-                            color: tokens.accent,
-                          }}
-                        >
-                          {ut('ui.detail.composite_rate')}{' '}
-                          {parseFloat(sc.toFixed(4))}%
-                        </div>
-                      ) : null;
-                    })()}
+                  <CompositeRate
+                    rate={subPoolRate}
+                    labelKey="ui.detail.composite_spawn_rate"
+                    precision={2}
+                  />
                   {(() => {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];
@@ -784,12 +846,14 @@ export default function DetailPage() {
                     ];
                     const groupCount = varGpKeys.length || 1;
                     const adjRate = (v: number) =>
-                      hasVariant
-                        ? +(
-                            v *
-                            (1 - (1 - 1 / forcedVcN) ** groupCount)
-                          ).toFixed(4)
-                        : v;
+                      subPoolRate > 0
+                        ? v
+                        : hasVariant
+                          ? +(
+                              v *
+                              (1 - (1 - 1 / forcedVcN) ** groupCount)
+                            ).toFixed(4)
+                          : v;
                     if (!hasVariant) return null;
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
@@ -797,6 +861,28 @@ export default function DetailPage() {
                       )
                     );
                     if (filteredGdi.length === 0) return null;
+                    const sameDropRates = (
+                      a: Record<string, number>,
+                      b: Record<string, number>
+                    ) => {
+                      const modes = new Set([
+                        ...Object.keys(a),
+                        ...Object.keys(b),
+                      ]);
+                      return [...modes].every((mode) => a[mode] === b[mode]);
+                    };
+                    const hideModes = filteredGdi.every((info) => {
+                      const groupInfo = sec.gdi.find(
+                        (entry) =>
+                          entry.translation === info.translation &&
+                          entry.label_type === info.label_type &&
+                          entry.label_prefix === info.label_prefix
+                      );
+                      return (
+                        !!groupInfo &&
+                        sameDropRates(info.drop_rates, groupInfo.drop_rates)
+                      );
+                    });
                     return (
                       <div
                         style={{
@@ -816,6 +902,7 @@ export default function DetailPage() {
                           adjSpawnRate={adjRate}
                           showPrefix={false}
                           parenModes
+                          hideModes={hideModes}
                           labelSeparator=":"
                         />
                         {(() => {
@@ -865,7 +952,9 @@ export default function DetailPage() {
                                     .replace('{count}', String(g.poolSize))
                                     .replace('{positions}', String(uniquePos))}
                                   {uniquePos > 1
-                                    ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos))}`
+                                    ? ` · ${ut('ui.detail.pool_positions')
+                                        .replace('{count}', String(uniquePos))
+                                        .replace('{select}', '1')}`
                                     : ''}
                                   )
                                 </span>
@@ -876,13 +965,20 @@ export default function DetailPage() {
                           const names = vc.variant_names ?? [];
                           const parts: string[] = [];
                           if (regPosCount > 0) {
-                            parts.push(`(${regPosCount}点)`);
+                            parts.push(
+                              `(${ut('ui.detail.position_count').replace('{count}', String(regPosCount))})`
+                            );
                           }
                           if (varPosCount > 0) {
                             if (names.length > 0) {
                               if (varPosCount > 1) {
                                 parts.push(
-                                  `(${varPosCount}点选${vc.variant_count})`
+                                  `(${ut('ui.detail.pool_positions')
+                                    .replace('{count}', String(varPosCount))
+                                    .replace(
+                                      '{select}',
+                                      String(vc.variant_count)
+                                    )})`
                                 );
                               } else {
                                 const nameStr = names
@@ -902,8 +998,10 @@ export default function DetailPage() {
                               ).size;
                               parts.push(
                                 groupPosCount === 1
-                                  ? `(${varPosCount}点选1)`
-                                  : `(${varPosCount}点)`
+                                  ? `(${ut('ui.detail.pool_positions')
+                                      .replace('{count}', String(varPosCount))
+                                      .replace('{select}', '1')})`
+                                  : `(${ut('ui.detail.position_count').replace('{count}', String(varPosCount))})`
                               );
                             }
                           }
@@ -916,6 +1014,7 @@ export default function DetailPage() {
                       </div>
                     );
                   })()}
+                  <CompositeRate rate={moduleCompositeRate} />
                   {debug && (
                     <div
                       style={{
@@ -934,7 +1033,9 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>范围:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.range')}
+                        </span>
                         <button
                           onClick={() =>
                             setAdj(
@@ -985,7 +1086,9 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>偏移:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.offset')}
+                        </span>
                         <button
                           onClick={() => setAdj(mapName, 'y', adj.y - 50)}
                           style={ctrlBtn}
@@ -1058,7 +1161,7 @@ export default function DetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↻ 旋转
+                          ↻ {ut('ui.debug.rotate')}
                         </button>
                         <button
                           onClick={() =>
@@ -1069,7 +1172,7 @@ export default function DetailPage() {
                             background: adj.mirrorX ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇄ 左右
+                          ⇄ {ut('ui.debug.mirror_horizontal')}
                         </button>
                         <button
                           onClick={() =>
@@ -1080,7 +1183,7 @@ export default function DetailPage() {
                             background: adj.mirrorY ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇅ 上下
+                          ⇅ {ut('ui.debug.mirror_vertical')}
                         </button>
                         <button
                           onClick={() =>
@@ -1092,7 +1195,7 @@ export default function DetailPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↺ 重置
+                          ↺ {ut('ui.debug.reset')}
                         </button>
                       </div>
                     </div>

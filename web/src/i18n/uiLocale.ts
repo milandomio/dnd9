@@ -2,6 +2,8 @@ import type { SupportedLang } from './locale';
 
 type UILocaleDict = Record<string, string>;
 
+const BRAND_NAME = '越来越黑暗闪电指南 DarkFlashNav';
+
 const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
   'zh-Hans': {
     'ui.nav.items': '物品表',
@@ -72,13 +74,17 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': '偏移',
     'ui.detail.scale': '缩放',
     'ui.detail.composite_rate': '综合爆率',
+    'ui.detail.composite_spawn_rate': '综合生成率',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate': '该品质未配置掉落，爆率：0%',
     'ui.detail.ref_rate': '参考爆率：',
     'ui.detail.color_legend': '颜色说明：',
     'ui.detail.z_above_ground': 'Z > 299 (高于地面)',
     'ui.detail.z_normal_height': '-299 ≤ Z ≤ 299 (正常高度)',
     'ui.detail.z_below_ground': 'Z < -299 (低于地面)',
     'ui.detail.pool_select': '{count}种选{positions}',
-    'ui.detail.pool_positions': '{count}点选1',
+    'ui.detail.pool_positions': '{count}点选{select}',
+    'ui.detail.position_count': '{count}点',
     'ui.pool.skeleton_guard_fake_death': '骷髅卫兵（装死）',
     'ui.drop_label.undersea_prefix': '(海底)',
     'ui.drop_label.special_suffix': '(特殊)',
@@ -98,6 +104,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}种实体',
     'ui.detail.mode': '模式',
     'ui.home.title': '越来越黑暗闪电指南',
+    'ui.home.description': '游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱',
     'ui.home.view_items': '查看物品位置',
     'ui.home.view_monsters': '查看怪物位置',
     'ui.home.view_props': '查看实体位置',
@@ -256,13 +263,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': 'Offset',
     'ui.detail.scale': 'Scale',
     'ui.detail.composite_rate': 'Composite Rate',
+    'ui.detail.composite_spawn_rate': 'Composite Spawn Rate',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      'This rarity is not configured to drop. Drop rate: 0%',
     'ui.detail.ref_rate': 'Reference rates: ',
     'ui.detail.color_legend': 'Color legend:',
     'ui.detail.z_above_ground': 'Z > 299 (Above ground)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Normal height)',
     'ui.detail.z_below_ground': 'Z < -299 (Below ground)',
     'ui.detail.pool_select': ' {count} choose {positions}',
-    'ui.detail.pool_positions': '{count} positions choose 1',
+    'ui.detail.pool_positions': '{count} positions choose {select}',
+    'ui.detail.position_count': '{count} positions',
     'ui.pool.skeleton_guard_fake_death': 'Skeleton Guardman (Feign Death)',
     'ui.drop_label.undersea_prefix': 'Undersea ',
     'ui.drop_label.special_suffix': ' (Special)',
@@ -282,6 +294,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entities',
     'ui.detail.mode': 'Mode',
     'ui.home.title': 'DarkFlashNav Guide',
+    'ui.home.description':
+      'Game Maps · Quest Guides · Boss Drops · Resource Locations · Find Chests',
     'ui.home.view_items': 'View Item Locations',
     'ui.home.view_monsters': 'View Monster Locations',
     'ui.home.view_props': 'View Prop Locations',
@@ -442,13 +456,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': 'Offset',
     'ui.detail.scale': 'Skalierung',
     'ui.detail.composite_rate': 'Gesamtrate',
+    'ui.detail.composite_spawn_rate': 'Gesamte Spawn-Rate',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      'Diese Seltenheit ist nicht als Drop konfiguriert. Droprate: 0%',
     'ui.detail.ref_rate': 'Referenzraten: ',
     'ui.detail.color_legend': 'Farblegende:',
     'ui.detail.z_above_ground': 'Z > 299 (Oberhalb des Bodens)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Normale Hoehe)',
     'ui.detail.z_below_ground': 'Z < -299 (Unterhalb des Bodens)',
     'ui.detail.pool_select': ' {count} wählen {positions}',
-    'ui.detail.pool_positions': '{count} Positionen wählen 1',
+    'ui.detail.pool_positions': '{count} Positionen wählen {select}',
+    'ui.detail.position_count': '{count} Positionen',
     'ui.pool.skeleton_guard_fake_death': 'Skelettwache (Scheintod)',
     'ui.drop_label.undersea_prefix': 'Unterwasser-',
     'ui.drop_label.special_suffix': ' (Spezial)',
@@ -468,6 +487,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} Entitäten',
     'ui.detail.mode': 'Modus',
     'ui.home.title': 'DarkFlashNav Leitfaden',
+    'ui.home.description':
+      'Spielkarten · Quest-Guides · Boss-Drops · Ressourcenfundorte · Truhen finden',
     'ui.home.view_items': 'Gegenstandsorte anzeigen',
     'ui.home.view_monsters': 'Monsterorte anzeigen',
     'ui.home.view_props': 'Objektorte anzeigen',
@@ -628,13 +649,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': 'Desplazamiento',
     'ui.detail.scale': 'Escala',
     'ui.detail.composite_rate': 'Tasa compuesta',
+    'ui.detail.composite_spawn_rate': 'Tasa de generación compuesta',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      'Esta rareza no esta configurada como botin. Probabilidad: 0%',
     'ui.detail.ref_rate': 'Tasas de referencia: ',
     'ui.detail.color_legend': 'Leyenda de color:',
     'ui.detail.z_above_ground': 'Z > 299 (Por encima del suelo)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Altura normal)',
     'ui.detail.z_below_ground': 'Z < -299 (Por debajo del suelo)',
     'ui.detail.pool_select': ' {count} elegir {positions}',
-    'ui.detail.pool_positions': '{count} posiciones elegir 1',
+    'ui.detail.pool_positions': '{count} posiciones elegir {select}',
+    'ui.detail.position_count': '{count} posiciones',
     'ui.pool.skeleton_guard_fake_death': 'Guardia esqueleto (finge muerte)',
     'ui.drop_label.undersea_prefix': 'Submarino ',
     'ui.drop_label.special_suffix': ' (Especial)',
@@ -654,6 +680,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entidades',
     'ui.detail.mode': 'Modo',
     'ui.home.title': 'Guía DarkFlashNav',
+    'ui.home.description':
+      'Mapas del juego · Guías de misiones · Botín de jefes · Ubicaciones de recursos · Encontrar cofres',
     'ui.home.view_items': 'Ver ubicaciones de objetos',
     'ui.home.view_monsters': 'Ver ubicaciones de monstruos',
     'ui.home.view_props': 'Ver ubicaciones de objetos',
@@ -814,13 +842,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': 'Décalage',
     'ui.detail.scale': 'Échelle',
     'ui.detail.composite_rate': 'Taux composite',
+    'ui.detail.composite_spawn_rate': 'Taux de génération composite',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      "Cette rarete n'est pas configuree comme butin. Taux: 0%",
     'ui.detail.ref_rate': 'Taux de référence : ',
     'ui.detail.color_legend': 'Légende des couleurs :',
     'ui.detail.z_above_ground': 'Z > 299 (Au-dessus du sol)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Hauteur normale)',
     'ui.detail.z_below_ground': 'Z < -299 (Sous le sol)',
     'ui.detail.pool_select': ' {count} choisir {positions}',
-    'ui.detail.pool_positions': '{count} positions choisir 1',
+    'ui.detail.pool_positions': '{count} positions choisir {select}',
+    'ui.detail.position_count': '{count} positions',
     'ui.pool.skeleton_guard_fake_death': 'Garde squelette (mort simulée)',
     'ui.drop_label.undersea_prefix': 'Sous-marin ',
     'ui.drop_label.special_suffix': ' (Spécial)',
@@ -840,6 +873,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entités',
     'ui.detail.mode': 'Mode',
     'ui.home.title': 'Guide DarkFlashNav',
+    'ui.home.description':
+      'Cartes du jeu · Guides de quêtes · Butin des boss · Emplacements des ressources · Trouver des coffres',
     'ui.home.view_items': "Voir les emplacements d'objets",
     'ui.home.view_monsters': 'Voir les emplacements de monstres',
     'ui.home.view_props': "Voir les emplacements d'accessoires",
@@ -999,13 +1034,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': 'オフセット',
     'ui.detail.scale': 'スケール',
     'ui.detail.composite_rate': '総合確率',
+    'ui.detail.composite_spawn_rate': '総合生成率',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      'このレアリティはドロップに設定されていません。ドロップ率: 0%',
     'ui.detail.ref_rate': '参考ドロップ率: ',
     'ui.detail.color_legend': '色の凡例:',
     'ui.detail.z_above_ground': 'Z > 299 (地上より上)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (通常の高さ)',
     'ui.detail.z_below_ground': 'Z < -299 (地面より下)',
     'ui.detail.pool_select': '{count}種から{positions}つ選択',
-    'ui.detail.pool_positions': '{count}地点から1つ選択',
+    'ui.detail.pool_positions': '{count}地点から{select}つ選択',
+    'ui.detail.position_count': '{count}地点',
     'ui.pool.skeleton_guard_fake_death': 'スケルトン衛兵（死んだふり）',
     'ui.drop_label.undersea_prefix': '海底',
     'ui.drop_label.special_suffix': '（特殊）',
@@ -1025,6 +1065,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}種のオブジェクト',
     'ui.detail.mode': 'モード',
     'ui.home.title': 'DarkFlashNav ガイド',
+    'ui.home.description':
+      'ゲームマップ · クエスト攻略 · ボスドロップ · 資源ポイント · 宝箱を探す',
     'ui.home.view_items': 'アイテムの場所を見る',
     'ui.home.view_monsters': 'モンスターの場所を見る',
     'ui.home.view_props': 'オブジェクトの場所を見る',
@@ -1182,13 +1224,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': '오프셋',
     'ui.detail.scale': '크기',
     'ui.detail.composite_rate': '종합 확률',
+    'ui.detail.composite_spawn_rate': '종합 생성 확률',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      '이 등급은 드롭으로 설정되지 않았습니다. 드롭률: 0%',
     'ui.detail.ref_rate': '참고 드롭률: ',
     'ui.detail.color_legend': '색상 설명:',
     'ui.detail.z_above_ground': 'Z > 299 (지면 위)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (정상 높이)',
     'ui.detail.z_below_ground': 'Z < -299 (지면 아래)',
     'ui.detail.pool_select': ' {count}종 중 {positions}개 선택',
-    'ui.detail.pool_positions': '{count}개 지점 중 1개 선택',
+    'ui.detail.pool_positions': '{count}개 지점 중 {select}개 선택',
+    'ui.detail.position_count': '{count}개 지점',
     'ui.pool.skeleton_guard_fake_death': '해골 경비병 (죽은 척)',
     'ui.drop_label.undersea_prefix': '해저 ',
     'ui.drop_label.special_suffix': ' (특수)',
@@ -1208,6 +1255,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}종 엔티티',
     'ui.detail.mode': '모드',
     'ui.home.title': 'DarkFlashNav 가이드',
+    'ui.home.description':
+      '게임 지도 · 퀘스트 공략 · 보스 드롭 · 자원 위치 · 보물상자 찾기',
     'ui.home.view_items': '아이템 위치 보기',
     'ui.home.view_monsters': '몬스터 위치 보기',
     'ui.home.view_props': '오브젝트 위치 보기',
@@ -1366,13 +1415,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': 'Deslocamento',
     'ui.detail.scale': 'Escala',
     'ui.detail.composite_rate': 'Taxa composta',
+    'ui.detail.composite_spawn_rate': 'Taxa composta de geração',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      'Esta raridade nao esta configurada para cair. Taxa: 0%',
     'ui.detail.ref_rate': 'Taxas de referência: ',
     'ui.detail.color_legend': 'Legenda de cores:',
     'ui.detail.z_above_ground': 'Z > 299 (Acima do solo)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Altura normal)',
     'ui.detail.z_below_ground': 'Z < -299 (Abaixo do solo)',
     'ui.detail.pool_select': ' escolher {positions} de {count}',
-    'ui.detail.pool_positions': 'escolher 1 de {count} posições',
+    'ui.detail.pool_positions': 'escolher {select} de {count} posições',
+    'ui.detail.position_count': '{count} posições',
     'ui.pool.skeleton_guard_fake_death': 'Guarda Esqueleto (Fingindo de Morto)',
     'ui.drop_label.undersea_prefix': 'Submarino ',
     'ui.drop_label.special_suffix': ' (Especial)',
@@ -1392,6 +1446,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} entidades',
     'ui.detail.mode': 'Modo',
     'ui.home.title': 'Guia DarkFlashNav',
+    'ui.home.description':
+      'Mapas do jogo · Guias de missões · Drops de chefes · Localizações de recursos · Encontrar baús',
     'ui.home.view_items': 'Ver locais de itens',
     'ui.home.view_monsters': 'Ver locais de monstros',
     'ui.home.view_props': 'Ver locais de objetos',
@@ -1551,13 +1607,18 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': 'Смещение',
     'ui.detail.scale': 'Масштаб',
     'ui.detail.composite_rate': 'Общий шанс',
+    'ui.detail.composite_spawn_rate': 'Общий шанс появления',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate':
+      'Эта редкость не настроена для выпадения. Шанс: 0%',
     'ui.detail.ref_rate': 'Справочные шансы: ',
     'ui.detail.color_legend': 'Цветовая легенда:',
     'ui.detail.z_above_ground': 'Z > 299 (Выше земли)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Нормальная высота)',
     'ui.detail.z_below_ground': 'Z < -299 (Ниже земли)',
     'ui.detail.pool_select': ' выбрать {positions} из {count}',
-    'ui.detail.pool_positions': 'выбрать 1 из {count} позиций',
+    'ui.detail.pool_positions': 'выбрать {select} из {count} позиций',
+    'ui.detail.position_count': '{count} позиций',
     'ui.pool.skeleton_guard_fake_death': 'Скелет-страж (притворяется мертвым)',
     'ui.drop_label.undersea_prefix': 'Подводный ',
     'ui.drop_label.special_suffix': ' (Особый)',
@@ -1577,6 +1638,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count} сущностей',
     'ui.detail.mode': 'Режим',
     'ui.home.title': 'Гайд DarkFlashNav',
+    'ui.home.description':
+      'Карты игры · Гайды по заданиям · Добыча с боссов · Места ресурсов · Поиск сундуков',
     'ui.home.view_items': 'Смотреть предметы',
     'ui.home.view_monsters': 'Смотреть монстров',
     'ui.home.view_props': 'Смотреть объекты',
@@ -1734,13 +1797,17 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.offset': '偏移',
     'ui.detail.scale': '縮放',
     'ui.detail.composite_rate': '綜合爆率',
+    'ui.detail.composite_spawn_rate': '綜合生成率',
+    'ui.detail.module_spawn_rate': '{rate}%',
+    'ui.detail.no_drop_rate': '此稀有度未設定掉落。掉落率：0%',
     'ui.detail.ref_rate': '參考爆率：',
     'ui.detail.color_legend': '顏色說明：',
     'ui.detail.z_above_ground': 'Z > 299 (高於地面)',
     'ui.detail.z_normal_height': '-299 ≤ Z ≤ 299 (正常高度)',
     'ui.detail.z_below_ground': 'Z < -299 (低於地面)',
     'ui.detail.pool_select': '{count}種選{positions}',
-    'ui.detail.pool_positions': '{count}點選1',
+    'ui.detail.pool_positions': '{count}點選{select}',
+    'ui.detail.position_count': '{count}點',
     'ui.pool.skeleton_guard_fake_death': '骷髏衛兵（裝死）',
     'ui.drop_label.undersea_prefix': '(海底)',
     'ui.drop_label.special_suffix': '(特殊)',
@@ -1760,6 +1827,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.entity_count': '{count}種實體',
     'ui.detail.mode': '模式',
     'ui.home.title': '越來越黑暗閃電指南',
+    'ui.home.description':
+      '遊戲地圖 · 任務攻略 · BOSS掉落 · 資源點位 · 尋找寶箱',
     'ui.home.view_items': '查看物品位置',
     'ui.home.view_monsters': '查看怪物位置',
     'ui.home.view_props': '查看實體位置',
@@ -1850,10 +1919,168 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
   },
 };
 
+const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
+  'zh-Hans': {
+    'ui.pwa.install_title': '安装 DND闪电指南',
+    'ui.pwa.install_description': '添加到主屏幕，随时访问',
+    'ui.pwa.install': '安装',
+    'ui.pwa.offline_notice': '当前离线，已缓存的页面可正常浏览',
+    'ui.pwa.offline_ready': '离线模式已就绪',
+    'ui.pwa.update_ready': '新版本已下载',
+    'ui.pwa.apply_update': '刷新以应用',
+    'ui.debug.coords_title': '所有坐标详情',
+    'ui.debug.group': '分组',
+    'ui.debug.coord_name': '坐标名称',
+    'ui.debug.map_file': '地图文件',
+    'ui.debug.map': '地图',
+    'ui.debug.label': '标签',
+    'ui.debug.map_summary': '找到 {count} 个位置 | 范围: ±{range}',
+    'ui.debug.transform': '旋转:{rotation} 偏移:({x},{y}) 大小:{sx}x{sy}',
+    'ui.debug.range': '范围:',
+    'ui.debug.offset': '偏移:',
+    'ui.debug.rotate': '旋转',
+    'ui.debug.mirror_horizontal': '左右',
+    'ui.debug.mirror_vertical': '上下',
+    'ui.debug.reset': '重置',
+    'ui.debug.default_threshold': '默认显示阈值（综合爆率%）：{threshold}%',
+    'ui.debug.threshold_hint':
+      'spawn_rate × 豪客赛爆率 ≥ {threshold}% 则默认显示',
+    'ui.seo.keywords': '越来越黑暗,Dark and Darker,DarkFlashNav,DND,游戏攻略',
+    'ui.seo.entity_description': '{name}在游戏内共有 {count} 个地图位置。',
+    'ui.seo.lootdrop_description':
+      '{name}由 {sources} 个来源掉落，共 {positions} 个位置点。',
+    'ui.seo.module_description':
+      '{name}地图模块，大小 {sx}x{sy}，包含 {entities} 个实体、{positions} 个位置。',
+    'ui.seo.module_group_description': '{name}地图模块，共 {count} 个模块。',
+  },
+  en: {
+    'ui.pwa.install_title': 'Install DarkFlashNav',
+    'ui.pwa.install_description': 'Add to your home screen for quick access',
+    'ui.pwa.install': 'Install',
+    'ui.pwa.offline_notice': 'You are offline. Cached pages remain available.',
+    'ui.pwa.offline_ready': 'Offline mode is ready',
+    'ui.pwa.update_ready': 'A new version has been downloaded',
+    'ui.pwa.apply_update': 'Refresh to update',
+    'ui.debug.coords_title': 'All Coordinate Details',
+    'ui.debug.group': 'Group',
+    'ui.debug.coord_name': 'Coordinate Name',
+    'ui.debug.map_file': 'Map File',
+    'ui.debug.map': 'Map',
+    'ui.debug.label': 'Label',
+    'ui.debug.map_summary': '{count} positions | Range: ±{range}',
+    'ui.debug.transform':
+      'Rotation: {rotation} Offset: ({x},{y}) Size: {sx}x{sy}',
+    'ui.debug.range': 'Range:',
+    'ui.debug.offset': 'Offset:',
+    'ui.debug.rotate': 'Rotate',
+    'ui.debug.mirror_horizontal': 'Horizontal',
+    'ui.debug.mirror_vertical': 'Vertical',
+    'ui.debug.reset': 'Reset',
+    'ui.debug.default_threshold':
+      'Default display threshold (composite rate %): {threshold}%',
+    'ui.debug.threshold_hint':
+      'Show by default when spawn_rate × High-Roller drop rate ≥ {threshold}%',
+    'ui.seo.keywords': 'Dark and Darker,DarkFlashNav,DND,game guide',
+    'ui.seo.entity_description':
+      '{name} has {count} map positions in the game.',
+    'ui.seo.lootdrop_description':
+      '{name} drops from {sources} sources across {positions} positions.',
+    'ui.seo.module_description':
+      '{name} module, size {sx}x{sy}, with {entities} entities and {positions} positions.',
+    'ui.seo.module_group_description':
+      '{name} modules, {count} modules in total.',
+  },
+  ja: {
+    'ui.pwa.install_title': 'DarkFlashNavをインストール',
+    'ui.pwa.install_description': 'ホーム画面に追加してすぐに開けます',
+    'ui.pwa.install': 'インストール',
+    'ui.pwa.offline_notice':
+      '現在オフラインです。キャッシュ済みのページは閲覧できます。',
+    'ui.pwa.offline_ready': 'オフラインモードの準備ができました',
+    'ui.pwa.update_ready': '新しいバージョンをダウンロードしました',
+    'ui.pwa.apply_update': '更新を適用するには再読み込みしてください',
+    'ui.debug.coords_title': 'すべての座標詳細',
+    'ui.debug.group': 'グループ',
+    'ui.debug.coord_name': '座標名',
+    'ui.debug.map_file': 'マップファイル',
+    'ui.debug.map': 'マップ',
+    'ui.debug.label': 'ラベル',
+    'ui.debug.map_summary': '{count}件の位置 | 範囲: ±{range}',
+    'ui.debug.transform':
+      '回転:{rotation} オフセット:({x},{y}) サイズ:{sx}x{sy}',
+    'ui.debug.range': '範囲:',
+    'ui.debug.offset': 'オフセット:',
+    'ui.debug.rotate': '回転',
+    'ui.debug.mirror_horizontal': '左右反転',
+    'ui.debug.mirror_vertical': '上下反転',
+    'ui.debug.reset': 'リセット',
+    'ui.debug.default_threshold':
+      'デフォルト表示しきい値（総合爆率%）：{threshold}%',
+    'ui.debug.threshold_hint':
+      'spawn_rate × ハイローラーのドロップ率 ≥ {threshold}% でデフォルト表示',
+    'ui.seo.keywords': 'ダーク・アンド・ダーカー,DarkFlashNav,DND,ゲーム攻略',
+    'ui.seo.entity_description': '{name}はゲーム内に{count}か所あります。',
+    'ui.seo.lootdrop_description':
+      '{name}は{sources}種類の供給源からドロップし、{positions}か所にあります。',
+    'ui.seo.module_description':
+      '{name}モジュール、サイズ {sx}x{sy}、{entities}個の実体と{positions}か所の位置があります。',
+    'ui.seo.module_group_description': '{name}モジュール、合計{count}件です。',
+  },
+  'zh-Hant': {
+    'ui.pwa.install_title': '安裝 DND閃電指南',
+    'ui.pwa.install_description': '新增至主畫面，隨時存取',
+    'ui.pwa.install': '安裝',
+    'ui.pwa.offline_notice': '目前離線，已快取的頁面仍可正常瀏覽',
+    'ui.pwa.offline_ready': '離線模式已就緒',
+    'ui.pwa.update_ready': '新版本已下載',
+    'ui.pwa.apply_update': '重新整理以套用',
+    'ui.debug.coords_title': '所有座標詳情',
+    'ui.debug.group': '分組',
+    'ui.debug.coord_name': '座標名稱',
+    'ui.debug.map_file': '地圖檔案',
+    'ui.debug.map': '地圖',
+    'ui.debug.label': '標籤',
+    'ui.debug.map_summary': '找到 {count} 個位置 | 範圍: ±{range}',
+    'ui.debug.transform': '旋轉:{rotation} 偏移:({x},{y}) 大小:{sx}x{sy}',
+    'ui.debug.range': '範圍:',
+    'ui.debug.offset': '偏移:',
+    'ui.debug.rotate': '旋轉',
+    'ui.debug.mirror_horizontal': '左右',
+    'ui.debug.mirror_vertical': '上下',
+    'ui.debug.reset': '重設',
+    'ui.debug.default_threshold': '預設顯示閾值（綜合掉落率%）：{threshold}%',
+    'ui.debug.threshold_hint':
+      'spawn_rate × 豪客賽掉落率 ≥ {threshold}% 時預設顯示',
+    'ui.seo.keywords': '越來越黑暗,Dark and Darker,DarkFlashNav,DND,遊戲攻略',
+    'ui.seo.entity_description': '{name}在遊戲內共有 {count} 個地圖位置。',
+    'ui.seo.lootdrop_description':
+      '{name}由 {sources} 個來源掉落，共 {positions} 個位置點。',
+    'ui.seo.module_description':
+      '{name}地圖模組，大小 {sx}x{sy}，包含 {entities} 個實體、{positions} 個位置。',
+    'ui.seo.module_group_description': '{name}地圖模組，共 {count} 個模組。',
+  },
+};
+
+function extraUiDict(lang: SupportedLang): UILocaleDict {
+  const localized =
+    UI_EXTRA_LOCALE[lang] ??
+    (lang.startsWith('zh') ? UI_EXTRA_LOCALE['zh-Hans'] : UI_EXTRA_LOCALE.en) ??
+    {};
+  return { ...localized, 'ui.brand.name': BRAND_NAME };
+}
+
 export function uiT(lang: SupportedLang, key: string): string {
-  return UI_LOCALE[lang]?.[key] ?? UI_LOCALE['zh-Hans']?.[key] ?? key;
+  return (
+    extraUiDict(lang)[key] ??
+    UI_LOCALE[lang]?.[key] ??
+    UI_LOCALE['zh-Hans']?.[key] ??
+    key
+  );
 }
 
 export function uiDict(lang: SupportedLang): UILocaleDict {
-  return UI_LOCALE[lang] ?? UI_LOCALE['zh-Hans'] ?? {};
+  return {
+    ...(UI_LOCALE[lang] ?? UI_LOCALE['zh-Hans'] ?? {}),
+    ...extraUiDict(lang),
+  };
 }

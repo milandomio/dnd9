@@ -220,8 +220,7 @@ export default function QuestNPCDetailPage() {
       <Helmet>
         <title>
           {ssrLocalizedTitle() ??
-            `${t(npc.translation_key, npc.npc_name_display)} ${ut('ui.quest_detail.task_list')}`}
-          | DarkFlashNav
+            `${t(npc.translation_key, npc.npc_name_display)} ${ut('ui.quest_detail.task_list')} | ${ut('ui.brand.name')}`}
         </title>
         <meta name="description" content={description} />
         <meta property="og:description" content={description} />
@@ -545,8 +544,7 @@ export default function QuestNPCDetailPage() {
                                       style={{
                                         ...rowStyle,
                                         color: dark ? '#ccc' : '#555',
-                                        whiteSpace: 'normal',
-                                        overflowWrap: 'anywhere',
+                                        whiteSpace: 'nowrap',
                                         padding: '6px 8px',
                                       }}
                                     >

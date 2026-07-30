@@ -1,5 +1,6 @@
 import { type CSSProperties } from 'react';
 import { useTheme } from '../hooks/useTheme';
+import { useLocale } from '../i18n/useLocale';
 
 export interface CoordRow {
   /** Unique row key (e.g. "monsterName-0") */
@@ -69,6 +70,7 @@ export default function DebugCoordTable({
   showMonster,
 }: Props) {
   const { tokens } = useTheme();
+  const { ut } = useLocale();
 
   const th: CSSProperties = {
     padding: '4px 6px',
@@ -141,7 +143,7 @@ export default function DebugCoordTable({
           margin: '0 0 10px',
         }}
       >
-        所有坐标详情
+        {ut('ui.debug.coords_title')}
       </h3>
       <table
         style={{
@@ -161,11 +163,11 @@ export default function DebugCoordTable({
                 style={checkboxStyle}
               />
             </th>
-            <th style={th}>分组</th>
-            {showMonster && <th style={th}>坐标名称</th>}
-            <th style={th}>地图文件</th>
-            <th style={th}>地图</th>
-            <th style={th}>标签</th>
+            <th style={th}>{ut('ui.debug.group')}</th>
+            {showMonster && <th style={th}>{ut('ui.debug.coord_name')}</th>}
+            <th style={th}>{ut('ui.debug.map_file')}</th>
+            <th style={th}>{ut('ui.debug.map')}</th>
+            <th style={th}>{ut('ui.debug.label')}</th>
             <th style={th}>X</th>
             <th style={th}>Y</th>
             <th style={th}>Z</th>

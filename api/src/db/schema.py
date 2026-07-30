@@ -28,6 +28,12 @@ class SchemaManager:
                 translation_key TEXT NOT NULL DEFAULT ''
             );
 
+            CREATE TABLE IF NOT EXISTS props_tag_index (
+                tag_name TEXT PRIMARY KEY,
+                translation_key TEXT NOT NULL DEFAULT '',
+                source_string TEXT NOT NULL DEFAULT ''
+            );
+
             CREATE TABLE IF NOT EXISTS dungeon_modules (
                 module_name TEXT PRIMARY KEY,
                 translation_key TEXT NOT NULL DEFAULT '',
@@ -107,11 +113,14 @@ class SchemaManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL DEFAULT '',
                 module_name TEXT NOT NULL DEFAULT '',
+                module_translation_key TEXT NOT NULL DEFAULT '',
                 quest_id TEXT NOT NULL DEFAULT '',
                 quest_title TEXT NOT NULL DEFAULT '',
+                quest_translation_key TEXT NOT NULL DEFAULT '',
                 quest_number INTEGER NOT NULL DEFAULT 0,
                 npc_name TEXT NOT NULL DEFAULT '',
-                npc_name_display TEXT NOT NULL DEFAULT ''
+                npc_name_display TEXT NOT NULL DEFAULT '',
+                npc_translation_key TEXT NOT NULL DEFAULT ''
             );
 
             CREATE TABLE IF NOT EXISTS spawner_entries (
@@ -157,6 +166,7 @@ class SchemaManager:
             );
         """)
         self._migrate_spawners_table()
+        self._migrate_explore_targets_table()
         self.conn.commit()
 
     def ensure_translation_table(self, lang: str):
@@ -181,3 +191,15 @@ class SchemaManager:
             c.execute("ALTER TABLE spawners ADD COLUMN group_parent TEXT NOT NULL DEFAULT ''")
         if "sub_group_parent" not in columns:
             c.execute("ALTER TABLE spawners ADD COLUMN sub_group_parent TEXT NOT NULL DEFAULT ''")
+
+    def _migrate_explore_targets_table(self):
+        c = self.conn.cursor()
+        c.execute("PRAGMA table_info(explore_targets)")
+        columns = [row[1] for row in c.fetchall()]
+        for column in (
+            "module_translation_key",
+            "quest_translation_key",
+            "npc_translation_key",
+        ):
+            if column not in columns:
+                c.execute(f"ALTER TABLE explore_targets ADD COLUMN {column} TEXT NOT NULL DEFAULT ''")

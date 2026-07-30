@@ -8,6 +8,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useLocale } from '../i18n/useLocale';
 import type { DungeonModule } from '../types/data';
@@ -36,6 +37,7 @@ interface Coord {
 interface Entity {
   name: string;
   translation: string;
+  translation_key?: string;
   type: 'item' | 'monster';
   color: string;
   coords: Coord[];
@@ -123,7 +125,7 @@ export default function QuestItemGroupPage() {
   if (!data)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
-        数据加载中...
+        {ut('ui.common.loading')}
       </div>
     );
 
@@ -257,8 +259,8 @@ export default function QuestItemGroupPage() {
 
       <Helmet>
         <title>
-          {groupLabel}
-          {group} 任务物品QuestItem | 越来越黑暗闪电指南 DarkFlashNav
+          {ssrLocalizedTitle() ??
+            `${groupLabel} | ${ut('ui.quest_items.title')} | ${ut('ui.brand.name')}`}
         </title>
         <meta name="description" content={description} />
         <meta property="og:description" content={description} />
@@ -334,8 +336,8 @@ export default function QuestItemGroupPage() {
               transition: 'all 0.2s',
             }}
           >
-            {e.type === 'item' ? '📦' : '👹'} {e.translation} ({e.coords.length}
-            )
+            {e.type === 'item' ? '📦' : '👹'}{' '}
+            {t(e.translation_key, e.translation)} ({e.coords.length})
           </button>
         ))}
       </div>
@@ -378,7 +380,7 @@ export default function QuestItemGroupPage() {
                   background: e.color,
                 }}
               ></span>
-              {e.translation}{' '}
+              {t(e.translation_key, e.translation)}{' '}
               <span style={{ color: tokens.muted }}>({e.coords.length})</span>
             </span>
           ))}
@@ -465,7 +467,9 @@ export default function QuestItemGroupPage() {
                       }}
                     >
                       {mod?.img_name || mod?.sl_base_name || mapName}.webp |
-                      找到 {dots.length} 个位置 | 范围: ±{range}
+                      {ut('ui.debug.map_summary')
+                        .replace('{count}', String(dots.length))
+                        .replace('{range}', String(range))}
                     </div>
                   )}
                   {debug && (
@@ -480,8 +484,12 @@ export default function QuestItemGroupPage() {
                     >
                       {dots[0]?.file || ''}
                       <br />
-                      旋转:{mod?.rotate ?? 0} 偏移:({mod?.offset_x ?? 0},
-                      {mod?.offset_y ?? 0}) 大小:{sx}x{sy}
+                      {ut('ui.debug.transform')
+                        .replace('{rotation}', String(mod?.rotate ?? 0))
+                        .replace('{x}', String(mod?.offset_x ?? 0))
+                        .replace('{y}', String(mod?.offset_y ?? 0))
+                        .replace('{sx}', String(sx))
+                        .replace('{sy}', String(sy))}
                     </div>
                   )}
                   {debug && (
@@ -502,7 +510,9 @@ export default function QuestItemGroupPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>范围:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.range')}
+                        </span>
                         <button
                           onClick={() =>
                             setAdj(
@@ -553,7 +563,9 @@ export default function QuestItemGroupPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <span style={{ color: tokens.muted }}>偏移:</span>
+                        <span style={{ color: tokens.muted }}>
+                          {ut('ui.debug.offset')}
+                        </span>
                         <button
                           onClick={() => setAdj(mapName, 'y', adj.y - 50)}
                           style={ctrlBtn}
@@ -626,7 +638,7 @@ export default function QuestItemGroupPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↻ 旋转
+                          ↻ {ut('ui.debug.rotate')}
                         </button>
                         <button
                           onClick={() =>
@@ -637,7 +649,7 @@ export default function QuestItemGroupPage() {
                             background: adj.mirrorX ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇄ 左右
+                          ⇄ {ut('ui.debug.mirror_horizontal')}
                         </button>
                         <button
                           onClick={() =>
@@ -648,7 +660,7 @@ export default function QuestItemGroupPage() {
                             background: adj.mirrorY ? '#4CAF50' : '#555',
                           }}
                         >
-                          ⇅ 上下
+                          ⇅ {ut('ui.debug.mirror_vertical')}
                         </button>
                         <button
                           onClick={() =>
@@ -660,7 +672,7 @@ export default function QuestItemGroupPage() {
                           }
                           style={ctrlBtn}
                         >
-                          ↺ 重置
+                          ↺ {ut('ui.debug.reset')}
                         </button>
                       </div>
                     </div>
@@ -674,7 +686,7 @@ export default function QuestItemGroupPage() {
                       y: d.y,
                       z: d.z,
                       color: d.entity.color,
-                      title: d.entity.translation,
+                      title: t(d.entity.translation_key, d.entity.translation),
                     }))}
                     offX={offX}
                     offY={offY}
@@ -717,7 +729,7 @@ export default function QuestItemGroupPage() {
                             style={{ cursor: 'pointer' }}
                             onClick={() => toggle(en)}
                           >
-                            {e.translation}
+                            {t(e.translation_key, e.translation)}
                           </span>
                           <span style={{ color: tokens.muted }}>
                             ({dots.filter((d) => d.entity.name === en).length}
@@ -747,7 +759,7 @@ export default function QuestItemGroupPage() {
                 group: formatGroupLabel(mod, t, ut) || g,
                 monster: {
                   name: e.name,
-                  translation: e.translation,
+                  translation: t(e.translation_key, e.translation),
                   color: e.color,
                   onToggle: () => toggle(e.name),
                 },

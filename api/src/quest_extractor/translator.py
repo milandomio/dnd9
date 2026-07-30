@@ -22,7 +22,7 @@ class Translator:
     # 默认语言
     DEFAULT_LANGUAGE = "zh-Hans"
 
-    def __init__(self, language=None, localization_root=None):
+    def __init__(self, language=None, localization_root=None, db=None):
         """
         初始化翻译器
 
@@ -31,8 +31,9 @@ class Translator:
             localization_root: Localization根目录路径
         """
         self.language = language or self.DEFAULT_LANGUAGE
+        self.db = db
         self.localization_root = localization_root or self.DEFAULT_LOCALIZATION_ROOT
-        self.translation_file = self._get_translation_file_path()
+        self.translation_file = self._get_translation_file_path() if db is None else None
         self.translations = {}
         self._load_translations()
 
@@ -42,6 +43,13 @@ class Translator:
 
     def _load_translations(self):
         """加载翻译文件"""
+        if self.db is not None:
+            self.translations = self.db.get_translations_map(self.language)
+            self.translations = {
+                k: re.sub(r"（裂开）", "", v) for k, v in self.translations.items() if isinstance(v, str)
+            }
+            return
+
         if not os.path.exists(self.translation_file):
             print(f"警告：翻译文件不存在: {self.translation_file}")
             return
@@ -106,7 +114,7 @@ class Translator:
         return npc_translations
 
     @staticmethod
-    def get_available_languages(localization_root=None):
+    def get_available_languages(localization_root=None, db=None):
         """
         获取可用的语言列表
 
@@ -116,6 +124,9 @@ class Translator:
         Returns:
             语言代码列表，如 ["en", "zh-Hans"]
         """
+        if db is not None:
+            return ["zh-Hans"]
+
         root = localization_root or Translator.DEFAULT_LOCALIZATION_ROOT
         if not os.path.exists(root):
             return []

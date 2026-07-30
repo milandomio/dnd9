@@ -12,6 +12,8 @@
 - UI 文案使用 `ui.<feature>.<key>`，由 `web/src/i18n/uiLocale.ts` 维护。
 - `useLocale()` 暴露 `t(key, fallback)` 和 `ut(uiKey)`；实体字典运行时加载，UI 字典静态导入。
 - 缺失翻译时按 locale、中文真值、实体名顺序回退。
+- 品牌标识使用 `ui.brand.name`，十种语言的值必须完全一致：`越来越黑暗闪电指南 DarkFlashNav`。品牌不是可翻译文案。
+- Sitemap 覆盖的所有页面，其 `<title>` 与 `og:title` 必须包含上述完整品牌标识；详情页和列表页通常使用 `页面标题 | 越来越黑暗闪电指南 DarkFlashNav`，十种语言首页使用 `越来越黑暗闪电指南 DarkFlashNav | 页面描述`。
 
 ## 数据与 Provider
 

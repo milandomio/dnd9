@@ -1,11 +1,11 @@
 import json
-import re
 from decimal import Decimal
 
-from config import LOOTDROP_DIR, LOOTDROP_GROUP_DIR, LOOTDROP_RATE_DIR, SPAWNER_DIR
+from config import LOOTDROP_DIR, LOOTDROP_GROUP_DIR, LOOTDROP_RATE_DIR, MAPS_DIR, SPAWNER_DIR
 from drop_rate import _round_rate
 
 from .._helpers import load_json_dir, ue_asset_base_name
+from .spawner_coordinates import extract_all_spawners
 
 _SPAWNER_PREFIXES = [
     "Id_Spawner_New_Monster_",
@@ -154,6 +154,15 @@ class SpawnersImporter:
         self.conn.commit()
         return len(rows)
 
+    def extract_spawners(
+        self, has_lootdrop_map: dict[str, bool], multi_entity_spawners: dict[str, list[dict]]
+    ) -> list[dict]:
+        return extract_all_spawners(
+            MAPS_DIR,
+            has_lootdrop_map=has_lootdrop_map,
+            multi_entity_spawners=multi_entity_spawners,
+        )
+
     def import_lootdrop_groups(self) -> int:
         c = self.conn.cursor()
         c.execute("DELETE FROM lootdrop_groups")
@@ -186,15 +195,6 @@ class SpawnersImporter:
         c.execute("DELETE FROM lootdrop_rate_items")
         rows = []
         files = load_json_dir(LOOTDROP_DIR)
-        _variant_re = re.compile(r"_\d{4}$")
-        _variant_priority = {"_5001": 0, "_4001": 1, "_3001": 2}
-
-        def _variant_rank(name: str) -> int:
-            m = _variant_re.search(name)
-            if m:
-                return _variant_priority.get(m.group(0), 99)
-            return 100
-
         for stem, data_list in files.items():
             if not data_list:
                 continue
@@ -209,28 +209,17 @@ class SpawnersImporter:
                 luck_grade = li.get("LuckGrade", 0)
                 count = li.get("ItemCount", 1)
                 rows.append((stem, item_name, luck_grade, count))
-        seen: dict[tuple[str, str], int] = {}
-        filtered = []
-        for _i, (stem, item_name, luck_grade, count) in enumerate(rows):
-            base = _variant_re.sub("", item_name)
-            key = (stem, item_name) if item_name.endswith("_8001") else (stem, base)
-            if base == item_name:
-                seen[key] = len(filtered)
-                filtered.append((stem, item_name, luck_grade, count))
-            elif key in seen:
-                existing_idx = seen[key]
-                existing_name = filtered[existing_idx][1]
-                if _variant_rank(item_name) < _variant_rank(existing_name):
-                    filtered[existing_idx] = (stem, item_name, luck_grade, count)
-            else:
-                seen[key] = len(filtered)
-                filtered.append((stem, item_name, luck_grade, count))
+        # Preserve every concrete variant referenced by LootDropItemArray. Collapsing
+        # a family to one representative loses which qualities can actually drop.
+        deduped = {
+            (stem, item_name): (stem, item_name, luck_grade, count) for stem, item_name, luck_grade, count in rows
+        }
         c.executemany(
             "INSERT INTO lootdrop_rate_items (lootdrop_id, item_name, luck_grade, drop_count) VALUES (?, ?, ?, ?)",
-            filtered,
+            deduped.values(),
         )
         self.conn.commit()
-        return len(filtered)
+        return len(deduped)
 
     def import_lootdrop_rate_weights(self) -> int:
         c = self.conn.cursor()

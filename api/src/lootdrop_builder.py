@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-from config import ITEM_DIR, TRANSLATION_ALIAS_MAP, superhoard_translation_key
+from config import TRANSLATION_ALIAS_MAP, superhoard_translation_key
 from label_type import (
     GOLDCHEST_FAMILY,
     GOLDCHEST_SPECIAL,
@@ -81,7 +81,7 @@ def _resolve_legend_ref(
             return entity_page_map[GOLDCHEST_SPECIAL]
         return f"props/{GOLDCHEST_SPECIAL}"
     if entity_page_map and entity_name:
-        page = entity_page_map.get(entity_name)
+        page = entity_page_map.get(entity_name) or entity_page_map.get(base_monster_name(entity_name))
         if page:
             return page
     base = _strip_legend_suffixes(trans)
@@ -94,11 +94,11 @@ def _resolve_legend_ref(
             return m["ref"]
         en = m.get("entity_name", m.get("name", ""))
         if entity_page_map and en:
-            page = entity_page_map.get(en)
+            page = entity_page_map.get(en) or entity_page_map.get(base_monster_name(en))
             if page:
                 return page
         if en:
-            return f"coords/{en}"
+            return f"coords/{base_monster_name(en)}"
     return None
 
 
@@ -162,43 +162,41 @@ _FALLBACK_RARITY = {
 
 
 def _get_variant_rarity(item_name: str, suffixes: list[str], translations: dict[str, str]) -> dict[str, dict]:
-    """Read RarityType from game JSON, translate via DB translations table."""
+    """Resolve rarity from the variant suffix and DB-backed translation map."""
     result: dict[str, dict] = {}
     for suffix in suffixes:
-        rarity_name: str | None = None
-        json_path = ITEM_DIR / f"Id_Item_{item_name}_{suffix}.json"
-        if json_path.exists():
-            try:
-                data = json.loads(json_path.read_text(encoding="utf-8"))
-                if isinstance(data, list) and data:
-                    tag = data[0].get("Properties", {}).get("RarityType", {}).get("TagName", "")
-                    rarity_name = tag.split(".")[-1] if tag else None
-            except Exception:
-                pass
-        if not rarity_name:
-            rarity_name = _FALLBACK_RARITY.get(suffix)
+        rarity_name = _FALLBACK_RARITY.get(suffix)
         if rarity_name:
             key = f"Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_{rarity_name}"
             result[suffix] = {"name": translations.get(key, rarity_name), "translation_key": key}
     return result
 
 
-def _detail_variant_suffixes(entry: dict) -> list[str]:
-    variant_count = entry.get("variant_count", 1)
-    if variant_count <= 1:
-        return []
+def _detail_variant_suffixes(entry: dict, drop_engine) -> list[str]:
+    item_name = entry["name"]
+    base_name = item_name.removesuffix("_8001")
+    suffixes = sorted(drop_engine.get_existing_variant_suffixes(base_name))
+    if item_name.endswith("_8001"):
+        return suffixes
+    return [suffix for suffix in suffixes if suffix != "8001"]
+
+
+def _artifact_translation_key(item_name: str, translations: dict[str, str]) -> str:
+    """Resolve an artifact key exclusively from the DB-backed translation map."""
+    expected_key = f"Text_DesignData_Item_Item_{item_name}"
+    return expected_key if expected_key in translations else ""
+
+
+def _possible_variant_suffixes(entry: dict) -> list[str]:
+    """Return game-defined quality suffixes, including qualities with no drop weight."""
     if entry["name"].endswith("_8001"):
-        # Artifact entries are standalone pages, but retain all rarity metadata
-        # so the page can navigate to the ordinary variants of the base item.
-        return ["1001", "2001", "3001", "4001", "5001", "6001", "7001", "8001"]
+        return ["8001"]
     match = _SUFFIX_NUM_RE.search(entry.get("raw_name", ""))
     if not match:
         return []
     first_num = int(match.group(1))
-    suffixes = [str(first_num + 1000 * i).zfill(4) for i in range(variant_count)]
-    if variant_count >= 8 and "8001" not in suffixes:
-        suffixes.append("8001")
-    return suffixes
+    count = entry.get("variant_count", 1)
+    return [str(first_num + 1000 * i).zfill(4) for i in range(count)]
 
 
 def _source_id(entity_name: str, source_kind: str) -> str:
@@ -296,6 +294,7 @@ def build_loot_index(
     monsters: list[dict],
     entity_class: dict,
     resolve_name,
+    translations: dict[str, str],
 ) -> list[dict]:
     """Build lootdrops.json index (grouped by item for list page)."""
     items_lookup = {r["item_name"]: r for r in items}
@@ -383,22 +382,12 @@ def build_loot_index(
             mon_translations.append(resolve_name(m, None, "monster") or m)
             mon_translation_keys.append("")
         variant_count = item_row.get("variant_count", 1) if item_row else 1
-        translation_key = ""
-        if item_row and item_row.get("translation_key"):
-            translation_key = item_row["translation_key"]
-            # For 8001 variants, read variant's game JSON to get correct Name key
-            if item_name.endswith("_8001"):
-                _vj = ITEM_DIR / f"Id_Item_{item_name}.json"
-                if _vj.exists():
-                    try:
-                        _vd = json.loads(_vj.read_text("utf-8"))
-                        if isinstance(_vd, list) and _vd:
-                            _nk = _vd[0].get("Properties", {}).get("Name", {}).get("Key", "")
-                            if _nk:
-                                translation_key = _nk
-                    except Exception:
-                        pass
-        elif item_name.endswith("_8001"):
+        translation_key = (
+            _artifact_translation_key(item_name, translations)
+            if item_name.endswith("_8001")
+            else item_row.get("translation_key", "") if item_row else ""
+        )
+        if not translation_key and item_name.endswith("_8001"):
             base_row = items_lookup.get(item_name.removesuffix("_8001"))
             if base_row:
                 translation_key = base_row.get("translation_key", "")
@@ -490,8 +479,8 @@ def build_and_save_lootdrop_details(
 
     for entry in loot_index:
         item_name = entry["name"]
-        variant_suffixes = _detail_variant_suffixes(entry)
-        is_variant_family = bool(variant_suffixes) and not item_name.endswith("_8001")
+        variant_suffixes = _detail_variant_suffixes(entry, drop_engine)
+        is_variant_family = len(variant_suffixes) > 1 and not item_name.endswith("_8001")
         merged: dict[str, dict] = {}
         _entry_mtk = entry.get("monster_translation_keys") or []
         for _i, m_name in enumerate(entry["monsters"]):
@@ -1178,7 +1167,12 @@ def build_and_save_lootdrop_details(
             _entry["hr100"] = True
         _vs = item_variant_suffixes.get(_iname)
         if _vs:
+            _possible = _possible_variant_suffixes(_entry)
             _entry["variant_suffixes"] = _vs
+            _entry["variant_count"] = len(_vs)
+            _unavailable = [suffix for suffix in _possible if suffix not in _vs and suffix != "8001"]
+            if _unavailable:
+                _entry["unavailable_variant_suffixes"] = _unavailable
         _valid = item_valid_names.get(_iname)
         if _valid:
             _filtered = [

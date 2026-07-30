@@ -8,6 +8,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { localizedSeoDescription } from '../i18n/seo';
 
 interface GroupEntry {
@@ -63,9 +64,12 @@ export default function QuestItemsPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>任务物品表 | 越来越黑暗闪电指南 DarkFlashNav</title>
+        <title>
+          {ssrLocalizedTitle() ??
+            `${ut('ui.quest_items.title')} | ${ut('ui.brand.name')}`}
+        </title>
         <meta name="description" content={description} />
-        <meta name="keywords" content="任务物品,任务攻略,任务查询" />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta property="og:description" content={description} />
       </Helmet>
       <h1

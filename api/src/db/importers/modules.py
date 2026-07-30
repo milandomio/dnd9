@@ -1,10 +1,10 @@
 import json
+import math
 import os
 import re
 from pathlib import Path
 
-from config import DUNGEON_MODULE_DIR, GROUP_TO_ART_DIR, MAPS_DIR
-from layout_utils import load_all_layout_rotations
+from config import DUNGEON_MODULE_DIR, GROUP_TO_ART_DIR, LAYOUT_DIR, MAPS_DIR
 
 from .._helpers import (
     extract_dungeon_module_name,
@@ -16,12 +16,45 @@ from .._helpers import (
 )
 
 
+def _load_layout_rotations(layout_root: Path) -> dict[str, int]:
+    rotations: dict[str, int] = {}
+    if not layout_root.exists():
+        return rotations
+    for dirpath, _, filenames in os.walk(layout_root):
+        for filename in filenames:
+            if not filename.endswith(".json") or not filename.startswith("ShipGraveyard_"):
+                continue
+            try:
+                with open(Path(dirpath) / filename, encoding="utf-8") as f:
+                    data = json.load(f)
+            except Exception:
+                continue
+            if not isinstance(data, list):
+                continue
+            for entry in data:
+                if not isinstance(entry, dict) or entry.get("Type") != "LevelStreamingAlwaysLoaded":
+                    continue
+                props = entry.get("Properties", {}) or {}
+                asset = (props.get("WorldAsset") or {}).get("AssetPathName", "")
+                if not asset:
+                    continue
+                rotation = (props.get("LevelTransform") or {}).get("Rotation", {}) or {}
+                yaw_rad = 2 * math.atan2(rotation.get("Z", 0), rotation.get("W", 1))
+                base = asset.rsplit("/", 1)[-1].split(".", 1)[0]
+                for suffix in ("_A", "_D", "_S", "_HR", "_HR_D"):
+                    if base.endswith(suffix):
+                        base = base[: -len(suffix)]
+                        break
+                rotations[base] = round((math.degrees(yaw_rad) - 90) % 360, 1)
+    return rotations
+
+
 class ModulesImporter:
     def __init__(self, conn):
         self.conn = conn
 
     def import_all(self) -> int:
-        module_rotations = load_all_layout_rotations()
+        module_rotations = _load_layout_rotations(LAYOUT_DIR)
         path_group_map = self._build_path_group_map()
         files = load_json_dir(DUNGEON_MODULE_DIR)
         c = self.conn.cursor()

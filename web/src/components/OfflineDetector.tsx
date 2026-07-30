@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useLocale } from '../i18n/useLocale';
 
 export default function OfflineDetector() {
   const [offline, setOffline] = useState(false);
+  const { ut } = useLocale();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -33,7 +35,7 @@ export default function OfflineDetector() {
         textAlign: 'center',
       }}
     >
-      当前离线，已缓存的页面可正常浏览
+      {ut('ui.pwa.offline_notice')}
     </div>
   );
 }

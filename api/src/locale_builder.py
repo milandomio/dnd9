@@ -3,7 +3,11 @@
 import json
 from pathlib import Path
 
-from config import SUPERHOARD_I18N, SUPERHOARD_I18N_KEY
+from config import (
+    SUPERHOARD_I18N,
+    SUPERHOARD_I18N_KEY,
+    hardcoded_locale_entries,
+)
 
 SUPPORTED_LANGUAGES = (
     "zh-Hans",
@@ -32,6 +36,9 @@ def _collect_keys(obj, used: set[str]):
     if isinstance(obj, dict):
         for key in (
             "translation_key",
+            "module_translation_key",
+            "quest_translation_key",
+            "npc_translation_key",
             "dungeon_translation_key",
             "rarity_translation_key",
         ):
@@ -116,6 +123,7 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
     locale_dir.mkdir(parents=True, exist_ok=True)
 
     used_keys = _load_used_keys(output_dir, lootdrop_keys)
+    used_keys = {key for key in used_keys if not key.startswith("ui.")}
     used_keys.add(SUPERHOARD_I18N_KEY)
     used_keys.update(FILTER_MODE_LOCALE_KEYS)
     fallback_translations = db.get_translations_map("zh-Hans")
@@ -129,7 +137,8 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
             filtered = {key: all_translations.get(key, fallback_translations.get(key, key)) for key in used_keys}
         else:
             filtered = dict(all_translations)
-        # Inject SuperHoard synthetic key (no Game.json entry)
+        filtered.update(hardcoded_locale_entries(lang, used_keys))
+        # Re-apply SuperHoard after hardcoded overrides because it shares the same synthetic key.
         sh_val = SUPERHOARD_I18N.get(lang) or SUPERHOARD_I18N.get("zh-Hans")
         if sh_val:
             filtered[SUPERHOARD_I18N_KEY] = sh_val

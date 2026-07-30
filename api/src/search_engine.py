@@ -1,614 +1,79 @@
-import json
-import math
-import os
 import re
-from pathlib import Path
-
-from config import MAPS_DIR, SPAWNER_ALIAS_MAP, SPAWNER_DIR
-from drop_rate import _round_rate
 
 _VARIANT_RE = re.compile(r"_\d{4}$")
 _QUALITY_RE = re.compile(r"_(Common|Elite|Nightmare|Unique)$")
 _HARD_SUFFIX_RE = re.compile(r"_(Hard|VeryHard)$")
-_AP_SUFFIX_RE = re.compile(r"\.(\d+)'?$")
+_LOOTDROP_GROUP_PREFIXES = ("ID_LootDropGroup_", "Id_LootDropGroup_")
 
 
 def strip_variant_suffixes(name: str) -> str:
-    result = name
-    result = _QUALITY_RE.sub("", result)
+    result = _QUALITY_RE.sub("", name)
     result = _HARD_SUFFIX_RE.sub("", result)
-    result = _VARIANT_RE.sub("", result)
-    return result
-
-
-def _ue_asset_base_name(asset_path: str) -> str:
-    """Extract base name from UE asset path like '/Game/.../Id_Foo.Id_Foo' → 'Id_Foo'."""
-    if not asset_path:
-        return ""
-    part = asset_path.rsplit("/", 1)[-1]
-    if "." in part:
-        part = part.split(".")[0]
-    return part
+    return _VARIANT_RE.sub("", result)
 
 
 def load_all_spawner_data(
+    db,
     monster_name_map: dict[str, str] | None = None,
 ) -> tuple[dict[str, bool], dict[str, list[dict]], dict[str, list[str]]]:
-    """Single-pass read of all DCSpawnerDataAsset files.
-
-    Builds three mappings simultaneously in one file scan:
-    1. keyword_has_lootdrop: keyword -> whether any item has LootDropGroupId
-    2. multi_entity: keyword -> [{entity_name, spawn_rate, spawner_type, lootdrop_group_id}]
-       (only spawners needing multi-entity expansion or redirect)
-    3. lootdrop_monster: ldg_name -> [canonical monster_names]
-       (only built when monster_name_map is provided)
-
-    Returns (keyword_has_lootdrop, multi_entity, lootdrop_monster).
-    """
+    """Build spawner lookup maps from the preloaded DB tables."""
     keyword_has_lootdrop: dict[str, bool] = {}
     multi_entity: dict[str, list[dict]] = {}
-    _ldg_to_monsters: dict[str, set[str]] = {}
+    ldg_to_monsters: dict[str, set[str]] = {}
 
-    if not SPAWNER_DIR.exists():
-        return keyword_has_lootdrop, multi_entity, {k: sorted(v) for k, v in _ldg_to_monsters.items()}
-
-    for json_file in SPAWNER_DIR.glob("*.json"):
-        try:
-            with open(json_file, encoding="utf-8") as f:
-                data = json.load(f)
-        except Exception:
-            continue
-        if not isinstance(data, list) or not data:
-            continue
-        entry = data[0]
-        if entry.get("Type") != "DCSpawnerDataAsset":
-            continue
-        name = entry.get("Name", "")
-        if not name:
-            continue
-        keyword = strip_id_prefix(name)
+    entries = db.get_all_spawner_entries()
+    monster_names = {row["monster_name"] for row in db.get_monster_entities()}
+    props_names = {row["asset_name"] for row in db.get_props_entities()}
+    grouped: dict[str, list[dict]] = {}
+    for row in entries:
+        keyword = row["spawner_keyword"]
         if not keyword:
             continue
-        # Stripped keyword for has_lootdrop_map lookups (multi_entity uses original)
-        kw_base = strip_variant_suffixes(strip_id_prefix(name))
-
-        props = entry.get("Properties", {}) or {}
-        items = props.get("SpawnerItemArray", []) or []
-
-        # --- 1. keyword -> has_lootdrop ---
-        has_ld = False
-        for item in items:
-            if (item.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""):
-                has_ld = True
-                break
-        keyword_has_lootdrop[kw_base] = has_ld
-
-        # --- 2. multi-entity / redirect ---
-        active_items = [it for it in items if (it.get("LootDropGroupId", {}) or {}).get("AssetPathName", "")]
-        if active_items:
-            entity_names: set[str] = set()
-            for item in active_items:
-                e_name = ""
-                for id_key in ("MonsterId", "PropsId"):
-                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                    if id_path:
-                        raw = _ue_asset_base_name(id_path) or ""
-                        e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                        e_name = strip_variant_suffixes(e_name)
-                        break
-                if e_name:
-                    entity_names.add(e_name)
-            if entity_names:
-                need_expand = len(entity_names) >= 2
-                need_redirect = len(entity_names) == 1 and keyword != next(iter(entity_names))
-                # Preserve SuperHoard spawner keyword (don't redirect to base entity name)
-                if need_redirect and keyword.startswith("SuperHoard"):
-                    need_redirect = False
-                if need_expand or need_redirect:
-                    # 按单个 grade 重叠计算 spawn_rate（而非按完全匹配的 DG 数组分组）
-                    _all_grades: set[int] = set()
-                    for _item in items:
-                        _all_grades.update(_item.get("DungeonGrades", []) or [])
-                    _grade_totals: dict[int, int] = {}
-                    for _g in _all_grades:
-                        _gt = sum(
-                            it.get("SpawnRate", 10000) for it in items if _g in (it.get("DungeonGrades", []) or [])
-                        )
-                        _grade_totals[_g] = max(_gt, 1)
-                    entries: list[dict] = []
-                    for item in items:
-                        if not (item.get("LootDropGroupId", {}) or {}).get("AssetPathName", ""):
-                            continue
-                        e_name = ""
-                        s_type = ""
-                        for id_key in ("MonsterId", "PropsId"):
-                            id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                            if id_path:
-                                raw = _ue_asset_base_name(id_path) or ""
-                                e_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                                e_name = strip_variant_suffixes(e_name)
-                                if "/V2/Monster/" in id_path:
-                                    s_type = "monster"
-                                elif "/V2/Props/" in id_path:
-                                    s_type = "props"
-                                break
-                        if not e_name:
-                            continue
-                        raw_rate = item.get("SpawnRate", 10000)
-                        _grades = item.get("DungeonGrades", []) or []
-                        _rates = [100 * raw_rate / _grade_totals[_g] for _g in _grades]
-                        spawn_rate_val = _round_rate(min(_rates)) if _rates else _round_rate(100 * raw_rate / 10000)
-                        spawn_rate_val = min(spawn_rate_val, 100.0)
-                        ldg = item.get("LootDropGroupId", {}) or {}
-                        ldg_path = ldg.get("AssetPathName", "")
-                        ldg_id = _ue_asset_base_name(ldg_path) if ldg_path else ""
-                        entries.append(
-                            {
-                                "entity_name": e_name,
-                                "spawn_rate": spawn_rate_val,
-                                "spawner_type": s_type,
-                                "lootdrop_group_id": ldg_id,
-                            }
-                        )
-                    if entries:
-                        multi_entity[keyword] = entries
-
-        # --- 3. lootdrop -> monster map (only when monster_name_map given) ---
-        if monster_name_map is not None:
-            for item in items:
-                ldg = item.get("LootDropGroupId") or {}
-                ldg_asset = ldg.get("AssetPathName", "")
-                if not ldg_asset:
-                    continue
-                ldg_name = _ue_asset_base_name(ldg_asset)
-                if not ldg_name:
-                    continue
-                for pfx in ("ID_LootDropGroup_", "Id_LootDropGroup_"):
-                    if ldg_name.startswith(pfx):
-                        ldg_name = ldg_name[len(pfx) :]
-                        break
-                mid = item.get("MonsterId") or {}
-                mid_asset = mid.get("AssetPathName", "")
-                if not mid_asset:
-                    pid = item.get("PropsId") or {}
-                    mid_asset = pid.get("AssetPathName", "")
-                    if not mid_asset:
-                        continue
-                mid_name = _ue_asset_base_name(mid_asset)
-                if not mid_name:
-                    continue
-                for pfx in ("Id_Monster_", "Id_Props_"):
-                    if mid_name.startswith(pfx):
-                        mid_name = mid_name[len(pfx) :]
-                        break
-                canonical = monster_name_map.get(mid_name.lower())
-                if not canonical:
-                    stripped = strip_variant_suffixes(mid_name)
-                    canonical = monster_name_map.get(stripped.lower(), mid_name)
-                _ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
-
-    lootdrop_monster = {k: sorted(v) for k, v in _ldg_to_monsters.items()}
-    return keyword_has_lootdrop, multi_entity, lootdrop_monster
-
-
-_PREFIXES = [
-    "DCSpawnerDataAsset'Id_Spawner_New_Monster_",
-    "DCSpawnerDataAsset'Id_Spawner_New_Props_",
-    "DCSpawnerDataAsset'Id_Spawner_New_LootDrop_",
-    "DCSpawnerDataAsset'Id_Spawner_Monster_",
-    "DCSpawnerDataAsset'Id_Spawner_Props_",
-    "DCSpawnerDataAsset'Id_Spawner_LootDrop_",
-    "DCSpawnerDataAsset'Id_Spawner_New_Lootdrop_",
-    "DCSpawnerDataAsset'Id_Spawner_Lootdrop_",
-    "DCSpawnerDataAsset'Id_Spawner_New_NPC_",
-    "DCSpawnerDataAsset'Id_Spawner_NPC_",
-    "DCSpawnerDataAsset'",
-    "Id_Spawner_New_Monster_",
-    "Id_Spawner_New_Props_",
-    "Id_Spawner_New_LootDrop_",
-    "Id_Spawner_New_NPC_",
-    "Id_Spawner_Monster_",
-    "Id_Spawner_Props_",
-    "Id_Spawner_LootDrop_",
-    "Id_Spawner_Lootdrop_",
-    "Spawn_",
-    "Spawner_New_",
-]
-
-_SUFFIXES = [
-    "_Elite",
-    "_Random",
-    "_2type",
-    "_3type",
-    "_4type",
-    "_5type",
-]
-
-
-def strip_id_prefix(name: str) -> str:
-    result = name
-    changed = True
-    while changed:
-        changed = False
-        for prefix in _PREFIXES:
-            if result.startswith(prefix):
-                result = result[len(prefix) :].rstrip("'\"")
-                changed = True
-                break
-        if not changed and result.startswith("Id_"):
-            result = result[3:]
-            changed = True
-    for suffix in _SUFFIXES:
-        if result.endswith(suffix):
-            result = result[: -len(suffix)]
-    return result
-
-
-def _preview_type(asset_path: str) -> str:
-    if "/V2/Monster/" in asset_path:
-        return "monster"
-    if "/V2/Props/" in asset_path:
-        return "props"
-    if "/V2/LootDrop/" in asset_path:
-        return "lootdrop"
-    return "unknown"
-
-
-def _preview_entity_name(asset_path: str) -> str:
-    """Extract entity name from PreviewData.AssetPathName.
-    e.g., /Game/.../Id_Props_StatueDwarven.Id_Props_StatueDwarven -> StatueDwarven
-    """
-    if not asset_path:
-        return ""
-    # Extract filename from path
-    parts = asset_path.rstrip("/").split("/")
-    if not parts:
-        return ""
-    filename = parts[-1]
-    # Remove duplicate suffix (e.g., Id_Props_StatueDwarven.Id_Props_StatueDwarven -> Id_Props_StatueDwarven)
-    if "." in filename:
-        filename = filename.split(".")[0]
-    # Strip Id_Props_, Id_Monster_, Id_LootDrop_ prefixes
-    for prefix in ["Id_Props_", "Id_Monster_", "Id_LootDrop_", "Id_Spawner_New_", "Id_Spawner_"]:
-        if filename.startswith(prefix):
-            filename = filename[len(prefix) :]
-            break
-    return filename
-
-
-def _sl_base_name(name: str) -> str:
-    for suffix in ["_HR_D", "_D", "_A"]:
-        if name.endswith(suffix):
-            return name[: -len(suffix)]
-    return name
-
-
-def _extract_actor_name(outer_str: str) -> str:
-    if "'" in outer_str:
-        parts = outer_str.split("'")
-        last_part = parts[-2] if len(parts) > 2 and parts[-1] == "" else parts[-1]
-        if "." in last_part:
-            return last_part.split(".")[-1]
-        return last_part
-    return outer_str
-
-
-def _strip_bp_prefix(bp_type: str) -> str:
-    """Strip BP_ prefix and _C suffix from entity type name."""
-    name = bp_type
-    if name.startswith("BP_"):
-        name = name[3:]
-    if name.endswith("_C"):
-        name = name[:-2]
-    # Strip trailing _ice, _01, _02 etc. numeric suffix for matching
-    # But keep meaningful suffixes like _Crypt, _Soulflame
-    return name
-
-
-def _list_map_jsons(root: str | Path) -> list[Path]:
-    root = Path(root)
-    if not root.exists():
-        return []
-    files = []
-    for dirpath, _, filenames in os.walk(root):
-        for fn in filenames:
-            if not fn.endswith(("_HR_D.json", "_D.json", "_A.json")):
-                continue
-            if "_SR" in fn or "_BossTest" in fn or "_Resize" in fn or "_Test" in fn:
-                continue
-            if "Arena" in fn or "ArenaStart" in dirpath:
-                continue
-            if fn in ("Ruins_Passage_Outer_11_D.json",):
-                continue
-            files.append(Path(dirpath) / fn)
-    return sorted(files)
-
-
-def extract_spawners(
-    map_json_path: Path,
-    multi_entity_spawners: dict[str, list[dict]] | None = None,
-    spawner_data_map: dict[str, bool] | None = None,
-) -> list[dict]:
-    try:
-        with open(map_json_path, encoding="utf-8") as f:
-            data = json.load(f)
-    except Exception:
-        return []
-
-    if not isinstance(data, list):
-        return []
-
-    spawners: dict[str, dict] = {}
-    scene: dict[str, dict] = {}
-
-    if multi_entity_spawners is None:
-        multi_entity_spawners = {}
-    if spawner_data_map is None:
-        spawner_data_map = {}
-
-    # Collect all scene-component-like entries for parent-chain resolution
-    _sc_entries: list[tuple[int, dict]] = []  # (array_index, entry)
-    _scene_comp_types = {"SphereComponent", "SceneComponent"}
-
-    # Build map from DefaultSceneRoot entry index → BP_GameSpawnerGroup_C name
-    group_root_to_name: dict[int, str] = {}
-    # Build map for sub-group containers (ObjectLinker, TriggerBox) → name
-    sub_group_root_to_name: dict[int, str] = {}
-    _sub_group_types = {"BP_GameObjectLinker_C", "BP_ObjectLinkWithTriggerBox_C"}
-    for _idx, entry in enumerate(data):
-        t = entry.get("Type", "")
-        props = entry.get("Properties", {}) or {}
-        root = props.get("RootComponent", {}) or {}
-        op = root.get("ObjectPath", "")
-        m = _AP_SUFFIX_RE.search(op) if op else None
-        if not m:
+        keyword_base = strip_variant_suffixes(keyword)
+        has_lootdrop = bool(row["lootdrop_group_id"])
+        keyword_has_lootdrop[keyword_base] = keyword_has_lootdrop.get(keyword_base, False) or has_lootdrop
+        if not has_lootdrop:
             continue
-        idx = int(m.group(1))
-        if t == "BP_GameSpawnerGroup_C":
-            group_root_to_name[idx] = entry.get("Name", "")
-        elif t in _sub_group_types:
-            sub_group_root_to_name[idx] = entry.get("Name", "")
+        grouped.setdefault(keyword, []).append(row)
+        entity_name = row["entity_name"]
+        if entity_name:
+            canonical = (monster_name_map or {}).get(entity_name.lower())
+            if not canonical:
+                stripped = strip_variant_suffixes(entity_name)
+                canonical = (monster_name_map or {}).get(stripped.lower(), entity_name)
+            ldg_name = row["lootdrop_group_id"]
+            for prefix in _LOOTDROP_GROUP_PREFIXES:
+                if ldg_name.startswith(prefix):
+                    ldg_name = ldg_name[len(prefix) :]
+                    break
+            ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
 
-    for idx, entry in enumerate(data):
-        if not isinstance(entry, dict):
+    for keyword, keyword_entries in grouped.items():
+        entity_names = {strip_variant_suffixes(row["entity_name"]) for row in keyword_entries if row["entity_name"]}
+        need_expand = len(entity_names) >= 2
+        need_redirect = len(entity_names) == 1 and keyword != next(iter(entity_names))
+        if need_redirect and keyword.startswith("SuperHoard"):
+            need_redirect = False
+        if not (need_expand or need_redirect):
             continue
-        t = entry.get("Type", "")
 
-        if t == "BP_GameSpawner_C":
-            props = entry.get("Properties", {}) or {}
-            sd = props.get("SpawnerDataAsset", {}) or {}
-            raw_obj = sd.get("ObjectName", "")
-            keyword = strip_id_prefix(raw_obj)
-            if not keyword:
+        expanded = []
+        for row in keyword_entries:
+            entity_name = strip_variant_suffixes(row["entity_name"])
+            if not entity_name:
                 continue
-            # Apply alias map (before variant stripping)
-            keyword_alias = SPAWNER_ALIAS_MAP.get(keyword, keyword)
-            # Stripped keyword for direct entity matching
-            keyword_stripped = strip_variant_suffixes(keyword_alias)
-            pd = props.get("PreviewData", {}) or {}
-            asset_path = pd.get("AssetPathName", "")
-            spawner_type = _preview_type(asset_path)
-            preview_name = strip_variant_suffixes(_preview_entity_name(asset_path))
-            spawner_name = entry.get("Name", "")
-            # Check if this spawner has lootdrop from spawner data asset
-            has_lootdrop = spawner_data_map.get(keyword_stripped, False) or spawner_data_map.get(keyword_alias, False)
-            if spawner_name:
-                spawners[spawner_name] = {
-                    "keyword": keyword_stripped,
-                    "keyword_original": keyword,
-                    "spawner_type": spawner_type,
-                    "preview_name": preview_name,
-                    "has_lootdrop": has_lootdrop,
-                }
-
-        elif t.startswith("BP_") and t.endswith("_C") and t not in ("BP_GameSpawner_C",):
-            entry_name = entry.get("Name", "")
-            if entry_name:
-                spawners[entry_name] = {
-                    "keyword": _strip_bp_prefix(t),
-                    "spawner_type": "props",
-                    "has_lootdrop": False,
-                }
-
-        if t in _scene_comp_types and entry.get("Name") in (
-            "SceneComponent",
-            "RootScene",
-            "DefaultSceneRoot",
-        ):
-            _sc_entries.append((idx, entry))
-
-    # Build scene coords with AttachParent chain resolution
-
-    def _resolve_world_loc(start_idx: int) -> tuple[float, float, float, float, str, str]:
-        """Walk up AttachParent chain to compute world-space x, y, z, yaw,
-        group name and sub-group name (closest container in chain)."""
-        chain: list[tuple[float, float, float, float]] = []
-        group_name = ""
-        sub_group_name = ""
-        visited: set[int] = set()
-        cur = start_idx
-        while cur >= 0 and cur not in visited:
-            visited.add(cur)
-            if cur >= len(data):
-                break
-            if cur in group_root_to_name:
-                group_name = group_root_to_name[cur]
-            if cur in sub_group_root_to_name and not sub_group_name:
-                sub_group_name = sub_group_root_to_name[cur]
-            entry = data[cur]
-            props = entry.get("Properties", {}) or {}
-            loc = props.get("RelativeLocation", {}) or {}
-            rot = props.get("RelativeRotation", {}) or {}
-            chain.append(
-                (
-                    loc.get("X", 0),
-                    loc.get("Y", 0),
-                    loc.get("Z", 0),
-                    rot.get("Yaw", 0),
-                )
+            spawner_type = (
+                "monster" if entity_name in monster_names else "props" if entity_name in props_names else "unknown"
             )
-            ap = props.get("AttachParent", {}) or {}
-            ap_path = ap.get("ObjectPath", "")
-            m = _AP_SUFFIX_RE.search(ap_path)
-            cur = int(m.group(1)) if m else -1
-        # Accumulate from root to leaf, rotating child offsets by parent rotation
-        x = y = z = 0.0
-        yaw_total = 0.0
-        for lx, ly, lz, lyaw in reversed(chain):
-            if yaw_total != 0:
-                r = math.radians(yaw_total)
-                cos_r, sin_r = math.cos(r), math.sin(r)
-                rx = lx * cos_r - ly * sin_r
-                ry = lx * sin_r + ly * cos_r
-            else:
-                rx, ry = lx, ly
-            x += rx
-            y += ry
-            z += lz
-            yaw_total += lyaw
-        return x, y, z, yaw_total, group_name, sub_group_name
-
-    for idx, entry in _sc_entries:
-        outer_raw = entry.get("Outer", "")
-        if isinstance(outer_raw, dict):
-            outer_raw = (outer_raw or {}).get("ObjectName", "")
-        if not outer_raw or not isinstance(outer_raw, str):
-            continue
-        actor_name = _extract_actor_name(outer_raw)
-        if not actor_name:
-            continue
-        props = entry.get("Properties", {}) or {}
-        ap = props.get("AttachParent", {}) or {}
-        if ap and ap.get("ObjectPath"):
-            # Has parent: resolve world coords by walking up the chain
-            wx, wy, wz, wyaw, group_name, sub_group_name = _resolve_world_loc(idx)
-            scene[actor_name] = {
-                "x": wx,
-                "y": wy,
-                "z": wz,
-                "yaw": round(wyaw % 360, 1),
-                "group_parent": group_name,
-                "sub_group_parent": sub_group_name,
-            }
-        else:
-            # No parent: use RelativeLocation directly
-            loc = props.get("RelativeLocation", {}) or {}
-            rot = props.get("RelativeRotation", {}) or {}
-            yaw_deg = rot.get("Yaw", 0)
-            yaw = round(yaw_deg % 360, 1)
-            scene[actor_name] = {
-                "x": loc.get("X", 0),
-                "y": loc.get("Y", 0),
-                "z": loc.get("Z", 0),
-                "yaw": yaw,
-                "group_parent": "",
-                "sub_group_parent": "",
-            }
-
-    results = []
-    for name, info in spawners.items():
-        coord = scene.get(name, {"x": 0, "y": 0, "z": 0, "group_parent": "", "sub_group_parent": ""})
-        stem = map_json_path.stem
-        version = ""
-        if stem.endswith("_HR_D"):
-            version = ""
-        elif stem.endswith("_D"):
-            version = "(D)"
-        elif stem.endswith("_A"):
-            version = "(A)"
-        map_base = _sl_base_name(stem)
-        keyword = info["keyword"]
-        kw_original = info.get("keyword_original", keyword)
-        # Check if this spawner keyword is a multi-entity random generator
-        # Use the original (non-stripped) keyword for multi_entity lookup
-        if multi_entity_spawners and kw_original in multi_entity_spawners:
-            # Expand: one spawner entry per possible entity type
-            # Filter: if the spawner keyword base matches any entity's base,
-            # only include entities of the same base (avoids GoblinWarrior → LavaGolem bleed)
-            entities = multi_entity_spawners[kw_original]
-            kw_base = keyword
-            entity_bases = {e["entity_name"] for e in entities}
-            has_match = any(kw_base == eb or kw_base in eb or eb in kw_base for eb in entity_bases)
-            for entity_info in entities:
-                if has_match:
-                    en = entity_info["entity_name"]
-                    if en != kw_base and kw_base not in en and en not in kw_base:
-                        continue
-                results.append(
-                    {
-                        "keyword": entity_info["entity_name"],
-                        "original_keyword": kw_original,
-                        "spawner_type": entity_info["spawner_type"],
-                        "preview_name": entity_info["entity_name"],
-                        "has_lootdrop": True,
-                        "x": coord["x"],
-                        "y": coord["y"],
-                        "z": coord["z"],
-                        "yaw": coord.get("yaw", 0),
-                        "json_filename": map_json_path.name,
-                        "map_base": map_base,
-                        "version": version,
-                        "group_parent": coord.get("group_parent", ""),
-                        "sub_group_parent": coord.get("sub_group_parent", ""),
-                    }
-                )
-        else:
-            results.append(
+            expanded.append(
                 {
-                    "keyword": info["keyword"],
-                    "original_keyword": info.get("keyword_original", info["keyword"]),
-                    "spawner_type": info["spawner_type"],
-                    "preview_name": info.get("preview_name", ""),
-                    "has_lootdrop": info.get("has_lootdrop", False),
-                    "x": coord["x"],
-                    "y": coord["y"],
-                    "z": coord["z"],
-                    "yaw": coord.get("yaw", 0),
-                    "json_filename": map_json_path.name,
-                    "map_base": map_base,
-                    "version": version,
-                    "group_parent": coord.get("group_parent", ""),
-                    "sub_group_parent": coord.get("sub_group_parent", ""),
+                    "entity_name": entity_name,
+                    "spawn_rate": min(row["spawn_rate"], 100.0),
+                    "spawner_type": spawner_type,
+                    "lootdrop_group_id": row["lootdrop_group_id"],
                 }
             )
-    return results
+        if expanded:
+            multi_entity[keyword] = expanded
 
-
-def coord_distance(a: tuple[float, float], b: tuple[float, float]) -> float:
-    return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2) ** 0.5
-
-
-def extract_all_spawners(
-    has_lootdrop_map: dict[str, bool] | None = None,
-    multi_entity_spawners: dict[str, list[dict]] | None = None,
-) -> list[dict]:
-    """Iterate all map files, extract spawners, deduplicate across HR_D/D variants.
-    Returns a flat list of spawner dicts with variant-stripped keywords."""
-    map_files = _list_map_jsons(MAPS_DIR)
-    # Sort so HR_D comes first, then D, then A — single pass dedup ordering
-    map_files.sort(key=lambda fp: (0 if fp.stem.endswith("_HR_D") else 1 if fp.stem.endswith("_D") else 2))
-
-    hr_coords: dict[str, list[tuple[float, float, float]]] = {}
-    all_spawners: list[dict] = []
-
-    if multi_entity_spawners is None:
-        multi_entity_spawners = {}
-    if has_lootdrop_map is None:
-        has_lootdrop_map = {}
-
-    for fp in map_files:
-        spawners = extract_spawners(fp, multi_entity_spawners=multi_entity_spawners, spawner_data_map=has_lootdrop_map)
-        stem = fp.stem
-        is_hr = stem.endswith("_HR_D")
-        is_d = stem.endswith("_D") and not is_hr
-
-        for s in spawners:
-            base = s["map_base"]
-            coord = (s["x"], s["y"], s["z"])
-            if is_hr:
-                hr_coords.setdefault(base, []).append(coord)
-            elif is_d and any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_coords.get(base, [])):
-                continue
-            all_spawners.append(s)
-
-    return all_spawners
+    return keyword_has_lootdrop, multi_entity, {key: sorted(value) for key, value in ldg_to_monsters.items()}

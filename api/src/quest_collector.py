@@ -4,7 +4,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from config import HARDCODED_TRANSLATIONS, OUTPUT_DIR
+from config import HARDCODED_TRANSLATIONS, OUTPUT_DIR, hardcoded_translation_key
 from quest_extractor.quest_extractor import QuestExtractor
 from quest_extractor.translator import Translator
 
@@ -77,15 +77,15 @@ def _translate_item(translator, name_en: str) -> str:
     return name_en
 
 
-def run_quest_extraction(entity_classification=None):
+def run_quest_extraction(db, entity_classification=None):
     print("\n--- Quest Extraction ---")
     if hasattr(_get_entity_key_map, "_cache"):
         _get_entity_key_map._cache = {}  # reset cache
     if entity_classification:
         _get_entity_key_map(entity_classification)
 
-    translator = Translator(language="zh-Hans")
-    extractor = QuestExtractor(translator=translator)
+    translator = Translator(language="zh-Hans", db=db)
+    extractor = QuestExtractor(translator=translator, db=db)
     quests = extractor.load_all_quests()
     print(f"  loaded {len(quests)} quests")
 
@@ -115,8 +115,10 @@ def _extract_explore(translator, extractor, quests):
             asset_path = content.get("asset_path", "")
             if not asset_path:
                 continue
-            translation = extractor.get_explore_target_translation(asset_path) or ""
-            module_name = extractor.match_asset_path_to_module(asset_path) or ""
+            content_data = content.get("content_data") or {}
+            module_asset_path = extractor.match_asset_path_to_module(asset_path, content_data) or ""
+            translation = extractor.get_explore_target_translation(module_asset_path) or ""
+            module_name = module_asset_path
             if not translation and not module_name:
                 continue
             clean_module = (
@@ -136,11 +138,15 @@ def _extract_explore(translator, extractor, quests):
                 {
                     "name": translation,
                     "module_name": clean_module,
+                    "module_translation_key": extractor.get_source_string_from_asset_path(module_asset_path)
+                    or content.get("translation_key", ""),
                     "quest_id": quest.get("id", ""),
                     "quest_title": quest.get("title_display", ""),
+                    "quest_translation_key": quest.get("title_key", ""),
                     "quest_number": quest.get("quest_number", 0),
                     "npc_name": npc_name,
                     "npc_name_display": quest.get("npc_name_display", npc_name),
+                    "npc_translation_key": f"Text_DesignData_Merchant_Merchant_{npc_name}",
                 }
             )
     explore_targets.sort(key=lambda x: (x["quest_number"], x["npc_name"]))
@@ -294,6 +300,7 @@ def _get_kill_target_info(translator, tag_name: str) -> tuple[str, str]:
             translation_key = type_key
     if not translated and monster in HARDCODED_TRANSLATIONS:
         translated = HARDCODED_TRANSLATIONS[monster]
+        translation_key = hardcoded_translation_key(monster) or ""
     # entity_index fallback (for example SmallJellyfish -> GiantJellyfish key)
     if not translated and monster:
         entity_key = _get_entity_key_map().get(monster, "")
@@ -347,7 +354,7 @@ def _extract_npc_list(translator, extractor, quests):
                     item.update(_parse_fetch_content(translator, cd))
                 elif ct == "Explore":
                     item["target"] = extractor.get_explore_target_translation(ap) or ""
-                    key = extractor.get_source_string_from_asset_path(extractor.match_asset_path_to_module(ap))
+                    key = extractor.get_source_string_from_asset_path(ap)
                     if key and translator.translate(key):
                         item["translation_key"] = key
                     item["count"] = cd.get("ContentCount", 1)

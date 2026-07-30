@@ -6,6 +6,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { localizedSeoDescription } from '../i18n/seo';
 
 interface GroupSummary {
@@ -68,7 +69,7 @@ export default function DungeonModulesPage() {
           group_key: m.group_key,
           group_floor: m.group_floor,
           group_sub_key: m.group_sub_key,
-          group_display: m.group_display || g || '未分组',
+          group_display: m.group_display || g || ut('ui.common.ungrouped'),
         });
       }
       map.get(g)!.count++;
@@ -103,9 +104,12 @@ export default function DungeonModulesPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>{ut('ui.module.title')} | 越来越黑暗闪电指南 DarkFlashNav</title>
+        <title>
+          {ssrLocalizedTitle() ??
+            `${ut('ui.module.title')} | ${ut('ui.brand.name')}`}
+        </title>
         <meta name="description" content={description} />
-        <meta name="keywords" content="地牢模块,地图模块,地牢坐标,地图坐标" />
+        <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta property="og:description" content={description} />
       </Helmet>
       <h1

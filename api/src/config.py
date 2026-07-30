@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 # api/src/
@@ -306,6 +307,165 @@ HARDCODED_TRANSLATIONS = {
     "ShipGraveyard_BladehandRefuge": "1-1",
     "ShipGraveyard_ElephantIsland": "3-6",
 }
+
+# Module spawners use numbered or dungeon-prefixed names while their display
+# names resolve to these base hardcoded entities.
+HARDCODED_TRANSLATION_KEY_ALIASES = {
+    "Ladder_01": "Ladder",
+    "Ladder_02": "Ladder",
+    "Ladder_03": "Ladder",
+    "Ladder_04": "Ladder",
+    "Inferno_PlaneFog": "PlaneFog",
+    "IceWall_01": "IceWall",
+    "IceWall_02": "IceWall",
+    "IceWall_05": "IceWall",
+    "IceWall_06": "IceWall",
+    "IceWall_08": "IceWall",
+    "IceWall_09": "IceWall",
+    "IceFloor_01": "IceFloor",
+    "IciclesWall_01": "IciclesWall",
+}
+
+# Synthetic keys make fallback entity names available to the locale exporter.
+HARDCODED_I18N_PREFIX = "df5.hardcoded."
+
+HARDCODED_LOCALE_OVERRIDES: dict[str, dict[str, str]] = {
+    "Ladder": {
+        "zh-Hans": "梯子",
+        "en": "Ladder",
+        "de": "Leiter",
+        "es": "Escalera",
+        "fr": "Échelle",
+        "ja": "はしご",
+        "ko": "사다리",
+        "pt-BR": "Escada",
+        "ru": "Лестница",
+        "zh-Hant": "梯子",
+    },
+    "PlaneFog": {
+        "zh-Hans": "平面雾",
+        "en": "Plane Fog",
+        "de": "Flächennebel",
+        "es": "Niebla plana",
+        "fr": "Brouillard plan",
+        "ja": "平面フォグ",
+        "ko": "평면 안개",
+        "pt-BR": "Névoa plana",
+        "ru": "Плоский туман",
+        "zh-Hant": "平面霧",
+    },
+    "IceWall": {
+        "zh-Hans": "冰墙",
+        "en": "Ice Wall",
+        "de": "Eiswand",
+        "es": "Pared de hielo",
+        "fr": "Mur de glace",
+        "ja": "氷の壁",
+        "ko": "얼음벽",
+        "pt-BR": "Parede de gelo",
+        "ru": "Ледяная стена",
+        "zh-Hant": "冰牆",
+    },
+    "IceFloor": {
+        "zh-Hans": "冰面",
+        "en": "Ice Floor",
+        "de": "Eisfläche",
+        "es": "Suelo de hielo",
+        "fr": "Sol de glace",
+        "ja": "氷の床",
+        "ko": "얼음 바닥",
+        "pt-BR": "Piso de gelo",
+        "ru": "Ледяной пол",
+        "zh-Hant": "冰面",
+    },
+    "IciclesWall": {
+        "zh-Hans": "冰柱墙",
+        "en": "Icicle Wall",
+        "de": "Eiszapfenwand",
+        "es": "Pared de carámbanos",
+        "fr": "Mur de stalactites de glace",
+        "ja": "つららの壁",
+        "ko": "고드름 벽",
+        "pt-BR": "Parede de estalactites de gelo",
+        "ru": "Стена с сосульками",
+        "zh-Hant": "冰柱牆",
+    },
+    "DwarfHandCannoneer": {
+        "zh-Hans": "矮人火铳手",
+        "en": "Dwarf Hand Cannoneer",
+        "de": "Zwergen-Handkanonier",
+        "es": "Artillero de mano enano",
+        "fr": "Canonnier nain",
+        "ja": "ドワーフ・ハンドキャノニア",
+        "ko": "드워프 핸드 캐노니어",
+        "pt-BR": "Canhoneiro de mão anão",
+        "ru": "Ручной канонир-дворф",
+        "zh-Hant": "矮人火銃手",
+    },
+    "Armor_DualBoss": {
+        "zh-Hans": "双Boss-护甲",
+        "en": "Dual Boss Armor",
+        "de": "Doppelboss-Rüstung",
+        "es": "Armadura de jefes dobles",
+        "fr": "Armure des deux boss",
+        "ja": "双ボスの防具",
+        "ko": "더블 보스 방어구",
+        "pt-BR": "Armadura dos chefes duplos",
+        "ru": "Доспехи двух боссов",
+        "zh-Hant": "雙Boss-護甲",
+    },
+    "Armor_Armory": {
+        "zh-Hans": "军械库-护甲",
+        "en": "Armory Armor",
+        "de": "Rüstung der Waffenkammer",
+        "es": "Armadura de la armería",
+        "fr": "Armure de l'armurerie",
+        "ja": "武器庫の防具",
+        "ko": "무기고 방어구",
+        "pt-BR": "Armadura do arsenal",
+        "ru": "Доспехи оружейной",
+        "zh-Hant": "軍械庫-護甲",
+    },
+    "Armor_GoldenRoom": {
+        "zh-Hans": "黄金房-护甲",
+        "en": "Golden Room Armor",
+        "de": "Rüstung der Goldkammer",
+        "es": "Armadura de la sala dorada",
+        "fr": "Armure de la salle dorée",
+        "ja": "黄金部屋の防具",
+        "ko": "황금 방 방어구",
+        "pt-BR": "Armadura da sala dourada",
+        "ru": "Доспехи золотой комнаты",
+        "zh-Hant": "黃金房-護甲",
+    },
+}
+
+
+def _english_hardcoded_name(name: str) -> str:
+    """Produce a readable non-Chinese fallback when the game has no locale key."""
+    spaced = name.replace("_", " ")
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", spaced)
+    spaced = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", spaced)
+    return re.sub(r"\s+", " ", spaced).strip().title()
+
+
+def hardcoded_translation_key(name: str) -> str | None:
+    """Return a stable synthetic locale key for an entity without a Game.json key."""
+    canonical_name = HARDCODED_TRANSLATION_KEY_ALIASES.get(name, name)
+    if canonical_name in HARDCODED_TRANSLATIONS:
+        return f"{HARDCODED_I18N_PREFIX}{canonical_name}"
+    return None
+
+
+def hardcoded_locale_entries(lang: str, used_keys: set[str]) -> dict[str, str]:
+    """Build synthetic locale entries only for hardcoded entities present in output."""
+    return {
+        key: HARDCODED_LOCALE_OVERRIDES.get(name, {}).get(lang)
+        or (value if lang == "zh-Hans" else _english_hardcoded_name(name))
+        for name, value in HARDCODED_TRANSLATIONS.items()
+        if (key := hardcoded_translation_key(name)) in used_keys
+    }
+
 
 # SuperHoard* has no Game.json key — synthetic i18n key + 10-lang full phrases
 SUPERHOARD_I18N_KEY = "df5.hardcoded.SuperHoard"

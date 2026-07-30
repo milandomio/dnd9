@@ -119,9 +119,11 @@ export function formatDropRateSuffix(
     modeFilter?: string;
     adjSpawnRate?: (v: number) => number;
     parenModes?: boolean;
+    hideModes?: boolean;
   }
 ): string {
   const adj = opts?.adjSpawnRate ?? ((v: number) => v);
+  if (opts?.hideModes) return `${adj(entry.spawn_rate)}%`;
   const multi =
     !!entry.spawn_rates && Object.keys(entry.spawn_rates).length > 1;
 
