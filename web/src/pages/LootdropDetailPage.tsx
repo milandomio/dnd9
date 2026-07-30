@@ -32,6 +32,7 @@ import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
 import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
+import MapImageRecognition from '../components/MapImageRecognition';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import {
@@ -40,6 +41,8 @@ import {
 } from '../utils/moduleSpawnRate';
 import { defaultVariantSuffix } from '../utils/variant';
 import { localizedSeoDescription } from '../i18n/seo';
+import { isRecognizableMapImage, mapImageUrl } from '../utils/mapImage';
+import type { MapImageTemplate } from '../utils/mapImageRecognition';
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
@@ -279,6 +282,7 @@ export default function LootdropDetailPage() {
   const [threshold, setThreshold] = useState(defaultThreshold);
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
+  const [mapRecognitionEnabled, setMapRecognitionEnabled] = useState(false);
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
@@ -742,6 +746,39 @@ export default function LootdropDetailPage() {
     }
   );
 
+  const recognitionTemplates: MapImageTemplate[] = [];
+  const recognitionImageUrls = new Set<string>();
+  for (const [, groupItems] of sortedGroups) {
+    for (const item of groupItems) {
+      const visibleDots = hideZeroRate
+        ? item.dots.filter((dot) => {
+            const groupName = item.mod?.group || '';
+            const gdi = data?.group_drop_info?.[groupName];
+            const entry = gdi?.find((candidate) =>
+              matchesGroupEntry(candidate, dot.monster)
+            );
+            if (!entry) return true;
+            if (modeFilter) return (entry.drop_rates[modeFilter] ?? 0) > 0;
+            return hasAnyRate(entry.drop_rates);
+          })
+        : item.dots;
+      const module = item.mod;
+      if (!visibleDots.length || !module?.has_img) continue;
+      const imageUrl = mapImageUrl(module);
+      if (
+        !isRecognizableMapImage(imageUrl) ||
+        recognitionImageUrls.has(imageUrl)
+      )
+        continue;
+      recognitionImageUrls.add(imageUrl);
+      recognitionTemplates.push({
+        id: item.mapName,
+        url: imageUrl,
+        label: t(module.translation_key, module.translation || item.mapName),
+      });
+    }
+  }
+
   const visibleCountByMonster = new Map<string, number>();
   for (const m of resolvedMonsters) {
     const seenPos = new Set<string>();
@@ -940,6 +977,11 @@ export default function LootdropDetailPage() {
             />
             {ut('ui.filter.hide_zero_rate')}
           </label>
+          <MapImageRecognition
+            templates={recognitionTemplates}
+            enabled={mapRecognitionEnabled}
+            onEnabledChange={setMapRecognitionEnabled}
+          />
         </div>
       )}
 
@@ -1538,7 +1580,7 @@ export default function LootdropDetailPage() {
                   )}
                   {visibleMaps.has(mapName) ? (
                     <MapPanel
-                      imageSrc={`/data/img/${mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
+                      imageSrc={mapImageUrl(mod)}
                       sx={sx}
                       sy={sy}
                       dots={dots.map((d) => ({

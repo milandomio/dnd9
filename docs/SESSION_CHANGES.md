@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-07-31
+
+### feat: 新增游戏内地图截图本地识别
+
+- **改动原因**：用户需要在详情页粘贴 Windows `PrtScn` 游戏截图，自动标出截图中属于当前页面的地图模块，并在浏览器本地预览和导出绿色标注图。
+- **变更文件**：`web/src/components/MapImageRecognition.tsx`；`web/src/utils/mapImageRecognition.ts`；`web/src/utils/mapImage.ts`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/i18n/uiLocale.ts`；`web/package.json`；`web/package-lock.json`；`web/vite.config.ts`；`docs/plans/游戏内地图识别.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：“隐藏0爆率坐标”后新增默认关闭滑动开关；开启后动态加载 `@techstark/opencv-js` 和当前过滤结果内全部地图 WebP，按 `0/90/180/270°` 多尺度模板匹配，未命中模板使用 ORB + RANSAC 单应性兜底；重叠边界去重后在原尺寸截图绘制 50% 透明绿色蒙版并导出 PNG。掉落页模板预加载独立于 `IntersectionObserver`，覆盖滚动后可见但尚未加载的地图卡片；OpenCV 动态 chunk 不进入 Workbox 安装时预缓存。
+- **验证**：`test-cap1.png` 四个 90° 方向均识别到 1 个 `TreasureRoom_01` 模块，绿色变化像素均为 7,044；完整 `test-cap.png` 在 `/zh-Hans/lootdrops/GoldenKey/` 的 11 个模板中识别到 5 个模块，预览和导出正常、无页面错误。Prettier、TypeScript、ESLint（0 error、19 条既有 warning）、i18n 23/23、quick SSG（15,290 HTML）通过，目标路由 HTTP 200。
+
 ## 2026-07-30
 
 ### docs: 建立游戏内地图识别执行计划

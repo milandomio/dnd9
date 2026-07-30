@@ -50,6 +50,9 @@ export default defineConfig(() => {
           // navigateFallback 未启用：SSG 路由的独立 HTML（含 SSR 数据）由 NetworkFirst 接管，
           // 访问后缓存，离线重复访问正常显示（含 SSR 数据）；首次离线深度链接无缓存时浏览器报错。
           navigateFallback: undefined,
+          // OpenCV.js is loaded only after the screenshot-recognition switch is enabled;
+          // keeping its large dynamic chunk out of the install-time precache preserves PWA startup cost.
+          globIgnores: ['**/opencv-*.js'],
           globPatterns: ['assets/**/*.{js,css}', 'offline.html'],
           runtimeCaching: [
             {
