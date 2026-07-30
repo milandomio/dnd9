@@ -29,6 +29,7 @@ import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
 import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
+import MapImageRecognition from '../components/MapImageRecognition';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useLocale } from '../i18n/useLocale';
@@ -38,6 +39,8 @@ import {
   getRareModuleSpawnRate,
 } from '../utils/moduleSpawnRate';
 import { localizedSeoDescription } from '../i18n/seo';
+import { isRecognizableMapImage, mapImageUrl } from '../utils/mapImage';
+import type { MapImageTemplate } from '../utils/mapImageRecognition';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -121,6 +124,7 @@ export default function DetailPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
+  const [mapRecognitionEnabled, setMapRecognitionEnabled] = useState(false);
 
   const dataVersion = useDataVersion();
   const fetchedRef = useRef(false);
@@ -468,6 +472,37 @@ export default function DetailPage() {
     return groupOrder.indexOf(a.groupName) - groupOrder.indexOf(b.groupName);
   });
 
+  const recognitionTemplates: MapImageTemplate[] = [];
+  const recognitionImageUrls = new Set<string>();
+  for (const sec of sections) {
+    for (const item of sec.items) {
+      const visibleCoords = hideZeroRate
+        ? item.coords.filter((coord) => {
+            const match = sec.gdi.find((entry) =>
+              labelMatch(coord.label || '', entry.translation)
+            );
+            if (!match) return true;
+            if (modeFilter) return (match.drop_rates[modeFilter] ?? 0) > 0;
+            return hasAnyRate(match.drop_rates);
+          })
+        : item.coords;
+      const module = item.mod;
+      if (!visibleCoords.length || !module?.has_img) continue;
+      const imageUrl = mapImageUrl(module, Boolean(isDetailTemplate));
+      if (
+        !isRecognizableMapImage(imageUrl) ||
+        recognitionImageUrls.has(imageUrl)
+      )
+        continue;
+      recognitionImageUrls.add(imageUrl);
+      recognitionTemplates.push({
+        id: item.mapName,
+        url: imageUrl,
+        label: t(module.translation_key, module.translation || item.mapName),
+      });
+    }
+  }
+
   let bottomCount = 0;
   const bottomMapsSet = new Set<string>();
   if (!hideZeroRate) {
@@ -585,6 +620,11 @@ export default function DetailPage() {
             />
             {ut('ui.filter.hide_zero_rate')}
           </label>
+          <MapImageRecognition
+            templates={recognitionTemplates}
+            enabled={mapRecognitionEnabled}
+            onEnabledChange={setMapRecognitionEnabled}
+          />
         </div>
       )}
 
@@ -807,7 +847,7 @@ export default function DetailPage() {
                   )}
 
                   <MapPanel
-                    imageSrc={`/data/img/${isDetailTemplate ? 'RareModule_1x1' : mod?.img_name || mod?.sl_base_name || 'RareModule_1x1'}.webp`}
+                    imageSrc={mapImageUrl(mod, Boolean(isDetailTemplate))}
                     sx={sx}
                     sy={sy}
                     dots={filteredDots}
