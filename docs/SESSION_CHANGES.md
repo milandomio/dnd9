@@ -402,3 +402,10 @@
 - **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`pageDescription()` 复用 main 已按语言 SSR 的页面 description，详情壳使用共享模板保守兜底；`injectLocalizedData()` 同时写入 `__localizedTitle`、`__localizedDescription`、`__ssrLang` 与 `__locale`；SSG 删除旧 description/OG 后写入唯一的 `data-rh="true"` 标签，交由 Helmet 接管。
 - **验证**：main quick SSG 成功生成 3,074 路由、12,070 个本地化 HTML、15,279 个 HTML 文件及 13,410 个根 Sitemap URL；全部 Sitemap URL 均有唯一 description 和同值 OG description，无占位符；预览 HTTP 200；`npm run format`、`npm run format:check`、`npx prettier --check src/i18n/seoTemplate.mjs`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）和 `npm run test:i18n`（23/23）通过；未推送 main、未部署。
+
+### docs: 固定 main 为默认开发分支
+
+- **改动原因**：避免在没有明确任务要求时切换分支，导致开发上下文与当前主线偏离。
+- **变更文件**：`CLAUDE.md`；`docs/DEVELOPMENT_WORKFLOW.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：默认工作分支由 `dev` 调整为 `main`；仅在用户明确要求时允许切换分支，所有分支继续执行同一提交纪律。
+- **验证**：文档交叉约定已同步，差异空白检查结果见本次 checkpoint。

@@ -4,9 +4,9 @@
 
 **运行环境：WSL 下的 Ubuntu，不要直接执行 win 环境的命令行工具。**
 
-**默认工作分支**：`dev`。`main` 分支已回滚至 `f9177a5`（多语言 P8-P12 前），仅保留 translation_EN 特性。新增功能在 dev 分支开发。
+**默认工作分支**：`main`。除非用户明确要求切换分支，不要自行切换；新增功能直接在 `main` 开发。
 
-**提交纪律（dev 同样强制）**：每个逻辑任务完成或中断前必须本地 `git commit` checkpoint；禁止在 dev 上堆积未提交 diff。「仅本地、不 push」≠「可以不 commit」。详见 `docs/DEVELOPMENT_WORKFLOW.md`。
+**提交纪律（所有分支强制）**：每个逻辑任务完成或中断前必须本地 `git commit` checkpoint；禁止堆积未提交 diff。「仅本地、不 push」≠「可以不 commit」。详见 `docs/DEVELOPMENT_WORKFLOW.md`。
 
 游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
