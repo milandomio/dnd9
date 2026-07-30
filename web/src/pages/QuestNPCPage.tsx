@@ -9,6 +9,7 @@ import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 function lsGet(key: string): boolean {
   try {
@@ -103,7 +104,8 @@ export default function QuestNPCPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.nav.quest_npc')} | {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ??
+            `${ut('ui.nav.quest_npc')} | ${ut('ui.brand.name')}`}
         </title>
         <meta
           name="description"

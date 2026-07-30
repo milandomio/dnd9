@@ -572,6 +572,35 @@ function localizedTitle(
     : localized;
 }
 
+function decodeHtml(value) {
+  return value
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function localizedDocumentTitle(route, routeData, localeDict, lang) {
+  // Detail shells deliberately avoid rendering full route data. Their concise
+  // entity title remains available from the route metadata.
+  if (isTemplateDetailRoute(route.path)) {
+    return `${localizedTitle(routeData, localeDict, route.path, lang)} | 越来越黑暗闪电指南 DarkFlashNav`;
+  }
+  try {
+    const result = render(localizedPath(route.path, lang), {
+      ...ssrDataMap,
+      __locale: localeDict,
+    });
+    const match = result.head.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+    if (match) return decodeHtml(match[1]);
+  } catch (err) {
+    console.error(`  [title] ${route.path} (${lang}): ${err.message}`);
+  }
+  const entityTitle = localizedTitle(routeData, localeDict, route.path, lang);
+  return entityTitle ? `${entityTitle} | 越来越黑暗闪电指南 DarkFlashNav` : '';
+}
+
 function injectLocalizedData(
   page,
   lang,
@@ -579,7 +608,7 @@ function injectLocalizedData(
   ssrLang = DEFAULT_LANG,
   localeDict
 ) {
-  return page.replace(SSR_SCRIPT_RE, (match, jsonText) => {
+  const inject = (jsonText = '{}') => {
     try {
       const payload = JSON.parse(jsonText);
       payload.__lang = lang;
@@ -588,9 +617,13 @@ function injectLocalizedData(
       if (title) payload.__localizedTitle = title;
       return `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>`;
     } catch {
-      return match;
+      return '';
     }
-  });
+  };
+  if (SSR_SCRIPT_RE.test(page)) {
+    return page.replace(SSR_SCRIPT_RE, (_match, jsonText) => inject(jsonText));
+  }
+  return page.replace(HEAD_CLOSE, `${inject()}\n${HEAD_CLOSE}`);
 }
 
 function localizePage(
@@ -604,7 +637,7 @@ function localizePage(
   ssrLocaleDict
 ) {
   const canonicalHref = localizedPath(route.path, lang);
-  const title = localizedTitle(routeData, localeDict, route.path, lang);
+  const title = localizedDocumentTitle(route, routeData, localeDict, lang);
   let out = injectLocalizedData(page, lang, title, ssrLang, ssrLocaleDict)
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
     .replace(
@@ -618,11 +651,7 @@ function localizePage(
     );
   }
   if (title) {
-    const pageTitle =
-      route.path === '/'
-        ? `越来越黑暗闪电指南 DarkFlashNav | ${title}`
-        : `${title} | 越来越黑暗闪电指南 DarkFlashNav`;
-    const titleTag = `<title>${escapeHtml(pageTitle)}</title>`;
+    const titleTag = `<title>${escapeHtml(title)}</title>`;
     out = /<title[^>]*>[^<]*<\/title>/.test(out)
       ? out.replace(/<title[^>]*>[^<]*<\/title>/, titleTag)
       : out.replace(HEAD_CLOSE, `    ${titleTag}\n${HEAD_CLOSE}`);
@@ -649,16 +678,7 @@ function renderLocalizedListPage(route, lang, localeDict) {
       HEAD_CLOSE,
       `${result.head}\n<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n</head>`
     );
-  return localizePage(
-    page,
-    route,
-    routeData,
-    localeDict,
-    lang,
-    true,
-    lang,
-    localeDict
-  );
+  return page;
 }
 
 function detailPreloads(urlPath) {
@@ -723,7 +743,7 @@ function createTemplateDetailPage(route, routeData, lang, localeDict) {
       `<div id="root" data-detail-placeholder>${detailPlaceholder(title)}`
     )
     .replace(HEAD_CLOSE, `${detailPreloads(urlPath)}</head>`);
-  return localizePage(page, route, routeData, localeDict, lang, false);
+  return page;
 }
 
 for (let i = 0; i < routes.length; i++) {
@@ -814,6 +834,10 @@ for (let i = 0; i < routes.length; i++) {
     );
   }
 
+  if (!r.redirect) {
+    page = localizePage(page, r, routeData, {}, DEFAULT_LANG, false);
+  }
+
   mkdirSync(dirname(outPath), { recursive: true });
   writeFileSync(outPath, page, 'utf-8');
 
@@ -852,17 +876,21 @@ for (const lang of LANGS) {
     const isEntityList = PAGES.some(
       (page) => r.path === `/${DEFAULT_LANG}/${page}`
     );
-    const page = isEntityList
+    const basePage = isEntityList
       ? renderLocalizedListPage(r, lang, localeDicts[lang])
       : isTemplateDetailRoute(r.path)
         ? createTemplateDetailPage(r, routeData, lang, localeDicts[lang])
-        : localizePage(
-            readFileSync(srcPath, 'utf-8'),
-            r,
-            routeData,
-            localeDicts[lang],
-            lang
-          );
+        : readFileSync(srcPath, 'utf-8');
+    const page = localizePage(
+      basePage,
+      r,
+      routeData,
+      localeDicts[lang],
+      lang,
+      true,
+      isEntityList ? lang : DEFAULT_LANG,
+      isEntityList ? localeDicts[lang] : undefined
+    );
     mkdirSync(dirname(dstPath), { recursive: true });
     writeFileSync(dstPath, page, 'utf-8');
     localizedCount++;

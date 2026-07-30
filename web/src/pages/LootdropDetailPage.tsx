@@ -819,7 +819,7 @@ export default function LootdropDetailPage() {
 
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? helmetTitle} | {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ?? `${helmetTitle} | ${ut('ui.brand.name')}`}
         </title>
         <meta
           name="description"
@@ -831,7 +831,9 @@ export default function LootdropDetailPage() {
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? helmetTitle} | ${ut('ui.brand.name')}`}
+          content={
+            ssrLocalizedTitle() ?? `${helmetTitle} | ${ut('ui.brand.name')}`
+          }
         />
         <meta
           property="og:description"
