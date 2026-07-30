@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### chore: 重建本地数据库并更新生产预览
+
+- **改动原因**：按请求删除 `api/data/darkfindv5.db`，从游戏数据重新生成本地数据库并部署至 `8080` 预览。
+- **变更文件**：`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`api/main.py` 重新导入翻译、实体、生成点、任务和掉落率后从 DB 导出 `data/json` 与十种 locale 字典；`web` SSG 基于这些产物生成静态站点。
+- **验证**：完整数据管道成功（147.52 秒），quick SSG 成功生成 15,290 个 HTML；`vite preview --port 8080` 监听 `0.0.0.0:8080`，首页返回 HTTP 200。
+
 ### fix: 为非详情页生成目标语言 SSR 正文
 
 - **改动原因**：主页、地图模块、任务和探索页面的非中文 HTML 原先仅替换 SEO 标题，正文仍复制简中 SSR，hydration 后切换目标语言时会出现中文闪屏。
