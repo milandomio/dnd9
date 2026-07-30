@@ -6,9 +6,9 @@
 
 ### fix: 将超级宝藏堆箱体坐标纳入掉落分组爆率
 
-- **改动原因**：`SuperHoard01_9` 掉落详情只按同名实体收集坐标，但沉船墓场使用 `SuperHoardChest01_9`；两者共用 `ID_LootDropGroup_SuperHoard` 和“超级宝藏堆”显示名，导致地图显示箱体坐标而 `group_drop_info` 未生成对应参考爆率。
+- **改动原因**：超级宝藏堆来源注入仅匹配 `Hoard01_9` 与 `HoardChest01`，漏掉沉船墓场的 `HoardChest01_9`；其对应 `SuperHoardChest01_9` 因此未进入掉落详情，地图显示箱体坐标而 `group_drop_info` 未生成对应参考爆率。
 - **变更文件**：`api/src/lootdrop_builder.py`；`docs/SESSION_CHANGES.md`。
-- **关键逻辑/映射关系**：超级宝藏堆来源收集 `SUPERHOARD_ENTITY_NAMES` 中所有同族坐标，并将对应原始 spawner 名纳入坐标过滤；因此 `SuperHoardChest01_9` 的 `ShipGraveyard_ShipRest` 坐标会参与 `SuperHoard01_9` 的 GDI 计算。
+- **关键逻辑/映射关系**：掉落索引将 `HoardChest01_9 -> SuperHoardChest01_9` 与既有 `Hoard01_9 -> SuperHoard01_9` 一同注入；两者共享 `ID_LootDropGroup_SuperHoard` 和“超级宝藏堆”显示名，后续合并坐标并为 `ShipGraveyard_ShipRest` 生成 GDI。
 - **验证**：Python 编译与 `tests.test_drop_rate`（6 项）通过；完整管道和前端构建待完成。
 
 ### fix: 将稀有模块出现率计入综合爆率
