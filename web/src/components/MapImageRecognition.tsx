@@ -14,6 +14,7 @@ import {
   loadOpenCv,
   recognizeMapScreenshot,
   type LoadedMapImageTemplate,
+  type MapImageRecognitionDebug,
   type MapImageTemplate,
   type MapImageMatch,
 } from '../utils/mapImageRecognition';
@@ -88,6 +89,9 @@ export default function MapImageRecognition({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [matches, setMatches] = useState<MapImageMatch[]>([]);
   const [gridType, setGridType] = useState<'5x5' | '7x7' | null>(null);
+  const [debugData, setDebugData] = useState<MapImageRecognitionDebug | null>(
+    null
+  );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   templatesRef.current = activeTemplates;
@@ -163,6 +167,7 @@ export default function MapImageRecognition({
     setPreviewUrl(null);
     setMatches([]);
     setGridType(null);
+    setDebugData(null);
     setErrorMessage(null);
     if (enabled && cvRef.current && loadedTemplatesRef.current.length > 0) {
       setStatus('ready');
@@ -226,7 +231,7 @@ export default function MapImageRecognition({
         screenshot,
         loadedTemplatesRef.current,
         cv,
-        { threshold: normalizeThreshold() }
+        { threshold: normalizeThreshold(), group: selectedGroup || undefined }
       );
       if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
       const nextPreviewUrl = URL.createObjectURL(output.blob);
@@ -234,11 +239,25 @@ export default function MapImageRecognition({
       setPreviewUrl(nextPreviewUrl);
       setMatches(output.matches);
       setGridType(output.gridType);
+      setDebugData(output.debug);
       setStatus('done');
     } catch {
       setStatus('error');
       setErrorMessage(ut('ui.map_recognition.recognition_error'));
     }
+  }
+
+  function exportDebugData() {
+    if (!debugData) return;
+    const blob = new Blob([JSON.stringify(debugData, null, 2)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = 'darkfind-map-recognition-debug.json';
+    anchor.click();
+    URL.revokeObjectURL(url);
   }
 
   const baseStatusText =
@@ -512,6 +531,65 @@ export default function MapImageRecognition({
             </div>
           )}
 
+          {matches.length > 0 && (
+            <details
+              open
+              style={{
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 4,
+                color: tokens.text,
+                fontSize: 11,
+              }}
+            >
+              <summary
+                style={{
+                  padding: '6px 8px',
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                }}
+              >
+                {ut('ui.map_recognition.result_details')}
+              </summary>
+              <div
+                style={{
+                  display: 'grid',
+                  gap: 1,
+                  borderTop: `1px solid ${tokens.border}`,
+                  background: tokens.border,
+                }}
+              >
+                {matches.map((match, index) => (
+                  <div
+                    key={`${match.templateId}-${match.x}-${match.y}-${index}`}
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'minmax(100px, 1fr) auto',
+                      gap: 8,
+                      padding: '6px 8px',
+                      background: tokens.bg,
+                    }}
+                  >
+                    <span style={{ overflowWrap: 'anywhere' }}>
+                      {index + 1}. {match.label}
+                    </span>
+                    <span
+                      style={{
+                        color: tokens.muted,
+                        textAlign: 'right',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}
+                    >
+                      {ut(`ui.map_recognition.method_${match.method}`)} ·{' '}
+                      {match.score.toFixed(3)}
+                      <br />x {Math.round(match.x)}, y {Math.round(match.y)}, w{' '}
+                      {Math.round(match.width)}, h {Math.round(match.height)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
+
           {previewUrl && (
             <div
               style={{
@@ -539,6 +617,27 @@ export default function MapImageRecognition({
                 <DownloadOutlined />
                 {ut('ui.map_recognition.export')}
               </a>
+              {debugData && (
+                <button
+                  type="button"
+                  onClick={exportDebugData}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    padding: '4px 8px',
+                    border: `1px solid ${tokens.border}`,
+                    borderRadius: 3,
+                    color: tokens.text,
+                    background: 'transparent',
+                    cursor: 'pointer',
+                    fontSize: 12,
+                  }}
+                >
+                  <DownloadOutlined />
+                  {ut('ui.map_recognition.export_debug')}
+                </button>
+              )}
               <button
                 type="button"
                 onClick={clearResult}
