@@ -395,3 +395,10 @@
 - **变更文件**：`web/src/i18n/seoTemplate.mjs`；`web/scripts/ssg.mjs`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：SEO 构建器兼容首页静态字符串和详情页动态函数；SSG 删除所有旧 description/OG description 后写入唯一的 `data-rh="true"` 标签，客户端 Helmet 复用该标签；测试补齐十语言搜索占位符，并断言静态与客户端 description/OG description 均存在且一致。
 - **验证**：来自 dev 的原始验证记录；本次移植后的 main 构建与浏览器验证将在 cherry-pick 完成后重新执行。
+
+### fix: 在 main 解决元描述移植冲突并完成验收
+
+- **改动原因**：将 dev 的两次多语言元描述提交移植到已演进的 main；冲突集中在页面 SEO、SSG 本地化和浏览器测试，需保留 main 的逐语言 SSR、标题和 `__locale` 注入机制。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`pageDescription()` 复用 main 已按语言 SSR 的页面 description，详情壳使用共享模板保守兜底；`injectLocalizedData()` 同时写入 `__localizedTitle`、`__localizedDescription`、`__ssrLang` 与 `__locale`；SSG 删除旧 description/OG 后写入唯一的 `data-rh="true"` 标签，交由 Helmet 接管。
+- **验证**：main quick SSG 成功生成 3,074 路由、12,070 个本地化 HTML、15,279 个 HTML 文件及 13,410 个根 Sitemap URL；全部 Sitemap URL 均有唯一 description 和同值 OG description，无占位符；预览 HTTP 200；`npm run format`、`npm run format:check`、`npx prettier --check src/i18n/seoTemplate.mjs`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）和 `npm run test:i18n`（23/23）通过；未推送 main、未部署。
