@@ -4,6 +4,8 @@ export interface MapImageTemplate {
   id: string;
   url: string;
   label: string;
+  group: string;
+  groupLabel: string;
 }
 
 export interface LoadedMapImageTemplate extends MapImageTemplate {
@@ -26,6 +28,7 @@ export interface MapImageRecognitionOutput {
   matches: MapImageMatch[];
   width: number;
   height: number;
+  gridType: '5x5' | '7x7' | null;
 }
 
 interface OpenCvModule {
@@ -53,6 +56,13 @@ interface OpenCvVector<T> {
   size(): number;
 }
 
+interface OrbSceneFeatures {
+  mask: InstanceType<CV['Mat']>;
+  keyPoints: InstanceType<CV['KeyPointVector']>;
+  descriptors: InstanceType<CV['Mat']>;
+  orb: InstanceType<CV['ORB']>;
+}
+
 interface WorkingMatch extends Omit<
   MapImageMatch,
   'x' | 'y' | 'width' | 'height'
@@ -63,12 +73,24 @@ interface WorkingMatch extends Omit<
   height: number;
 }
 
-const MAX_WORKING_EDGE = 800;
+interface SearchRegion {
+  canvas: HTMLCanvasElement;
+  x: number;
+  y: number;
+  gridHint: MapImageRecognitionOutput['gridType'];
+}
+
+const MAX_WORKING_EDGE = 600;
 const TEMPLATE_SCALES = [0.32, 0.4, 0.44, 0.48, 0.6, 0.75, 1, 1.25];
+const GRID_TEMPLATE_SCALES = {
+  '5x5': [0.4, 0.44, 0.48],
+  '7x7': [0.36, 0.4, 0.44],
+} as const;
 const TEMPLATE_ROTATIONS = [0, 90, 180, 270] as const;
 const TEMPLATE_MATCH_THRESHOLD = 0.52;
 const MAX_PEAKS_PER_TEMPLATE = 8;
 const MAX_SCORE_CANDIDATES = 4096;
+const MAX_FINE_TEMPLATE_CANDIDATES = 18;
 
 let openCvPromise: Promise<CV> | null = null;
 
@@ -140,6 +162,112 @@ function rotateCanvas(
   context.rotate((degrees * Math.PI) / 180);
   context.drawImage(source, -source.width / 2, -source.height / 2);
   return canvas;
+}
+
+function dominantDenseRange(
+  values: Uint32Array,
+  threshold: number,
+  maxGap: number
+): { start: number; end: number } | null {
+  const ranges: Array<{ start: number; end: number }> = [];
+  let start = -1;
+  for (let index = 0; index <= values.length; index += 1) {
+    if (index < values.length && values[index] >= threshold) {
+      if (start < 0) start = index;
+      continue;
+    }
+    if (start >= 0) {
+      ranges.push({ start, end: index - 1 });
+      start = -1;
+    }
+  }
+  if (!ranges.length) return null;
+
+  const merged: Array<{ start: number; end: number }> = [];
+  for (const range of ranges) {
+    const previous = merged[merged.length - 1];
+    if (previous && range.start - previous.end - 1 <= maxGap) {
+      previous.end = range.end;
+    } else {
+      merged.push({ ...range });
+    }
+  }
+  return merged.reduce((largest, range) =>
+    range.end - range.start > largest.end - largest.start ? range : largest
+  );
+}
+
+function detectMapSearchRegion(source: HTMLCanvasElement): SearchRegion {
+  if (source.width < 480 || source.height < 270) {
+    return { canvas: source, x: 0, y: 0, gridHint: null };
+  }
+  const context = source.getContext('2d', { willReadFrequently: true });
+  if (!context) return { canvas: source, x: 0, y: 0, gridHint: null };
+  const pixels = context.getImageData(0, 0, source.width, source.height).data;
+  const rowDensity = new Uint32Array(source.height);
+  const columnDensity = new Uint32Array(source.width);
+  for (let y = 0; y < source.height; y += 1) {
+    for (let x = 0; x < source.width; x += 1) {
+      const index = (y * source.width + x) * 4;
+      const luminance =
+        pixels[index] * 0.2126 +
+        pixels[index + 1] * 0.7152 +
+        pixels[index + 2] * 0.0722;
+      if (luminance < 95) continue;
+      rowDensity[y] += 1;
+      columnDensity[x] += 1;
+    }
+  }
+  const rows = dominantDenseRange(
+    rowDensity,
+    source.width * 0.15,
+    Math.max(2, Math.round(source.height * 0.02))
+  );
+  const columns = dominantDenseRange(
+    columnDensity,
+    source.height * 0.3,
+    Math.max(2, Math.round(source.width * 0.02))
+  );
+  if (!rows || !columns) return { canvas: source, x: 0, y: 0, gridHint: null };
+
+  const padding = Math.max(
+    4,
+    Math.round(Math.min(source.width, source.height) * 0.02)
+  );
+  const left = Math.max(0, columns.start - padding);
+  const top = Math.max(0, rows.start - padding);
+  const right = Math.min(source.width, columns.end + padding + 1);
+  const bottom = Math.min(source.height, rows.end + padding + 1);
+  if (
+    right - left < source.width * 0.25 ||
+    bottom - top < source.height * 0.4
+  ) {
+    return { canvas: source, x: 0, y: 0, gridHint: null };
+  }
+
+  const canvas = createCanvas(right - left, bottom - top);
+  const cropContext = canvas.getContext('2d');
+  if (!cropContext) return { canvas: source, x: 0, y: 0, gridHint: null };
+  cropContext.drawImage(
+    source,
+    left,
+    top,
+    canvas.width,
+    canvas.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+  const widthRatio = canvas.width / source.width;
+  const heightRatio = canvas.height / source.height;
+  const gridHint =
+    widthRatio >= 0.42 && heightRatio >= 0.74
+      ? '7x7'
+      : widthRatio <= 0.42 && heightRatio <= 0.74
+        ? '5x5'
+        : null;
+  return { canvas, x: left, y: top, gridHint };
 }
 
 async function blobToCanvas(blob: Blob): Promise<HTMLCanvasElement> {
@@ -240,6 +368,34 @@ function mergeMatches(matches: WorkingMatch[]): WorkingMatch[] {
   return kept;
 }
 
+function inferMapGridType(
+  matches: WorkingMatch[],
+  searchRegion: SearchRegion
+): MapImageRecognitionOutput['gridType'] {
+  if (searchRegion.gridHint) return searchRegion.gridHint;
+  if (searchRegion.x === 0 && searchRegion.y === 0) return null;
+  const reliable = matches.filter(
+    (match) => match.method === 'template' && match.score >= 0.58
+  );
+  const candidates = reliable.length >= 3 ? reliable : matches;
+  if (candidates.length < 3) return null;
+  const cellSizes = candidates
+    .map((match) => Math.min(match.width, match.height))
+    .filter((size) => size >= 24)
+    .sort((a, b) => a - b);
+  if (cellSizes.length < 3) return null;
+  const medianCellSize = cellSizes[Math.floor(cellSizes.length / 2)];
+  const estimatedGridSize =
+    (searchRegion.canvas.width / medianCellSize +
+      searchRegion.canvas.height / medianCellSize) /
+    2;
+  const distanceToFive = Math.abs(estimatedGridSize - 5);
+  const distanceToSeven = Math.abs(estimatedGridSize - 7);
+  const nearestDistance = Math.min(distanceToFive, distanceToSeven);
+  if (nearestDistance > 1.25) return null;
+  return distanceToFive <= distanceToSeven ? '5x5' : '7x7';
+}
+
 function collectTemplatePeaks(
   result: InstanceType<CV['Mat']>,
   templateWidth: number,
@@ -298,6 +454,83 @@ function collectTemplatePeaks(
   return peaks;
 }
 
+function maxMatScore(result: InstanceType<CV['Mat']>): number {
+  let bestScore = -Infinity;
+  for (let index = 0; index < result.data32F.length; index += 1) {
+    if (result.data32F[index] > bestScore) {
+      bestScore = result.data32F[index];
+    }
+  }
+  return bestScore;
+}
+
+async function prefilterTemplates(
+  cv: CV,
+  scene: HTMLCanvasElement,
+  templates: LoadedMapImageTemplate[],
+  workingScale: number,
+  templateScales: readonly number[]
+): Promise<LoadedMapImageTemplate[]> {
+  if (templates.length <= MAX_FINE_TEMPLATE_CANDIDATES) return templates;
+  const coarseFactor = 0.5;
+  const coarseScene = resizeCanvas(scene, coarseFactor);
+  const sceneRgba = cv.imread(coarseScene);
+  const sceneGray = new cv.Mat();
+  const scores: Array<{
+    template: LoadedMapImageTemplate;
+    score: number;
+  }> = [];
+  try {
+    cv.cvtColor(sceneRgba, sceneGray, cv.COLOR_RGBA2GRAY);
+    for (const template of templates) {
+      let bestScore = -Infinity;
+      for (const rotation of TEMPLATE_ROTATIONS) {
+        const rotatedTemplate = rotateCanvas(template.canvas, rotation);
+        for (const relativeScale of templateScales) {
+          const scaledCanvas = resizeCanvas(
+            rotatedTemplate,
+            workingScale * relativeScale * coarseFactor
+          );
+          if (
+            scaledCanvas.width > sceneGray.cols ||
+            scaledCanvas.height > sceneGray.rows ||
+            scaledCanvas.width < 16 ||
+            scaledCanvas.height < 16
+          ) {
+            continue;
+          }
+          const templateRgba = cv.imread(scaledCanvas);
+          const templateGray = new cv.Mat();
+          const result = new cv.Mat();
+          try {
+            cv.cvtColor(templateRgba, templateGray, cv.COLOR_RGBA2GRAY);
+            cv.matchTemplate(
+              sceneGray,
+              templateGray,
+              result,
+              cv.TM_CCOEFF_NORMED
+            );
+            bestScore = Math.max(bestScore, maxMatScore(result));
+          } finally {
+            templateRgba.delete();
+            templateGray.delete();
+            result.delete();
+          }
+        }
+      }
+      scores.push({ template, score: bestScore });
+      await yieldToBrowser();
+    }
+  } finally {
+    sceneRgba.delete();
+    sceneGray.delete();
+  }
+  return scores
+    .sort((a, b) => b.score - a.score)
+    .slice(0, MAX_FINE_TEMPLATE_CANDIDATES)
+    .map(({ template }) => template);
+}
+
 function getKeyPointPoint(keyPoint: OpenCvKeyPoint): { x: number; y: number } {
   return keyPoint.pt ?? { x: keyPoint.x ?? 0, y: keyPoint.y ?? 0 };
 }
@@ -322,7 +555,8 @@ function orbFallback(
   cv: CV,
   sceneGray: InstanceType<CV['Mat']>,
   template: LoadedMapImageTemplate,
-  workingScale: number
+  workingScale: number,
+  sceneFeatures: OrbSceneFeatures
 ): WorkingMatch | null {
   const templateCanvas = resizeCanvas(template.canvas, workingScale);
   if (
@@ -334,12 +568,8 @@ function orbFallback(
 
   const templateRgba = cv.imread(templateCanvas);
   const templateGray = new cv.Mat();
-  const mask = new cv.Mat();
   const templateKeyPoints = new cv.KeyPointVector();
-  const sceneKeyPoints = new cv.KeyPointVector();
   const templateDescriptors = new cv.Mat();
-  const sceneDescriptors = new cv.Mat();
-  const orb = new cv.ORB(1200);
   const matcher = new cv.BFMatcher(cv.NORM_HAMMING, false);
   const knnMatches = new cv.DMatchVectorVector();
   let templatePoints: InstanceType<CV['Mat']> | null = null;
@@ -349,16 +579,21 @@ function orbFallback(
   let transformedCorners: InstanceType<CV['Mat']> | null = null;
   try {
     cv.cvtColor(templateRgba, templateGray, cv.COLOR_RGBA2GRAY);
-    orb.detectAndCompute(
+    sceneFeatures.orb.detectAndCompute(
       templateGray,
-      mask,
+      sceneFeatures.mask,
       templateKeyPoints,
       templateDescriptors
     );
-    orb.detectAndCompute(sceneGray, mask, sceneKeyPoints, sceneDescriptors);
-    if (templateDescriptors.empty() || sceneDescriptors.empty()) return null;
+    if (templateDescriptors.empty() || sceneFeatures.descriptors.empty())
+      return null;
 
-    matcher.knnMatch(templateDescriptors, sceneDescriptors, knnMatches, 2);
+    matcher.knnMatch(
+      templateDescriptors,
+      sceneFeatures.descriptors,
+      knnMatches,
+      2
+    );
     const goodMatches: Array<{
       templatePoint: { x: number; y: number };
       scenePoint: { x: number; y: number };
@@ -378,9 +613,9 @@ function orbFallback(
         )
       );
       const scenePoint = getKeyPointPoint(
-        (sceneKeyPoints as unknown as OpenCvVector<OpenCvKeyPoint>).get(
-          first.trainIdx
-        )
+        (
+          sceneFeatures.keyPoints as unknown as OpenCvVector<OpenCvKeyPoint>
+        ).get(first.trainIdx)
       );
       goodMatches.push({ templatePoint, scenePoint });
     }
@@ -455,12 +690,8 @@ function orbFallback(
   } finally {
     templateRgba.delete();
     templateGray.delete();
-    mask.delete();
     templateKeyPoints.delete();
-    sceneKeyPoints.delete();
     templateDescriptors.delete();
-    sceneDescriptors.delete();
-    orb.delete();
     matcher.delete();
     knnMatches.delete();
     templatePoints?.delete();
@@ -469,6 +700,25 @@ function orbFallback(
     homography?.delete();
     transformedCorners?.delete();
   }
+}
+
+function createOrbSceneFeatures(
+  cv: CV,
+  sceneGray: InstanceType<CV['Mat']>
+): OrbSceneFeatures {
+  const mask = new cv.Mat();
+  const keyPoints = new cv.KeyPointVector();
+  const descriptors = new cv.Mat();
+  const orb = new cv.ORB(1200);
+  orb.detectAndCompute(sceneGray, mask, keyPoints, descriptors);
+  return { mask, keyPoints, descriptors, orb };
+}
+
+function deleteOrbSceneFeatures(features: OrbSceneFeatures) {
+  features.mask.delete();
+  features.keyPoints.delete();
+  features.descriptors.delete();
+  features.orb.delete();
 }
 
 function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
@@ -512,15 +762,26 @@ export async function recognizeMapScreenshot(
     MAX_WORKING_EDGE / Math.max(screenshot.width, screenshot.height)
   );
   const workingScreenshot = resizeCanvas(screenshot, workingScale);
-  const screenshotRgba = cv.imread(workingScreenshot);
+  const searchRegion = detectMapSearchRegion(workingScreenshot);
+  const templateScales = searchRegion.gridHint
+    ? GRID_TEMPLATE_SCALES[searchRegion.gridHint]
+    : TEMPLATE_SCALES;
+  const candidateTemplates = await prefilterTemplates(
+    cv,
+    searchRegion.canvas,
+    templates,
+    workingScale,
+    templateScales
+  );
+  const screenshotRgba = cv.imread(searchRegion.canvas);
   const screenshotGray = new cv.Mat();
   const rawMatches: WorkingMatch[] = [];
   try {
     cv.cvtColor(screenshotRgba, screenshotGray, cv.COLOR_RGBA2GRAY);
-    for (const template of templates) {
+    for (const template of candidateTemplates) {
       for (const rotation of TEMPLATE_ROTATIONS) {
         const rotatedTemplate = rotateCanvas(template.canvas, rotation);
-        for (const relativeScale of TEMPLATE_SCALES) {
+        for (const relativeScale of templateScales) {
           const scaledCanvas = resizeCanvas(
             rotatedTemplate,
             workingScale * relativeScale
@@ -559,23 +820,42 @@ export async function recognizeMapScreenshot(
           }
         }
       }
-      if (!rawMatches.some((match) => match.templateId === template.id)) {
-        const fallback = orbFallback(
-          cv,
-          screenshotGray,
-          template,
-          workingScale
-        );
-        if (fallback) rawMatches.push(fallback);
-      }
       await yieldToBrowser();
+    }
+    const unmatchedTemplates = candidateTemplates.filter(
+      (template) =>
+        !rawMatches.some((match) => match.templateId === template.id)
+    );
+    if (unmatchedTemplates.length > 0) {
+      const sceneFeatures = createOrbSceneFeatures(cv, screenshotGray);
+      try {
+        for (const template of unmatchedTemplates) {
+          const fallback = orbFallback(
+            cv,
+            screenshotGray,
+            template,
+            workingScale,
+            sceneFeatures
+          );
+          if (fallback) rawMatches.push(fallback);
+          await yieldToBrowser();
+        }
+      } finally {
+        deleteOrbSceneFeatures(sceneFeatures);
+      }
     }
   } finally {
     screenshotRgba.delete();
     screenshotGray.delete();
   }
 
-  const matches = mergeMatches(rawMatches);
+  const localMatches = mergeMatches(rawMatches);
+  const gridType = inferMapGridType(localMatches, searchRegion);
+  const matches = localMatches.map((match) => ({
+    ...match,
+    x: match.x + searchRegion.x,
+    y: match.y + searchRegion.y,
+  }));
   const outputCanvas = drawAnnotation(screenshot, matches, workingScale);
   return {
     blob: await canvasToBlob(outputCanvas),
@@ -588,6 +868,7 @@ export async function recognizeMapScreenshot(
     })),
     width: screenshot.width,
     height: screenshot.height,
+    gridType,
   };
 }
 

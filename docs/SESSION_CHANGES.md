@@ -4,6 +4,13 @@
 
 ## 2026-07-31
 
+### perf: 增加地图识别 ROI、网格与动态分组筛选
+
+- **改动原因**：完整截图全屏遍历所有模板、旋转和尺度约需 51 秒；通用 GoldChest 页面包含 40 张模板，还需要用户按当前截图地图分组缩小识别范围，并区分 5x5/7x7 地图。
+- **变更文件**：`web/src/utils/mapImageRecognition.ts`；`web/src/components/MapImageRecognition.tsx`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/plans/游戏内地图识别优化.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：亮度密度自动定位大地图 ROI，匹配边界补回 ROI 偏移后映射到原图；ROI 比例与模块中位尺寸推断 5x5/7x7，并缩窄尺度；大模板集合先半尺寸粗筛到 18 个；ORB 场景描述子全模板共享；分组下拉框实时使用当前页面可见模板的 `DungeonModule.group`，默认全部。
+- **验证**：三张 1920x1080 截图均正确分类网格（废墟 1 层 7x7，地穴/炼狱 5x5）；OldRustyKey 的 7x7 图识别到 1 个目标；GoldChest 分组选项实时显示 8 个当前页面分组且默认“全部”。炼狱 5 个已知目标当前仅识别 2 个，固定阈值调优记录在独立优化计划，下一 checkpoint 实施精度选项。
+
 ### feat: 新增游戏内地图截图本地识别
 
 - **改动原因**：用户需要在详情页粘贴 Windows `PrtScn` 游戏截图，自动标出截图中属于当前页面的地图模块，并在浏览器本地预览和导出绿色标注图。

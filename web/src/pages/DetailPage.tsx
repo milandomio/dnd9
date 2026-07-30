@@ -499,6 +499,8 @@ export default function DetailPage() {
         id: item.mapName,
         url: imageUrl,
         label: t(module.translation_key, module.translation || item.mapName),
+        group: module.group,
+        groupLabel: formatGroupLabel(module, t, ut) || module.group,
       });
     }
   }
