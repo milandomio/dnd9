@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### chore: 推送 main 并同步本地数据库快照
+
+- **改动原因**：按请求核对线上 `origin/main` 与本地 `main`；远程数据库哈希为 `13e6c6b2ea8be492de3ee3c3b5860ce8c4fe8725`，本地数据库哈希为 `ea3b6fcc1e110a3539bb3b78a60cdb8b5372c180`，存在差异，需要将本地新快照随 `main` 推送。
+- **变更文件**：`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：数据库按 `BUILD_AND_DEPLOY.md` 规则临时纳入提交并推送到 `origin/main`，推送后恢复本地 `skip-worktree` 状态；数据库仍是 Actions 无游戏源时导出前端数据的唯一来源。
+- **验证**：已通过 Git 远程对象哈希确认线上线下数据库不同；推送后复核 `origin/main` 与本地 `main` 指向一致。
+
 ### fix: 将超级宝藏堆箱体坐标纳入掉落分组爆率
 
 - **改动原因**：超级宝藏堆来源注入仅匹配 `Hoard01_9` 与 `HoardChest01`，漏掉沉船墓场的 `HoardChest01_9`；其对应 `SuperHoardChest01_9` 因此未进入掉落详情，地图显示箱体坐标而 `group_drop_info` 未生成对应参考爆率。
