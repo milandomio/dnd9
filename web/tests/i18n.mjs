@@ -5,7 +5,14 @@ const TIMEOUT = 20000;
 const EXPECTED_PLACEHOLDER = {
   'zh-Hans': '搜索物品/怪物/实体...',
   en: 'Search items/monsters/props...',
+  de: 'Gegenstände/Monster/Objekte suchen...',
+  es: 'Buscar objetos/monstruos...',
+  fr: 'Rechercher objets/monstres...',
   ja: 'アイテム/モンスターを検索...',
+  ko: '아이템/몬스터 검색...',
+  'pt-BR': 'Buscar itens/monstros...',
+  ru: 'Поиск предметов/монстров...',
+  'zh-Hant': '搜尋物品/怪物/實體...',
 };
 
 const LANGS = [

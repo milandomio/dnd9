@@ -702,21 +702,15 @@ function injectLocalizedData(page, lang, title, description) {
 }
 
 function replaceDescriptionMeta(page, description) {
-  const descriptionMeta = `<meta name="description" content="${escapeHtml(description)}">`;
-  const ogDescriptionMeta = `<meta property="og:description" content="${escapeHtml(description)}">`;
-  let out = page.replace(
-    /<meta\b(?=[^>]*\bname="description")[^>]*>/i,
-    descriptionMeta
+  const descriptionMeta = `<meta data-rh="true" name="description" content="${escapeHtml(description)}">`;
+  const ogDescriptionMeta = `<meta data-rh="true" property="og:description" content="${escapeHtml(description)}">`;
+  const withoutDescriptions = page
+    .replace(/<meta\b(?=[^>]*\bname="description")[^>]*>/gi, '')
+    .replace(/<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/gi, '');
+  return withoutDescriptions.replace(
+    HEAD_CLOSE,
+    `${descriptionMeta}\n${ogDescriptionMeta}\n${HEAD_CLOSE}`
   );
-  if (out === page)
-    out = out.replace(HEAD_CLOSE, `${descriptionMeta}\n${HEAD_CLOSE}`);
-  const withOg = out.replace(
-    /<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/i,
-    ogDescriptionMeta
-  );
-  return withOg === out
-    ? withOg.replace(HEAD_CLOSE, `${ogDescriptionMeta}\n${HEAD_CLOSE}`)
-    : withOg;
 }
 
 function localizePage(
@@ -899,6 +893,12 @@ for (let i = 0; i < routes.length; i++) {
     }
   } else {
     page = templated.replace(HEAD_CLOSE, `${preloadHtml}\n</head>`);
+  }
+  if (!r.redirect) {
+    page = replaceDescriptionMeta(
+      page,
+      routeDescription(r, routeData, {}, DEFAULT_LANG)
+    );
   }
 
   mkdirSync(dirname(outPath), { recursive: true });

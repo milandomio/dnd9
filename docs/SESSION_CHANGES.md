@@ -93,3 +93,10 @@
 - **变更文件**：`web/src/i18n/seoTemplate.mjs`；`web/src/i18n/seo.ts`；`web/src/i18n/ssrTitle.ts`；`web/src/pages/*.tsx`；`web/scripts/ssg.mjs`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：浏览器与 SSG 共用 10 语言、12 种页面类型的 description 模板；页面使用原始实体、来源、坐标和任务统计同步输出 description/OG description；SSG 写入 `__localizedDescription` 并替换静态标签，详情壳也注入最小元数据；Playwright 覆盖十语言首页和静态/客户端 description 一致性。
 - **当前状态**：WIP。格式化、Node 语法和 TypeScript 检查通过；quick SSG 第二次失败，原因是 `seoTemplate.mjs` 的 `home` 模板为字符串而构建器仍按函数调用，尚未修复，未做部署或 HTTP/浏览器验证。
+
+### fix: 完成多语言元描述优化与验证
+
+- **改动原因**：修复 WIP 中静态首页模板调用失败，以及 SSG 写入的元标签未带 Helmet 所有权标记、客户端追加重复 description 的问题。
+- **变更文件**：`web/src/i18n/seoTemplate.mjs`；`web/scripts/ssg.mjs`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SEO 构建器兼容首页静态字符串和详情页动态函数；SSG 删除所有旧 description/OG description 后写入唯一的 `data-rh="true"` 标签，客户端 Helmet 复用该标签；测试补齐十语言搜索占位符，并断言静态与客户端 description/OG description 均存在且一致。
+- **验证**：quick SSG 成功生成 12,976 个 HTML；10 个语言 Sitemap 共 12,710 个 URL 静态审计均为单一 description、单一同值 OG description、无占位符；HTTP 200；`npm run format`、`npm run format:check`、`npx prettier --check src/i18n/seoTemplate.mjs`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）和 `npm run test:i18n`（22/22）通过；未部署、未访问 Bing Webmaster Tools。
