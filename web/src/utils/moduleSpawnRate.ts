@@ -9,3 +9,11 @@ const RARE_MODULE_SPAWN_RATES: Record<string, number> = {
 export function getRareModuleSpawnRate(moduleName?: string): number {
   return moduleName ? (RARE_MODULE_SPAWN_RATES[moduleName] ?? 0) : 0;
 }
+
+export function applyModuleSpawnRate(
+  rate: number,
+  moduleName?: string
+): number {
+  const moduleSpawnRate = getRareModuleSpawnRate(moduleName);
+  return moduleSpawnRate > 0 ? (rate * moduleSpawnRate) / 100 : rate;
+}

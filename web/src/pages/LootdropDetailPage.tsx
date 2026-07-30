@@ -34,7 +34,10 @@ import CompositeRate from '../components/CompositeRate';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
-import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
+import {
+  applyModuleSpawnRate,
+  getRareModuleSpawnRate,
+} from '../utils/moduleSpawnRate';
 import { defaultVariantSuffix } from '../utils/variant';
 import { localizedSeoDescription } from '../i18n/seo';
 
@@ -632,6 +635,7 @@ export default function LootdropDetailPage() {
 
   function computeModuleScore(
     item: {
+      mapName?: string;
       mod?: DungeonModule;
       dots: {
         monster: LootdropMonster;
@@ -689,7 +693,7 @@ export default function LootdropDetailPage() {
           Math.round(((baseScore * g.positions.size) / g.vc) * 10000) / 10000;
       }
     }
-    return total;
+    return applyModuleSpawnRate(total, item.mod?.name || item.mapName);
   }
 
   for (const group of groupedByType.values()) {
