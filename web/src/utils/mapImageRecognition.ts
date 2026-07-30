@@ -205,6 +205,20 @@ function cropCanvas(
   return canvas;
 }
 
+function cropCanvasRegion(
+  source: HTMLCanvasElement,
+  x: number,
+  y: number,
+  width: number,
+  height: number
+): HTMLCanvasElement {
+  const canvas = createCanvas(width, height);
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('Canvas 2D context is unavailable');
+  context.drawImage(source, x, y, width, height, 0, 0, width, height);
+  return canvas;
+}
+
 function rotateCanvas(
   source: HTMLCanvasElement,
   degrees: (typeof TEMPLATE_ROTATIONS)[number]
@@ -839,6 +853,121 @@ function drawAnnotation(
   return output;
 }
 
+async function refineGridMatches(
+  cv: CV,
+  scene: HTMLCanvasElement,
+  templates: LoadedMapImageTemplate[],
+  seeds: WorkingMatch[],
+  gridType: NonNullable<SearchRegion['gridHint']>,
+  threshold: number
+): Promise<WorkingMatch[]> {
+  const gridSize = gridType === '5x5' ? 5 : 7;
+  const cellWidth = scene.width / gridSize;
+  const cellHeight = scene.height / gridSize;
+  const templateById = new Map(
+    templates.map((template) => [template.id, template])
+  );
+  const cells = new Map<
+    string,
+    {
+      template: LoadedMapImageTemplate;
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+      seed: WorkingMatch;
+    }
+  >();
+  for (const seed of seeds) {
+    const template = templateById.get(seed.templateId);
+    if (!template) continue;
+    const column = Math.floor((seed.x + seed.width / 2) / cellWidth);
+    const row = Math.floor((seed.y + seed.height / 2) / cellHeight);
+    if (column < 0 || column >= gridSize || row < 0 || row >= gridSize)
+      continue;
+    const x = Math.round(column * cellWidth);
+    const y = Math.round(row * cellHeight);
+    const width = Math.min(scene.width - x, Math.round(cellWidth));
+    const height = Math.min(scene.height - y, Math.round(cellHeight));
+    const key = `${template.id}:${column}:${row}`;
+    const existing = cells.get(key);
+    if (!existing || seed.score > existing.seed.score) {
+      cells.set(key, { template, x, y, width, height, seed });
+    }
+  }
+
+  const matches: WorkingMatch[] = [];
+  for (const { template, x, y, width, height, seed } of cells.values()) {
+    const cellCanvas = cropCanvasRegion(scene, x, y, width, height);
+    const cellRgba = cv.imread(cellCanvas);
+    const cellGray = new cv.Mat();
+    try {
+      cv.cvtColor(cellRgba, cellGray, cv.COLOR_RGBA2GRAY);
+      const baseScale = seed.width / template.canvas.width;
+      const scales = [0.92, 0.98, 1, 1.04, 1.08].map(
+        (factor) => baseScale * factor
+      );
+      for (const rotation of TEMPLATE_ROTATIONS) {
+        const rotatedTemplate = rotateCanvas(template.canvas, rotation);
+        for (const scale of scales) {
+          const scaledCanvas = resizeCanvas(rotatedTemplate, scale);
+          if (
+            scaledCanvas.width > cellGray.cols ||
+            scaledCanvas.height > cellGray.rows ||
+            scaledCanvas.width < 32 ||
+            scaledCanvas.height < 32
+          ) {
+            continue;
+          }
+          const templateRgba = cv.imread(scaledCanvas);
+          const templateGray = new cv.Mat();
+          const result = new cv.Mat();
+          try {
+            cv.cvtColor(templateRgba, templateGray, cv.COLOR_RGBA2GRAY);
+            cv.matchTemplate(
+              cellGray,
+              templateGray,
+              result,
+              cv.TM_CCOEFF_NORMED
+            );
+            const peaks = collectTemplatePeaks(
+              result,
+              scaledCanvas.width,
+              scaledCanvas.height,
+              template,
+              threshold
+            );
+            matches.push(
+              ...peaks.matches.map((match) => ({
+                ...match,
+                x: match.x + x,
+                y: match.y + y,
+              }))
+            );
+          } finally {
+            templateRgba.delete();
+            templateGray.delete();
+            result.delete();
+          }
+        }
+      }
+    } finally {
+      cellRgba.delete();
+      cellGray.delete();
+    }
+    await yieldToBrowser();
+  }
+  return mergeMatches(
+    matches.filter(
+      (match) =>
+        match.x >= 0 &&
+        match.y >= 0 &&
+        match.x + match.width <= scene.width &&
+        match.y + match.height <= scene.height
+    )
+  );
+}
+
 export async function recognizeMapScreenshot(
   screenshot: HTMLCanvasElement,
   templates: LoadedMapImageTemplate[],
@@ -876,6 +1005,9 @@ export async function recognizeMapScreenshot(
   const fineScores = new Map<string, number>();
   try {
     cv.cvtColor(screenshotRgba, screenshotGray, cv.COLOR_RGBA2GRAY);
+    const scanThreshold = searchRegion.gridHint
+      ? Math.min(matchThreshold, 0.38)
+      : matchThreshold;
     for (const template of candidateTemplates) {
       for (const rotation of TEMPLATE_ROTATIONS) {
         const rotatedTemplate = rotateCanvas(template.canvas, rotation);
@@ -908,7 +1040,7 @@ export async function recognizeMapScreenshot(
               scaledCanvas.width,
               scaledCanvas.height,
               template,
-              matchThreshold
+              scanThreshold
             );
             fineScores.set(
               template.id,
@@ -920,7 +1052,7 @@ export async function recognizeMapScreenshot(
             rawMatches.push(...peakResult.matches);
             if (
               peakResult.matches.length === 0 &&
-              peakResult.bestScore >= matchThreshold - 0.12
+              peakResult.bestScore >= scanThreshold - 0.12
             ) {
               const insetX = Math.max(2, Math.round(scaledCanvas.width * 0.12));
               const insetY = Math.max(
@@ -945,7 +1077,7 @@ export async function recognizeMapScreenshot(
                     innerCanvas.width,
                     innerCanvas.height,
                     template,
-                    matchThreshold,
+                    scanThreshold,
                     {
                       boxWidth: scaledCanvas.width,
                       boxHeight: scaledCanvas.height,
@@ -978,11 +1110,25 @@ export async function recognizeMapScreenshot(
       }
       await yieldToBrowser();
     }
+    if (searchRegion.gridHint) {
+      const refinedMatches = await refineGridMatches(
+        cv,
+        searchRegion.canvas,
+        candidateTemplates,
+        mergeMatches(rawMatches),
+        searchRegion.gridHint,
+        matchThreshold
+      );
+      if (refinedMatches.length > 0) {
+        rawMatches.length = 0;
+        rawMatches.push(...refinedMatches);
+      }
+    }
     const unmatchedTemplates = candidateTemplates.filter(
       (template) =>
         !rawMatches.some((match) => match.templateId === template.id)
     );
-    if (unmatchedTemplates.length > 0) {
+    if (unmatchedTemplates.length > 0 && !searchRegion.gridHint) {
       const sceneFeatures = createOrbSceneFeatures(cv, screenshotGray);
       try {
         for (const template of unmatchedTemplates) {
