@@ -8,6 +8,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 interface ExploreTarget {
   name: string;
@@ -53,7 +54,8 @@ export default function ExplorePage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.explore.title')} | {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ??
+            `${ut('ui.explore.title')} | ${ut('ui.brand.name')}`}
         </title>
         <meta
           name="description"

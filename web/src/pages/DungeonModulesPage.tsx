@@ -6,6 +6,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 interface GroupSummary {
   group: string;
@@ -99,7 +100,8 @@ export default function DungeonModulesPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.module.title')} | {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ??
+            `${ut('ui.module.title')} | ${ut('ui.brand.name')}`}
         </title>
         <meta name="description" content={ut('ui.home.view_dungeon_modules')} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />

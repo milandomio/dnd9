@@ -8,6 +8,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useLocale } from '../i18n/useLocale';
 import type { DungeonModule } from '../types/data';
@@ -251,7 +252,8 @@ export default function QuestItemGroupPage() {
 
       <Helmet>
         <title>
-          {groupLabel} | {ut('ui.quest_items.title')} | {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ??
+            `${groupLabel} | ${ut('ui.quest_items.title')} | ${ut('ui.brand.name')}`}
         </title>
         <meta
           name="description"

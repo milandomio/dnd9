@@ -8,6 +8,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 interface GroupEntry {
   group: string;
@@ -59,7 +60,8 @@ export default function QuestItemsPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.quest_items.title')} | {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ??
+            `${ut('ui.quest_items.title')} | ${ut('ui.brand.name')}`}
         </title>
         <meta name="description" content={ut('ui.quest_items.footer')} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />

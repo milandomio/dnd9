@@ -181,8 +181,8 @@ export default function DungeonModuleDetailPage() {
 
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? moduleDisplayName} | {ut('ui.module.title')} |{' '}
-          {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ??
+            `${moduleDisplayName} | ${ut('ui.module.title')} | ${ut('ui.brand.name')}`}
         </title>
         <meta
           name="description"

@@ -10,6 +10,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { useLanguage } from '../i18n/LanguageContext';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 type CardTheme = {
   border: string;
@@ -118,7 +119,7 @@ export default function HomePage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ut('ui.brand.name')} | {homeDescription}
+          {ssrLocalizedTitle() ?? `${ut('ui.brand.name')} | ${homeDescription}`}
         </title>
         <meta
           name="description"

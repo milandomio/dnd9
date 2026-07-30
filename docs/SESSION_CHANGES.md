@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 注入全站 SSG 多语言标题
+
+- **改动原因**：`/en/dungeon_modules/ShipGraveyard/` 等数组型路由没有实体 `translation_key` 可供旧 SSG 标题函数解析，保留了简中 SSR `<title>`；模板详情壳也未内联 `__localizedTitle`，客户端首轮会回写中文标题。
+- **变更文件**：`web/scripts/ssg.mjs`；`web/src/pages/HomePage.tsx`；`web/src/pages/ListPage.tsx`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/pages/DungeonModuleDetailPage.tsx`；`web/src/pages/DungeonModuleGroupPage.tsx`；`web/src/pages/DungeonModulesPage.tsx`；`web/src/pages/ExplorePage.tsx`；`web/src/pages/QuestItemGroupPage.tsx`；`web/src/pages/QuestItemsPage.tsx`；`web/src/pages/QuestNPCDetailPage.tsx`；`web/src/pages/QuestNPCPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SSG 为非模板路由从目标语言 SSR head 提取完整 `<title>`，模板详情壳按本地化实体名生成标题；每个页面把同一完整值注入 `window.__SSR_DATA__.__localizedTitle`，各页面首轮 Helmet 优先使用该值，列表页保持目标语言 SSR，其他页面维持简中正文 hydration。
+- **验证**：Prettier、TypeScript、quick SSG、`test:i18n`（16/16）与 HTTP 200 通过；10 种语言的所有非默认路由均有 `<title>` 和注入标题；Playwright 确认 `/en/dungeon_modules/ShipGraveyard/` 标题为 `The Ship Graveyard1F | Dungeon Modules | 越来越黑暗闪电指南 DarkFlashNav`。
+
 ### fix: 修复探索页模块图片与多语言名称
 
 - **改动原因**：`/en/explore/` 的探索目标仍使用任务内容资产路径，无法命中地图模块图片；探索导出同时缺少任务标题、模块和 NPC 的翻译键。

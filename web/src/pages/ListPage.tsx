@@ -9,6 +9,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
+import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
 type IndexEntry = SearchEntry & {
   category?: string;
@@ -132,7 +133,10 @@ export default function ListPage() {
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
-        <title>{`【${pageLabel}】${locationsLabel} | ${ut('ui.brand.name')}`}</title>
+        <title>
+          {ssrLocalizedTitle() ??
+            `【${pageLabel}】${locationsLabel} | ${ut('ui.brand.name')}`}
+        </title>
         <meta name="description" content={`${pageLabel} ${validItemCount}`} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta

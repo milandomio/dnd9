@@ -494,9 +494,8 @@ export default function DetailPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>
-          {ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`}
-          {' | '}
-          {ut('ui.brand.name')}
+          {ssrLocalizedTitle() ??
+            `${entityLabel} -${pageLabel} | ${ut('ui.brand.name')}`}
         </title>
         <meta
           name="description"
@@ -507,7 +506,10 @@ export default function DetailPage() {
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
-          content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | ${ut('ui.brand.name')}`}
+          content={
+            ssrLocalizedTitle() ??
+            `${entityLabel} -${pageLabel} | ${ut('ui.brand.name')}`
+          }
         />
         <meta
           property="og:description"
