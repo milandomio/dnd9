@@ -14,6 +14,8 @@ import {
   loadOpenCv,
   recognizeMapScreenshot,
   type LoadedMapImageTemplate,
+  type MapGridCalibration,
+  type MapGridType,
   type MapImageRecognitionDebug,
   type MapImageTemplate,
   type MapImageMatch,
@@ -76,6 +78,7 @@ export default function MapImageRecognition({
   const loadedTemplatesRef = useRef<LoadedMapImageTemplate[]>([]);
   const previewUrlRef = useRef<string | null>(null);
   const pasteAreaRef = useRef<HTMLDivElement>(null);
+  const screenshotRef = useRef<HTMLCanvasElement | null>(null);
   const templateSignature = activeTemplates
     .map((template) => `${template.id}:${template.url}:${template.label}`)
     .join('|');
@@ -88,7 +91,10 @@ export default function MapImageRecognition({
   const [templateFailures, setTemplateFailures] = useState(0);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [matches, setMatches] = useState<MapImageMatch[]>([]);
-  const [gridType, setGridType] = useState<'5x5' | '7x7' | null>(null);
+  const [gridType, setGridType] = useState<MapGridType | null>(null);
+  const [gridX, setGridX] = useState('');
+  const [gridY, setGridY] = useState('');
+  const [cellSize, setCellSize] = useState('');
   const [debugData, setDebugData] = useState<MapImageRecognitionDebug | null>(
     null
   );
@@ -167,6 +173,10 @@ export default function MapImageRecognition({
     setPreviewUrl(null);
     setMatches([]);
     setGridType(null);
+    setGridX('');
+    setGridY('');
+    setCellSize('');
+    screenshotRef.current = null;
     setDebugData(null);
     setErrorMessage(null);
     if (enabled && cvRef.current && loadedTemplatesRef.current.length > 0) {
@@ -205,6 +215,57 @@ export default function MapImageRecognition({
     return normalized;
   }
 
+  function getGridCalibration(): MapGridCalibration | undefined {
+    const x = Number(gridX);
+    const y = Number(gridY);
+    const size = Number(cellSize);
+    if (
+      !gridType ||
+      !Number.isFinite(x) ||
+      !Number.isFinite(y) ||
+      !Number.isFinite(size) ||
+      size <= 0
+    ) {
+      return undefined;
+    }
+    return { gridType, x, y, cellSize: size };
+  }
+
+  async function runRecognition(screenshot: HTMLCanvasElement) {
+    const cv = cvRef.current;
+    if (!cv || loadedTemplatesRef.current.length === 0) return;
+    setStatus('recognizing');
+    setErrorMessage(null);
+    try {
+      const output = await recognizeMapScreenshot(
+        screenshot,
+        loadedTemplatesRef.current,
+        cv,
+        {
+          threshold: normalizeThreshold(),
+          group: selectedGroup || undefined,
+          calibration: getGridCalibration(),
+        }
+      );
+      if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+      const nextPreviewUrl = URL.createObjectURL(output.blob);
+      previewUrlRef.current = nextPreviewUrl;
+      setPreviewUrl(nextPreviewUrl);
+      setMatches(output.matches);
+      setGridType(output.gridType);
+      if (output.calibration) {
+        setGridX(output.calibration.x.toFixed(1));
+        setGridY(output.calibration.y.toFixed(1));
+        setCellSize(output.calibration.cellSize.toFixed(1));
+      }
+      setDebugData(output.debug);
+      setStatus('done');
+    } catch {
+      setStatus('error');
+      setErrorMessage(ut('ui.map_recognition.recognition_error'));
+    }
+  }
+
   async function handlePaste(event: React.ClipboardEvent<HTMLDivElement>) {
     event.preventDefault();
     const imageItem = [...event.clipboardData.items].find((item) =>
@@ -216,35 +277,24 @@ export default function MapImageRecognition({
       return;
     }
     const blob = imageItem.getAsFile();
-    const cv = cvRef.current;
-    if (!blob || !cv || loadedTemplatesRef.current.length === 0) {
+    if (!blob || !cvRef.current || loadedTemplatesRef.current.length === 0) {
       setStatus('error');
       setErrorMessage(ut('ui.map_recognition.not_ready'));
       return;
     }
 
-    setStatus('recognizing');
-    setErrorMessage(null);
     try {
       const screenshot = await decodeScreenshot(blob);
-      const output = await recognizeMapScreenshot(
-        screenshot,
-        loadedTemplatesRef.current,
-        cv,
-        { threshold: normalizeThreshold(), group: selectedGroup || undefined }
-      );
-      if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
-      const nextPreviewUrl = URL.createObjectURL(output.blob);
-      previewUrlRef.current = nextPreviewUrl;
-      setPreviewUrl(nextPreviewUrl);
-      setMatches(output.matches);
-      setGridType(output.gridType);
-      setDebugData(output.debug);
-      setStatus('done');
+      screenshotRef.current = screenshot;
+      await runRecognition(screenshot);
     } catch {
       setStatus('error');
       setErrorMessage(ut('ui.map_recognition.recognition_error'));
     }
+  }
+
+  async function handleRerun() {
+    if (screenshotRef.current) await runRecognition(screenshotRef.current);
   }
 
   function exportDebugData() {
@@ -396,6 +446,93 @@ export default function MapImageRecognition({
                 )}
               </span>
             </span>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 6,
+              flexWrap: 'wrap',
+              color: tokens.muted,
+              fontSize: 11,
+            }}
+          >
+            <select
+              aria-label={ut('ui.map_recognition.grid_size')}
+              value={gridType || ''}
+              onChange={(event) =>
+                setGridType((event.target.value || null) as MapGridType | null)
+              }
+              style={{
+                padding: '2px 5px',
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 3,
+                color: tokens.text,
+                background: tokens.bg,
+                fontSize: 11,
+              }}
+            >
+              <option value="">{ut('ui.map_recognition.grid_unknown')}</option>
+              {(['3x3', '4x4', '5x5', '7x7'] as const).map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+            {[
+              ['X', gridX, setGridX],
+              ['Y', gridY, setGridY],
+              [ut('ui.map_recognition.cell_size'), cellSize, setCellSize],
+            ].map(([label, value, setter]) => (
+              <label
+                key={label as string}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}
+              >
+                {label as string}
+                <input
+                  type="number"
+                  aria-label={label as string}
+                  min={label === ut('ui.map_recognition.cell_size') ? 1 : 0}
+                  step={0.1}
+                  value={value as string}
+                  onChange={(event) =>
+                    (setter as (value: string) => void)(event.target.value)
+                  }
+                  style={{
+                    width: 58,
+                    padding: '2px 4px',
+                    border: `1px solid ${tokens.border}`,
+                    borderRadius: 3,
+                    color: tokens.text,
+                    background: tokens.bg,
+                    fontSize: 11,
+                  }}
+                />
+              </label>
+            ))}
+            <button
+              type="button"
+              onClick={handleRerun}
+              disabled={!screenshotRef.current || status === 'recognizing'}
+              title={ut('ui.map_recognition.rerun')}
+              aria-label={ut('ui.map_recognition.rerun')}
+              style={{
+                width: 26,
+                height: 24,
+                display: 'inline-grid',
+                placeItems: 'center',
+                padding: 0,
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 3,
+                color: tokens.text,
+                background: tokens.bg,
+                cursor: screenshotRef.current ? 'pointer' : 'not-allowed',
+              }}
+            >
+              <ScanOutlined />
+            </button>
           </div>
 
           <div

@@ -12,6 +12,15 @@ export interface LoadedMapImageTemplate extends MapImageTemplate {
   canvas: HTMLCanvasElement;
 }
 
+export type MapGridType = '3x3' | '4x4' | '5x5' | '7x7';
+
+export interface MapGridCalibration {
+  gridType: MapGridType;
+  x: number;
+  y: number;
+  cellSize: number;
+}
+
 export interface MapImageMatch {
   templateId: string;
   label: string;
@@ -28,7 +37,8 @@ export interface MapImageRecognitionOutput {
   matches: MapImageMatch[];
   width: number;
   height: number;
-  gridType: '5x5' | '7x7' | null;
+  gridType: MapGridType | null;
+  calibration: MapGridCalibration | null;
   debug: MapImageRecognitionDebug;
 }
 
@@ -38,6 +48,7 @@ export interface MapImageRecognitionDebug {
   group: string | null;
   threshold: number;
   gridType: MapImageRecognitionOutput['gridType'];
+  calibration: MapGridCalibration | null;
   source: { width: number; height: number };
   workingScale: number;
   searchRegion: { x: number; y: number; width: number; height: number };
@@ -58,6 +69,7 @@ export interface MapImageRecognitionDebug {
 export interface MapImageRecognitionOptions {
   threshold?: number;
   group?: string;
+  calibration?: MapGridCalibration;
 }
 
 interface OpenCvModule {
@@ -117,6 +129,8 @@ interface TemplatePrefilterResult {
 const MAX_WORKING_EDGE = 600;
 const TEMPLATE_SCALES = [0.32, 0.4, 0.44, 0.48, 0.6, 0.75, 1, 1.25];
 const GRID_TEMPLATE_SCALES = {
+  '3x3': [0.6, 0.68, 0.75],
+  '4x4': [0.48, 0.52, 0.6],
   '5x5': [0.4, 0.44, 0.48, 0.52],
   '7x7': [0.36, 0.4, 0.44],
 } as const;
@@ -127,6 +141,10 @@ const MAX_SCORE_CANDIDATES = 4096;
 const MAX_FINE_TEMPLATE_CANDIDATES = 18;
 
 let openCvPromise: Promise<CV> | null = null;
+
+function getGridSize(gridType: MapGridType): number {
+  return Number.parseInt(gridType, 10);
+}
 
 function isPromiseLike(value: unknown): value is PromiseLike<unknown> {
   return (
@@ -341,6 +359,85 @@ function detectMapSearchRegion(source: HTMLCanvasElement): SearchRegion {
         ? '5x5'
         : null;
   return { canvas, x: left, y: top, gridHint };
+}
+
+function createCalibratedSearchRegion(
+  source: HTMLCanvasElement,
+  calibration: MapGridCalibration,
+  workingScale: number
+): SearchRegion {
+  const gridSize = getGridSize(calibration.gridType);
+  const x = Math.max(0, Math.round(calibration.x * workingScale));
+  const y = Math.max(0, Math.round(calibration.y * workingScale));
+  const mapSize = Math.round(calibration.cellSize * gridSize * workingScale);
+  const width = Math.min(mapSize, source.width - x);
+  const height = Math.min(mapSize, source.height - y);
+  return {
+    canvas: cropCanvasRegion(source, x, y, width, height),
+    x,
+    y,
+    gridHint: calibration.gridType,
+  };
+}
+
+function deriveGridCalibration(
+  searchRegion: SearchRegion,
+  seeds: WorkingMatch[],
+  gridType: MapGridType,
+  workingScale: number
+): MapGridCalibration | null {
+  const reliableSeeds = seeds.filter(
+    (seed) =>
+      seed.method !== 'orb' && seed.score >= DEFAULT_TEMPLATE_MATCH_THRESHOLD
+  );
+  const candidates = reliableSeeds.length > 0 ? reliableSeeds : seeds;
+  if (candidates.length === 0) return null;
+  const sizes = candidates
+    .map((seed) => Math.min(seed.width, seed.height))
+    .sort((a, b) => a - b);
+  const gridSize = getGridSize(gridType);
+  const contentSize = sizes[Math.floor(sizes.length / 2)];
+  const pitchCandidates: number[] = [];
+  for (let first = 0; first < candidates.length; first += 1) {
+    for (let second = first + 1; second < candidates.length; second += 1) {
+      for (const distance of [
+        Math.abs(candidates[first].x - candidates[second].x),
+        Math.abs(candidates[first].y - candidates[second].y),
+      ]) {
+        for (let cells = 1; cells < gridSize; cells += 1) {
+          const pitch = distance / cells;
+          if (pitch >= contentSize * 0.9 && pitch <= contentSize * 1.15) {
+            pitchCandidates.push(pitch);
+          }
+        }
+      }
+    }
+  }
+  pitchCandidates.sort((a, b) => a - b);
+  const cellSize =
+    pitchCandidates[Math.floor(pitchCandidates.length / 2)] ?? contentSize;
+  const approximateX =
+    searchRegion.x + (searchRegion.canvas.width - cellSize * gridSize) / 2;
+  const approximateY =
+    searchRegion.y + (searchRegion.canvas.height - cellSize * gridSize) / 2;
+  const origins = (axis: 'x' | 'y', approximate: number) =>
+    candidates
+      .map((seed) => {
+        const index = Math.min(
+          gridSize - 1,
+          Math.max(0, Math.round((seed[axis] - approximate) / cellSize))
+        );
+        return seed[axis] + searchRegion[axis] - index * cellSize;
+      })
+      .sort((a, b) => a - b);
+  const xOrigins = origins('x', approximateX - searchRegion.x);
+  const yOrigins = origins('y', approximateY - searchRegion.y);
+  return {
+    gridType,
+    x: xOrigins[Math.floor(xOrigins.length / 2)] / workingScale,
+    y: yOrigins[Math.floor(yOrigins.length / 2)] / workingScale,
+    cellSize: cellSize / workingScale,
+  };
 }
 
 async function blobToCanvas(blob: Blob): Promise<HTMLCanvasElement> {
@@ -839,14 +936,32 @@ function drawAnnotation(
   searchRegion: SearchRegion,
   gridType: MapImageRecognitionOutput['gridType']
 ): HTMLCanvasElement {
-  const output = createCanvas(screenshot.width, screenshot.height);
+  const cropMap = gridType !== null;
+  const output = createCanvas(
+    cropMap ? searchRegion.canvas.width / workingScale : screenshot.width,
+    cropMap ? searchRegion.canvas.height / workingScale : screenshot.height
+  );
   const context = output.getContext('2d');
   if (!context) throw new Error('Canvas 2D context is unavailable');
-  context.drawImage(screenshot, 0, 0);
+  if (cropMap) {
+    context.drawImage(
+      screenshot,
+      searchRegion.x / workingScale,
+      searchRegion.y / workingScale,
+      output.width,
+      output.height,
+      0,
+      0,
+      output.width,
+      output.height
+    );
+  } else {
+    context.drawImage(screenshot, 0, 0);
+  }
   context.fillStyle = 'rgba(0, 190, 80, 0.5)';
   for (const match of matches) {
     if (gridType) {
-      const gridSize = gridType === '5x5' ? 5 : 7;
+      const gridSize = getGridSize(gridType);
       const cellWidth = searchRegion.canvas.width / gridSize;
       const cellHeight = searchRegion.canvas.height / gridSize;
       const column = Math.floor(
@@ -857,8 +972,8 @@ function drawAnnotation(
       );
       if (column >= 0 && column < gridSize && row >= 0 && row < gridSize) {
         context.fillRect(
-          (searchRegion.x + column * cellWidth) / workingScale,
-          (searchRegion.y + row * cellHeight) / workingScale,
+          (column * cellWidth) / workingScale,
+          (row * cellHeight) / workingScale,
           cellWidth / workingScale,
           cellHeight / workingScale
         );
@@ -866,8 +981,8 @@ function drawAnnotation(
       }
     }
     context.fillRect(
-      match.x / workingScale,
-      match.y / workingScale,
+      (cropMap ? match.x - searchRegion.x : match.x) / workingScale,
+      (cropMap ? match.y - searchRegion.y : match.y) / workingScale,
       match.width / workingScale,
       match.height / workingScale
     );
@@ -879,117 +994,88 @@ async function refineGridMatches(
   cv: CV,
   scene: HTMLCanvasElement,
   templates: LoadedMapImageTemplate[],
-  seeds: WorkingMatch[],
   gridType: NonNullable<SearchRegion['gridHint']>,
   threshold: number
 ): Promise<WorkingMatch[]> {
-  const gridSize = gridType === '5x5' ? 5 : 7;
+  const gridSize = getGridSize(gridType);
   const cellWidth = scene.width / gridSize;
   const cellHeight = scene.height / gridSize;
-  const templateById = new Map(
-    templates.map((template) => [template.id, template])
-  );
-  const cells = new Map<
-    string,
-    {
-      template: LoadedMapImageTemplate;
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-      seed: WorkingMatch;
-    }
-  >();
-  for (const seed of seeds) {
-    const template = templateById.get(seed.templateId);
-    if (!template) continue;
-    const column = Math.floor((seed.x + seed.width / 2) / cellWidth);
-    const row = Math.floor((seed.y + seed.height / 2) / cellHeight);
-    if (column < 0 || column >= gridSize || row < 0 || row >= gridSize)
-      continue;
-    const x = Math.round(column * cellWidth);
-    const y = Math.round(row * cellHeight);
-    const width = Math.min(scene.width - x, Math.round(cellWidth));
-    const height = Math.min(scene.height - y, Math.round(cellHeight));
-    const key = `${template.id}:${column}:${row}`;
-    const existing = cells.get(key);
-    if (!existing || seed.score > existing.seed.score) {
-      cells.set(key, { template, x, y, width, height, seed });
-    }
-  }
-
   const matches: WorkingMatch[] = [];
-  for (const { template, x, y, width, height, seed } of cells.values()) {
-    const cellCanvas = cropCanvasRegion(scene, x, y, width, height);
-    const cellRgba = cv.imread(cellCanvas);
-    const cellGray = new cv.Mat();
-    const cellMatches: WorkingMatch[] = [];
-    try {
-      cv.cvtColor(cellRgba, cellGray, cv.COLOR_RGBA2GRAY);
-      const baseScale = seed.width / template.canvas.width;
-      const scales = [0.92, 0.98, 1, 1.04, 1.08].map(
-        (factor) => baseScale * factor
-      );
-      for (const rotation of TEMPLATE_ROTATIONS) {
-        const rotatedTemplate = rotateCanvas(template.canvas, rotation);
-        for (const scale of scales) {
-          const scaledCanvas = resizeCanvas(rotatedTemplate, scale);
-          if (
-            scaledCanvas.width > cellGray.cols ||
-            scaledCanvas.height > cellGray.rows ||
-            scaledCanvas.width < 32 ||
-            scaledCanvas.height < 32
-          ) {
-            continue;
-          }
-          const templateRgba = cv.imread(scaledCanvas);
-          const templateGray = new cv.Mat();
-          const result = new cv.Mat();
-          try {
-            cv.cvtColor(templateRgba, templateGray, cv.COLOR_RGBA2GRAY);
-            cv.matchTemplate(
-              cellGray,
-              templateGray,
-              result,
-              cv.TM_CCOEFF_NORMED
+  for (let row = 0; row < gridSize; row += 1) {
+    for (let column = 0; column < gridSize; column += 1) {
+      const x = Math.round(column * cellWidth);
+      const y = Math.round(row * cellHeight);
+      const right = Math.round((column + 1) * cellWidth);
+      const bottom = Math.round((row + 1) * cellHeight);
+      const width = right - x;
+      const height = bottom - y;
+      const cellCanvas = cropCanvasRegion(scene, x, y, width, height);
+      const cellRgba = cv.imread(cellCanvas);
+      const cellGray = new cv.Mat();
+      let bestMatch: WorkingMatch | null = null;
+      try {
+        cv.cvtColor(cellRgba, cellGray, cv.COLOR_RGBA2GRAY);
+        for (const template of templates) {
+          for (const rotation of TEMPLATE_ROTATIONS) {
+            const rotatedTemplate = rotateCanvas(template.canvas, rotation);
+            const fitScale = Math.min(
+              cellWidth / rotatedTemplate.width,
+              cellHeight / rotatedTemplate.height
             );
-            const peaks = collectTemplatePeaks(
-              result,
-              scaledCanvas.width,
-              scaledCanvas.height,
-              template,
-              threshold
-            );
-            cellMatches.push(
-              ...peaks.matches.map((match) => ({
-                ...match,
-                x: match.x + x,
-                y: match.y + y,
-              }))
-            );
-          } finally {
-            templateRgba.delete();
-            templateGray.delete();
-            result.delete();
+            for (const factor of [0.94, 0.96, 0.98, 1]) {
+              const scaledCanvas = resizeCanvas(
+                rotatedTemplate,
+                fitScale * factor
+              );
+              if (
+                scaledCanvas.width > cellGray.cols ||
+                scaledCanvas.height > cellGray.rows ||
+                scaledCanvas.width < 32 ||
+                scaledCanvas.height < 32
+              ) {
+                continue;
+              }
+              const templateRgba = cv.imread(scaledCanvas);
+              const templateGray = new cv.Mat();
+              const result = new cv.Mat();
+              try {
+                cv.cvtColor(templateRgba, templateGray, cv.COLOR_RGBA2GRAY);
+                cv.matchTemplate(
+                  cellGray,
+                  templateGray,
+                  result,
+                  cv.TM_CCOEFF_NORMED
+                );
+                const score = maxMatScore(result);
+                if (!bestMatch || score > bestMatch.score) {
+                  bestMatch = {
+                    templateId: template.id,
+                    label: template.label,
+                    x,
+                    y,
+                    width,
+                    height,
+                    score,
+                    method: 'template',
+                  };
+                }
+              } finally {
+                templateRgba.delete();
+                templateGray.delete();
+                result.delete();
+              }
+            }
           }
         }
+      } finally {
+        cellRgba.delete();
+        cellGray.delete();
       }
-    } finally {
-      cellRgba.delete();
-      cellGray.delete();
+      if (bestMatch && bestMatch.score >= threshold) matches.push(bestMatch);
+      await yieldToBrowser();
     }
-    matches.push(...(cellMatches.length > 0 ? cellMatches : [seed]));
-    await yieldToBrowser();
   }
-  return mergeMatches(
-    matches.filter(
-      (match) =>
-        match.x >= 0 &&
-        match.y >= 0 &&
-        match.x + match.width <= scene.width &&
-        match.y + match.height <= scene.height
-    )
-  );
+  return matches;
 }
 
 export async function recognizeMapScreenshot(
@@ -1009,7 +1095,15 @@ export async function recognizeMapScreenshot(
     MAX_WORKING_EDGE / Math.max(screenshot.width, screenshot.height)
   );
   const workingScreenshot = resizeCanvas(screenshot, workingScale);
-  const searchRegion = detectMapSearchRegion(workingScreenshot);
+  const searchRegion = options.calibration
+    ? createCalibratedSearchRegion(
+        workingScreenshot,
+        options.calibration,
+        workingScale
+      )
+    : detectMapSearchRegion(workingScreenshot);
+  let finalSearchRegion = searchRegion;
+  let calibration = options.calibration ?? null;
   const templateScales = searchRegion.gridHint
     ? GRID_TEMPLATE_SCALES[searchRegion.gridHint]
     : TEMPLATE_SCALES;
@@ -1030,118 +1124,135 @@ export async function recognizeMapScreenshot(
   try {
     cv.cvtColor(screenshotRgba, screenshotGray, cv.COLOR_RGBA2GRAY);
     const scanThreshold = searchRegion.gridHint
-      ? Math.min(matchThreshold, 0.38)
+      ? Math.min(matchThreshold, 0.5)
       : matchThreshold;
-    for (const template of candidateTemplates) {
-      for (const rotation of TEMPLATE_ROTATIONS) {
-        const rotatedTemplate = rotateCanvas(template.canvas, rotation);
-        for (const relativeScale of templateScales) {
-          const scaledCanvas = resizeCanvas(
-            rotatedTemplate,
-            workingScale * relativeScale
-          );
-          if (
-            scaledCanvas.width > screenshotGray.cols ||
-            scaledCanvas.height > screenshotGray.rows ||
-            scaledCanvas.width < 32 ||
-            scaledCanvas.height < 32
-          ) {
-            continue;
-          }
-          const templateRgba = cv.imread(scaledCanvas);
-          const templateGray = new cv.Mat();
-          const result = new cv.Mat();
-          try {
-            cv.cvtColor(templateRgba, templateGray, cv.COLOR_RGBA2GRAY);
-            cv.matchTemplate(
-              screenshotGray,
-              templateGray,
-              result,
-              cv.TM_CCOEFF_NORMED
+    if (!options.calibration) {
+      for (const template of candidateTemplates) {
+        for (const rotation of TEMPLATE_ROTATIONS) {
+          const rotatedTemplate = rotateCanvas(template.canvas, rotation);
+          for (const relativeScale of templateScales) {
+            const scaledCanvas = resizeCanvas(
+              rotatedTemplate,
+              workingScale * relativeScale
             );
-            const peakResult = collectTemplatePeaks(
-              result,
-              scaledCanvas.width,
-              scaledCanvas.height,
-              template,
-              scanThreshold
-            );
-            fineScores.set(
-              template.id,
-              Math.max(
-                fineScores.get(template.id) ?? -Infinity,
-                peakResult.bestScore
-              )
-            );
-            rawMatches.push(...peakResult.matches);
             if (
-              peakResult.matches.length === 0 &&
-              peakResult.bestScore >= scanThreshold - 0.12
+              scaledCanvas.width > screenshotGray.cols ||
+              scaledCanvas.height > screenshotGray.rows ||
+              scaledCanvas.width < 32 ||
+              scaledCanvas.height < 32
             ) {
-              const insetX = Math.max(2, Math.round(scaledCanvas.width * 0.12));
-              const insetY = Math.max(
-                2,
-                Math.round(scaledCanvas.height * 0.12)
+              continue;
+            }
+            const templateRgba = cv.imread(scaledCanvas);
+            const templateGray = new cv.Mat();
+            const result = new cv.Mat();
+            try {
+              cv.cvtColor(templateRgba, templateGray, cv.COLOR_RGBA2GRAY);
+              cv.matchTemplate(
+                screenshotGray,
+                templateGray,
+                result,
+                cv.TM_CCOEFF_NORMED
               );
-              const innerCanvas = cropCanvas(scaledCanvas, insetX, insetY);
-              if (innerCanvas.width >= 24 && innerCanvas.height >= 24) {
-                const innerRgba = cv.imread(innerCanvas);
-                const innerGray = new cv.Mat();
-                const innerResult = new cv.Mat();
-                try {
-                  cv.cvtColor(innerRgba, innerGray, cv.COLOR_RGBA2GRAY);
-                  cv.matchTemplate(
-                    screenshotGray,
-                    innerGray,
-                    innerResult,
-                    cv.TM_CCOEFF_NORMED
-                  );
-                  const innerPeaks = collectTemplatePeaks(
-                    innerResult,
-                    innerCanvas.width,
-                    innerCanvas.height,
-                    template,
-                    scanThreshold,
-                    {
-                      boxWidth: scaledCanvas.width,
-                      boxHeight: scaledCanvas.height,
-                      offsetX: insetX,
-                      offsetY: insetY,
-                      method: 'template-inner',
-                    }
-                  );
-                  fineScores.set(
-                    template.id,
-                    Math.max(
-                      fineScores.get(template.id) ?? -Infinity,
-                      innerPeaks.bestScore
-                    )
-                  );
-                  rawMatches.push(...innerPeaks.matches);
-                } finally {
-                  innerRgba.delete();
-                  innerGray.delete();
-                  innerResult.delete();
+              const peakResult = collectTemplatePeaks(
+                result,
+                scaledCanvas.width,
+                scaledCanvas.height,
+                template,
+                scanThreshold
+              );
+              fineScores.set(
+                template.id,
+                Math.max(
+                  fineScores.get(template.id) ?? -Infinity,
+                  peakResult.bestScore
+                )
+              );
+              rawMatches.push(...peakResult.matches);
+              if (
+                peakResult.matches.length === 0 &&
+                peakResult.bestScore >= scanThreshold - 0.12
+              ) {
+                const insetX = Math.max(
+                  2,
+                  Math.round(scaledCanvas.width * 0.12)
+                );
+                const insetY = Math.max(
+                  2,
+                  Math.round(scaledCanvas.height * 0.12)
+                );
+                const innerCanvas = cropCanvas(scaledCanvas, insetX, insetY);
+                if (innerCanvas.width >= 24 && innerCanvas.height >= 24) {
+                  const innerRgba = cv.imread(innerCanvas);
+                  const innerGray = new cv.Mat();
+                  const innerResult = new cv.Mat();
+                  try {
+                    cv.cvtColor(innerRgba, innerGray, cv.COLOR_RGBA2GRAY);
+                    cv.matchTemplate(
+                      screenshotGray,
+                      innerGray,
+                      innerResult,
+                      cv.TM_CCOEFF_NORMED
+                    );
+                    const innerPeaks = collectTemplatePeaks(
+                      innerResult,
+                      innerCanvas.width,
+                      innerCanvas.height,
+                      template,
+                      scanThreshold,
+                      {
+                        boxWidth: scaledCanvas.width,
+                        boxHeight: scaledCanvas.height,
+                        offsetX: insetX,
+                        offsetY: insetY,
+                        method: 'template-inner',
+                      }
+                    );
+                    fineScores.set(
+                      template.id,
+                      Math.max(
+                        fineScores.get(template.id) ?? -Infinity,
+                        innerPeaks.bestScore
+                      )
+                    );
+                    rawMatches.push(...innerPeaks.matches);
+                  } finally {
+                    innerRgba.delete();
+                    innerGray.delete();
+                    innerResult.delete();
+                  }
                 }
               }
+            } finally {
+              templateRgba.delete();
+              templateGray.delete();
+              result.delete();
             }
-          } finally {
-            templateRgba.delete();
-            templateGray.delete();
-            result.delete();
           }
         }
+        await yieldToBrowser();
       }
-      await yieldToBrowser();
     }
     if (searchRegion.gridHint) {
-      const refinedMatches = await refineGridMatches(
-        cv,
-        searchRegion.canvas,
-        candidateTemplates,
+      calibration ??= deriveGridCalibration(
+        searchRegion,
         mergeMatches(rawMatches),
         searchRegion.gridHint,
-        matchThreshold
+        workingScale
+      );
+      if (calibration) {
+        finalSearchRegion = createCalibratedSearchRegion(
+          workingScreenshot,
+          calibration,
+          workingScale
+        );
+      }
+      const refinedMatches = await refineGridMatches(
+        cv,
+        finalSearchRegion.canvas,
+        candidateTemplates,
+        searchRegion.gridHint,
+        Math.max(0.2, matchThreshold - 0.25)
       );
       if (refinedMatches.length > 0) {
         rawMatches.length = 0;
@@ -1176,11 +1287,11 @@ export async function recognizeMapScreenshot(
   }
 
   const localMatches = mergeMatches(rawMatches);
-  const gridType = inferMapGridType(localMatches, searchRegion);
+  const gridType = inferMapGridType(localMatches, finalSearchRegion);
   const withSearchRegionOffset = (match: WorkingMatch): WorkingMatch => ({
     ...match,
-    x: match.x + searchRegion.x,
-    y: match.y + searchRegion.y,
+    x: match.x + finalSearchRegion.x,
+    y: match.y + finalSearchRegion.y,
   });
   const toSourceCoordinates = (match: WorkingMatch): MapImageMatch => ({
     ...match,
@@ -1198,7 +1309,7 @@ export async function recognizeMapScreenshot(
     screenshot,
     workingMatches,
     workingScale,
-    searchRegion,
+    finalSearchRegion,
     gridType
   );
   const matchingFinishedAt = performance.now();
@@ -1213,13 +1324,14 @@ export async function recognizeMapScreenshot(
     group: options.group || null,
     threshold: matchThreshold,
     gridType,
+    calibration,
     source: { width: screenshot.width, height: screenshot.height },
     workingScale,
     searchRegion: {
-      x: searchRegion.x / workingScale,
-      y: searchRegion.y / workingScale,
-      width: searchRegion.canvas.width / workingScale,
-      height: searchRegion.canvas.height / workingScale,
+      x: finalSearchRegion.x / workingScale,
+      y: finalSearchRegion.y / workingScale,
+      width: finalSearchRegion.canvas.width / workingScale,
+      height: finalSearchRegion.canvas.height / workingScale,
     },
     templateCount: templates.length,
     candidateTemplateCount: candidateTemplates.length,
@@ -1244,6 +1356,7 @@ export async function recognizeMapScreenshot(
     width: screenshot.width,
     height: screenshot.height,
     gridType,
+    calibration,
     debug,
   };
 }
