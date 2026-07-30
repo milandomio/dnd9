@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-from config import TRANSLATION_ALIAS_MAP, superhoard_translation_key
+from config import SUPERHOARD_ENTITY_NAMES, TRANSLATION_ALIAS_MAP, superhoard_translation_key
 from label_type import (
     GOLDCHEST_FAMILY,
     GOLDCHEST_SPECIAL,
@@ -486,7 +486,11 @@ def build_and_save_lootdrop_details(
         for _i, m_name in enumerate(entry["monsters"]):
             if m_name == item_name:
                 continue
-            coords = all_coords.get(m_name, [])
+            coord_sources = (m_name,)
+            if m_name in SUPERHOARD_ENTITY_NAMES:
+                # SuperHoard and SuperHoardChest share one loot table and display name.
+                coord_sources = tuple(sorted(SUPERHOARD_ENTITY_NAMES))
+            coords = [coord for source in coord_sources for coord in all_coords.get(source, [])]
             _coord_key = m_name if coords else None
             if not coords:
                 _m_base = QUALITY_RE.sub("", m_name)
@@ -508,7 +512,9 @@ def build_and_save_lootdrop_details(
                         coords = _c
                         _coord_key = _ak
                         break
-            _valid_sk = entity_spawners.get(m_name, set())
+            _valid_sk = set(entity_spawners.get(m_name, set()))
+            if m_name in SUPERHOARD_ENTITY_NAMES:
+                _valid_sk.update(coord_sources)
             if _valid_sk:
                 coords = [
                     c for c in coords if c.get("keyword", "") in _valid_sk or c.get("original_keyword", "") in _valid_sk
