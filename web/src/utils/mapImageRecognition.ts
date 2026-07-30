@@ -835,7 +835,9 @@ function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
 function drawAnnotation(
   screenshot: HTMLCanvasElement,
   matches: WorkingMatch[],
-  workingScale: number
+  workingScale: number,
+  searchRegion: SearchRegion,
+  gridType: MapImageRecognitionOutput['gridType']
 ): HTMLCanvasElement {
   const output = createCanvas(screenshot.width, screenshot.height);
   const context = output.getContext('2d');
@@ -843,6 +845,26 @@ function drawAnnotation(
   context.drawImage(screenshot, 0, 0);
   context.fillStyle = 'rgba(0, 190, 80, 0.5)';
   for (const match of matches) {
+    if (gridType) {
+      const gridSize = gridType === '5x5' ? 5 : 7;
+      const cellWidth = searchRegion.canvas.width / gridSize;
+      const cellHeight = searchRegion.canvas.height / gridSize;
+      const column = Math.floor(
+        (match.x - searchRegion.x + match.width / 2) / cellWidth
+      );
+      const row = Math.floor(
+        (match.y - searchRegion.y + match.height / 2) / cellHeight
+      );
+      if (column >= 0 && column < gridSize && row >= 0 && row < gridSize) {
+        context.fillRect(
+          (searchRegion.x + column * cellWidth) / workingScale,
+          (searchRegion.y + row * cellHeight) / workingScale,
+          cellWidth / workingScale,
+          cellHeight / workingScale
+        );
+        continue;
+      }
+    }
     context.fillRect(
       match.x / workingScale,
       match.y / workingScale,
@@ -1170,7 +1192,13 @@ export async function recognizeMapScreenshot(
   const matchesBeforeNms = rawMatches
     .map(withSearchRegionOffset)
     .map(toSourceCoordinates);
-  const outputCanvas = drawAnnotation(screenshot, workingMatches, workingScale);
+  const outputCanvas = drawAnnotation(
+    screenshot,
+    workingMatches,
+    workingScale,
+    searchRegion,
+    gridType
+  );
   const matchingFinishedAt = performance.now();
   const normalizedScore = (score: number | undefined) =>
     score !== undefined && Number.isFinite(score) ? score : null;
