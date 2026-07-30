@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 为非详情页生成目标语言 SSR 正文
+
+- **改动原因**：主页、地图模块、任务和探索页面的非中文 HTML 原先仅替换 SEO 标题，正文仍复制简中 SSR，hydration 后切换目标语言时会出现中文闪屏。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：将原本仅服务四类实体列表的目标语言 SSR 生成器泛化到全部非模板详情路由；每页在 SSG 时以 `/{lang}/...` 渲染，内联该语言 `__locale`，并设定 `__ssrLang={lang}`；items、monsters、props、lootdrops 和地图模块详情继续使用轻量详情壳，避免坐标数据和 Ant Design 样式重复嵌入数千页。
+- **验证**：Prettier、TypeScript、脚本语法、quick SSG（28.6 秒）、`test:i18n`（16/16）通过；禁用 JavaScript 的 `/en/dungeon_modules/ShipGraveyard/` 首屏已含 `The Ship Graveyard1F` 且不含“沉船墓场”，hydration 后保持英文且无 React 控制台错误，目标路由 HTTP 200。
+
 ### fix: 为无语言前缀旧 URL 生成默认语言跳转壳
 
 - **改动原因**：历史 `props/Lifeleaf/` 等静态实体页仍可能被 CDN 或搜索引擎命中，物理 HTML 会先于客户端 `Navigate` 返回，导致没有跳到默认语言路径。
