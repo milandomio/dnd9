@@ -11,6 +11,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { useLanguage } from '../i18n/LanguageContext';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { localizedSeoDescription } from '../i18n/seo';
 
 type CardTheme = {
   border: string;
@@ -102,9 +103,10 @@ export default function HomePage() {
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const { tokens, dark } = useTheme();
   const dataVersion = useDataVersion();
-  const { ut } = useLocale();
+  const { ut, dict } = useLocale();
   const { lang } = useLanguage();
   const homeDescription = ut('ui.home.description');
+  const description = localizedSeoDescription(lang, dict, 'home');
 
   useEffect(() => {
     if (ssrData) return;
@@ -121,16 +123,13 @@ export default function HomePage() {
         <title>
           {ssrLocalizedTitle() ?? `${ut('ui.brand.name')} | ${homeDescription}`}
         </title>
-        <meta
-          name="description"
-          content={`${ut('ui.brand.name')} - ${homeDescription}`}
-        />
+        <meta name="description" content={description} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
           content={`${ut('ui.brand.name')} - ${homeDescription}`}
         />
-        <meta property="og:description" content={homeDescription} />
+        <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
       </Helmet>
       <AppName />

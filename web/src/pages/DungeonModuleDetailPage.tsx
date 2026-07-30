@@ -20,6 +20,7 @@ import {
 } from '../components/MapDebug';
 import DebugCoordTable from '../components/DebugCoordTable';
 import MapPanel from '../components/MapPanel';
+import { localizedSeoDescription } from '../i18n/seo';
 
 interface CoordEntity {
   name: string;
@@ -58,7 +59,7 @@ export default function DungeonModuleDetailPage() {
   const { tokens, dark } = useTheme();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
-  const { t, ut } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   const dataVersion = useDataVersion();
 
@@ -165,6 +166,16 @@ export default function DungeonModuleDetailPage() {
     });
   }
   const totalCoords = dots.length;
+  const description = localizedSeoDescription(lang, dict, 'module', {
+    name: moduleDisplayName,
+    group: groupLabel,
+    width: sx,
+    height: sy,
+    entities: entities.length || undefined,
+    locations:
+      entities.reduce((count, entity) => count + entity.coords.length, 0) ||
+      undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -184,15 +195,8 @@ export default function DungeonModuleDetailPage() {
           {ssrLocalizedTitle() ??
             `${moduleDisplayName} | ${ut('ui.module.title')} | ${ut('ui.brand.name')}`}
         </title>
-        <meta
-          name="description"
-          content={ut('ui.seo.module_description')
-            .replace('{name}', moduleDisplayName)
-            .replace('{sx}', String(sx))
-            .replace('{sy}', String(sy))
-            .replace('{entities}', String(entities.length))
-            .replace('{positions}', String(totalCoords))}
-        />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

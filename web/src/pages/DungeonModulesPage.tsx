@@ -7,6 +7,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { localizedSeoDescription } from '../i18n/seo';
 
 interface GroupSummary {
   group: string;
@@ -45,7 +46,7 @@ export default function DungeonModulesPage() {
   const [loading, setLoading] = useState(!ssrGroups);
   const { tokens } = useTheme();
   const { modules } = useDungeonModules();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   useEffect(() => {
     if (ssrGroups) return;
@@ -95,6 +96,10 @@ export default function DungeonModulesPage() {
     );
 
   const totalMods = groups.reduce((s, g) => s + g.module_count, 0);
+  const description = localizedSeoDescription(lang, dict, 'modules', {
+    groups: groups.length || undefined,
+    modules: totalMods || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -103,8 +108,9 @@ export default function DungeonModulesPage() {
           {ssrLocalizedTitle() ??
             `${ut('ui.module.title')} | ${ut('ui.brand.name')}`}
         </title>
-        <meta name="description" content={ut('ui.home.view_dungeon_modules')} />
+        <meta name="description" content={description} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

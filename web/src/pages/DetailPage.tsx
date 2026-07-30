@@ -34,6 +34,7 @@ import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { getRareModuleSpawnRate } from '../utils/moduleSpawnRate';
+import { localizedSeoDescription } from '../i18n/seo';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -128,7 +129,7 @@ export default function DetailPage() {
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t, ut } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -194,6 +195,10 @@ export default function DetailPage() {
   const pageLabel = ut(`ui.nav.${page}`);
 
   const coords = entity.coords ?? [];
+  const description = localizedSeoDescription(lang, dict, 'entity', {
+    name: entityLabel,
+    locations: coords.length || undefined,
+  });
   const visibleCoords = coords.filter(
     (c, i) => !hiddenRows.has(`${c.file}-${i}`)
   );
@@ -497,12 +502,7 @@ export default function DetailPage() {
           {ssrLocalizedTitle() ??
             `${entityLabel} -${pageLabel} | ${ut('ui.brand.name')}`}
         </title>
-        <meta
-          name="description"
-          content={ut('ui.seo.entity_description')
-            .replace('{name}', entityLabel)
-            .replace('{count}', String(coords.length))}
-        />
+        <meta name="description" content={description} />
         <meta name="keywords" content={ut('ui.seo.keywords')} />
         <meta
           property="og:title"
@@ -511,12 +511,7 @@ export default function DetailPage() {
             `${entityLabel} -${pageLabel} | ${ut('ui.brand.name')}`
           }
         />
-        <meta
-          property="og:description"
-          content={ut('ui.seo.entity_description')
-            .replace('{name}', entityLabel)
-            .replace('{count}', String(coords.length))}
-        />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

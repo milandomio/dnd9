@@ -5,13 +5,36 @@ const TIMEOUT = 20000;
 const EXPECTED_PLACEHOLDER = {
   'zh-Hans': '搜索物品/怪物/实体...',
   en: 'Search items/monsters/props...',
+  de: 'Gegenstände/Monster/Objekte suchen...',
+  es: 'Buscar objetos/monstruos...',
+  fr: 'Rechercher objets/monstres...',
   ja: 'アイテム/モンスターを検索...',
+  ko: '아이템/몬스터 검색...',
+  'pt-BR': 'Buscar itens/monstros...',
+  ru: 'Поиск предметов/монстров...',
+  'zh-Hant': '搜尋物品/怪物/實體...',
 };
 
+const LANGS = [
+  'zh-Hans',
+  'en',
+  'de',
+  'es',
+  'fr',
+  'ja',
+  'ko',
+  'pt-BR',
+  'ru',
+  'zh-Hant',
+];
+const HOME_PAGES = LANGS.map((lang) => ({
+  path: `/${lang}/`,
+  desc: `HomePage(${lang})`,
+  lang,
+}));
+
 const PAGES = [
-  { path: '/zh-Hans/', desc: 'HomePage', lang: 'zh-Hans' },
-  { path: '/en/', desc: 'HomePage(en)', lang: 'en' },
-  { path: '/ja/', desc: 'HomePage(ja)', lang: 'ja' },
+  ...HOME_PAGES,
   { path: '/zh-Hans/items/', desc: 'ItemsList', lang: 'zh-Hans' },
   { path: '/en/items/', desc: 'ItemsList(en)', lang: 'en' },
   { path: '/ja/items/', desc: 'ItemsList(ja)', lang: 'ja' },
@@ -111,6 +134,20 @@ async function testPage(
   });
 
   try {
+    const staticResponse = await fetch(`${BASE}${path}`);
+    if (!staticResponse.ok)
+      throw new Error(`static HTTP ${staticResponse.status}`);
+    const staticHtml = await staticResponse.text();
+    const staticDescription = staticHtml.match(
+      /<meta[^>]+name="description"[^>]+content="([^"]*)"/i
+    )?.[1];
+    const staticOgDescription = staticHtml.match(
+      /<meta[^>]+property="og:description"[^>]+content="([^"]*)"/i
+    )?.[1];
+    if (!staticDescription || !staticOgDescription)
+      throw new Error('missing static description metadata');
+    if (staticDescription !== staticOgDescription)
+      throw new Error('static description and OG description differ');
     const response = await page.goto(`${BASE}${path}`, {
       waitUntil: 'domcontentloaded',
       timeout: TIMEOUT,
@@ -132,6 +169,12 @@ async function testPage(
 
     const title = await page.title();
     const htmlLang = await page.locator('html').getAttribute('lang');
+    const description = await page
+      .locator('meta[name="description"]')
+      .getAttribute('content');
+    const ogDescription = await page
+      .locator('meta[property="og:description"]')
+      .getAttribute('content');
     const rootText = (await page.locator('#root').innerText()).trim();
     const hydrationErrors = [...pageErrors, ...consoleErrors].filter((error) =>
       HYDRATION_RE.test(error)
@@ -163,6 +206,10 @@ async function testPage(
         throw new Error(`unexpected link: ${href}`);
       }
     }
+    if (!description || !ogDescription)
+      throw new Error('missing client description metadata');
+    if (description !== ogDescription)
+      throw new Error('client description and OG description differ');
     if (hydrationErrors.length)
       throw new Error(`hydration: ${hydrationErrors.join(' | ')}`);
     if (errors.length) throw new Error(errors.join(' | '));

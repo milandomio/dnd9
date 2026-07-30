@@ -25,6 +25,7 @@ import {
   readdirSync,
 } from 'fs';
 import { join, dirname } from 'path';
+import { buildSeoDescription } from '../src/i18n/seoTemplate.mjs';
 
 const QUICK = process.argv.includes('--quick');
 const WEB = new URL('..', import.meta.url).pathname;
@@ -293,6 +294,8 @@ for (const g of questGroups) {
       group_floor: g.group_floor,
       group_sub_key: g.group_sub_key,
       group_display: g.group_display,
+      entity_count: g.entity_count,
+      position_count: g.position_count,
       entities: [],
     };
   }
@@ -307,6 +310,7 @@ for (const g of dmGroups) {
 
 // Explore page needs module data too
 ssrDataMap['explore-modules'] = moduleData;
+ssrDataMap['explore'] = readJSON(join(DATA, 'explore.json'));
 
 // Detail pages — full SSR data (full mode) or minimal SSR data (quick mode)
 for (const p of PAGES) {
@@ -387,11 +391,7 @@ for (const m of moduleData) {
     }
   } else {
     ssrDataMap[key] = {
-      module: {
-        name: m.name,
-        translation: m.translation,
-        translation_key: m.translation_key,
-      },
+      module: m,
       coords: null,
     };
   }
@@ -605,6 +605,7 @@ function injectLocalizedData(
   page,
   lang,
   title,
+  description,
   ssrLang = DEFAULT_LANG,
   localeDict
 ) {
@@ -615,6 +616,7 @@ function injectLocalizedData(
       payload.__ssrLang = ssrLang;
       if (localeDict) payload.__locale = localeDict;
       if (title) payload.__localizedTitle = title;
+      payload.__localizedDescription = description;
       return `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>`;
     } catch {
       return '';
@@ -624,6 +626,47 @@ function injectLocalizedData(
     return page.replace(SSR_SCRIPT_RE, (_match, jsonText) => inject(jsonText));
   }
   return page.replace(HEAD_CLOSE, `${inject()}\n${HEAD_CLOSE}`);
+}
+
+function replaceDescriptionMeta(page, description) {
+  const descriptionMeta = `<meta data-rh="true" name="description" content="${escapeHtml(description)}">`;
+  const ogDescriptionMeta = `<meta data-rh="true" property="og:description" content="${escapeHtml(description)}">`;
+  const withoutDescriptions = page
+    .replace(/<meta\b(?=[^>]*\bname="description")[^>]*>/gi, '')
+    .replace(/<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/gi, '');
+  return withoutDescriptions.replace(
+    HEAD_CLOSE,
+    `${descriptionMeta}\n${ogDescriptionMeta}\n${HEAD_CLOSE}`
+  );
+}
+
+function templateDescription(route, routeData, localeDict, lang) {
+  const parts = route.path.split('/').filter(Boolean);
+  if (parts[0] === DEFAULT_LANG) parts.shift();
+  const [section] = parts;
+  const name = localizedTitle(routeData, localeDict, route.path, lang);
+  if (section === 'lootdrops') {
+    return buildSeoDescription(lang, 'lootdrop', { name });
+  }
+  if (section === 'dungeon_modules') {
+    const module = routeData?.module;
+    return buildSeoDescription(lang, 'module', {
+      name,
+      width: module?.size_x || undefined,
+      height: module?.size_y || undefined,
+    });
+  }
+  return buildSeoDescription(lang, 'entity', { name });
+}
+
+function pageDescription(page, route, routeData, localeDict, lang) {
+  if (isTemplateDetailRoute(route.path)) {
+    return templateDescription(route, routeData, localeDict, lang);
+  }
+  const match = page.match(
+    /<meta\b(?=[^>]*\bname="description")(?=[^>]*\bcontent="([^"]*)")[^>]*>/i
+  );
+  return match ? decodeHtml(match[1]) : buildSeoDescription(lang, 'home');
 }
 
 function localizePage(
@@ -638,7 +681,18 @@ function localizePage(
 ) {
   const canonicalHref = localizedPath(route.path, lang);
   const title = localizedDocumentTitle(route, routeData, localeDict, lang);
-  let out = injectLocalizedData(page, lang, title, ssrLang, ssrLocaleDict)
+  const description = pageDescription(page, route, routeData, localeDict, lang);
+  let out = replaceDescriptionMeta(
+    injectLocalizedData(
+      page,
+      lang,
+      title,
+      description,
+      ssrLang,
+      ssrLocaleDict
+    ),
+    description
+  )
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
     .replace(
       /<link rel="canonical" href="[^"]*">/,
