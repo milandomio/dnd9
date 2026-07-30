@@ -9,7 +9,7 @@
 - **改动原因**：超级宝藏堆来源注入仅匹配 `Hoard01_9` 与 `HoardChest01`，漏掉沉船墓场的 `HoardChest01_9`；其对应 `SuperHoardChest01_9` 因此未进入掉落详情，地图显示箱体坐标而 `group_drop_info` 未生成对应参考爆率。
 - **变更文件**：`api/src/lootdrop_builder.py`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：掉落索引将 `HoardChest01_9 -> SuperHoardChest01_9` 与既有 `Hoard01_9 -> SuperHoard01_9` 一同注入；两者共享 `ID_LootDropGroup_SuperHoard` 和“超级宝藏堆”显示名，后续合并坐标并为 `ShipGraveyard_ShipRest` 生成 GDI。
-- **验证**：Python 编译与 `tests.test_drop_rate`（6 项）通过；完整管道和前端构建待完成。
+- **验证**：Python 编译、`tests.test_drop_rate`（6 项）、Black 与 pre-commit Ruff 通过；完整数据管道（190.15 秒）和 quick SSG（69.5 秒）通过，`/zh-Hans/lootdrops/WarMaul_8001/` HTTP 200；Playwright 点击“超级宝藏堆”后确认沉船墓场渲染 `超级宝藏堆100%[PvE:0%][普通:0%][豪客赛:0.0036%][逆袭赛:0%]`。
 
 ### fix: 将稀有模块出现率计入综合爆率
 
