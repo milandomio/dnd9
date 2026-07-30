@@ -4,6 +4,13 @@
 
 ## 2026-07-30
 
+### fix: 紧邻显示综合生成率和综合爆率
+
+- **改动原因**：物品详情页的 Composite Spawn Rate 位于模块地图后，而 Composite Rate 位于参考爆率后，难以直接对照两项概率。
+- **变更文件**：`web/src/components/CompositeRate.tsx`；`web/src/pages/DetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：通用 `CompositeRate` 新增可选 `spawnRate` 与 `spawnPrecision`，固定先渲染 `ui.detail.composite_spawn_rate` 再渲染综合爆率；详情页将原本两次调用合并，传入模块子池生成率。
+- **验证**：Prettier、TypeScript 和 ESLint（0 error、19 条既有 warning）通过；quick SSG 生成 15,290 个 HTML；`/en/items/GrimveilCloak/` HTTP 200，Playwright hydration 后确认 `Composite Spawn Rate 92.38%` 位于 `Composite Rate 60.047%` 前。
+
 ### chore: 同步最新数据库快照至 main
 
 - **改动原因**：按请求将 `dev` 已重建的本地 SQLite 数据库快照同步至 `main` 并推送远端。
