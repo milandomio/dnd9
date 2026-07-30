@@ -31,6 +31,10 @@ export interface MapImageRecognitionOutput {
   gridType: '5x5' | '7x7' | null;
 }
 
+export interface MapImageRecognitionOptions {
+  threshold?: number;
+}
+
 interface OpenCvModule {
   default?: unknown;
 }
@@ -87,7 +91,7 @@ const GRID_TEMPLATE_SCALES = {
   '7x7': [0.36, 0.4, 0.44],
 } as const;
 const TEMPLATE_ROTATIONS = [0, 90, 180, 270] as const;
-const TEMPLATE_MATCH_THRESHOLD = 0.52;
+const DEFAULT_TEMPLATE_MATCH_THRESHOLD = 0.52;
 const MAX_PEAKS_PER_TEMPLATE = 8;
 const MAX_SCORE_CANDIDATES = 4096;
 const MAX_FINE_TEMPLATE_CANDIDATES = 18;
@@ -400,7 +404,8 @@ function collectTemplatePeaks(
   result: InstanceType<CV['Mat']>,
   templateWidth: number,
   templateHeight: number,
-  template: LoadedMapImageTemplate
+  template: LoadedMapImageTemplate,
+  matchThreshold: number
 ): WorkingMatch[] {
   const candidates: Array<{ x: number; y: number; score: number }> = [];
   let bestScore = -Infinity;
@@ -411,8 +416,8 @@ function collectTemplatePeaks(
       if (score > bestScore) bestScore = score;
     }
   }
-  if (bestScore < TEMPLATE_MATCH_THRESHOLD) return [];
-  const threshold = Math.max(TEMPLATE_MATCH_THRESHOLD, bestScore - 0.08);
+  if (bestScore < matchThreshold) return [];
+  const threshold = Math.max(matchThreshold, bestScore - 0.08);
   for (let y = 0; y < result.rows; y += stride) {
     for (let x = 0; x < result.cols; x += stride) {
       const index = y * result.cols + x;
@@ -754,9 +759,14 @@ function drawAnnotation(
 export async function recognizeMapScreenshot(
   screenshot: HTMLCanvasElement,
   templates: LoadedMapImageTemplate[],
-  cv: CV
+  cv: CV,
+  options: MapImageRecognitionOptions = {}
 ): Promise<MapImageRecognitionOutput> {
   if (templates.length === 0) throw new Error('No map templates are available');
+  const matchThreshold = Math.min(
+    0.9,
+    Math.max(0.2, options.threshold ?? DEFAULT_TEMPLATE_MATCH_THRESHOLD)
+  );
   const workingScale = Math.min(
     1,
     MAX_WORKING_EDGE / Math.max(screenshot.width, screenshot.height)
@@ -810,7 +820,8 @@ export async function recognizeMapScreenshot(
                 result,
                 scaledCanvas.width,
                 scaledCanvas.height,
-                template
+                template,
+                matchThreshold
               )
             );
           } finally {

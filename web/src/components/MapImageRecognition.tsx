@@ -32,6 +32,14 @@ type RecognitionStatus =
   | 'done'
   | 'error';
 
+type PrecisionPreset = 'standard' | 'high' | 'maximum' | 'custom';
+
+const PRECISION_PRESETS: Record<Exclude<PrecisionPreset, 'custom'>, number> = {
+  standard: 0.52,
+  high: 0.45,
+  maximum: 0.38,
+};
+
 const switchTrack: CSSProperties = {
   position: 'relative',
   display: 'inline-block',
@@ -49,6 +57,9 @@ export default function MapImageRecognition({
   const { ut } = useLocale();
   const utRef = useRef(ut);
   const [selectedGroup, setSelectedGroup] = useState('');
+  const [precisionPreset, setPrecisionPreset] =
+    useState<PrecisionPreset>('standard');
+  const [thresholdInput, setThresholdInput] = useState('0.52');
   const groupOptions = [
     ...new Map(
       templates
@@ -168,6 +179,27 @@ export default function MapImageRecognition({
     setSelectedGroup(group);
   }
 
+  function handlePrecisionPreset(preset: PrecisionPreset) {
+    setPrecisionPreset(preset);
+    if (preset !== 'custom') {
+      setThresholdInput(PRECISION_PRESETS[preset].toFixed(2));
+    }
+  }
+
+  function handleThresholdChange(value: string) {
+    setThresholdInput(value);
+    setPrecisionPreset('custom');
+  }
+
+  function normalizeThreshold() {
+    const threshold = Number(thresholdInput);
+    const normalized = Number.isFinite(threshold)
+      ? Math.min(0.9, Math.max(0.2, threshold))
+      : PRECISION_PRESETS.standard;
+    setThresholdInput(normalized.toFixed(2));
+    return normalized;
+  }
+
   async function handlePaste(event: React.ClipboardEvent<HTMLDivElement>) {
     event.preventDefault();
     const imageItem = [...event.clipboardData.items].find((item) =>
@@ -193,7 +225,8 @@ export default function MapImageRecognition({
       const output = await recognizeMapScreenshot(
         screenshot,
         loadedTemplatesRef.current,
-        cv
+        cv,
+        { threshold: normalizeThreshold() }
       );
       if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
       const nextPreviewUrl = URL.createObjectURL(output.blob);
@@ -344,6 +377,76 @@ export default function MapImageRecognition({
                 )}
               </span>
             </span>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              flexWrap: 'wrap',
+              color: tokens.muted,
+              fontSize: 11,
+            }}
+          >
+            <label
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}
+            >
+              {ut('ui.map_recognition.precision')}
+              <select
+                aria-label={ut('ui.map_recognition.precision')}
+                value={precisionPreset}
+                onChange={(event) =>
+                  handlePrecisionPreset(event.target.value as PrecisionPreset)
+                }
+                style={{
+                  padding: '2px 5px',
+                  border: `1px solid ${tokens.border}`,
+                  borderRadius: 3,
+                  color: tokens.text,
+                  background: tokens.bg,
+                  fontSize: 11,
+                }}
+              >
+                <option value="standard">
+                  {ut('ui.map_recognition.precision_standard')}
+                </option>
+                <option value="high">
+                  {ut('ui.map_recognition.precision_high')}
+                </option>
+                <option value="maximum">
+                  {ut('ui.map_recognition.precision_maximum')}
+                </option>
+                <option value="custom">
+                  {ut('ui.map_recognition.precision_custom')}
+                </option>
+              </select>
+            </label>
+            <label
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}
+            >
+              {ut('ui.map_recognition.threshold')}
+              <input
+                type="number"
+                aria-label={ut('ui.map_recognition.threshold')}
+                min={0.2}
+                max={0.9}
+                step={0.01}
+                value={thresholdInput}
+                onChange={(event) => handleThresholdChange(event.target.value)}
+                onBlur={normalizeThreshold}
+                style={{
+                  width: 58,
+                  padding: '2px 4px',
+                  border: `1px solid ${tokens.border}`,
+                  borderRadius: 3,
+                  color: tokens.text,
+                  background: tokens.bg,
+                  fontSize: 11,
+                }}
+              />
+            </label>
           </div>
 
           <div
