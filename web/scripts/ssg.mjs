@@ -659,7 +659,7 @@ function localizePage(
   return out;
 }
 
-function renderLocalizedListPage(route, lang, localeDict) {
+function renderLocalizedPage(route, lang, localeDict) {
   const urlPath = localizedPath(route.path, lang);
   const dataKey = routeDataKey(route.path);
   const routeData = ssrDataMap[dataKey];
@@ -847,7 +847,7 @@ for (let i = 0; i < routes.length; i++) {
   }
 }
 
-// ---- step 5b: generate localized HTML copies without re-rendering React ----
+// ---- step 5b: generate localized HTML copies ----
 console.log(
   `[ssg] generating localized HTML copies for ${LANGS.filter((l) => l !== DEFAULT_LANG).length} non-default languages…`
 );
@@ -864,7 +864,6 @@ for (const lang of LANGS) {
     if (r.generateStatic === false) continue;
     const dataKey = routeDataKey(r.path);
     const routeData = ssrDataMap[dataKey];
-    const srcPath = join(DIST, r.file);
     // Strip DEFAULT_LANG prefix from file path for target lang directory
     const langFilePrefix = `${DEFAULT_LANG}/`;
     const relFile = r.file.startsWith(langFilePrefix)
@@ -873,14 +872,10 @@ for (const lang of LANGS) {
     const dstFile =
       relFile === 'index.html' ? `${lang}/index.html` : join(lang, relFile);
     const dstPath = join(DIST, dstFile);
-    const isEntityList = PAGES.some(
-      (page) => r.path === `/${DEFAULT_LANG}/${page}`
-    );
-    const basePage = isEntityList
-      ? renderLocalizedListPage(r, lang, localeDicts[lang])
-      : isTemplateDetailRoute(r.path)
-        ? createTemplateDetailPage(r, routeData, lang, localeDicts[lang])
-        : readFileSync(srcPath, 'utf-8');
+    const usesTemplateDetail = isTemplateDetailRoute(r.path);
+    const basePage = usesTemplateDetail
+      ? createTemplateDetailPage(r, routeData, lang, localeDicts[lang])
+      : renderLocalizedPage(r, lang, localeDicts[lang]);
     const page = localizePage(
       basePage,
       r,
@@ -888,8 +883,8 @@ for (const lang of LANGS) {
       localeDicts[lang],
       lang,
       true,
-      isEntityList ? lang : DEFAULT_LANG,
-      isEntityList ? localeDicts[lang] : undefined
+      usesTemplateDetail ? DEFAULT_LANG : lang,
+      usesTemplateDetail ? undefined : localeDicts[lang]
     );
     mkdirSync(dirname(dstPath), { recursive: true });
     writeFileSync(dstPath, page, 'utf-8');
