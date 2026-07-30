@@ -9,6 +9,7 @@ import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
+import { localizedSeoDescription } from '../i18n/seo';
 
 function lsGet(key: string): boolean {
   try {
@@ -49,7 +50,7 @@ export default function QuestNPCPage() {
   const seasonVersion = useSeasonVersion();
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   const npcDisplayName = (npc: NPCEntry) =>
     t(npc.translation_key, npc.npc_name_display);
@@ -98,16 +99,17 @@ export default function QuestNPCPage() {
     );
 
   const refresh = () => setData((prev) => [...prev]);
+  const description = localizedSeoDescription(lang, dict, 'questNpcs', {
+    npcs: data.length || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>{ut('ui.nav.quest_npc')} | DarkFlashNav</title>
-        <meta
-          name="description"
-          content={`${ut('ui.nav.quest_npc')} - ${ut('ui.quest_detail.task_list')}`}
-        />
+        <meta name="description" content={description} />
         <meta name="keywords" content={ut('ui.nav.quest_npc')} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <div
         style={{

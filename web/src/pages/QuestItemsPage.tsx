@@ -8,6 +8,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
+import { localizedSeoDescription } from '../i18n/seo';
 
 interface GroupEntry {
   group: string;
@@ -36,7 +37,7 @@ export default function QuestItemsPage() {
   const [loading, setLoading] = useState(!ssrData);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   useEffect(() => {
     if (ssrData) return;
@@ -54,16 +55,18 @@ export default function QuestItemsPage() {
     );
 
   const totalPos = groups.reduce((s, g) => s + g.position_count, 0);
+  const description = localizedSeoDescription(lang, dict, 'questItems', {
+    groups: groups.length || undefined,
+    locations: totalPos || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>任务物品表 | 越来越黑暗闪电指南 DarkFlashNav</title>
-        <meta
-          name="description"
-          content="任务物品查询——按地图分组查看任务物品分布。"
-        />
+        <meta name="description" content={description} />
         <meta name="keywords" content="任务物品,任务攻略,任务查询" />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

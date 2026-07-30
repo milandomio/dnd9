@@ -21,6 +21,7 @@ import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import MapPanel from '../components/MapPanel';
+import { localizedSeoDescription } from '../i18n/seo';
 
 interface Coord {
   x: number;
@@ -87,7 +88,7 @@ export default function QuestItemGroupPage() {
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t, ut } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -232,8 +233,14 @@ export default function QuestItemGroupPage() {
     (s, mg) => s + mg.dots.length,
     0
   );
-  const visibleCount = entities.filter((e) => !hidden.has(e.name)).length;
   const groupLabel = formatGroupLabel(data, t, ut);
+  const description = localizedSeoDescription(lang, dict, 'questGroup', {
+    name: groupLabel,
+    entities: entities.length || undefined,
+    locations:
+      entities.reduce((count, entity) => count + entity.coords.length, 0) ||
+      undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -253,10 +260,8 @@ export default function QuestItemGroupPage() {
           {groupLabel}
           {group} 任务物品QuestItem | 越来越黑暗闪电指南 DarkFlashNav
         </title>
-        <meta
-          name="description"
-          content={`${groupLabel} 任务物品位置，${visibleCount} 个实体，${totalCoords} 个位置点。`}
-        />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

@@ -10,6 +10,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { useLanguage } from '../i18n/LanguageContext';
+import { localizedSeoDescription } from '../i18n/seo';
 
 type CardTheme = {
   border: string;
@@ -101,8 +102,9 @@ export default function HomePage() {
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const { tokens, dark } = useTheme();
   const dataVersion = useDataVersion();
-  const { ut } = useLocale();
+  const { ut, dict } = useLocale();
   const { lang } = useLanguage();
+  const description = localizedSeoDescription(lang, dict, 'home');
 
   useEffect(() => {
     if (ssrData) return;
@@ -120,10 +122,7 @@ export default function HomePage() {
           越来越黑暗闪电指南 DarkFlashNav |
           游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱
         </title>
-        <meta
-          name="description"
-          content="越来越黑暗闪电指南 DarkFlashNav——游戏地图、任务攻略、BOSS掉落、资源点位、寻找宝箱，一站式查询工具。"
-        />
+        <meta name="description" content={description} />
         <meta
           name="keywords"
           content="越来越黑暗,越来越黑暗玩家指南,越来越黑暗闪电指南,DarkFlashNav,Dark and Darker,darkanddarker,暗黑地牢,地牢探索,DND,游戏攻略,物品查询,怪物位置,掉落查询,地图坐标,装备属性,武器查询,防具查询,饰品查询,任务攻略,NPC位置,宝箱位置,地牢模块"
@@ -132,10 +131,7 @@ export default function HomePage() {
           property="og:title"
           content="越来越黑暗闪电指南 - 游戏地图·任务攻略·BOSS掉落·资源点位·寻找宝箱"
         />
-        <meta
-          property="og:description"
-          content="游戏地图、任务攻略、BOSS掉落、资源点位、寻找宝箱"
-        />
+        <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
       </Helmet>
       <AppName />

@@ -32,6 +32,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { localizedSeoDescription } from '../i18n/seo';
 
 const GROUP_ORDER = [
   'GoblinCave',
@@ -101,7 +102,7 @@ export default function DetailPage() {
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t, ut } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
 
@@ -167,6 +168,10 @@ export default function DetailPage() {
   const pageLabel = ut(`ui.nav.${page}`);
 
   const coords = entity.coords ?? [];
+  const description = localizedSeoDescription(lang, dict, 'entity', {
+    name: entityLabel,
+    locations: coords.length || undefined,
+  });
   const visibleCoords = coords.filter(
     (c, i) => !hiddenRows.has(`${c.file}-${i}`)
   );
@@ -458,10 +463,7 @@ export default function DetailPage() {
           {ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`}
           {' | 越来越黑暗闪电指南 DarkFlashNav'}
         </title>
-        <meta
-          name="description"
-          content={`${entityLabel}在游戏内的地图位置分布，共 ${coords.length} 个位置点。`}
-        />
+        <meta name="description" content={description} />
         <meta
           name="keywords"
           content="物品详情,怪物详情,装备属性,武器属性,防具属性,饰品属性"
@@ -470,10 +472,7 @@ export default function DetailPage() {
           property="og:title"
           content={`${ssrLocalizedTitle() ?? `${entityLabel} -${pageLabel}`} | DarkFlashNav`}
         />
-        <meta
-          property="og:description"
-          content={`${entityLabel} 共 ${coords.length} 个位置点`}
-        />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

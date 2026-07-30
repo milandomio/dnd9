@@ -84,3 +84,12 @@
 - **变更文件**：`api/src/config.py`；`api/src/db/importers/props.py`；`api/src/db/repositories/props.py`；`api/src/index_export.py`；`api/src/search_index_builder.py`；`api/src/locale_builder.py`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：搜索条目携带并消费 NPC/group/tag/source 翻译键；locale 与搜索均按目标语言、中文、原值顺序显式回退且缺表立即失败；`Text_DesignData_Props_Props_Ore_BrimstoneOre` 统一映射到多语言覆盖更完整的 `Text_DesignData_Item_Item_BrimstoneOres_5001`。
 - **验证**：完整管道、Python lint/Black、`npm test` 与差异空白检查通过；10 种 locale 均为 1,672 个相同键；NPC 搜索中文残留清零；硫磺矿实体输出新 key。
+
+# 2026-07-30 会话修改记录
+
+### wip: 执行多语言元描述优化
+
+- **改动原因**：执行 `META_DESCRIPTION_OPTIMIZATION.md`，修复可索引页面短 description、缺失 OG description 和非默认语言 SSG 元数据未本地化的问题。
+- **变更文件**：`web/src/i18n/seoTemplate.mjs`；`web/src/i18n/seo.ts`；`web/src/i18n/ssrTitle.ts`；`web/src/pages/*.tsx`；`web/scripts/ssg.mjs`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：浏览器与 SSG 共用 10 语言、12 种页面类型的 description 模板；页面使用原始实体、来源、坐标和任务统计同步输出 description/OG description；SSG 写入 `__localizedDescription` 并替换静态标签，详情壳也注入最小元数据；Playwright 覆盖十语言首页和静态/客户端 description 一致性。
+- **当前状态**：WIP。格式化、Node 语法和 TypeScript 检查通过；quick SSG 第二次失败，原因是 `seoTemplate.mjs` 的 `home` 模板为字符串而构建器仍按函数调用，尚未修复，未做部署或 HTTP/浏览器验证。

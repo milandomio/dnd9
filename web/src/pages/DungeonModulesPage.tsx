@@ -6,6 +6,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { localizedSeoDescription } from '../i18n/seo';
 
 interface GroupSummary {
   group: string;
@@ -44,7 +45,7 @@ export default function DungeonModulesPage() {
   const [loading, setLoading] = useState(!ssrGroups);
   const { tokens } = useTheme();
   const { modules } = useDungeonModules();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   useEffect(() => {
     if (ssrGroups) return;
@@ -94,16 +95,18 @@ export default function DungeonModulesPage() {
     );
 
   const totalMods = groups.reduce((s, g) => s + g.module_count, 0);
+  const description = localizedSeoDescription(lang, dict, 'modules', {
+    groups: groups.length || undefined,
+    modules: totalMods || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>{ut('ui.module.title')} | 越来越黑暗闪电指南 DarkFlashNav</title>
-        <meta
-          name="description"
-          content="地图模块查询——按地图分组查看所有模块。"
-        />
+        <meta name="description" content={description} />
         <meta name="keywords" content="地牢模块,地图模块,地牢坐标,地图坐标" />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

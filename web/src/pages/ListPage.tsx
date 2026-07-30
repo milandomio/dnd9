@@ -9,6 +9,7 @@ import { dataUrl } from '../utils/dataUrl';
 import { getPageEntries, type SearchEntry } from '../hooks/useSearchIndex';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
+import { localizedSeoDescription } from '../i18n/seo';
 
 type IndexEntry = SearchEntry & {
   category?: string;
@@ -102,7 +103,7 @@ export default function ListPage() {
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
-  const { t, ut } = useLocale();
+  const { t, ut, dict } = useLocale();
   const pageLabel = ut(NAV_KEY_LOOKUP[page!] || '') || page! || '';
   const locationsLabel = ut('ui.list.locations');
   const validItemCount = ut('ui.list.valid_items').replace(
@@ -110,6 +111,10 @@ export default function ListPage() {
     String(data.length)
   );
   const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
+  const description = localizedSeoDescription(lang, dict, 'list', {
+    category: page,
+    count: data.length || undefined,
+  });
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -133,7 +138,7 @@ export default function ListPage() {
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <Helmet>
         <title>{`【${pageLabel}】${locationsLabel} | 越来越黑暗闪电指南 DarkFlashNav`}</title>
-        <meta name="description" content={`${pageLabel} ${validItemCount}`} />
+        <meta name="description" content={description} />
         <meta
           name="keywords"
           content="物品查询,怪物查询,装备查询,武器查询,防具查询,饰品查询,掉落查询,游戏攻略"
@@ -142,7 +147,7 @@ export default function ListPage() {
           property="og:title"
           content={`【${pageLabel}】${locationsLabel}`}
         />
-        <meta property="og:description" content={validItemCount} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

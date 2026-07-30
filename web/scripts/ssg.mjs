@@ -25,6 +25,7 @@ import {
   readdirSync,
 } from 'fs';
 import { join, dirname } from 'path';
+import { buildSeoDescription } from '../src/i18n/seoTemplate.mjs';
 
 const QUICK = process.argv.includes('--quick');
 const WEB = new URL('..', import.meta.url).pathname;
@@ -278,6 +279,8 @@ for (const g of questGroups) {
       group_floor: g.group_floor,
       group_sub_key: g.group_sub_key,
       group_display: g.group_display,
+      entity_count: g.entity_count,
+      position_count: g.position_count,
       entities: [],
     };
   }
@@ -292,6 +295,7 @@ for (const g of dmGroups) {
 
 // Explore page needs module data too
 ssrDataMap['explore-modules'] = moduleData;
+ssrDataMap['explore'] = readJSON(join(DATA, 'explore.json'));
 
 // Detail pages — full SSR data (full mode) or minimal SSR data (quick mode)
 for (const p of PAGES) {
@@ -368,11 +372,7 @@ for (const m of moduleData) {
     }
   } else {
     ssrDataMap[key] = {
-      module: {
-        name: m.name,
-        translation: m.translation,
-        translation_key: m.translation_key,
-      },
+      module: m,
       coords: null,
     };
   }
@@ -541,18 +541,182 @@ function localizedTitle(routeData, localeDict, routePath = '') {
     : localized;
 }
 
-function injectLocalizedData(page, lang, title) {
-  return page.replace(SSR_SCRIPT_RE, (match, jsonText) => {
+function localizedValue(data, localeDict) {
+  if (!data || typeof data !== 'object') return '';
+  return (
+    (data.translation_key && localeDict[data.translation_key]) ||
+    data.translation ||
+    data.name ||
+    data.group_display ||
+    data.group ||
+    ''
+  );
+}
+
+function coordCount(entities) {
+  if (!Array.isArray(entities)) return undefined;
+  const count = entities.reduce(
+    (total, entity) => total + (entity.coords?.length ?? 0),
+    0
+  );
+  return count || undefined;
+}
+
+function routeDescription(route, routeData, localeDict, lang) {
+  const parts = route.path.split('/').filter(Boolean);
+  if (parts[0] === DEFAULT_LANG) parts.shift();
+  if (parts.length === 0) return buildSeoDescription(lang, 'home');
+  const [section, name] = parts;
+  if (PAGES.includes(section) && !name) {
+    return buildSeoDescription(lang, 'list', {
+      category: section,
+      count: Array.isArray(routeData) ? routeData.length : undefined,
+    });
+  }
+  if (PAGES.includes(section) && name) {
+    const entity = firstTranslatable(routeData) || {};
+    if (section === 'lootdrops') {
+      const item = routeData?.item;
+      const suffix = decodeURIComponent(name).match(/_(\d{4})$/)?.[1];
+      const variant = suffix ? item?.variants?.[suffix] : undefined;
+      const sourceIds = variant
+        ? new Set(
+            Object.values(variant.group_drop_info ?? {}).flatMap((entries) =>
+              entries.map((entry) => entry.source_id)
+            )
+          )
+        : undefined;
+      return buildSeoDescription(lang, 'lootdrop', {
+        name: localizedTitle(routeData, localeDict, route.path),
+        sources: sourceIds?.size || item?.monsters?.length || undefined,
+        locations: sourceIds
+          ? [...sourceIds].reduce(
+              (total, sourceId) =>
+                total + (item.sources?.[sourceId]?.coords?.length ?? 0),
+              0
+            ) || undefined
+          : coordCount(item?.monsters),
+      });
+    }
+    return buildSeoDescription(lang, 'entity', {
+      name: localizedTitle(routeData, localeDict, route.path),
+      locations: entity.coords?.length || undefined,
+    });
+  }
+  if (section === 'explore') {
+    const targets = Array.isArray(routeData) ? routeData : [];
+    return buildSeoDescription(lang, 'explore', {
+      targets: targets.length || undefined,
+      npcs: new Set(targets.map((target) => target.npc_name)).size || undefined,
+    });
+  }
+  if (section === 'quest_items' && !name) {
+    const groups = Array.isArray(routeData) ? routeData : [];
+    return buildSeoDescription(lang, 'questItems', {
+      groups: groups.length || undefined,
+      locations:
+        groups.reduce(
+          (total, group) => total + (group.position_count ?? 0),
+          0
+        ) || undefined,
+    });
+  }
+  if (section === 'quest_items') {
+    return buildSeoDescription(lang, 'questGroup', {
+      name: localizedValue(routeData, localeDict),
+      entities:
+        routeData?.entities?.length || routeData?.entity_count || undefined,
+      locations:
+        coordCount(routeData?.entities) ||
+        routeData?.position_count ||
+        undefined,
+    });
+  }
+  if (section === 'quest_npc' && !name) {
+    return buildSeoDescription(lang, 'questNpcs', {
+      npcs: Array.isArray(routeData) ? routeData.length : undefined,
+    });
+  }
+  if (section === 'quest_npc') {
+    const npc = Array.isArray(routeData)
+      ? routeData.find((entry) => entry.npc_name === decodeURIComponent(name))
+      : undefined;
+    return buildSeoDescription(lang, 'questNpc', {
+      name: localizedValue(npc, localeDict) || decodeURIComponent(name),
+      quests: npc?.quests?.length || undefined,
+    });
+  }
+  if (section === 'dungeon_modules' && !name) {
+    const groups = Array.isArray(routeData) ? routeData : [];
+    return buildSeoDescription(lang, 'modules', {
+      groups: groups.length || undefined,
+      modules:
+        groups.reduce((total, group) => total + (group.module_count ?? 0), 0) ||
+        undefined,
+    });
+  }
+  if (section === 'dungeon_modules' && parts.length === 2) {
+    const modules = Array.isArray(routeData) ? routeData : [];
+    return buildSeoDescription(lang, 'moduleGroup', {
+      name: localizedValue(modules[0], localeDict) || decodeURIComponent(name),
+      modules: modules.length || undefined,
+    });
+  }
+  const module = routeData?.module;
+  return buildSeoDescription(lang, 'module', {
+    name: localizedValue(module, localeDict) || decodeURIComponent(parts[2]),
+    group: localizedValue(module, localeDict),
+    width: module?.size_x || undefined,
+    height: module?.size_y || undefined,
+    entities: routeData?.coords?.entities?.length || undefined,
+    locations: coordCount(routeData?.coords?.entities),
+  });
+}
+
+function injectLocalizedData(page, lang, title, description) {
+  let replaced = false;
+  const localized = page.replace(SSR_SCRIPT_RE, (match, jsonText) => {
+    replaced = true;
     try {
       const payload = JSON.parse(jsonText);
       payload.__lang = lang;
       payload.__ssrLang = DEFAULT_LANG;
       if (title) payload.__localizedTitle = title;
+      payload.__localizedDescription = description;
       return `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>`;
     } catch {
       return match;
     }
   });
+  if (replaced) return localized;
+  const payload = {
+    __lang: lang,
+    __ssrLang: DEFAULT_LANG,
+    ...(title ? { __localizedTitle: title } : {}),
+    __localizedDescription: description,
+  };
+  return localized.replace(
+    HEAD_CLOSE,
+    `<script>window.__SSR_DATA__=${JSON.stringify(payload)}</script>\n${HEAD_CLOSE}`
+  );
+}
+
+function replaceDescriptionMeta(page, description) {
+  const descriptionMeta = `<meta name="description" content="${escapeHtml(description)}">`;
+  const ogDescriptionMeta = `<meta property="og:description" content="${escapeHtml(description)}">`;
+  let out = page.replace(
+    /<meta\b(?=[^>]*\bname="description")[^>]*>/i,
+    descriptionMeta
+  );
+  if (out === page)
+    out = out.replace(HEAD_CLOSE, `${descriptionMeta}\n${HEAD_CLOSE}`);
+  const withOg = out.replace(
+    /<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/i,
+    ogDescriptionMeta
+  );
+  return withOg === out
+    ? withOg.replace(HEAD_CLOSE, `${ogDescriptionMeta}\n${HEAD_CLOSE}`)
+    : withOg;
 }
 
 function localizePage(
@@ -565,7 +729,11 @@ function localizePage(
 ) {
   const canonicalHref = localizedPath(route.path, lang);
   const title = localizedTitle(routeData, localeDict, route.path);
-  let out = injectLocalizedData(page, lang, title)
+  const description = routeDescription(route, routeData, localeDict, lang);
+  let out = replaceDescriptionMeta(
+    injectLocalizedData(page, lang, title, description),
+    description
+  )
     .replace(/<html(\s[^>]*)?>/, `<html lang="${lang}">`)
     .replace(
       /<link rel="canonical" href="[^"]*">/,

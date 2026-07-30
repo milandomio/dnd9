@@ -11,6 +11,7 @@ import { dataUrl } from '../utils/dataUrl';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
+import { localizedSeoDescription } from '../i18n/seo';
 
 const RARITY_COLORS_LIGHT: Record<string, string> = {
   粗糙: '#757575',
@@ -106,7 +107,7 @@ export default function QuestNPCDetailPage() {
   const { tokens, dark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
@@ -209,6 +210,10 @@ export default function QuestNPCDetailPage() {
   })();
 
   const npcDone = lsGet(`quest_npc_npc_${npc.npc_name}`);
+  const description = localizedSeoDescription(lang, dict, 'questNpc', {
+    name: t(npc.translation_key, npc.npc_name_display),
+    quests: npc.quests.length || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -218,10 +223,8 @@ export default function QuestNPCDetailPage() {
             `${t(npc.translation_key, npc.npc_name_display)} ${ut('ui.quest_detail.task_list')}`}
           | DarkFlashNav
         </title>
-        <meta
-          name="description"
-          content={`${t(npc.translation_key, npc.npc_name_display)} - ${ut('ui.quest_detail.task_list')}`}
-        />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
       </Helmet>
 
       <div

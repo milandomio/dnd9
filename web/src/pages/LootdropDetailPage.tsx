@@ -33,6 +33,7 @@ import ReferenceDropRates from '../components/ReferenceDropRates';
 import MapPanel from '../components/MapPanel';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
+import { localizedSeoDescription } from '../i18n/seo';
 
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
@@ -270,7 +271,7 @@ export default function LootdropDetailPage() {
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
   const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
@@ -787,6 +788,10 @@ export default function LootdropDetailPage() {
   const visibleCount = resolvedMonsters.filter(
     (m) => !hidden.has(m.translation)
   ).length;
+  const rawLocationCount = resolvedMonsters.reduce(
+    (count, monster) => count + monster.coords.length,
+    0
+  );
   const itemLabel = stripTrailingParenthetical(
     t(data.translation_key, data.translation || data.name)
   );
@@ -796,6 +801,11 @@ export default function LootdropDetailPage() {
       : '';
   const pageLabel = ut('ui.nav.lootdrops');
   const helmetTitle = `${itemLabel}${rarityLabel} -${pageLabel}`;
+  const description = localizedSeoDescription(lang, dict, 'lootdrop', {
+    name: itemLabel,
+    sources: monsters.length || undefined,
+    locations: rawLocationCount || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -814,10 +824,7 @@ export default function LootdropDetailPage() {
         <title>
           {ssrLocalizedTitle() ?? helmetTitle} | 越来越黑暗闪电指南 DarkFlashNav
         </title>
-        <meta
-          name="description"
-          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落，共 ${bottomCount} 个位置点。`}
-        />
+        <meta name="description" content={description} />
         <meta
           name="keywords"
           content="掉落查询,爆率查询,怪物掉落,物品掉落,地图坐标,掉落位置"
@@ -826,10 +833,7 @@ export default function LootdropDetailPage() {
           property="og:title"
           content={`${ssrLocalizedTitle() ?? helmetTitle} | DarkFlashNav`}
         />
-        <meta
-          property="og:description"
-          content={`${itemLabel} 由 ${visibleCount} 个怪物掉落`}
-        />
+        <meta property="og:description" content={description} />
       </Helmet>
       <h1
         style={{

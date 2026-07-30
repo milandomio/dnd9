@@ -9,6 +9,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import type { DungeonModule } from '../types/data';
+import { localizedSeoDescription } from '../i18n/seo';
 
 export default function DungeonModuleGroupPage() {
   const { group } = useParams<{ group: string }>();
@@ -17,7 +18,7 @@ export default function DungeonModuleGroupPage() {
   const { modules: allModules } = useDungeonModules();
   const [loading, setLoading] = useState(!ssrModules);
   const { tokens } = useTheme();
-  const { t, ut, lang } = useLocale();
+  const { t, ut, lang, dict } = useLocale();
 
   const modules = useMemo(() => {
     // Prefer SSR data (pre-filtered for this group)
@@ -66,6 +67,10 @@ export default function DungeonModuleGroupPage() {
 
   const groupLabel =
     formatGroupLabel(modules[0], t, ut) || group || ut('ui.common.ungrouped');
+  const description = localizedSeoDescription(lang, dict, 'moduleGroup', {
+    name: groupLabel,
+    modules: modules.length || undefined,
+  });
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -74,10 +79,8 @@ export default function DungeonModuleGroupPage() {
           {groupLabel}
           {group} 地图模块Module | 越来越黑暗闪电指南 DarkFlashNav
         </title>
-        <meta
-          name="description"
-          content={`${groupLabel} 地图模块，共 ${modules.length} 个模块。`}
-        />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
       </Helmet>
       <div style={{ textAlign: 'center', marginBottom: 8 }}>
         <h1
