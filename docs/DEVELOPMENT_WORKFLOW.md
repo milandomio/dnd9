@@ -2,9 +2,9 @@
 
 本文件保存日常改动、预检、提交相关细节。触发条件：准备改代码、提交、本地质量检查、遇到 pre-commit / TypeScript / Prettier 问题时阅读。
 
-**适用范围**：`dev` 与任意功能分支一视同仁。默认工作分支是 `dev`，**dev 上的改动同样必须及时本地 commit**，不得以「还在 dev / 未合 main」为由堆未提交 diff。
+**适用范围**：所有分支一视同仁。默认工作分支是 `main`；除非用户明确要求切换分支，不要自行切换，新增功能直接在 `main` 开发。任何分支上的改动都必须及时本地 commit，不得以「尚未合并」为由堆未提交 diff。
 
-## 强制提交节奏（dev 同样适用）
+## 强制提交节奏（所有分支适用）
 
 | 时机 | 动作 |
 |------|------|
@@ -16,7 +16,7 @@
 
 禁止：
 
-- 在 `dev` 上连续多轮改动却长期不 commit，导致 `git status` 堆积无关文件
+- 在任意分支连续多轮改动却长期不 commit，导致 `git status` 堆积无关文件
 - 用 `git add -A` 把无关 WIP 和本任务绑成一次提交（应只 stage 本任务文件）
 - 未跑预检就 commit 赌 hook
 - **把「已完成」的改动长期留在工作区**：禁止因「不是当前任务」就默认当半成品搁置；应拆 commit。历史教训：列表 `monster_translation_keys` / 首页 i18n 曾做完未提，干净 checkout 会丢字段
@@ -58,7 +58,7 @@ git add <本任务文件...> && git commit -m "feat: ..."
 
 - **TS6133 unused variable**：删除 `?v=` 参数后，很多地方 `dataVersion` 变量不再使用。每次改动后跑 `npx tsc --noEmit` 自检，发现 unused 变量主动删掉，不要等 hook 报错。
 - **Prettier 失败**：`vite.config.ts` 等配置文件也可能格式不符，在编辑后手动 `npm run format`。
-- **dev 上 status 很脏**：先把已完成任务拆成独立 commit；剩余用户/其他任务文件不要强行塞进当前 commit。
+- **当前分支 status 很脏**：先把已完成任务拆成独立 commit；剩余用户/其他任务文件不要强行塞进当前 commit。
 
 ## 重要警告
 
