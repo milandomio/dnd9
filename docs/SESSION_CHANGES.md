@@ -633,3 +633,10 @@
 - **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：新增 `ui.map_recognition.clear_parameters` 按钮，复用 `clearResult()` 清除 `screenshotRef`、预览、匹配项、网格类型、地图起点和模块像素；OpenCV 引擎及地图模板缓存保持不变，清空后可重新粘贴图片识别。
 - **补充逻辑**：带有 5x5/7x7 网格校准时若识别结果为 0，在清空按钮右侧以红色显示 `ui.map_recognition.zero_match_clear_hint`，提示用户清空参数后重新粘贴图片，不使用弹窗。
+
+### fix: 将识图操作按钮移到第二行
+
+- **改动原因**：重新识别和清空参数按钮文案较长，与地图规模和坐标输入控件同处一行时会挤压布局。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：在地图规模、地图起点和模块像素控件之后增加 100% 宽度的换行占位，使重新识别、清空参数及 0 结果提示固定进入下一行；按钮事件和参数逻辑不变。
+- **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）、`npm run test:i18n`（23/23）和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认地图规模控件位于 y=210，两个按钮位于 y=242，地图分组控件位于 y=274。
