@@ -4,6 +4,13 @@
 
 ## 2026-07-31
 
+### chore: 集中忽略地图识图测试图片
+
+- **改动原因**：根目录下的 4 张地图识图测试图片属于本地测试数据，不应继续作为未跟踪文件散落在仓库根目录。
+- **变更文件**：`.gitignore`；`test-data/test-cap-7x7.png`；`test-data/test-cap-dy.png`；`test-data/test-cap.png`；`test-data/test-cap1.png`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：图片统一移动到根目录 `test-data/`，新增 `/test-data/` 忽略规则，使该目录及其内容整体不参与 Git 状态和提交。
+- **验证**：已确认 4 张图片均位于 `test-data/`，根目录不再显示这些文件；待提交前复核忽略状态。
+
 ### docs: 记录 Blindfall Pit 从 Dungeon/Layout/Module 到 0.84% 的完整计算链
 
 - **改动原因**：`Blindfall Pit` 的基础 `1%` 不应仅以 `moduleSpawnRate.ts` 中的固定值表达，需要保留从 `Id_Dungeon_RandomCrypt_N_Solo` 的布局引用、Rare 槽统计、Crypt 稀有模块池到中心塔覆盖修正的可复算路径。
