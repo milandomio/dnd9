@@ -1,12 +1,20 @@
 # HARDCODED_TRANSLATIONS 全量 10 语 i18n 计划
 
-> 状态：**仅计划，未执行**  
-> 日期：2026-07-26  
+> 状态：**框架已实施，人工译文待补**
+> 首次计划：2026-07-26；状态核实：2026-08-01
 > 前置：`SUPERHOARD_I18N.md` 已落地（单 key 特例）；本计划将其**推广为全量框架**
 
 ---
 
 ## 1. 问题
+
+## 已实施状态（2026-08-01）
+
+- `hardcoded_translation_key()`、`resolve_translation_key()` 与 `hardcoded_locale_entries()` 已落地；当前输出中使用的 129 个 `df5.hardcoded.*` 键在 10 个 locale 文件中均有值。
+- items、monsters、props、lootdrop 来源、模块坐标、任务目标与搜索索引的写出路径已复用合成键解析，不再因空 `translation_key` 直接丢失 i18n 入口。
+- `SuperHoard*` 继续使用专用的 `df5.hardcoded.SuperHoard` 十语言人工文案。
+- 与原计划的差异：除 `HARDCODED_LOCALE_OVERRIDES` 外，非中文值目前由实体标识自动转为可读英文，而非 230 条人工十语言译文。因此“键体系和可显示回退”已完成，“全量人工本地化”仍未完成。
+- 原文中“未执行”“有空再执行”及未勾选验收项仅反映 2026-07-26 的计划快照；后续工作应以本节和日语详情 backlog 为准。
 
 ### 1.1 现象
 
@@ -190,14 +198,11 @@ for full_key, lang_map in hardcoded_i18n_bundle().items():
 
 ### 阶段 5 — 验证
 
-- [ ] `python main.py` EXIT:0
-- [ ] `locale/en.json` 含抽样 `df5.hardcoded.Barrel`、`df5.hardcoded.ChestLarge` 等非中文
-- [ ] `df5.hardcoded.SuperHoard` 仍在且文案不变
-- [ ] `search_index`：原 HARDCODED 空 tk 条目现有 `df5.hardcoded.*` 或官方 `Text_*`
-- [ ] Ruby_5001 等：SuperHoard + 原空 key 掉落源 en 非中文
-- [ ] props `LivingStatue` / `SkeletonWoodenBarrel` 等有 key
-- [ ] 前端 dev：`/en/...` 抽样页
-- [ ] `SESSION_CHANGES.md` + 本地 commit（不 push）
+- [x] `locale/en.json` 等 10 个 locale 含当前使用的 `df5.hardcoded.*`，且键集合无缺口。
+- [x] `df5.hardcoded.SuperHoard` 保留专用十语言文案。
+- [x] 搜索索引、实体和掉落来源的已知硬编码名称使用 `df5.hardcoded.*` 或官方 `Text_*`。
+- [x] 前端多语言抽样页与 i18n Playwright 回归通过。
+- [ ] 对全部高频用户可见实体补人工十语言译文，并逐语言人工复核；不再将“存在可读英文回退”误记为人工翻译完成。
 
 ### 阶段 6 — 文档
 

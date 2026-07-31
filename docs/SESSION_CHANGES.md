@@ -654,3 +654,12 @@
 - **变更文件**：`web/src/components/MapPanel.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`web/src/components/CompositeRate.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：将 `spawnRate && spawnRate > 0` 改为 `spawnRate !== undefined && spawnRate > 0`，使 `spawnRate === 0` 时返回布尔 `false` 而不是直接渲染数字 `0`；地图 Z 高度标签恢复原逻辑。
 - **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）和 quick SSG 构建通过；`Bandage` 目标页 HTTP 200，Playwright 确认“断裂通道”卡片不再存在独立的 `0` 文本节点，源码中已无 `hideZeroZLabels`。
+
+## 2026-08-01
+
+### docs: 核实并同步项目计划状态
+
+- **改动原因**：项目待办盘点将 SEO、PWA、硬编码多语言和后端审计误判为未开始，原因是旧计划文档未随已合并代码和验证记录更新。
+- **变更文件**：`docs/plans/MULTILANG_STATUS.md`；`docs/plans/HARDCODED_I18N.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/plans/META_DESCRIPTION_OPTIMIZATION.md`；`docs/PWA_ROADMAP.md`；`docs/BACKEND_AUDIT_FIX_PLAN.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SEO 以 `seoTemplate.mjs -> localizedSeoDescription() -> SSG __localizedDescription -> description/og:description` 为完成链路；PWA 六项以 `d46cd0fb` 及 manifest、离线页、更新提示、安装提示实现为准；硬编码实体以 `resolve_translation_key() -> df5.hardcoded.* -> hardcoded_locale_entries()` 为完成的键与回退链路。日语剩余项按当前产物重新归类为 90 个日语等于英语的 synthetic key、38 个空 key 实体和 2 个模块 fallback，共 130 项。
+- **验证**：复核提交 `2de870fe`、`8a578589`、`59452a72`、`7f1eb6ae`、`d46cd0fb` 与 `5bacaeef`；检查当前 129 个 `df5.hardcoded.*` 键在十语言 locale 均无缺口；quick SSG 产物中英文首页和日语详情页的 description/OG 一致，日语详情页含 `__localizedDescription`；`npm run test:i18n` 23/23 通过。

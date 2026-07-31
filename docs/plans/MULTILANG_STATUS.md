@@ -6,6 +6,8 @@
 - P9：Ant Design locale 切换和 locale 字典体积优化。
 - P10：Playwright 多语言回归框架。
 - P11：移除 `translation_EN` / `resolver_en`。
+- P12：硬编码实体使用 `df5.hardcoded.*` 合成键；当前输出使用的 129 个键在 10 个 locale 文件中均有值。
+- 多语言标题、`description` 与 `og:description` 已由 SSG 注入本地化首屏值，客户端复用 `__localizedTitle` / `__localizedDescription`。
 
 当前主链路为：
 
@@ -15,13 +17,11 @@ URL 前缀 -> LanguageProvider -> locale fetch -> t()/ut()
 中文 SSR -> SSG 标题后处理 -> 多语言 HTML/sitemap
 ```
 
-## 已知问题
+## 当前剩余
 
-非中文页面的 NavBar 标签曾出现 Hydration mismatch，原因是 SSG body 为中文而客户端首轮直接渲染目标语言。若重新处理，必须先选择门控、body 后处理或纯 CSR 方案，再执行代码修改；不要仅通过忽略控制台错误验收。
-
-详情页标题和 ModuleDetail 标题重复问题已有修复，相关历史验证见 [`MULTILANG_PLAN_ARCHIVE.md`](MULTILANG_PLAN_ARCHIVE.md) 第 10 节。
-
-日语详情页实体标题仍有 130 个翻译候选：88 个已有 synthetic key 但日语值等于英文，42 个缺少 `translation_key` 并使用原始标识或中文兜底。完整清单和处理顺序见 [`JA_DETAIL_I18N_BACKLOG.md`](JA_DETAIL_I18N_BACKLOG.md)。
+- 非中文 NavBar 曾有 Hydration mismatch；`LanguageProvider` 现以 SSG 注入的 `__ssrLang` 对齐客户端首轮语言。2026-08-01 的 23 页多语言 Playwright 回归未发现 hydration 错误，因此不再作为已知问题。
+- 日语详情页仍有 130 个需人工决定的实体标题：90 个已有 synthetic key 但日语值等于英文，38 个实体缺少 `translation_key`，另有 2 个模块标题仍使用中文或 raw fallback。完整审计口径见 [`JA_DETAIL_I18N_BACKLOG.md`](JA_DETAIL_I18N_BACKLOG.md)。
+- `df5.hardcoded.*` 已保证所有语言有稳定显示值，但大多数非中文值由可读英文标识自动生成；高频用户可见实体仍应逐批补人工本地化文案。
 
 ## 后续原则
 
