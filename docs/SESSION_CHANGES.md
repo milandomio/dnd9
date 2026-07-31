@@ -4,6 +4,13 @@
 
 ## 2026-07-31
 
+### fix: 调整地图识图精度预设中文文案
+
+- **改动原因**：识别精度下拉框原先使用“标准/高召回/极高召回”，用户要求改为按精度等级直观显示。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：简体中文 `ui.map_recognition.precision_standard` →“高精度”、`precision_high` →“中精度”、`precision_maximum` →“低精度”；预设阈值 `0.52/0.45/0.38`、英文及其他语言文案保持不变。
+- **验证**：`npm run format:check`、`npx tsc --noEmit` 和 `npm run lint` 通过；lint 保持 19 条既有 warning、0 error。`npm run test:i18n` 因未启动 `localhost:8080` 服务全部报 `fetch failed`，未进入页面断言。
+
 ### chore: 集中忽略地图识图测试图片
 
 - **改动原因**：根目录下的 4 张地图识图测试图片属于本地测试数据，不应继续作为未跟踪文件散落在仓库根目录。
