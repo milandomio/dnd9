@@ -677,3 +677,9 @@
 - **变更文件**：`api/src/config.py`；`api/src/translator.py`；`api/src/module_builder.py`；`api/tests/test_hardcoded_i18n.py`；`docs/plans/MULTILANG_STATUS.md`；`docs/plans/HARDCODED_I18N.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`EXPLICIT_TRANSLATION_KEY_OVERRIDES` 优先返回已核实的游戏 key，覆盖 `LittleToad_Poison -> Text_DesignData_Monster_Monster_LittleToad`、`Ruins_Chapel -> Text_DesignData_Dungeon_DungeonModule_Abandoned_Sanctuary` 及 LivingArmor/LivingStatue/Morayeel/Rat/TrainingDummy；无官方 key 的 37 个环境实体进入 `HARDCODED_TRANSLATIONS -> df5.hardcoded.* -> hardcoded_locale_entries()`。模块仅为 `Ruins_Chapel` 与 `Ruins_DualBossTreasureRoom` 走 fallback，ShipGraveyard 的数字模块别名保持原样；五个怪物和双 Boss 宝藏室在 `HARDCODED_LOCALE_OVERRIDES` 中提供十语言静态词条。
 - **验证**：两次完整 `python main.py` 管道均通过，最终耗时 131.77 秒；所有详情实体的空 key 数为 0；172 个当前使用的 `df5.hardcoded.*` key 在十语言 locale 中均无缺口；Python unittest 8 项通过；第一次 quick SSG 通过（3067 路由、15202 HTML、17011 文件）。前端格式、类型、lint 与浏览器 i18n 回归在提交前复核。
+
+### feat: 补齐第二批场景实体十语言名称
+
+- **改动原因**：射箭靶、战旗、烛台、萤火虫和地面灯会直接作为详情页实体标题显示，不应继续在非中文 locale 中回退为英文技术名。
+- **变更文件**：`api/src/config.py`；`docs/plans/MULTILANG_STATUS.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：五个实体在 `HARDCODED_LOCALE_OVERRIDES` 提供 zh-Hans/en/de/es/fr/ja/ko/pt-BR/ru/zh-Hant 的静态名称；`hardcoded_locale_entries()` 继续将这些值按 `df5.hardcoded.*` key 写入对应语言 locale。
