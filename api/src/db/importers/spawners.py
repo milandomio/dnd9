@@ -212,7 +212,8 @@ class SpawnersImporter:
         # Preserve every concrete variant referenced by LootDropItemArray. Collapsing
         # a family to one representative loses which qualities can actually drop.
         deduped = {
-            (stem, item_name): (stem, item_name, luck_grade, count) for stem, item_name, luck_grade, count in rows
+            (stem, item_name, luck_grade): (stem, item_name, luck_grade, count)
+            for stem, item_name, luck_grade, count in rows
         }
         c.executemany(
             "INSERT INTO lootdrop_rate_items (lootdrop_id, item_name, luck_grade, drop_count) VALUES (?, ?, ?, ?)",

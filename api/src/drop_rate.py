@@ -17,7 +17,7 @@ def _round_rate(v: float) -> float:
     return float(d)
 
 
-def _find_rate_item(rate_items: dict[str, tuple[int, int]], item_name: str) -> tuple[int, int] | None:
+def _find_rate_item(rate_items: dict[str, list[tuple[int, int]]], item_name: str) -> list[tuple[int, int]] | None:
     """Find an exact item, or the preferred real variant for an unsuffixed family."""
     item_info = rate_items.get(item_name)
     if item_info is not None or _VARIANT_RE.match(item_name):
@@ -44,7 +44,7 @@ class DropRateEngine:
         self._entity_ldg_all: dict[str, set[str]] = {}
         self._ore_ldg: dict[str, str] = {}
         self._ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
-        self._ld_rate_items: dict[str, dict[str, tuple[int, int]]] = {}
+        self._ld_rate_items: dict[str, dict[str, list[tuple[int, int]]]] = {}
         self._ld_luck_grade_count: dict[tuple[str, int], int] = {}
         self._ld_rate_weights: dict[str, dict[int, int]] = {}
         self._ld_rate_totals: dict[str, int] = {}
@@ -118,14 +118,14 @@ class DropRateEngine:
 
         # lootdrop_rate_items
         for _row in _c.execute("SELECT lootdrop_id, item_name, luck_grade, drop_count FROM lootdrop_rate_items"):
-            self._ld_rate_items.setdefault(_row["lootdrop_id"], {})[_row["item_name"]] = (
-                _row["luck_grade"],
-                _row["drop_count"],
+            self._ld_rate_items.setdefault(_row["lootdrop_id"], {}).setdefault(_row["item_name"], []).append(
+                (_row["luck_grade"], _row["drop_count"])
             )
         for _ld_id, _items in self._ld_rate_items.items():
             _lg_counts: dict[int, int] = {}
-            for _item_name, (_lg, _) in _items.items():
-                _lg_counts[_lg] = _lg_counts.get(_lg, 0) + 1
+            for _item_name, _item_entries in _items.items():
+                for _lg, _ in _item_entries:
+                    _lg_counts[_lg] = _lg_counts.get(_lg, 0) + 1
                 self._item_to_ld_ids.setdefault(_item_name, set()).add(_ld_id)
             for _lg, _cnt in _lg_counts.items():
                 self._ld_luck_grade_count[(_ld_id, _lg)] = _cnt
@@ -348,11 +348,11 @@ class DropRateEngine:
             if item_info is None:
                 continue
             found = True
-            luck_grade, item_count = item_info
-            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
-            _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
             _rate_total = self._ld_rate_totals.get(lr_id, 10000)
-            total_weight += _pool_weight / _shared / _rate_total
+            for luck_grade, _item_count in item_info:
+                _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
+                _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
+                total_weight += _pool_weight / _shared / _rate_total
         if found:
             return total_weight
         return 0.0
@@ -535,10 +535,11 @@ class DropRateEngine:
                     if not rate_items:
                         continue
                     _lg_weights: dict[int, int] = {}
-                    for _item_name, (lg, _) in rate_items.items():
-                        _w = self._ld_rate_weights.get(lr_id, {}).get(lg, 0)
-                        if _w > _lg_weights.get(lg, 0):
-                            _lg_weights[lg] = _w
+                    for _item_entries in rate_items.values():
+                        for lg, _ in _item_entries:
+                            _w = self._ld_rate_weights.get(lr_id, {}).get(lg, 0)
+                            if _w > _lg_weights.get(lg, 0):
+                                _lg_weights[lg] = _w
                     _rate_total = self._ld_rate_totals.get(lr_id, 10000)
                     for lg, w in _lg_weights.items():
                         _shared = self._ld_luck_grade_count.get((ld_id, lg), 1)
@@ -568,8 +569,9 @@ class DropRateEngine:
                         continue
                     rate_total = self._ld_rate_totals.get(lr_id, 10000)
                     _lg_set: set[int] = set()
-                    for _item_name, (lg, _) in rate_items.items():
-                        _lg_set.add(lg)
+                    for _item_entries in rate_items.values():
+                        for lg, _ in _item_entries:
+                            _lg_set.add(lg)
                     ld_prob = 0.0
                     for lg in _lg_set:
                         w = self._ld_rate_weights.get(lr_id, {}).get(lg, 0)
@@ -608,25 +610,24 @@ class DropRateEngine:
         for ld_id, lr_id, _ in grade_data:
             if target_ld_id and ld_id != target_ld_id:
                 continue
-            _found_lg = None
+            _found_lgs: list[int] | None = None
             if item_name:
                 rate_items = self._ld_rate_items.get(ld_id, {})
                 item_info = _find_rate_item(rate_items, item_name)
                 if item_info is None:
                     continue
-                _found_lg = item_info[0]
+                _found_lgs = [lg for lg, _ in item_info]
             found = True
-            _pool_lg = _found_lg if _found_lg is not None else luck_grade
-            _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(_pool_lg, 0)
-            if _pool_weight == 0:
-                continue
-            _shared_lg = _found_lg if _found_lg is not None else luck_grade
-            _shared = self._ld_luck_grade_count.get((ld_id, _shared_lg), 1)
             if _rt_cache is not None:
                 _rate_total = _rt_cache.setdefault(lr_id, self._ld_rate_totals.get(lr_id, 10000))
             else:
                 _rate_total = self._ld_rate_totals.get(lr_id, 10000)
-            total_weight += _pool_weight / _shared / _rate_total
+            for _pool_lg in _found_lgs or [luck_grade]:
+                _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(_pool_lg, 0)
+                if _pool_weight == 0:
+                    continue
+                _shared = self._ld_luck_grade_count.get((ld_id, _pool_lg), 1)
+                total_weight += _pool_weight / _shared / _rate_total
         if found:
             if not target_ld_id:
                 self._variant_rate_cache[(ldg_id, luck_grade, full_grade, item_name)] = total_weight
