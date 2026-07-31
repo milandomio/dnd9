@@ -653,6 +653,8 @@ export default function LootdropDetailPage() {
         score?: number;
         file: string;
         group_parent?: string;
+        sub_group_parent?: string;
+        parent_pool_size?: number;
         quality?: string;
       }[];
     },
@@ -664,9 +666,35 @@ export default function LootdropDetailPage() {
       { sourceKey: string; positions: Set<string>; vc: number }
     >();
     const regPositions = new Map<string, number>();
+    const sharedPoolScores = new Map<
+      string,
+      { size: number; scores: Map<string, number> }
+    >();
     for (const d of item.dots) {
-      const vc = d.variant_count ?? 1;
+      const sourceKey = lootdropSourceKey(d.monster);
       const posKey = `${d.x},${d.y},${d.z}`;
+      let s = d.score ?? 0;
+      if (s === 0) {
+        const rate = _rateLookup.get(sourceKey);
+        if (rate) s = (rate.sr * rate.dr) / 100;
+      }
+      if (
+        d.group_parent &&
+        d.sub_group_parent &&
+        d.parent_pool_size &&
+        d.parent_pool_size > 0
+      ) {
+        const poolKey = `${d.file}::${d.group_parent}`;
+        const pool = sharedPoolScores.get(poolKey) ?? {
+          size: d.parent_pool_size,
+          scores: new Map<string, number>(),
+        };
+        const scoreKey = `${sourceKey}::${posKey}`;
+        pool.scores.set(scoreKey, Math.max(pool.scores.get(scoreKey) ?? 0, s));
+        sharedPoolScores.set(poolKey, pool);
+        continue;
+      }
+      const vc = d.variant_count ?? 1;
       if (vc > 1) {
         const key = d.group_parent || `${d.file}::${vc}`;
         const existing = varGroups.get(key);
@@ -674,23 +702,21 @@ export default function LootdropDetailPage() {
           existing.positions.add(posKey);
         } else {
           varGroups.set(key, {
-            sourceKey: lootdropSourceKey(d.monster),
+            sourceKey,
             positions: new Set([posKey]),
             vc,
           });
         }
       } else {
-        const mKey = `${d.monster.translation}::${posKey}`;
-        let s = d.score ?? 0;
-        if (s === 0) {
-          const rate = _rateLookup.get(lootdropSourceKey(d.monster));
-          if (rate) s = (rate.sr * rate.dr) / 100;
-        }
+        const mKey = `${sourceKey}::${posKey}`;
         const prev = regPositions.get(mKey) ?? 0;
         if (s > prev) regPositions.set(mKey, s);
       }
     }
     for (const s of regPositions.values()) total += s;
+    for (const pool of sharedPoolScores.values()) {
+      for (const s of pool.scores.values()) total += s / pool.size;
+    }
     for (const [, g] of varGroups) {
       const rate = _rateLookup.get(g.sourceKey);
       if (rate) {

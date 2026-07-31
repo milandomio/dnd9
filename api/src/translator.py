@@ -254,6 +254,7 @@ def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_po
         if spi and spi[0] > 0:
             out["sub_pool_size"] = spi[0]
             out["sub_pool_entries"] = spi[1]
+            out["parent_pool_size"] = spi[2]
     vc_info = vc.get((c["map_base"], c["json_filename"], _gp))
     if vc_info and vc_info[0] > 1:
         out["variant_count"] = vc_info[0]

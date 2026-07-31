@@ -25,6 +25,7 @@ export interface Coord {
   sub_group_parent?: string;
   sub_pool_size?: number;
   sub_pool_entries?: VariantNameEntry[];
+  parent_pool_size?: number;
 }
 
 export interface LootdropCoord extends Omit<Coord, 'label'> {
