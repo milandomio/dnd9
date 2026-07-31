@@ -58,7 +58,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.map_recognition.grid_unknown': '未识别',
     'ui.map_recognition.cell_size': '模块像素',
     'ui.map_recognition.rerun': '按缓存参数重新识别',
-    'ui.map_recognition.group_select': '地图分组',
+    'ui.map_recognition.group_select': '选择地图',
     'ui.map_recognition.precision': '识别精度',
     'ui.map_recognition.precision_standard': '高精度',
     'ui.map_recognition.precision_high': '中精度',

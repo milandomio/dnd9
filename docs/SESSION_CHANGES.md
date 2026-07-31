@@ -4,6 +4,34 @@
 
 ## 2026-07-31
 
+### fix: 为地图规模下拉增加介绍标题
+
+- **改动原因**：`3x3/4x4/5x5/7x7` 网格选择下拉缺少与“识别精度”一致的可见说明标题。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：网格下拉包裹为带 `ui.map_recognition.grid_size` 文案的标签，简体中文显示“地图规模”；网格值、`gridType` 状态和识别校准逻辑保持不变。
+- **验证**：`npm run format`、`npx tsc --noEmit`、`npm run lint` 和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认识图面板中“地图规模”存在且 `地图规模/3x3/4x4/5x5/7x7` 下拉可用。
+
+### fix: 明确地图识图校准起点输入标签
+
+- **改动原因**：识图面板中的网格起点输入仅显示 `X/Y`，无法直观看出其为地图起点坐标。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：网格参数行的可见标签由 `X/Y` 改为“地图起点X/地图起点Y”，输入值、`gridX/gridY` 状态及校准参数传递保持不变。
+- **验证**：`npm run format`、`npx tsc --noEmit`、`npm run lint` 和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认“地图起点X/地图起点Y”显示且输入控件仍可用。
+
+### fix: 为地图分组下拉增加红色选择提示
+
+- **改动原因**：地图分组下拉缺少像“识别精度”一样的可见介绍标题，用户需要明显提醒进行地图选择。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；`web/src/components/MapImageRecognitionPanel.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：简体中文 `ui.map_recognition.group_select` 改为“选择地图”；地图分组下拉保留在识别精度行最左侧，并包裹可见标题，标题使用 `#d4380d`、13px、700 字重的大红色样式；`selectedGroup`、`handleGroupChange()` 和筛选逻辑不变。
+- **验证**：`npm run format`、`npx tsc --noEmit`、`npm run lint` 和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认“选择地图”标题为红色样式，并与识别精度下拉处于同一行。
+
+### fix: 将地图分组选择移到识别精度左侧
+
+- **改动原因**：地图分组选择框原位于识图面板标题行右上角，用户需要它与识别精度控件处于同一行并位于其左侧。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：标题行保留模板数量；`ui.map_recognition.group_select` 对应的下拉框移动到精度行最左侧，顺序变为“地图分组 → 识别精度 → 精度阈值”，`selectedGroup` 和 `handleGroupChange()` 行为不变。
+- **验证**：`npm run format`、`npx tsc --noEmit`、`npm run lint` 和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认地图分组下拉位于识别精度左侧且两者 `y` 坐标一致。
+
 ### fix: 调整地图识图精度预设中文文案
 
 - **改动原因**：识别精度下拉框原先使用“标准/高召回/极高召回”，用户要求改为按精度等级直观显示。
