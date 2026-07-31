@@ -126,7 +126,7 @@ interface TemplatePrefilterResult {
   scores: Map<string, number>;
 }
 
-const MAX_WORKING_EDGE = 600;
+const MAX_WORKING_EDGE = 1200;
 const TEMPLATE_SCALES = [0.32, 0.4, 0.44, 0.48, 0.6, 0.75, 1, 1.25];
 const GRID_TEMPLATE_SCALES = {
   '3x3': [0.6, 0.68, 0.75],
@@ -1234,9 +1234,10 @@ export async function recognizeMapScreenshot(
       }
     }
     if (searchRegion.gridHint) {
+      const seedMatches = mergeMatches(rawMatches);
       calibration ??= deriveGridCalibration(
         searchRegion,
-        mergeMatches(rawMatches),
+        seedMatches,
         searchRegion.gridHint,
         workingScale
       );
@@ -1252,12 +1253,23 @@ export async function recognizeMapScreenshot(
         finalSearchRegion.canvas,
         candidateTemplates,
         searchRegion.gridHint,
-        Math.max(0.2, matchThreshold - 0.25)
+        matchThreshold
       );
-      if (refinedMatches.length > 0) {
-        rawMatches.length = 0;
-        rawMatches.push(...refinedMatches);
-      }
+      const calibratedSeedMatches = seedMatches
+        .map((match) => ({
+          ...match,
+          x: match.x + searchRegion.x - finalSearchRegion.x,
+          y: match.y + searchRegion.y - finalSearchRegion.y,
+        }))
+        .filter(
+          (match) =>
+            match.x + match.width / 2 >= 0 &&
+            match.y + match.height / 2 >= 0 &&
+            match.x + match.width / 2 <= finalSearchRegion.canvas.width &&
+            match.y + match.height / 2 <= finalSearchRegion.canvas.height
+        );
+      rawMatches.length = 0;
+      rawMatches.push(...refinedMatches, ...calibratedSeedMatches);
     }
     const unmatchedTemplates = candidateTemplates.filter(
       (template) =>
