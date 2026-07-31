@@ -1733,6 +1733,8 @@ export default function LootdropDetailPage() {
                                 string,
                                 {
                                   dots: typeof mDots;
+                                  parentKey: string;
+                                  parentPoolSize: number;
                                   poolSize: number;
                                   poolEntries: VariantNameEntry[];
                                 }
@@ -1745,6 +1747,8 @@ export default function LootdropDetailPage() {
                                 if (!linkerGroups.has(key)) {
                                   linkerGroups.set(key, {
                                     dots: [],
+                                    parentKey: gp,
+                                    parentPoolSize: d.parent_pool_size ?? 0,
                                     poolSize: d.sub_pool_size ?? 0,
                                     poolEntries: d.sub_pool_entries ?? [],
                                   });
@@ -1780,12 +1784,19 @@ export default function LootdropDetailPage() {
                                 });
                               };
                               const parts: string[] = [];
+                              const describedParents = new Set<string>();
                               for (const [, g] of linkerGroups) {
                                 const uniquePos = new Set(
                                   g.dots.map((d) => `${d.x},${d.y},${d.z}`)
                                 ).size;
+                                const parentPoolLabel =
+                                  g.parentPoolSize > 1 &&
+                                  !describedParents.has(g.parentKey)
+                                    ? `${ut('ui.detail.parent_pool_select').replace('{count}', String(g.parentPoolSize))} `
+                                    : '';
+                                describedParents.add(g.parentKey);
                                 parts.push(
-                                  `(${ut('ui.detail.shared_pool').replace('{members}', g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep')))}${uniquePos > 1 ? ` · ${ut('ui.detail.position_count').replace('{count}', String(uniquePos))}` : ''})`
+                                  `${parentPoolLabel}(${ut('ui.detail.shared_pool').replace('{members}', g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep')))}${uniquePos > 1 ? ` · ${ut('ui.detail.position_count').replace('{count}', String(uniquePos))}` : ''})`
                                 );
                               }
                               const dedupedReg = dedupPos(regDots);

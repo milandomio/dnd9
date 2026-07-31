@@ -971,6 +971,8 @@ export default function DetailPage() {
                             string,
                             {
                               coords: Coord[];
+                              parentKey: string;
+                              parentPoolSize: number;
                               poolSize: number;
                               poolEntries: NonNullable<
                                 Coord['sub_pool_entries']
@@ -985,6 +987,8 @@ export default function DetailPage() {
                             if (!linkerGroups.has(key)) {
                               linkerGroups.set(key, {
                                 coords: [],
+                                parentKey: gp,
+                                parentPoolSize: c.parent_pool_size ?? 0,
                                 poolSize: c.sub_pool_size ?? 0,
                                 poolEntries: c.sub_pool_entries ?? [],
                               });
@@ -992,10 +996,15 @@ export default function DetailPage() {
                             linkerGroups.get(key)!.coords.push(c);
                           }
                           if (linkerGroups.size > 0) {
+                            const describedParents = new Set<string>();
                             return [...linkerGroups.entries()].map(([, g]) => {
                               const uniquePos = new Set(
                                 g.coords.map((c) => `${c.x},${c.y},${c.z}`)
                               ).size;
+                              const showParentPool =
+                                g.parentPoolSize > 1 &&
+                                !describedParents.has(g.parentKey);
+                              describedParents.add(g.parentKey);
                               return (
                                 <span
                                   key={g.poolEntries
@@ -1003,6 +1012,16 @@ export default function DetailPage() {
                                     .join(',')}
                                   style={{ color: tokens.muted }}
                                 >
+                                  {showParentPool && (
+                                    <>
+                                      {ut(
+                                        'ui.detail.parent_pool_select'
+                                      ).replace(
+                                        '{count}',
+                                        String(g.parentPoolSize)
+                                      )}{' '}
+                                    </>
+                                  )}
                                   (
                                   {ut('ui.detail.shared_pool').replace(
                                     '{members}',

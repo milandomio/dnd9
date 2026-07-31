@@ -29,8 +29,8 @@
 
 - **改动原因**：`BP_GameObjectLinker` 内的成员会共同生成；此前详情页和掉落页将其错误显示为“实体 N 种选 M、位置选 1”，幽鬼、阴森帷幕披风与风箱页面均受影响。
 - **变更文件**：`api/src/collector.py`；`api/src/translator.py`；`web/src/types/data.ts`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
-- **关键逻辑/映射关系**：同一 `(map, file, group_parent)` 的 `sub_group_parent` 数量导出为 `parent_pool_size`；详情页按父池中包含当前实体的子组数计算出现率，子组成员则统一显示为“共生组合：成员列表 · N 点”，不再把成员数或点数视为互斥分母。掉落页的坐标分数按父池规模分摊，并跳过共生坐标旧的 `variant_count` 除法。
-- **验证**：`python main.py`、`npm run format`、`npm run format:check`、`npx tsc --noEmit`、quick SSG 构建及 `HTTP 200` 均通过；Playwright 确认幽鬼、阴森帷幕披风和风箱页面出现“共生组合”，且不再含“幽鬼、阴森帷幕披风2种选”。
+- **关键逻辑/映射关系**：同一 `(map, file, group_parent)` 的 `sub_group_parent` 数量导出为 `parent_pool_size`；详情页按父池中包含当前实体的子组数计算出现率，子组成员则统一显示为“共生组合：成员列表 · N 点”，不再把成员数或点数视为互斥分母。每个父池首次出现时显示“随机组合池：N组中选1组”；掉落页的坐标分数按父池规模分摊，并跳过共生坐标旧的 `variant_count` 除法。
+- **验证**：`python main.py`、`npm run format`、`npm run format:check`、`npx tsc --noEmit`、quick SSG 构建及 `HTTP 200` 均通过；Playwright 确认幽鬼、阴森帷幕披风和风箱页面出现“共生组合”，且不再含“幽鬼、阴森帷幕披风2种选”；披风页仅显示一次“随机组合池：6组中选1组”并保留全部 6 个组合。
 
 ### fix: 明确地图识别精度阈值标签
 
