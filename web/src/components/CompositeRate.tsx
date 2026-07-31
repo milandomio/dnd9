@@ -33,7 +33,7 @@ export default function CompositeRate({
 
   return (
     <>
-      {spawnRate && spawnRate > 0 && (
+      {spawnRate !== undefined && spawnRate > 0 && (
         <div style={rateStyle}>
           {ut('ui.detail.composite_spawn_rate')}{' '}
           {parseFloat(spawnRate.toFixed(spawnPrecision))}%

@@ -1626,7 +1626,6 @@ export default function LootdropDetailPage() {
                       offY={offY}
                       adj={adj}
                       range={range}
-                      hideZeroZLabels
                     />
                   ) : (
                     <div

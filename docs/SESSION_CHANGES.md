@@ -647,3 +647,10 @@
 - **变更文件**：`web/src/components/MapPanel.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`MapPanel` 新增 `hideZeroZLabels` 开关；掉落详情页启用该开关，仅隐藏 `Math.round(z) === 0` 的文字，黄色点位和非零 Z 标签继续保留，其他页面不变。
 - **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）、`npm run test:i18n`（23/23）和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认 `Spear_8001` 地图无 `0` 高度标签但保留非零标签，`AshTree01` 其他详情页仍保留原有零高度标签。
+
+### fix: 回滚错误的零高度标签修改并修复综合爆率旁的 0
+
+- **回退内容及原因**：回退提交 `93ac20b5` 中 `MapPanel.hideZeroZLabels` 和掉落详情页开关；`Bandage` 页面中的独立 `0` 并非 Z 高度标签，而是 `CompositeRate` 的数值短路渲染。
+- **变更文件**：`web/src/components/MapPanel.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`web/src/components/CompositeRate.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：将 `spawnRate && spawnRate > 0` 改为 `spawnRate !== undefined && spawnRate > 0`，使 `spawnRate === 0` 时返回布尔 `false` 而不是直接渲染数字 `0`；地图 Z 高度标签恢复原逻辑。
+- **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）和 quick SSG 构建通过；`Bandage` 目标页 HTTP 200，Playwright 确认“断裂通道”卡片不再存在独立的 `0` 文本节点，源码中已无 `hideZeroZLabels`。
