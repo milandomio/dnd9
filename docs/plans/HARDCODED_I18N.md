@@ -10,10 +10,10 @@
 
 ## 已实施状态（2026-08-01）
 
-- `hardcoded_translation_key()`、`resolve_translation_key()` 与 `hardcoded_locale_entries()` 已落地；当前输出中使用的 129 个 `df5.hardcoded.*` 键在 10 个 locale 文件中均有值。
+- `hardcoded_translation_key()`、`resolve_translation_key()` 与 `hardcoded_locale_entries()` 已落地；当前输出中使用的 172 个 `df5.hardcoded.*` 键在 10 个 locale 文件中均有值。
 - items、monsters、props、lootdrop 来源、模块坐标、任务目标与搜索索引的写出路径已复用合成键解析，不再因空 `translation_key` 直接丢失 i18n 入口。
 - `SuperHoard*` 继续使用专用的 `df5.hardcoded.SuperHoard` 十语言人工文案。
-- 与原计划的差异：除 `HARDCODED_LOCALE_OVERRIDES` 外，非中文值目前由实体标识自动转为可读英文，而非 230 条人工十语言译文。因此“键体系和可显示回退”已完成，“全量人工本地化”仍未完成。
+- 与原计划的差异：`HARDCODED_LOCALE_OVERRIDES` 已为五个用户可见怪物和双 Boss 宝藏室提供十语言词条；其余技术实体仍由名称自动转为可读英文，而非 230 条人工十语言译文。因此“键体系和可显示回退”已完成，“全量人工本地化”仍未完成。
 - 原文中“未执行”“有空再执行”及未勾选验收项仅反映 2026-07-26 的计划快照；后续工作应以本节和日语详情 backlog 为准。
 
 ### 1.1 现象

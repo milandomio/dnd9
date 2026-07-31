@@ -663,3 +663,10 @@
 - **变更文件**：`docs/plans/MULTILANG_STATUS.md`；`docs/plans/HARDCODED_I18N.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/plans/META_DESCRIPTION_OPTIMIZATION.md`；`docs/PWA_ROADMAP.md`；`docs/BACKEND_AUDIT_FIX_PLAN.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：SEO 以 `seoTemplate.mjs -> localizedSeoDescription() -> SSG __localizedDescription -> description/og:description` 为完成链路；PWA 六项以 `d46cd0fb` 及 manifest、离线页、更新提示、安装提示实现为准；硬编码实体以 `resolve_translation_key() -> df5.hardcoded.* -> hardcoded_locale_entries()` 为完成的键与回退链路。日语剩余项按当前产物重新归类为 90 个日语等于英语的 synthetic key、38 个空 key 实体和 2 个模块 fallback，共 130 项。
 - **验证**：复核提交 `2de870fe`、`8a578589`、`59452a72`、`7f1eb6ae`、`d46cd0fb` 与 `5bacaeef`；检查当前 129 个 `df5.hardcoded.*` 键在十语言 locale 均无缺口；quick SSG 产物中英文首页和日语详情页的 description/OG 一致，日语详情页含 `__localizedDescription`；`npm run test:i18n` 23/23 通过。
+
+### feat: 补齐硬编码实体 key 与第一批十语言名称
+
+- **改动原因**：详情页中有 38 个实体缺少 `translation_key`，`Ruins_Chapel` 等模块因此回退为中文或 raw identifier；五个普通怪物则只有可读英文回退，无法在十语言页面显示本地化名称。
+- **变更文件**：`api/src/config.py`；`api/src/translator.py`；`api/src/module_builder.py`；`api/tests/test_hardcoded_i18n.py`；`docs/plans/MULTILANG_STATUS.md`；`docs/plans/HARDCODED_I18N.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`EXPLICIT_TRANSLATION_KEY_OVERRIDES` 优先返回已核实的游戏 key，覆盖 `LittleToad_Poison -> Text_DesignData_Monster_Monster_LittleToad`、`Ruins_Chapel -> Text_DesignData_Dungeon_DungeonModule_Abandoned_Sanctuary` 及 LivingArmor/LivingStatue/Morayeel/Rat/TrainingDummy；无官方 key 的 37 个环境实体进入 `HARDCODED_TRANSLATIONS -> df5.hardcoded.* -> hardcoded_locale_entries()`。模块仅为 `Ruins_Chapel` 与 `Ruins_DualBossTreasureRoom` 走 fallback，ShipGraveyard 的数字模块别名保持原样；五个怪物和双 Boss 宝藏室在 `HARDCODED_LOCALE_OVERRIDES` 中提供十语言静态词条。
+- **验证**：两次完整 `python main.py` 管道均通过，最终耗时 131.77 秒；所有详情实体的空 key 数为 0；172 个当前使用的 `df5.hardcoded.*` key 在十语言 locale 中均无缺口；Python unittest 8 项通过；第一次 quick SSG 通过（3067 路由、15202 HTML、17011 文件）。前端格式、类型、lint 与浏览器 i18n 回归在提交前复核。

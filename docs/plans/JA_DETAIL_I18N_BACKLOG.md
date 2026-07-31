@@ -2,12 +2,12 @@
 
 ## 当前审计基线
 
-- **审计日期**：2026-08-01（基于当前 `data/json` locale 与实体详情产物复核）。
+- **审计日期**：2026-08-01（基于完成本轮管道后的 `data/json` locale 与实体详情产物复核）。
 - **审计范围**：日语 `items`、`monsters`、`props`、`lootdrops` 和 `dungeon_modules` 详情页的主实体标题；不把坐标中的地图文件名、页脚品牌和 `PvE`、`HR`、`EXP` 等固定缩写当作实体翻译问题。
-- **候选总数**：130 个实体。
-- **分类**：90 个已有 `df5.hardcoded.*` synthetic key 但日语值仍等于英文；38 个实体缺少 `translation_key`；2 个模块仍以中文或 raw fallback 显示。
+- **候选总数**：110 个技术实体。
+- **分类**：所有详情实体已具备官方或 `df5.hardcoded.*` key；五个怪物已补十语言人工词条，`LittleToad_Poison`、`LivingArmor`、`LivingStatue`、`Morayeel`、`Rat`、`TrainingDummy_CharacterBase` 和 `Ruins_Chapel` 复用官方 key；其余 110 个技术实体的日语值仍等于英文。
 - **排除项**：`EmptyModule_1F_09/13/14/15` 与 ShipGraveyard 的两个数字模块名是既定显示别名（如 `5-1`、`1-1`），不是待翻译 raw identifier。
-- **数据依据**：`data/json/{items,monsters,props,lootdrops,dungeon_modules.json,locale/{ja,en}.json}`；所有当前使用的 129 个 `df5.hardcoded.*` 键已在十语言 locale 中存在。
+- **数据依据**：`data/json/{items,monsters,props,lootdrops,dungeon_modules.json,locale/{ja,en}.json}`；所有当前使用的 172 个 `df5.hardcoded.*` 键已在十语言 locale 中存在。
 - **清单说明**：下方逐项清单保留 2026-07-30 的人工核对记录，个别计数已被后续合成键落地改变；实施前先按上述当前基线重新导出候选，不以旧条目数量判断完成度。
 
 ## 处理顺序
