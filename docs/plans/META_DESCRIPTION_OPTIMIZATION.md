@@ -2,7 +2,14 @@
 
 ## 状态
 
-草案，未执行。等待确认后才开始 URL 审计、文案修改和构建验证。本阶段不修改网站业务代码、不运行构建、不访问 Bing Webmaster Tools。
+**已实施核心链路，保留为持续审计计划。** 2026-07-30 的 `2de870fe`、`8a578589`、`59452a72` 已完成十语言描述模板、React/SSG 共用构建入口、静态 HTML 注入和浏览器回归验证。
+
+- `web/src/i18n/seoTemplate.mjs` 为主页、列表、实体、掉落、探索、任务和地图模块提供十语言 description 模板。
+- 全部页面使用 `localizedSeoDescription()`，`meta[name="description"]` 与 `og:description` 取同一个值。
+- SSG 对非默认语言注入 `__localizedDescription` 并重写静态 description/OG 标签；客户端首轮使用该值，locale 加载后再由同一模板重算。
+- 2026-08-01 quick SSG 抽查确认英文主页与日语详情页的静态 description/OG 一致，且日语详情页含 `__localizedDescription`；`npm run test:i18n` 23/23 通过。
+
+仍未执行的是全 Sitemap 的长度、重复、语言质量审计，以及 Bing Webmaster Tools 发布后监测；这些不应再被表述为“SEO 未开始”。
 
 ## 背景与当前发现
 
