@@ -301,7 +301,7 @@ def run():
                         )
                 _coord_variant_count[_vkey] = (_vcnt, _vtr)
 
-        _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[dict[str, str]]]] = {}
+        _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[dict[str, str]], int]] = {}
         for _sp_key, (_sp_cnt, _sp_raw_names) in _sub_pool_info_raw.items():
             _sp_tr: list[dict[str, str]] = []
             for _kw in _sp_raw_names:
@@ -336,7 +336,18 @@ def run():
                         "name": _name,
                     }
                 )
-            _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr)
+            _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr, 0)
+
+        _parent_pool_sizes: dict[tuple[str, str, str], int] = {}
+        for _map_base, _filename, _group_parent, _sub_group_parent in _sub_pool_info:
+            _parent_key = (_map_base, _filename, _group_parent)
+            _parent_pool_sizes[_parent_key] = _parent_pool_sizes.get(_parent_key, 0) + 1
+        for _sp_key, (_sp_cnt, _sp_entries, _) in _sub_pool_info.items():
+            _sub_pool_info[_sp_key] = (
+                _sp_cnt,
+                _sp_entries,
+                _parent_pool_sizes[_sp_key[:3]],
+            )
 
         pipe.log("[JSON] building merged lootdrop map...")
         merged_loot, skip_variants = build_merged_loot_map(db)
