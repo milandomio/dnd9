@@ -147,10 +147,16 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
             img_name = "RareModule_1x1"
             has_img = True
         aliases = r.get("aliases", []) or []
+        translation_key = r["translation_key"]
+        if not translation_key and r["module_name"] in {
+            "Ruins_Chapel",
+            "Ruins_DualBossTreasureRoom",
+        }:
+            translation_key = resolve_translation_key(r["module_name"])
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
-            "translation_key": r["translation_key"],
-            "translation": resolve_name(r["module_name"], r["translation_key"], "module"),
+            "translation_key": translation_key,
+            "translation": resolve_name(r["module_name"], translation_key, "module"),
             "group": r["module_group"],
             "size_x": sx,
             "size_y": sy,
