@@ -17,7 +17,7 @@ class DropRateVariantTest(unittest.TestCase):
     def setUp(self):
         self.engine = DropRateEngine()
         self.engine._ld_groups = {"group": {1001: [("drop", "rate", 1)]}}
-        self.engine._ld_rate_items = {"drop": {"Bandage_4001": (4, 1)}}
+        self.engine._ld_rate_items = {"drop": {"Bandage_4001": [(4, 1)]}}
         self.engine._ld_luck_grade_count = {("drop", 4): 1}
         self.engine._ld_rate_weights = {"rate": {4: 4000, 5: 2000}}
         self.engine._ld_rate_totals = {"rate": 10000}
@@ -35,6 +35,24 @@ class DropRateVariantTest(unittest.TestCase):
             self.engine.compute_variant_rate("group", 4, 1001, item_name="Bandage_4001"),
             0.4,
         )
+
+    def test_item_with_multiple_luck_grades_sums_each_pool_weight(self):
+        self.engine._ld_rate_items = {"drop": {"ShiningPearl": [(6, 1), (7, 1)]}}
+        self.engine._ld_luck_grade_count = {("drop", 6): 1, ("drop", 7): 1}
+        self.engine._ld_rate_weights = {"rate": {6: 1250, 7: 50}}
+
+        self.assertEqual(self.engine.compute_drop_rate("group", "ShiningPearl", 1001), 0.13)
+        self.assertEqual(
+            self.engine.compute_variant_rate("group", 6, 1001, item_name="ShiningPearl"),
+            0.13,
+        )
+
+    def test_bellows_sums_all_three_registered_luck_grades(self):
+        self.engine._ld_rate_items = {"drop": {"Bellows": [(2, 1), (3, 1), (4, 1)]}}
+        self.engine._ld_luck_grade_count = {("drop", 2): 1, ("drop", 3): 1, ("drop", 4): 1}
+        self.engine._ld_rate_weights = {"rate": {2: 500, 3: 1000, 4: 2000}}
+
+        self.assertAlmostEqual(self.engine.compute_drop_rate("group", "Bellows", 1001), 0.35)
 
     def test_detail_suffixes_come_from_real_drop_entries(self):
         self.engine._existing_variant_suffixes = {"Bandage": {"1001", "2001", "3001", "4001"}}

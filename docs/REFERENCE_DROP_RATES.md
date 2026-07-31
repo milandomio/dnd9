@@ -21,6 +21,8 @@ SpawnerDataAsset
 
 `DungeonGrade` 先映射到地图组、模式和楼层，再选对应 `LootDropRateId`。同一 lootdrop group 在不同 grade 下不能复用 rate。
 
+同一 `ItemId` 可在一个 `LootDropItemArray` 中对应多个 `LuckGrade`。导入时必须保留每一行；计算该物品爆率时累加各行的 `weight[luck_grade] / total_weight`，并按同 LuckGrade 的物品数均分权重。
+
 ## DB 预加载
 
 `DropRateEngine.preload()` 将查询链压入内存，避免详情导出时重复 SQL：
@@ -29,7 +31,7 @@ SpawnerDataAsset
 |----------|------|------|
 | `_spawner_ldg` | `spawner_entries` | entity/spawner -> lootdrop group |
 | `_ld_groups` | `lootdrop_groups` | group -> grade -> lootdrop/rate/count |
-| `_ld_rate_items` | `lootdrop_rate_items` | lootdrop -> item/luck grade/count |
+| `_ld_rate_items` | `lootdrop_rate_items` | lootdrop -> item -> 多个 luck grade/count |
 | `_ld_rate_weights` | `lootdrop_rate_weights` | rate -> luck grade 权重 |
 | `_ld_rate_totals` | 权重汇总 | 爆率归一化分母 |
 

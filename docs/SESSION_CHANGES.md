@@ -664,6 +664,13 @@
 - **关键逻辑/映射关系**：SEO 以 `seoTemplate.mjs -> localizedSeoDescription() -> SSG __localizedDescription -> description/og:description` 为完成链路；PWA 六项以 `d46cd0fb` 及 manifest、离线页、更新提示、安装提示实现为准；硬编码实体以 `resolve_translation_key() -> df5.hardcoded.* -> hardcoded_locale_entries()` 为完成的键与回退链路。日语剩余项按当前产物重新归类为 90 个日语等于英语的 synthetic key、38 个空 key 实体和 2 个模块 fallback，共 130 项。
 - **验证**：复核提交 `2de870fe`、`8a578589`、`59452a72`、`7f1eb6ae`、`d46cd0fb` 与 `5bacaeef`；检查当前 129 个 `df5.hardcoded.*` 键在十语言 locale 均无缺口；quick SSG 产物中英文首页和日语详情页的 description/OG 一致，日语详情页含 `__localizedDescription`；`npm run test:i18n` 23/23 通过。
 
+### fix: 合并同一物品的多 LuckGrade 掉落权重
+
+- **改动原因**：`ShiningPearl` 与 `Bellows` 等物品在同一个 `LootDropItemArray` 中有多条不同 `LuckGrade`；导入时以物品名去重，导致仅最后一条保留，爆率被低估。
+- **变更文件**：`api/src/db/importers/spawners.py`；`api/src/drop_rate.py`；`api/tests/test_drop_rate.py`；`docs/REFERENCE_DROP_RATES.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`(lootdrop_id, item_name, luck_grade)` 保留原始每个掉落档位；`_ld_rate_items` 改为 item 对应档位列表，`compute_drop_rate()` 与指定物品的 `compute_variant_rate()` 累加每个档位的 `weight / shared_count / total_weight`。风箱 `LG2/LG3/LG4 -> 5% + 10% + 20% = 35%`（豪客炼狱 3 层）；闪耀珍珠 `LG6/LG7 -> 12.5% + 0.5% = 13%`（豪客船墓）。
+- **验证**：`python -m unittest api.tests.test_drop_rate` 8 项通过；`python -m py_compile src/drop_rate.py src/db/importers/spawners.py` 通过；完整 `python main.py` 管道通过。产物 `data/json/lootdrops/Bellows.json` 显示豪客赛 35%，`ShiningPearl.json` 显示豪客赛与逆袭赛 13%。
+
 ### feat: 补齐硬编码实体 key 与第一批十语言名称
 
 - **改动原因**：详情页中有 38 个实体缺少 `translation_key`，`Ruins_Chapel` 等模块因此回退为中文或 raw identifier；五个普通怪物则只有可读英文回退，无法在十语言页面显示本地化名称。
