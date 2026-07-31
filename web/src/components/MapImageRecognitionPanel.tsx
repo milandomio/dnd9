@@ -429,6 +429,7 @@ export default function MapImageRecognitionPanel({
             />
           </label>
         ))}
+        <span aria-hidden="true" style={{ flexBasis: '100%', height: 0 }} />
         <button
           type="button"
           onClick={handleRerun}
