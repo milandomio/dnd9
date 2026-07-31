@@ -1,9 +1,17 @@
+const RARE_MODULE_BASE_SPAWN_RATE = 1;
+const CRYPT_GRID_CELL_COUNT = 25;
+const CENTER_TOWER_COVERED_CELL_COUNT = 4;
+const RARE_MODULE_SPAWN_RATE =
+  (RARE_MODULE_BASE_SPAWN_RATE *
+    (CRYPT_GRID_CELL_COUNT - CENTER_TOWER_COVERED_CELL_COUNT)) /
+  CRYPT_GRID_CELL_COUNT;
+
 const RARE_MODULE_SPAWN_RATES: Record<string, number> = {
-  Crypt_BlindfallPit: 1,
-  Crypt_LightlessChamber_01: 1,
-  Crypt_LightlessTomb_01: 1,
-  Crypt_MadCorridors: 1,
-  Crypt_TorchboundVault: 1,
+  Crypt_BlindfallPit: RARE_MODULE_SPAWN_RATE,
+  Crypt_LightlessChamber_01: RARE_MODULE_SPAWN_RATE,
+  Crypt_LightlessTomb_01: RARE_MODULE_SPAWN_RATE,
+  Crypt_MadCorridors: RARE_MODULE_SPAWN_RATE,
+  Crypt_TorchboundVault: RARE_MODULE_SPAWN_RATE,
 };
 
 export function getRareModuleSpawnRate(moduleName?: string): number {

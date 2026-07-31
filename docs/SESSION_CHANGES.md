@@ -4,6 +4,13 @@
 
 ## 2026-07-31
 
+### fix: 将中心塔覆盖概率计入稀有模块出现率
+
+- **改动原因**：地穴稀有模块先以 1% 概率落入 5x5 网格，随后 2x2 的 `CenterTower_HR_D` 会覆盖其中 4 格；此前页面仍按 1% 计算，导致综合爆率偏高。
+- **变更文件**：`web/src/utils/moduleSpawnRate.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：五个 `Crypt_*` 稀有模块共享的出现率改为 `1% × (25 - 4) / 25 = 0.84%`；`getRareModuleSpawnRate()` 同时驱动模块标题出现率，`applyModuleSpawnRate()` 继续将该值折算到物品/怪物/容器详情页和掉落详情页的综合爆率。
+- **验证**：`npm run format`、`npm run format:check` 与 `npx tsc --noEmit` 通过。
+
 ### perf: 延迟加载地图截图识别资源
 
 - **改动原因**：关闭识图开关时，详情页仍静态加载识图组件并构造模板描述数组；虽然未加载 OpenCV 和模板图片，仍存在不必要的脚本与计算开销。
