@@ -4,12 +4,26 @@
 
 ## 2026-07-31
 
+### perf: 延迟加载地图截图识别资源
+
+- **改动原因**：关闭识图开关时，详情页仍静态加载识图组件并构造模板描述数组；虽然未加载 OpenCV 和模板图片，仍存在不必要的脚本与计算开销。
+- **变更文件**：`web/src/components/MapImageRecognition.tsx`；`web/src/components/MapImageRecognitionPanel.tsx`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：保留的轻量开关通过 `React.lazy` 在开启后才请求识图面板 chunk；面板 chunk 再按原逻辑动态导入 OpenCV，并请求当前页面模板图片。详情页和掉落页仅在开关开启时构造模板描述数组，关闭时不遍历识图模板。关闭开关会卸载面板。
+- **验证**：Prettier 与 TypeScript 通过，quick SSG 通过；Playwright 在关闭开关的初始加载记录中未发现 `MapImageRecognitionPanel` 或 `opencv` 请求，开启并等待引擎就绪后才依次请求面板 chunk 和 OpenCV chunk。
+
 ### perf: 提高地图识别工作分辨率
 
 - **改动原因**：1920px 截图缩到 600px 后，5x5 单元仅约 42px，Cistern 的细墙和小型标记损失严重。
 - **变更文件**：`web/src/utils/mapImageRecognition.ts`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`MAX_WORKING_EDGE` 从 `600` 提高到 `1200`，1920px 截图中的单元工作尺寸约从 42px 提升到 84px；识别流程和原图坐标换算不变。
 - **验证**：1200px 下 Cistern 固定单元分数由约 `0.329` 提升到 `0.766`；Inferno 标准模式回归为 5 个真值，`InfernoMouth` 分数 `0.639`。移除低分辨率阶段的 `-0.25` 固定单元阈值补偿，改为合并标准高置信锚点与固定单元结果；锚点在合并前会从初始 ROI 局部坐标映射到校准地图局部坐标，以中心落入地图范围判断保留，避免边缘模块被裁剪过滤。
+
+### fix: 共生子池不再显示为互斥选项
+
+- **改动原因**：`BP_GameObjectLinker` 内的成员会共同生成；此前详情页和掉落页将其错误显示为“实体 N 种选 M、位置选 1”，幽鬼、阴森帷幕披风与风箱页面均受影响。
+- **变更文件**：`api/src/collector.py`；`api/src/translator.py`；`web/src/types/data.ts`；`web/src/pages/DetailPage.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：同一 `(map, file, group_parent)` 的 `sub_group_parent` 数量导出为 `parent_pool_size`；详情页按父池中包含当前实体的子组数计算出现率，子组成员则统一显示为“共生组合：成员列表 · N 点”，不再把成员数或点数视为互斥分母。
+- **验证**：`python main.py`、`npm run format`、`npm run format:check`、`npx tsc --noEmit`、quick SSG 构建及 `HTTP 200` 均通过；Playwright 确认幽鬼、阴森帷幕披风和风箱页面出现“共生组合”，且不再含“幽鬼、阴森帷幕披风2种选”。
 
 ### fix: 明确地图识别精度阈值标签
 
