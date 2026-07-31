@@ -20,6 +20,8 @@ export interface MapPanelProps {
   range: number;
   /** true = 单分类，用 zColor 着色圆点；false = 多分类，用 dot.color */
   singleCategory?: boolean;
+  /** Hide zero-height labels while keeping their map markers visible. */
+  hideZeroZLabels?: boolean;
   children?: React.ReactNode;
   /** Image URL (direct or blob) managed by the parent */
   imageSrc: string;
@@ -42,6 +44,7 @@ function MapPanel({
   adj,
   range,
   singleCategory,
+  hideZeroZLabels = false,
   children,
   imageSrc,
 }: MapPanelProps) {
@@ -100,23 +103,25 @@ function MapPanel({
                 zIndex: 10,
               }}
             >
-              <span
-                style={{
-                  position: 'absolute',
-                  left: '50%',
-                  top: '100%',
-                  transform: 'translateX(-50%)',
-                  fontSize: 11,
-                  fontFamily: 'Arial, sans-serif',
-                  color: textCol,
-                  whiteSpace: 'nowrap',
-                  textShadow,
-                  lineHeight: 1,
-                  marginTop: 1,
-                }}
-              >
-                {Math.round(d.z)}
-              </span>
+              {(!hideZeroZLabels || Math.round(d.z) !== 0) && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '100%',
+                    transform: 'translateX(-50%)',
+                    fontSize: 11,
+                    fontFamily: 'Arial, sans-serif',
+                    color: textCol,
+                    whiteSpace: 'nowrap',
+                    textShadow,
+                    lineHeight: 1,
+                    marginTop: 1,
+                  }}
+                >
+                  {Math.round(d.z)}
+                </span>
+              )}
             </div>
           );
         })}

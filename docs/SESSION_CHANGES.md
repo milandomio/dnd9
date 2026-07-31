@@ -640,3 +640,10 @@
 - **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：在地图规模、地图起点和模块像素控件之后增加 100% 宽度的换行占位，使重新识别、清空参数及 0 结果提示固定进入下一行；按钮事件和参数逻辑不变。
 - **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）、`npm run test:i18n`（23/23）和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认地图规模控件位于 y=210，两个按钮位于 y=242，地图分组控件位于 y=274。
+
+### fix: 掉落详情页隐藏零高度标签
+
+- **改动原因**：`/zh-Hans/lootdrops/Spear_8001/` 的地图点位下方显示 `0`，该值是 Z 高度而非掉落数据，容易与爆率或数量混淆。
+- **变更文件**：`web/src/components/MapPanel.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`MapPanel` 新增 `hideZeroZLabels` 开关；掉落详情页启用该开关，仅隐藏 `Math.round(z) === 0` 的文字，黄色点位和非零 Z 标签继续保留，其他页面不变。
+- **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 error，19 个既有 warning）、`npm run test:i18n`（23/23）和 quick SSG 构建通过；目标页 HTTP 200，Playwright 确认 `Spear_8001` 地图无 `0` 高度标签但保留非零标签，`AshTree01` 其他详情页仍保留原有零高度标签。
