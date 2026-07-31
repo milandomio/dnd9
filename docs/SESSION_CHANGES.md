@@ -683,3 +683,10 @@
 - **改动原因**：射箭靶、战旗、烛台、萤火虫和地面灯会直接作为详情页实体标题显示，不应继续在非中文 locale 中回退为英文技术名。
 - **变更文件**：`api/src/config.py`；`docs/plans/MULTILANG_STATUS.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：五个实体在 `HARDCODED_LOCALE_OVERRIDES` 提供 zh-Hans/en/de/es/fr/ja/ko/pt-BR/ru/zh-Hant 的静态名称；`hardcoded_locale_entries()` 继续将这些值按 `df5.hardcoded.*` key 写入对应语言 locale。
+
+### feat: 为技术实体生成十语言本地化标签
+
+- **改动原因**：其余硬编码环境与引擎实体没有可靠的游戏官方名称，但不能继续在非中文页面静默显示英文回退。
+- **变更文件**：`api/src/config.py`；`docs/plans/MULTILANG_STATUS.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`TECHNICAL_LOCALE_PREFIXES[lang] + _english_hardcoded_name(name)` 在数据管道中生成静态 locale 值，例如日语为“技术对象: Asset Name”；`HARDCODED_LOCALE_OVERRIDES` 和官方 key 仍优先，后续人工词条可直接覆盖自动标签。
+- **验证**：完整 `python main.py` 管道通过（121.84 秒）；详情实体空 key 数为 0，日语与英语值相同数为 0；Python 编译、Ruff、Black 与差异空白检查通过。
