@@ -4,6 +4,13 @@
 
 ## 2026-07-31
 
+### docs: 记录 Blindfall Pit 从 Dungeon/Layout/Module 到 0.84% 的完整计算链
+
+- **改动原因**：`Blindfall Pit` 的基础 `1%` 不应仅以 `moduleSpawnRate.ts` 中的固定值表达，需要保留从 `Id_Dungeon_RandomCrypt_N_Solo` 的布局引用、Rare 槽统计、Crypt 稀有模块池到中心塔覆盖修正的可复算路径。
+- **变更文件**：`docs/BLINDFALL_PIT_PROBABILITY_RECORD.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`Id_Dungeon_RandomCrypt_N_Solo.json.Properties.Layouts[]` 引用 40 个 `Crypt_5x5` 布局；`DungeonLayout.Properties.Slots[].SlotTypes[].SlotType` 统计出 2 个含 `Rare` 槽布局；`NumMaxRares=1` 确认当前每局最多一次稀有抽取；`DungeonModule` 中 `ModuleType=Crypt && bIsRare=true` 得到 5 个稀有模块，故基础概率为 `(2/40)×(1/5)=1%`；`CenterTower` 的 `2x2` 尺寸在 `5x5` 网格覆盖 4 格，最终为 `1%×(25-4)/25=0.84%`。文档同时记录字段、文件链、假设、模式差异和布局变更后的重算检查项。
+- **验证**：已根据游戏解包资产和历史提交 `501d7b59` / `4a469816` 复核文件链与数值；本次仅文档改动，未运行数据管道或前端构建。
+
 ### fix: 将中心塔覆盖概率计入稀有模块出现率
 
 - **改动原因**：地穴稀有模块先以 1% 概率落入 5x5 网格，随后 2x2 的 `CenterTower_HR_D` 会覆盖其中 4 格；此前页面仍按 1% 计算，导致综合爆率偏高。
