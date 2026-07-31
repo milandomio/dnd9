@@ -348,27 +348,6 @@ export default function MapImageRecognitionPanel({
             gap: 6,
           }}
         >
-          <select
-            aria-label={ut('ui.map_recognition.group_select')}
-            value={selectedGroup}
-            onChange={(event) => handleGroupChange(event.target.value)}
-            style={{
-              maxWidth: 180,
-              padding: '2px 5px',
-              border: `1px solid ${tokens.border}`,
-              borderRadius: 3,
-              color: tokens.text,
-              background: tokens.bg,
-              fontSize: 11,
-            }}
-          >
-            <option value="">{ut('ui.filter.all')}</option>
-            {groupOptions.map(([group, label]) => (
-              <option key={group} value={group}>
-                {label}
-              </option>
-            ))}
-          </select>
           <span style={{ color: tokens.muted, fontSize: 11 }}>
             {ut('ui.map_recognition.template_count').replace(
               '{count}',
@@ -389,31 +368,34 @@ export default function MapImageRecognitionPanel({
           fontSize: 11,
         }}
       >
-        <select
-          aria-label={ut('ui.map_recognition.grid_size')}
-          value={gridType || ''}
-          onChange={(event) =>
-            setGridType((event.target.value || null) as MapGridType | null)
-          }
-          style={{
-            padding: '2px 5px',
-            border: `1px solid ${tokens.border}`,
-            borderRadius: 3,
-            color: tokens.text,
-            background: tokens.bg,
-            fontSize: 11,
-          }}
-        >
-          <option value="">{ut('ui.map_recognition.grid_unknown')}</option>
-          {(['3x3', '4x4', '5x5', '7x7'] as const).map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+          {ut('ui.map_recognition.grid_size')}
+          <select
+            aria-label={ut('ui.map_recognition.grid_size')}
+            value={gridType || ''}
+            onChange={(event) =>
+              setGridType((event.target.value || null) as MapGridType | null)
+            }
+            style={{
+              padding: '2px 5px',
+              border: `1px solid ${tokens.border}`,
+              borderRadius: 3,
+              color: tokens.text,
+              background: tokens.bg,
+              fontSize: 11,
+            }}
+          >
+            <option value="">{ut('ui.map_recognition.grid_unknown')}</option>
+            {(['3x3', '4x4', '5x5', '7x7'] as const).map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </label>
         {[
-          ['X', gridX, setGridX],
-          ['Y', gridY, setGridY],
+          ['地图起点X', gridX, setGridX],
+          ['地图起点Y', gridY, setGridY],
           [ut('ui.map_recognition.cell_size'), cellSize, setCellSize],
         ].map(([label, value, setter]) => (
           <label
@@ -476,6 +458,39 @@ export default function MapImageRecognitionPanel({
           fontSize: 11,
         }}
       >
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+          <span
+            style={{
+              color: '#d4380d',
+              fontSize: 13,
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {ut('ui.map_recognition.group_select')}
+          </span>
+          <select
+            aria-label={ut('ui.map_recognition.group_select')}
+            value={selectedGroup}
+            onChange={(event) => handleGroupChange(event.target.value)}
+            style={{
+              maxWidth: 180,
+              padding: '2px 5px',
+              border: `1px solid ${tokens.border}`,
+              borderRadius: 3,
+              color: tokens.text,
+              background: tokens.bg,
+              fontSize: 11,
+            }}
+          >
+            <option value="">{ut('ui.filter.all')}</option>
+            {groupOptions.map(([group, label]) => (
+              <option key={group} value={group}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
         <label style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
           {ut('ui.map_recognition.precision')}
           <select
