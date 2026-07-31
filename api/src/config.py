@@ -378,6 +378,19 @@ HARDCODED_TRANSLATION_KEY_ALIASES = {
 # Synthetic keys make fallback entity names available to the locale exporter.
 HARDCODED_I18N_PREFIX = "df5.hardcoded."
 
+# Assets without a player-facing game name remain technically identifiable while
+# each locale still signals that the following readable asset name is technical.
+TECHNICAL_LOCALE_PREFIXES = {
+    "de": "Technisches Objekt: ",
+    "es": "Objeto técnico: ",
+    "fr": "Objet technique : ",
+    "ja": "技術オブジェクト: ",
+    "ko": "기술 오브젝트: ",
+    "pt-BR": "Objeto técnico: ",
+    "ru": "Технический объект: ",
+    "zh-Hant": "技術物件：",
+}
+
 HARDCODED_LOCALE_OVERRIDES: dict[str, dict[str, str]] = {
     "ArcheryTarget": {
         "zh-Hans": "射箭靶",
@@ -642,7 +655,7 @@ def hardcoded_locale_entries(lang: str, used_keys: set[str]) -> dict[str, str]:
     """Build synthetic locale entries only for hardcoded entities present in output."""
     return {
         key: HARDCODED_LOCALE_OVERRIDES.get(name, {}).get(lang)
-        or (value if lang == "zh-Hans" else _english_hardcoded_name(name))
+        or (value if lang == "zh-Hans" else TECHNICAL_LOCALE_PREFIXES.get(lang, "") + _english_hardcoded_name(name))
         for name, value in HARDCODED_TRANSLATIONS.items()
         if (key := hardcoded_translation_key(name)) in used_keys
     }

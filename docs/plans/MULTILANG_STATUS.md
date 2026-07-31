@@ -20,8 +20,8 @@ URL 前缀 -> LanguageProvider -> locale fetch -> t()/ut()
 ## 当前剩余
 
 - 非中文 NavBar 曾有 Hydration mismatch；`LanguageProvider` 现以 SSG 注入的 `__ssrLang` 对齐客户端首轮语言。2026-08-01 的 23 页多语言 Playwright 回归未发现 hydration 错误，因此不再作为已知问题。
-- 日语详情页不再有空 key、raw identifier 或中文模块兜底；仍有 105 个技术实体的日语值等于英文。完整审计口径见 [`JA_DETAIL_I18N_BACKLOG.md`](JA_DETAIL_I18N_BACKLOG.md)。
-- `df5.hardcoded.*` 已保证所有语言有稳定显示值，但 105 个技术实体仍使用可读英文回退；后续须按十语言范围决定保留技术英文或补人工译文。
+- 日语详情页不再有空 key、raw identifier 或中文模块兜底；技术实体使用带语言前缀的可读资产名。完整审计口径见 [`JA_DETAIL_I18N_BACKLOG.md`](JA_DETAIL_I18N_BACKLOG.md)。
+- `df5.hardcoded.*` 已保证所有语言有稳定显示值；技术实体当前使用自动生成的十语言技术标签，后续可逐项替换为更自然的人工实体译名。
 
 ## 后续原则
 
