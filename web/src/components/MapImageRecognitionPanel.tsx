@@ -406,6 +406,7 @@ export default function MapImageRecognitionPanel({
             <input
               type="number"
               aria-label={label as string}
+              placeholder={ut('ui.map_recognition.grid_unknown')}
               min={label === ut('ui.map_recognition.cell_size') ? 1 : 0}
               step={0.1}
               value={value as string}
@@ -483,7 +484,9 @@ export default function MapImageRecognitionPanel({
               fontSize: 11,
             }}
           >
-            <option value="">{ut('ui.filter.all')}</option>
+            <option value="">
+              {ut('ui.map_recognition.group_unselected')}
+            </option>
             {groupOptions.map(([group, label]) => (
               <option key={group} value={group}>
                 {label}
