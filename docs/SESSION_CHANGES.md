@@ -620,3 +620,16 @@
 - **变更文件**：`CLAUDE.md`；`docs/DEVELOPMENT_WORKFLOW.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：默认工作分支由 `dev` 调整为 `main`；仅在用户明确要求时允许切换分支，所有分支继续执行同一提交纪律。
 - **验证**：文档交叉约定已同步，差异空白检查结果见本次 checkpoint。
+
+### fix: 将重新识别按钮改为使用改动参数
+
+- **改动原因**：明确重新识别按钮只用于应用用户修改后的识别参数，避免“按缓存参数”造成误解；同时将原图标按钮改为带可见文案的按钮。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：按钮仍调用 `handleRerun`，继续复用当前缓存截图和当前控件参数；`ui.map_recognition.rerun` 作为按钮文字、`title` 和 `aria-label`，各语言同步表达“使用改动后的参数重新识别”。
+
+### feat: 增加清空地图识图参数按钮
+
+- **改动原因**：切换到不同的 5x5 或 7x7 地图时，需要清除上一张地图的截图缓存、识别结果和自动校准值，避免新图片沿用旧地图裁剪参数。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：新增 `ui.map_recognition.clear_parameters` 按钮，复用 `clearResult()` 清除 `screenshotRef`、预览、匹配项、网格类型、地图起点和模块像素；OpenCV 引擎及地图模板缓存保持不变，清空后可重新粘贴图片识别。
+- **补充逻辑**：带有 5x5/7x7 网格校准时若识别结果为 0，在清空按钮右侧以红色显示 `ui.map_recognition.zero_match_clear_hint`，提示用户清空参数后重新粘贴图片，不使用弹窗。

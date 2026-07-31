@@ -316,6 +316,10 @@ export default function MapImageRecognitionPanel({
     status === 'done' && gridType
       ? `${baseStatusText} · ${ut('ui.map_recognition.grid_type').replace('{grid}', gridType)}`
       : baseStatusText;
+  const shouldSuggestClearParameters =
+    status === 'done' &&
+    matches.length === 0 &&
+    (gridType === '5x5' || gridType === '7x7');
 
   return (
     <div
@@ -432,20 +436,75 @@ export default function MapImageRecognitionPanel({
           title={ut('ui.map_recognition.rerun')}
           aria-label={ut('ui.map_recognition.rerun')}
           style={{
-            width: 26,
-            height: 24,
-            display: 'inline-grid',
-            placeItems: 'center',
-            padding: 0,
+            minHeight: 24,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 4,
+            padding: '2px 6px',
             border: `1px solid ${tokens.border}`,
             borderRadius: 3,
             color: tokens.text,
             background: tokens.bg,
             cursor: screenshotRef.current ? 'pointer' : 'not-allowed',
+            fontSize: 11,
+            whiteSpace: 'nowrap',
           }}
         >
           <ScanOutlined />
+          {ut('ui.map_recognition.rerun')}
         </button>
+        <button
+          type="button"
+          onClick={clearResult}
+          disabled={
+            status === 'recognizing' ||
+            (!screenshotRef.current &&
+              !previewUrl &&
+              !gridType &&
+              !gridX &&
+              !gridY &&
+              !cellSize)
+          }
+          title={ut('ui.map_recognition.clear_parameters')}
+          aria-label={ut('ui.map_recognition.clear_parameters')}
+          style={{
+            minHeight: 24,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 4,
+            padding: '2px 6px',
+            border: `1px solid ${tokens.border}`,
+            borderRadius: 3,
+            color: tokens.text,
+            background: tokens.bg,
+            cursor:
+              status === 'recognizing' ||
+              (!screenshotRef.current &&
+                !previewUrl &&
+                !gridType &&
+                !gridX &&
+                !gridY &&
+                !cellSize)
+                ? 'not-allowed'
+                : 'pointer',
+            fontSize: 11,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <DeleteOutlined />
+          {ut('ui.map_recognition.clear_parameters')}
+        </button>
+        {shouldSuggestClearParameters && (
+          <span
+            style={{
+              color: '#d4380d',
+              fontSize: 11,
+              fontWeight: 600,
+            }}
+          >
+            {ut('ui.map_recognition.zero_match_clear_hint')}
+          </span>
+        )}
       </div>
 
       <div
