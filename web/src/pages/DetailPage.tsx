@@ -56,25 +56,32 @@ const GROUP_ORDER = [
 type Entity = ItemEntity | MonsterEntity | PropsEntity;
 
 function subPoolGenerationRate(coords: Coord[]): number {
-  const poolSizes = new Map<string, number>();
+  const parentPools = new Map<
+    string,
+    { size: number; subGroups: Set<string> }
+  >();
   for (const coord of coords) {
     if (
       !coord.group_parent ||
       !coord.sub_group_parent ||
-      !coord.sub_pool_size ||
-      coord.sub_pool_size <= 0
+      !coord.parent_pool_size ||
+      coord.parent_pool_size <= 0
     ) {
       continue;
     }
-    poolSizes.set(
-      `${coord.group_parent}::${coord.sub_group_parent}`,
-      coord.sub_pool_size
-    );
+    const parentPool = parentPools.get(coord.group_parent) ?? {
+      size: coord.parent_pool_size,
+      subGroups: new Set<string>(),
+    };
+    parentPool.subGroups.add(coord.sub_group_parent);
+    parentPools.set(coord.group_parent, parentPool);
   }
-  if (poolSizes.size === 0) return 0;
+  if (parentPools.size === 0) return 0;
 
-  const missAll = [...poolSizes.values()].reduce(
-    (probability, poolSize) => probability * (1 - 1 / poolSize),
+  const missAll = [...parentPools.values()].reduce(
+    (probability, parentPool) =>
+      probability *
+      (1 - Math.min(1, parentPool.subGroups.size / parentPool.size)),
     1
   );
   return Math.round((1 - missAll) * 10000) / 100;
@@ -473,35 +480,37 @@ export default function DetailPage() {
   });
 
   const recognitionTemplates: MapImageTemplate[] = [];
-  const recognitionImageUrls = new Set<string>();
-  for (const sec of sections) {
-    for (const item of sec.items) {
-      const visibleCoords = hideZeroRate
-        ? item.coords.filter((coord) => {
-            const match = sec.gdi.find((entry) =>
-              labelMatch(coord.label || '', entry.translation)
-            );
-            if (!match) return true;
-            if (modeFilter) return (match.drop_rates[modeFilter] ?? 0) > 0;
-            return hasAnyRate(match.drop_rates);
-          })
-        : item.coords;
-      const module = item.mod;
-      if (!visibleCoords.length || !module?.has_img) continue;
-      const imageUrl = mapImageUrl(module, Boolean(isDetailTemplate));
-      if (
-        !isRecognizableMapImage(imageUrl) ||
-        recognitionImageUrls.has(imageUrl)
-      )
-        continue;
-      recognitionImageUrls.add(imageUrl);
-      recognitionTemplates.push({
-        id: item.mapName,
-        url: imageUrl,
-        label: t(module.translation_key, module.translation || item.mapName),
-        group: module.group,
-        groupLabel: formatGroupLabel(module, t, ut) || module.group,
-      });
+  if (mapRecognitionEnabled) {
+    const recognitionImageUrls = new Set<string>();
+    for (const sec of sections) {
+      for (const item of sec.items) {
+        const visibleCoords = hideZeroRate
+          ? item.coords.filter((coord) => {
+              const match = sec.gdi.find((entry) =>
+                labelMatch(coord.label || '', entry.translation)
+              );
+              if (!match) return true;
+              if (modeFilter) return (match.drop_rates[modeFilter] ?? 0) > 0;
+              return hasAnyRate(match.drop_rates);
+            })
+          : item.coords;
+        const module = item.mod;
+        if (!visibleCoords.length || !module?.has_img) continue;
+        const imageUrl = mapImageUrl(module, Boolean(isDetailTemplate));
+        if (
+          !isRecognizableMapImage(imageUrl) ||
+          recognitionImageUrls.has(imageUrl)
+        )
+          continue;
+        recognitionImageUrls.add(imageUrl);
+        recognitionTemplates.push({
+          id: item.mapName,
+          url: imageUrl,
+          label: t(module.translation_key, module.translation || item.mapName),
+          group: module.group,
+          groupLabel: formatGroupLabel(module, t, ut) || module.group,
+        });
+      }
     }
   }
 
@@ -901,13 +910,16 @@ export default function DetailPage() {
                               (1 - (1 - 1 / forcedVcN) ** groupCount)
                             ).toFixed(4)
                           : v;
-                    if (!hasVariant) return null;
+                    const hasSharedPool = mapCoords.some(
+                      (c) => c.sub_pool_entries && c.sub_pool_entries.length > 0
+                    );
+                    if (!hasVariant && !hasSharedPool) return null;
                     const filteredGdi = gdi.filter((info) =>
                       mapCoords.some(
                         (c) => c.label && labelMatch(c.label, info.translation)
                       )
                     );
-                    if (filteredGdi.length === 0) return null;
+                    if (hasVariant && filteredGdi.length === 0) return null;
                     const sameDropRates = (
                       a: Record<string, number>,
                       b: Record<string, number>
@@ -943,15 +955,17 @@ export default function DetailPage() {
                           alignItems: 'center',
                         }}
                       >
-                        <ReferenceDropRates
-                          entries={filteredGdi}
-                          modeFilter={modeFilter}
-                          adjSpawnRate={adjRate}
-                          showPrefix={false}
-                          parenModes
-                          hideModes={hideModes}
-                          labelSeparator=":"
-                        />
+                        {filteredGdi.length > 0 && (
+                          <ReferenceDropRates
+                            entries={filteredGdi}
+                            modeFilter={modeFilter}
+                            adjSpawnRate={adjRate}
+                            showPrefix={false}
+                            parenModes
+                            hideModes={hideModes}
+                            labelSeparator=":"
+                          />
+                        )}
                         {(() => {
                           const linkerGroups = new Map<
                             string,
@@ -990,18 +1004,16 @@ export default function DetailPage() {
                                   style={{ color: tokens.muted }}
                                 >
                                   (
-                                  {g.poolEntries
-                                    .map((entry) =>
-                                      t(entry.translation_key, entry.name)
-                                    )
-                                    .join(ut('ui.location.map_sep'))}
-                                  {ut('ui.detail.pool_select')
-                                    .replace('{count}', String(g.poolSize))
-                                    .replace('{positions}', String(uniquePos))}
+                                  {ut('ui.detail.shared_pool').replace(
+                                    '{members}',
+                                    g.poolEntries
+                                      .map((entry) =>
+                                        t(entry.translation_key, entry.name)
+                                      )
+                                      .join(ut('ui.location.map_sep'))
+                                  )}
                                   {uniquePos > 1
-                                    ? ` · ${ut('ui.detail.pool_positions')
-                                        .replace('{count}', String(uniquePos))
-                                        .replace('{select}', '1')}`
+                                    ? ` · ${ut('ui.detail.position_count').replace('{count}', String(uniquePos))}`
                                     : ''}
                                   )
                                 </span>

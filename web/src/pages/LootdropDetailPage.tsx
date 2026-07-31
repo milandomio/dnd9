@@ -593,6 +593,7 @@ export default function LootdropDetailPage() {
         sub_group_parent?: string;
         sub_pool_size?: number;
         sub_pool_entries?: VariantNameEntry[];
+        parent_pool_size?: number;
         quality?: string;
       }[];
     }
@@ -619,6 +620,7 @@ export default function LootdropDetailPage() {
         sub_group_parent: c.sub_group_parent,
         sub_pool_size: c.sub_pool_size,
         sub_pool_entries: c.sub_pool_entries,
+        parent_pool_size: c.parent_pool_size,
         quality: c.quality,
       });
     });
@@ -747,37 +749,39 @@ export default function LootdropDetailPage() {
   );
 
   const recognitionTemplates: MapImageTemplate[] = [];
-  const recognitionImageUrls = new Set<string>();
-  for (const [, groupItems] of sortedGroups) {
-    for (const item of groupItems) {
-      const visibleDots = hideZeroRate
-        ? item.dots.filter((dot) => {
-            const groupName = item.mod?.group || '';
-            const gdi = data?.group_drop_info?.[groupName];
-            const entry = gdi?.find((candidate) =>
-              matchesGroupEntry(candidate, dot.monster)
-            );
-            if (!entry) return true;
-            if (modeFilter) return (entry.drop_rates[modeFilter] ?? 0) > 0;
-            return hasAnyRate(entry.drop_rates);
-          })
-        : item.dots;
-      const module = item.mod;
-      if (!visibleDots.length || !module?.has_img) continue;
-      const imageUrl = mapImageUrl(module);
-      if (
-        !isRecognizableMapImage(imageUrl) ||
-        recognitionImageUrls.has(imageUrl)
-      )
-        continue;
-      recognitionImageUrls.add(imageUrl);
-      recognitionTemplates.push({
-        id: item.mapName,
-        url: imageUrl,
-        label: t(module.translation_key, module.translation || item.mapName),
-        group: module.group,
-        groupLabel: formatGroupLabel(module, t, ut) || module.group,
-      });
+  if (mapRecognitionEnabled) {
+    const recognitionImageUrls = new Set<string>();
+    for (const [, groupItems] of sortedGroups) {
+      for (const item of groupItems) {
+        const visibleDots = hideZeroRate
+          ? item.dots.filter((dot) => {
+              const groupName = item.mod?.group || '';
+              const gdi = data?.group_drop_info?.[groupName];
+              const entry = gdi?.find((candidate) =>
+                matchesGroupEntry(candidate, dot.monster)
+              );
+              if (!entry) return true;
+              if (modeFilter) return (entry.drop_rates[modeFilter] ?? 0) > 0;
+              return hasAnyRate(entry.drop_rates);
+            })
+          : item.dots;
+        const module = item.mod;
+        if (!visibleDots.length || !module?.has_img) continue;
+        const imageUrl = mapImageUrl(module);
+        if (
+          !isRecognizableMapImage(imageUrl) ||
+          recognitionImageUrls.has(imageUrl)
+        )
+          continue;
+        recognitionImageUrls.add(imageUrl);
+        recognitionTemplates.push({
+          id: item.mapName,
+          url: imageUrl,
+          label: t(module.translation_key, module.translation || item.mapName),
+          group: module.group,
+          groupLabel: formatGroupLabel(module, t, ut) || module.group,
+        });
+      }
     }
   }
 
@@ -1755,7 +1759,7 @@ export default function LootdropDetailPage() {
                                   g.dots.map((d) => `${d.x},${d.y},${d.z}`)
                                 ).size;
                                 parts.push(
-                                  `(${g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep'))}${ut('ui.detail.pool_select').replace('{count}', String(g.poolSize)).replace('{positions}', String(uniquePos))}${uniquePos > 1 ? ` · ${ut('ui.detail.pool_positions').replace('{count}', String(uniquePos)).replace('{select}', '1')}` : ''})`
+                                  `(${ut('ui.detail.shared_pool').replace('{members}', g.poolEntries.map((entry) => t(entry.translation_key, entry.name)).join(ut('ui.location.map_sep')))}${uniquePos > 1 ? ` · ${ut('ui.detail.position_count').replace('{count}', String(uniquePos))}` : ''})`
                                 );
                               }
                               const dedupedReg = dedupPos(regDots);
