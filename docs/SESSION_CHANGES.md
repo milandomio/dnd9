@@ -4,6 +4,20 @@
 
 ## 2026-07-31
 
+### fix: 为地图校准输入增加未识别占位文案
+
+- **改动原因**：地图起点 X、Y 和模块像素输入为空时没有状态提示，用户无法直观看出可以等待系统自动识别。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：三个数字输入复用 `ui.map_recognition.grid_unknown` 作为 `placeholder`，简体中文显示“未识别”；输入值、自动校准回填和手动编辑逻辑不变。
+- **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint` 和 quick SSG 构建通过；`npm run test:i18n` 通过 23/23；目标页 HTTP 200，Playwright 确认三个校准输入的 `placeholder` 均为“未识别”。
+
+### fix: 将地图分组空选项改为未选择
+
+- **改动原因**：地图分组下拉的空值选项原显示“全部”，无法明确提示用户需要主动选择地图分组。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；`web/src/components/MapImageRecognitionPanel.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：新增 `ui.map_recognition.group_unselected`，替代地图分组下拉中的全站 `ui.filter.all`；简体中文为“未选择”，其他 9 种语言同步提供对应文案，空值仍表示未指定分组。
+- **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint` 和 quick SSG 构建通过；`npm run test:i18n` 通过 23/23；Playwright 确认地图分组空选项显示“未选择”，全站其他“全部”文案不受影响。
+
 ### fix: 为地图规模下拉增加介绍标题
 
 - **改动原因**：`3x3/4x4/5x5/7x7` 网格选择下拉缺少与“识别精度”一致的可见说明标题。
