@@ -11,6 +11,13 @@
 - **关键逻辑/映射关系**：`collector.py` 分别记录索引、详情和 enrichment；`build_and_save_lootdrop_details()` 以 `perf_counter()` 累计 setup、源坐标、基础 GDI 概率、坐标规范化/评分、ref/坐标预算、变体 GDI、详情 JSON、索引回写和未归类时间。实测 478 个 lootdrop：详情 `94.568s`，其中基础 `group_rates` 为 `73.068s`（77.3%），源坐标 `8.881s`，变体 `7.887s`，详情 JSON `2.138s`；enrichment 为 `0.527s`。因此后续优化应优先减少 `DropRateEngine.get_group_drop_rates()` 的重复计算，而非继续压缩 JSON I/O。
 - **验证**：Ruff、Black、Python 编译和 11 个后端单元测试通过；完整管道成功，`lootdrops=95.16s`、总计 `120.83s`，日志为 `/tmp/darkfindv5-lootdrop-profile.log`；预览根路径 HTTP 200。
 
+### perf: 拆解基础 group_rates 的概率计算时间
+
+- **改动原因**：第一层分项显示基础 `group_rates` 占 lootdrop 详情的大多数时间，仍需明确其内部是候选组定位、模式/楼层遍历、掉落表匹配还是权重计算造成。
+- **变更文件**：`api/src/drop_rate.py`；`api/src/lootdrop_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`build_and_save_lootdrop_details()` 将共享 profile 传给 `get_group_drop_rates()`；后者分别累计候选 LDG 解析、模式/楼层调度及 `compute_drop_rate()`，后者再累计分级表查询、`_find_rate_item()`、权重累加和其余循环。实测基础 `group_rates=72.368s`：`get_group_drop_rates=69.870s`、调用端 `2.498s`；其中 `compute_drop_rate=68.599s`，而 `_find_rate_item()` 为 `67.507s`，占基础 group_rates `93.3%`。其未命中基础物品时会扫描整个 `rate_items` 并匹配变体，是后续缓存 `(lootdrop_id, item_name)` 查询结果的唯一优先热点。
+- **验证**：Ruff、Black、Python 编译和 11 个后端单元测试通过；完整管道成功，`lootdrops=94.39s`、总计 `127.44s`，日志为 `/tmp/darkfindv5-group-rates-profile.log`；预览根路径 HTTP 200。
+
 ### perf: enrichment 改为内存传递并单次写实体详情
 
 - **改动原因**：`enrichment.py` 在 lootdrop 详情生成后再次解析 lootdrop、items、monsters、props 派生 JSON，再写回实体详情；该二次 I/O 不需要重新访问 DB 或解包数据。
