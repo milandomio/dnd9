@@ -120,5 +120,6 @@ Type.Item.Weapon.Sword         -> ..._Type_Item_Weapon_Sword
 - 完整管道生成 787 条带物品类型的 DB 记录、478 个 lootdrop 条目和 10 种 locale 文件；普通掉落条目无缺失类型元数据。
 - 当前列表生成 46 个标签；默认 `神器（28）`，`辅助道具：消耗品（15）` 可正常切换。
 - 分类按钮按一级 `ItemType` 分行，同一大类的子分类保持同一行；例如饰品行结束后，护甲分类从下一行开始。
+- 按钮使用内容宽度排列，不会因一行按钮数量不足而拉伸填满整行。
 - 英文等语言遇到游戏翻译表缺失的类型键时，前端将键名视为无效翻译并回退到对应语言的 `Uncategorized`，不展示内部键名。
 - 验证通过：31 个后端测试、Ruff、Black、Prettier、TypeScript、quick SSG、HTTP 200 和中英文 Playwright 标签切换。

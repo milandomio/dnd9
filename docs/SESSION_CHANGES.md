@@ -4,6 +4,20 @@
 
 ## 2026-08-02
 
+### style: 用标准锚点模拟 Select 视觉
+
+- **改动原因**：需要尝试不依赖 Ant Design `Select` 的 SEO 兼容方案，同时保持语言栏原有下拉框外观。
+- **变更文件**：`web/src/components/NavBar.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：语言选项继续使用 SSR 可爬取的 `<a href>`，通过原生 `details/summary` 和内联样式模拟 Select 的 7em 宽度、24px 高度、边框、下拉菜单、选中态、悬停态和打开态；链接仍由 `withLangPrefix()` 生成并统一补尾斜杠。
+- **验证**：Prettier、TypeScript 通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；Playwright 实测触发器约 `112x24px`、菜单包含 10 个语言锚点，首页和 NPC 页 HTTP 200。
+
+### style: lootdrop 分类按钮改为内容宽度
+
+- **改动原因**：分类按钮使用可增长 flex 配置，导致一行按钮不足时被拉伸填满整行；需要保持按钮自身内容宽度。
+- **变更文件**：`web/src/pages/ListPage.tsx`；`docs/plans/LOOTDROP_ITEM_TYPE_GROUPING.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：将按钮 flex 从可增长布局改为 `0 1 auto`，保留大类分行和行内自动换行，按钮只按文字、数量和 padding 占用宽度。
+- **验证**：Prettier、ESLint（0 error）、TypeScript 和 quick SSG 通过；`/zh-Hans/lootdrops/` HTTP 200；Playwright 在 1200px 宽度下验证首行三个按钮总占用 365px、容器宽 1168px，未被拉伸。
+
 ### feat: 按物品大类分行显示 lootdrop 标签
 
 - **改动原因**：类型标签全部处于同一 flex 行流中，饰品和护甲等不同一级大类之间没有明确换行。
