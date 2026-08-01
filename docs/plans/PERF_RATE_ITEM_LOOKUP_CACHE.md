@@ -83,6 +83,59 @@ _ld_preferred_base_items: dict[str, dict[str, list[tuple[int, int]]]]
 `compute_variant_rate()` 保持现状：其查询带品质后缀，已有精确查询语义，不应通过基底
 回退索引。
 
+## 实际执行链
+
+### 计算链
+
+```text
+lootdrop_builder.build_and_save_lootdrop_details()
+  -> DropRateEngine.get_group_drop_rates(item, entity, map_group)
+    -> map_group -> dungeon grade 后缀
+    -> PVE / 普通 / 豪客赛各模式
+    -> DropRateEngine.compute_drop_rate(lootdrop_group, item, grade)
+      -> _ld_groups[group][grade] -> (lootdrop_id, rate_id, drop_count)
+      -> _ld_rate_items[lootdrop_id]
+      -> _resolve_rate_item(lootdrop_id, rate_items, item)
+        -> 精确 item_name 命中：返回该项
+        -> 带品质后缀但未命中：返回 None
+        -> 无后缀基底：_ld_preferred_base_items[lootdrop_id][base]
+      -> 遍历返回项的 luck_grade
+      -> weight[rate_id][luck_grade] / 同 luck grade 物品数 / rate_total
+    -> 每个模式和楼层取最大概率，最终乘 100 并四舍五入
+```
+
+预加载期间的索引构建链：
+
+```text
+_ld_rate_items[lootdrop_id][variant_item]
+  -> 识别 _NNNN 品质后缀
+  -> 忽略 _8001
+  -> 同 base 优先 _5001，否则最大后缀
+  -> _ld_preferred_base_items[lootdrop_id][base]
+  -> 指向原有 [(luck_grade, drop_count), ...] 列表
+```
+
+优化前，计算链在每个 `compute_drop_rate()` 调用中执行一次完整的
+`rate_items.items()` 扫描、正则匹配和变体选择。优化后，这段扫描仅在 `preload()`
+中对每个 LootDrop 池执行一次，导出热路径只进行字典查询。
+
+### I/O 链与边界
+
+```text
+游戏解包数据
+  -> importer 写入 SQLite（导入阶段）
+  -> DropRateEngine.preload() 单次 SELECT lootdrop_rate_items
+  -> _ld_rate_items / _ld_preferred_base_items（仅内存）
+  -> lootdrop 详情计算（仅内存）
+  -> json.dump 写出 lootdrops/*.json（既有输出阶段）
+```
+
+- `_find_rate_item()` 的旧热点没有 SQL、文件读取或文件写入；它是纯内存 CPU 扫描。
+- 本次没有新增 DB 查询、解包数据访问、JSON 读取或详情文件写入。
+- 新增的索引来自 `preload()` 已读取的 `_ld_rate_items`，不复制 luck-grade 列表。
+- `lootdrops/*.json` 的既有写盘仍在详情计算完成后执行；本次不改变写入次数、路径或
+  JSON 结构。
+
 ## 实施步骤
 
 1. 在 `drop_rate.py` 增加预加载索引与私有 resolver；不修改 `_find_rate_item()` 的
@@ -134,3 +187,5 @@ _ld_preferred_base_items: dict[str, dict[str, list[tuple[int, int]]]]
   （减少 `67.977s`，93.9%）；lootdrop 详情从 `93.819s` 降至 `28.979s`
   （减少 `64.840s`，69.1%）；`lootdrops` 管道步骤从 `94.39s` 降至 `29.59s`
   （减少 `64.80s`，68.7%）。最终日志：`/tmp/darkfindv5-rate-item-cache-final.log`。
+- 已补充实际计算链与 I/O 链：优化将一次预加载期内存遍历替换为导出期重复内存扫描，
+  不改变 DB、JSON 或解包数据 I/O。
