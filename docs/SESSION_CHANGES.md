@@ -18,6 +18,13 @@
 - **关键逻辑/映射关系**：新增 `SOURCE_UNAVAILABLE` 状态及保护矩阵：有效 DB + 源不可用只走 DB-only；无效/缺失 DB + 源不可用直接 fail fast；`--rebuild-db` 同样必须先通过 source_available；stale 检查只返回状态，不执行 `DB_PATH.unlink()`，正式 DB 只在 building DB 导入完成并校验后通过 `os.replace()` 替换。
 - **验证**：已检查当前 `main.py` 的 `_pre_cleanup()` 仅删除 `data/json`，当前生产代码没有 DB unlink；方案测试矩阵新增 DB inode/mtime/大小不变、部分 source root 缺失和强制重建拒绝用例。本次仍仅修改方案与会话文档，未改生产逻辑。
 
+### wip: 开始实施 DB freshness 与原子重建生命周期
+
+- **改动原因**：开始落实 DB 生命周期方案，先消除 `GAME_ROOT` 存在即重复 importer 的隐式分支，并防止 source 不可用时误删或创建空 DB。
+- **变更文件**：`api/src/db_freshness.py`；`api/main.py`；`api/src/collector.py`；`api/src/db/__init__.py`；`api/src/db/schema.py`；`docs/plans/DB_FRESHNESS_AND_IMPORT_LIFECYCLE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：新增 metadata-only source manifest 和 `pipeline_meta`；入口先得到 DB 决策，再选择 DB-only 或写入 `darkfindv5.db.building` 的 full import；full import 完成后写 manifest/`import_complete`，关闭连接后 `os.replace()` 替换正式 DB。source 不可用时只允许复用有效 DB，强制重建也拒绝执行。
+- **当前状态**：已完成静态实现但尚未写生命周期测试、未跑完整管道；`item_coord_chain_map` 的重复 JOIN 仍未替换。此 checkpoint 仅保存可继续开发的 WIP，后续必须先完成测试与四路径管道验证。
+
 ### perf: 缓存 lootdrop 来源实体坐标骨架并完成前后对照
 
 - **改动原因**：最新 profile 中 `source_coords` 为 `9.293s`，同一来源实体会被多个 lootdrop 重复执行坐标回退、Spawner 过滤、label 分类、坐标转换和 spawn rate 查找，需要验证按实体复用坐标骨架的实际收益。
