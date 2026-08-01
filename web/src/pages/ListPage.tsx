@@ -191,6 +191,22 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   return groups;
 }
 
+function groupLootGroupsByCategory(groups: LootGroup[]): LootGroup[][] {
+  const rows: LootGroup[][] = [];
+  let rowKey = '';
+  for (const group of groups) {
+    const nextRowKey = group.categoryKey
+      ? `category:${itemCategoryName(group.categoryKey)}`
+      : 'special';
+    if (nextRowKey !== rowKey) {
+      rows.push([]);
+      rowKey = nextRowKey;
+    }
+    rows[rows.length - 1].push(group);
+  }
+  return rows;
+}
+
 function formatLootGroupLabel(
   group: LootGroup,
   t: (key: string | undefined, fallback: string) => string,
@@ -248,6 +264,7 @@ export default function ListPage() {
     count: data.length || undefined,
   });
   const lootGroups = page === 'lootdrops' ? groupLootdrops(data) : [];
+  const lootGroupRows = groupLootGroupsByCategory(lootGroups);
   const selectedLootGroup =
     lootGroups.find((group) => group.key === activeLootGroup) ?? lootGroups[0];
 
@@ -429,46 +446,58 @@ export default function ListPage() {
                       style={{
                         gridColumn: '1 / -1',
                         display: 'flex',
-                        flexWrap: 'wrap',
+                        flexDirection: 'column',
                         gap: 8,
                         marginBottom: 4,
                       }}
                     >
-                      {lootGroups.map((group) => {
-                        const isActive = selectedLootGroup?.key === group.key;
-                        const label = formatLootGroupLabel(
-                          group,
-                          t,
-                          ut,
-                          delimiter
-                        );
-                        return (
-                          <button
-                            key={group.key}
-                            type="button"
-                            role="tab"
-                            aria-selected={isActive}
-                            onClick={() => setActiveLootGroup(group.key)}
-                            style={{
-                              flex: '1 1 140px',
-                              minHeight: 42,
-                              padding: '8px 12px',
-                              color: isActive ? tokens.bg : tokens.accent,
-                              background: isActive
-                                ? tokens.accent
-                                : tokens.surface,
-                              border: `1px solid ${tokens.accent}`,
-                              borderRadius: 6,
-                              cursor: 'pointer',
-                              fontSize: 15,
-                              fontWeight: 'bold',
-                              transition: 'background 0.2s, color 0.2s',
-                            }}
-                          >
-                            {group.icon} {label} （{group.items.length}）
-                          </button>
-                        );
-                      })}
+                      {lootGroupRows.map((row, rowIndex) => (
+                        <div
+                          key={rowIndex}
+                          style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: 8,
+                          }}
+                        >
+                          {row.map((group) => {
+                            const isActive =
+                              selectedLootGroup?.key === group.key;
+                            const label = formatLootGroupLabel(
+                              group,
+                              t,
+                              ut,
+                              delimiter
+                            );
+                            return (
+                              <button
+                                key={group.key}
+                                type="button"
+                                role="tab"
+                                aria-selected={isActive}
+                                onClick={() => setActiveLootGroup(group.key)}
+                                style={{
+                                  flex: '1 1 140px',
+                                  minHeight: 42,
+                                  padding: '8px 12px',
+                                  color: isActive ? tokens.bg : tokens.accent,
+                                  background: isActive
+                                    ? tokens.accent
+                                    : tokens.surface,
+                                  border: `1px solid ${tokens.accent}`,
+                                  borderRadius: 6,
+                                  cursor: 'pointer',
+                                  fontSize: 15,
+                                  fontWeight: 'bold',
+                                  transition: 'background 0.2s, color 0.2s',
+                                }}
+                              >
+                                {group.icon} {label} （{group.items.length}）
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ))}
                     </div>
                     {selectedLootGroup && (
                       <div

@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### feat: 按物品大类分行显示 lootdrop 标签
+
+- **改动原因**：类型标签全部处于同一 flex 行流中，饰品和护甲等不同一级大类之间没有明确换行。
+- **变更文件**：`web/src/pages/ListPage.tsx`；`docs/plans/LOOTDROP_ITEM_TYPE_GROUPING.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：按 `itemCategoryName(item_category_key)` 将标签聚合为行；同一 `ItemType` 的子类型共享一行，一级大类变化时创建新行，神器/小型神器/稀有掉落保留特殊首行。
+- **验证**：Prettier、ESLint（0 error）、TypeScript 和 quick SSG 通过；`/zh-Hans/lootdrops/` HTTP 200；Playwright 验证 `饰品：戒指（7）` 位于 `护甲：布甲（64）` 上一行，点击护甲后显示 64 项。
+
 ### feat: 按物品真实类型重分组 lootdrop
 
 - **改动原因**：原 `物品 / 饰品 / 武器装备` 分组依赖 `variant_count` 和爆率分数猜测，无法反映游戏资产中的 `ItemType`、`ArmorType`、`MiscType`、`UtilityType`、`AccessoryType` 和 `WeaponTypes`。
