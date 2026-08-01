@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-08-01
+
+### docs: 新增 Blindfall Pit 概率计算链英文版
+
+- **改动原因**：用户需要一份更易阅读的英文文档来说明稀有模块从 Dungeon、DungeonLayout、DungeonModule 到 `0.84%` 的完整计算链，同时保留原中文文档不变。
+- **变更文件**：`docs/BLINDFALL_PIT_PROBABILITY_RECORD_EN.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：英文版将布局层 `2/40`、Crypt 稀有模块池 `1/5`、基础概率 `1%` 和 CenterTower `2x2` 覆盖修正 `21/25` 分章节说明，最终公式仍为 `1% × 21/25 = 0.84%`；同时整理资产链、模式差异、均匀抽取假设、失效条件和重算检查清单。原文件 `docs/BLINDFALL_PIT_PROBABILITY_RECORD.md` 未修改。
+- **验证**：英文文档 Prettier 检查、`npm run format`、`npm run format:check`、`npx tsc --noEmit` 和 `git diff --check` 均通过。
+
 ## 2026-07-31
 
 ### fix: 为地图校准输入增加未识别占位文案
