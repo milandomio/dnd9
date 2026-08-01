@@ -2,6 +2,7 @@
 
 import json
 import re
+import time
 from decimal import ROUND_HALF_UP, Decimal
 
 from config import DUNGEON_MODE_NAMES, MODULE_GROUP_FLOOR_SUFFIXES
@@ -335,30 +336,67 @@ class DropRateEngine:
             return cached
         return self._spawn_rate_cache.get(entity_name, 0.0)
 
-    def compute_drop_rate(self, ldg_id: str, item_name: str, full_grade: int) -> float:
+    def compute_drop_rate(
+        self,
+        ldg_id: str,
+        item_name: str,
+        full_grade: int,
+        profile: dict[str, float] | None = None,
+    ) -> float:
         """Compute drop rate for an item in a specific group+grade (0~1)."""
+        _started = time.perf_counter() if profile is not None else 0.0
+        _grade_lookup_started = time.perf_counter() if profile is not None else 0.0
         grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
+        _grade_lookup = time.perf_counter() - _grade_lookup_started if profile is not None else 0.0
         if not grade_data:
+            if profile is not None:
+                _total = time.perf_counter() - _started
+                profile["compute_drop_rate"] += _total
+                profile["grade_lookup"] += _grade_lookup
+                profile["compute_overhead"] += _total - _grade_lookup
             return 0.0
         total_weight = 0.0
         found = False
+        _item_lookup = 0.0
+        _weight_math = 0.0
         for ld_id, lr_id, _ in grade_data:
             rate_items = self._ld_rate_items.get(ld_id, {})
+            _item_lookup_started = time.perf_counter() if profile is not None else 0.0
             item_info = _find_rate_item(rate_items, item_name)
+            if profile is not None:
+                _item_lookup += time.perf_counter() - _item_lookup_started
             if item_info is None:
                 continue
             found = True
+            _weight_math_started = time.perf_counter() if profile is not None else 0.0
             _rate_total = self._ld_rate_totals.get(lr_id, 10000)
             for luck_grade, _item_count in item_info:
                 _pool_weight = self._ld_rate_weights.get(lr_id, {}).get(luck_grade, 0)
                 _shared = self._ld_luck_grade_count.get((ld_id, luck_grade), 1)
                 total_weight += _pool_weight / _shared / _rate_total
+            if profile is not None:
+                _weight_math += time.perf_counter() - _weight_math_started
+        if profile is not None:
+            _total = time.perf_counter() - _started
+            profile["compute_drop_rate"] += _total
+            profile["grade_lookup"] += _grade_lookup
+            profile["item_lookup"] += _item_lookup
+            profile["weight_math"] += _weight_math
+            profile["compute_overhead"] += _total - _grade_lookup - _item_lookup - _weight_math
         if found:
             return total_weight
         return 0.0
 
-    def get_group_drop_rates(self, item_name: str, monster_name: str, group_key: str) -> dict[str, float]:
+    def get_group_drop_rates(
+        self,
+        item_name: str,
+        monster_name: str,
+        group_key: str,
+        profile: dict[str, float] | None = None,
+    ) -> dict[str, float]:
         """Compute per-mode drop rates for an item/monster in a map group."""
+        _started = time.perf_counter() if profile is not None else 0.0
+        _candidate_started = time.perf_counter() if profile is not None else 0.0
         _primary = self._spawner_ldg.get(monster_name, "")
         _primary_set: set[str] = set()
         if _primary:
@@ -387,16 +425,23 @@ class DropRateEngine:
         if _vluck_m:
             _variant_luck = int(_vluck_m.group(1))
         suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        _candidate_resolution = time.perf_counter() - _candidate_started if profile is not None else 0.0
         if not suffixes:
+            if profile is not None:
+                _total = time.perf_counter() - _started
+                profile["get_group_total"] += _total
+                profile["candidate_resolution"] += _candidate_resolution
+                profile["mode_suffix_dispatch"] += _total - _candidate_resolution
             return {}
         mode_rates: dict[str, float] = {}
+        _compute_before = profile["compute_drop_rate"] if profile is not None else 0.0
         for mode_id, mode_name in DUNGEON_MODE_NAMES.items():
             best_rate = 0.0
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
                 # Try primary LDGs first
                 for _ldg_id in _primary_set:
-                    rate = self.compute_drop_rate(_ldg_id, item_name, full_grade)
+                    rate = self.compute_drop_rate(_ldg_id, item_name, full_grade, profile)
                     if rate > best_rate:
                         best_rate = rate
                 # For high-luck variant items (LG>=8), only use primary LDGs
@@ -404,10 +449,16 @@ class DropRateEngine:
                     for _ldg_id in _fallback_set:
                         if _ldg_id in _primary_set:
                             continue
-                        rate = self.compute_drop_rate(_ldg_id, item_name, full_grade)
+                        rate = self.compute_drop_rate(_ldg_id, item_name, full_grade, profile)
                         if rate > best_rate:
                             best_rate = rate
             mode_rates[mode_name] = _round_rate(best_rate * 100)
+        if profile is not None:
+            _total = time.perf_counter() - _started
+            _compute_total = profile["compute_drop_rate"] - _compute_before
+            profile["get_group_total"] += _total
+            profile["candidate_resolution"] += _candidate_resolution
+            profile["mode_suffix_dispatch"] += _total - _candidate_resolution - _compute_total
         return mode_rates
 
     def _get_candidate_ids(self, monster_name: str) -> set[str]:

@@ -455,6 +455,16 @@ def build_and_save_lootdrop_details(
         "index_finalize": 0.0,
         "index_json_write": 0.0,
     }
+    _rate_profile: dict[str, float] = {
+        "get_group_total": 0.0,
+        "candidate_resolution": 0.0,
+        "mode_suffix_dispatch": 0.0,
+        "compute_drop_rate": 0.0,
+        "grade_lookup": 0.0,
+        "item_lookup": 0.0,
+        "weight_math": 0.0,
+        "compute_overhead": 0.0,
+    }
     _all_started = time.perf_counter()
     _setup_started = time.perf_counter()
     map_base_to_group = drop_engine.map_base_to_group
@@ -712,10 +722,10 @@ def build_and_save_lootdrop_details(
                 _en = _m_data.get("entity_name", _m_data["name"])
                 # synthetic special: rates keyed under real entity GoldChest_UnderSea
                 _rate_en = "GoldChest_UnderSea" if _en == GOLDCHEST_SPECIAL else _en
-                _dr = drop_engine.get_group_drop_rates(item_name, _rate_en, _g)
+                _dr = drop_engine.get_group_drop_rates(item_name, _rate_en, _g, _rate_profile)
                 if not _dr:
                     _dr = (
-                        drop_engine.get_group_drop_rates(item_name, "GoldChest", _g)
+                        drop_engine.get_group_drop_rates(item_name, "GoldChest", _g, _rate_profile)
                         if _en == GOLDCHEST_SPECIAL
                         else None
                     )
@@ -1231,6 +1241,10 @@ def build_and_save_lootdrop_details(
     if log_fn:
         _timed_total = sum(_timings.values())
         _total = time.perf_counter() - _all_started
+        _rate_caller_overhead = _timings["group_rates"] - _rate_profile["get_group_total"]
+        for _name, _elapsed in _rate_profile.items():
+            log_fn(f"[PERF] lootdrops.group_rates.{_name}: {_elapsed:.3f}s")
+        log_fn(f"[PERF] lootdrops.group_rates.caller_overhead: {_rate_caller_overhead:.3f}s")
         for _name, _elapsed in _timings.items():
             log_fn(f"[PERF] lootdrops.{_name}: {_elapsed:.3f}s")
         log_fn(f"[PERF] lootdrops.unattributed: {_total - _timed_total:.3f}s")
