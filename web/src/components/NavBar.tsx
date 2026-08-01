@@ -4,6 +4,7 @@ import { Input, Spin } from 'antd';
 import {
   BulbOutlined,
   ClockCircleOutlined,
+  DownOutlined,
   GlobalOutlined,
   LoadingOutlined,
   SearchOutlined,
@@ -405,21 +406,42 @@ export default function NavBar() {
             rowGap: 6,
           }}
         >
-          <details style={{ position: 'relative' }}>
+          <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
+          <details style={{ position: 'relative', width: '7em' }}>
+            <style>{`
+              .language-selector-summary {
+                list-style: none;
+              }
+              .language-selector-summary::-webkit-details-marker {
+                display: none;
+              }
+            `}</style>
             <summary
+              className="language-selector-summary"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 5,
+                justifyContent: 'space-between',
+                gap: 8,
                 minHeight: 24,
+                padding: '0 7px',
+                boxSizing: 'border-box',
                 color: tokens.text,
+                background: dark ? '#333' : '#fff',
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 6,
+                fontSize: 14,
+                lineHeight: '22px',
                 cursor: 'pointer',
                 userSelect: 'none',
               }}
               aria-label={`Language: ${LANG_DISPLAY_NAME[lang]}`}
             >
-              <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
-              <span style={{ fontSize: 13 }}>{LANG_DISPLAY_NAME[lang]}</span>
+              <span>{LANG_DISPLAY_NAME[lang]}</span>
+              <DownOutlined
+                aria-hidden
+                style={{ color: tokens.muted, fontSize: 10 }}
+              />
             </summary>
             <nav
               aria-label="Language versions"
