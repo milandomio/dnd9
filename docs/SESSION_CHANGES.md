@@ -4,6 +4,20 @@
 
 ## 2026-08-01
 
+### docs: 制定 DB 新旧判断与导入生命周期修复方案
+
+- **改动原因**：当前 `collector.py` 用 `GAME_ROOT.exists()` 直接开启全量 importer，DB 存在也重复导入；历史 `_is_db_stale()` 在 DB-only 改造中被移除，导致 freshness、首次导入和 DB-only 模式没有明确边界。
+- **变更文件**：`docs/plans/DB_FRESHNESS_AND_IMPORT_LIFECYCLE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：方案恢复“打开 SQLite 前判断 DB 状态”的入口，使用 `pipeline_meta` source manifest 区分 missing/fresh/stale，采用 building DB + 完成标记 + 原子替换避免半成品 DB；`GAME_ROOT` 仅表示源可用，不再决定是否导入。方案同时记录当前约 10s 的 `item_coord_chain_map` 三表 JOIN，要求复用 `DropRateEngine._base_item_spawners` 并修正计时边界。
+- **验证**：已对照当前 `main.py`、`collector.py`、DB importer、schema、历史提交 `78d04b3b` 与 `2bd1438b`；本次仅新增方案文档，未改生产逻辑。
+
+### docs: 增加源目录不可用时禁止删除 DB 的硬性保护
+
+- **改动原因**：需要避免游戏目录缺失、挂载失败或源目录部分缺失时，stale 判断把“无法读取源”误判为空源，进而删除有效 DB 或创建空 DB。
+- **变更文件**：`docs/plans/DB_FRESHNESS_AND_IMPORT_LIFECYCLE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：新增 `SOURCE_UNAVAILABLE` 状态及保护矩阵：有效 DB + 源不可用只走 DB-only；无效/缺失 DB + 源不可用直接 fail fast；`--rebuild-db` 同样必须先通过 source_available；stale 检查只返回状态，不执行 `DB_PATH.unlink()`，正式 DB 只在 building DB 导入完成并校验后通过 `os.replace()` 替换。
+- **验证**：已检查当前 `main.py` 的 `_pre_cleanup()` 仅删除 `data/json`，当前生产代码没有 DB unlink；方案测试矩阵新增 DB inode/mtime/大小不变、部分 source root 缺失和强制重建拒绝用例。本次仍仅修改方案与会话文档，未改生产逻辑。
+
 ### perf: 缓存 lootdrop 来源实体坐标骨架并完成前后对照
 
 - **改动原因**：最新 profile 中 `source_coords` 为 `9.293s`，同一来源实体会被多个 lootdrop 重复执行坐标回退、Spawner 过滤、label 分类、坐标转换和 spawn rate 查找，需要验证按实体复用坐标骨架的实际收益。
