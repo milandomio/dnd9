@@ -99,26 +99,39 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
       continue;
     }
     if (item.item_category_key) {
-      const subtypeKeys = item.item_subtype_keys ?? [];
-      const key = [item.item_category_key, ...subtypeKeys].join(
-        ITEM_GROUP_SEPARATOR
-      );
-      let group = typedGroups.get(key);
-      if (!group) {
-        const category = itemCategoryName(item.item_category_key);
-        group = {
+      const rawSubtypeKeys = item.item_subtype_keys ?? [];
+      const rawSubtypeTranslations = item.item_subtype_translations ?? [];
+      const subtypeEntries = rawSubtypeKeys
+        .map((key, index) => ({
           key,
-          label: key,
-          icon: ITEM_CATEGORY_ICONS[category] ?? '📦',
-          items: [],
-          categoryKey: item.item_category_key,
-          categoryTranslation: item.item_category_translation,
-          subtypeKeys,
-          subtypeTranslations: item.item_subtype_translations,
-        };
-        typedGroups.set(key, group);
+          translation: rawSubtypeTranslations[index] || '',
+        }))
+        .filter(({ key, translation }) => translation && translation !== key);
+      const groupsToAdd = subtypeEntries.length
+        ? subtypeEntries
+        : [{ key: '', translation: '' }];
+      for (const { key: subtypeKey, translation } of groupsToAdd) {
+        const subtypeKeys = subtypeKey ? [subtypeKey] : [];
+        const groupKey = [item.item_category_key, ...subtypeKeys].join(
+          ITEM_GROUP_SEPARATOR
+        );
+        let group = typedGroups.get(groupKey);
+        if (!group) {
+          const category = itemCategoryName(item.item_category_key);
+          group = {
+            key: groupKey,
+            label: groupKey,
+            icon: ITEM_CATEGORY_ICONS[category] ?? '📦',
+            items: [],
+            categoryKey: item.item_category_key,
+            categoryTranslation: item.item_category_translation,
+            subtypeKeys,
+            subtypeTranslations: subtypeKey ? [translation] : [],
+          };
+          typedGroups.set(groupKey, group);
+        }
+        group.items.push(item);
       }
-      group.items.push(item);
       continue;
     }
     if (vc === 7 || vc === 8) {
@@ -221,19 +234,29 @@ function formatLootGroupLabel(
     return ut(group.labelKey || '') || group.label;
   }
   const unknownLabel = ut('ui.list.item_group_unknown');
-  const category = translatePart(
-    group.categoryKey,
-    group.categoryTranslation || unknownLabel
-  );
   const subtype = (group.subtypeKeys ?? [])
     .map((key, index) =>
       translatePart(key, group.subtypeTranslations?.[index] || unknownLabel)
     )
     .join(delimiter);
-  if (!subtype) return category;
-  return ut('ui.list.item_group')
-    .replace('{category}', category)
-    .replace('{type}', subtype);
+  return subtype || unknownLabel;
+}
+
+function formatLootGroupCategoryLabel(
+  group: LootGroup,
+  t: (key: string | undefined, fallback: string) => string,
+  ut: (key: string) => string
+): string {
+  if (!group.categoryKey) return '';
+  const unknownLabel = ut('ui.list.item_group_unknown');
+  const category = t(
+    group.categoryKey,
+    group.categoryTranslation || unknownLabel
+  );
+  return ut('ui.list.item_group_prefix').replace(
+    '{category}',
+    category === group.categoryKey ? unknownLabel : category
+  );
 }
 
 export default function ListPage() {
@@ -451,53 +474,78 @@ export default function ListPage() {
                         marginBottom: 4,
                       }}
                     >
-                      {lootGroupRows.map((row, rowIndex) => (
-                        <div
-                          key={rowIndex}
-                          style={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            gap: 8,
-                          }}
-                        >
-                          {row.map((group) => {
-                            const isActive =
-                              selectedLootGroup?.key === group.key;
-                            const label = formatLootGroupLabel(
-                              group,
-                              t,
-                              ut,
-                              delimiter
-                            );
-                            return (
-                              <button
-                                key={group.key}
-                                type="button"
-                                role="tab"
-                                aria-selected={isActive}
-                                onClick={() => setActiveLootGroup(group.key)}
+                      {lootGroupRows.map((row, rowIndex) => {
+                        const categoryLabel = formatLootGroupCategoryLabel(
+                          row[0],
+                          t,
+                          ut
+                        );
+                        return (
+                          <div
+                            key={rowIndex}
+                            style={{
+                              display: 'flex',
+                              flexWrap: 'wrap',
+                              gap: 4,
+                            }}
+                          >
+                            {categoryLabel && (
+                              <span
                                 style={{
-                                  flex: '0 1 auto',
-                                  minHeight: 42,
-                                  padding: '8px 12px',
-                                  color: isActive ? tokens.bg : tokens.accent,
-                                  background: isActive
-                                    ? tokens.accent
-                                    : tokens.surface,
-                                  border: `1px solid ${tokens.accent}`,
-                                  borderRadius: 6,
-                                  cursor: 'pointer',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  color: tokens.accent,
                                   fontSize: 15,
                                   fontWeight: 'bold',
-                                  transition: 'background 0.2s, color 0.2s',
+                                  whiteSpace: 'nowrap',
                                 }}
                               >
-                                {group.icon} {label} （{group.items.length}）
-                              </button>
-                            );
-                          })}
-                        </div>
-                      ))}
+                                {row[0].icon}
+                                {categoryLabel}
+                              </span>
+                            )}
+                            {row.map((group) => {
+                              const isActive =
+                                selectedLootGroup?.key === group.key;
+                              const label = formatLootGroupLabel(
+                                group,
+                                t,
+                                ut,
+                                delimiter
+                              );
+                              const displayLabel = group.categoryKey
+                                ? `${label}(${group.items.length})`
+                                : `${group.icon}${label}(${group.items.length})`;
+                              return (
+                                <button
+                                  key={group.key}
+                                  type="button"
+                                  role="tab"
+                                  aria-selected={isActive}
+                                  onClick={() => setActiveLootGroup(group.key)}
+                                  style={{
+                                    flex: '0 1 auto',
+                                    minHeight: 36,
+                                    padding: '4px 8px',
+                                    color: isActive ? tokens.bg : tokens.accent,
+                                    background: isActive
+                                      ? tokens.accent
+                                      : tokens.surface,
+                                    border: `1px solid ${tokens.accent}`,
+                                    borderRadius: 6,
+                                    cursor: 'pointer',
+                                    fontSize: 15,
+                                    fontWeight: 'bold',
+                                    transition: 'background 0.2s, color 0.2s',
+                                  }}
+                                >
+                                  {displayLabel}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        );
+                      })}
                     </div>
                     {selectedLootGroup && (
                       <div
