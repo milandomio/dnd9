@@ -919,7 +919,7 @@ function detailPlaceholder(title, modules, localeDict, lang) {
       return `<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
   <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">${escapeHtml(name)}</h3>
   <div style="aspect-ratio:${sx} / ${sy};overflow:hidden;border-radius:3px;background:#141414">
-    <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(name)}" style="display:block;width:100%;height:100%;object-fit:cover">
+    <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(name)}" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
   </div>
 </article>`;
     })
