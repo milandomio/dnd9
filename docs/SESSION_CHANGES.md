@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### feat: 语言切换器改为可爬取链接
+
+- **改动原因**：语言栏原使用 Ant Design `Select` 和脚本跳转，语言选项不是标准 `<a href>`，不利于搜索引擎发现对应语言页面；需要按 canonical 尾斜杠规则提供可爬取的内部链接。
+- **变更文件**：`web/src/components/NavBar.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：使用原生 `details/nav` 菜单渲染十种语言的标准 `<a>`；通过 `withLangPrefix()` 保留当前页面路径，并统一补充尾斜杠，同时保留 query/hash，设置 `hrefLang`、`lang` 和语言名称锚文本。
+- **验证**：Prettier、TypeScript、完整前端格式检查通过；ESLint 0 error（19 条既有 warning）；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；`Woodsman` 页面包含 10 个带尾斜杠语言链接，预览首页和 NPC 页 HTTP 200。
+
 ### feat: lootdrops 列表改为分类标签切换
 
 - **改动原因**：`zh-Hans/lootdrops/` 原先同时展开所有掉落分类，页面内容过长；需要改为类似 Excel 工作表的分类切换，只展示当前选中分类。
