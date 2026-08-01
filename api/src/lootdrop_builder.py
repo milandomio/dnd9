@@ -2,6 +2,7 @@
 
 import json
 import re
+import time
 from pathlib import Path
 
 from config import TRANSLATION_ALIAS_MAP, superhoard_translation_key
@@ -443,6 +444,19 @@ def build_and_save_lootdrop_details(
     lootdrop_group_info_out: dict[str, dict[str, list[dict]]] | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
+    _timings: dict[str, float] = {
+        "setup": 0.0,
+        "source_coords": 0.0,
+        "group_rates": 0.0,
+        "normalize_score": 0.0,
+        "refs_budget": 0.0,
+        "variant_details": 0.0,
+        "detail_json_write": 0.0,
+        "index_finalize": 0.0,
+        "index_json_write": 0.0,
+    }
+    _all_started = time.perf_counter()
+    _setup_started = time.perf_counter()
     map_base_to_group = drop_engine.map_base_to_group
     spawn_rate_cache = drop_engine.spawn_rate_cache
     spawn_rate_detail = drop_engine.spawn_rate_detail
@@ -483,6 +497,7 @@ def build_and_save_lootdrop_details(
         _ec_tk = (_ec or {}).get("translation_key") or ""
         if _ec_tk and not m_tk_map.get(_ec_name):
             m_tk_map[_ec_name] = _ec_tk
+    _timings["setup"] = time.perf_counter() - _setup_started
 
     detail_count = 0
     detail_total = len(loot_index)
@@ -491,6 +506,7 @@ def build_and_save_lootdrop_details(
 
     for entry in loot_index:
         item_name = entry["name"]
+        _source_coords_started = time.perf_counter()
         variant_suffixes = _detail_variant_suffixes(entry, drop_engine)
         is_variant_family = len(variant_suffixes) > 1 and not item_name.endswith("_8001")
         merged: dict[str, dict] = {}
@@ -680,8 +696,10 @@ def build_and_save_lootdrop_details(
                     if _gp:
                         coord_out["group_parent"] = _gp
                     merged[_gc_merge_key]["coords"].append(coord_out)
+        _timings["source_coords"] += time.perf_counter() - _source_coords_started
 
         # Compute per-group drop rates
+        _group_rates_started = time.perf_counter()
         _group_drop_info: dict[str, list[dict]] = {}
         for _base, _m_data in merged.items():
             _has_locked = _m_data.get("_has_locked", False)
@@ -757,7 +775,9 @@ def build_and_save_lootdrop_details(
                 )
                 if _has_varied_spawn:
                     _group_drop_info[_g][-1]["spawn_rates"] = _sr_by_mode
+        _timings["group_rates"] += time.perf_counter() - _group_rates_started
         # Deduplicate coords and update translation for locked-merged entries
+        _normalize_score_started = time.perf_counter()
         for _base_data in merged.values():
             if _base_data.pop("_has_locked", False):
                 _old = _base_data["translation"]
@@ -842,7 +862,9 @@ def build_and_save_lootdrop_details(
             if _bases and len(_bases) > 1:
                 _v["_multi_base"] = True
         monsters_out = list(merged.values())
+        _timings["normalize_score"] += time.perf_counter() - _normalize_score_started
         # gdi 子类图例：无坐标时仍保留 monsters 条目（预算/变体后再跑一遍）
+        _refs_budget_started = time.perf_counter()
         monsters_out = _ensure_gdi_monster_entries(monsters_out, _group_drop_info, entity_page_map)
 
         # MERGE: Merge "组" suffix entries into their base translations
@@ -950,6 +972,7 @@ def build_and_save_lootdrop_details(
             _max_scores,
             _trans_with_any_rate if _trans_with_any_rate else None,
         )
+        _timings["refs_budget"] += time.perf_counter() - _refs_budget_started
         if monsters_out:
             if used_translation_keys is not None:
                 _item_tk = entry.get("translation_key")
@@ -982,6 +1005,7 @@ def build_and_save_lootdrop_details(
                         )
 
             if is_variant_family:
+                _variant_details_started = time.perf_counter()
                 sources: dict[str, dict] = {}
                 source_ids_by_translation: dict[str, set[str]] = {}
                 unresolved_refs: list[str] = []
@@ -1139,6 +1163,7 @@ def build_and_save_lootdrop_details(
                 detail.pop("group_drop_info", None)
                 if not detail["sources"] or not detail["variants"]:
                     raise RuntimeError(f"empty merged lootdrop family: {item_name}")
+                _timings["variant_details"] += time.perf_counter() - _variant_details_started
             # Clean internal keys from group_drop_info before saving base detail
             for _g_list in _group_drop_info.values():
                 for _e in _g_list:
@@ -1150,7 +1175,9 @@ def build_and_save_lootdrop_details(
                 for _monster in monsters_out:
                     for _internal_key in ("_coord_key", "_multi_base", "_source_kind"):
                         _monster.pop(_internal_key, None)
+            _detail_json_write_started = time.perf_counter()
             _save(output_dir, f"lootdrops/{item_name}.json", detail, compact=True)
+            _timings["detail_json_write"] += time.perf_counter() - _detail_json_write_started
             item_max_score[item_name] = max(_max_scores.values(), default=0.0)
             item_valid_names[item_name] = {_m["name"] for _m in monsters_out}
             _has_hr100 = any(
@@ -1166,6 +1193,7 @@ def build_and_save_lootdrop_details(
         log_fn(f"[JSON] lootdrops detail files DONE -> {detail_count} items")
 
     # Update lootdrops.json index with max_score, hr100, variant_suffixes and filtered monsters
+    _index_finalize_started = time.perf_counter()
     for _entry in loot_index:
         _iname = _entry["name"]
         _entry["max_score"] = item_max_score.get(_iname, 0.0)
@@ -1195,6 +1223,17 @@ def build_and_save_lootdrop_details(
                 _entry["monsters"], _entry["monster_translations"], _entry["monster_translation_keys"] = map(
                     list, zip(*_filtered, strict=True)
                 )
+    _timings["index_finalize"] = time.perf_counter() - _index_finalize_started
+    _index_json_write_started = time.perf_counter()
     _save(output_dir, "lootdrops.json", loot_index)
+    _timings["index_json_write"] = time.perf_counter() - _index_json_write_started
+
+    if log_fn:
+        _timed_total = sum(_timings.values())
+        _total = time.perf_counter() - _all_started
+        for _name, _elapsed in _timings.items():
+            log_fn(f"[PERF] lootdrops.{_name}: {_elapsed:.3f}s")
+        log_fn(f"[PERF] lootdrops.unattributed: {_total - _timed_total:.3f}s")
+        log_fn(f"[PERF] lootdrops.detail_total: {_total:.3f}s")
 
     return item_max_score

@@ -1,5 +1,6 @@
 import json
 import re
+import time
 
 from config import (
     DB_PATH,
@@ -478,6 +479,7 @@ def run():
         pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
 
         with pipe.step("lootdrops") as ctx:
+            _lootdrop_started = time.perf_counter()
             loot_index = build_loot_index(
                 merged_loot,
                 items,
@@ -498,9 +500,11 @@ def run():
                 ]
             _save("lootdrops.json", loot_index)
             ctx.set_result(f"{len(loot_index)} items")
+            pipe.log(f"[PERF] lootdrops index: {time.perf_counter() - _lootdrop_started:.3f}s")
 
         used_translation_keys: set[str] = set()
         lootdrop_group_info_by_item: dict[str, dict[str, list[dict]]] = {}
+        _lootdrop_details_started = time.perf_counter()
         build_and_save_lootdrop_details(
             loot_index,
             drop_engine,
@@ -518,8 +522,10 @@ def run():
             used_translation_keys,
             lootdrop_group_info_by_item,
         )
+        pipe.log(f"[PERF] lootdrops details: {time.perf_counter() - _lootdrop_details_started:.3f}s")
         pipe.log("[JSON] lootdrops detail files DONE")
 
+        _lootdrop_enrichment_started = time.perf_counter()
         enrich_all_entities(
             drop_engine,
             loot_index,
@@ -528,6 +534,7 @@ def run():
             OUTPUT_DIR,
             pipe.log,
         )
+        pipe.log(f"[PERF] lootdrops enrichment: {time.perf_counter() - _lootdrop_enrichment_started:.3f}s")
 
         with pipe.step("quest data export") as ctx:
             print("\nExporting quest data from DB...")
