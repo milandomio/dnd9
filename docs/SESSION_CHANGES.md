@@ -4,6 +4,13 @@
 
 ## 2026-08-01
 
+### perf: 重跑 lootdrop 并确认缓存后的新热点
+
+- **改动原因**：基底物品匹配缓存上线后，需要在同一当前版本重新运行 lootdrop，确认原概率计算热点消失后最耗时的阶段。
+- **变更文件**：`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：478 个 lootdrop 详情最新构建耗时 `25.506s`：源实体坐标收集/转换 `9.168s`（35.9%）最高，变体详情生成 `7.676s`（30.1%）第二，缓存后的基础 `group_rates` `3.946s`（15.5%），坐标规范化/评分 `2.211s`（8.7%），详情 JSON 写入 `2.184s`（8.6%）。源坐标阶段包含坐标回退、Spawner 过滤、label 分类、坐标对象转换、spawn rate 查找和质量正则；变体阶段包含来源 ref 解析及每个品质/地图组/来源反复调用 `get_variant_group_drop_rates()`。原 `_find_rate_item()` 线性扫描已不再是热点。
+- **验证**：完整管道成功，`lootdrops` 步骤 `26.06s`、总计 `52.59s`；quick SSG 生成 3,067 路由和 12,007 多语言 HTML，`/`、`/zh-Hans/items/Bandage/` 均 HTTP 200。日志：`/tmp/darkfindv5-lootdrop-rerun.log`，构建日志：`/tmp/darkfindv5-lootdrop-rerun-build.log`。
+
 ### perf: 缓存 LootDrop 基底物品优选变体查询
 
 - **改动原因**：基础 `group_rates` 中 `_find_rate_item()` 会为每个无后缀基底物品反复扫描完整掉落池，profile 显示其占该阶段 93.3%。
