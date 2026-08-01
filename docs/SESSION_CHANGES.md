@@ -4,6 +4,13 @@
 
 ## 2026-08-01
 
+### perf: 增加 lootdrop 分项计时并定位概率计算热点
+
+- **改动原因**：总计时只能显示 `lootdrops` 耗时，无法判断坐标整理、掉落概率计算、变体处理、JSON 序列化或 enrichment 的实际占比。
+- **变更文件**：`api/src/collector.py`；`api/src/lootdrop_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`collector.py` 分别记录索引、详情和 enrichment；`build_and_save_lootdrop_details()` 以 `perf_counter()` 累计 setup、源坐标、基础 GDI 概率、坐标规范化/评分、ref/坐标预算、变体 GDI、详情 JSON、索引回写和未归类时间。实测 478 个 lootdrop：详情 `94.568s`，其中基础 `group_rates` 为 `73.068s`（77.3%），源坐标 `8.881s`，变体 `7.887s`，详情 JSON `2.138s`；enrichment 为 `0.527s`。因此后续优化应优先减少 `DropRateEngine.get_group_drop_rates()` 的重复计算，而非继续压缩 JSON I/O。
+- **验证**：Ruff、Black、Python 编译和 11 个后端单元测试通过；完整管道成功，`lootdrops=95.16s`、总计 `120.83s`，日志为 `/tmp/darkfindv5-lootdrop-profile.log`；预览根路径 HTTP 200。
+
 ### perf: enrichment 改为内存传递并单次写实体详情
 
 - **改动原因**：`enrichment.py` 在 lootdrop 详情生成后再次解析 lootdrop、items、monsters、props 派生 JSON，再写回实体详情；该二次 I/O 不需要重新访问 DB 或解包数据。
