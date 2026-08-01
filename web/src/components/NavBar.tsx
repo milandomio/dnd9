@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { Input, Select, Spin } from 'antd';
+import { Input, Spin } from 'antd';
 import {
   BulbOutlined,
   ClockCircleOutlined,
@@ -17,7 +17,11 @@ import {
   DEFAULT_LANG,
   type SupportedLang,
 } from '../i18n/locale';
-import { useLanguage, stripLangPrefix } from '../i18n/LanguageContext';
+import {
+  useLanguage,
+  stripLangPrefix,
+  withLangPrefix,
+} from '../i18n/LanguageContext';
 import { useLocale } from '../i18n/useLocale';
 import { useSSRData } from '../context/SSRDataContext';
 import { DataVersionLoader } from '../hooks/useDataVersion';
@@ -48,6 +52,18 @@ const PAGE_TAG_KEYS: Record<string, string> = {
 
 const RECENT_KEY = 'recentSearches';
 const MAX_RECENT = 5;
+
+function localizedHref(
+  path: string,
+  search: string,
+  hash: string,
+  nextLang: SupportedLang
+) {
+  const localized = withLangPrefix(path, nextLang);
+  const canonicalPath =
+    localized === '/' ? '/' : localized.replace(/\/?$/, '/');
+  return `${canonicalPath}${search}${hash}`;
+}
 
 function getRecent(): string[] {
   try {
@@ -151,10 +167,6 @@ export default function NavBar() {
     setQuery('');
     setShowDropdown(false);
     navigate(withLangPrefix(hit.url, lang));
-  };
-
-  const handleLangChange = (nextLang: SupportedLang) => {
-    window.location.href = withLangPrefix(location.pathname, nextLang);
   };
 
   const handleRecentClick = (term: string) => {
@@ -393,22 +405,71 @@ export default function NavBar() {
             rowGap: 6,
           }}
         >
-          <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
-          <Select
-            size="small"
-            value={lang}
-            onChange={handleLangChange}
-            options={SUPPORTED_LANGS.map((value) => ({
-              value,
-              label: LANG_DISPLAY_NAME[value],
-            }))}
-            style={{ width: '7em' }}
-            virtual={false}
-            listHeight={320}
-            getPopupContainer={(triggerNode) =>
-              triggerNode.parentElement || document.body
-            }
-          />
+          <details style={{ position: 'relative' }}>
+            <summary
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
+                minHeight: 24,
+                color: tokens.text,
+                cursor: 'pointer',
+                userSelect: 'none',
+              }}
+              aria-label={`Language: ${LANG_DISPLAY_NAME[lang]}`}
+            >
+              <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
+              <span style={{ fontSize: 13 }}>{LANG_DISPLAY_NAME[lang]}</span>
+            </summary>
+            <nav
+              aria-label="Language versions"
+              style={{
+                position: 'absolute',
+                top: 'calc(100% + 4px)',
+                right: 0,
+                zIndex: 1001,
+                minWidth: 120,
+                padding: 4,
+                background: dark ? '#2c2c2c' : '#fff',
+                border: `1px solid ${tokens.border}`,
+                borderRadius: 6,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              }}
+            >
+              {SUPPORTED_LANGS.map((value) => (
+                <a
+                  key={value}
+                  href={localizedHref(
+                    location.pathname,
+                    location.search,
+                    location.hash,
+                    value
+                  )}
+                  hrefLang={value}
+                  lang={value}
+                  aria-current={value === lang ? 'page' : undefined}
+                  style={{
+                    display: 'block',
+                    padding: '6px 8px',
+                    color: value === lang ? tokens.accent : tokens.text,
+                    textDecoration: 'none',
+                    whiteSpace: 'nowrap',
+                    borderRadius: 4,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = dark
+                      ? '#444'
+                      : '#e6f4ff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  {LANG_DISPLAY_NAME[value]}
+                </a>
+              ))}
+            </nav>
+          </details>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <BulbOutlined
               style={{ color: dark ? '#ffd700' : '#333', fontSize: 16 }}
