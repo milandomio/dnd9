@@ -363,4 +363,28 @@ item_coord_chain_map = {
 
 ## 状态
 
-状态：待实施。
+状态：阶段 A 实施中，已保存 WIP checkpoint。
+
+### 已完成（未完成端到端验证）
+
+- 新增 `api/src/db_freshness.py`：只读取 source root 的路径、文件名、大小和 mtime，
+  生成 manifest；不读取游戏 JSON 内容。
+- `inspect_database()` 已定义 `DB_READY`、`DB_ONLY`、`REBUILD_REQUIRED` 和
+  `FAIL_FAST` 决策；source root 不可用时不会返回 stale。
+- 源不可用且有效 DB 存在时返回 `DB_ONLY`；源不可用且 DB 缺失/无效时 fail fast；
+  `--rebuild-db` 在源不可用时同样 fail fast。
+- schema 新增 `pipeline_meta`，`DatabaseManager` 新增 meta 读写接口。
+- `collector.run()` 已接收 `import_required`、`db_path` 和 `source_manifest`，不再以
+  `GAME_ROOT.exists()` 隐式决定 importer。
+- `main.py` 已增加 `--rebuild-db`、building DB 路径和 `os.replace()` 原子替换入口；
+  stale 判断在 `DatabaseManager()` 之前执行，正式 DB 不在 normal rebuild 路径被 unlink。
+
+### 待续
+
+1. 为 `db_freshness.py` 增加 isolated 临时目录测试：missing/fresh/stale、source
+   unavailable、forced rebuild、legacy DB、manifest 变更和只读 DB 不被创建/删除。
+2. 为 `main.py` 的 building DB 路径增加成功替换和 importer 异常保留旧 DB 的测试。
+3. 审查 full import 初始 `entity_classification` 的空 DB 时序，并跑删除 DB 的完整 rebuild。
+4. 实施阶段 C：将 `item_coord_chain_map` 三表 JOIN 改为 `DropRateEngine` 内存索引，
+   并给该阶段独立计时。
+5. 运行 fresh DB、stale DB、DB-only、source unavailable 四种完整管道，随后运行 SSG。

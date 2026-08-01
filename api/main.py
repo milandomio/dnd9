@@ -1,4 +1,6 @@
+import argparse
 import json
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -6,7 +8,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from collector import run
-from config import DATA_DELIVERY_DIR, IMG_SRC, LOG_DIR, OUTPUT_DIR
+from config import DATA_DELIVERY_DIR, DB_PATH, IMG_SRC, LOG_DIR, OUTPUT_DIR
+from db_freshness import inspect_database
 from pipeline_timer import PipelineTimer
 
 PLACEHOLDER_IMG = "RareModule_1x1"
@@ -128,9 +131,36 @@ def _pre_cleanup():
         print(f"[CLEANUP] removed {json_dir}")
 
 
-if __name__ == "__main__":
+def _parse_args():
+    parser = argparse.ArgumentParser(description="DarkFindV5 data pipeline")
+    parser.add_argument("--rebuild-db", action="store_true", help="force a full DB rebuild")
+    return parser.parse_args()
+
+
+def main():
+    args = _parse_args()
+    decision = inspect_database(force_rebuild=args.rebuild_db)
+    print(f"[DB] state={decision.state}: {decision.reason}")
+    if decision.state == "FAIL_FAST":
+        raise RuntimeError(f"cannot prepare database: {decision.reason}")
+
     _pre_cleanup()
-    timer = run()
+    if decision.import_required:
+        building_path = DB_PATH.with_name(DB_PATH.name + ".building")
+        building_path.parent.mkdir(parents=True, exist_ok=True)
+        building_path.unlink(missing_ok=True)
+        try:
+            timer = run(
+                import_required=True,
+                db_path=building_path,
+                source_manifest=decision.manifest,
+            )
+            os.replace(building_path, DB_PATH)
+        except Exception:
+            building_path.unlink(missing_ok=True)
+            raise
+    else:
+        timer = run(import_required=False)
     _deliver(timer)
     _validate_images()
 
@@ -140,3 +170,7 @@ if __name__ == "__main__":
         if log_file:
             print(f"  log saved: {log_file}")
         _cleanup_old_logs(LOG_DIR)
+
+
+if __name__ == "__main__":
+    main()

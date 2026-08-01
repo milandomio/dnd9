@@ -4,7 +4,6 @@ import time
 
 from config import (
     DB_PATH,
-    GAME_ROOT,
     LOG_DIR,
     OUTPUT_DIR,
 )
@@ -53,7 +52,11 @@ def _resolve_group_display(group: str, translations: dict[str, str]) -> str:
     return f"{base}{floor}层"
 
 
-def run():
+def run(
+    import_required: bool = False,
+    db_path=DB_PATH,
+    source_manifest: dict | None = None,
+):
     print("=" * 50)
     print("  DarkFindV5 - Data Collector")
     print("=" * 50)
@@ -64,16 +67,15 @@ def run():
     try:
 
         pipe.log("creating DatabaseManager...")
-        db = DatabaseManager(DB_PATH)
+        db = DatabaseManager(db_path)
         pipe.log("DatabaseManager ready")
-
-        game_available = GAME_ROOT.exists()
+        pipe.log(f"[DB] mode={'full import' if import_required else 'DB-only'}")
 
         pipe.log("get_entity_classification START")
         entity_class = db.get_entity_classification()
         pipe.log(f"get_entity_classification DONE -> {len(entity_class)}")
 
-        if game_available:
+        if import_required:
             with pipe.phase("import_translations", 11) as ctx:
                 count = db.import_translations()
                 ctx.set_result(f"{count}")
@@ -204,8 +206,17 @@ def run():
                 db.import_lootdrop_groups()
                 db.import_lootdrop_rate_items()
                 db.import_lootdrop_rate_weights()
-        else:
-            print("\n[SKIP] Game data not found, using existing DB")
+            if source_manifest is None:
+                raise RuntimeError("full import requires a source manifest")
+            db.set_pipeline_meta(
+                {
+                    "schema_version": source_manifest["schema_version"],
+                    "generator_version": source_manifest["generator_version"],
+                    "source_manifest": json.dumps(source_manifest, sort_keys=True, separators=(",", ":")),
+                    "source_latest_mtime_ns": str(source_manifest["latest_mtime_ns"]),
+                    "import_complete": "1",
+                }
+            )
         pipe.log("[JSON] loading entities from DB...")
         items = db.get_item_entities()
         monsters = db.get_monster_entities()

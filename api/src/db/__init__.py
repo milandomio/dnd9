@@ -21,6 +21,16 @@ class DatabaseManager:
     def connect(self):
         return self.conn
 
+    def get_pipeline_meta(self) -> dict[str, str]:
+        return {row["key"]: row["value"] for row in self.conn.execute("SELECT key, value FROM pipeline_meta")}
+
+    def set_pipeline_meta(self, values: dict[str, str]) -> None:
+        self.conn.executemany(
+            "INSERT OR REPLACE INTO pipeline_meta (key, value) VALUES (?, ?)",
+            values.items(),
+        )
+        self.conn.commit()
+
     def close(self):
         self.conn.close()
 

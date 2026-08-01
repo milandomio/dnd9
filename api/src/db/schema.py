@@ -164,6 +164,11 @@ class SchemaManager:
                 search_term TEXT NOT NULL DEFAULT '',
                 spawner_count INTEGER NOT NULL DEFAULT 0
             );
+
+            CREATE TABLE IF NOT EXISTS pipeline_meta (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL DEFAULT ''
+            );
         """)
         self._migrate_spawners_table()
         self._migrate_explore_targets_table()
