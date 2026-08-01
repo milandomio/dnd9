@@ -224,6 +224,9 @@ export default function NavBar() {
     }
   }
 
+  const languageSelectedBackground = dark ? '#303030' : '#e6f4ff';
+  const languageHoverBackground = dark ? '#424242' : '#f5f5f5';
+
   return (
     <>
       <DataVersionLoader />
@@ -407,13 +410,25 @@ export default function NavBar() {
           }}
         >
           <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
-          <details style={{ position: 'relative', width: '7em' }}>
+          <details
+            className="language-selector-details"
+            style={{ position: 'relative', width: '7em' }}
+          >
             <style>{`
               .language-selector-summary {
                 list-style: none;
               }
               .language-selector-summary::-webkit-details-marker {
                 display: none;
+              }
+              .language-selector-summary:hover,
+              .language-selector-summary:focus-visible,
+              .language-selector-details[open] .language-selector-summary {
+                border-color: ${tokens.accent} !important;
+              }
+              .language-selector-summary:focus-visible {
+                outline: 2px solid ${tokens.accent};
+                outline-offset: 1px;
               }
             `}</style>
             <summary
@@ -450,12 +465,15 @@ export default function NavBar() {
                 top: 'calc(100% + 4px)',
                 right: 0,
                 zIndex: 1001,
-                minWidth: 120,
+                minWidth: '100%',
+                boxSizing: 'border-box',
+                maxHeight: 320,
+                overflowY: 'auto',
                 padding: 4,
-                background: dark ? '#2c2c2c' : '#fff',
+                background: dark ? '#141414' : '#fff',
                 border: `1px solid ${tokens.border}`,
                 borderRadius: 6,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                boxShadow: '0 6px 16px rgba(0,0,0,0.3)',
               }}
             >
               {SUPPORTED_LANGS.map((value) => (
@@ -472,19 +490,26 @@ export default function NavBar() {
                   aria-current={value === lang ? 'page' : undefined}
                   style={{
                     display: 'block',
-                    padding: '6px 8px',
+                    padding: '5px 12px',
                     color: value === lang ? tokens.accent : tokens.text,
+                    background:
+                      value === lang
+                        ? languageSelectedBackground
+                        : 'transparent',
                     textDecoration: 'none',
                     whiteSpace: 'nowrap',
                     borderRadius: 4,
+                    fontSize: 14,
+                    lineHeight: '22px',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = dark
-                      ? '#444'
-                      : '#e6f4ff';
+                    e.currentTarget.style.background = languageHoverBackground;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.background =
+                      value === lang
+                        ? languageSelectedBackground
+                        : 'transparent';
                   }}
                 >
                   {LANG_DISPLAY_NAME[value]}
