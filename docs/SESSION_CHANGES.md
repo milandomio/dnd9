@@ -39,6 +39,13 @@
 - **关键逻辑/映射关系**：SSG 根据实体坐标或 lootdrop 来源坐标解析 `dungeon_modules.json` 的模块别名，构建仅含名称、翻译键、图片名和尺寸的 `templateModules` 摘要；详情壳将摘要渲染为响应式模块卡片，使用 `/data/img/{img_name}.webp` 和模块名 `alt`，跳过 `RareModule_1x1`、`UnderConstruction_1x1` 及无图模块。多语言壳复用模块翻译字典，并保留客户端后续加载完整 JSON 的流程。
 - **验证**：Prettier、TypeScript、ESLint（0 error，19 条既有 warning）通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；`GoldCoins`、`Abomination` 详情壳均包含真实模块名和 WebP，目标 HTML 未发现占位图或 `#####`；预览根路径、详情页和图片 URL 分别返回 HTTP 200。
 
+### perf: 延迟加载详情壳地图图片
+
+- **改动原因**：详情壳已包含真实地图 WebP，但无 JavaScript 页面也可能在首屏同时请求大量图片，和客户端 JS、详情 JSON 竞争网络资源。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：详情壳地图 `<img>` 增加原生 `loading="lazy"` 和 `decoding="async"`；不依赖 JavaScript，现代浏览器接近视口时加载图片，旧浏览器忽略属性后仍能正常显示。
+- **验证**：详情 HTML 包含 `loading="lazy" decoding="async"`；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；预览首页、详情页和地图图片 URL 均返回 HTTP 200。全局 `format:check` 仍受工作区已有未格式化的 `web/src/pages/ListPage.tsx` 阻塞，本次 `ssg.mjs` 无格式问题。
+
 ## 2026-08-01
 
 ### docs: 制定 DB 新旧判断与导入生命周期修复方案
