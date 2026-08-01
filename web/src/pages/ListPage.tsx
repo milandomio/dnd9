@@ -101,6 +101,7 @@ export default function ListPage() {
   const ssrData = useSSRData<IndexEntry[]>(`list-${page}`);
   const [data, setData] = useState<IndexEntry[]>(ssrData || []);
   const [debug, setDebug] = useState(false);
+  const [activeLootGroup, setActiveLootGroup] = useState<string | null>(null);
   const dataVersion = useDataVersion();
   const { tokens } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
@@ -116,6 +117,10 @@ export default function ListPage() {
     category: page,
     count: data.length || undefined,
   });
+  const lootGroups = page === 'lootdrops' ? groupLootdrops(data) : [];
+  const selectedLootGroup =
+    lootGroups.find((group) => group.label === activeLootGroup) ??
+    lootGroups[0];
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -287,125 +292,168 @@ export default function ListPage() {
             })()
           : page === 'lootdrops'
             ? (() => {
-                const groups = groupLootdrops(data);
-                return groups.map((group) => (
-                  <div key={group.label} style={{ gridColumn: '1 / -1' }}>
+                return (
+                  <>
                     <div
+                      role="tablist"
+                      aria-label={pageLabel}
                       style={{
-                        fontSize: 22,
-                        fontWeight: 'bold',
-                        color: tokens.accent,
-                        marginBottom: 12,
-                        paddingLeft: 4,
+                        gridColumn: '1 / -1',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 8,
+                        marginBottom: 4,
                       }}
                     >
-                      {group.icon}{' '}
-                      {ut(LOOT_GROUP_KEYS[group.label] || group.label) ||
-                        group.label}
-                      （{group.items.length}）
-                    </div>
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        gap: 20,
-                      }}
-                    >
-                      {group.items.map((entity) => {
-                        const vc = entity.variant_count ?? 1;
-                        const isAlreadyVariant = /_\d{4}$/.test(entity.name);
-                        const target =
-                          vc > 1 &&
-                          !isAlreadyVariant &&
-                          !entity.name.endsWith('_8001')
-                            ? `${entity.name}_5001`
-                            : entity.name;
+                      {lootGroups.map((group) => {
+                        const isActive =
+                          selectedLootGroup?.label === group.label;
                         return (
-                          <Link
-                            key={entity.name}
-                            to={withLangPrefix(`/lootdrops/${target}/`, lang)}
+                          <button
+                            key={group.label}
+                            type="button"
+                            role="tab"
+                            aria-selected={isActive}
+                            onClick={() => setActiveLootGroup(group.label)}
                             style={{
-                              textDecoration: 'none',
-                              display: 'block',
-                              background: tokens.surface,
-                              border: `1px solid ${tokens.border}`,
-                              borderRadius: 8,
-                              padding: 20,
-                              textAlign: 'center',
-                              transition: 'transform 0.2s, box-shadow 0.2s',
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.transform =
-                                'translateY(-5px)';
-                              e.currentTarget.style.boxShadow =
-                                '0 5px 15px rgba(0,0,0,0.5)';
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.transform = 'none';
-                              e.currentTarget.style.boxShadow = 'none';
+                              flex: '1 1 140px',
+                              minHeight: 42,
+                              padding: '8px 12px',
+                              color: isActive ? tokens.bg : tokens.accent,
+                              background: isActive
+                                ? tokens.accent
+                                : tokens.surface,
+                              border: `1px solid ${tokens.accent}`,
+                              borderRadius: 6,
+                              cursor: 'pointer',
+                              fontSize: 15,
+                              fontWeight: 'bold',
+                              transition: 'background 0.2s, color 0.2s',
                             }}
                           >
-                            <div
-                              style={{
-                                color: tokens.text,
-                                fontSize: 18,
-                                fontWeight: 'bold',
-                              }}
-                            >
-                              {t(
-                                entity.translation_key,
-                                entity.translation || entity.name
-                              )}
-                            </div>
-                            {debug && (
-                              <div
-                                style={{
-                                  color: tokens.muted,
-                                  fontSize: 12,
-                                  marginTop: 4,
-                                }}
-                              >
-                                {t(entity.translation_key, entity.translation)}
-                                【{entity.name}】
-                              </div>
-                            )}
-                            {entity.monsters && entity.monsters.length > 0 && (
-                              <div
-                                style={{
-                                  color: tokens.text,
-                                  fontSize: 13,
-                                  marginTop: 6,
-                                  lineHeight: 1.5,
-                                }}
-                              >
-                                {ut('ui.list.target')}{' '}
-                                <span style={{ color: tokens.muted }}>
-                                  {entity.monster_translations &&
-                                    (entity.monster_translations.length <= 6
-                                      ? entity.monster_translations
-                                      : entity.monster_translations.slice(0, 5)
-                                    )
-                                      .map((mt, i) =>
-                                        t(
-                                          entity.monster_translation_keys?.[
-                                            i
-                                          ] ?? '',
-                                          mt
-                                        )
-                                      )
-                                      .join(delimiter)}
-                                  {entity.monster_translations &&
-                                    entity.monster_translations.length > 6 &&
-                                    '...'}
-                                </span>
-                              </div>
-                            )}
-                          </Link>
+                            {group.icon}{' '}
+                            {ut(LOOT_GROUP_KEYS[group.label] || group.label) ||
+                              group.label}{' '}
+                            （{group.items.length}）
+                          </button>
                         );
                       })}
                     </div>
-                  </div>
-                ));
+                    {selectedLootGroup && (
+                      <div
+                        key={selectedLootGroup.label}
+                        role="tabpanel"
+                        style={{
+                          gridColumn: '1 / -1',
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(3, 1fr)',
+                          gap: 20,
+                        }}
+                      >
+                        {selectedLootGroup.items.map((entity) => {
+                          const vc = entity.variant_count ?? 1;
+                          const isAlreadyVariant = /_\d{4}$/.test(entity.name);
+                          const target =
+                            vc > 1 &&
+                            !isAlreadyVariant &&
+                            !entity.name.endsWith('_8001')
+                              ? `${entity.name}_5001`
+                              : entity.name;
+                          return (
+                            <Link
+                              key={entity.name}
+                              to={withLangPrefix(`/lootdrops/${target}/`, lang)}
+                              style={{
+                                textDecoration: 'none',
+                                display: 'block',
+                                background: tokens.surface,
+                                border: `1px solid ${tokens.border}`,
+                                borderRadius: 8,
+                                padding: 20,
+                                textAlign: 'center',
+                                transition: 'transform 0.2s, box-shadow 0.2s',
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.transform =
+                                  'translateY(-5px)';
+                                e.currentTarget.style.boxShadow =
+                                  '0 5px 15px rgba(0,0,0,0.5)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.transform = 'none';
+                                e.currentTarget.style.boxShadow = 'none';
+                              }}
+                            >
+                              <div
+                                style={{
+                                  color: tokens.text,
+                                  fontSize: 18,
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                {t(
+                                  entity.translation_key,
+                                  entity.translation || entity.name
+                                )}
+                              </div>
+                              {debug && (
+                                <div
+                                  style={{
+                                    color: tokens.muted,
+                                    fontSize: 12,
+                                    marginTop: 4,
+                                  }}
+                                >
+                                  {t(
+                                    entity.translation_key,
+                                    entity.translation
+                                  )}
+                                  【{entity.name}】
+                                </div>
+                              )}
+                              {entity.monsters &&
+                                entity.monsters.length > 0 && (
+                                  <div
+                                    style={{
+                                      color: tokens.text,
+                                      fontSize: 13,
+                                      marginTop: 6,
+                                      lineHeight: 1.5,
+                                    }}
+                                  >
+                                    {ut('ui.list.target')}{' '}
+                                    <span style={{ color: tokens.muted }}>
+                                      {entity.monster_translations &&
+                                        (entity.monster_translations.length <= 6
+                                          ? entity.monster_translations
+                                          : entity.monster_translations.slice(
+                                              0,
+                                              5
+                                            )
+                                        )
+                                          .map((mt, i) =>
+                                            t(
+                                              entity.monster_translation_keys?.[
+                                                i
+                                              ] ?? '',
+                                              mt
+                                            )
+                                          )
+                                          .join(delimiter)}
+                                      {entity.monster_translations &&
+                                        entity.monster_translations.length >
+                                          6 &&
+                                        '...'}
+                                    </span>
+                                  </div>
+                                )}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </>
+                );
               })()
             : // Default rendering for non-props, non-lootdrops pages
               data.map((entity) => (
