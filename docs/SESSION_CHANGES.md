@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### feat: lootdrops 列表改为分类标签切换
+
+- **改动原因**：`zh-Hans/lootdrops/` 原先同时展开所有掉落分类，页面内容过长；需要改为类似 Excel 工作表的分类切换，只展示当前选中分类。
+- **变更文件**：`web/src/pages/ListPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：复用既有 `groupLootdrops()` 分类顺序和数量，在原“神器（28）”标题位置渲染分类标签按钮；默认选择第一个分类，点击标签更新 `activeLootGroup`，`tabpanel` 只渲染对应分类的掉落卡片，其他列表页保持原逻辑。
+- **验证**：Prettier、ESLint（0 error）、TypeScript 通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；`/zh-Hans/lootdrops/` HTTP 200，Playwright 验证标签数 6，默认“神器（28）”显示 28 项，切换“小型神器（8）”显示 8 项。
+
 ### perf: 完成 DB freshness 生命周期与 item 坐标链索引优化
 
 - **改动原因**：DB 存在但解包源未变化时仍会重复完整 importer；`item_coord_chain_map` 还会执行约 10 秒三表 JOIN，且 source 不可用时 DB-only 连接可能触发 schema migration。
