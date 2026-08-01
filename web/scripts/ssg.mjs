@@ -121,6 +121,112 @@ const render = ssrMod.render || ssrMod.default?.render;
 console.log('[ssg] reading data files…');
 const index = readJSON(join(DATA, 'index.json'));
 const moduleData = readJSON(join(DATA, 'dungeon_modules.json'));
+const moduleByAlias = new Map();
+for (const module of moduleData) {
+  for (const alias of [
+    module.name,
+    ...(module.names ?? []),
+    module.sl_base_name,
+    ...(module.all_sl_base_names ?? []),
+  ]) {
+    if (alias) moduleByAlias.set(alias, module);
+  }
+}
+
+const coordMapNamesCache = new Map();
+
+function readCoordMapNames(ref) {
+  if (!ref) return [];
+  const cached = coordMapNamesCache.get(ref);
+  if (cached) return cached;
+  try {
+    const value = readJSON(join(DATA, `${ref}.json`));
+    const coords = Array.isArray(value) ? value : value.coords || [];
+    const mapNames = [
+      ...new Set(coords.map((coord) => coord.map).filter(Boolean)),
+    ];
+    coordMapNamesCache.set(ref, mapNames);
+    return mapNames;
+  } catch {
+    coordMapNamesCache.set(ref, []);
+    return [];
+  }
+}
+
+function templateModuleSummary(module) {
+  const imageName = module.img_name || module.sl_base_name;
+  if (
+    !module.has_img ||
+    !imageName ||
+    imageName === 'RareModule_1x1' ||
+    imageName === 'UnderConstruction_1x1'
+  ) {
+    return null;
+  }
+  return {
+    name: module.name,
+    translation: module.translation,
+    translation_key: module.translation_key,
+    img_name: module.img_name,
+    sl_base_name: module.sl_base_name,
+    size_x: module.size_x,
+    size_y: module.size_y,
+  };
+}
+
+function templateModulesFromMapNames(mapNames) {
+  const seen = new Set();
+  const modules = [];
+  for (const mapName of mapNames) {
+    const module = moduleByAlias.get(mapName);
+    if (!module || seen.has(module.name)) continue;
+    const summary = templateModuleSummary(module);
+    if (!summary) continue;
+    seen.add(module.name);
+    modules.push(summary);
+  }
+  return modules;
+}
+
+function templateModulesFromCoords(coords) {
+  return templateModulesFromMapNames(
+    (coords ?? []).map((coord) => coord.map).filter(Boolean)
+  );
+}
+
+function lootdropVariantSuffix(item, routeName) {
+  if (!item.variants) return null;
+  const requested = routeName.match(/_(\d{4})$/)?.[1];
+  if (requested && item.variants[requested]) return requested;
+  if (item.variants['5001']) return '5001';
+  return Object.keys(item.variants).at(-1) ?? null;
+}
+
+function templateModulesFromLootdrop(item, routeName) {
+  const mapNames = [];
+  const suffix = lootdropVariantSuffix(item, routeName);
+  if (item.sources && item.variants && suffix) {
+    const sourceIds = new Set(
+      Object.values(item.variants[suffix]?.group_drop_info ?? {}).flatMap(
+        (entries) => entries.map((entry) => entry.source_id)
+      )
+    );
+    for (const sourceId of sourceIds) {
+      const source = item.sources[sourceId];
+      if (source?.ref) mapNames.push(...readCoordMapNames(source.ref));
+    }
+  } else {
+    for (const monster of item.monsters ?? []) {
+      if (monster.coords) {
+        mapNames.push(
+          ...monster.coords.map((coord) => coord.map).filter(Boolean)
+        );
+      }
+      if (monster.ref) mapNames.push(...readCoordMapNames(monster.ref));
+    }
+  }
+  return templateModulesFromMapNames(mapNames);
+}
 
 const PAGES = ['items', 'monsters', 'props', 'lootdrops'];
 const DETAIL_TEMPLATE_PAGES = new Set([
@@ -321,14 +427,25 @@ for (const p of PAGES) {
       ...(e.variant_suffixes ?? []),
       ...(e.unavailable_variant_suffixes ?? []),
     ];
+    const detailFilePath =
+      p === 'lootdrops'
+        ? join(DATA, 'lootdrops', `${name}.json`)
+        : join(DATA, p, `${name}.json`);
+    let detailData;
+    try {
+      detailData = readJSON(detailFilePath);
+    } catch {
+      detailData = null;
+    }
     if (!QUICK) {
-      const filePath =
-        p === 'lootdrops'
-          ? join(DATA, 'lootdrops', `${name}.json`)
-          : join(DATA, p, `${name}.json`);
       try {
+        if (!detailData) throw new Error('detail data not found');
         if (p === 'lootdrops') {
-          const itemData = { item: readJSON(filePath), modules: moduleData };
+          const itemData = {
+            item: detailData,
+            modules: moduleData,
+            templateModules: templateModulesFromLootdrop(detailData, name),
+          };
           ssrDataMap[`lootdrops/${name}`] = itemData;
           // Variant routes select from the same merged base detail in memory.
           if (routeSuffixes.length > 1) {
@@ -336,13 +453,18 @@ for (const p of PAGES) {
               ssrDataMap[`lootdrops/${name}_${suffix}`] = {
                 item: itemData.item,
                 modules: moduleData,
+                templateModules: templateModulesFromLootdrop(
+                  detailData,
+                  `${name}_${suffix}`
+                ),
               };
             }
           }
         } else {
           ssrDataMap[`${p}/${name}`] = {
-            entity: readJSON(filePath),
+            entity: detailData,
             modules: moduleData,
+            templateModules: templateModulesFromCoords(detailData.coords),
           };
         }
       } catch {
@@ -358,10 +480,20 @@ for (const p of PAGES) {
             translation_key: e.translation_key,
           },
         };
-        ssrDataMap[`lootdrops/${name}`] = minimalItem;
+        ssrDataMap[`lootdrops/${name}`] = {
+          ...minimalItem,
+          templateModules: detailData
+            ? templateModulesFromLootdrop(detailData, name)
+            : [],
+        };
         if (routeSuffixes.length > 1) {
           for (const suffix of routeSuffixes) {
-            ssrDataMap[`lootdrops/${name}_${suffix}`] = minimalItem;
+            ssrDataMap[`lootdrops/${name}_${suffix}`] = {
+              ...minimalItem,
+              templateModules: detailData
+                ? templateModulesFromLootdrop(detailData, `${name}_${suffix}`)
+                : [],
+            };
           }
         }
       } else {
@@ -371,6 +503,9 @@ for (const p of PAGES) {
             translation: e.translation,
             translation_key: e.translation_key,
           },
+          templateModules: detailData
+            ? templateModulesFromCoords(detailData.coords)
+            : [],
         };
       }
     }
@@ -751,15 +886,52 @@ function lootdropBaseName(name) {
   return match && match[2] !== '8001' ? match[1] : name;
 }
 
-function detailPlaceholder(title) {
-  const image = '/data/img/RareModule_1x1.webp';
-  return `<main aria-busy="true">
-  <h1>${escapeHtml(title)}</h1>
-  <section>
-    <h2>#####</h2>
-    <img src="${image}" alt="" width="256" height="256">
-    <img src="${image}" alt="" width="256" height="256">
-    <img src="${image}" alt="" width="256" height="256">
+function localizedTemplateModuleName(module, localeDict) {
+  return (
+    (module.translation_key && localeDict?.[module.translation_key]) ||
+    module.translation ||
+    module.name
+  );
+}
+
+const TEMPLATE_MODULE_HEADINGS = {
+  'zh-Hans': '地图模块表',
+  en: 'Dungeon map modules',
+  de: 'Dungeon-Module',
+  es: 'Módulos de mazmorra',
+  fr: 'Modules de donjon',
+  ja: 'ダンジョンモジュール',
+  ko: '던전 모듈',
+  'pt-BR': 'Módulos de masmorra',
+  ru: 'Модули подземелья',
+  'zh-Hant': '地圖模組表',
+};
+
+function detailPlaceholder(title, modules, localeDict, lang) {
+  const moduleHeading = TEMPLATE_MODULE_HEADINGS[lang] || '地图模块表';
+  const moduleCards = modules
+    .map((module) => {
+      const name = localizedTemplateModuleName(module, localeDict);
+      const imageName = module.img_name || module.sl_base_name;
+      const sx = Number(module.size_x) || 1;
+      const sy = Number(module.size_y) || 1;
+      const imageUrl = `/data/img/${imageName}.webp`;
+      return `<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">${escapeHtml(name)}</h3>
+  <div style="aspect-ratio:${sx} / ${sy};overflow:hidden;border-radius:3px;background:#141414">
+    <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(name)}" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>`;
+    })
+    .join('\n');
+  const content = moduleCards
+    ? `<h2 style="margin:0 0 10px;font-size:22px;color:#ffc107">${escapeHtml(moduleHeading)}</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px">${moduleCards}</div>`
+    : `<p>未找到可显示的地图模块。</p>`;
+  return `<main aria-busy="false" style="max-width:1200px;min-height:100vh;margin:0 auto;padding:16px;box-sizing:border-box;background:#141414;color:#f5f5f5">
+  <h1 style="margin:0 0 16px;text-align:center;color:#ffc107;font-size:32px">${escapeHtml(title)}</h1>
+  <section aria-label="${escapeHtml(moduleHeading)}" style="color:#f5f5f5">
+    ${content}
   </section>
 </main>`;
 }
@@ -780,14 +952,15 @@ function createTemplateDetailPage(route, routeData, lang, localeDict) {
     '</title>',
     `</title>\n    <link rel="canonical" href="${canonical}">\n    <base href="${baseHrefFromFile(route.file)}">`
   );
-  // Detail pages fetch their route data after the client starts. Rendering GoldChest
-  // here copied its coordinates and Ant Design's SSR styles into every detail file.
+  // Detail pages fetch their route data after the client starts. Keep the static
+  // shell limited to module summaries instead of rendering coordinates and styles.
   const title = localizedTitle(routeData, localeDict, route.path);
+  const modules = routeData?.templateModules ?? [];
   const page = templated
     .replace(/<title>[^<]*<\/title>\s*/, '')
     .replace(
       ROOT_MARKER,
-      `<div id="root" data-detail-placeholder>${detailPlaceholder(title)}`
+      `<div id="root" data-detail-placeholder>${detailPlaceholder(title, modules, localeDict, lang)}`
     )
     .replace(HEAD_CLOSE, `${detailPreloads(urlPath)}</head>`);
   return page;

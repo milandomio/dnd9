@@ -25,6 +25,13 @@
 - **关键逻辑/映射关系**：在 `bdb055e3` 优化前 worktree 和最终优化 worktree 中，用同一外部源、`--rebuild-db` 和 `PYTHONHASHSEED=0` 生成产物；索引预加载按旧 SQL 的 `rate_items -> lootdrop_groups -> spawner_entries` 行序构造 set，直接复用 set，保持 `export_items()` 首个 fallback spawner 的既有选择。
 - **验证**：优化前 `53.36s`，优化后 `39.48s`；`data` 两侧各 1,782 文件，包含 255 个非 JSON 图片文件，`diff -qr` 返回零差异，代表性 JSON SHA-256 相同。首次对照发现并修复了 fallback set 重建造成的 7 个 item 坐标差异，最终对照已清零。
 
+### feat: 详情页静态壳注入地图模块和真实 WebP
+
+- **改动原因**：详情页原本只注入标题、`#####` 和三张 `RareModule_1x1` 占位图，搜索引擎和禁用 JavaScript 的用户无法看到页面实际包含哪些地图模块；需要保留轻量壳的性能优势，同时提供可索引的正文内容。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：SSG 根据实体坐标或 lootdrop 来源坐标解析 `dungeon_modules.json` 的模块别名，构建仅含名称、翻译键、图片名和尺寸的 `templateModules` 摘要；详情壳将摘要渲染为响应式模块卡片，使用 `/data/img/{img_name}.webp` 和模块名 `alt`，跳过 `RareModule_1x1`、`UnderConstruction_1x1` 及无图模块。多语言壳复用模块翻译字典，并保留客户端后续加载完整 JSON 的流程。
+- **验证**：Prettier、TypeScript、ESLint（0 error，19 条既有 warning）通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；`GoldCoins`、`Abomination` 详情壳均包含真实模块名和 WebP，目标 HTML 未发现占位图或 `#####`；预览根路径、详情页和图片 URL 分别返回 HTTP 200。
+
 ## 2026-08-01
 
 ### docs: 制定 DB 新旧判断与导入生命周期修复方案
