@@ -18,6 +18,20 @@
 - **关键逻辑/映射关系**：语言选项继续使用 SSR 可爬取的 `<a href>`，通过原生 `details/summary` 和内联样式模拟 Select 的 7em 宽度、24px 高度、边框、下拉菜单、选中态、悬停态和打开态；链接仍由 `withLangPrefix()` 生成并统一补尾斜杠。
 - **验证**：Prettier、TypeScript 通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；Playwright 实测触发器约 `112x24px`、菜单包含 10 个语言锚点，首页和 NPC 页 HTTP 200。
 
+### fix: 拆分多子类型并合并未分类 lootdrop
+
+- **改动原因**：多标签物品被错误合并成 `魔法物品、杖` 等独立分类，且不同无翻译子类型产生多个“未分类”按钮；同时标签不需要中括号。
+- **变更文件**：`web/src/pages/ListPage.tsx`；`docs/plans/LOOTDROP_ITEM_TYPE_GROUPING.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：一个物品的多个有效子类型分别写入对应大类子组；无有效翻译的子类型统一使用空子类型键合并；显示格式改为 `⚔️武器：`、`斧(6)`，特殊组为 `🏺神器(28)`，移除所有 `【】`。
+- **验证**：Prettier、ESLint（0 error）、TypeScript 和 quick SSG 通过；`/zh-Hans/lootdrops/` HTTP 200；Playwright 验证无组合组、每个大类只有一个未分类按钮，点击 `斧(6)` 显示 6 项。
+
+### style: lootdrop 标签改为紧凑大类前缀格式
+
+- **改动原因**：大类已独立成行后，子分类按钮仍重复显示大类名称并带有空格；需要改为行首大类标签和紧凑子类按钮。
+- **变更文件**：`web/src/pages/ListPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/plans/LOOTDROP_ITEM_TYPE_GROUPING.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：动态行显示 `图标【大类：】`，子类显示 `【子类(count)】`；特殊分组显示 `图标【分组(count)】`，新增 `ui.list.item_group_prefix` 支持多语言冒号格式。
+- **验证**：Prettier、ESLint（0 error）、TypeScript 和 quick SSG 通过；`/zh-Hans/lootdrops/` HTTP 200；Playwright 验证分类文本无空格，`⚔️【武器：】【斧(5)】` 格式正确，点击斧分类显示 5 项。
+
 ### style: lootdrop 分类按钮改为内容宽度
 
 - **改动原因**：分类按钮使用可增长 flex 配置，导致一行按钮不足时被拉伸填满整行；需要保持按钮自身内容宽度。
