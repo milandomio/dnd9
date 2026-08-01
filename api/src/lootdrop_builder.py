@@ -511,6 +511,9 @@ def build_and_save_lootdrop_details(
 
     detail_count = 0
     detail_total = len(loot_index)
+    source_coord_cache: dict[str, tuple | None] = {}
+    source_coord_cache_hits = 0
+    source_coord_cache_misses = 0
     if log_fn:
         log_fn(f"[JSON] lootdrop detail loop starting: {detail_total} items")
 
@@ -524,35 +527,97 @@ def build_and_save_lootdrop_details(
         for _i, m_name in enumerate(entry["monsters"]):
             if m_name == item_name:
                 continue
-            coords = all_coords.get(m_name, [])
-            _coord_key = m_name if coords else None
-            if not coords:
-                _m_base = QUALITY_RE.sub("", m_name)
-                if _m_base != m_name:
-                    coords = all_coords.get(_m_base, [])
-                    if coords:
-                        _coord_key = _m_base
-            if not coords:
-                alias = TRANSLATION_ALIAS_MAP.get(m_name)
-                if alias:
-                    coords = all_coords.get(alias, [])
-                    if coords:
-                        _coord_key = alias
-            if not coords:
-                alt_keywords = og_to_keywords.get(m_name, set())
-                for _ak in sorted(alt_keywords):
-                    _c = all_coords.get(_ak, [])
-                    if _c:
-                        coords = _c
-                        _coord_key = _ak
-                        break
-            _valid_sk = entity_spawners.get(m_name, set())
-            if _valid_sk:
-                coords = [
-                    c for c in coords if c.get("keyword", "") in _valid_sk or c.get("original_keyword", "") in _valid_sk
-                ]
-            if not coords:
+            if m_name not in source_coord_cache:
+                source_coord_cache_misses += 1
+                coords = all_coords.get(m_name, [])
+                _coord_key = m_name if coords else None
+                if not coords:
+                    _m_base = QUALITY_RE.sub("", m_name)
+                    if _m_base != m_name:
+                        coords = all_coords.get(_m_base, [])
+                        if coords:
+                            _coord_key = _m_base
+                if not coords:
+                    alias = TRANSLATION_ALIAS_MAP.get(m_name)
+                    if alias:
+                        coords = all_coords.get(alias, [])
+                        if coords:
+                            _coord_key = alias
+                if not coords:
+                    alt_keywords = og_to_keywords.get(m_name, set())
+                    for _ak in sorted(alt_keywords):
+                        _c = all_coords.get(_ak, [])
+                        if _c:
+                            coords = _c
+                            _coord_key = _ak
+                            break
+                _valid_sk = entity_spawners.get(m_name, set())
+                if _valid_sk:
+                    coords = [
+                        c
+                        for c in coords
+                        if c.get("keyword", "") in _valid_sk or c.get("original_keyword", "") in _valid_sk
+                    ]
+                if not coords:
+                    source_coord_cache[m_name] = None
+                else:
+                    base = base_monster_name(m_name)
+                    locked_base = m_name.replace("_Locked", "")
+                    is_locked = locked_base != m_name
+                    if is_locked:
+                        base = base_monster_name(locked_base)
+                    coords_by_type: dict[str, list[dict]] = {}
+                    for _c in coords:
+                        _t = _classify_label(_c.get("original_keyword", ""), m_name)
+                        coords_by_type.setdefault(_t, []).append(_c)
+                    prepared_coords_by_type: dict[str, tuple[dict, ...]] = {}
+                    for _type, _typed_coords in coords_by_type.items():
+                        prepared_coords: list[dict] = []
+                        for _c in _typed_coords:
+                            _raw_label = _c.get("original_keyword") or _c.get("keyword", "")
+                            coord_out = {
+                                "x": _c["x"],
+                                "y": _c["y"],
+                                "z": _c["z"],
+                                "yaw": _c.get("yaw", 0),
+                                "map": _c["map_base"],
+                                "file": _c["json_filename"],
+                                "version": _c["version"],
+                                "label": _raw_label,
+                            }
+                            _gp = _c.get("group_parent", "")
+                            if _gp:
+                                coord_out["group_parent"] = _gp
+                            _vc_info = coord_variant_count.get((_c["map_base"], _c["json_filename"], _gp))
+                            if _vc_info and _vc_info[0] > 1:
+                                coord_out["variant_count"] = _vc_info[0]
+                                coord_out["variant_names"] = _vc_info[1]
+                            _rate_en = _c.get("keyword") or m_name
+                            if _c.get("keyword") != _c.get("original_keyword", ""):
+                                _pair = (_c["original_keyword"], _rate_en)
+                                _sr = spawn_rate_detail.get(_pair, 0) if _pair else spawn_rate_cache.get(_rate_en, 0)
+                            else:
+                                _sr = spawn_rate_cache.get(_rate_en, 0)
+                            _qm = re.search(r"_(VeryLow|Low|Med|High)$", _c.get("keyword", "")) or re.search(
+                                r"_(VeryLow|Low|Med|High)$", _c.get("original_keyword", "")
+                            )
+                            if _qm:
+                                coord_out["quality"] = _qm.group(1)
+                            coord_out["spawn_rate"] = _sr
+                            prepared_coords.append(coord_out)
+                        prepared_coords_by_type[_type] = tuple(prepared_coords)
+                    source_coord_cache[m_name] = (
+                        _coord_key,
+                        base,
+                        is_locked,
+                        prepared_coords_by_type,
+                    )
+            else:
+                source_coord_cache_hits += 1
+            prepared_source = source_coord_cache[m_name]
+            if prepared_source is None:
                 continue
+            _coord_key, base, is_locked, coords_by_type = prepared_source
             m_trans = entry["monster_translations"][_i]
             # Prefer loot_index keys (already resolved), then maps, then entity_class / SuperHoard
             m_tk = _entry_mtk[_i] if _i < len(_entry_mtk) else ""
@@ -562,15 +627,6 @@ def build_and_save_lootdrop_details(
                 m_tk = ((entity_class or {}).get(m_name) or {}).get("translation_key", "") or ""
             if not m_tk:
                 m_tk = superhoard_translation_key(m_name) or ""
-            base = base_monster_name(m_name)
-            locked_base = m_name.replace("_Locked", "")
-            is_locked = locked_base != m_name
-            if is_locked:
-                base = base_monster_name(locked_base)
-            coords_by_type: dict[str, list[dict]] = {}
-            for _c in coords:
-                _t = _classify_label(_c.get("original_keyword", ""), m_name)
-                coords_by_type.setdefault(_t, []).append(_c)
             for _type, _typed_coords in coords_by_type.items():
                 _suffix = _LABEL_TYPE_SUFFIX.get(_type, "")
                 _type_trans = m_trans + _suffix if _suffix else m_trans
@@ -602,38 +658,7 @@ def build_and_save_lootdrop_details(
                 if is_locked:
                     merged[_merge_key]["_has_locked"] = True
                 for _c in _typed_coords:
-                    _raw_label = _c.get("original_keyword") or _c.get("keyword", "")
-                    coord_out = {
-                        "x": _c["x"],
-                        "y": _c["y"],
-                        "z": _c["z"],
-                        "yaw": _c.get("yaw", 0),
-                        "map": _c["map_base"],
-                        "file": _c["json_filename"],
-                        "version": _c["version"],
-                        "label": _raw_label,
-                    }
-                    _gp = _c.get("group_parent", "")
-                    if _gp:
-                        coord_out["group_parent"] = _gp
-                    _vc_info = coord_variant_count.get((_c["map_base"], _c["json_filename"], _gp))
-                    if _vc_info and _vc_info[0] > 1:
-                        coord_out["variant_count"] = _vc_info[0]
-                        coord_out["variant_names"] = _vc_info[1]
-                    # rate entity: synthetic special uses real keyword on coord
-                    _rate_en = _c.get("keyword") or m_name
-                    if _c.get("keyword") != _c.get("original_keyword", ""):
-                        _pair = (_c["original_keyword"], _rate_en)
-                        _sr = spawn_rate_detail.get(_pair, 0) if _pair else spawn_rate_cache.get(_rate_en, 0)
-                    else:
-                        _sr = spawn_rate_cache.get(_rate_en, 0)
-                    _qm = re.search(r"_(VeryLow|Low|Med|High)$", _c.get("keyword", "")) or re.search(
-                        r"_(VeryLow|Low|Med|High)$", _c.get("original_keyword", "")
-                    )
-                    if _qm:
-                        coord_out["quality"] = _qm.group(1)
-                    coord_out["spawn_rate"] = _sr
-                    merged[_merge_key]["coords"].append(coord_out)
+                    merged[_merge_key]["coords"].append(dict(_c))
 
         # GoldChest_special: coords live under synthetic key after all_coords split;
         # inject when this item drops any GoldChest family entity.
@@ -1247,6 +1272,10 @@ def build_and_save_lootdrop_details(
         log_fn(f"[PERF] lootdrops.group_rates.caller_overhead: {_rate_caller_overhead:.3f}s")
         for _name, _elapsed in _timings.items():
             log_fn(f"[PERF] lootdrops.{_name}: {_elapsed:.3f}s")
+        log_fn(
+            f"[PERF] lootdrops.source_coords.cache: hits={source_coord_cache_hits}, "
+            f"misses={source_coord_cache_misses}, entries={len(source_coord_cache)}"
+        )
         log_fn(f"[PERF] lootdrops.unattributed: {_total - _timed_total:.3f}s")
         log_fn(f"[PERF] lootdrops.detail_total: {_total:.3f}s")
 

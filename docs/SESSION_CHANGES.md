@@ -4,6 +4,13 @@
 
 ## 2026-08-01
 
+### perf: 缓存 lootdrop 来源实体坐标骨架并完成前后对照
+
+- **改动原因**：最新 profile 中 `source_coords` 为 `9.293s`，同一来源实体会被多个 lootdrop 重复执行坐标回退、Spawner 过滤、label 分类、坐标转换和 spawn rate 查找，需要验证按实体复用坐标骨架的实际收益。
+- **变更文件**：`api/src/lootdrop_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：在详情循环内增加 `source_name -> prepared_coords_by_type` 缓存。首次遇到实体时完成 `all_coords` 多级回退、`entity_spawners` 过滤、`classify_label`、坐标字段组装、variant 元数据、spawn rate 和质量识别；后续物品只复制不含 `score` 的坐标骨架，保留每个物品独立计算 score 的语义。缓存 `18,361` 命中、`295` 未命中，命中率 `98.4%`。
+- **验证**：同一数据集、同一当前代码基线对照：详情构建 `25.608s -> 21.210s`（减少 `4.398s`，17.2%）；其中 `source_coords` `9.293s -> 2.209s`（减少 `7.084s`，76.2%）；`lootdrops` 步骤 `26.21s -> 22.01s`（减少 `4.20s`，16.0%）；全管道 `53.97s -> 50.58s`（减少 `3.39s`，6.3%，受其他阶段波动影响）。Ruff、Black、Python 编译、16 个单元测试、完整管道和 quick SSG 通过；生成 3,067 路由、12,007 多语言 HTML，`/`、`/zh-Hans/items/Bandage/` 均 HTTP 200。日志：`/tmp/darkfindv5-coord-cache-before.log`、`/tmp/darkfindv5-coord-cache-after.log`。
+
 ### perf: 重跑 lootdrop 并确认缓存后的新热点
 
 - **改动原因**：基底物品匹配缓存上线后，需要在同一当前版本重新运行 lootdrop，确认原概率计算热点消失后最耗时的阶段。
