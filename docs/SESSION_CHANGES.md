@@ -4,6 +4,20 @@
 
 ## 2026-08-02
 
+### fix: 点击外部自动收起语言菜单
+
+- **改动原因**：原生 `details` 默认只响应自身的开关，点击页面其他区域不会像 Ant Design `Select` 一样自动失焦收起。
+- **变更文件**：`web/src/components/NavBar.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：为语言菜单增加 `pointerdown` 文档监听；事件目标不在语言 `details` 内且菜单处于打开状态时，将 `open` 设为 `false`，菜单内部点击和语言锚点导航保持不变。
+- **验证**：Prettier、TypeScript 和 quick SSG 通过；用户实测点击外部区域后菜单自动收回，构建生成 3,067 路由和 12,007 个多语言 HTML。
+
+### style: 缩短语言选择框宽度
+
+- **改动原因**：上一版将语言框从 `7em` 增大到 `8em` 后视觉偏长，需要调整为更紧凑的宽度。
+- **变更文件**：`web/src/components/NavBar.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：语言触发器宽度从 `8em` 调整为 `6em`，下拉菜单通过 `minWidth: 100%` 同步宽度；菜单高度、深色背景和可爬取锚点保持不变。
+- **验证**：Prettier、TypeScript 通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；Playwright 实测触发器宽度 `96px`、菜单 `clientHeight=scrollHeight=328px`、10 个语言锚点，首页和 NPC 页 HTTP 200。
+
 ### style: 增大语言下拉菜单并统一深色背景
 
 - **改动原因**：语言菜单高度过小，10 个语言选项可能出现滚动条；未展开的语言框颜色也比菜单背景更亮，需要统一视觉。

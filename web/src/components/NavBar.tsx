@@ -91,6 +91,7 @@ export default function NavBar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
+  const languageSelectorRef = useRef<HTMLDetailsElement>(null);
   const inputRef = useRef<any>(null);
   const [recentSearches, setRecentSearches] = useState<string[]>(getRecent);
 
@@ -152,6 +153,21 @@ export default function NavBar() {
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: PointerEvent) => {
+      const selector = languageSelectorRef.current;
+      if (
+        selector?.open &&
+        e.target instanceof Node &&
+        !selector.contains(e.target)
+      ) {
+        selector.open = false;
+      }
+    };
+    document.addEventListener('pointerdown', handler);
+    return () => document.removeEventListener('pointerdown', handler);
   }, []);
 
   const saveRecent = (term: string) => {
@@ -411,8 +427,9 @@ export default function NavBar() {
         >
           <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
           <details
+            ref={languageSelectorRef}
             className="language-selector-details"
-            style={{ position: 'relative', width: '8em' }}
+            style={{ position: 'relative', width: '6em' }}
           >
             <style>{`
               .language-selector-summary {
