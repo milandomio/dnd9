@@ -121,4 +121,16 @@ _ld_preferred_base_items: dict[str, dict[str, list[tuple[int, int]]]]
 
 ## 状态
 
-状态：待实施。
+状态：已完成。
+
+- 实现了 `_ld_preferred_base_items` 和 `_build_preferred_base_items()`；索引在
+  `preload()` 加载 `lootdrop_rate_items` 后构建，每个值引用原有 luck-grade 列表。
+- `compute_drop_rate()` 改用 `_resolve_rate_item()`：精确项和带后缀查询保持原行为，
+  只有无后缀基底查询使用预加载索引；未调用 `preload()` 的手工 engine 仍调用原始
+  `_find_rate_item()`。
+- 新增测试覆盖 `_5001` 优先、无 `_5001` 时最高品质、精确基底优先、排除 `_8001`、
+  缺失带后缀不回退，以及缓存 resolver 与旧 resolver 的结果对照。
+- 同一数据集完整管道实测：基础 `group_rates` 从 `72.368s` 降至 `4.391s`
+  （减少 `67.977s`，93.9%）；lootdrop 详情从 `93.819s` 降至 `28.979s`
+  （减少 `64.840s`，69.1%）；`lootdrops` 管道步骤从 `94.39s` 降至 `29.59s`
+  （减少 `64.80s`，68.7%）。最终日志：`/tmp/darkfindv5-rate-item-cache-final.log`。

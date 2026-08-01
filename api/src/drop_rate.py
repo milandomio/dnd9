@@ -46,6 +46,7 @@ class DropRateEngine:
         self._ore_ldg: dict[str, str] = {}
         self._ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
         self._ld_rate_items: dict[str, dict[str, list[tuple[int, int]]]] = {}
+        self._ld_preferred_base_items: dict[str, dict[str, list[tuple[int, int]]]] | None = None
         self._ld_luck_grade_count: dict[tuple[str, int], int] = {}
         self._ld_rate_weights: dict[str, dict[int, int]] = {}
         self._ld_rate_totals: dict[str, int] = {}
@@ -68,6 +69,31 @@ class DropRateEngine:
         self._variant_rate_cache: dict[tuple, float] = {}
         self._candidate_ids_cache: dict[str, set[str]] = {}
         self._all_groups_cache: dict[tuple, dict[str, dict[str, float]]] = {}
+
+    @staticmethod
+    def _build_preferred_base_items(
+        rate_items_by_lootdrop: dict[str, dict[str, list[tuple[int, int]]]],
+    ) -> dict[str, dict[str, list[tuple[int, int]]]]:
+        """Select the legacy base-item fallback for every preloaded lootdrop."""
+        preferred_by_lootdrop: dict[str, dict[str, list[tuple[int, int]]]] = {}
+        for _ld_id, _items in rate_items_by_lootdrop.items():
+            _preferred: dict[str, tuple[str, list[tuple[int, int]]]] = {}
+            for _item_name, _item_entries in _items.items():
+                _variant = _VARIANT_RE.match(_item_name)
+                if not _variant or _item_name.endswith("_8001"):
+                    continue
+                _base = _variant.group(1)
+                _current = _preferred.get(_base)
+                if (
+                    _current is None
+                    or _item_name.endswith("_5001")
+                    or (not _current[0].endswith("_5001") and _item_name[-4:] > _current[0][-4:])
+                ):
+                    _preferred[_base] = (_item_name, _item_entries)
+            preferred_by_lootdrop[_ld_id] = {
+                _base: _item_entries for _base, (_item_name, _item_entries) in _preferred.items()
+            }
+        return preferred_by_lootdrop
 
     def preload(self, db, modules_data: list[dict]) -> None:
         """Preload all drop rate data from DB."""
@@ -130,6 +156,11 @@ class DropRateEngine:
                 self._item_to_ld_ids.setdefault(_item_name, set()).add(_ld_id)
             for _lg, _cnt in _lg_counts.items():
                 self._ld_luck_grade_count[(_ld_id, _lg)] = _cnt
+
+        # Pre-resolve base item fallbacks once. Detail generation repeatedly asks
+        # for the same base item across groups and grades, so scanning every pool
+        # for its preferred variant is prohibitively expensive.
+        self._ld_preferred_base_items = self._build_preferred_base_items(self._ld_rate_items)
 
         # lootdrop_rate_weights
         for _row in _c.execute(
@@ -336,6 +367,17 @@ class DropRateEngine:
             return cached
         return self._spawn_rate_cache.get(entity_name, 0.0)
 
+    def _resolve_rate_item(
+        self, lootdrop_id: str, rate_items: dict[str, list[tuple[int, int]]], item_name: str
+    ) -> list[tuple[int, int]] | None:
+        """Resolve exact items or use the preloaded fallback for a base item."""
+        item_info = rate_items.get(item_name)
+        if item_info is not None or _VARIANT_RE.match(item_name):
+            return item_info
+        if self._ld_preferred_base_items is None:
+            return _find_rate_item(rate_items, item_name)
+        return self._ld_preferred_base_items.get(lootdrop_id, {}).get(item_name)
+
     def compute_drop_rate(
         self,
         ldg_id: str,
@@ -362,7 +404,7 @@ class DropRateEngine:
         for ld_id, lr_id, _ in grade_data:
             rate_items = self._ld_rate_items.get(ld_id, {})
             _item_lookup_started = time.perf_counter() if profile is not None else 0.0
-            item_info = _find_rate_item(rate_items, item_name)
+            item_info = self._resolve_rate_item(ld_id, rate_items, item_name)
             if profile is not None:
                 _item_lookup += time.perf_counter() - _item_lookup_started
             if item_info is None:

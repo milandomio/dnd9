@@ -4,6 +4,13 @@
 
 ## 2026-08-01
 
+### perf: 缓存 LootDrop 基底物品优选变体查询
+
+- **改动原因**：基础 `group_rates` 中 `_find_rate_item()` 会为每个无后缀基底物品反复扫描完整掉落池，profile 显示其占该阶段 93.3%。
+- **变更文件**：`api/src/drop_rate.py`；`api/tests/test_drop_rate.py`；`docs/plans/PERF_RATE_ITEM_LOOKUP_CACHE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`DropRateEngine.preload()` 将每个 `lootdrop_id` 的变体族预先映射为 `base_item_name -> 优选 luck-grade 条目`；`_resolve_rate_item()` 保持精确项优先，带后缀项缺失仍返回 `None`，只有无后缀基底使用 `_5001` 优先、否则最高真实品质的缓存值，且 `_8001` 不参与。未预加载的手工 engine 仍回退原 `_find_rate_item()` 扫描。
+- **验证**：恢复点为 `f2253c1f`；Ruff、Black、Python 编译和 16 个单元测试通过。完整管道成功，基础 `group_rates` 从 `72.368s` 降至 `4.391s`（-93.9%），lootdrop 详情从 `93.819s` 降至 `28.979s`（-69.1%），`lootdrops` 从 `94.39s` 降至 `29.59s`（-68.7%）；quick SSG 生成 3,067 路由和 12,007 多语言 HTML，`/`、`/zh-Hans/items/Bandage/` 均 HTTP 200。
+
 ### docs: 制定 LootDrop 基底物品匹配缓存优化方案
 
 - **改动原因**：profile 确认 `_find_rate_item()` 的候选池线性扫描占基础 `group_rates` 的主要时间，需要在实现前固定语义、索引范围、测试和回退路径。

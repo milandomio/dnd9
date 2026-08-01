@@ -4,7 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from drop_rate import DropRateEngine  # noqa: E402
+from drop_rate import DropRateEngine, _find_rate_item  # noqa: E402
 from lootdrop_builder import (  # noqa: E402
     _artifact_translation_key,
     _detail_variant_suffixes,
@@ -23,11 +23,68 @@ class DropRateVariantTest(unittest.TestCase):
         self.engine._ld_rate_totals = {"rate": 10000}
 
     def test_missing_variant_never_borrows_another_quality_weight(self):
+        self.engine._ld_preferred_base_items = {"drop": {"Bandage": [(4, 1)]}}
         self.assertEqual(self.engine.compute_drop_rate("group", "Bandage_5001", 1001), 0)
         self.assertEqual(
             self.engine.compute_variant_rate("group", 5, 1001, item_name="Bandage_5001"),
             0,
         )
+
+    def test_preloaded_cache_prefers_epic_variant_for_base_item(self):
+        self.engine._ld_rate_items = {
+            "drop": {
+                "Bandage_4001": [(4, 1)],
+                "Bandage_5001": [(5, 1)],
+                "Bandage_7001": [(7, 1)],
+            }
+        }
+        self.engine._ld_preferred_base_items = {"drop": {"Bandage": [(5, 1)]}}
+        self.engine._ld_luck_grade_count = {("drop", 4): 1, ("drop", 5): 1, ("drop", 7): 1}
+        self.engine._ld_rate_weights = {"rate": {4: 4000, 5: 5000, 7: 7000}}
+
+        self.assertEqual(self.engine.compute_drop_rate("group", "Bandage", 1001), 0.5)
+
+    def test_preloaded_cache_uses_highest_variant_without_epic(self):
+        self.engine._ld_rate_items = {"drop": {"Bandage_4001": [(4, 1)], "Bandage_7001": [(7, 1)]}}
+        self.engine._ld_preferred_base_items = {"drop": {"Bandage": [(7, 1)]}}
+        self.engine._ld_luck_grade_count = {("drop", 4): 1, ("drop", 7): 1}
+        self.engine._ld_rate_weights = {"rate": {4: 4000, 7: 7000}}
+
+        self.assertEqual(self.engine.compute_drop_rate("group", "Bandage", 1001), 0.7)
+
+    def test_exact_base_item_beats_preloaded_variant(self):
+        self.engine._ld_rate_items = {"drop": {"Bandage": [(2, 1)], "Bandage_5001": [(5, 1)]}}
+        self.engine._ld_preferred_base_items = {"drop": {"Bandage": [(5, 1)]}}
+        self.engine._ld_luck_grade_count = {("drop", 2): 1, ("drop", 5): 1}
+        self.engine._ld_rate_weights = {"rate": {2: 2000, 5: 5000}}
+
+        self.assertEqual(self.engine.compute_drop_rate("group", "Bandage", 1001), 0.2)
+
+    def test_preloaded_cache_excludes_artifact_variant(self):
+        self.engine._ld_rate_items = {"drop": {"Bandage_8001": [(8, 1)]}}
+        self.engine._ld_preferred_base_items = {"drop": {}}
+        self.engine._ld_luck_grade_count = {("drop", 8): 1}
+        self.engine._ld_rate_weights = {"rate": {8: 8000}}
+
+        self.assertEqual(self.engine.compute_drop_rate("group", "Bandage", 1001), 0)
+
+    def test_preloaded_cache_matches_legacy_base_resolution(self):
+        rate_items = {
+            "Bandage_4001": [(4, 1)],
+            "Bandage_5001": [(5, 1)],
+            "Bandage_7001": [(7, 1)],
+            "Sword_4001": [(4, 1)],
+            "Sword_7001": [(7, 1)],
+            "Artifact_8001": [(8, 1)],
+            "ExactItem": [(2, 1)],
+        }
+        self.engine._ld_preferred_base_items = self.engine._build_preferred_base_items({"drop": rate_items})
+
+        for item_name in ("Bandage", "Sword", "Artifact", "ExactItem", "Bandage_3001"):
+            self.assertEqual(
+                self.engine._resolve_rate_item("drop", rate_items, item_name),
+                _find_rate_item(rate_items, item_name),
+            )
 
     def test_base_family_uses_highest_real_variant_when_epic_is_absent(self):
         self.assertEqual(self.engine.compute_drop_rate("group", "Bandage", 1001), 0.4)
