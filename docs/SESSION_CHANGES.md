@@ -11,6 +11,13 @@
 - **关键逻辑/映射关系**：入口以 metadata-only manifest 决定 `DB_READY`、`DB_ONLY`、`REBUILD_REQUIRED` 或 `FAIL_FAST`；完整导入写入 `.building`，核心表校验和 `pipeline_meta` 完成后用 `os.replace()` 替换正式 DB；DB-only 使用 SQLite read-only 连接。`DropRateEngine.preload()` 的 `base_item -> spawner set` 索引替换 `lootdrop_rate_items -> lootdrop_groups -> spawner_entries` JOIN，并排除旧 JOIN 不会返回的空 spawner key。
 - **验证**：27 个后端测试、Ruff、Black、Python 编译、Prettier、TypeScript 全通过；final full rebuild `38.45s`，hot DB-only `24.84s`。旧 SQL 与内存索引均为 529 keys，坐标链阶段低于日志显示精度。quick SSG 生成 3,067 routes、12,007 localized HTML、17,011 dist files，`http://localhost:8080/` 返回 HTTP 200。
 
+### verify: 完成优化前后 data 产物零差异对照
+
+- **改动原因**：需要证明移除三表 JOIN 后不仅性能改善，后端管线生成物也没有业务语义或字节差异。
+- **变更文件**：`api/src/drop_rate.py`；`api/src/collector.py`；`api/tests/test_drop_rate.py`；`docs/plans/DB_FRESHNESS_AND_IMPORT_LIFECYCLE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：在 `bdb055e3` 优化前 worktree 和最终优化 worktree 中，用同一外部源、`--rebuild-db` 和 `PYTHONHASHSEED=0` 生成产物；索引预加载按旧 SQL 的 `rate_items -> lootdrop_groups -> spawner_entries` 行序构造 set，直接复用 set，保持 `export_items()` 首个 fallback spawner 的既有选择。
+- **验证**：优化前 `53.36s`，优化后 `39.48s`；`data` 两侧各 1,782 文件，包含 255 个非 JSON 图片文件，`diff -qr` 返回零差异，代表性 JSON SHA-256 相同。首次对照发现并修复了 fallback set 重建造成的 7 个 item 坐标差异，最终对照已清零。
+
 ## 2026-08-01
 
 ### docs: 制定 DB 新旧判断与导入生命周期修复方案
