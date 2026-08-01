@@ -58,6 +58,10 @@ class DropRateEngine:
         self._entity_spawners: dict[str, set[str]] = {}
         # group_id → set of spawner_keywords that belong to this group
         self._group_to_spawners: dict[str, set[str]] = {}
+        # Ordered source rows used to preserve the legacy fallback selection.
+        self._ordered_group_spawners: dict[str, list[str]] = {}
+        self._ordered_drop_groups: dict[str, list[str]] = {}
+        self._ordered_rate_items: list[tuple[str, str]] = []
         # base_item_name → set of suffixes with actual drop data
         self._existing_variant_suffixes: dict[str, set[str]] = {}
         # lootdrop_id → set of group_ids
@@ -113,8 +117,9 @@ class DropRateEngine:
 
         # spawner_keyword / entity_name → lootdrop_group_id
         for _row in _c.execute(
-            "SELECT DISTINCT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
+            "SELECT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
         ):
+            self._ordered_group_spawners.setdefault(_row["lootdrop_group_id"], []).append(_row["spawner_keyword"])
             for _key in (_row["spawner_keyword"], _row["entity_name"]):
                 if _key and _key not in self._spawner_ldg:
                     self._spawner_ldg[_key] = _row["lootdrop_group_id"]
@@ -134,17 +139,21 @@ class DropRateEngine:
                     _stripped = _m.group(1)
                     if _stripped and _stripped not in self._ore_ldg:
                         self._ore_ldg[_stripped] = _row["lootdrop_group_id"]
+        for _spawners in self._ordered_group_spawners.values():
+            _spawners.sort()
 
         # lootdrop_groups
         for _row in _c.execute(
             "SELECT group_id, dungeon_grade, lootdrop_id, lootdrop_rate_id, drop_count FROM lootdrop_groups"
         ):
+            self._ordered_drop_groups.setdefault(_row["lootdrop_id"], []).append(_row["group_id"])
             self._ld_groups.setdefault(_row["group_id"], {}).setdefault(_row["dungeon_grade"], []).append(
                 (_row["lootdrop_id"], _row["lootdrop_rate_id"], _row["drop_count"])
             )
 
         # lootdrop_rate_items
         for _row in _c.execute("SELECT lootdrop_id, item_name, luck_grade, drop_count FROM lootdrop_rate_items"):
+            self._ordered_rate_items.append((_row["lootdrop_id"], _row["item_name"]))
             self._ld_rate_items.setdefault(_row["lootdrop_id"], {}).setdefault(_row["item_name"], []).append(
                 (_row["luck_grade"], _row["drop_count"])
             )
@@ -185,15 +194,14 @@ class DropRateEngine:
 
         # Build base item → spawner keywords once instead of scanning all rate
         # items for every variant family during lootdrop export.
-        for _item_name, _ld_ids in self._item_to_ld_ids.items():
+        for _ld_id, _item_name in self._ordered_rate_items:
             _m = _VARIANT_RE.match(_item_name)
             _base = _m.group(1) if _m else _item_name
-            _spawners: set[str] = set()
-            for _ld_id in _ld_ids:
-                for _gid in self._ld_id_to_groups.get(_ld_id, set()):
-                    _spawners.update(self._group_to_spawners.get(_gid, set()))
-            if _spawners:
-                self._base_item_spawners.setdefault(_base, set()).update(_spawners)
+            _spawners = self._base_item_spawners.setdefault(_base, set())
+            for _gid in self._ordered_drop_groups.get(_ld_id, []):
+                for _spawner in self._ordered_group_spawners.get(_gid, []):
+                    _spawners.add(_spawner)
+        self._base_item_spawners = {base: spawners for base, spawners in self._base_item_spawners.items() if spawners}
 
         # Build existing variant suffixes from _ld_rate_items
         for _items in self._ld_rate_items.values():

@@ -400,9 +400,7 @@ def run(
         pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
 
         with pipe.step("item coord chain map") as ctx:
-            item_coord_chain_map = {
-                base_item: set(spawners) for base_item, spawners in drop_engine.base_item_spawners.items()
-            }
+            item_coord_chain_map = drop_engine.base_item_spawners
             ctx.set_result(f"{len(item_coord_chain_map)} item keys")
 
         # P005: Build ENTITY_PAGE_MAP for coord reference

@@ -384,7 +384,8 @@ item_coord_chain_map = {
 - full import 在写 `pipeline_meta.import_complete=1` 前校验 building DB 的核心数据，写入
   manifest、generator/schema version 和 UTC `import_completed_at` 后才原子替换。
 - `item_coord_chain_map` 已改为复用 `DropRateEngine.base_item_spawners`，并独立计时；
-  空 spawner 集合不保留，实际新旧索引均为 529 个 item key。
+  空 spawner 集合不保留；独立预加载行按旧 SQL 的连接顺序构造 set，且 collector 不再复制
+  set，避免 fallback 首个 spawner 改变。实际新旧索引均为 529 个 item key。
 
 ### 验证（2026-08-02）
 
@@ -393,6 +394,9 @@ item_coord_chain_map = {
 - 最终强制 full rebuild 成功：`38.45s`，building DB 写入 6 项 `pipeline_meta` 后替换正式 DB。
 - 最终 hot DB-only 成功：`24.84s`，日志确认 `DB_READY` 且无 importer / 地图解析阶段。
 - 旧 SQL JOIN 对照和内存索引均为 529 个 item key，独立阶段耗时低于日志显示精度。
+- 在 `PYTHONHASHSEED=0` 下以 `bdb055e3` 和最终优化代码分别完整重建，两个 `data/`
+  目录均为 1,782 个文件，`diff -qr` 无差异；255 个图片文件和代表性 JSON SHA-256
+  完全一致。优化前 `53.36s`，优化后 `39.48s`。
 - quick SSG 成功：3,067 routes、12,007 localized HTML、17,011 dist files；
   `http://localhost:8080/` 返回 HTTP 200。
 

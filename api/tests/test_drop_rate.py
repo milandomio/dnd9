@@ -157,6 +157,7 @@ class DropRatePreloadIndexTest(unittest.TestCase):
             CREATE TABLE lootdrop_rate_weights (rate_id TEXT, luck_grade INTEGER, weight INTEGER);
             CREATE TABLE spawners (keyword TEXT, map_base TEXT);
             INSERT INTO spawner_entries VALUES ('TearofHrithurs', '', 'group-a');
+            INSERT INTO spawner_entries VALUES ('TearofHrimthurs', '', 'group-a');
             INSERT INTO lootdrop_groups VALUES ('group-a', 1001, 'drop-a', 'rate-a', 1);
             INSERT INTO lootdrop_rate_items VALUES ('drop-a', 'TearofHrimthurs_5001', 5, 1);
             INSERT INTO lootdrop_rate_items VALUES ('orphan-drop', 'OrphanItem_5001', 5, 1);
@@ -171,17 +172,20 @@ class DropRatePreloadIndexTest(unittest.TestCase):
 
         engine = DropRateEngine()
         engine.preload(_Db(), [])
-        old_sql_map = {
-            row["item_name"].removesuffix("_5001"): {row["spawner_keyword"]}
-            for row in conn.execute(
-                "SELECT DISTINCT lri.item_name, se.spawner_keyword "
-                "FROM lootdrop_rate_items lri "
-                "JOIN lootdrop_groups lg ON lri.lootdrop_id = lg.lootdrop_id "
-                "JOIN spawner_entries se ON lg.group_id = se.lootdrop_group_id"
-            )
-        }
+        old_sql_map = {}
+        for row in conn.execute(
+            "SELECT DISTINCT lri.item_name, se.spawner_keyword "
+            "FROM lootdrop_rate_items lri "
+            "JOIN lootdrop_groups lg ON lri.lootdrop_id = lg.lootdrop_id "
+            "JOIN spawner_entries se ON lg.group_id = se.lootdrop_group_id"
+        ):
+            old_sql_map.setdefault(row["item_name"].removesuffix("_5001"), set()).add(row["spawner_keyword"])
 
         self.assertEqual(engine.base_item_spawners, old_sql_map)
+        self.assertEqual(
+            list(engine.base_item_spawners["TearofHrimthurs"]),
+            list(old_sql_map["TearofHrimthurs"]),
+        )
 
 
 if __name__ == "__main__":
