@@ -440,6 +440,7 @@ def build_and_save_lootdrop_details(
     translations: dict[str, str] | None = None,
     entity_page_map: dict[str, str] | None = None,
     used_translation_keys: set[str] | None = None,
+    lootdrop_group_info_out: dict[str, dict[str, list[dict]]] | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
     map_base_to_group = drop_engine.map_base_to_group
@@ -448,6 +449,15 @@ def build_and_save_lootdrop_details(
     spawn_rate_by_mode = drop_engine.spawn_rate_by_mode
     entity_spawners = drop_engine.entity_spawners
     entity_page_map_ci = {name.casefold(): page for name, page in (entity_page_map or {}).items()}
+    available_entity_pages = set((entity_page_map or {}).values())
+
+    def _ref_is_available(candidate: str | None) -> bool:
+        if not candidate:
+            return False
+        if candidate in available_entity_pages:
+            return True
+        return (output_dir / f"{candidate}.json").is_file()
+
     spawner_public_entities: dict[str, set[str]] = {}
     for entity_name, spawner_names in entity_spawners.items():
         canonical_name = base_monster_name(entity_name.replace("_Locked", ""))
@@ -997,11 +1007,7 @@ def build_and_save_lootdrop_details(
                         _resolve_legend_ref(_source.get("translation", ""), _en, monsters_out, entity_page_map)
                     )
                     _ref = next(
-                        (
-                            candidate
-                            for candidate in _ref_candidates
-                            if candidate and (output_dir / f"{candidate}.json").is_file()
-                        ),
+                        (candidate for candidate in _ref_candidates if _ref_is_available(candidate)),
                         None,
                     )
                     if not _ref:
@@ -1045,11 +1051,7 @@ def build_and_save_lootdrop_details(
                             _resolve_legend_ref(_gdi_source["translation"], _en, monsters_out, entity_page_map)
                         )
                         _ref = next(
-                            (
-                                candidate
-                                for candidate in _ref_candidates
-                                if candidate and (output_dir / f"{candidate}.json").is_file()
-                            ),
+                            (candidate for candidate in _ref_candidates if _ref_is_available(candidate)),
                             None,
                         )
                         if not _ref:
@@ -1142,6 +1144,8 @@ def build_and_save_lootdrop_details(
                 for _e in _g_list:
                     _e.pop("_entity_name", None)
                     _e.pop("_source_kind", None)
+            if lootdrop_group_info_out is not None and not is_variant_family:
+                lootdrop_group_info_out[item_name] = _group_drop_info
             if not is_variant_family:
                 for _monster in monsters_out:
                     for _internal_key in ("_coord_key", "_multi_base", "_source_kind"):

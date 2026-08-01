@@ -11,13 +11,24 @@ _LABEL_TYPE_SUFFIX = LABEL_TYPE_SUFFIX
 _classify_label = classify_label
 
 
+def _save_entity_files(output_dir: Path, entity_data_by_type: dict[str, dict[str, dict]]) -> None:
+    for entity_type, entities in entity_data_by_type.items():
+        for name, entity_data in entities.items():
+            path = output_dir / entity_type / f"{name}.json"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(entity_data, f, ensure_ascii=False, indent=2)
+
+
 def enrich_all_entities(
     drop_engine,
     loot_index: list[dict],
+    entity_data_by_type: dict[str, dict[str, dict]],
+    lootdrop_group_info_by_item: dict[str, dict[str, list[dict]]],
     output_dir: Path,
     log_fn=None,
 ) -> None:
-    """Inject group_drop_info into all entity JSON files and clean zero-rate entries."""
+    """Enrich in-memory entity data, then write each detail file once."""
     spawner_ldg = drop_engine.spawner_ldg
     ore_ldg = drop_engine.ore_ldg
     map_base_to_group = drop_engine.map_base_to_group
@@ -27,28 +38,17 @@ def enrich_all_entities(
 
     _spawner_ldg_lower: dict[str, str] = {k.lower(): v for k, v in spawner_ldg.items()}
 
-    # ── Update item entities with group_drop_info from lootdrop files ──
+    # ── Update item entities with group_drop_info from the in-memory lootdrop result ──
     if log_fn:
         log_fn("[JSON] updating item entities with group drop info...")
     update_count = 0
     for entry in loot_index:
         iname = entry["name"]
-        loot_path = output_dir / f"lootdrops/{iname}.json"
-        if not loot_path.exists():
+        entity_data = entity_data_by_type["items"].get(iname)
+        gdi = lootdrop_group_info_by_item.get(iname)
+        if entity_data is None or not gdi:
             continue
-        with open(loot_path) as f:
-            loot_data = json.load(f)
-        gdi = loot_data.get("group_drop_info", {})
-        if not gdi:
-            continue
-        entity_path = output_dir / f"items/{iname}.json"
-        if not entity_path.exists():
-            continue
-        with open(entity_path) as f:
-            entity_data = json.load(f)
         entity_data["group_drop_info"] = gdi
-        with open(entity_path, "w") as f:
-            json.dump(entity_data, f, ensure_ascii=False, indent=2)
         update_count += 1
     if log_fn:
         log_fn(f"[JSON] updated {update_count} item entities with group drop info")
@@ -57,10 +57,7 @@ def enrich_all_entities(
     if log_fn:
         log_fn("[JSON] computing group_drop_info from ID_LootDropGroup...")
     direct_count = 0
-    for item_file in (output_dir / "items").glob("*.json"):
-        with open(item_file) as f:
-            entity_data = json.load(f)
-        iname = entity_data["name"]
+    for iname, entity_data in entity_data_by_type["items"].items():
         ldg_id = spawner_ldg.get(iname, "")
         if not ldg_id:
             continue
@@ -100,8 +97,6 @@ def enrich_all_entities(
             ]
         if group_drop_info:
             entity_data["group_drop_info"] = group_drop_info
-            with open(item_file, "w") as f:
-                json.dump(entity_data, f, ensure_ascii=False, indent=2)
             direct_count += 1
     if log_fn:
         log_fn(f"[JSON] computed group_drop_info for {direct_count} direct-spawn items")
@@ -110,10 +105,7 @@ def enrich_all_entities(
     if log_fn:
         log_fn("[JSON] updating monster entities with group drop info...")
     mon_update = 0
-    for mfile in (output_dir / "monsters").glob("*.json"):
-        with open(mfile) as f:
-            edata = json.load(f)
-        mname = edata["name"]
+    for mname, edata in entity_data_by_type["monsters"].items():
         # Find lootdrop_group_id (with suffix fallback)
         ldg_id = spawner_ldg.get(mname, "")
         if not ldg_id:
@@ -153,8 +145,6 @@ def enrich_all_entities(
             ]
         if group_drop_info:
             edata["group_drop_info"] = group_drop_info
-            with open(mfile, "w") as f:
-                json.dump(edata, f, ensure_ascii=False, indent=2)
             mon_update += 1
     if log_fn:
         log_fn(f"[JSON] updated {mon_update} monster entities with group drop info")
@@ -163,10 +153,7 @@ def enrich_all_entities(
     if log_fn:
         log_fn("[JSON] updating props entities with group drop info...")
     prop_update = 0
-    for pfile in (output_dir / "props").glob("*.json"):
-        with open(pfile) as f:
-            edata = json.load(f)
-        pname = edata["name"]
+    for pname, edata in entity_data_by_type["props"].items():
         # GoldChest_special: synthetic page — rates from GoldChest_UnderSea + ChestSpecial*
         if pname == GOLDCHEST_SPECIAL:
             ldg_id = (
@@ -217,8 +204,6 @@ def enrich_all_entities(
                 group_drop_info[g] = [{**entry, "drop_rates": dr} for entry in kw_entries.values()]
             if group_drop_info:
                 edata["group_drop_info"] = group_drop_info
-                with open(pfile, "w") as f:
-                    json.dump(edata, f, ensure_ascii=False, indent=2)
                 prop_update += 1
             continue
 
@@ -301,8 +286,6 @@ def enrich_all_entities(
             ]
         if group_drop_info:
             edata["group_drop_info"] = group_drop_info
-            with open(pfile, "w") as f:
-                json.dump(edata, f, ensure_ascii=False, indent=2)
             prop_update += 1
     if log_fn:
         log_fn(f"[JSON] updated {prop_update} props entities with group drop info")
@@ -311,10 +294,8 @@ def enrich_all_entities(
     if log_fn:
         log_fn("[JSON] cleaning up zero-rate entries...")
     clean_count = 0
-    for subdir in ("items", "props", "monsters"):
-        for efile in (output_dir / subdir).glob("*.json"):
-            with open(efile) as f:
-                edata = json.load(f)
+    for entities in entity_data_by_type.values():
+        for edata in entities.values():
             gdi = edata.get("group_drop_info")
             if not gdi:
                 continue
@@ -335,8 +316,7 @@ def enrich_all_entities(
                     edata["group_drop_info"] = new_gdi
                 else:
                     del edata["group_drop_info"]
-                with open(efile, "w") as f:
-                    json.dump(edata, f, ensure_ascii=False, indent=2)
                 clean_count += 1
+    _save_entity_files(output_dir, entity_data_by_type)
     if log_fn:
         log_fn(f"[JSON] cleaned {clean_count} files with zero-rate entries")
