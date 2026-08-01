@@ -9,12 +9,16 @@ from .schema import SchemaManager
 
 
 class DatabaseManager:
-    def __init__(self, db_path: str | Path = DB_PATH):
+    def __init__(self, db_path: str | Path = DB_PATH, initialize_schema: bool = True):
         self.db_path = Path(db_path)
-        self.conn = sqlite3.connect(str(self.db_path))
+        if initialize_schema:
+            self.conn = sqlite3.connect(str(self.db_path))
+        else:
+            self.conn = sqlite3.connect(f"file:{self.db_path.resolve()}?mode=ro", uri=True)
         self.conn.row_factory = sqlite3.Row
-        self.schema = SchemaManager(self.conn)
-        self.schema.create_tables()
+        if initialize_schema:
+            self.schema = SchemaManager(self.conn)
+            self.schema.create_tables()
         self.importers = ImporterRegistry(self.conn)
         self.repos = RepositoryRegistry(self.conn)
 

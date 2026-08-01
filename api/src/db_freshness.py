@@ -38,6 +38,13 @@ REQUIRED_TABLES = frozenset(
     }
 )
 
+CORE_TABLES = (
+    "item_entities",
+    "monster_entities",
+    "props_entities",
+    "dungeon_modules",
+)
+
 
 @dataclass(frozen=True)
 class DatabaseDecision:
@@ -106,8 +113,8 @@ def _read_pipeline_meta(db_path: Path) -> dict[str, str]:
     return {key: value for key, value in rows}
 
 
-def _has_usable_legacy_db(db_path: Path) -> bool:
-    """Accept old populated DBs for DB-only deployment before metadata exists."""
+def has_usable_database(db_path: Path) -> bool:
+    """Verify required tables and core exported entities without modifying the DB."""
     if not db_path.is_file():
         return False
     uri = f"file:{db_path.resolve()}?mode=ro"
@@ -116,7 +123,7 @@ def _has_usable_legacy_db(db_path: Path) -> bool:
             tables = {row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type = 'table'").fetchall()}
             if not REQUIRED_TABLES.issubset(tables):
                 return False
-            for table in ("item_entities", "monster_entities", "props_entities", "dungeon_modules"):
+            for table in CORE_TABLES:
                 if conn.execute(f"SELECT 1 FROM {table} LIMIT 1").fetchone() is None:
                     return False
     except (sqlite3.DatabaseError, OSError):
@@ -126,9 +133,12 @@ def _has_usable_legacy_db(db_path: Path) -> bool:
 
 def _is_complete_db(db_path: Path) -> bool:
     meta = _read_pipeline_meta(db_path)
-    if meta.get("import_complete") == "1":
-        return True
-    return _has_usable_legacy_db(db_path)
+    if not has_usable_database(db_path):
+        return False
+    # Legacy DBs do not contain pipeline_meta. They are rebuilt when sources are
+    # available because their manifest is absent, but remain usable DB-only data
+    # when the source tree is unavailable.
+    return not meta or meta.get("import_complete") == "1"
 
 
 def inspect_database(

@@ -363,12 +363,13 @@ item_coord_chain_map = {
 
 ## 状态
 
-状态：阶段 A 实施中，已保存 WIP checkpoint。
+状态：阶段 A-C 已完成并验证；阶段 D 精细增量暂不实施。
 
-### 已完成（未完成端到端验证）
+### 已完成
 
 - 新增 `api/src/db_freshness.py`：只读取 source root 的路径、文件名、大小和 mtime，
-  生成 manifest；不读取游戏 JSON 内容。
+  生成 manifest；不读取游戏 JSON 内容。核心实体表必须存在且非空，metadata-only DB
+  不会被误判为有效。
 - `inspect_database()` 已定义 `DB_READY`、`DB_ONLY`、`REBUILD_REQUIRED` 和
   `FAIL_FAST` 决策；source root 不可用时不会返回 stale。
 - 源不可用且有效 DB 存在时返回 `DB_ONLY`；源不可用且 DB 缺失/无效时 fail fast；
@@ -378,13 +379,23 @@ item_coord_chain_map = {
   `GAME_ROOT.exists()` 隐式决定 importer。
 - `main.py` 已增加 `--rebuild-db`、building DB 路径和 `os.replace()` 原子替换入口；
   stale 判断在 `DatabaseManager()` 之前执行，正式 DB 不在 normal rebuild 路径被 unlink。
+- DB-only 使用 SQLite read-only 连接，跳过 schema 创建和 migration；source 不可用时复用
+  legacy DB 不会改写正式 DB。
+- full import 在写 `pipeline_meta.import_complete=1` 前校验 building DB 的核心数据，写入
+  manifest、generator/schema version 和 UTC `import_completed_at` 后才原子替换。
+- `item_coord_chain_map` 已改为复用 `DropRateEngine.base_item_spawners`，并独立计时；
+  空 spawner 集合不保留，实际新旧索引均为 529 个 item key。
 
-### 待续
+### 验证（2026-08-02）
 
-1. 为 `db_freshness.py` 增加 isolated 临时目录测试：missing/fresh/stale、source
-   unavailable、forced rebuild、legacy DB、manifest 变更和只读 DB 不被创建/删除。
-2. 为 `main.py` 的 building DB 路径增加成功替换和 importer 异常保留旧 DB 的测试。
-3. 审查 full import 初始 `entity_classification` 的空 DB 时序，并跑删除 DB 的完整 rebuild。
-4. 实施阶段 C：将 `item_coord_chain_map` 三表 JOIN 改为 `DropRateEngine` 内存索引，
-   并给该阶段独立计时。
-5. 运行 fresh DB、stale DB、DB-only、source unavailable 四种完整管道，随后运行 SSG。
+- `python3 -m unittest discover -s api/tests -p 'test_*.py'`：27 tests OK。
+- Ruff、Black、Python 编译、Prettier 和 TypeScript 均通过。
+- 最终强制 full rebuild 成功：`38.45s`，building DB 写入 6 项 `pipeline_meta` 后替换正式 DB。
+- 最终 hot DB-only 成功：`24.84s`，日志确认 `DB_READY` 且无 importer / 地图解析阶段。
+- 旧 SQL JOIN 对照和内存索引均为 529 个 item key，独立阶段耗时低于日志显示精度。
+- quick SSG 成功：3,067 routes、12,007 localized HTML、17,011 dist files；
+  `http://localhost:8080/` 返回 HTTP 200。
+
+### 后续
+
+1. 阶段 D 可在需要时按 source group 实现局部 importer 跳过；当前任意 manifest 变化仍安全地完整重建。

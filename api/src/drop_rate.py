@@ -188,10 +188,12 @@ class DropRateEngine:
         for _item_name, _ld_ids in self._item_to_ld_ids.items():
             _m = _VARIANT_RE.match(_item_name)
             _base = _m.group(1) if _m else _item_name
-            _spawners = self._base_item_spawners.setdefault(_base, set())
+            _spawners: set[str] = set()
             for _ld_id in _ld_ids:
                 for _gid in self._ld_id_to_groups.get(_ld_id, set()):
                     _spawners.update(self._group_to_spawners.get(_gid, set()))
+            if _spawners:
+                self._base_item_spawners.setdefault(_base, set()).update(_spawners)
 
         # Build existing variant suffixes from _ld_rate_items
         for _items in self._ld_rate_items.values():
@@ -347,6 +349,11 @@ class DropRateEngine:
         Used as fallback when a specific variant has no spawner data.
         """
         return self._base_item_spawners.get(base_item_name, set())
+
+    @property
+    def base_item_spawners(self) -> dict[str, set[str]]:
+        """Return the preloaded base-item to spawner reverse index."""
+        return self._base_item_spawners
 
     def get_quality_variants(self, entity_name: str) -> list[str]:
         """Generate all quality variant names for a given entity.
