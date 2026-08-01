@@ -690,3 +690,10 @@
 - **变更文件**：`api/src/config.py`；`docs/plans/MULTILANG_STATUS.md`；`docs/plans/JA_DETAIL_I18N_BACKLOG.md`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`TECHNICAL_LOCALE_PREFIXES[lang] + _english_hardcoded_name(name)` 在数据管道中生成静态 locale 值，例如日语为“技术对象: Asset Name”；`HARDCODED_LOCALE_OVERRIDES` 和官方 key 仍优先，后续人工词条可直接覆盖自动标签。
 - **验证**：完整 `python main.py` 管道通过（121.84 秒）；详情实体空 key 数为 0，日语与英语值相同数为 0；Python 编译、Ruff、Black 与差异空白检查通过。
+
+### chore: 删除数据库后重建数据快照
+
+- **改动原因**：按请求删除 `api/data/darkfindv5.db`，从游戏导出重新导入并生成当前数据快照。
+- **变更文件**：`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：删除 DB 后 `python main.py` 重新执行翻译、实体、模块、spawner、任务和爆率导入，并由交付阶段写入新的 `data/json/meta.json`；其中 `dataDate` 取运行当天系统日期，`seasonVersion` 固定为 `9`。
+- **验证**：完整冷重建管道通过；quick SSG 通过（3067 路由、15202 HTML、17011 文件），生产预览首页 HTTP 200。
