@@ -4,6 +4,13 @@
 
 ## 2026-08-01
 
+### perf: enrichment 改为内存传递并单次写实体详情
+
+- **改动原因**：`enrichment.py` 在 lootdrop 详情生成后再次解析 lootdrop、items、monsters、props 派生 JSON，再写回实体详情；该二次 I/O 不需要重新访问 DB 或解包数据。
+- **变更文件**：`api/src/collector.py`；`api/src/entity_export.py`；`api/src/lootdrop_builder.py`；`api/src/enrichment.py`；`api/tests/test_enrichment.py`；`docs/plans/PERF_ENRICHMENT_IN_MEMORY.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：实体导出将详情对象暂存为 `entity_data_by_type`；lootdrop 详情生成将基础条目的 `group_drop_info` 暂存为 `lootdrop_group_info_by_item`；enrichment 直接消费两者，执行直接生成实体的 GDI、怪物/props GDI 注入和零率清理，最后统一写出每个实体详情一次。`entity_page_map` 同时作为变体 ref 的可用页面集合，允许实体详情延后落盘。
+- **验证**：Ruff、Black、Python 编译、11 个后端单元测试、runtime I/O guard、前端 Prettier 与 TypeScript 通过；完整数据管道成功，items/monsters/props 含 GDI 详情数为 `95/134/45`；quick SSG 生成 3,067 路由和 12,007 多语言 HTML；`/`、`/zh-Hans/items/Bandage/` 均 HTTP 200。
+
 ### docs: 新增 Blindfall Pit 概率计算链英文版
 
 - **改动原因**：用户需要一份更易阅读的英文文档来说明稀有模块从 Dungeon、DungeonLayout、DungeonModule 到 `0.84%` 的完整计算链，同时保留原中文文档不变。

@@ -22,6 +22,19 @@ def _save(output_dir: Path, filename: str, data: list | dict):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
+def _store_detail(
+    output_dir: Path,
+    filename: str,
+    name: str,
+    data: dict,
+    entity_data_out: dict[str, dict] | None,
+):
+    if entity_data_out is not None:
+        entity_data_out[name] = data
+    else:
+        _save(output_dir, filename, data)
+
+
 def export_items(
     items: list[dict],
     merged_loot: dict[str, list[str]],
@@ -34,6 +47,7 @@ def export_items(
     map_to_module: dict | None = None,
     item_coord_chain_map: dict[str, set[str]] | None = None,
     sub_pool_info: dict | None = None,
+    entity_data_out: dict[str, dict] | None = None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
     items_index = []
@@ -80,7 +94,7 @@ def export_items(
             "monsters": merged_loot.get(name, []),
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in coords],
         }
-        _save(output_dir, f"items/{name}.json", entity_data)
+        _store_detail(output_dir, f"items/{name}.json", name, entity_data, entity_data_out)
     _save(output_dir, "items.json", items_index)
     return items_index
 
@@ -94,6 +108,7 @@ def export_monsters(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
+    entity_data_out: dict[str, dict] | None = None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
     _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
@@ -145,7 +160,13 @@ def export_monsters(
                 build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
             ],
         }
-        _save(output_dir, f"monsters/{canonical['monster_name']}.json", entity_data)
+        _store_detail(
+            output_dir,
+            f"monsters/{canonical['monster_name']}.json",
+            canonical["monster_name"],
+            entity_data,
+            entity_data_out,
+        )
     _save(output_dir, "monsters.json", monsters_index)
     return monsters_index
 
@@ -160,6 +181,7 @@ def export_props(
     output_dir: Path,
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
+    entity_data_out: dict[str, dict] | None = None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
     props_index = []
@@ -234,7 +256,7 @@ def export_props(
             "translation_key": translation_key,
             "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
         }
-        _save(output_dir, f"props/{name_key}.json", entity_data)
+        _store_detail(output_dir, f"props/{name_key}.json", name_key, entity_data, entity_data_out)
 
     # GoldChest_special: synthetic page (Special-generator coords only)
     _gc_special_coords = all_coords.get(GOLDCHEST_SPECIAL) or []
@@ -256,15 +278,17 @@ def export_props(
                 "type": "props",
             }
         )
-        _save(
+        _store_detail(
             output_dir,
             f"props/{GOLDCHEST_SPECIAL}.json",
+            GOLDCHEST_SPECIAL,
             {
                 "name": GOLDCHEST_SPECIAL,
                 "translation": _gc_special_trans,
                 "translation_key": _gc_tk,
                 "coords": _built,
             },
+            entity_data_out,
         )
 
     _save(output_dir, "props.json", props_index)

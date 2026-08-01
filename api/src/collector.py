@@ -389,6 +389,11 @@ def run():
 
         # P005: Build ENTITY_PAGE_MAP for coord reference
         entity_page_map: dict[str, str] = {}
+        entity_data_by_type: dict[str, dict[str, dict]] = {
+            "items": {},
+            "monsters": {},
+            "props": {},
+        }
 
         with pipe.step("items export") as ctx:
             items_index = export_items(
@@ -403,8 +408,9 @@ def run():
                 map_to_module,
                 item_coord_chain_map,
                 _sub_pool_info,
+                entity_data_by_type["items"],
             )
-            # P005: Build from actual exported files, not raw DB data
+            # P005: Build from actual exported entities, not raw DB data
             for e in items_index:
                 entity_page_map[e["name"]] = f"items/{e['name']}"
             ctx.set_result(f"{len(items_index)} items")
@@ -419,6 +425,7 @@ def run():
                 OUTPUT_DIR,
                 map_to_module,
                 _sub_pool_info,
+                entity_data_by_type["monsters"],
             )
             for e in monsters_index:
                 entity_page_map[e["name"]] = f"monsters/{e['name']}"
@@ -435,6 +442,7 @@ def run():
                 OUTPUT_DIR,
                 map_to_module,
                 _sub_pool_info,
+                entity_data_by_type["props"],
             )
             for e in props_index:
                 entity_page_map[e["name"]] = f"props/{e['name']}"
@@ -492,6 +500,7 @@ def run():
             ctx.set_result(f"{len(loot_index)} items")
 
         used_translation_keys: set[str] = set()
+        lootdrop_group_info_by_item: dict[str, dict[str, list[dict]]] = {}
         build_and_save_lootdrop_details(
             loot_index,
             drop_engine,
@@ -507,10 +516,18 @@ def run():
             translations,
             entity_page_map,
             used_translation_keys,
+            lootdrop_group_info_by_item,
         )
         pipe.log("[JSON] lootdrops detail files DONE")
 
-        enrich_all_entities(drop_engine, loot_index, OUTPUT_DIR, pipe.log)
+        enrich_all_entities(
+            drop_engine,
+            loot_index,
+            entity_data_by_type,
+            lootdrop_group_info_by_item,
+            OUTPUT_DIR,
+            pipe.log,
+        )
 
         with pipe.step("quest data export") as ctx:
             print("\nExporting quest data from DB...")
