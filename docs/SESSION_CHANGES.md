@@ -18,6 +18,13 @@
 - **关键逻辑/映射关系**：`build_and_save_lootdrop_details()` 将共享 profile 传给 `get_group_drop_rates()`；后者分别累计候选 LDG 解析、模式/楼层调度及 `compute_drop_rate()`，后者再累计分级表查询、`_find_rate_item()`、权重累加和其余循环。实测基础 `group_rates=72.368s`：`get_group_drop_rates=69.870s`、调用端 `2.498s`；其中 `compute_drop_rate=68.599s`，而 `_find_rate_item()` 为 `67.507s`，占基础 group_rates `93.3%`。其未命中基础物品时会扫描整个 `rate_items` 并匹配变体，是后续缓存 `(lootdrop_id, item_name)` 查询结果的唯一优先热点。
 - **验证**：Ruff、Black、Python 编译和 11 个后端单元测试通过；完整管道成功，`lootdrops=94.39s`、总计 `127.44s`，日志为 `/tmp/darkfindv5-group-rates-profile.log`；预览根路径 HTTP 200。
 
+### perf: 验证 _find_rate_item 的候选扫描热点
+
+- **改动原因**：`_find_rate_item()` 占基础 `group_rates` 的 93.3%，需要确认是精确字典查询、候选池扫描、正则匹配还是变体选择造成。
+- **变更文件**：`api/src/drop_rate.py`（临时插入后回退）；`api/src/lootdrop_builder.py`（临时插入后回退）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：临时 profile 显示 `_find_rate_item=126.026s`，候选池线性扫描 `124.254s`（98.6%）；该扫描的正则匹配、基础名/`_8001` 条件和循环分别记录为 `63.353s/29.017s/31.884s`。后两项含逐候选 `perf_counter()` 的测量成本，不能作为绝对性能值；可以确定的是未命中时的整池扫描才是热点，变体选择仅 `0.404s`。临时细粒度计时会令 lootdrop 从约 `94s` 上升至 `157s`，已完整回退，不影响日常管道。
+- **验证**：临时 profile 的完整管道成功，日志为 `/tmp/darkfindv5-find-rate-profile.log`；回退后将重新运行 Python 预检，预览根路径保持 HTTP 200。
+
 ### perf: enrichment 改为内存传递并单次写实体详情
 
 - **改动原因**：`enrichment.py` 在 lootdrop 详情生成后再次解析 lootdrop、items、monsters、props 派生 JSON，再写回实体详情；该二次 I/O 不需要重新访问 DB 或解包数据。
