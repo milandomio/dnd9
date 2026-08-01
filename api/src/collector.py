@@ -506,6 +506,11 @@ def run(
             pipe.log(f"[PERF] lootdrops index: {time.perf_counter() - _lootdrop_started:.3f}s")
 
         used_translation_keys: set[str] = set()
+        for _entry in loot_index:
+            _category_key = _entry.get("item_category_key", "")
+            if _category_key:
+                used_translation_keys.add(_category_key)
+            used_translation_keys.update(_entry.get("item_subtype_keys") or [])
         lootdrop_group_info_by_item: dict[str, dict[str, list[dict]]] = {}
         _lootdrop_details_started = time.perf_counter()
         build_and_save_lootdrop_details(

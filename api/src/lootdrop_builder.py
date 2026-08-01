@@ -188,6 +188,32 @@ def _artifact_translation_key(item_name: str, translations: dict[str, str]) -> s
     return expected_key if expected_key in translations else ""
 
 
+def _item_type_metadata(item_row: dict | None, translations: dict[str, str]) -> dict:
+    if not item_row:
+        return {
+            "item_type": "",
+            "item_category_key": "",
+            "item_category_translation": "",
+            "item_subtype_keys": [],
+            "item_subtype_translations": [],
+        }
+    try:
+        subtype_keys = json.loads(item_row.get("item_subtype_keys", "[]"))
+    except (TypeError, json.JSONDecodeError):
+        subtype_keys = []
+    if not isinstance(subtype_keys, list):
+        subtype_keys = []
+    subtype_keys = [key for key in subtype_keys if isinstance(key, str) and key]
+    category_key = item_row.get("item_category_key", "") or ""
+    return {
+        "item_type": item_row.get("item_type", "") or "",
+        "item_category_key": category_key,
+        "item_category_translation": translations.get(category_key, "") if category_key else "",
+        "item_subtype_keys": subtype_keys,
+        "item_subtype_translations": [translations.get(key, "") for key in subtype_keys],
+    }
+
+
 def _possible_variant_suffixes(entry: dict) -> list[str]:
     """Return game-defined quality suffixes, including qualities with no drop weight."""
     if entry["name"].endswith("_8001"):
@@ -421,6 +447,7 @@ def build_loot_index(
             "monster_translations": merged_translations,
             "monster_translation_keys": merged_translation_keys,
         }
+        entry.update(_item_type_metadata(item_row, translations))
         loot_index.append(entry)
     loot_index.sort(key=lambda x: x["translation"] or x["name"])
     return loot_index

@@ -289,6 +289,15 @@ def build_and_save_indexes(
         si_entry["max_score"] = entry.get("max_score", 0.0)
         if entry.get("hr100"):
             si_entry["hr100"] = True
+        for key in (
+            "item_type",
+            "item_category_key",
+            "item_category_translation",
+            "item_subtype_keys",
+            "item_subtype_translations",
+        ):
+            if entry.get(key):
+                si_entry[key] = entry[key]
         search_index.append(si_entry)
     for entry in quest_npcs_data:
         search_index.append(

@@ -24,12 +24,23 @@ type IndexEntry = SearchEntry & {
   monster_translation_keys?: string[];
   max_score?: number;
   hr100?: boolean;
+  item_type?: string;
+  item_category_key?: string;
+  item_category_translation?: string;
+  item_subtype_keys?: string[];
+  item_subtype_translations?: string[];
 };
 
 type LootGroup = {
+  key: string;
   label: string;
   icon: string;
   items: IndexEntry[];
+  labelKey?: string;
+  categoryKey?: string;
+  categoryTranslation?: string;
+  subtypeKeys?: string[];
+  subtypeTranslations?: string[];
 };
 
 const NAV_KEY_LOOKUP: Record<string, string> = {
@@ -48,6 +59,22 @@ const LOOT_GROUP_KEYS: Record<string, string> = {
   ['武器装备']: 'ui.list.weapon',
 };
 
+const ITEM_GROUP_SEPARATOR = '\u001f';
+const ITEM_CATEGORY_ORDER = ['Utility', 'Misc', 'Accessory', 'Armor', 'Weapon'];
+const ITEM_CATEGORY_ICONS: Record<string, string> = {
+  Utility: '🧪',
+  Misc: '📦',
+  Accessory: '💍',
+  Armor: '🛡️',
+  Weapon: '⚔️',
+};
+
+function itemCategoryName(categoryKey: string): string {
+  const marker = '_Category_';
+  const index = categoryKey.lastIndexOf(marker);
+  return index >= 0 ? categoryKey.slice(index + marker.length) : '';
+}
+
 function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   const weapon: IndexEntry[] = [];
   const accessory: IndexEntry[] = [];
@@ -55,6 +82,7 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   const artifact: IndexEntry[] = [];
   const hr100: IndexEntry[] = [];
   const misc: IndexEntry[] = [];
+  const typedGroups = new Map<string, LootGroup>();
   for (const item of items) {
     if (item.name.endsWith('_8001')) {
       artifact.push(item);
@@ -62,6 +90,29 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
     }
     if (item.hr100) {
       hr100.push(item);
+      continue;
+    }
+    if (item.item_category_key) {
+      const subtypeKeys = item.item_subtype_keys ?? [];
+      const key = [item.item_category_key, ...subtypeKeys].join(
+        ITEM_GROUP_SEPARATOR
+      );
+      let group = typedGroups.get(key);
+      if (!group) {
+        const category = itemCategoryName(item.item_category_key);
+        group = {
+          key,
+          label: key,
+          icon: ITEM_CATEGORY_ICONS[category] ?? '📦',
+          items: [],
+          categoryKey: item.item_category_key,
+          categoryTranslation: item.item_category_translation,
+          subtypeKeys,
+          subtypeTranslations: item.item_subtype_translations,
+        };
+        typedGroups.set(key, group);
+      }
+      group.items.push(item);
       continue;
     }
     const vc = item.variant_count ?? 1;
@@ -78,16 +129,93 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
   }
   const groups: LootGroup[] = [];
   if (artifact.length)
-    groups.push({ label: '神器', icon: '🏺', items: artifact });
+    groups.push({
+      key: 'artifact',
+      label: '神器',
+      labelKey: LOOT_GROUP_KEYS['神器'],
+      icon: '🏺',
+      items: artifact,
+    });
   if (hr100.length)
-    groups.push({ label: '小型神器', icon: '🪙', items: hr100 });
-  if (rare.length) groups.push({ label: '稀有掉落', icon: '✨', items: rare });
-  if (misc.length) groups.push({ label: '物品', icon: '📦', items: misc });
+    groups.push({
+      key: 'mini-artifact',
+      label: '小型神器',
+      labelKey: LOOT_GROUP_KEYS['小型神器'],
+      icon: '🪙',
+      items: hr100,
+    });
+  if (rare.length)
+    groups.push({
+      key: 'rare-drop',
+      label: '稀有掉落',
+      labelKey: LOOT_GROUP_KEYS['稀有掉落'],
+      icon: '✨',
+      items: rare,
+    });
+  if (misc.length)
+    groups.push({
+      key: 'legacy-misc',
+      label: '物品',
+      labelKey: LOOT_GROUP_KEYS['物品'],
+      icon: '📦',
+      items: misc,
+    });
   if (accessory.length)
-    groups.push({ label: '饰品', icon: '💍', items: accessory });
+    groups.push({
+      key: 'legacy-accessory',
+      label: '饰品',
+      labelKey: LOOT_GROUP_KEYS['饰品'],
+      icon: '💍',
+      items: accessory,
+    });
   if (weapon.length)
-    groups.push({ label: '武器装备', icon: '⚔️', items: weapon });
+    groups.push({
+      key: 'legacy-weapon',
+      label: '武器装备',
+      labelKey: LOOT_GROUP_KEYS['武器装备'],
+      icon: '⚔️',
+      items: weapon,
+    });
+  groups.push(
+    ...[...typedGroups.values()].sort((a, b) => {
+      const aCategory = itemCategoryName(a.categoryKey ?? '');
+      const bCategory = itemCategoryName(b.categoryKey ?? '');
+      const categoryDiff =
+        ITEM_CATEGORY_ORDER.indexOf(aCategory) -
+        ITEM_CATEGORY_ORDER.indexOf(bCategory);
+      return categoryDiff || a.key.localeCompare(b.key);
+    })
+  );
   return groups;
+}
+
+function formatLootGroupLabel(
+  group: LootGroup,
+  t: (key: string | undefined, fallback: string) => string,
+  ut: (key: string) => string,
+  delimiter: string
+): string {
+  const translatePart = (key: string, fallback: string) => {
+    const value = t(key, fallback);
+    return value === key ? fallback : value;
+  };
+  if (!group.categoryKey) {
+    return ut(group.labelKey || '') || group.label;
+  }
+  const unknownLabel = ut('ui.list.item_group_unknown');
+  const category = translatePart(
+    group.categoryKey,
+    group.categoryTranslation || unknownLabel
+  );
+  const subtype = (group.subtypeKeys ?? [])
+    .map((key, index) =>
+      translatePart(key, group.subtypeTranslations?.[index] || unknownLabel)
+    )
+    .join(delimiter);
+  if (!subtype) return category;
+  return ut('ui.list.item_group')
+    .replace('{category}', category)
+    .replace('{type}', subtype);
 }
 
 export default function ListPage() {
@@ -119,8 +247,7 @@ export default function ListPage() {
   });
   const lootGroups = page === 'lootdrops' ? groupLootdrops(data) : [];
   const selectedLootGroup =
-    lootGroups.find((group) => group.label === activeLootGroup) ??
-    lootGroups[0];
+    lootGroups.find((group) => group.key === activeLootGroup) ?? lootGroups[0];
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -306,15 +433,20 @@ export default function ListPage() {
                       }}
                     >
                       {lootGroups.map((group) => {
-                        const isActive =
-                          selectedLootGroup?.label === group.label;
+                        const isActive = selectedLootGroup?.key === group.key;
+                        const label = formatLootGroupLabel(
+                          group,
+                          t,
+                          ut,
+                          delimiter
+                        );
                         return (
                           <button
-                            key={group.label}
+                            key={group.key}
                             type="button"
                             role="tab"
                             aria-selected={isActive}
-                            onClick={() => setActiveLootGroup(group.label)}
+                            onClick={() => setActiveLootGroup(group.key)}
                             style={{
                               flex: '1 1 140px',
                               minHeight: 42,
@@ -331,17 +463,14 @@ export default function ListPage() {
                               transition: 'background 0.2s, color 0.2s',
                             }}
                           >
-                            {group.icon}{' '}
-                            {ut(LOOT_GROUP_KEYS[group.label] || group.label) ||
-                              group.label}{' '}
-                            （{group.items.length}）
+                            {group.icon} {label} （{group.items.length}）
                           </button>
                         );
                       })}
                     </div>
                     {selectedLootGroup && (
                       <div
-                        key={selectedLootGroup.label}
+                        key={selectedLootGroup.key}
                         role="tabpanel"
                         style={{
                           gridColumn: '1 / -1',
