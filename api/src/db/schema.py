@@ -13,7 +13,10 @@ class SchemaManager:
                 raw_name TEXT NOT NULL,
                 translation_key TEXT NOT NULL DEFAULT '',
                 category TEXT NOT NULL DEFAULT '',
-                variant_count INTEGER NOT NULL DEFAULT 1
+                variant_count INTEGER NOT NULL DEFAULT 1,
+                item_type TEXT NOT NULL DEFAULT '',
+                item_category_key TEXT NOT NULL DEFAULT '',
+                item_subtype_keys TEXT NOT NULL DEFAULT '[]'
             );
 
             CREATE TABLE IF NOT EXISTS monster_entities (
@@ -170,6 +173,7 @@ class SchemaManager:
                 value TEXT NOT NULL DEFAULT ''
             );
         """)
+        self._migrate_item_entities_table()
         self._migrate_spawners_table()
         self._migrate_explore_targets_table()
         self.conn.commit()
@@ -196,6 +200,18 @@ class SchemaManager:
             c.execute("ALTER TABLE spawners ADD COLUMN group_parent TEXT NOT NULL DEFAULT ''")
         if "sub_group_parent" not in columns:
             c.execute("ALTER TABLE spawners ADD COLUMN sub_group_parent TEXT NOT NULL DEFAULT ''")
+
+    def _migrate_item_entities_table(self):
+        c = self.conn.cursor()
+        c.execute("PRAGMA table_info(item_entities)")
+        columns = {row[1] for row in c.fetchall()}
+        for column, definition in (
+            ("item_type", "TEXT NOT NULL DEFAULT ''"),
+            ("item_category_key", "TEXT NOT NULL DEFAULT ''"),
+            ("item_subtype_keys", "TEXT NOT NULL DEFAULT '[]'"),
+        ):
+            if column not in columns:
+                c.execute(f"ALTER TABLE item_entities ADD COLUMN {column} {definition}")
 
     def _migrate_explore_targets_table(self):
         c = self.conn.cursor()

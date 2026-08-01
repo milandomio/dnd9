@@ -15,7 +15,7 @@ from pathlib import Path
 from config import DATA_DIR, DB_PATH, LOCALIZATION_ROOT, MAPS_DIR
 
 FRESHNESS_SCHEMA_VERSION = "1"
-GENERATOR_VERSION = "db-lifecycle-v1"
+GENERATOR_VERSION = "db-lifecycle-v2-item-type-grouping"
 
 SOURCE_ROOTS: dict[str, Path] = {
     "localization": LOCALIZATION_ROOT,

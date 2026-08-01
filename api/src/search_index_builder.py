@@ -41,6 +41,10 @@ def build_search_index_files(db, output_dir: Path) -> list[str]:
         )
         if key
     }
+    for entry in base_index:
+        used_keys.add(entry.get("item_category_key", ""))
+        used_keys.update(entry.get("item_subtype_keys") or [])
+    used_keys.discard("")
     fallback_translations.update(hardcoded_locale_entries("zh-Hans", used_keys))
     exported: list[str] = []
     for lang in SUPPORTED_LANGUAGES:
@@ -71,6 +75,25 @@ def build_search_index_files(db, output_dir: Path) -> list[str]:
                         ),
                     )
                     for index, key in enumerate(monster_keys)
+                ]
+            category_key = entry.get("item_category_key", "")
+            if category_key:
+                localized["item_category_translation"] = translations.get(
+                    category_key,
+                    fallback_translations.get(category_key, entry.get("item_category_translation", "")),
+                )
+            subtype_keys = entry.get("item_subtype_keys") or []
+            if subtype_keys:
+                subtype_fallbacks = entry.get("item_subtype_translations") or []
+                localized["item_subtype_translations"] = [
+                    translations.get(
+                        key,
+                        fallback_translations.get(
+                            key,
+                            subtype_fallbacks[index] if index < len(subtype_fallbacks) else "",
+                        ),
+                    )
+                    for index, key in enumerate(subtype_keys)
                 ]
             localized_index.append(localized)
         with open(search_dir / f"{lang}.json", "w", encoding="utf-8") as f:

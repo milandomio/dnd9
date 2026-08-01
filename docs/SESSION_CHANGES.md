@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### feat: 按物品真实类型重分组 lootdrop
+
+- **改动原因**：原 `物品 / 饰品 / 武器装备` 分组依赖 `variant_count` 和爆率分数猜测，无法反映游戏资产中的 `ItemType`、`ArmorType`、`MiscType`、`UtilityType`、`AccessoryType` 和 `WeaponTypes`。
+- **变更文件**：`api/src/db/schema.py`；`api/src/db/importers/items.py`；`api/src/db/repositories/items.py`；`api/src/db_freshness.py`；`api/src/lootdrop_builder.py`；`api/src/index_export.py`；`api/src/search_index_builder.py`；`api/src/locale_builder.py`；`api/src/collector.py`；`api/tests/test_item_type_metadata.py`；`web/src/pages/ListPage.tsx`；`web/src/i18n/uiLocale.ts`；`docs/plans/LOOTDROP_ITEM_TYPE_GROUPING.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：导入阶段将 `ItemType` 映射为 `Text_Code...Category_*`，将 Gameplay Tag 映射为 `Text_Code...Type_Item_*`，写入 DB 后传递到 lootdrop 和 SSR 搜索索引；前端按稳定翻译键组合分组并显示如 `辅助道具：消耗品`、`护甲：皮甲`，神器/小型神器/稀有掉落保持特殊分组。旧 DB 缺字段时返回默认值，源可用时通过生成器版本变化触发重建。
+- **验证**：31 个后端测试、Ruff、Black、Prettier、TypeScript 通过；完整管道生成 787 条类型记录、478 个 lootdrop 和 10 种 locale；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个 dist 文件；`/zh-Hans/lootdrops/` HTTP 200，Playwright 验证 46 个标签、默认神器 28 项、切换辅助道具消耗品 15 项，中英文缺失翻译均回退为多语言未分类文案。
+
 ### feat: 语言切换器改为可爬取链接
 
 - **改动原因**：语言栏原使用 Ant Design `Select` 和脚本跳转，语言选项不是标准 `<a href>`，不利于搜索引擎发现对应语言页面；需要按 canonical 尾斜杠规则提供可爬取的内部链接。
