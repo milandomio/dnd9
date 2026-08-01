@@ -1,12 +1,13 @@
 import json
-import re
 import time
+from datetime import datetime, timezone
 
 from config import (
     DB_PATH,
     LOG_DIR,
     OUTPUT_DIR,
 )
+from db_freshness import has_usable_database
 from db_manager import DatabaseManager
 from drop_rate import DropRateEngine
 from enrichment import enrich_all_entities
@@ -67,7 +68,7 @@ def run(
     try:
 
         pipe.log("creating DatabaseManager...")
-        db = DatabaseManager(db_path)
+        db = DatabaseManager(db_path, initialize_schema=import_required)
         pipe.log("DatabaseManager ready")
         pipe.log(f"[DB] mode={'full import' if import_required else 'DB-only'}")
 
@@ -208,12 +209,16 @@ def run(
                 db.import_lootdrop_rate_weights()
             if source_manifest is None:
                 raise RuntimeError("full import requires a source manifest")
+            db.connect().commit()
+            if not has_usable_database(db.db_path):
+                raise RuntimeError("full import did not produce a usable database")
             db.set_pipeline_meta(
                 {
                     "schema_version": source_manifest["schema_version"],
                     "generator_version": source_manifest["generator_version"],
                     "source_manifest": json.dumps(source_manifest, sort_keys=True, separators=(",", ":")),
                     "source_latest_mtime_ns": str(source_manifest["latest_mtime_ns"]),
+                    "import_completed_at": datetime.now(timezone.utc).isoformat(),
                     "import_complete": "1",
                 }
             )
@@ -364,23 +369,6 @@ def run(
         pipe.log("[JSON] building merged lootdrop map...")
         merged_loot, skip_variants = build_merged_loot_map(db)
 
-        pipe.log("[JSON] building item→spawner coord chain map...")
-        _variant_re = re.compile(r"_\d{4}$")
-        item_coord_chain_map: dict[str, set[str]] = {}
-        for _row in (
-            db.connect()
-            .execute(
-                "SELECT DISTINCT lri.item_name, se.spawner_keyword "
-                "FROM lootdrop_rate_items lri "
-                "JOIN lootdrop_groups lg ON lri.lootdrop_id = lg.lootdrop_id "
-                "JOIN spawner_entries se ON lg.group_id = se.lootdrop_group_id"
-            )
-            .fetchall()
-        ):
-            _base = _variant_re.sub("", _row["item_name"])
-            item_coord_chain_map.setdefault(_base, set()).add(_row["spawner_keyword"])
-        pipe.log(f"[JSON] item_coord_chain_map DONE -> {len(item_coord_chain_map)} item keys")
-
         pipe.log("[JSON] building modules_map...")
         modules = db.get_dungeon_modules()
         modules_map = build_modules_map(db, resolver.resolve, module_rotations=None)
@@ -398,6 +386,24 @@ def run(
                 _mod["group_floor"] = 1
                 _mod["group_sub_key"] = None
             _mod["group_display"] = _resolve_group_display(_g, translations)
+
+        with pipe.step("dungeon_modules export") as ctx:
+            merged_coords = build_and_save_module_coords(
+                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR
+            )
+            modules_data = build_and_save_modules_data(modules_map, module_to_maps, merged_coords, OUTPUT_DIR)
+            ctx.set_result(f"{len(modules_data)} modules")
+
+        pipe.log("[JSON] preloading drop rate data...")
+        drop_engine = DropRateEngine()
+        drop_engine.preload(db, modules_data)
+        pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
+
+        with pipe.step("item coord chain map") as ctx:
+            item_coord_chain_map = {
+                base_item: set(spawners) for base_item, spawners in drop_engine.base_item_spawners.items()
+            }
+            ctx.set_result(f"{len(item_coord_chain_map)} item keys")
 
         # P005: Build ENTITY_PAGE_MAP for coord reference
         entity_page_map: dict[str, str] = {}
@@ -476,18 +482,6 @@ def run(
             pipe.log(f"[JSON] orphan coord files: {_orphan_count}")
 
         pipe.log(f"[JSON] ENTITY_PAGE_MAP built: {len(entity_page_map)} entities")
-
-        with pipe.step("dungeon_modules export") as ctx:
-            merged_coords = build_and_save_module_coords(
-                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR
-            )
-            modules_data = build_and_save_modules_data(modules_map, module_to_maps, merged_coords, OUTPUT_DIR)
-            ctx.set_result(f"{len(modules_data)} modules")
-
-        pipe.log("[JSON] preloading drop rate data...")
-        drop_engine = DropRateEngine()
-        drop_engine.preload(db, modules_data)
-        pipe.log("[JSON] preloaded drop rate data via DropRateEngine")
 
         with pipe.step("lootdrops") as ctx:
             _lootdrop_started = time.perf_counter()

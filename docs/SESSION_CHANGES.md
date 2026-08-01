@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-08-02
+
+### perf: 完成 DB freshness 生命周期与 item 坐标链索引优化
+
+- **改动原因**：DB 存在但解包源未变化时仍会重复完整 importer；`item_coord_chain_map` 还会执行约 10 秒三表 JOIN，且 source 不可用时 DB-only 连接可能触发 schema migration。
+- **变更文件**：`api/main.py`；`api/src/collector.py`；`api/src/db_freshness.py`；`api/src/db/__init__.py`；`api/src/db/schema.py`；`api/src/drop_rate.py`；`api/tests/test_db_freshness.py`；`api/tests/test_drop_rate.py`；`docs/plans/DB_FRESHNESS_AND_IMPORT_LIFECYCLE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：入口以 metadata-only manifest 决定 `DB_READY`、`DB_ONLY`、`REBUILD_REQUIRED` 或 `FAIL_FAST`；完整导入写入 `.building`，核心表校验和 `pipeline_meta` 完成后用 `os.replace()` 替换正式 DB；DB-only 使用 SQLite read-only 连接。`DropRateEngine.preload()` 的 `base_item -> spawner set` 索引替换 `lootdrop_rate_items -> lootdrop_groups -> spawner_entries` JOIN，并排除旧 JOIN 不会返回的空 spawner key。
+- **验证**：27 个后端测试、Ruff、Black、Python 编译、Prettier、TypeScript 全通过；final full rebuild `38.45s`，hot DB-only `24.84s`。旧 SQL 与内存索引均为 529 keys，坐标链阶段低于日志显示精度。quick SSG 生成 3,067 routes、12,007 localized HTML、17,011 dist files，`http://localhost:8080/` 返回 HTTP 200。
+
 ## 2026-08-01
 
 ### docs: 制定 DB 新旧判断与导入生命周期修复方案

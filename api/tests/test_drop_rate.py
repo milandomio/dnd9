@@ -1,3 +1,4 @@
+import sqlite3
 import sys
 import unittest
 from pathlib import Path
@@ -143,6 +144,44 @@ class DropRateVariantTest(unittest.TestCase):
             ),
             "coords/SkeletonFootmanFromFakeDeath",
         )
+
+
+class DropRatePreloadIndexTest(unittest.TestCase):
+    def test_base_item_spawner_index_matches_rate_item_join(self):
+        conn = sqlite3.connect(":memory:")
+        conn.row_factory = sqlite3.Row
+        conn.executescript("""
+            CREATE TABLE spawner_entries (spawner_keyword TEXT, entity_name TEXT, lootdrop_group_id TEXT);
+            CREATE TABLE lootdrop_groups (group_id TEXT, dungeon_grade INTEGER, lootdrop_id TEXT, lootdrop_rate_id TEXT, drop_count INTEGER);
+            CREATE TABLE lootdrop_rate_items (lootdrop_id TEXT, item_name TEXT, luck_grade INTEGER, drop_count INTEGER);
+            CREATE TABLE lootdrop_rate_weights (rate_id TEXT, luck_grade INTEGER, weight INTEGER);
+            CREATE TABLE spawners (keyword TEXT, map_base TEXT);
+            INSERT INTO spawner_entries VALUES ('TearofHrithurs', '', 'group-a');
+            INSERT INTO lootdrop_groups VALUES ('group-a', 1001, 'drop-a', 'rate-a', 1);
+            INSERT INTO lootdrop_rate_items VALUES ('drop-a', 'TearofHrimthurs_5001', 5, 1);
+            INSERT INTO lootdrop_rate_items VALUES ('orphan-drop', 'OrphanItem_5001', 5, 1);
+        """)
+
+        class _Db:
+            def connect(self):
+                return conn
+
+            def get_all_spawner_entries(self):
+                return []
+
+        engine = DropRateEngine()
+        engine.preload(_Db(), [])
+        old_sql_map = {
+            row["item_name"].removesuffix("_5001"): {row["spawner_keyword"]}
+            for row in conn.execute(
+                "SELECT DISTINCT lri.item_name, se.spawner_keyword "
+                "FROM lootdrop_rate_items lri "
+                "JOIN lootdrop_groups lg ON lri.lootdrop_id = lg.lootdrop_id "
+                "JOIN spawner_entries se ON lg.group_id = se.lootdrop_group_id"
+            )
+        }
+
+        self.assertEqual(engine.base_item_spawners, old_sql_map)
 
 
 if __name__ == "__main__":
