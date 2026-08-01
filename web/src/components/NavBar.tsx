@@ -412,7 +412,7 @@ export default function NavBar() {
           <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
           <details
             className="language-selector-details"
-            style={{ position: 'relative', width: '7em' }}
+            style={{ position: 'relative', width: '8em' }}
           >
             <style>{`
               .language-selector-summary {
@@ -442,7 +442,7 @@ export default function NavBar() {
                 padding: '0 7px',
                 boxSizing: 'border-box',
                 color: tokens.text,
-                background: dark ? '#333' : '#fff',
+                background: dark ? '#141414' : '#fff',
                 border: `1px solid ${tokens.border}`,
                 borderRadius: 6,
                 fontSize: 14,
@@ -467,7 +467,7 @@ export default function NavBar() {
                 zIndex: 1001,
                 minWidth: '100%',
                 boxSizing: 'border-box',
-                maxHeight: 320,
+                maxHeight: 420,
                 overflowY: 'auto',
                 padding: 4,
                 background: dark ? '#141414' : '#fff',
