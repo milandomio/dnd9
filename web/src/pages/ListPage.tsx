@@ -92,6 +92,12 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
       hr100.push(item);
       continue;
     }
+    const vc = item.variant_count ?? 1;
+    const ms = item.max_score ?? 0;
+    if (ms > 0 && ms < 1) {
+      rare.push(item);
+      continue;
+    }
     if (item.item_category_key) {
       const subtypeKeys = item.item_subtype_keys ?? [];
       const key = [item.item_category_key, ...subtypeKeys].join(
@@ -115,14 +121,10 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
       group.items.push(item);
       continue;
     }
-    const vc = item.variant_count ?? 1;
-    const ms = item.max_score ?? 0;
     if (vc === 7 || vc === 8) {
       weapon.push(item);
     } else if (vc === 5) {
       accessory.push(item);
-    } else if (ms > 0 && ms < 1) {
-      rare.push(item);
     } else {
       misc.push(item);
     }
