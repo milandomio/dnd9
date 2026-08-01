@@ -477,7 +477,7 @@ export default function ListPage() {
                                 aria-selected={isActive}
                                 onClick={() => setActiveLootGroup(group.key)}
                                 style={{
-                                  flex: '1 1 140px',
+                                  flex: '0 1 auto',
                                   minHeight: 42,
                                   padding: '8px 12px',
                                   color: isActive ? tokens.bg : tokens.accent,
