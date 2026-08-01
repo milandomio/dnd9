@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### style: 增大语言下拉菜单并统一深色背景
+
+- **改动原因**：语言菜单高度过小，10 个语言选项可能出现滚动条；未展开的语言框颜色也比菜单背景更亮，需要统一视觉。
+- **变更文件**：`web/src/components/NavBar.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：触发器宽度从 `7em` 调整为 `8em`，菜单最大高度从 `320px` 调整为 `420px`，深色主题下触发器和菜单统一使用 `#141414`；锚点和 URL 逻辑不变。
+- **验证**：Prettier、TypeScript 通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；Playwright 实测菜单 `clientHeight=scrollHeight=328px`、触发器 `128x24px`、10 个语言锚点，首页和 NPC 页 HTTP 200。
+
 ### style: 用标准锚点模拟 Select 视觉
 
 - **改动原因**：需要尝试不依赖 Ant Design `Select` 的 SEO 兼容方案，同时保持语言栏原有下拉框外观。
