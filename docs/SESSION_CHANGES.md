@@ -4,6 +4,13 @@
 
 ## 2026-08-01
 
+### docs: 制定 LootDrop 基底物品匹配缓存优化方案
+
+- **改动原因**：profile 确认 `_find_rate_item()` 的候选池线性扫描占基础 `group_rates` 的主要时间，需要在实现前固定语义、索引范围、测试和回退路径。
+- **变更文件**：`docs/plans/PERF_RATE_ITEM_LOOKUP_CACHE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：方案在 `DropRateEngine.preload()` 中构建 `lootdrop_id -> base_item_name -> 既有 luck-grade 条目` 的优选变体索引；查询仍先精确命中，基底回退优先 `_5001`、否则最高真实品质、忽略 `_8001`。DB 当前有 395 个池、44,459 行、6,682 个变体族，索引只保存既有列表引用；未预加载的手工 engine 继续使用原始扫描以兼容测试。
+- **验证**：已复核 `REFERENCE_DROP_RATES.md` 的变体规则、`drop_rate.py` 调用链和现有 `test_drop_rate.py`；计划阶段不修改生产逻辑，待实施时执行完整管道 A/B 与 JSON 语义对照。
+
 ### perf: 增加 lootdrop 分项计时并定位概率计算热点
 
 - **改动原因**：总计时只能显示 `lootdrops` 耗时，无法判断坐标整理、掉落概率计算、变体处理、JSON 序列化或 enrichment 的实际占比。
