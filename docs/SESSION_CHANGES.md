@@ -11,6 +11,13 @@
 - **关键逻辑/映射关系**：导入阶段将 `ItemType` 映射为 `Text_Code...Category_*`，将 Gameplay Tag 映射为 `Text_Code...Type_Item_*`，写入 DB 后传递到 lootdrop 和 SSR 搜索索引；前端按稳定翻译键组合分组并显示如 `辅助道具：消耗品`、`护甲：皮甲`，神器/小型神器/稀有掉落保持特殊分组。旧 DB 缺字段时返回默认值，源可用时通过生成器版本变化触发重建。
 - **验证**：31 个后端测试、Ruff、Black、Prettier、TypeScript 通过；完整管道生成 787 条类型记录、478 个 lootdrop 和 10 种 locale；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个 dist 文件；`/zh-Hans/lootdrops/` HTTP 200，Playwright 验证 46 个标签、默认神器 28 项、切换辅助道具消耗品 15 项，中英文缺失翻译均回退为多语言未分类文案。
 
+### style: 恢复语言栏下拉框视觉
+
+- **改动原因**：可爬取链接改造后语言栏变成普通文本菜单，偏离原 Ant Design `Select` 的下拉框视觉；需要保留标准锚点，同时恢复原来的边框框体外观。
+- **变更文件**：`web/src/components/NavBar.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：保留 `details/nav/a` 结构，在原地球图标旁将 `summary` 设置为约 `7em` 宽、24px 高、边框、圆角和下拉箭头的 Select 风格，菜单链接和尾斜杠 URL 逻辑不变。
+- **验证**：Prettier、TypeScript 通过；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；Playwright 实测触发器尺寸约 `112x24px`、边框 `1px`、圆角 `6px`，菜单可展开且包含 10 个语言锚点；首页和 NPC 页 HTTP 200。
+
 ### feat: 语言切换器改为可爬取链接
 
 - **改动原因**：语言栏原使用 Ant Design `Select` 和脚本跳转，语言选项不是标准 `<a href>`，不利于搜索引擎发现对应语言页面；需要按 canonical 尾斜杠规则提供可爬取的内部链接。
