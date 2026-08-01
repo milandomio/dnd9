@@ -11,6 +11,13 @@
 - **关键逻辑/映射关系**：`DropRateEngine.preload()` 将每个 `lootdrop_id` 的变体族预先映射为 `base_item_name -> 优选 luck-grade 条目`；`_resolve_rate_item()` 保持精确项优先，带后缀项缺失仍返回 `None`，只有无后缀基底使用 `_5001` 优先、否则最高真实品质的缓存值，且 `_8001` 不参与。未预加载的手工 engine 仍回退原 `_find_rate_item()` 扫描。
 - **验证**：恢复点为 `f2253c1f`；Ruff、Black、Python 编译和 16 个单元测试通过。完整管道成功，基础 `group_rates` 从 `72.368s` 降至 `4.391s`（-93.9%），lootdrop 详情从 `93.819s` 降至 `28.979s`（-69.1%），`lootdrops` 从 `94.39s` 降至 `29.59s`（-68.7%）；quick SSG 生成 3,067 路由和 12,007 多语言 HTML，`/`、`/zh-Hans/items/Bandage/` 均 HTTP 200。
 
+### docs: 补充掉落率缓存计划的计算链与 I/O 边界
+
+- **改动原因**：需要明确此次性能优化实际替换的是哪段概率计算，以及是否改变 DB、JSON 或解包数据的 I/O。
+- **变更文件**：`docs/plans/PERF_RATE_ITEM_LOOKUP_CACHE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：文档列出 `lootdrop detail -> group rates -> group/grade -> lootdrop -> rate items -> resolver -> luck-grade 权重` 计算链，并列出 `SQLite preload -> 内存索引 -> 内存计算 -> 既有 JSON 写盘` I/O 链；确认索引将导出期重复的 `rate_items.items()` 内存扫描前移至 `preload()` 单次内存遍历，不新增 SQL、JSON 或解包文件 I/O。
+- **验证**：文档与 `DropRateEngine.preload()`、`_build_preferred_base_items()`、`_resolve_rate_item()`、`compute_drop_rate()` 当前实现逐段对照；本次仅文档补充，不重跑管道。
+
 ### docs: 制定 LootDrop 基底物品匹配缓存优化方案
 
 - **改动原因**：profile 确认 `_find_rate_item()` 的候选池线性扫描占基础 `group_rates` 的主要时间，需要在实现前固定语义、索引范围、测试和回退路径。
