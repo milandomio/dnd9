@@ -940,7 +940,7 @@ function detailTemplate() {
   return template
     .replace(/\s*<style>[\s\S]*?<\/style>/, '')
     .replace(
-      /\s*<link rel="preload" href="\/data\/(?:json\/meta\.json|[^"/]+\/json\/(?:dungeon_modules|index|search_index)\.json)" as="fetch" crossorigin="anonymous">/g,
+      /\s*<link rel="preload" href="\/data\/(?:[^"/]+\/json\/(?:dungeon_modules|index|search_index)\.json)" as="fetch" crossorigin="anonymous">/g,
       ''
     );
 }
