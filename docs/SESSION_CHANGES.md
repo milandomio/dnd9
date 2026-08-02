@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-08-03
+
+### perf: 排查并修复其他详情页的渐进加载问题
+
+- **改动原因**：lootdrop 详情页改为渐进加载后，items/monsters/props 共用的 `DetailPage` 仍会一次实例化所有地图图片，路由切换和 Quick/CSR 数据壳也可能短暂显示旧实体或不完整数据；其他详情页还存在相同的版本等待和旧请求覆盖风险。
+- **变更文件**：`web/src/pages/DetailPage.tsx`；`web/src/pages/QuestItemGroupPage.tsx`；`web/src/pages/DungeonModuleDetailPage.tsx`；`web/src/pages/QuestNPCDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`DetailPage` 仅接受带 `coords` 的完整 SSR 实体，按当前 URL 校验实体名称，数据请求使用 `AbortController`；地图卡片沿用 lootdrop 的 `IntersectionObserver` 和 `600px` 预加载范围，未进入视口时保留固定比例占位。Quest 物品组在 Quick 模式的 `entities: []` 壳下等待完整 JSON；地图模块详情只有坐标就绪后结束 loading，并忽略旧路由响应；NPC 详情等待 `dataVersion` 后再生成版本化 URL。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；ESLint 0 error、20 条既有 warning；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件，预览根路径 HTTP 200。Playwright 验证 `GoldChest` 详情 41 张地图卡首屏仅创建 10 个 `MapPanel`、无页面错误，`Ale → GoldChest` 延迟切换不残留旧实体。现有 `test:i18n` 为 25/27，两条 CastillonDagger 多语言文案断言仍失败，与本次改动无关。
+
 ## 2026-08-02
 
 ### fix: 防止 LiteLLM 缺少 `.env` 时 systemd 重启风暴

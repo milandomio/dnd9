@@ -124,8 +124,12 @@ export default function QuestNPCDetailPage() {
 
   useEffect(() => {
     if (ssrData) return;
+    if (!dataVersion) return;
     fetch(dataUrl(dataVersion, '/data/json/quest_npc.json'))
-      .then<NPCEntry[]>((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`quest NPC HTTP ${r.status}`);
+        return r.json() as Promise<NPCEntry[]>;
+      })
       .then(setAllNpcs)
       .catch(console.error);
   }, [ssrData, dataVersion]);
