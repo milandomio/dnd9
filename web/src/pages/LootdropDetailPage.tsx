@@ -1077,10 +1077,9 @@ export default function LootdropDetailPage() {
         );
       })()}
 
-      {data.variant_rarity && data.variants && (
+      {data.variant_rarity && Object.keys(data.variant_rarity).length > 1 && (
         <VariantSwitch
           variantRarity={data.variant_rarity}
-          suffixes={Object.keys(data.variants)}
           itemName={itemName}
           currentSuffix={currentSuffix}
         />
