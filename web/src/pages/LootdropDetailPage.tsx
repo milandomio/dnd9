@@ -63,6 +63,8 @@ const GROUP_ORDER = [
 ];
 
 const VARIANT_RE = /^(.+?)_(\d{4})$/;
+// Load one referenced entity at a time so each response renders immediately.
+const REF_FETCH_BATCH_SIZE = 1;
 const LOOT_SOURCE_UI_KEYS: Record<string, string> = {
   Weapon_DualBoss: 'ui.loot_source.dual_boss_weapon',
   Weapon_MysticalTreasureRoom: 'ui.loot_source.mystical_treasure_weapon',
@@ -443,11 +445,18 @@ export default function LootdropDetailPage() {
     }
   );
   useEffect(() => {
-    if (dataVersion) resetGlobalCaches(dataVersion);
-    const refsNeeded = monsters
-      .filter((m) => m.ref && !refCoords.has(m.ref))
-      .map((m) => m.ref!);
+    if (!dataVersion) return;
+    resetGlobalCaches(dataVersion);
+    const refsNeeded = [
+      ...new Set(
+        [...monsters]
+          .filter((m) => m.ref && !refCoords.has(m.ref))
+          .sort((a, b) => (b.max_score ?? -1) - (a.max_score ?? -1))
+          .map((m) => m.ref!)
+      ),
+    ];
     if (refsNeeded.length === 0) return;
+    let cancelled = false;
 
     const fetchRef = (ref: string): Promise<[string, LootdropCoord[]]> => {
       // Return from global cache if available
@@ -459,7 +468,10 @@ export default function LootdropDetailPage() {
         return _globalRefPending.get(ref)!.then((coords) => [ref, coords]);
       }
       const p = fetch(dataUrl(dataVersion, `/data/json/${ref}.json`))
-        .then((r) => r.json())
+        .then((r) => {
+          if (!r.ok) throw new Error(`entity HTTP ${r.status}: ${ref}`);
+          return r.json();
+        })
         .then((entity) => {
           const coords: LootdropCoord[] = Array.isArray(entity)
             ? entity
@@ -467,18 +479,45 @@ export default function LootdropDetailPage() {
           _globalRefCache.set(ref, coords);
           _globalRefPending.delete(ref);
           return coords;
+        })
+        .catch((error) => {
+          _globalRefPending.delete(ref);
+          throw error;
         });
       _globalRefPending.set(ref, p);
       return p.then((coords) => [ref, coords]);
     };
 
-    Promise.all(refsNeeded.map(fetchRef)).then((results) => {
-      setRefCoords((prev) => {
-        const next = new Map(prev);
-        for (const [ref, coords] of results) next.set(ref, coords);
-        return next;
-      });
-    });
+    const loadBatches = async () => {
+      for (
+        let start = 0;
+        start < refsNeeded.length && !cancelled;
+        start += REF_FETCH_BATCH_SIZE
+      ) {
+        const batch = refsNeeded.slice(start, start + REF_FETCH_BATCH_SIZE);
+        const results = await Promise.allSettled(batch.map(fetchRef));
+        if (cancelled) return;
+        const loaded = results.flatMap((result, index) => {
+          if (result.status === 'fulfilled') return [result.value];
+          console.error(
+            `Failed to load entity coordinates: ${batch[index]}`,
+            result.reason
+          );
+          return [];
+        });
+        if (loaded.length === 0) continue;
+        setRefCoords((prev) => {
+          const next = new Map(prev);
+          for (const [ref, coords] of loaded) next.set(ref, coords);
+          return next;
+        });
+      }
+    };
+
+    void loadBatches();
+    return () => {
+      cancelled = true;
+    };
   }, [monsters, dataVersion]);
 
   const variantRatesBySource = useMemo(() => {
@@ -557,12 +596,12 @@ export default function LootdropDetailPage() {
     return lookup;
   }, [data?.group_drop_info]);
 
-  // P005: Show loading state while fetching referenced coords
+  // Render available sources while referenced coordinates continue loading.
   const hasRefs = monsters.some((m) => m.ref);
   const refsLoaded =
     !hasRefs || monsters.every((m) => !m.ref || refCoords.has(m.ref!));
 
-  if (!data || !refsLoaded)
+  if (!data)
     return (
       <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
         {ut('ui.common.loading')}
@@ -1174,6 +1213,11 @@ export default function LootdropDetailPage() {
             ? ut('ui.common.hide_all')
             : ut('ui.common.show_all')}
         </button>
+        {!refsLoaded && (
+          <span style={{ color: tokens.muted, alignSelf: 'center' }}>
+            {ut('ui.common.loading')}
+          </span>
+        )}
         {visibleMonsters.map((m) => (
           <button
             key={m.translation}
