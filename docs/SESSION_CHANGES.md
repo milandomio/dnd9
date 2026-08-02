@@ -46,6 +46,13 @@
 - **关键逻辑/映射关系**：动态行显示 `图标【大类：】`，子类显示 `【子类(count)】`；特殊分组显示 `图标【分组(count)】`，新增 `ui.list.item_group_prefix` 支持多语言冒号格式。
 - **验证**：Prettier、ESLint（0 error）、TypeScript 和 quick SSG 通过；`/zh-Hans/lootdrops/` HTTP 200；Playwright 验证分类文本无空格，`⚔️【武器：】【斧(5)】` 格式正确，点击斧分类显示 5 项。
 
+### fix: 合并含未分类大类中的单项子分类
+
+- **改动原因**：某个一级大类已经存在“未分类”时，数量为 1 的独立子分类按钮信息量过低，单独展示会造成分类栏过碎。
+- **变更文件**：`web/src/pages/ListPage.tsx`；`docs/plans/LOOTDROP_ITEM_TYPE_GROUPING.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：先按一级分类寻找空子类型的“未分类”组；仅当该组存在时，将同大类中 `items.length === 1` 的子类型组的物品移入未分类，并按物品名去重后删除原按钮；没有未分类组的大类不受影响。
+- **验证**：Prettier、ESLint（0 error）、TypeScript、quick SSG 和 HTTP 200 通过；Playwright 验证辅助道具、杂项的未分类组正常显示，武器无未分类组时单项 `火器(1)` 仍保留。
+
 ### style: lootdrop 分类按钮改为内容宽度
 
 - **改动原因**：分类按钮使用可增长 flex 配置，导致一行按钮不足时被拉伸填满整行；需要保持按钮自身内容宽度。
