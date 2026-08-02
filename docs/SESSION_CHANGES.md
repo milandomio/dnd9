@@ -11,6 +11,13 @@
 - **关键逻辑/映射关系**：关联引用去重后按 `max_score` 降序排列，`REF_FETCH_BATCH_SIZE = 1` 使每次只请求一个 `/data/{version}/json/{page}/{name}.json`；每个请求完成后立即写入 `refCoords`，移除关联坐标未全部完成时的整页阻塞，保留全局缓存、请求去重和失败后继续后续请求。
 - **验证**：`npm run format`、`format:check`、TypeScript、ESLint 无 error；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件；目标页 HTTP 200；Playwright 验证最大同时在途关联请求数为 1、5 秒内渲染 66 个按钮且无浏览器错误。
 
+### perf: 详情页提前预加载数据版本
+
+- **改动原因**：详情页模板删除了 `meta.json` preload，客户端必须等 React 启动后才发起版本请求，导致第一个关联实体 JSON 额外等待一次网络往返。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：详情页继续移除通用的模块、索引和搜索索引 preload，但保留 `/data/json/meta.json` preload，使数据版本探测与基础 lootdrop JSON 并行；版本号准备后仍由 `dataUrl()` 请求版本化关联 JSON。
+- **验证**：quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件；目标页 HTML 含 `meta.json` preload 且 HTTP 200；模拟 300ms 网络延迟时第一个关联 JSON 约 345ms 发起；TypeScript、Prettier、ESLint 无 error。
+
 ### chore: 清理项目内 LiteLLM 提交历史
 
 - **改动原因**：LiteLLM 是 WSL 工作区环境配置，不属于 `DarkFindV5` 项目管理范围；其本地提交链应从项目分支移除。
