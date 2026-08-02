@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### fix: 防止 LiteLLM 缺少 `.env` 时 systemd 重启风暴
+
+- **改动原因**：用户安装并启用 `litellm.service` 后，systemd 无法读取不存在的 `/home/mio/litellm/.env`，按 `Restart=on-failure` 每 5 秒重复启动并报告 `Result: resources`。
+- **变更文件**：`/home/mio/litellm/litellm.service`；`/home/mio/CLAUDE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：在 `[Unit]` 增加 `ConditionPathExists=/home/mio/litellm/.env`；真实 `.env` 存在前服务跳过启动，存在后继续读取 `EnvironmentFile` 并使用 `/home/mio/litellm/config.yaml`。
+- **验证**：journal 已确认根因是 `Failed to load environment files: No such file or directory`；更新后的服务模板通过 `systemd-analyze verify`。当前已安装的 system unit 仍需重新安装模板后才包含保护条件。
+
 ### wip: 准备 LiteLLM 随 WSL 启动的 systemd 服务
 
 - **改动原因**：需要让独立的 LiteLLM 网关在 WSL 启动后自动运行，并统一使用 `/home/mio/litellm/` 配置。
