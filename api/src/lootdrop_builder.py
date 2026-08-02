@@ -177,9 +177,9 @@ def _detail_variant_suffixes(entry: dict, drop_engine) -> list[str]:
     item_name = entry["name"]
     base_name = item_name.removesuffix("_8001")
     suffixes = sorted(drop_engine.get_existing_variant_suffixes(base_name))
-    if item_name.endswith("_8001"):
-        return suffixes
-    return [suffix for suffix in suffixes if suffix != "8001"]
+    # Keep 8001 in rarity metadata so ordinary variants can link to the
+    # standalone artifact page. The merged variant data still excludes it.
+    return suffixes
 
 
 def _artifact_translation_key(item_name: str, translations: dict[str, str]) -> str:

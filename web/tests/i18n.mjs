@@ -45,6 +45,19 @@ const PAGES = [
     path: '/zh-Hans/lootdrops/HeaterShield_8001/',
     desc: 'LootdropDetail',
     lang: 'zh-Hans',
+    expectedHrefs: ['/zh-Hans/lootdrops/HeaterShield_7001/'],
+  },
+  {
+    path: '/zh-Hans/lootdrops/Spellbook_7001/',
+    desc: 'LootdropDetail(Spellbook unique)',
+    lang: 'zh-Hans',
+    expectedHrefs: ['/zh-Hans/lootdrops/Spellbook_8001/'],
+  },
+  {
+    path: '/zh-Hans/lootdrops/Spellbook_8001/',
+    desc: 'LootdropDetail(Spellbook artifact)',
+    lang: 'zh-Hans',
+    expectedHrefs: ['/zh-Hans/lootdrops/Spellbook_7001/'],
   },
   {
     path: '/en/lootdrops/HeaterShield_8001/',

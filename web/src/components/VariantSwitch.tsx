@@ -26,20 +26,19 @@ function getRarityColor(
 
 interface VariantSwitchProps {
   variantRarity: Record<string, { name: string; translation_key: string }>;
-  suffixes: string[];
   itemName: string;
   currentSuffix: string | null;
 }
 
 export default function VariantSwitch({
   variantRarity,
-  suffixes,
   itemName,
   currentSuffix,
 }: VariantSwitchProps) {
   const { tokens } = useTheme();
   const { lang } = useLanguage();
   const { t } = useLocale();
+  const suffixes = Object.keys(variantRarity);
   if (suffixes.length <= 1) return null;
   const defaultSuffix = defaultVariantSuffix(suffixes);
 

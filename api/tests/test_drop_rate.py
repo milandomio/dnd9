@@ -113,11 +113,33 @@ class DropRateVariantTest(unittest.TestCase):
         self.assertAlmostEqual(self.engine.compute_drop_rate("group", "Bellows", 1001), 0.35)
 
     def test_detail_suffixes_come_from_real_drop_entries(self):
-        self.engine._existing_variant_suffixes = {"Bandage": {"1001", "2001", "3001", "4001"}}
+        self.engine._existing_variant_suffixes = {"Bandage": {"1001", "2001", "3001", "4001", "8001"}}
         entry = {"name": "Bandage", "variant_count": 7}
         self.assertEqual(
             _detail_variant_suffixes(entry, self.engine),
-            ["1001", "2001", "3001", "4001"],
+            ["1001", "2001", "3001", "4001", "8001"],
+        )
+
+    def test_artifact_and_ordinary_pages_share_rarity_suffixes(self):
+        self.engine._existing_variant_suffixes = {
+            "Spellbook": {
+                "1001",
+                "2001",
+                "3001",
+                "4001",
+                "5001",
+                "6001",
+                "7001",
+                "8001",
+            }
+        }
+        self.assertEqual(
+            _detail_variant_suffixes({"name": "Spellbook"}, self.engine)[-1],
+            "8001",
+        )
+        self.assertEqual(
+            _detail_variant_suffixes({"name": "Spellbook_8001"}, self.engine),
+            ["1001", "2001", "3001", "4001", "5001", "6001", "7001", "8001"],
         )
 
     def test_artifact_translation_key_does_not_require_game_json(self):
