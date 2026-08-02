@@ -136,6 +136,13 @@
 - **关键逻辑/映射关系**：详情壳地图 `<img>` 增加原生 `loading="lazy"` 和 `decoding="async"`；不依赖 JavaScript，现代浏览器接近视口时加载图片，旧浏览器忽略属性后仍能正常显示。
 - **验证**：详情 HTML 包含 `loading="lazy" decoding="async"`；quick SSG 生成 3,067 路由、12,007 个多语言 HTML；预览首页、详情页和地图图片 URL 均返回 HTTP 200。全局 `format:check` 仍受工作区已有未格式化的 `web/src/pages/ListPage.tsx` 阻塞，本次 `ssg.mjs` 无格式问题。
 
+### fix: 恢复武器掉落来源十语言实体翻译
+
+- **改动原因**：硬编码实体接入 `df5.hardcoded.*` 后，`Weapon_GoldenRoom`、`Weapon_MysticalTreasureRoom` 等掉落来源未补实体 locale 覆盖，日语和繁中错误回退为 `技術オブジェクト:` / `技術物件：` 加英文资产名。
+- **变更文件**：`api/src/config.py`；`api/tests/test_hardcoded_i18n.py`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：为 CastillonDagger 实际使用的 8 个武器掉落来源补齐 `HARDCODED_LOCALE_OVERRIDES` 十语言词条，保持 `df5.hardcoded.{实体名}` key 不变；浏览器回归锁定 `ja/zh-Hant` 目标文案，并排除语言切换器当前 URL 对变体链接断言的干扰。
+- **验证**：完整数据管道、quick SSG（3,067 路由、12,007 个多语言 HTML）、HTTP 200、3 个后端 i18n 单测、Black、Prettier、TypeScript 和 Playwright i18n 回归 25/25 通过。
+
 ## 2026-08-01
 
 ### docs: 制定 DB 新旧判断与导入生命周期修复方案
