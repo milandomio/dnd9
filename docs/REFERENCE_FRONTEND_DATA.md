@@ -15,6 +15,15 @@
 - `dungeon_modules.json` 由 `useDungeonModules()` 全局缓存，详情页通过坐标的 `c.map` 查共享 Map。
 - `AppInner.tsx` 顶层主动预取模块数据，SSG 还可注入版本化 preload，避免详情页首次渲染串行等待。
 
+## Lootdrop 变体 SSG/CSR 规则
+
+- `web/scripts/ssg.mjs` 可以注册所有变体 URL，但 `generateStatic` 决定是否实际写出对应的 HTML 文件。
+- 普通变体中仅默认变体生成 SSG 实体页；默认后缀优先使用可用的 `_5001`，不存在时使用最高可用品质后缀。
+- 普通非默认变体不生成 `dist/{lang}/lootdrops/{name}_{suffix}/index.html`，访问时由 `web/src/main.tsx` 使用 `createRoot()` 进入 CSR，并由详情页请求基底 lootdrop JSON。
+- `_8001` 神器变体独立保留 SSG 生成，不受普通变体默认后缀规则限制。
+- `unavailable_variant_suffixes` 仅保留静态提示壳，用于显示无爆率状态，不代表生成了完整实体 SSR 数据。
+- 非默认普通变体不得重新扩大为全量 SSG；修改 `ssg.mjs` 时必须同时检查 `generateStatic`、`main.tsx` 的 SSR 数据判定和多语言 HTML 拷贝逻辑。
+
 ## 共享 Hook
 
 - `useDataVersion()`：模块级 listeners 同步所有调用者，避免只有触发 fetch 的组件拿到新版本。

@@ -14,6 +14,16 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 
 `python main.py` 在 search_index 步骤后自动运行 `build_locale_files`，生成 `data/json/locale/{lang}.json`（10种语言）。`npm run build` 中的 `ssg.mjs` 使用这些 locale 字典为每种语言生成 HTML 副本（dist/{lang}/...）。完整构建产物约 1.28 GB。
 
+## Lootdrop 变体构建范围
+
+SSG 不为普通 lootdrop 变体生成全量实体文件，避免每个品质变体重复占用静态文件预算：
+
+- 普通变体仅生成默认品质变体的 SSG HTML；默认后缀优先为 `_5001`，否则取最高可用品质。
+- 普通非默认变体不生成 `dist/{lang}/lootdrops/{name}_{suffix}/index.html`，由浏览器 CSR 加载基底 JSON 后渲染。
+- `_8001` 神器变体仍单独生成 SSG HTML。
+- 无爆率后缀只生成静态提示壳；这类壳不包含完整实体 SSR 数据。
+- 变体 URL 仍可由构建脚本注册，注册 URL 不等于生成实体 HTML 文件；`generateStatic: false` 的路由必须被跳过默认语言、多语言副本、legacy redirect 和 sitemap 输出。
+
 ## IndexNow
 
 IndexNow 已接入主站 GitHub Actions：静态密钥文件随构建发布到 `dist/{key}.txt`，发布到 `gh-pages` 后自动读取该文件和各语言 sitemap，向 IndexNow API 批量提交 URL。
