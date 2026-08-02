@@ -4,6 +4,14 @@
 
 ## 2026-08-02
 
+### wip: 准备 LiteLLM 随 WSL 启动的 systemd 服务
+
+- **改动原因**：需要让独立的 LiteLLM 网关在 WSL 启动后自动运行，并统一使用 `/home/mio/litellm/` 配置。
+- **变更文件**：`/home/mio/litellm/litellm.service`；`/home/mio/CLAUDE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：服务以 `mio` 用户运行，读取 `/home/mio/litellm/.env`，加载 `/home/mio/litellm/config.yaml`，绑定 `127.0.0.1:4000`，失败自动重启；安装目标为 `/etc/systemd/system/litellm.service`。
+- **当前阻塞**：真实 `.env` 尚未创建，当前没有 endpoint/key；本次会话的 `sudo` 需要交互密码，尚未将模板安装到系统 unit 目录，因此尚未启用或手动启动服务。
+- **验证**：`systemd-analyze verify /home/mio/litellm/litellm.service` 通过；当前 `systemd` 正常运行，但 `litellm.service` 不存在。
+
 ### perf: lootdrop 关联坐标改为串行渐进加载
 
 - **改动原因**：`GoldBangle1J_5001` 等掉落详情页的分类来源较多，一次性请求全部关联实体 JSON 会在高延迟网络下长时间阻塞整页；需要按爆率优先顺序逐个加载并逐个渲染。
