@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### fix: 详情页至少点亮一个掉落分类
+
+- **改动原因**：详情页默认显示阈值高于所有掉落分类的 `max_score` 时，分类按钮会全部熄灭，页面默认没有可显示的来源。
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：初始化、SSR 数据切换和异步数据加载时，若没有分类达到默认阈值，则按分类按钮的 `max_score` 降序取第一个分类作为新的显示阈值；手动调试阈值仍可正常隐藏全部分类。
+- **验证**：Prettier、format:check、TypeScript 通过；ESLint 0 error，保留 19 条既有 warning。
+
 ### wip: 恢复神器与普通变体的双向稀有度链接
 
 - **改动原因**：`Spellbook_7001` 等普通变体页缺少 `8001` 神器入口，`Spellbook_8001` 等独立神器页又因切换组件依赖 `variants` 而无法显示低等级变体入口。

@@ -122,6 +122,24 @@ function hasLootdropDetail(item: LootdropItem | undefined): boolean {
   return Boolean(item?.monsters || item?.sources);
 }
 
+function getDisplayThreshold(
+  monsters: LootdropMonster[],
+  threshold: number
+): number {
+  const candidates = monsters
+    .filter(
+      (monster) =>
+        !monster.name.endsWith('_Elite') &&
+        monster.max_score != null &&
+        monster.max_score >= 0
+    )
+    .sort((a, b) => (b.max_score ?? -1) - (a.max_score ?? -1));
+  if (candidates.some((monster) => (monster.max_score ?? -1) >= threshold)) {
+    return threshold;
+  }
+  return candidates[0]?.max_score ?? threshold;
+}
+
 function stripTrailingParenthetical(value: string): string {
   return value.replace(/\s*[（(][^（）()]*[）)]\s*$/, '').trim();
 }
@@ -269,17 +287,24 @@ export default function LootdropDetailPage() {
   const modules = globalModules;
   const isArtifact = baseName.endsWith('_8001');
   const defaultThreshold = isArtifact ? 0.03 : 2.5;
+  const initialThreshold = hasLootdropDetail(effectiveSsrData?.item)
+    ? getDisplayThreshold(
+        selectLootdropVariant(effectiveSsrData!.item, currentSuffix).monsters ??
+          [],
+        defaultThreshold
+      )
+    : defaultThreshold;
   const [hidden, setHidden] = useState<Set<string>>(() =>
     hasLootdropDetail(effectiveSsrData?.item)
       ? defaultHidden(
           selectLootdropVariant(effectiveSsrData!.item, currentSuffix)
             .monsters ?? [],
-          defaultThreshold
+          initialThreshold
         )
       : new Set()
   );
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
-  const [threshold, setThreshold] = useState(defaultThreshold);
+  const [threshold, setThreshold] = useState(initialThreshold);
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
   const [mapRecognitionEnabled, setMapRecognitionEnabled] = useState(false);
@@ -300,7 +325,12 @@ export default function LootdropDetailPage() {
       );
       _globalLootCache.set(baseName, effectiveSsrData!.item);
       setData(selected);
-      setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
+      const nextThreshold = getDisplayThreshold(
+        selected.monsters ?? [],
+        defaultThreshold
+      );
+      setThreshold(nextThreshold);
+      setHidden(defaultHidden(selected.monsters ?? [], nextThreshold));
       return;
     }
     if (!dataVersion) return;
@@ -331,7 +361,12 @@ export default function LootdropDetailPage() {
         if (cancelled) return;
         const selected = selectLootdropVariant(item, currentSuffix);
         setData(selected);
-        setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
+        const nextThreshold = getDisplayThreshold(
+          selected.monsters ?? [],
+          defaultThreshold
+        );
+        setThreshold(nextThreshold);
+        setHidden(defaultHidden(selected.monsters ?? [], nextThreshold));
       })
       .catch((error) => {
         _globalLootPending.delete(baseName);
