@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### fix: 恢复地图模块分组页 SSR hydrate
+
+- **改动原因**：`dungeon_modules/{group}` 页面注入的是分组专用 SSR 数据键，但客户端路由判定只检查列表键，导致页面虽然内容正常却每次走 `createRoot()` 重挂载。
+- **变更文件**：`web/src/main.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：在地图模块详情键判断之后增加 `dungeon_modules/${group}` 精确键判断，保留模块详情页优先匹配，分组页命中后使用 `hydrateRoot()`。
+- **验证**：Prettier、TypeScript、ESLint（0 error）、quick SSG（3,067 路由、17,011 个文件）、根路径/分组页/模块详情页 HTTP 200、i18n 回归 27/27 通过。
+
 ### docs: 明确 lootdrop 变体 SSG 与 CSR 范围
 
 - **改动原因**：避免普通 lootdrop 的非默认变体扩大静态 HTML 产物范围，明确默认变体、神器变体和 CSR 路由的边界。
