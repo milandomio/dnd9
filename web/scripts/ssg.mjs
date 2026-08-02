@@ -863,7 +863,8 @@ function renderLocalizedPage(route, lang, localeDict) {
   return page;
 }
 
-function detailPreloads(urlPath) {
+function detailPreloads(urlPath, lang) {
+  const preloads = [];
   const detailMatch = urlPath.match(
     /^\/(?:[^/]+\/)?(items|monsters|props|lootdrops)\/(.+)$/
   );
@@ -872,13 +873,24 @@ function detailPreloads(urlPath) {
     if (detailMatch[1] === 'lootdrops') {
       detailName = lootdropBaseName(detailName);
     }
-    return `    <link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailName}.json" as="fetch" crossorigin="anonymous">\n`;
+    preloads.push(
+      `<link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailName}.json" as="fetch" crossorigin="anonymous">`
+    );
   }
   const moduleMatch = urlPath.match(
     /^\/(?:[^/]+\/)?dungeon_modules\/[^/]+\/(.+)$/
   );
-  if (!moduleMatch) return '';
-  return `    <link rel="preload" href="/data/${shortVer}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">\n`;
+  if (moduleMatch) {
+    preloads.push(
+      `<link rel="preload" href="/data/${shortVer}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">`
+    );
+  }
+  if (lang && lang !== DEFAULT_LANG) {
+    preloads.push(
+      `<link rel="preload" href="/data/${shortVer}/json/locale/${lang}.json" as="fetch" crossorigin="anonymous">`
+    );
+  }
+  return preloads.length > 0 ? `    ${preloads.join('\n    ')}\n` : '';
 }
 
 function lootdropBaseName(name) {
@@ -962,7 +974,7 @@ function createTemplateDetailPage(route, routeData, lang, localeDict) {
       ROOT_MARKER,
       `<div id="root" data-detail-placeholder>${detailPlaceholder(title, modules, localeDict, lang)}`
     )
-    .replace(HEAD_CLOSE, `${detailPreloads(urlPath)}</head>`);
+    .replace(HEAD_CLOSE, `${detailPreloads(urlPath, lang)}</head>`);
   return page;
 }
 
@@ -1109,7 +1121,7 @@ for (const lang of LANGS) {
       localeDicts[lang],
       lang,
       true,
-      usesTemplateDetail ? DEFAULT_LANG : lang,
+      lang,
       usesTemplateDetail ? undefined : localeDicts[lang]
     );
     mkdirSync(dirname(dstPath), { recursive: true });
