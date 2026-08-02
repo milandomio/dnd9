@@ -549,16 +549,16 @@ export default function ListPage() {
                                   onClick={() => setActiveLootGroup(group.key)}
                                   style={{
                                     flex: '0 1 auto',
-                                    minHeight: 36,
-                                    padding: '4px 8px',
+                                    minHeight: 54,
+                                    padding: '6px 12px',
                                     color: isActive ? tokens.bg : tokens.accent,
                                     background: isActive
                                       ? tokens.accent
                                       : tokens.surface,
                                     border: `1px solid ${tokens.accent}`,
-                                    borderRadius: 6,
+                                    borderRadius: 9,
                                     cursor: 'pointer',
-                                    fontSize: 15,
+                                    fontSize: 22.5,
                                     fontWeight: 'bold',
                                     transition: 'background 0.2s, color 0.2s',
                                   }}
