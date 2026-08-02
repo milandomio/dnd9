@@ -4,6 +4,20 @@
 
 ## 2026-08-02
 
+### perf: lootdrop 关联坐标改为串行渐进加载
+
+- **改动原因**：`GoldBangle1J_5001` 等掉落详情页的分类来源较多，一次性请求全部关联实体 JSON 会在高延迟网络下长时间阻塞整页；需要按爆率优先顺序逐个加载并逐个渲染。
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：关联引用去重后按 `max_score` 降序排列，`REF_FETCH_BATCH_SIZE = 1` 使每次只请求一个 `/data/{version}/json/{page}/{name}.json`；每个请求完成后立即写入 `refCoords`，移除关联坐标未全部完成时的整页阻塞，保留全局缓存、请求去重和失败后继续后续请求。
+- **验证**：`npm run format`、`format:check`、TypeScript、ESLint 无 error；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件；目标页 HTTP 200；Playwright 验证最大同时在途关联请求数为 1、5 秒内渲染 66 个按钮且无浏览器错误。
+
+### chore: 清理项目内 LiteLLM 提交历史
+
+- **改动原因**：LiteLLM 是 WSL 工作区环境配置，不属于 `DarkFindV5` 项目管理范围；其本地提交链应从项目分支移除。
+- **变更文件**：`docs/SESSION_CHANGES.md`；移除本地分支中的 `7fec0c01` 至 `305da1e9` 共 8 个 LiteLLM 相关提交。
+- **关键逻辑/映射关系**：`main` 从 `305da1e9` 回退至共同基线 `335bf70b`，使用 mixed reset 保留当前前端改动；项目内 `litellm/` 文件和对应会话记录均不再存在，`origin/main` 未改动。
+- **验证**：`git log` 的当前分支不再包含 LiteLLM 提交；项目内无 `litellm` 文件；当前仅保留本次前端改动和会话记录差异。
+
 ### fix: 恢复地图模块分组页 SSR hydrate
 
 - **改动原因**：`dungeon_modules/{group}` 页面注入的是分组专用 SSR 数据键，但客户端路由判定只检查列表键，导致页面虽然内容正常却每次走 `createRoot()` 重挂载。
@@ -243,7 +257,7 @@
 - **关键逻辑/映射关系**：`build_and_save_lootdrop_details()` 将共享 profile 传给 `get_group_drop_rates()`；后者分别累计候选 LDG 解析、模式/楼层调度及 `compute_drop_rate()`，后者再累计分级表查询、`_find_rate_item()`、权重累加和其余循环。实测基础 `group_rates=72.368s`：`get_group_drop_rates=69.870s`、调用端 `2.498s`；其中 `compute_drop_rate=68.599s`，而 `_find_rate_item()` 为 `67.507s`，占基础 group_rates `93.3%`。其未命中基础物品时会扫描整个 `rate_items` 并匹配变体，是后续缓存 `(lootdrop_id, item_name)` 查询结果的唯一优先热点。
 - **验证**：Ruff、Black、Python 编译和 11 个后端单元测试通过；完整管道成功，`lootdrops=94.39s`、总计 `127.44s`，日志为 `/tmp/darkfindv5-group-rates-profile.log`；预览根路径 HTTP 200。
 
-### perf: 验证 _find_rate_item 的候选扫描热点
+### perf: 验证 \_find_rate_item 的候选扫描热点
 
 - **改动原因**：`_find_rate_item()` 占基础 `group_rates` 的 93.3%，需要确认是精确字典查询、候选池扫描、正则匹配还是变体选择造成。
 - **变更文件**：`api/src/drop_rate.py`（临时插入后回退）；`api/src/lootdrop_builder.py`（临时插入后回退）；`docs/SESSION_CHANGES.md`。
@@ -563,7 +577,7 @@
 - **关键逻辑/映射关系**：为 `df5.hardcoded.DwarfHandCannoneer`、`df5.hardcoded.Armor_DualBoss`、`df5.hardcoded.Armor_Armory`、`df5.hardcoded.Armor_GoldenRoom` 增加十种语言显式映射；locale 构建器继续按产物实际使用键注入，前端无需改变 `t(translation_key, fallback)` 消费逻辑。
 - **验证**：数据管道成功生成 10 个 locale；SSG 生成 3070 路由；目标日语页面 HTTP 200，4 个来源名称均已本地化且无英文泄漏；`npm run test:i18n` 16/16、Prettier、TypeScript、Ruff 和 Black 通过。
 
-### fix: CI 构建保留神器 _8001 专用翻译键
+### fix: CI 构建保留神器 \_8001 专用翻译键
 
 - **改动原因**：线上 `ja/lootdrops/HeaterShield_8001/` 的版本化数据将神器错误写为基础物品键 `Text_DesignData_Item_Item_HeaterShield_1001`，显示“ヒーターシールド”而非“イージス”；本地因有游戏解包 JSON 不复现，GitHub Actions 无解包目录时静默回退基础键。
 - **变更文件**：`api/src/lootdrop_builder.py`；`api/src/collector.py`；`api/tests/test_drop_rate.py`；`docs/SESSION_CHANGES.md`。
@@ -862,6 +876,7 @@
 - **变更文件**：`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`npm run build` 使用管道生成的版本化 JSON、locale 和搜索索引完成多语言 SSG；预览服务只提供 `web/dist` 静态产物。
 - **验证**：quick SSG 成功生成 3,074 路由、12,070 个本地化 HTML、15,848 个 dist 文件和 10 语言 sitemap；`http://localhost:8080/` 返回 HTTP 200；Prettier、TypeScript、Black、Ruff、Python 单元测试和 runtime guard 均通过。
+
 ### fix: 完成多语言元描述优化与验证
 
 - **改动原因**：修复 WIP 中静态首页模板调用失败，以及 SSG 写入的元标签未带 Helmet 所有权标记、客户端追加重复 description 的问题。
