@@ -26,6 +26,9 @@ function hasRouteSsrData(): boolean {
   if (page === 'dungeon_modules' && parts[1] && parts[2]) {
     return Boolean(ssrData[`dungeon_modules_detail/${parts[1]}/${parts[2]}`]);
   }
+  if (page === 'dungeon_modules' && parts[1]) {
+    return Boolean(ssrData[`dungeon_modules/${parts[1]}`]);
+  }
   return Boolean(ssrData[`list-${page}`] ?? ssrData[page]);
 }
 
