@@ -311,10 +311,6 @@ for (const p of PAGES) {
         routes.push({
           path: `/${DEFAULT_LANG}/lootdrops/${encodeURIComponent(variantName)}`,
           file: `${DEFAULT_LANG}/lootdrops/${variantName}/index.html`,
-          generateStatic:
-            unavailableSuffixes.includes(suffix) ||
-            suffix === defaultSuffix ||
-            suffix === '8001',
         });
       }
     } else {

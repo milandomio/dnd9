@@ -7,9 +7,9 @@
 ### wip: 恢复神器与普通变体的双向稀有度链接
 
 - **改动原因**：`Spellbook_7001` 等普通变体页缺少 `8001` 神器入口，`Spellbook_8001` 等独立神器页又因切换组件依赖 `variants` 而无法显示低等级变体入口。
-- **变更文件**：`api/src/lootdrop_builder.py`；`api/tests/test_drop_rate.py`；`web/src/components/VariantSwitch.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
-- **关键逻辑/映射关系**：普通变体的 `variant_rarity` 保留真实掉落后缀中的 `8001`，但合并后的 `variants` 数据仍排除独立神器；前端按 `variant_rarity` 渲染跨详情页链接，使普通页指向 `*_8001`、神器页指向 `*_1001~7001`。
-- **当前状态**：后端掉落率单测 15/15、Python 编译、Prettier、TypeScript 已通过；完整管道、SSG 和目标页浏览器回归待执行。
+- **变更文件**：`api/src/lootdrop_builder.py`；`api/tests/test_drop_rate.py`；`web/src/components/VariantSwitch.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/scripts/ssg.mjs`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：普通变体的 `variant_rarity` 保留真实掉落后缀中的 `8001`，但合并后的 `variants` 数据仍排除独立神器；前端按 `variant_rarity` 渲染跨详情页链接，使普通页指向 `*_8001`、神器页指向 `*_1001~7001`；quick SSG 为所有已生成稀有度路由输出轻量详情壳，避免未落盘路由回退首页导致 hydration 错误。
+- **当前状态**：后端掉落率单测 15/15、Python 编译、Prettier、TypeScript 已通过；数据管道已成功，SSG 路由壳和目标页浏览器回归待重新执行。
 
 ### fix: 点击外部自动收起语言菜单
 
