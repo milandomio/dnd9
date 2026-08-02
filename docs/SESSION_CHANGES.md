@@ -53,6 +53,13 @@
 - **关键逻辑/映射关系**：先按一级分类寻找空子类型的“未分类”组；仅当该组存在时，将同大类中 `items.length === 1` 的子类型组的物品移入未分类，并按物品名去重后删除原按钮；没有未分类组的大类不受影响。
 - **验证**：Prettier、ESLint（0 error）、TypeScript、quick SSG 和 HTTP 200 通过；Playwright 验证辅助道具、杂项的未分类组正常显示，武器无未分类组时单项 `火器(1)` 仍保留。
 
+### style: lootdrop 分组按钮放大 1.5 倍
+
+- **改动原因**：当前分类按钮尺寸偏小，需要整体放大以提高可读性和点击区域。
+- **变更文件**：`web/src/pages/ListPage.tsx`；`docs/plans/LOOTDROP_ITEM_TYPE_GROUPING.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：分组按钮最小高度从 `36px` 调整为 `54px`，内边距从 `4px 8px` 调整为 `6px 12px`，字体从 `15px` 调整为 `22.5px`，圆角从 `6px` 调整为 `9px`；分组逻辑和内容宽度布局保持不变。
+- **验证**：Prettier、ESLint（0 error）、TypeScript、quick SSG 和 HTTP 200 通过；Playwright 实测按钮高度 `54px`、字体 `22.5px`、内边距 `6px 12px`、圆角 `9px`。
+
 ### style: lootdrop 分类按钮改为内容宽度
 
 - **改动原因**：分类按钮使用可增长 flex 配置，导致一行按钮不足时被拉伸填满整行；需要保持按钮自身内容宽度。
