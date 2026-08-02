@@ -11,12 +11,12 @@
 - **关键逻辑/映射关系**：初始化、SSR 数据切换和异步数据加载时，若没有分类达到默认阈值，则按分类按钮的 `max_score` 降序取第一个分类作为新的显示阈值；手动调试阈值仍可正常隐藏全部分类。
 - **验证**：Prettier、format:check、TypeScript 通过；ESLint 0 error，保留 19 条既有 warning。
 
-### wip: 恢复神器与普通变体的双向稀有度链接
+### fix: 恢复神器与普通变体的双向稀有度链接
 
 - **改动原因**：`Spellbook_7001` 等普通变体页缺少 `8001` 神器入口，`Spellbook_8001` 等独立神器页又因切换组件依赖 `variants` 而无法显示低等级变体入口。
-- **变更文件**：`api/src/lootdrop_builder.py`；`api/tests/test_drop_rate.py`；`web/src/components/VariantSwitch.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/scripts/ssg.mjs`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
-- **关键逻辑/映射关系**：普通变体的 `variant_rarity` 保留真实掉落后缀中的 `8001`，但合并后的 `variants` 数据仍排除独立神器；前端按 `variant_rarity` 渲染跨详情页链接，使普通页指向 `*_8001`、神器页指向 `*_1001~7001`；quick SSG 为所有已生成稀有度路由输出轻量详情壳，避免未落盘路由回退首页导致 hydration 错误。
-- **当前状态**：后端掉落率单测 15/15、Python 编译、Prettier、TypeScript 已通过；数据管道已成功，SSG 路由壳和目标页浏览器回归待重新执行。
+- **变更文件**：`api/src/lootdrop_builder.py`；`api/tests/test_drop_rate.py`；`web/src/components/VariantSwitch.tsx`；`web/src/pages/LootdropDetailPage.tsx`；`web/src/main.tsx`；`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：普通变体的 `variant_rarity` 保留真实掉落后缀中的 `8001`，但合并后的 `variants` 数据仍排除独立神器；前端按 `variant_rarity` 渲染跨详情页链接，使普通页指向 `*_8001`、神器页指向 `*_1001~7001`；客户端根据当前 URL 是否存在匹配的 SSR 数据，区分正常 hydrate 和首页 fallback 的 CSR，避免未静态化变体路由触发 hydration 错误。
+- **验证**：后端掉落率单测 15/15、Python 编译、Ruff、Black、Prettier、TypeScript 通过；DB-only 管道成功生成 478 个 lootdrop；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个 dist 文件；首页、`Spellbook_7001` 和 `Spellbook_8001` HTTP 200，Playwright/i18n 回归 27/27 通过且无 hydration 错误。
 
 ### fix: 点击外部自动收起语言菜单
 
