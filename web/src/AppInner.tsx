@@ -28,6 +28,7 @@ import { LanguageProvider } from './i18n/LanguageContext';
 import { DEFAULT_LANG, isSupportedLang } from './i18n/locale';
 import { useAntdLocale } from './i18n/antdLocale';
 import type { ReactNode } from 'react';
+import { useLocale } from './i18n/useLocale';
 
 function AntdLocaleProvider({ children }: { children: ReactNode }) {
   const locale = useAntdLocale();
@@ -81,30 +82,55 @@ function AppRoutes() {
 }
 
 /** Shared page content (routes only, no router wrapper). */
-export function AppInner() {
+function LocalizedApp() {
   const { tokens } = useTheme();
-  useDungeonModules(); // preload module data eagerly
+  const { localeReady, ut } = useLocale();
+
+  if (!localeReady) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          padding: '16px',
+          background: tokens.bg,
+          boxSizing: 'border-box',
+          color: tokens.text,
+          textAlign: 'center',
+        }}
+      >
+        {ut('ui.common.loading')}
+      </div>
+    );
+  }
+
+  return (
+    <AntdLocaleProvider>
+      <div
+        style={{
+          minHeight: '100vh',
+          padding: '16px',
+          background: tokens.bg,
+          boxSizing: 'border-box',
+          maxWidth: 1200,
+          margin: '0 auto',
+        }}
+      >
+        <SWUpdateBanner />
+        <OfflineDetector />
+        <InstallPrompt />
+        <NavBar />
+        <AppRoutes />
+        <Footer />
+      </div>
+    </AntdLocaleProvider>
+  );
+}
+
+export function AppInner() {
+  useDungeonModules(); // preload data version and module data before locale gate opens
   return (
     <LanguageProvider>
-      <AntdLocaleProvider>
-        <div
-          style={{
-            minHeight: '100vh',
-            padding: '16px',
-            background: tokens.bg,
-            boxSizing: 'border-box',
-            maxWidth: 1200,
-            margin: '0 auto',
-          }}
-        >
-          <SWUpdateBanner />
-          <OfflineDetector />
-          <InstallPrompt />
-          <NavBar />
-          <AppRoutes />
-          <Footer />
-        </div>
-      </AntdLocaleProvider>
+      <LocalizedApp />
     </LanguageProvider>
   );
 }

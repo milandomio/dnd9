@@ -33,6 +33,13 @@
 - **关键逻辑/映射关系**：详情页继续移除通用的模块、索引和搜索索引 preload，但保留 `/data/json/meta.json` preload，使数据版本探测与基础 lootdrop JSON 并行；版本号准备后仍由 `dataUrl()` 请求版本化关联 JSON。
 - **验证**：quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件；目标页 HTML 含 `meta.json` preload 且 HTTP 200；模拟 300ms 网络延迟时第一个关联 JSON 约 345ms 发起；TypeScript、Prettier、ESLint 无 error。
 
+### fix: 非默认语言先加载字典再渲染页面
+
+- **改动原因**：模板详情页首轮将 `__ssrLang` 错设为默认中文且没有注入 locale 字典，客户端会先用中文回退文本渲染，再切换到目标语言，造成实体名称闪动。
+- **变更文件**：`web/src/AppInner.tsx`；`web/src/i18n/useLocale.ts`；`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：详情 HTML 预加载 `/data/{version}/json/locale/{lang}.json`，SSG 注入真实路由语言；`useLocale()` 通过 `loadedLang` 和 `localeReady` 管理字典生命周期；非默认语言在 locale 就绪前只渲染当前语言的加载提示，字典完成后才挂载导航、页面和实体翻译。
+- **验证**：TypeScript、Prettier、ESLint 无 error；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件；英文详情页 locale preload、`__ssrLang: en` 和 HTTP 200 正常；locale 延迟 500ms 时首屏无中文实体文本，加载后直接显示英文。
+
 ### chore: 清理项目内 LiteLLM 提交历史
 
 - **改动原因**：LiteLLM 是 WSL 工作区环境配置，不属于 `DarkFindV5` 项目管理范围；其本地提交链应从项目分支移除。
