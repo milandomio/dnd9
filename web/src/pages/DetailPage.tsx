@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo, useState } from 'react';
+import { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Typography } from 'antd';
@@ -96,11 +96,7 @@ export default function DetailPage() {
     isDetailTemplate?: boolean;
   }>(dataKey);
   const [entity, setEntity] = useState<Entity | null>(
-    ssrData?.entity?.coords
-      ? ssrData.entity
-      : ssrData?.entity?.name
-        ? (ssrData.entity as Entity)
-        : null
+    ssrData?.entity?.coords ? ssrData.entity : null
   );
   const isDetailTemplate =
     ssrData?.isDetailTemplate && entity?.isDetailTemplate;
@@ -132,20 +128,58 @@ export default function DetailPage() {
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
   const [mapRecognitionEnabled, setMapRecognitionEnabled] = useState(false);
+  const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
 
   const dataVersion = useDataVersion();
-  const fetchedRef = useRef(false);
-
-  // Reset fetch guard when navigating between entities
-  useEffect(() => {
-    fetchedRef.current = false;
-  }, [page, name]);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const { debug, toggle, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
   const { t, ut, lang, dict } = useLocale();
   const ctrlBtn = useCtrlBtn();
   const ctrlInput = useCtrlInput();
+
+  const mapRef = useCallback(
+    (mapName: string, element: HTMLDivElement | null) => {
+      if (!element) return;
+      if (typeof IntersectionObserver === 'undefined') {
+        setVisibleMaps((prev) => {
+          if (prev.has(mapName)) return prev;
+          const next = new Set(prev);
+          next.add(mapName);
+          return next;
+        });
+        return;
+      }
+      if (!observerRef.current) {
+        observerRef.current = new IntersectionObserver(
+          (entries) => {
+            setVisibleMaps((prev) => {
+              const next = new Set(prev);
+              for (const entry of entries) {
+                const mapName = (entry.target as HTMLElement).dataset.mapName;
+                if (!mapName) continue;
+                if (entry.isIntersecting) next.add(mapName);
+                else next.delete(mapName);
+              }
+              return next;
+            });
+          },
+          { rootMargin: '600px' }
+        );
+      }
+      element.dataset.mapName = mapName;
+      observerRef.current.observe(element);
+    },
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      observerRef.current?.disconnect();
+      observerRef.current = null;
+    };
+  }, []);
 
   const toggleRow = (key: string, forceShow?: boolean) => {
     setHiddenRows((prev) => {
@@ -184,20 +218,28 @@ export default function DetailPage() {
       setEntity(ssrData.entity);
       return;
     }
+    setEntity(null);
     if (!dataVersion) return;
     const decoded = decodeURIComponent(name!);
     const url = dataUrl(dataVersion, `/data/json/${page}/${decoded}.json`);
-    if (fetchedRef.current) return;
-    fetchedRef.current = true;
-    fetch(url)
-      .then<Entity>((r) => r.json())
-      .then((entityData) => {
-        setEntity(entityData);
+    const controller = new AbortController();
+    fetch(url, { signal: controller.signal })
+      .then((r) => {
+        if (!r.ok)
+          throw new Error(`entity HTTP ${r.status}: ${page}/${decoded}`);
+        return r.json() as Promise<Entity>;
       })
-      .catch(console.error);
+      .then((entityData) => {
+        if (!controller.signal.aborted) setEntity(entityData);
+      })
+      .catch((error: unknown) => {
+        if (!controller.signal.aborted) console.error(error);
+      });
+    return () => controller.abort();
   }, [page, name, ssrData, dataVersion]);
 
-  if (!entity)
+  const routeName = name ? decodeURIComponent(name) : '';
+  if (!entity || entity.name !== routeName)
     return (
       <Typography.Text type="danger">{ut('ui.common.loading')}</Typography.Text>
     );
@@ -772,6 +814,7 @@ export default function DetailPage() {
               return (
                 <div
                   key={`${sec.sectionKey}-${mapName}`}
+                  ref={(element) => mapRef(mapName, element)}
                   style={{
                     minWidth: 0,
                     gridColumn: sx >= 2 ? `span ${sx}` : undefined,
@@ -857,17 +900,28 @@ export default function DetailPage() {
                     </div>
                   )}
 
-                  <MapPanel
-                    imageSrc={mapImageUrl(mod, Boolean(isDetailTemplate))}
-                    sx={sx}
-                    sy={sy}
-                    dots={filteredDots}
-                    offX={offX}
-                    offY={offY}
-                    adj={adj}
-                    range={range}
-                    singleCategory
-                  />
+                  {visibleMaps.has(mapName) ? (
+                    <MapPanel
+                      imageSrc={mapImageUrl(mod, Boolean(isDetailTemplate))}
+                      sx={sx}
+                      sy={sy}
+                      dots={filteredDots}
+                      offX={offX}
+                      offY={offY}
+                      adj={adj}
+                      range={range}
+                      singleCategory
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        aspectRatio: `${sx} / ${sy}`,
+                        backgroundColor: tokens.bg,
+                        border: `1px solid ${tokens.border}`,
+                        borderRadius: 4,
+                      }}
+                    />
+                  )}
                   {(() => {
                     const g = mod?.group || '';
                     const gdi = entity.group_drop_info?.[g];

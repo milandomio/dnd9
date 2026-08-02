@@ -76,9 +76,9 @@ export default function QuestItemGroupPage() {
   const ssrData = useSSRData<GroupData>(dataKey);
   const hasFullData = !!ssrData?.entities?.length;
   const [data, setData] = useState<GroupData | null>(
-    hasFullData ? ssrData : ssrData?.group ? (ssrData as GroupData) : null
+    hasFullData ? ssrData : null
   );
-  const [loading, setLoading] = useState(!hasFullData && !ssrData?.group);
+  const [loading, setLoading] = useState(!hasFullData);
   const { modules } = useDungeonModules();
   const [hidden, setHidden] = useState<Set<string>>(() => {
     if (ssrData?.entities) {
@@ -97,23 +97,38 @@ export default function QuestItemGroupPage() {
   useEffect(() => {
     if (!group) return;
     if (ssrData?.entities?.length) {
+      setData(ssrData);
       setLoading(false);
       return;
     }
+    setData(null);
+    setLoading(true);
     if (!dataVersion) return;
+    let cancelled = false;
     fetch(
       dataUrl(
         dataVersion,
         `/data/json/quest_items_groups/${encodeURIComponent(group)}.json`
       )
     )
-      .then<GroupData>((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`quest item group HTTP ${r.status}`);
+        return r.json() as Promise<GroupData>;
+      })
       .then((gd) => {
+        if (cancelled) return;
         setData(gd);
         setHidden(new Set(gd.entities.map((e) => e.name)));
       })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .catch((error: unknown) => {
+        if (!cancelled) console.error(error);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [group, ssrData, dataVersion]);
 
   if (loading)

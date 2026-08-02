@@ -52,7 +52,7 @@ export default function DungeonModuleDetailPage() {
   const [coordsData, setCoordsData] = useState<ModuleCoordsData | null>(
     effectiveCoords
   );
-  const [loading, setLoading] = useState(!effectiveCoords && !effectiveModSsr);
+  const [loading, setLoading] = useState(!effectiveCoords);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set());
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
@@ -71,23 +71,38 @@ export default function DungeonModuleDetailPage() {
     if (effectiveCoords) {
       setCoordsData(effectiveCoords);
       setHidden(new Set(effectiveCoords.entities.map((e) => e.name)));
+      setLoading(false);
       return;
     }
+    setCoordsData(null);
+    setLoading(true);
     if (!dataVersion) return;
+    let cancelled = false;
     const coordsUrl = dataUrl(
       dataVersion,
       `/data/json/dungeon_modules_coords/${encodeURIComponent(name)}.json`
     );
     fetch(coordsUrl)
-      .then<ModuleCoordsData>((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`module coords HTTP ${r.status}`);
+        return r.json() as Promise<ModuleCoordsData>;
+      })
       .then((coords) => {
+        if (cancelled) return;
         setCoordsData(coords);
         if (coords) {
           setHidden(new Set(coords.entities.map((e) => e.name)));
         }
       })
-      .catch(() => null)
-      .finally(() => setLoading(false));
+      .catch((error: unknown) => {
+        if (!cancelled) console.error(error);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [group, name, dataVersion, effectiveCoords]);
 
   if (loading)
