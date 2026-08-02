@@ -57,6 +57,33 @@ const PAGES = [
     lang: 'ja',
   },
   {
+    path: '/ja/lootdrops/CastillonDagger_5001/',
+    desc: 'LootdropDetail(CastillonDagger)(ja)',
+    lang: 'ja',
+    textChecks: [
+      { pattern: /神秘の宝物庫の武器 \(1\)/, expected: true },
+      { pattern: /黄金部屋の武器 \(1\)/, expected: true },
+      {
+        pattern:
+          /技術オブジェクト: Weapon (?:Mystical Treasure Room|Golden Room)/,
+        expected: false,
+      },
+    ],
+  },
+  {
+    path: '/zh-Hant/lootdrops/CastillonDagger_5001/',
+    desc: 'LootdropDetail(CastillonDagger)(zh-Hant)',
+    lang: 'zh-Hant',
+    textChecks: [
+      { pattern: /神秘寶藏房-武器 \(1\)/, expected: true },
+      { pattern: /黃金房-武器 \(1\)/, expected: true },
+      {
+        pattern: /技術物件：Weapon (?:Mystical Treasure Room|Golden Room)/,
+        expected: false,
+      },
+    ],
+  },
+  {
     path: '/en/lootdrops/Bandage_5001/',
     desc: 'LootdropDetail(Bandage)(en)',
     lang: 'en',
@@ -94,6 +121,16 @@ function isIgnoredExternal(url) {
 
 function isGenericResourceError(message) {
   return /^Failed to load resource:/i.test(message);
+}
+
+async function contentLinkCount(page, href) {
+  return page
+    .locator(`a[href=${JSON.stringify(href)}]`)
+    .evaluateAll(
+      (links) =>
+        links.filter((link) => !link.closest('.language-selector-details'))
+          .length
+    );
 }
 
 async function testPage(
@@ -195,14 +232,12 @@ async function testPage(
       }
     }
     for (const href of expectedHrefs) {
-      if (
-        (await page.locator(`a[href=${JSON.stringify(href)}]`).count()) === 0
-      ) {
+      if ((await contentLinkCount(page, href)) === 0) {
         throw new Error(`missing link: ${href}`);
       }
     }
     for (const href of forbiddenHrefs) {
-      if ((await page.locator(`a[href=${JSON.stringify(href)}]`).count()) > 0) {
+      if ((await contentLinkCount(page, href)) > 0) {
         throw new Error(`unexpected link: ${href}`);
       }
     }
