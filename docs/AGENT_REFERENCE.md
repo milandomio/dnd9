@@ -57,11 +57,13 @@ DarkFindV5/
 │   │   ├── hooks/               # useDebug, useTheme, useDungeonModules, useDataVersion, useSearchIndex
 │   │   ├── context/             # SSRDataContext
 │   │   └── types/               # data.ts, quest.ts
-│   ├── scripts/ssg.mjs        # SSG 构建脚本（--quick 模式下详情页为 CSR）
+│   ├── scripts/ssg.mjs        # SSG 构建脚本（普通非默认变体 CSR；默认变体与神器保留 SSG）
 │   └── public/data/           # 构建时从 ../data/ 复制
 ├── deploy.sh                 # 一键部署（管道→构建→启动服务→提交）
 └── docs/                     # 技术文档、计划、排障记录
 ```
+
+Lootdrop 变体的静态范围：普通变体只生成默认变体实体 HTML，普通非默认变体不生成 SSG 实体文件并由 CSR 渲染；`_8001` 神器变体独立保留 SSG。完整规则见 [`REFERENCE_FRONTEND_DATA.md`](REFERENCE_FRONTEND_DATA.md) 和 [`BUILD_AND_DEPLOY.md`](BUILD_AND_DEPLOY.md)。
 
 ## 页面布局
 

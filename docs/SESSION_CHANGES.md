@@ -4,6 +4,13 @@
 
 ## 2026-08-02
 
+### docs: 明确 lootdrop 变体 SSG 与 CSR 范围
+
+- **改动原因**：避免普通 lootdrop 的非默认变体扩大静态 HTML 产物范围，明确默认变体、神器变体和 CSR 路由的边界。
+- **变更文件**：`docs/REFERENCE_FRONTEND_DATA.md`；`docs/BUILD_AND_DEPLOY.md`；`docs/AGENT_REFERENCE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：普通变体仅默认后缀生成 SSG 实体文件，非默认普通变体由 `main.tsx` 使用 CSR 加载基底 JSON；`_8001` 神器独立保留 SSG；不可用后缀只生成无实体数据的提示壳。
+- **验证**：文档内容与 `web/scripts/ssg.mjs` 的 `generateStatic`、`web/src/main.tsx` 的 SSR 数据判定保持一致。
+
 ### fix: 详情页至少点亮一个掉落分类
 
 - **改动原因**：详情页默认显示阈值高于所有掉落分类的 `max_score` 时，分类按钮会全部熄灭，页面默认没有可显示的来源。
