@@ -142,6 +142,30 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
       misc.push(item);
     }
   }
+  const unknownGroups = new Map<string, LootGroup>();
+  for (const group of typedGroups.values()) {
+    if (group.categoryKey && !(group.subtypeKeys ?? []).length) {
+      unknownGroups.set(group.categoryKey, group);
+    }
+  }
+  for (const group of [...typedGroups.values()]) {
+    if (
+      !group.categoryKey ||
+      !(group.subtypeKeys ?? []).length ||
+      group.items.length !== 1
+    ) {
+      continue;
+    }
+    const unknownGroup = unknownGroups.get(group.categoryKey);
+    if (!unknownGroup) continue;
+    const item = group.items[0];
+    if (
+      !unknownGroup.items.some((unknownItem) => unknownItem.name === item.name)
+    ) {
+      unknownGroup.items.push(item);
+    }
+    typedGroups.delete(group.key);
+  }
   const groups: LootGroup[] = [];
   if (artifact.length)
     groups.push({
