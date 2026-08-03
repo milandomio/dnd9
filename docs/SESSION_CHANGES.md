@@ -4,6 +4,13 @@
 
 ## 2026-08-03
 
+### fix: 修复中文分组页标题重复括号
+
+- **改动原因**：地图模块分组页和任务物品分组页由页面组件统一输出 `【名称】`，简体中文与繁体中文 locale 模板又重复包含括号，导致标题出现多余的 `【】`。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：移除 `ui.module_group.title`、`ui.module_detail.title`、`ui.quest_group.title` 在简体中文和繁体中文中的内层括号，保留组件输出的 `【名称】`，标题恢复为 `【名称】地图模块` 或 `【名称】任务物品`。
+- **验证**：`npm run format`、`npm run format:check`、`npm run lint`、`npx tsc --noEmit` 通过；Lint 为 0 error、20 条既有 warning；locale 中不再存在 `【{...}】` 模板。
+
 ### fix: 移除首页入口的暂停维护文案
 
 - **改动原因**：多语言首页的地图模块预览和任务物品入口带有“暂停维护”状态文案，导致搜索引擎将整个网站误判为暂停维护。
