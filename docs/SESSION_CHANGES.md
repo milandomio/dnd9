@@ -4,13 +4,12 @@
 
 ## 2026-08-03
 
-### wip: 为 lootdrop 详情页暴露异步加载就绪状态
+### fix: 让 i18n 测试等待 lootdrop 详情页异步加载完成
 
-- **改动原因**：`test:i18n` 在 3 个 lootdrop 详情页上失败；Spellbook unique 页在客户端更新 SEO 描述期间读到不一致的 `description` / `og:description`，CastillonDagger 的日文与繁中页在引用坐标未完全加载时读取 DOM，导致目标来源文案未出现。
-- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
-- **关键逻辑/映射关系**：lootdrop 数据尚未就绪或引用坐标仍在串行加载时，详情页节点输出 `aria-busy="true"`；加载完成后输出 `aria-busy="false"`。当前测试仍只查询 `#root > [aria-busy="true"]`，而实际标记位于嵌套的详情页节点里，所以等待条件没有命中。
-- **错误原文**：`FAIL [zh-Hans] LootdropDetail(Spellbook unique): client description and OG description differ`；`FAIL [ja] LootdropDetail(CastillonDagger)(ja): text check failed: /神秘の宝物庫の武器 \(1\)/ expected=true`；`FAIL [zh-Hant] LootdropDetail(CastillonDagger)(zh-Hant): text check failed: /神秘寶藏房-武器 \(1\)/ expected=true`。
-- **当前阻塞**：需要把 i18n 测试的就绪查询改为覆盖 `#root` 内的详情页节点，然后重新验证 3 条失败断言。
+- **改动原因**：i18n 测试没有等待 lootdrop 详情页的异步基础数据和引用坐标加载完成，过早读取 SEO 元数据及来源文案。
+- **变更文件**：`web/tests/i18n.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：lootdrop 详情页的 `aria-busy` 标记位于 `#root` 内的应用布局后代节点，不是 `#root` 的直接子节点；测试改用 `#root [aria-busy="true"]`，使其在详情页输出 `aria-busy="false"` 后再执行断言。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit`、quick SSG（3,067 路由、15,202 个 HTML）和根路径 HTTP 200 通过；`npm run test:i18n` 为 27/27，Spellbook unique 与 CastillonDagger 日语、繁中断言均通过。
 
 ### feat: 为地图截图识别增加 PVE 协议同意门禁并补充首页关键词
 
