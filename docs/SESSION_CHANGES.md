@@ -4,6 +4,13 @@
 
 ## 2026-08-03
 
+### feat: 为地图截图识别增加 PVE 协议同意门禁并补充首页关键词
+
+- **改动原因**：地图截图识别会加载 OpenCV 和模板资源，需要在首次使用前明确展示 PVE 协议；首页同时需要保留 `dnd闪电指南` 关键词以支持中文搜索入口。
+- **变更文件**：`web/src/components/MapImageRecognition.tsx`；`web/src/i18n/uiLocale.ts`；`web/src/pages/HomePage.tsx`；`web/tests/map-recognition-consent.mjs`；`web/tests/i18n.mjs`；`web/package.json`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：使用 `darkfind.map-recognition.pve-consent.v1` 持久化同意状态；未同意时只显示协议弹窗，不触发识图组件、OpenCV 或模板资源加载；同意后才懒加载 `MapImageRecognitionPanel` 并执行原有识图流程。协议提供十种语言翻译，品牌名 `越来越黑暗闪电指南 DarkFlashNav` 保持不翻译；首页追加 `dnd闪电指南`，i18n 测试增加关键词断言。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；ESLint 0 error、20 条既有 warning；quick SSG 生成 3,067 路由、15,202 个 HTML、17,011 个文件，根路径 HTTP 200；`npm run test:map-recognition` 通过，确认同意前无识图资源请求、同意后产生 2 个识图资源请求。`npm run test:i18n` 仍为 25/27，两条 CastillonDagger 多语言文案断言失败，与本次改动无关。
+
 ### fix: 修复 lootdrop 与任务地图来源实体的硬编码 i18n 回退
 
 - **改动原因**：日语任务物品页将 `Potion`、`Ground`、宝箱和部分怪物来源显示为 `技術オブジェクト: ...`；部分来源虽然已有官方十语言 Game key，却因导出层未应用别名而错误生成 `df5.hardcoded.*`。
