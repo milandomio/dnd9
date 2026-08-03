@@ -722,7 +722,10 @@ export default function LootdropDetailPage({
 
   if (!data)
     return (
-      <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
+      <div
+        aria-busy="true"
+        style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}
+      >
         {ut('ui.common.loading')}
       </div>
     );
@@ -1101,7 +1104,10 @@ export default function LootdropDetailPage({
   );
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+    <div
+      aria-busy={data == null || (hasRefs && !refsLoaded) ? 'true' : 'false'}
+      style={{ maxWidth: 1200, margin: '0 auto' }}
+    >
       <DebugPanel
         buttons={[
           {
