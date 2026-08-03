@@ -222,6 +222,14 @@ async function testPage(
     const description = await page
       .locator('meta[name="description"]')
       .getAttribute('content');
+    if (desc === 'HomePage(zh-Hans)') {
+      const keywords = await page
+        .locator('meta[name="keywords"]')
+        .getAttribute('content');
+      if (!keywords?.includes('dnd闪电指南')) {
+        throw new Error(`missing homepage keyword: ${keywords}`);
+      }
+    }
     const ogDescription = await page
       .locator('meta[property="og:description"]')
       .getAttribute('content');

@@ -17,7 +17,8 @@
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\" \"scripts/**/*.mjs\" \"tests/**/*.mjs\" \"*.{js,ts,json}\"",
     "check": "npm run lint && npm run format:check && npm run typecheck",
     "test": "npm run check",
-    "test:i18n": "node tests/i18n.mjs"
+    "test:i18n": "node tests/i18n.mjs",
+    "test:map-recognition": "node tests/map-recognition-consent.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.0",

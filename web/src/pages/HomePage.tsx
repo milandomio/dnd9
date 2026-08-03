@@ -107,6 +107,7 @@ export default function HomePage() {
   const { lang } = useLanguage();
   const homeDescription = ut('ui.home.description');
   const description = localizedSeoDescription(lang, dict, 'home');
+  const homeKeywords = `${ut('ui.seo.keywords')},dnd闪电指南`;
 
   useEffect(() => {
     if (ssrData) return;
@@ -124,7 +125,7 @@ export default function HomePage() {
           {ssrLocalizedTitle() ?? `${ut('ui.brand.name')} | ${homeDescription}`}
         </title>
         <meta name="description" content={description} />
-        <meta name="keywords" content={ut('ui.seo.keywords')} />
+        <meta name="keywords" content={homeKeywords} />
         <meta
           property="og:title"
           content={`${ut('ui.brand.name')} - ${homeDescription}`}
