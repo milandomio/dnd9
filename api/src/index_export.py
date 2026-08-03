@@ -48,6 +48,31 @@ def generate_quest_items_groups(
     with open(quest_items_path) as f:
         quest_items = json.load(f)
 
+    entity_classification = db.get_entity_classification()
+    entity_classification_lower = {name.lower(): value for name, value in entity_classification.items()}
+
+    def entity_meta(name: str) -> dict:
+        exact = entity_classification.get(name) or entity_classification_lower.get(name.lower())
+        if exact:
+            return exact
+        name_lower = name.lower()
+        for candidate in sorted(entity_classification, key=len):
+            if candidate.lower().startswith(f"{name_lower}_"):
+                metadata = entity_classification[candidate]
+                if metadata.get("translation_key"):
+                    return metadata
+        return {}
+
+    def entity_type_and_scope(name: str) -> tuple[str, str]:
+        types = entity_meta(name).get("types", [])
+        if "monster" in types:
+            return "monster", "monster"
+        if "props" in types:
+            return "props", "props"
+        if "item" in types:
+            return "item", "item"
+        return "monster", "monster"
+
     # Build map_base -> module_group lookup
     map_to_group = {}
     for m in modules:
@@ -86,6 +111,7 @@ def generate_quest_items_groups(
     for item_name in item_names:
         info_list = quest_map.get(item_name, [])
         trans = info_list[0]["item_translation"] if info_list else item_name
+        item_translation_key = resolve_translation_key(item_name, entity_meta(item_name).get("translation_key"))
 
         icoords = all_coords.get(item_name, [])
         mnames = merged_loot.get(item_name, [])
@@ -100,7 +126,7 @@ def generate_quest_items_groups(
                 groups[mt]["entities"][ek] = {
                     "name": item_name,
                     "translation": trans,
-                    "translation_key": resolve_translation_key(item_name),
+                    "translation_key": item_translation_key,
                     "type": "item",
                     "color": _COLORS[ci % len(_COLORS)],
                     "coords": [],
@@ -130,7 +156,10 @@ def generate_quest_items_groups(
         for mn in sorted(mnames):
             if mn == item_name:
                 continue
-            mtrans = resolve_name(mn, None, "monster")
+            entity_type, scope = entity_type_and_scope(mn)
+            raw_translation_key = entity_meta(mn).get("translation_key")
+            mtrans = resolve_name(mn, raw_translation_key, scope)
+            monster_translation_key = resolve_translation_key(mn, raw_translation_key)
             mcoords = all_coords.get(mn, [])
             for c in mcoords:
                 mb = c["map_base"]
@@ -143,8 +172,8 @@ def generate_quest_items_groups(
                     groups[mt]["entities"][ek] = {
                         "name": mn,
                         "translation": mtrans,
-                        "translation_key": resolve_translation_key(mn),
-                        "type": "monster",
+                        "translation_key": monster_translation_key,
+                        "type": entity_type,
                         "color": _COLORS[ci % len(_COLORS)],
                         "coords": [],
                         "quest_items": [item_name],

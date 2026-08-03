@@ -234,6 +234,7 @@ const DETAIL_TEMPLATE_PAGES = new Set([
   'monsters',
   'props',
   'lootdrops',
+  'quest_items',
 ]);
 const SINGLE = ['explore', 'quest_items', 'quest_npc', 'dungeon_modules'];
 const DEFAULT_LANG = 'zh-Hans';
@@ -683,6 +684,31 @@ function stripTrailingParenthetical(value) {
     .trim();
 }
 
+const GROUP_FLOOR_SUFFIX = {
+  'zh-Hans': '层',
+  'zh-Hant': '層',
+  en: 'F',
+  de: 'F',
+  es: 'F',
+  fr: 'F',
+  ja: '階',
+  ko: '층',
+  'pt-BR': 'F',
+  ru: ' этаж',
+};
+
+function localizedQuestGroupTitle(routeData, localeDict, lang) {
+  if (!routeData) return '';
+  const base = routeData.group_key ? localeDict[routeData.group_key] : '';
+  if (!base) return routeData.group_display || routeData.group || '';
+  const floor = routeData.group_floor ?? 1;
+  const suffix = GROUP_FLOOR_SUFFIX[lang] ?? '';
+  const sub = routeData.group_sub_key
+    ? localeDict[routeData.group_sub_key]
+    : '';
+  return `${base}${floor}${suffix}${sub ? `（${sub}）` : ''}`;
+}
+
 function localizedTitle(
   routeData,
   localeDict,
@@ -693,6 +719,9 @@ function localizedTitle(
     return (
       HOME_TITLE_DESCRIPTIONS[lang] || HOME_TITLE_DESCRIPTIONS[DEFAULT_LANG]
     );
+  }
+  if (/\/quest_items\/[^/]+\/?$/.test(routePath)) {
+    return localizedQuestGroupTitle(routeData, localeDict, lang);
   }
   const entity = firstTranslatable(routeData);
   if (!entity) return '';
@@ -782,6 +811,20 @@ function templateDescription(route, routeData, localeDict, lang) {
   const name = localizedTitle(routeData, localeDict, route.path, lang);
   if (section === 'lootdrops') {
     return buildSeoDescription(lang, 'lootdrop', { name });
+  }
+  if (section === 'quest_items') {
+    const entities = routeData?.entities?.length || routeData?.entity_count;
+    const locations = routeData?.entities
+      ? routeData.entities.reduce(
+          (count, entity) => count + (entity.coords?.length || 0),
+          0
+        )
+      : routeData?.position_count;
+    return buildSeoDescription(lang, 'questGroup', {
+      name,
+      entities: entities || undefined,
+      locations: locations || undefined,
+    });
   }
   if (section === 'dungeon_modules') {
     const module = routeData?.module;

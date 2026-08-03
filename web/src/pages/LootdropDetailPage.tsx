@@ -44,6 +44,28 @@ import { localizedSeoDescription } from '../i18n/seo';
 import { isRecognizableMapImage, mapImageUrl } from '../utils/mapImage';
 import type { MapImageTemplate } from '../utils/mapImageRecognition';
 
+interface QuestGroupEntity {
+  name: string;
+  translation: string;
+  translation_key?: string;
+  color: string;
+  coords: LootdropCoord[];
+}
+
+interface QuestGroupData {
+  group: string;
+  group_key?: string;
+  group_floor?: number;
+  group_sub_key?: string | null;
+  group_display: string;
+  entities: QuestGroupEntity[];
+}
+
+interface LootdropSsrData {
+  item: LootdropItem;
+  modules: DungeonModule[];
+}
+
 // P005: Global ref coord cache — shared across all LootdropDetailPage instances
 const _globalRefCache = new Map<string, LootdropCoord[]>();
 const _globalRefPending = new Map<string, Promise<LootdropCoord[]>>();
@@ -100,6 +122,26 @@ function hasAnyRate(dr: Record<string, number>): boolean {
 
 function lootdropSourceKey(monster: LootdropMonster): string {
   return monster.source_id ?? monster.translation;
+}
+
+function monsterVisibilityKey(monster: LootdropMonster): string {
+  return lootdropSourceKey(monster);
+}
+
+function normalizeQuestGroup(group: QuestGroupData): LootdropItem {
+  return {
+    name: group.group,
+    translation: group.group_display,
+    monsters: group.entities.map((entity) => ({
+      name: entity.name,
+      entity_name: entity.name,
+      translation: entity.translation,
+      translation_key: entity.translation_key,
+      source_id: entity.name,
+      color: entity.color,
+      coords: entity.coords,
+    })),
+  };
 }
 
 function lootdropSourceTranslationKey(
@@ -220,11 +262,20 @@ function resetGlobalCaches(dataVersion: string) {
   _globalCacheVersion = dataVersion;
 }
 
-export default function LootdropDetailPage() {
-  const { name } = useParams<{ name: string }>();
+interface LootdropDetailPageProps {
+  mode?: 'lootdrop' | 'quest_group';
+}
+
+export default function LootdropDetailPage({
+  mode = 'lootdrop',
+}: LootdropDetailPageProps) {
+  const { name, group } = useParams<{ name: string; group: string }>();
   const navigate = useNavigate();
-  const decodedName = decodeURIComponent(name ?? '');
-  const variantMatch = decodedName.match(VARIANT_RE);
+  const isQuestGroupPage = mode === 'quest_group';
+  const decodedName = decodeURIComponent(
+    (isQuestGroupPage ? group : name) ?? ''
+  );
+  const variantMatch = isQuestGroupPage ? null : decodedName.match(VARIANT_RE);
   // _8001 artifacts are independent entries, not variants of a base item
   const isVariant = variantMatch && variantMatch[2] !== '8001';
   const baseName = isVariant ? variantMatch![1] : decodedName;
@@ -235,30 +286,47 @@ export default function LootdropDetailPage() {
       : null;
   // itemName is always the base item name (without any variant suffix), used for navigation
   const itemName = variantMatch ? variantMatch[1] : decodedName;
-  const dataKey = `lootdrops/${decodedName}`;
-  const baseDataKey = `lootdrops/${baseName}`;
-  const ssrData = useSSRData<{ item: LootdropItem; modules: DungeonModule[] }>(
-    dataKey
+  const dataKey = isQuestGroupPage
+    ? `quest_items_groups/${decodedName}`
+    : `lootdrops/${decodedName}`;
+  const baseDataKey = isQuestGroupPage ? '' : `lootdrops/${baseName}`;
+  const ssrData = useSSRData<LootdropSsrData>(isQuestGroupPage ? '' : dataKey);
+  const baseSsrData = useSSRData<LootdropSsrData>(baseDataKey);
+  const ssrQuestData = useSSRData<QuestGroupData>(
+    isQuestGroupPage ? dataKey : ''
   );
-  const baseSsrData = useSSRData<{
-    item: LootdropItem;
-    modules: DungeonModule[];
-  }>(baseDataKey);
-  const effectiveSsrData = hasLootdropDetail(ssrData?.item)
-    ? ssrData
-    : hasLootdropDetail(baseSsrData?.item)
-      ? baseSsrData
-      : ssrData?.item?.name
-        ? ssrData
-        : baseSsrData?.item?.name
-          ? baseSsrData
-          : null;
+  const fullQuestSsrData =
+    isQuestGroupPage && ssrQuestData?.entities?.length ? ssrQuestData : null;
+  const questSsrItem = useMemo(
+    () => (fullQuestSsrData ? normalizeQuestGroup(fullQuestSsrData) : null),
+    [fullQuestSsrData]
+  );
+  const effectiveSsrData = useMemo(
+    () =>
+      isQuestGroupPage
+        ? questSsrItem
+          ? { item: questSsrItem, modules: [] }
+          : null
+        : hasLootdropDetail(ssrData?.item)
+          ? ssrData
+          : hasLootdropDetail(baseSsrData?.item)
+            ? baseSsrData
+            : ssrData?.item?.name
+              ? ssrData
+              : baseSsrData?.item?.name
+                ? baseSsrData
+                : null,
+    [isQuestGroupPage, questSsrItem, ssrData, baseSsrData]
+  );
   const [data, setData] = useState<LootdropItem | null>(
     hasLootdropDetail(effectiveSsrData?.item)
       ? selectLootdropVariant(effectiveSsrData!.item, currentSuffix)
       : effectiveSsrData?.item?.name
         ? (effectiveSsrData.item as LootdropItem)
         : null
+  );
+  const [questGroupData, setQuestGroupData] = useState<QuestGroupData | null>(
+    fullQuestSsrData
   );
   const dataVersion = useDataVersion();
   const { modules: globalModules } = useDungeonModules();
@@ -282,7 +350,7 @@ export default function LootdropDetailPage() {
       if (m.name.endsWith('_Elite')) continue;
       const sc = m.max_score;
       if (sc == null || sc < 0) continue;
-      if (sc < threshold) init.add(m.translation);
+      if (sc < threshold) init.add(monsterVisibilityKey(m));
     }
     return init;
   }
@@ -320,6 +388,48 @@ export default function LootdropDetailPage() {
   useEffect(() => {
     if (!baseName) return;
     if (dataVersion) resetGlobalCaches(dataVersion);
+    if (isQuestGroupPage) {
+      let cancelled = false;
+      if (fullQuestSsrData) {
+        setQuestGroupData(fullQuestSsrData);
+        const selected = normalizeQuestGroup(fullQuestSsrData);
+        setData(selected);
+        setThreshold(defaultThreshold);
+        setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
+        return () => {
+          cancelled = true;
+        };
+      }
+      setQuestGroupData(null);
+      setData(null);
+      setHidden(new Set());
+      if (!dataVersion) return;
+      fetch(
+        dataUrl(
+          dataVersion,
+          `/data/json/quest_items_groups/${encodeURIComponent(decodedName)}.json`
+        )
+      )
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(`quest item group HTTP ${response.status}`);
+          return response.json() as Promise<QuestGroupData>;
+        })
+        .then((groupData) => {
+          if (cancelled) return;
+          const selected = normalizeQuestGroup(groupData);
+          setQuestGroupData(groupData);
+          setData(selected);
+          setThreshold(defaultThreshold);
+          setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
+        })
+        .catch((error: unknown) => {
+          if (!cancelled) console.error(error);
+        });
+      return () => {
+        cancelled = true;
+      };
+    }
     if (hasLootdropDetail(effectiveSsrData?.item)) {
       const selected = selectLootdropVariant(
         effectiveSsrData!.item,
@@ -377,10 +487,19 @@ export default function LootdropDetailPage() {
     return () => {
       cancelled = true;
     };
-  }, [baseName, currentSuffix, effectiveSsrData, dataVersion]);
+  }, [
+    baseName,
+    currentSuffix,
+    dataVersion,
+    decodedName,
+    effectiveSsrData,
+    fullQuestSsrData,
+    isQuestGroupPage,
+  ]);
 
   // Base URLs redirect to a real variant; explicit unavailable variants stay at 0%.
   useEffect(() => {
+    if (isQuestGroupPage) return;
     const suffixes = data?.variants ? Object.keys(data.variants) : [];
     if (suffixes.length <= 1) return;
     if (currentSuffix) return;
@@ -389,7 +508,7 @@ export default function LootdropDetailPage() {
     navigate(`/${lang}/lootdrops/${itemName}_${defaultSuffix}/`, {
       replace: true,
     });
-  }, [data, currentSuffix, itemName, lang, navigate]);
+  }, [data, currentSuffix, itemName, lang, navigate, isQuestGroupPage]);
 
   // 在调试模式下实时响应阈值变化
   useEffect(() => {
@@ -425,14 +544,14 @@ export default function LootdropDetailPage() {
     observerRef.current.observe(el);
   }, []);
 
-  // Reset lazy-load state when name changes (navigation between lootdrops)
+  // Reset lazy-load state when navigating between detail datasets.
   useEffect(() => {
     setVisibleMaps(new Set());
     if (observerRef.current) {
       observerRef.current.disconnect();
       observerRef.current = null;
     }
-  }, [name]);
+  }, [decodedName]);
 
   const monsters = data?.monsters ?? [];
   // P005: Load referenced entity coordinates (with global cache)
@@ -674,7 +793,8 @@ export default function LootdropDetailPage() {
   >();
   for (const m of resolvedMonsters) {
     m.coords.forEach((c, j) => {
-      if (hidden.has(m.translation) || hiddenRows.has(`${m.translation}-${j}`))
+      const visibilityKey = monsterVisibilityKey(m);
+      if (hidden.has(visibilityKey) || hiddenRows.has(`${visibilityKey}-${j}`))
         return;
       if (qualityFilter && c.quality && c.quality !== qualityFilter) return;
       if (!mapGroups.has(c.map))
@@ -887,6 +1007,7 @@ export default function LootdropDetailPage() {
 
   const visibleCountByMonster = new Map<string, number>();
   for (const m of resolvedMonsters) {
+    const visibilityKey = monsterVisibilityKey(m);
     const seenPos = new Set<string>();
     for (const c of m.coords) {
       if (hideZeroRate) {
@@ -906,13 +1027,13 @@ export default function LootdropDetailPage() {
       if (seenPos.has(posKey)) continue;
       seenPos.add(posKey);
       visibleCountByMonster.set(
-        m.translation,
-        (visibleCountByMonster.get(m.translation) ?? 0) + 1
+        visibilityKey,
+        (visibleCountByMonster.get(visibilityKey) ?? 0) + 1
       );
     }
   }
   const visibleMonsters = orderedMonsters.filter(
-    (m) => (visibleCountByMonster.get(m.translation) ?? 0) > 0
+    (m) => (visibleCountByMonster.get(monsterVisibilityKey(m)) ?? 0) > 0
   );
   let bottomCount = 0;
   const visibleMapsSet = new Set<string>();
@@ -940,26 +1061,44 @@ export default function LootdropDetailPage() {
     }
   }
   const visibleCount = resolvedMonsters.filter(
-    (m) => !hidden.has(m.translation)
+    (m) => !hidden.has(monsterVisibilityKey(m))
   ).length;
   const rawLocationCount = resolvedMonsters.reduce(
     (count, monster) => count + monster.coords.length,
     0
   );
-  const itemLabel = stripTrailingParenthetical(
-    t(data.translation_key, data.translation || data.name)
-  );
+  const questGroupLabel = questGroupData
+    ? formatGroupLabel(questGroupData, t, ut)
+    : data.translation || decodedName;
+  const itemLabel = isQuestGroupPage
+    ? questGroupLabel
+    : stripTrailingParenthetical(
+        t(data.translation_key, data.translation || data.name)
+      );
   const rarityLabel =
     currentSuffix && data.variant_rarity?.[currentSuffix]
       ? `(${t(data.variant_rarity[currentSuffix].translation_key, data.variant_rarity[currentSuffix].name)})`
       : '';
-  const pageLabel = ut('ui.nav.lootdrops');
+  const pageLabel = isQuestGroupPage
+    ? ut('ui.nav.quest_items')
+    : ut('ui.nav.lootdrops');
   const helmetTitle = `${itemLabel}${rarityLabel} -${pageLabel}`;
-  const description = localizedSeoDescription(lang, dict, 'lootdrop', {
-    name: itemLabel,
-    sources: monsters.length || undefined,
-    locations: rawLocationCount || undefined,
-  });
+  const description = localizedSeoDescription(
+    lang,
+    dict,
+    isQuestGroupPage ? 'questGroup' : 'lootdrop',
+    isQuestGroupPage
+      ? {
+          name: itemLabel,
+          entities: monsters.length || undefined,
+          locations: rawLocationCount || undefined,
+        }
+      : {
+          name: itemLabel,
+          sources: monsters.length || undefined,
+          locations: rawLocationCount || undefined,
+        }
+  );
 
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -1017,7 +1156,7 @@ export default function LootdropDetailPage() {
         )}
         {' >> '}
         {resolvedMonsters
-          .filter((m) => !hidden.has(m.translation))
+          .filter((m) => !hidden.has(monsterVisibilityKey(m)))
           .map((m) => t(lootdropSourceTranslationKey(m), m.translation))
           .join(delimiter)}
         {resolvedMonsters.length - visibleCount > 0 && (
@@ -1052,37 +1191,41 @@ export default function LootdropDetailPage() {
             alignItems: 'center',
           }}
         >
-          <span style={{ color: tokens.muted }}>
-            {ut('ui.filter.drop_rate')}：
-          </span>
-          <select
-            value={modeFilter}
-            onChange={(e) => setModeFilter(e.target.value)}
-            style={{
-              background: tokens.bg,
-              color: tokens.text,
-              border: `1px solid ${tokens.border}`,
-              borderRadius: 4,
-              padding: '2px 6px',
-              fontSize: 13,
-              cursor: 'pointer',
-            }}
-          >
-            <option value="">{ut('ui.filter.all')}</option>
-            <option value="PVE">{ut('ui.filter.pve')}</option>
-            <option value="普通">{ut('ui.filter.normal')}</option>
-            <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
-            <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
-          </select>
-          <label style={{ cursor: 'pointer', userSelect: 'none' }}>
-            <input
-              type="checkbox"
-              checked={hideZeroRate}
-              onChange={(e) => setHideZeroRate(e.target.checked)}
-              style={{ marginRight: 3, cursor: 'pointer' }}
-            />
-            {ut('ui.filter.hide_zero_rate')}
-          </label>
+          {!isQuestGroupPage && (
+            <>
+              <span style={{ color: tokens.muted }}>
+                {ut('ui.filter.drop_rate')}：
+              </span>
+              <select
+                value={modeFilter}
+                onChange={(e) => setModeFilter(e.target.value)}
+                style={{
+                  background: tokens.bg,
+                  color: tokens.text,
+                  border: `1px solid ${tokens.border}`,
+                  borderRadius: 4,
+                  padding: '2px 6px',
+                  fontSize: 13,
+                  cursor: 'pointer',
+                }}
+              >
+                <option value="">{ut('ui.filter.all')}</option>
+                <option value="PVE">{ut('ui.filter.pve')}</option>
+                <option value="普通">{ut('ui.filter.normal')}</option>
+                <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
+                <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
+              </select>
+              <label style={{ cursor: 'pointer', userSelect: 'none' }}>
+                <input
+                  type="checkbox"
+                  checked={hideZeroRate}
+                  onChange={(e) => setHideZeroRate(e.target.checked)}
+                  style={{ marginRight: 3, cursor: 'pointer' }}
+                />
+                {ut('ui.filter.hide_zero_rate')}
+              </label>
+            </>
+          )}
           <MapImageRecognition
             templates={recognitionTemplates}
             enabled={mapRecognitionEnabled}
@@ -1189,12 +1332,14 @@ export default function LootdropDetailPage() {
         <button
           onClick={() => {
             const allHidden = visibleMonsters.every((m) =>
-              hidden.has(m.translation)
+              hidden.has(monsterVisibilityKey(m))
             );
             if (allHidden || hidden.size === visibleMonsters.length) {
               setHidden(new Set());
             } else {
-              setHidden(new Set(visibleMonsters.map((m) => m.translation)));
+              setHidden(
+                new Set(visibleMonsters.map((m) => monsterVisibilityKey(m)))
+              );
             }
           }}
           style={{
@@ -1220,8 +1365,8 @@ export default function LootdropDetailPage() {
         )}
         {visibleMonsters.map((m) => (
           <button
-            key={m.translation}
-            onClick={() => toggle(m.translation)}
+            key={monsterVisibilityKey(m)}
+            onClick={() => toggle(monsterVisibilityKey(m))}
             style={{
               padding: '8px 15px',
               border: `2px solid ${m.color}`,
@@ -1230,13 +1375,15 @@ export default function LootdropDetailPage() {
               fontSize: 14,
               fontWeight: 'bold',
               color: tokens.text,
-              background: hidden.has(m.translation) ? 'transparent' : m.color,
-              opacity: hidden.has(m.translation) ? 0.3 : 1,
+              background: hidden.has(monsterVisibilityKey(m))
+                ? 'transparent'
+                : m.color,
+              opacity: hidden.has(monsterVisibilityKey(m)) ? 0.3 : 1,
               transition: 'all 0.2s',
             }}
           >
             {t(lootdropSourceTranslationKey(m), m.translation)} (
-            {visibleCountByMonster.get(m.translation) ?? 0})
+            {visibleCountByMonster.get(monsterVisibilityKey(m)) ?? 0})
           </button>
         ))}
       </div>
@@ -1377,7 +1524,7 @@ export default function LootdropDetailPage() {
                           const m = resolvedMonsters.find((source) =>
                             matchesGroupEntry(info, source)
                           );
-                          return m && !hidden.has(m.translation);
+                          return m && !hidden.has(monsterVisibilityKey(m));
                         }
                       )}
                       modeFilter={modeFilter}
@@ -1945,12 +2092,14 @@ export default function LootdropDetailPage() {
                       );
                     })}
                   </div>
-                  <CompositeRate
-                    rate={computeModuleScore(
-                      { mod, dots },
-                      groupDropRateLookup.get(groupName) ?? new Map()
-                    )}
-                  />
+                  {!isQuestGroupPage && (
+                    <CompositeRate
+                      rate={computeModuleScore(
+                        { mod, dots },
+                        groupDropRateLookup.get(groupName) ?? new Map()
+                      )}
+                    />
+                  )}
                 </div>
               );
             })}
@@ -1964,15 +2113,16 @@ export default function LootdropDetailPage() {
             m.coords.map((c, j) => {
               const mod = modules.get(c.map);
               const g = mod?.group || '';
-              const rowKey = `${m.translation}-${j}`;
+              const visibilityKey = monsterVisibilityKey(m);
+              const rowKey = `${visibilityKey}-${j}`;
               return {
                 key: rowKey,
                 group: formatGroupLabel(mod, t, ut) || g,
                 monster: {
-                  name: m.name,
+                  name: visibilityKey,
                   translation: m.translation,
                   color: m.color,
-                  onToggle: () => toggle(m.translation),
+                  onToggle: () => toggle(visibilityKey),
                 },
                 file: c.file,
                 mapName: c.map,
@@ -1981,7 +2131,7 @@ export default function LootdropDetailPage() {
                 x: c.x,
                 y: c.y,
                 z: c.z,
-                hidden: hidden.has(m.translation) || hiddenRows.has(rowKey),
+                hidden: hidden.has(visibilityKey) || hiddenRows.has(rowKey),
               };
             })
           );
@@ -1990,10 +2140,10 @@ export default function LootdropDetailPage() {
             if (matched.length === 0) return;
             const allHidden = matched.every((r) => r.hidden);
             for (const r of matched) {
-              const mTl = r.monster?.translation;
+              const mKey = r.monster?.name;
               if (allHidden) {
-                if (mTl && hidden.has(mTl)) {
-                  toggle(mTl);
+                if (mKey && hidden.has(mKey)) {
+                  toggle(mKey);
                 }
                 toggleRow(r.key, true);
               } else {
