@@ -21,6 +21,8 @@ except ImportError:
 
     from translator import Translator
 
+from translator import resolve_translation_key
+
 
 class QuestExtractor:
     """任务数据提取器（协调器）"""
@@ -201,9 +203,9 @@ class QuestExtractor:
         return results
 
     @staticmethod
-    def _module_name_from_asset_path(asset_path):
+    def _module_name_candidates(asset_path):
         if not asset_path:
-            return ""
+            return []
         name = asset_path.rsplit("/", 1)[-1].split(".", 1)[0]
         for prefix in (
             "Id_DungeonModule_",
@@ -219,7 +221,13 @@ class QuestExtractor:
             if name.endswith(suffix):
                 name = name[: -len(suffix)]
                 break
-        return re.sub(r"_\d+$", "", name)
+        normalized = re.sub(r"_\d+$", "", name)
+        return [name, normalized] if normalized != name else [name]
+
+    @staticmethod
+    def _module_name_from_asset_path(asset_path):
+        candidates = QuestExtractor._module_name_candidates(asset_path)
+        return candidates[-1] if candidates else ""
 
     def _get_module_index(self):
         if self._module_index is None:
@@ -236,10 +244,11 @@ class QuestExtractor:
         return self._module_index
 
     def _get_module_record(self, asset_path):
-        module_name = self._module_name_from_asset_path(asset_path)
-        if not module_name:
-            return None
-        return self._get_module_index().get(module_name)
+        for module_name in self._module_name_candidates(asset_path):
+            module = self._get_module_index().get(module_name)
+            if module:
+                return module
+        return None
 
     def _translate_module_target(self, asset_path):
         module_name = self._module_name_from_asset_path(asset_path)
@@ -247,6 +256,8 @@ class QuestExtractor:
             return None
         module = self._get_module_record(asset_path)
         key = module.get("translation_key", "") if module else ""
+        if not key:
+            key = resolve_translation_key(module_name)
         if not key:
             key = f"Text_DesignData_Dungeon_DungeonModule_{module_name}"
         translated = self.translator.translate(key) if self.translator else ""
@@ -325,7 +336,8 @@ class QuestExtractor:
             if module and module.get("translation_key"):
                 return module["translation_key"]
             module_name = self._module_name_from_asset_path(asset_path)
-            return f"Text_DesignData_Dungeon_DungeonModule_{module_name}" if module_name else None
+            key = resolve_translation_key(module_name)
+            return key or (f"Text_DesignData_Dungeon_DungeonModule_{module_name}" if module_name else None)
         json_path = self.AssetPathName_to_json(asset_path)
         if not json_path or not os.path.exists(json_path):
             return None
@@ -633,7 +645,8 @@ class QuestExtractor:
         if self.db is not None:
             module = self._get_module_record(asset_path)
             if module:
-                key = module.get("translation_key", "")
+                module_name = self._module_name_from_asset_path(asset_path)
+                key = module.get("translation_key", "") or resolve_translation_key(module_name)
                 return key, self.translator.translate(key) if key and self.translator else module.get("module_name", "")
             return None, self._module_name_from_asset_path(asset_path)
         json_path = self.AssetPathName_to_json(asset_path)

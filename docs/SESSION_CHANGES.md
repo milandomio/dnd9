@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-08-04
+
+### fix: 修复任务 NPC 探索目标再次丢失 i18n 键
+
+- **改动原因**：`/zh-Hans/quest_npc/TavernMaster/` 等任务 NPC 详情页重新出现 `Crypt_FourWayConnect`、`HangingShip`、`FloatingVillage`、`CircleIsland`、`RockIsland` 等原始模块名；任务 NPC 导出分支没有复用 `ModuleId` 对应的真实模块资源，且部分编号模块在匹配 DB 模块记录前就剥掉了 `_01/_02` 后缀，导致 `translation_key` 丢失。
+- **变更文件**：`api/src/quest_collector.py`；`api/src/quest_extractor/quest_extractor.py`；`api/tests/test_quest_i18n.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：任务 NPC 的 `Explore` 内容改为先用 `match_asset_path_to_module(asset_path, content_data)` 读取 `content_data.ModuleId.AssetPathName`，再从真实模块路径解析目标名称和 `translation_key`；模块查询改为同时尝试完整模块名与去编号后的规范名，既保留 `IceCave_Hut_03`、`Ruins_Square_01`、`Ruins_Cemetery_01` 这类编号模块的官方 key，也允许 `Ruins_Chapel` 通过既有 `EXPLICIT_TRANSLATION_KEY_OVERRIDES` 回退到 `Text_DesignData_Dungeon_DungeonModule_Abandoned_Sanctuary`。
+- **验证**：完整 `python main.py --rebuild-db` 成功，`quest_npc.json` 的 Explore 漏 key 数降为 0；`Crypt_FourWayConnect`、`HangingShip` 等原始名不再出现在任务 NPC 数据中，对应条目已写入 `中心祭坛`、`吊船`、`水上村落`、`环形岛`、`岩岛` 及官方模块 key。`python -m unittest tests/test_quest_i18n.py tests/test_hardcoded_i18n.py`、`python -m py_compile`、`npm run format`、`npm run format:check`、`npx tsc --noEmit`、quick SSG、`vite preview` HTTP 200 和 `npm run test:i18n` 27/27 通过。
+
 ## 2026-08-03
 
 ### fix: 让 i18n 测试等待 lootdrop 详情页异步加载完成
