@@ -212,7 +212,7 @@ async function testPage(
       .first()
       .waitFor({ state: 'visible', timeout: TIMEOUT });
     await page.waitForFunction(
-      () => !document.querySelector('#root > [aria-busy="true"]'),
+      () => !document.querySelector('#root [aria-busy="true"]'),
       undefined,
       { timeout: TIMEOUT }
     );
