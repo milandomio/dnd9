@@ -4,6 +4,13 @@
 
 ## 2026-08-03
 
+### fix: 修复 lootdrop 与任务地图来源实体的硬编码 i18n 回退
+
+- **改动原因**：日语任务物品页将 `Potion`、`Ground`、宝箱和部分怪物来源显示为 `技術オブジェクト: ...`；部分来源虽然已有官方十语言 Game key，却因导出层未应用别名而错误生成 `df5.hardcoded.*`。
+- **变更文件**：`api/src/config.py`；`api/tests/test_hardcoded_i18n.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`Armor`、`BlueMarlin`、`Coin`、`Gems`、`Trinkets`、`Weapon` 及 Dwarf/Pirate/Tidewalker/Stingray 来源改用已验证的官方 translation key；`Potion`、`Ground`、`Accessory_OldRustRoom`、普通/海底宝箱和 `SkeletonWoodenBarrel` 保留合成 key，并补齐十语言覆盖。测试同时约束官方 key 映射和无官方 key 来源的完整 locale 集合。
+- **验证**：两次 DB-only 数据管道成功，10 种 locale/search index 生成；任务与 lootdrop 产物中的来源 key 已切换或覆盖，日语不再对目标来源生成技术前缀；35 个 Python 单测、Ruff、Black、Prettier、TypeScript、ESLint（0 error）通过；quick SSG 生成 3,067 路由、15,202 个 HTML、17,011 个文件；`http://localhost:8080/` 与日语任务页均 HTTP 200。
+
 ### feat: 任务物品分组页复用掉落详情模板并补齐 i18n
 
 - **改动原因**：任务物品分组页独立维护了一套与 lootdrop 详情页高度重复的地图、分类按钮和调试布局，且任务实体导出缺少真实 `translation_key`，多语言页面的分类按钮回退为中文。
