@@ -4,6 +4,13 @@
 
 ## 2026-08-03
 
+### fix: 移除首页入口的暂停维护文案
+
+- **改动原因**：多语言首页的地图模块预览和任务物品入口带有“暂停维护”状态文案，导致搜索引擎将整个网站误判为暂停维护。
+- **变更文件**：`web/src/i18n/uiLocale.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：保留 `ui.home.view_explore` 与 `ui.home.view_quest_items` 两个 key 及其首页入口，仅移除简体中文、繁体中文和其他 8 种语言翻译中的暂停状态后缀。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；`web/src` 中未发现暂停维护及对应多语言暂停状态词残留。
+
 ### perf: 排查并修复其他详情页的渐进加载问题
 
 - **改动原因**：lootdrop 详情页改为渐进加载后，items/monsters/props 共用的 `DetailPage` 仍会一次实例化所有地图图片，路由切换和 Quick/CSR 数据壳也可能短暂显示旧实体或不完整数据；其他详情页还存在相同的版本等待和旧请求覆盖风险。
