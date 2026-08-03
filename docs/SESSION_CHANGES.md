@@ -6,10 +6,11 @@
 
 ### wip: 为 lootdrop 详情页暴露异步加载就绪状态
 
-- **改动原因**：`test:i18n` 的 Spellbook SEO meta 和 CastillonDagger 多语言来源断言在详情页异步数据尚未完成时读取 DOM；需要让页面明确暴露基础数据与引用坐标的忙碌状态。
+- **改动原因**：`test:i18n` 在 3 个 lootdrop 详情页上失败；Spellbook unique 页在客户端更新 SEO 描述期间读到不一致的 `description` / `og:description`，CastillonDagger 的日文与繁中页在引用坐标未完全加载时读取 DOM，导致目标来源文案未出现。
 - **变更文件**：`web/src/pages/LootdropDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
-- **关键逻辑/映射关系**：lootdrop 数据尚未就绪或引用坐标仍在串行加载时，详情页节点输出 `aria-busy="true"`；加载完成后输出 `aria-busy="false"`。当前测试仍只查询 `#root` 的直接子节点，未覆盖该嵌套路由节点，因此修复尚未闭环。
-- **当前阻塞**：需要将 i18n 测试的就绪查询改为覆盖 `#root` 内的详情页节点，然后重新验证 3 条失败断言。
+- **关键逻辑/映射关系**：lootdrop 数据尚未就绪或引用坐标仍在串行加载时，详情页节点输出 `aria-busy="true"`；加载完成后输出 `aria-busy="false"`。当前测试仍只查询 `#root > [aria-busy="true"]`，而实际标记位于嵌套的详情页节点里，所以等待条件没有命中。
+- **错误原文**：`FAIL [zh-Hans] LootdropDetail(Spellbook unique): client description and OG description differ`；`FAIL [ja] LootdropDetail(CastillonDagger)(ja): text check failed: /神秘の宝物庫の武器 \(1\)/ expected=true`；`FAIL [zh-Hant] LootdropDetail(CastillonDagger)(zh-Hant): text check failed: /神秘寶藏房-武器 \(1\)/ expected=true`。
+- **当前阻塞**：需要把 i18n 测试的就绪查询改为覆盖 `#root` 内的详情页节点，然后重新验证 3 条失败断言。
 
 ### feat: 为地图截图识别增加 PVE 协议同意门禁并补充首页关键词
 
