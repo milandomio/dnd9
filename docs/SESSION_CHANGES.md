@@ -4,6 +4,13 @@
 
 ## 2026-08-03
 
+### feat: 任务物品分组页复用掉落详情模板并补齐 i18n
+
+- **改动原因**：任务物品分组页独立维护了一套与 lootdrop 详情页高度重复的地图、分类按钮和调试布局，且任务实体导出缺少真实 `translation_key`，多语言页面的分类按钮回退为中文。
+- **变更文件**：`web/src/AppInner.tsx`；`web/src/pages/LootdropDetailPage.tsx`；删除 `web/src/pages/QuestItemGroupPage.tsx`；`web/scripts/ssg.mjs`；`api/src/index_export.py`；`api/src/locale_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`/:lang/quest_items/:group` 直接路由到 `LootdropDetailPage mode="quest_group"`；`QuestGroupData` 适配为统一的实体/坐标详情模型，复用分类按钮、地图卡片懒加载、调试坐标表、位置统计和地图识图，任务模式隐藏掉落率过滤与综合爆率。管道通过 DB 实体分类写入物品、怪物和 props 的真实翻译 key，并为 `Bookshelf` 等基名匹配变体实体 key；locale 导出扫描 `quest_items_groups`，SSG 为任务分组生成多语言 title/description。
+- **验证**：数据管道成功完成并交付 JSON/locale；所有 `quest_items_groups/*.json` 实体均有 `translation_key`；quick SSG 生成 3,067 路由、15,202 个 HTML、17,011 个文件；目标任务页和 `Bandage_4001` 详情页 HTTP 200；Playwright 验证中文/英文任务页详情标题、英文 `Ash Pile` 分类按钮、无掉落率 UI、无页面错误；Prettier、TypeScript、Ruff、Black 通过，ESLint 0 error、20 条既有 warning。
+
 ### fix: 修复中文分组页标题重复括号
 
 - **改动原因**：地图模块分组页和任务物品分组页由页面组件统一输出 `【名称】`，简体中文与繁体中文 locale 模板又重复包含括号，导致标题出现多余的 `【】`。

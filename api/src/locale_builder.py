@@ -70,7 +70,9 @@ def _load_used_keys(output_dir: Path, lootdrop_keys: set[str] | None = None) -> 
                 used.add(tk)
 
     subdirs = (
-        ("items", "monsters", "props") if lootdrop_keys is not None else ("items", "monsters", "props", "lootdrops")
+        ("items", "monsters", "props", "quest_items_groups")
+        if lootdrop_keys is not None
+        else ("items", "monsters", "props", "lootdrops", "quest_items_groups")
     )
     loot_index_path = output_dir / "lootdrops.json"
     if loot_index_path.exists():
