@@ -353,8 +353,9 @@ def _extract_npc_list(translator, extractor, quests):
                 elif ct == "Fetch":
                     item.update(_parse_fetch_content(translator, cd))
                 elif ct == "Explore":
-                    item["target"] = extractor.get_explore_target_translation(ap) or ""
-                    key = extractor.get_source_string_from_asset_path(ap)
+                    module_asset_path = extractor.match_asset_path_to_module(ap, cd) or ap
+                    item["target"] = extractor.get_explore_target_translation(module_asset_path) or ""
+                    key = extractor.get_source_string_from_asset_path(module_asset_path)
                     if key and translator.translate(key):
                         item["translation_key"] = key
                     item["count"] = cd.get("ContentCount", 1)
