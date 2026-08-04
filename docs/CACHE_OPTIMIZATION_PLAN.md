@@ -50,12 +50,9 @@ export function dataUrl(version: string, path: string) {
 urlPattern: ({ url }) => /^\/data\/(?:[a-z0-9]+\/)?json\//.test(url.pathname),
 ```
 
-### ✅ 2b. 全局 preload 增加 index.json + search_index.json（已实施）
+### ⚠️ 2b. 全局 preload 增加 index.json + search_index.json（计划项，当前未实施）
 
-```ts
-  `<link rel="preload" href="/data/${short}/json/index.json" as="fetch" crossorigin="anonymous">`,
-  `<link rel="preload" href="/data/${short}/json/search_index.json" as="fetch" crossorigin="anonymous">`,
-```
+当前 `web/vite.config.ts` 全局注入 `/data/json/meta.json` 与版本化 `dungeon_modules.json`；未发现 `index.json`、`search_index.json` 两条全局 preload。若后续实施，需要同步更新代码与验证记录。详情页样板壳还会过滤这些公共索引 preload，仅保留 `meta.json` 版本探测 preload。
 
 ### ✅ 3. 修改 `web/scripts/ssg.mjs` 详情页 preload 注入（已实施）
 
@@ -81,7 +78,7 @@ urlPattern: ({ url }) => /^\/data\/(?:[a-z0-9]+\/)?json\//.test(url.pathname),
 | `HomePage.tsx`                | `index.json`                            | `dataUrl()` 完成 |
 | `ExplorePage.tsx`             | `explore.json`                          | `dataUrl()` 完成 |
 | `QuestItemsPage.tsx`          | `quest_items_groups.json`               | `dataUrl()` 完成 |
-| `QuestItemGroupPage.tsx`      | `quest_items_groups/{group}.json`       | `dataUrl()` 完成 |
+| `LootdropDetailPage.tsx`（`mode="quest_group"`） | `quest_items_groups/{group}.json` | 客户端 `dataUrl()` 已完成；当前 SSG 详情壳尚未注入任务分组专用 preload |
 | `QuestNPCPage.tsx`            | `quest_npc.json`                        | `dataUrl()` 完成 |
 | `QuestNPCDetailPage.tsx`      | `quest_npc.json`                        | `dataUrl()` 完成 |
 

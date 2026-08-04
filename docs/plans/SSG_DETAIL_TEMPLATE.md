@@ -35,7 +35,7 @@
 | `/:lang/monsters/:name`               | `DetailPage.tsx`              | `monsters/{name}.json`                        |
 | `/:lang/props/:name`                  | `DetailPage.tsx`              | `props/{name}.json`                           |
 | `/:lang/lootdrops/:name`              | `LootdropDetailPage.tsx`      | `lootdrops/{name}.json`                       |
-| `/:lang/quest_items/:group`           | `QuestItemGroupPage.tsx`      | `quest_items_groups/{group}.json`             |
+| `/:lang/quest_items/:group`           | `LootdropDetailPage(mode="quest_group")` | `quest_items_groups/{group}.json`             |
 | `/:lang/quest_npc/:npc_name`          | `QuestNPCDetailPage.tsx`      | `quest_npc.json`                              |
 | `/:lang/dungeon_modules/:group/:name` | `DungeonModuleDetailPage.tsx` | `dungeon_modules_coords/{name}.json` 与模块表 |
 | `/:lang/explore`                      | `ExplorePage.tsx`             | Explore 所需模块与索引数据                    |
@@ -44,13 +44,14 @@ lootdrop 基底名称到默认变体的重定向（例如 `/:lang/lootdrops/Heat
 
 ## 当前状态
 
-`items`、`monsters`、`props`、`lootdrops` 和地牢模块详情已由 `createTemplateDetailPage()` 生成轻量壳：
+`items`、`monsters`、`props`、`lootdrops`、任务物品分组和地牢模块详情已由 `createTemplateDetailPage()` 生成轻量壳：
 
 - `detailPlaceholder()` 在构建期直接写入每个输出 HTML，不保存独立样板文件。
-- 默认语言与九种非默认语言均写入目标路由标题；壳不含 `__SSR_DATA__`、hreflang 集、公共数据 preload 或内联样式，仅保留当前详情所需的 JSON preload。
+- 默认语言与九种非默认语言均写入目标路由标题；详情壳过滤 `dungeon_modules.json`、`index.json` 和 `search_index.json` 等公共 preload，但保留 `/data/json/meta.json` 版本探测 preload，并按路由保留可用的详情专用 preload。
+- 任务物品分组由 `LootdropDetailPage(mode="quest_group")` 承担，客户端按 URL 请求真实 `quest_items_groups/{group}.json`；当前 `detailPreloads()` 尚未为任务分组注入专用 preload。
 - `props/GoldChest` 当前约 1.8KB。
 
-其余非列表路由仍走 `render()` 完整 SSR，包括任务物品分组、任务 NPC、Explore 和地牢模块分组页。
+任务 NPC、Explore 和地牢模块分组页仍走 `render()` 完整 SSR。
 
 ## 实施方案
 
@@ -78,12 +79,12 @@ preload 规则必须使用显式映射：
 | 路由类型                             | preload                                                   |
 | ------------------------------------ | --------------------------------------------------------- |
 | items / monsters / props / lootdrops | `/data/{version}/json/{type}/{name}.json`                 |
-| quest item group                     | `/data/{version}/json/quest_items_groups/{group}.json`    |
+| quest item group                     | `/data/{version}/json/quest_items_groups/{group}.json`（计划项；当前 `detailPreloads()` 尚未注入） |
 | quest NPC detail                     | `/data/{version}/json/quest_npc.json`                     |
 | dungeon module detail                | `/data/{version}/json/dungeon_modules_coords/{name}.json` |
 | explore                              | 页面首次实际请求的模块/索引资源，或无 preload             |
 
-不得保留首页 `meta.json`、索引、模块表等公共 preload，也不得 preload 真实地图图片、引用坐标或 GoldChest 数据。
+不得在壳中 preload 详情无关的索引、模块表等公共资源；`detailTemplate()` 会过滤 `dungeon_modules.json`、`index.json` 和 `search_index.json`，但保留 `/data/json/meta.json` 版本探测 preload。不得 preload 真实地图图片、引用坐标或 GoldChest 数据。
 
 ### 3. 客户端接管与数据回退
 

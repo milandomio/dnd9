@@ -6,7 +6,7 @@
 
 ---
 
-## 1. 现象
+## 1. 修复前现象（历史记录）
 
 英文详情页底部：
 
@@ -19,7 +19,7 @@
 
 ---
 
-## 2. 根因
+## 2. 修复前根因（历史记录）
 
 ### 2.1 `LocationStats` 硬编码中文
 
@@ -40,7 +40,7 @@
 |------|------|------|
 | `DetailPage.tsx` | ~1186–1190 | `modules.get(k)?.translation \|\| k` |
 | `LootdropDetailPage.tsx` | ~1682–1686 | 同上 |
-| `QuestItemGroupPage.tsx` | ~809–811 | UI 文案已 `ut`，地图名仍用 `.translation` |
+| `LootdropDetailPage.tsx`（`quest_group` 分支） | ~809–811 | UI 文案已 `ut`，地图名仍用 `.translation` |
 
 对比同页已正确写法（Lootdrop 地图 h3 ~1153）：
 
@@ -54,15 +54,15 @@ t(mod?.translation_key, mod?.translation || mod?.name || mapName)
 |------|------|
 | `DetailPage.tsx` ~1211 | `mapLabel: mod?.translation \|\| c.map` |
 | `LootdropDetailPage.tsx` ~1630 | 同上 |
-| `QuestItemGroupPage.tsx` ~749 | 同上 |
+| `LootdropDetailPage.tsx`（`quest_group` 分支） ~749 | 同上 |
 
 ### 2.4 UI 字典已有近似 key，未复用到公共组件
 
 | key | 用途 | 现状 |
 |-----|------|------|
 | `ui.module_detail.pos_stat` | 「位置统计：共 {count} 个位置点」 | 仅 `DungeonModuleDetailPage` |
-| `ui.quest_group.pos_stat` | 同上文案 | 仅 `QuestItemGroupPage` 内联 |
-| `ui.quest_group.map_includes` | 「包含地图：」 | 仅 `QuestItemGroupPage` 内联 |
+| `ui.quest_group.pos_stat` | 同上文案 | 历史上仅 `QuestItemGroupPage` 内联；当前由 `LocationStats` 使用 `ui.location.pos_stat` |
+| `ui.quest_group.map_includes` | 「包含地图：」 | 历史上仅 `QuestItemGroupPage` 内联；当前由 `LocationStats` 使用 `ui.location.map_includes` |
 
 `LocationStats` 与详情页底部**未使用**上述 key，导致三处文案分裂。
 
@@ -125,12 +125,14 @@ return (
 
 ### 4.3 调用点修改清单
 
+> **当前状态：已完成**（2026-08-03）。`LocationStats` 已采用方案 A：通过 `useLocale`、`mapKeys` 和 `modules` 在组件内调用 `t/ut`；`DetailPage`、`LootdropDetailPage` 及 `debug mapLabel` 均已完成地图名本地化。原 `QuestItemGroupPage.tsx` 已删除，任务物品分组由 `LootdropDetailPage(mode="quest_group")` 承担。
+
 | 文件 | 改动 |
 |------|------|
 | `LocationStats.tsx` | i18n 文案 +（若 A）模块名采样 |
 | `DetailPage.tsx` | 底部 LocationStats；debug `mapLabel` 用 `t` |
 | `LootdropDetailPage.tsx` | 同上 |
-| `QuestItemGroupPage.tsx` | 底部地图名 `t`；可改为复用 `LocationStats` 去重 |
+| `LootdropDetailPage.tsx`（`quest_group` 分支） | 底部地图名与 debug `mapLabel` 使用 `t`；复用 `LocationStats` |
 | `uiLocale.ts` | 10 语言补 `ui.location.*`（若新增） |
 
 ### 4.4 不做 / 注意
@@ -156,12 +158,11 @@ return (
 ## 6. 相关文件速查
 
 ```
-web/src/components/LocationStats.tsx          # 硬编码中文
+web/src/components/LocationStats.tsx          # useLocale + t/ut + ui.location.*
 web/src/pages/DetailPage.tsx                  # 调用 + mapLabel
-web/src/pages/LootdropDetailPage.tsx          # 调用 + mapLabel；h3 已正确 t()
-web/src/pages/QuestItemGroupPage.tsx          # 内联 ut，地图名未 t
+web/src/pages/LootdropDetailPage.tsx          # 调用 + mapLabel；含 quest_group 分支
 web/src/pages/DungeonModuleDetailPage.tsx     # 已用 ui.module_detail.pos_stat
-web/src/i18n/uiLocale.ts                      # pos_stat / map_includes 已存在但未统一
+web/src/i18n/uiLocale.ts                      # ui.location.*
 web/src/i18n/useLocale.ts                     # t / ut
 web/src/types/data.ts                         # DungeonModule.translation_key
 ```

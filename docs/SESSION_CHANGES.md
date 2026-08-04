@@ -11,6 +11,13 @@
 - **关键逻辑/映射关系**：任务 NPC 的 `Explore` 内容改为先用 `match_asset_path_to_module(asset_path, content_data)` 读取 `content_data.ModuleId.AssetPathName`，再从真实模块路径解析目标名称和 `translation_key`；模块查询改为同时尝试完整模块名与去编号后的规范名，既保留 `IceCave_Hut_03`、`Ruins_Square_01`、`Ruins_Cemetery_01` 这类编号模块的官方 key，也允许 `Ruins_Chapel` 通过既有 `EXPLICIT_TRANSLATION_KEY_OVERRIDES` 回退到 `Text_DesignData_Dungeon_DungeonModule_Abandoned_Sanctuary`。
 - **验证**：完整 `python main.py --rebuild-db` 成功，`quest_npc.json` 的 Explore 漏 key 数降为 0；`Crypt_FourWayConnect`、`HangingShip` 等原始名不再出现在任务 NPC 数据中，对应条目已写入 `中心祭坛`、`吊船`、`水上村落`、`环形岛`、`岩岛` 及官方模块 key。`python -m unittest tests/test_quest_i18n.py tests/test_hardcoded_i18n.py`、`python -m py_compile`、`npm run format`、`npm run format:check`、`npx tsc --noEmit`、quick SSG、`vite preview` HTTP 200 和 `npm run test:i18n` 27/27 通过。
 
+### docs: 同步会话日志与活跃计划文档状态
+
+- **改动原因**：近期实现已完成任务物品分组模板复用、LocationStats i18n、地图分组 i18n 和详情壳 preload 调整，但活跃计划仍引用已删除的 `QuestItemGroupPage.tsx`、旧的完整 SSR 状态，或把 `index.json`/`search_index.json` 全局 preload 标为已实施；两处历史日志也未注明 25/27 失败已被后续修复。
+- **变更文件**：`docs/SESSION_CHANGES.md`；`docs/plans/SSG_DETAIL_TEMPLATE.md`；`docs/plans/LOCATION_STATS_I18N.md`；`docs/plans/DUNGEON_GROUP_I18N.md`；`docs/CACHE_OPTIMIZATION_PLAN.md`。
+- **关键逻辑/映射关系**：保留历史 `25/27` 验证事实并补充 2026-08-03 已复测 `27/27`；将任务分组统一记为 `LootdropDetailPage(mode="quest_group")`，标明其使用详情轻量壳但当前没有专用 preload；将 LocationStats 与地图分组计划的完成状态、旧页面归属和实现事实回写；将 index/search 全局 preload 标为当前未实施，并记录详情壳保留 `meta.json`、过滤公共 preload 的实际行为。
+- **验证**：`git diff --check`、`web` 下 `npm run format:check`、`npx tsc --noEmit` 通过；未修改生产代码或归档历史记录。
+
 ## 2026-08-03
 
 ### fix: 让 i18n 测试等待 lootdrop 详情页异步加载完成
@@ -25,7 +32,7 @@
 - **改动原因**：地图截图识别会加载 OpenCV 和模板资源，需要在首次使用前明确展示 PVE 协议；首页同时需要保留 `dnd闪电指南` 关键词以支持中文搜索入口。
 - **变更文件**：`web/src/components/MapImageRecognition.tsx`；`web/src/i18n/uiLocale.ts`；`web/src/pages/HomePage.tsx`；`web/tests/map-recognition-consent.mjs`；`web/tests/i18n.mjs`；`web/package.json`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：使用 `darkfind.map-recognition.pve-consent.v1` 持久化同意状态；未同意时只显示协议弹窗，不触发识图组件、OpenCV 或模板资源加载；同意后才懒加载 `MapImageRecognitionPanel` 并执行原有识图流程。协议提供十种语言翻译，品牌名 `越来越黑暗闪电指南 DarkFlashNav` 保持不翻译；首页追加 `dnd闪电指南`，i18n 测试增加关键词断言。
-- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；ESLint 0 error、20 条既有 warning；quick SSG 生成 3,067 路由、15,202 个 HTML、17,011 个文件，根路径 HTTP 200；`npm run test:map-recognition` 通过，确认同意前无识图资源请求、同意后产生 2 个识图资源请求。`npm run test:i18n` 仍为 25/27，两条 CastillonDagger 多语言文案断言失败，与本次改动无关。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；ESLint 0 error、20 条既有 warning；quick SSG 生成 3,067 路由、15,202 个 HTML、17,011 个文件，根路径 HTTP 200；`npm run test:map-recognition` 通过，确认同意前无识图资源请求、同意后产生 2 个识图资源请求。`npm run test:i18n` 当时为 25/27，两条 CastillonDagger 多语言文案断言失败，与本次改动无关；该历史失败已由后续等待 lootdrop 详情页就绪的修复解决，2026-08-03 复测为 27/27，见本文件最新 i18n 测试条目。
 
 ### fix: 修复 lootdrop 与任务地图来源实体的硬编码 i18n 回退
 
@@ -60,7 +67,7 @@
 - **改动原因**：lootdrop 详情页改为渐进加载后，items/monsters/props 共用的 `DetailPage` 仍会一次实例化所有地图图片，路由切换和 Quick/CSR 数据壳也可能短暂显示旧实体或不完整数据；其他详情页还存在相同的版本等待和旧请求覆盖风险。
 - **变更文件**：`web/src/pages/DetailPage.tsx`；`web/src/pages/QuestItemGroupPage.tsx`；`web/src/pages/DungeonModuleDetailPage.tsx`；`web/src/pages/QuestNPCDetailPage.tsx`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：`DetailPage` 仅接受带 `coords` 的完整 SSR 实体，按当前 URL 校验实体名称，数据请求使用 `AbortController`；地图卡片沿用 lootdrop 的 `IntersectionObserver` 和 `600px` 预加载范围，未进入视口时保留固定比例占位。Quest 物品组在 Quick 模式的 `entities: []` 壳下等待完整 JSON；地图模块详情只有坐标就绪后结束 loading，并忽略旧路由响应；NPC 详情等待 `dataVersion` 后再生成版本化 URL。
-- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；ESLint 0 error、20 条既有 warning；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件，预览根路径 HTTP 200。Playwright 验证 `GoldChest` 详情 41 张地图卡首屏仅创建 10 个 `MapPanel`、无页面错误，`Ale → GoldChest` 延迟切换不残留旧实体。现有 `test:i18n` 为 25/27，两条 CastillonDagger 多语言文案断言仍失败，与本次改动无关。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 通过；ESLint 0 error、20 条既有 warning；quick SSG 生成 3,067 路由、12,007 个多语言 HTML、17,011 个文件，预览根路径 HTTP 200。Playwright 验证 `GoldChest` 详情 41 张地图卡首屏仅创建 10 个 `MapPanel`、无页面错误，`Ale → GoldChest` 延迟切换不残留旧实体。`test:i18n` 当时为 25/27，两条 CastillonDagger 多语言文案断言失败；该历史失败已由后续等待 lootdrop 详情页就绪的修复解决，2026-08-03 复测为 27/27，见本文件最新 i18n 测试条目。
 
 ## 2026-08-02
 
