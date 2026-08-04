@@ -24,27 +24,28 @@
    return {"slot_key": slot_key, "floor": floor, "sub_key": sub_key}
    ```
 
-2. **`collector.py`** ✅（待补双写）— 注入三字段 + `_resolve_group_display()` 辅助
+2. **`collector.py`** ✅（已完成双写）— 注入三字段 + `_resolve_group_display()` 辅助
    ```python
    _mod["group_key"] / group_floor / group_sub_key
-   _mod["group_display"] = _resolve_group_display(_g, translations)  # 待补
+   _mod["group_display"] = _resolve_group_display(_g, translations)  # 已完成
    ```
 
-3. **`module_builder.py`** ⏳ — 确认 `build_and_save_modules_data()` `.copy()` 透传四字段到 `dungeon_modules.json`
+3. **`module_builder.py`** ✅ — `build_and_save_modules_data()` `.copy()` 已确认透传四字段到 `dungeon_modules.json`
 
-4. **`index_export.py`** ⏳ — `quest_items_groups` 写入 `group_key`/`group_floor`/`group_sub_key`（保留 `group_display`）；search_index tag 暂继续用中文 resolver
+4. **`index_export.py`** ✅ — `quest_items_groups` 写入 `group_key`/`group_floor`/`group_sub_key`（保留 `group_display`）；search_index tag 继续用中文 resolver
 
-5. **`locale_builder.py`** ⏳ — 扫描 `dungeon_modules.json` 的 `group_key` + `group_sub_key` 进 used_keys
+5. **`locale_builder.py`** ✅ — 扫描 `dungeon_modules.json` 的 `group_key` + `group_sub_key` 进 used_keys
 
 ### 前端
 
-6. **`web/src/types/data.ts`** ⏳ — 新增 `group_key`/`group_floor`/`group_sub_key`，**保留** `group_display`
+6. **`web/src/types/data.ts`** ✅ — 新增 `group_key`/`group_floor`/`group_sub_key`，**保留** `group_display`
 
-7. **`web/src/utils/formatGroupLabel.ts`** ⏳（新）— 统一组装逻辑 + fallback
+7. **`web/src/utils/formatGroupLabel.ts`** ✅ — 统一组装逻辑 + fallback
 
-8. **`web/src/i18n/uiLocale.ts`** ⏳ — 各语言 `ui.common.floor`
+8. **`web/src/i18n/uiLocale.ts`** ✅ — 各语言 `ui.common.floor`
 
-9. **全量页面** ⏳：
+9. **全量页面** ✅：原任务分组独立页面已删除，其渲染点并入 `LootdropDetailPage` 的 `quest_group` 分支。
+
    | 文件 | 渲染点 |
    |------|--------|
    | LootdropDetailPage | 分组标题、debug 表 |
@@ -53,10 +54,10 @@
    | DungeonModuleGroupPage | groupLabel |
    | DungeonModulesPage | 分组摘要 |
    | QuestItemsPage | 分组卡片 |
-   | QuestItemGroupPage | 页头 + 模块分组 |
+   | LootdropDetailPage（`mode="quest_group"`） | 页头 + 模块分组 |
    | ExplorePage | 分组标签 |
 
-10. **`web/scripts/ssg.mjs`** ⏳ — SSR 分组摘要携带三 key 字段 + group_display
+10. **`web/scripts/ssg.mjs`** ✅ — SSR 分组摘要携带三 key 字段 + group_display
 
 ## 当前进度
 
