@@ -4,6 +4,14 @@
 
 ## 2026-08-05
 
+### docs: 优化测试通过后的 Git 本地提交流程
+
+- **改动原因**：原流程同时要求改动前创建 checkpoint、任务完成立即 commit，并在构建前提交 `WIP`，容易让未经过功能验证的改动被提前提交，也可能混入无关工作区文件；正式提交时机应改为适用功能测试通过后。
+- **变更文件**：`CLAUDE.md`；`docs/DEVELOPMENT_WORKFLOW.md`；`docs/BUILD_AND_DEPLOY.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：干净工作区只检查状态、不创建空 checkpoint；已有本任务 WIP 或测试失败/会话中断时才使用 `wip:` 保存进度。实现后按改动范围运行静态预检和功能测试，测试通过后追加 SESSION_CHANGES，精确 stage 本任务文件并正式 commit；明确 pre-commit 只做静态检查，不替代单测、数据管道、SSG、HTTP 或 Playwright 回归。
+- **验证**：已用 `rg` 核对旧 checkpoint/构建前提交表述，执行 `git diff --check`；本次仅修改流程文档，不运行数据管道、构建或 Playwright。
+
+
 ### fix: 地图截图识别每次开启都重新显示 PVE 协议
 
 - **改动原因**：地图截图识别的协议同意状态此前通过 localStorage 持久化，用户同意一次后当前页面及其他页面均不再弹出提示；需求改为每次打开识别功能时都必须确认。

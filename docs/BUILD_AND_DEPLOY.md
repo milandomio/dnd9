@@ -4,14 +4,18 @@
 
 ## 完整构建
 
+构建前先按 `docs/DEVELOPMENT_WORKFLOW.md` 检查并分类工作区；不要为了开始构建而提交未验证功能。只有已有本任务 WIP 需要保护时，才先创建 `wip:` checkpoint；干净工作区跳过。
+
 ```bash
-git commit -am "WIP: <描述>"                    # 1. checkpoint
-cd api && python main.py > pipeline.log 2>&1     # 2. 数据管道（含 locale 字典导出）
-cd web && npm run build > build.log 2>&1         # 3. 前端构建（含 SSG 多语言 HTML 后处理）
-# 4. 启动web + 强制验证
-cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
+git status --short                              # 1. 检查工作区
+cd api && nohup python main.py > pipeline.log 2>&1 &  # 2. 数据管道（含 locale 字典导出）
+cd web && nohup npm run build > build.log 2>&1 &      # 3. 前端构建（含 SSG 多语言 HTML 后处理）
+# 4. 启动 web + 强制验证；构建进程结束且日志成功后执行
+cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log &
+sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 ```
 
+管道、构建和 preview 都必须检查后台日志/进程状态，确认命令成功后才能进行适用的功能回归。HTTP 200 和功能测试通过后，回到 `docs/DEVELOPMENT_WORKFLOW.md` 执行 `SESSION_CHANGES`、精确 staging 和正式 commit。测试失败或中断时才使用 `wip:` 保存状态。
 `python main.py` 在 search_index 步骤后自动运行 `build_locale_files`，生成 `data/json/locale/{lang}.json`（10种语言）。`npm run build` 中的 `ssg.mjs` 使用这些 locale 字典为每种语言生成 HTML 副本（dist/{lang}/...）。完整构建产物约 1.28 GB。
 
 ## Lootdrop 变体构建范围
@@ -44,7 +48,7 @@ IndexNow 已接入主站 GitHub Actions：静态密钥文件随构建发布到 `
 
 ## 仅前端改动
 
-只改 `web/` 代码时，不需要跑数据管道，直接构建 + 启动预览：
+只改 `web/` 代码时，不需要跑数据管道，直接构建 + 启动预览。构建和适用功能回归通过后，再按 `docs/DEVELOPMENT_WORKFLOW.md` 提交；不要在构建前使用 `git commit -am` 保存未验证功能：
 
 ```bash
 cd web && npm run build > build.log 2>&1      # 1. 前端构建（含 TS 类型检查 + SSG）
@@ -55,8 +59,10 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 ## 一键部署
 
 ```bash
-./deploy.sh > deploy.log 2>&1   # 管道 → 构建 → 启动服务 → git 提交
+./deploy.sh > deploy.log 2>&1   # 管道 → 构建 → 启动服务；验证通过后再按开发流程精确提交
 ```
+
+`deploy.sh` 的自动流程不能替代本地功能回归，也不能改变“测试通过后正式提交”的顺序。
 
 ## 数据流
 
@@ -81,7 +87,9 @@ cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview
 DB 在 `.gitignore` 中，默认不跟踪。推送时临时加入，推送后立即取消本地跟踪，确保远程有 DB（供 Actions 部署）而本地不跟踪。
 
 ```bash
-git add -A && git commit -m "feat: <描述>"
+# 只在数据与适用功能验证通过后，按 DEVELOPMENT_WORKFLOW 精确提交；不要用 git add -A 混入其他 WIP
+git add <本任务文件...> docs/SESSION_CHANGES.md && git commit -m "feat: <描述>"
+
 git update-index --no-skip-worktree api/data/darkfindv5.db 2>/dev/null
 if git diff --quiet HEAD -- api/data/darkfindv5.db; then
   git update-index --skip-worktree api/data/darkfindv5.db
