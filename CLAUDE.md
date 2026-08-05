@@ -6,7 +6,7 @@
 
 **默认工作分支**：`main`。除非用户明确要求切换分支，不要自行切换；新增功能直接在 `main` 开发。
 
-**提交纪律（所有分支强制）**：每个逻辑任务完成或中断前必须本地 `git commit` checkpoint；禁止堆积未提交 diff。「仅本地、不 push」≠「可以不 commit」。详见 `docs/DEVELOPMENT_WORKFLOW.md`。
+**提交纪律（所有分支强制）**：本地提交流程以“适用的功能测试通过后提交正式 commit”为准。改动前先检查 `git status`；只有工作区已有本任务的未提交 WIP、需要保护当前进度时才建立 `wip:` checkpoint，干净工作区不创建空 checkpoint。功能测试失败或会话中断时，可以提交 `wip:` 保存进度，但不得把 WIP 当作功能完成。详见 `docs/DEVELOPMENT_WORKFLOW.md`。
 
 游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
@@ -44,7 +44,7 @@
 
 ## 文档强制规则
 
-**每次改动（包括回退和修复）必须在其完成后的最后一步将摘要追加到 `docs/SESSION_CHANGES.md`。** 这是不可跳过的步骤，优先级与构建验证相同。
+**每次改动必须在正式 commit 之前完成记录**，记录顺序为：适用的静态预检和功能测试通过 → 追加 `docs/SESSION_CHANGES.md` → 精确 stage → 正式 commit。
 
 要求：
 - 按日期分区（`# YYYY-MM-DD 会话修改记录`），当天已有则追加
@@ -105,10 +105,9 @@
 
 ## 开发/构建强制入口
 
-- 改代码前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 创建 checkpoint；**dev 分支同样适用**。如存在用户未提交改动，只处理本任务相关文件，禁止回退他人改动、禁止 `git add -A` 混提。
-- 任务完成或中断前必须本地 commit；禁止多轮改完只写 SESSION_CHANGES 却不 commit。
-- **`git status` 脏文件**：先判定改完 vs 改一半（见 `docs/DEVELOPMENT_WORKFLOW.md`「脏文件验收」）；**已完成的不得当 WIP 搁置**，须拆开单独 commit。
-- 提交前必须按 `docs/DEVELOPMENT_WORKFLOW.md` 手动跑 format / format:check / tsc 预检。
+- 改代码前先检查 `git status`；只有本任务已有未提交 WIP 且需要保护时，才按 `docs/DEVELOPMENT_WORKFLOW.md` 建立 `wip:` checkpoint；干净工作区跳过。
+- 功能实现后必须先完成适用的静态预检和功能测试，再追加 `SESSION_CHANGES`，最后只 stage 本任务文件并正式 commit；中断或测试失败时才使用 `wip:` commit 保存状态。
+- pre-commit hook 只提供静态质量检查，不等同于功能测试；提交前必须按改动范围手动运行相应测试。
 - 构建、启动 web、部署、DB 推送必须按 `docs/BUILD_AND_DEPLOY.md` 执行；构建完成后必须验证 HTTP 200。
 - 禁止直接执行实时输出的长流程命令；`python main.py`、`npm run build`、部署、全站测试等必须重定向到日志后单独读取，避免阻塞 TUI。
 - **WSL 非阻塞执行**：长流程即使重定向日志也必须后台启动（如 `nohup <command> > <log> 2>&1 &`），随后用短命令检查进程和读取日志；禁止等待构建、测试或服务器前台命令结束后才继续执行。
