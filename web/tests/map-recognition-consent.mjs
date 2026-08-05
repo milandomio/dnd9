@@ -1,7 +1,6 @@
 import { chromium } from 'playwright';
 
 const BASE = process.env.BASE_URL || 'http://localhost:8080';
-const CONSENT_STORAGE_KEY = 'darkfind.map-recognition.pve-consent.v1';
 
 function isRecognitionResource(url) {
   const normalized = url.toLowerCase();
@@ -28,11 +27,6 @@ async function main() {
       waitUntil: 'domcontentloaded',
       timeout: 20000,
     });
-    await page.evaluate(
-      (key) => localStorage.removeItem(key),
-      CONSENT_STORAGE_KEY
-    );
-    await page.reload({ waitUntil: 'domcontentloaded', timeout: 20000 });
     await page.locator('#root').waitFor({ state: 'visible', timeout: 20000 });
 
     await page.getByRole('button', { name: '显示调试信息' }).click();
@@ -51,7 +45,7 @@ async function main() {
     }
 
     const requestsBeforeCancel = recognitionRequests.length;
-    await consentDialog.getByRole('button').nth(1).click();
+    await consentDialog.getByRole('button', { name: '取消' }).click();
     if (await toggle.isChecked()) throw new Error('cancel enabled recognition');
     if (recognitionRequests.length !== requestsBeforeCancel) {
       throw new Error(
@@ -61,12 +55,16 @@ async function main() {
 
     await toggle.click();
     await consentDialog.waitFor({ state: 'visible' });
-    await consentDialog.getByRole('button').nth(2).click();
+    await consentDialog.getByRole('button', { name: '同意并继续' }).click();
     await page
       .getByText('截图识图', { exact: true })
       .waitFor({ state: 'visible' });
     if (!(await toggle.isChecked()))
       throw new Error('consent did not enable recognition');
+
+    await toggle.click();
+    await toggle.click();
+    await consentDialog.waitFor({ state: 'visible' });
 
     console.log(
       `PASS map recognition consent: ${recognitionRequests.length} recognition resource requests after agreement`
