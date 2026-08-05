@@ -2,7 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
-## 2026-08-04
+## 2026-08-05
+
+### fix: 地图截图识别每次开启都重新显示 PVE 协议
+
+- **改动原因**：地图截图识别的协议同意状态此前通过 localStorage 持久化，用户同意一次后当前页面及其他页面均不再弹出提示；需求改为每次打开识别功能时都必须确认。
+- **变更文件**：`web/src/components/MapImageRecognition.tsx`；`web/tests/map-recognition-consent.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：移除 `darkfind.map-recognition.pve-consent.v1` 的 localStorage 读写及永久同意状态；每次勾选“地图截图识别”均打开协议 Modal，取消不加载识图资源，同意后才启用识别面板。测试同时验证取消不启用、同意后启用，以及关闭后再次打开仍重新弹出协议。
+- **验证**：`npm run format`、`npm run format:check`、`npx tsc --noEmit` 和 `git diff --check` 通过；地图识别 Playwright 测试未执行（当前 `localhost:8080` 未启动）。
+
 
 ### fix: 修复任务 NPC 探索目标再次丢失 i18n 键
 
