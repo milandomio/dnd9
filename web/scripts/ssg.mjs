@@ -662,10 +662,14 @@ function localizedPath(path, lang) {
 }
 
 function alternateLinks(path) {
-  return LANGS.map((lang) => {
-    const href = SITE + localizedPath(path, lang);
-    return `<link rel="alternate" hreflang="${lang}" href="${href}">`;
-  }).join('\n    ');
+  const links = LANGS.map(
+    (lang) =>
+      `<link rel="alternate" hreflang="${lang}" href="${SITE + localizedPath(path, lang)}">`
+  );
+  links.push(
+    `<link rel="alternate" hreflang="x-default" href="${SITE + localizedPath(path, DEFAULT_LANG)}">`
+  );
+  return links.join('\n    ');
 }
 
 function firstTranslatable(data) {
@@ -1116,7 +1120,7 @@ for (let i = 0; i < routes.length; i++) {
   }
 
   if (!r.redirect) {
-    page = localizePage(page, r, routeData, {}, DEFAULT_LANG, false);
+    page = localizePage(page, r, routeData, {}, DEFAULT_LANG, true);
   }
 
   mkdirSync(dirname(outPath), { recursive: true });
@@ -1256,8 +1260,11 @@ for (const lang of LANGS) {
     const alts = LANGS.map(
       (altLang) =>
         `    <xhtml:link rel="alternate" hreflang="${altLang}" href="${SITE + localizedPath(r.path, altLang)}" />`
-    ).join('\n');
-    entries += `  <url>\n    <loc>${loc}</loc>\n${alts}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
+    );
+    alts.push(
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE + localizedPath(r.path, DEFAULT_LANG)}" />`
+    );
+    entries += `  <url>\n    <loc>${loc}</loc>\n${alts.join('\n')}\n    <lastmod>${dataDateStr}</lastmod>\n    <changefreq>${freq}</changefreq>\n    <priority>${prio}</priority>\n  </url>\n`;
   }
   const sitemap = `${SITEMAP_HEADER}${entries}${SITEMAP_FOOTER}`;
   const filename = `sitemap-${lang}.xml`;
