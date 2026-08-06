@@ -1,0 +1,5250 @@
+{
+  "name": "GoldCoins",
+  "translation": "金币",
+  "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "Abomination",
+    "AshPile",
+    "Banshee",
+    "Bookshelf",
+    "CaveTroll",
+    "CentaurDemon",
+    "Cerberus",
+    "Cockatrice",
+    "CofferSmall",
+    "Coffin_01",
+    "Coffin_02",
+    "Coffin_03",
+    "Coffin_04",
+    "Coffin_05",
+    "Coffin_06",
+    "DeathBeetle",
+    "DeathSkull",
+    "DemonBat",
+    "DemonBerserker",
+    "DemonDog",
+    "DemonExecutioner",
+    "DemonFly",
+    "DemonImp",
+    "DemonOverseer",
+    "DemonScout",
+    "DireWolf",
+    "FallenDwarf01",
+    "FallenDwarf02",
+    "FallenDwarf03",
+    "FiendlingChopper",
+    "FiendlingCrusher",
+    "FiendlingSlasher",
+    "FlatChestLarge",
+    "FlatChestLarge_UnderSea",
+    "FrostDemon",
+    "FrostGiantBerserker",
+    "FrostGiantShielder",
+    "FrostImp",
+    "FrostImp_Unique",
+    "FrostSentinel",
+    "FrostSkeletonArcher",
+    "FrostSkeletonAxeman",
+    "FrostSkeletonCrossbowman",
+    "FrostSkeletonFootmanFromFakeDeath",
+    "FrostSkeletonGuardmanFromFakeDeath",
+    "FrostSkeletonHalberdier",
+    "FrostSkeletonMaceman",
+    "FrostSkeletonWoodenBarrer",
+    "FrostSkeletonWoodenBarrer_Elite",
+    "FrostSkeletonWoodenBarrer_Nightmare",
+    "FrostWalker",
+    "FrostWolf",
+    "FrostWolf_Unique",
+    "FrostWyvern",
+    "FrozenGhost",
+    "GhostKing",
+    "GiantBat",
+    "GiantCentipede",
+    "GiantClam_Chest",
+    "GiantDragonfly",
+    "GiantSpider",
+    "GiantWorm",
+    "GoblinArcher",
+    "GoblinAxeman",
+    "GoblinBolaslinger",
+    "GoblinMage",
+    "GoblinWarrior",
+    "GoblinWarrior_Unique",
+    "GoldChest",
+    "GoldChest_UnderSea",
+    "Ground",
+    "Harpy",
+    "HellHunter",
+    "HellMaggot",
+    "IceGiantSpider",
+    "IceGiantSpider_Unique",
+    "IceHarpy",
+    "IceHound",
+    "IceKoboldArcher",
+    "IceKoboldAxeman",
+    "IceSpider",
+    "LavaGolem",
+    "Lich",
+    "LivingArmor",
+    "LivingArmor_Unique",
+    "LivingStatue",
+    "MarvelousChest",
+    "MidnightStag",
+    "Mummy",
+    "OrnateChestLarge",
+    "OrnateChestLarge_Locked",
+    "OrnateChestLarge_Locked_UnderSea",
+    "OrnateChestLarge_UnderSea",
+    "OrnateChestMedium",
+    "OrnateChestMedium_Locked",
+    "OrnateChestMedium_Locked_UnderSea",
+    "OrnateChestMedium_UnderSea",
+    "OrnateChestSmall",
+    "OrnateChestSmall_Locked",
+    "PinchclawCrab",
+    "PirateAxeThrower",
+    "PirateSwiftblade",
+    "PirateSwordman",
+    "Pot01",
+    "Pot01_UnderSea",
+    "Pot02",
+    "Pot02_UnderSea",
+    "Pot03",
+    "Pot03_UnderSea",
+    "Pot04",
+    "Pot04_UnderSea",
+    "RuinsGolem",
+    "SimpleChestLarge",
+    "SimpleChestLarge_UnderSea",
+    "SimpleChestMedium",
+    "SimpleChestMedium_UnderSea",
+    "SimpleChestSmall",
+    "SimpleChestSmall_UnderSea",
+    "SkeletonArcher",
+    "SkeletonArcher_Summoned",
+    "SkeletonAxeman",
+    "SkeletonBones",
+    "SkeletonChampion",
+    "SkeletonCorpse01",
+    "SkeletonCorpse01_UnderSea",
+    "SkeletonCorpse02",
+    "SkeletonCorpse02_UnderSea",
+    "SkeletonCorpse03",
+    "SkeletonCorpse03_UnderSea",
+    "SkeletonCrossbowman",
+    "SkeletonFootmanFromFakeDeath",
+    "SkeletonFootmanFromFakeDeath_Unique",
+    "SkeletonGuardmanFromFakeDeath",
+    "SkeletonGuardman_Summoned",
+    "SkeletonMage",
+    "SkeletonSpearman",
+    "SkeletonSwordman",
+    "SkeletonWarlord",
+    "SkeletonWoodenBarrel",
+    "SkeletonWoodenBarrel_Elite",
+    "SkeletonWoodenBarrel_Nightmare",
+    "Slime",
+    "Slime_Unique",
+    "SpectralKnight",
+    "SpiderPot",
+    "SpiderPot_Elite",
+    "SpiderPot_Nightmare",
+    "StoneTomb01",
+    "TidewalkerClubfighter",
+    "TidewalkerSlinger",
+    "TidewalkerSpearer",
+    "Wendigo",
+    "Wisp",
+    "WoodChestLarge",
+    "WoodChestLarge_UnderSea",
+    "WoodChestMedium",
+    "WoodChestMedium_UnderSea",
+    "WoodChestSmall",
+    "WoodenBarrel",
+    "WoodenBarrel01",
+    "WoodenBarrel02",
+    "WoodenBarrel04",
+    "WoodenBarrel_Firedeep",
+    "WoodenCrateMedium01",
+    "WoodenCrateMedium_UnderSea",
+    "WoodenCrateSmall",
+    "WoodenCrateSmall_UnderSea",
+    "WoodenCrate_Firedeep_01",
+    "WoodenCrate_Firedeep_02",
+    "Wraith",
+    "Yeti",
+    "Zombie",
+    "id_Monster_Cyclops"
+  ],
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": -700.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": 700.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": 700.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": 350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": 350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": 0.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": -350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": -350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": -700.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -350.0,
+      "y": -700.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -450.0,
+      "y": 0.0,
+      "z": 300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": -700.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": -700.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": -350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": -350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": 0.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": 0.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": 350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": 350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": 703.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -850.0,
+      "y": 703.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 450.0,
+      "y": 0.0,
+      "z": 300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": 700.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": 350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": 350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": 0.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": -350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": -700.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": -700.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": -700.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": -350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": -350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": -350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": 0.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": 0.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": 350.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": 350.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": 700.0,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 850.0,
+      "y": 700.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 450.0,
+      "y": 0.0,
+      "z": 500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": 700.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -450.0,
+      "y": 0.0,
+      "z": 500.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessTomb_01",
+      "file": "Crypt_LightlessTomb_01_D.json",
+      "version": "(D)",
+      "label": "Coffin_R",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 264,
+      "variant_names": []
+    },
+    {
+      "x": -291.99997,
+      "y": -739.99994,
+      "z": -511.9109,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "Coffin_01"
+    },
+    {
+      "x": 500.0,
+      "y": 0.0,
+      "z": -917.0,
+      "yaw": 90.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "Coffin_01",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Coffin_01",
+          "name": "精致棺材"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+          "name": "棺材"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+          "name": "皇家棺材"
+        }
+      ]
+    },
+    {
+      "x": -1160.0,
+      "y": 750.0,
+      "z": -530.0,
+      "yaw": 90.0,
+      "map": "Ruins_Watchtower",
+      "file": "Ruins_Watchtower_HR_D.json",
+      "version": "",
+      "label": "Coffin_01"
+    },
+    {
+      "x": -1160.0,
+      "y": 50.0,
+      "z": -530.0,
+      "yaw": 90.0,
+      "map": "Ruins_Watchtower",
+      "file": "Ruins_Watchtower_HR_D.json",
+      "version": "",
+      "label": "Coffin_01"
+    },
+    {
+      "x": 1123.0,
+      "y": -92.0,
+      "z": 120.0,
+      "yaw": 90.0,
+      "map": "Tomb_Center",
+      "file": "Tomb_Center_HR_D.json",
+      "version": "",
+      "label": "Coffin_01"
+    },
+    {
+      "x": 1033.0,
+      "y": 380.0,
+      "z": 120.0,
+      "yaw": 270.0,
+      "map": "Tomb_Center",
+      "file": "Tomb_Center_HR_D.json",
+      "version": "",
+      "label": "Coffin_01"
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.6325,
+          "普通": 10.2259,
+          "豪客赛": 11.569,
+          "逆袭赛": 11.569
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9651,
+          "逆袭赛": 7.9651
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9375,
+          "逆袭赛": 7.9375
+        }
+      },
+      {
+        "translation": "重型华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "憎恶",
+        "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔半人马",
+        "translation_key": "Text_DesignData_Monster_Monster_CentaurDemon",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "地狱三头犬",
+        "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "死亡甲虫",
+        "translation_key": "Text_DesignData_Monster_Monster_DeathBeetle",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔蝙蝠",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonBat",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔狂战士",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonBerserker",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔犬",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonDog",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔处刑者",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔蜉蝣",
+        "translation_key": "Text_DesignData_Monster_Monster_Demonfly",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔鬼童",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔监军",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonOverseer",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恶魔斥候",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonScout",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "劣魔斩切者",
+        "translation_key": "Text_DesignData_Monster_Monster_FiendlingChopper",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "劣魔粉碎者",
+        "translation_key": "Text_DesignData_Monster_Monster_FiendlingCrusher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "劣魔砍杀者",
+        "translation_key": "Text_DesignData_Monster_Monster_FiendlingSlasher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "鬼王",
+        "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "剧毒蜻蜓",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "地狱猎手",
+        "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "魔蛆",
+        "translation_key": "Text_DesignData_Monster_Monster_HellMaggot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "translation_key": "Text_DesignData_Props_Props_Pot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅弓箭手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅斧兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅弩手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅卫士组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonGuardman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅长枪兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅双手剑士",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "幽鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "殭尸",
+        "translation_key": "Text_DesignData_Monster_Monster_Zombie",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "translation_key": "Text_DesignData_Props_Props_SpiderPot",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "石像鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.886,
+          "逆袭赛": 32.886
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ],
+    "FireDeep": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.6325,
+          "普通": 10.2259,
+          "豪客赛": 11.569,
+          "逆袭赛": 11.569
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9651,
+          "逆袭赛": 7.9651
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9375,
+          "逆袭赛": 7.9375
+        }
+      },
+      {
+        "translation": "灰烬堆",
+        "translation_key": "Text_DesignData_Props_Props_AshPile",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "矮人亡骸组",
+        "translation_key": "Text_DesignData_Props_Props_FallenDwarf",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "矮人木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel_Firedeep",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "熔岩魔像",
+        "translation_key": "Text_DesignData_Monster_Monster_LavaGolem",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 4.7478,
+          "普通": 5.4577,
+          "豪客赛": 6.5103,
+          "逆袭赛": 6.5103
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "矮人中型木箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrate_Firedeep_01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "矮人小型木箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrate_Firedeep_02",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7677,
+          "普通": 1.7473,
+          "豪客赛": 1.7604,
+          "逆袭赛": 1.7604
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.886,
+          "逆袭赛": 32.886
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.7615,
+          "普通": 8.9817,
+          "豪客赛": 10.3236,
+          "逆袭赛": 10.3236
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9099,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "精致棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "旧棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_02",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_05",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "重型华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "石棺",
+        "translation_key": "Text_DesignData_Props_Props_StoneTomb01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "报丧女妖",
+        "translation_key": "Text_DesignData_Monster_Monster_Banshee",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "蛇尾鸡",
+        "translation_key": "Text_DesignData_Monster_Monster_Cockatrice",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "translation_key": "Text_DesignData_Monster_Monster_DeathSkull",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "恐狼",
+        "translation_key": "Text_DesignData_Monster_Monster_DireWolf",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨型蝙蝠",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantBat",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "剧毒蜻蜓",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨型蜘蛛",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨型蠕虫",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "鹰身女妖",
+        "translation_key": "Text_DesignData_Monster_Monster_Harpy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "translation_key": "Text_DesignData_Props_Props_Pot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "废墟魔像",
+        "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅弓箭手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅斧兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅冠军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅卫士组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonGuardman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅双手剑士",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅木桶",
+        "translation_key": "df5.hardcoded.SkeletonWoodenBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "鬼灵骑士",
+        "translation_key": "Text_DesignData_Monster_Monster_SpectralKnight",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "幻灵",
+        "translation_key": "Text_DesignData_Monster_Monster_Wisp",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "殭尸",
+        "translation_key": "Text_DesignData_Monster_Monster_Zombie",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "史莱姆",
+        "translation_key": "Text_DesignData_Monster_Monster_Slime",
+        "spawn_rate": 99.9546,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "translation_key": "Text_DesignData_Props_Props_SpiderPot",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "铠甲傀儡",
+        "translation_key": "Text_DesignData_Monster_Monster_LivingArmor",
+        "spawn_rate": 87.92,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7813,
+          "普通": 1.7658,
+          "豪客赛": 1.7039,
+          "逆袭赛": 1.7039
+        }
+      },
+      {
+        "translation": "石像鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅木桶(随机)",
+        "translation_key": "df5.hardcoded.SkeletonWoodenBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.8833,
+          "逆袭赛": 32.8824
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 3.4482,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "午夜雄鹿",
+        "translation_key": "Text_DesignData_Monster_Monster_MidnightStag",
+        "spawn_rate": 0.04,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.7218,
+          "普通": 9.5873,
+          "豪客赛": 10.8242,
+          "逆袭赛": 10.8242
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "木桶(随机)",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 35.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "translation_key": "Text_DesignData_Monster_Monster_DeathSkull",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜巨人狂战士",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostGiantBerserker",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜持盾巨人",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅弓手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅斧手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅弩手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonCrossbowman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅步兵",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonFootman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅卫士",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonGuardman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅戟兵",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonHalberdier",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅锤手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonMaceman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜行尸",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostWalker",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨型蝙蝠",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantBat",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "寒冰鹰身女妖",
+        "translation_key": "Text_DesignData_Monster_Monster_IceHarpy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "寒冰狗头人弓手",
+        "translation_key": "Text_DesignData_Monster_Monster_IceKoboldArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "寒冰狗头人斧手",
+        "translation_key": "Text_DesignData_Monster_Monster_IceKoboldAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "translation_key": "Text_DesignData_Props_Props_Pot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅冠军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰雪巨猿",
+        "translation_key": "Text_DesignData_Monster_Monster_Yeti",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜狼",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostWolf",
+        "spawn_rate": 99.9728,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜巨型蜘蛛",
+        "translation_key": "Text_DesignData_Monster_Monster_IceGiantSpider",
+        "spawn_rate": 99.891,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "translation_key": "Text_DesignData_Props_Props_SpiderPot",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7745,
+          "普通": 1.7606,
+          "豪客赛": 1.7332,
+          "逆袭赛": 1.7332
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.8842,
+          "逆袭赛": 32.8842
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ],
+    "Crypt": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.7218,
+          "普通": 9.5873,
+          "豪客赛": 10.8242,
+          "逆袭赛": 10.8242
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9283,
+          "逆袭赛": 7.9283
+        }
+      },
+      {
+        "translation": "精致棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "旧棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_02",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "木棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_05",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "重型华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "石棺",
+        "translation_key": "Text_DesignData_Props_Props_StoneTomb01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "translation_key": "Text_DesignData_Monster_Monster_DeathSkull",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "鬼王",
+        "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "剧毒蜻蜓",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巫妖",
+        "translation_key": "Text_DesignData_Monster_Monster_Lich",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "translation_key": "Text_DesignData_Props_Props_Pot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅弓箭手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅斧兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅冠军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅弩手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅卫士组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonGuardman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅长枪兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅双手剑士",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅督军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅木桶",
+        "translation_key": "df5.hardcoded.SkeletonWoodenBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "幽鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "殭尸",
+        "translation_key": "Text_DesignData_Monster_Monster_Zombie",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "translation_key": "Text_DesignData_Props_Props_SpiderPot",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7745,
+          "普通": 1.7606,
+          "豪客赛": 1.7332,
+          "逆袭赛": 1.7332
+        }
+      },
+      {
+        "translation": "骷髅木桶(随机)",
+        "translation_key": "df5.hardcoded.SkeletonWoodenBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.8842,
+          "逆袭赛": 32.8842
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 3.4482,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "哥布林战士",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinWarrior",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 56.2824,
+          "普通": 56.8824,
+          "豪客赛": 58.8897,
+          "逆袭赛": 57.8824
+        }
+      },
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.7615,
+          "普通": 8.9817,
+          "豪客赛": 10.3236,
+          "逆袭赛": 10.3236
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9099,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "旧棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_02",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_05",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9007,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "洞穴巨魔",
+        "translation_key": "Text_DesignData_Monster_Monster_CaveTroll",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "死亡甲虫",
+        "translation_key": "Text_DesignData_Monster_Monster_DeathBeetle",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "translation_key": "Text_DesignData_Monster_Monster_DeathSkull",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨型蝙蝠",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantBat",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨型蜈蚣",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantCentipede",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "剧毒蜻蜓",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨型蜘蛛",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "哥布林弓手",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "哥布林斧手",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "哥布林投石手",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinBolaslinger",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "哥布林法师",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "translation_key": "Text_DesignData_Props_Props_Pot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅弓箭手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅冠军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅卫士组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonGuardman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅双手剑士",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅木桶",
+        "translation_key": "df5.hardcoded.SkeletonWoodenBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "殭尸",
+        "translation_key": "Text_DesignData_Monster_Monster_Zombie",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "独眼巨人组",
+        "translation_key": "Text_DesignData_Monster_Monster_Cyclops",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "蜘蛛罐子",
+        "translation_key": "Text_DesignData_Props_Props_SpiderPot",
+        "spawn_rate": 90.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅木桶(随机)",
+        "translation_key": "df5.hardcoded.SkeletonWoodenBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.8833,
+          "逆袭赛": 32.8824
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8833,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.6325,
+          "普通": 10.2259,
+          "豪客赛": 11.569,
+          "逆袭赛": 11.569
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9651,
+          "逆袭赛": 7.9651
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9375,
+          "逆袭赛": 7.9375
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "飞行骷髅头",
+        "translation_key": "Text_DesignData_Monster_Monster_DeathSkull",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜恶魔大君",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostDemon",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜哨戒魔像",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSentinel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅弓手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅斧手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅弩手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonCrossbowman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅步兵",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonFootman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅卫士",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonGuardman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅戟兵",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonHalberdier",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜骷髅锤手",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonMaceman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜行尸",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostWalker",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜飞龙",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostWyvern",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜怨灵",
+        "translation_key": "Text_DesignData_Monster_Monster_FrozenGhost",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "寒冰鹰身女妖",
+        "translation_key": "Text_DesignData_Monster_Monster_IceHarpy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "寒冰猎犬",
+        "translation_key": "Text_DesignData_Monster_Monster_IceHound",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜蜘蛛",
+        "translation_key": "Text_DesignData_Monster_Monster_IceSpider",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "translation_key": "Text_DesignData_Props_Props_Pot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "温迪戈",
+        "translation_key": "Text_DesignData_Monster_Monster_Wendigo",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "大型加固宝箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜鬼童",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostImp",
+        "spawn_rate": 99.891,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "冰霜巨型蜘蛛",
+        "translation_key": "Text_DesignData_Monster_Monster_IceGiantSpider",
+        "spawn_rate": 99.891,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.886,
+          "逆袭赛": 32.886
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.886,
+          "逆袭赛": 7.886
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 8.7218,
+          "普通": 9.8901,
+          "豪客赛": 10.8242,
+          "逆袭赛": 10.8242
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9283,
+          "逆袭赛": 7.9283
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "黄金宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "方型宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 57.893,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.9938,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.9981,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 27.49,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "巨型蝙蝠",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantBat",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "巨蚌",
+        "translation_key": "Text_DesignData_Props_Props_GiantClam_Chest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "木乃伊",
+        "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "钳爪蟹",
+        "translation_key": "Text_DesignData_Monster_Monster_PinchclawCrab",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "海盗掷斧手",
+        "translation_key": "Text_DesignData_Monster_Monster_PirateAxeThrower",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "海盗快刀手组",
+        "translation_key": "Text_DesignData_Monster_Monster_PirateSwiftblade",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "海盗剑士",
+        "translation_key": "Text_DesignData_Monster_Monster_PirateSwordman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "罐子",
+        "translation_key": "Text_DesignData_Props_Props_Pot",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅弓箭手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "遗骸",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅冠军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅卫士组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonGuardman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅双手剑士",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "踏潮者棍手组",
+        "translation_key": "Text_DesignData_Monster_Monster_TidewalkerClubfighter",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "踏潮者飞镖投手",
+        "translation_key": "Text_DesignData_Monster_Monster_TidewalkerSlinger",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "踏潮者矛手组",
+        "translation_key": "Text_DesignData_Monster_Monster_TidewalkerSpearer",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "中型木箱子",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型木板箱",
+        "translation_key": "Text_DesignData_Props_Props_WoodenCrateSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "骷髅步兵组",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+        "spawn_rate": 99.9091,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.9191,
+          "逆袭赛": 7.9191
+        }
+      },
+      {
+        "translation": "骷髅木桶(随机)",
+        "translation_key": "df5.hardcoded.SkeletonWoodenBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "迷你宝盒组",
+        "translation_key": "Text_DesignData_Props_Props_CofferSmall",
+        "spawn_rate": 3.0001,
+        "drop_rates": {
+          "PVE": 31.2824,
+          "普通": 31.8824,
+          "豪客赛": 32.8842,
+          "逆袭赛": 32.8842
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8824,
+          "逆袭赛": 7.8824
+        }
+      },
+      {
+        "translation": "加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 36.8437,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "小型加固宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+        "spawn_rate": 35.0014,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+        "spawn_rate": 34.9986,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0002,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "重型华丽宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 4.9998,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 3.6844,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 3.4482,
+        "drop_rates": {
+          "PVE": 6.2824,
+          "普通": 6.8824,
+          "豪客赛": 7.8842,
+          "逆袭赛": 7.8842
+        }
+      },
+      {
+        "translation": "大型加固宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_WoodChestLarge",
+        "spawn_rate": 10.0,
+        "drop_rates": {
+          "PVE": 0.4,
+          "普通": 1.0,
+          "豪客赛": 2.0,
+          "逆袭赛": 2.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Crocodilian",
+  "translation": "鳄鱼人",
+  "translation_key": "Text_DesignData_Monster_Monster_Crocodilian",
+  "coords": [
+    {
+      "x": 2174.9841,
+      "y": 230.88385,
+      "z": 25.757713,
+      "yaw": 345.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "Crocodilian"
+    },
+    {
+      "x": 76.0,
+      "y": -7.0,
+      "z": 600.0001,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_SeaFortress",
+      "file": "ShipGraveyard_SeaFortress_D.json",
+      "version": "(D)",
+      "label": "Crocodilian"
+    },
+    {
+      "x": -505.64178,
+      "y": 775.7115,
+      "z": 1190.0,
+      "yaw": 320.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "Crocodilian"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "鳄鱼人",
+        "translation_key": "Text_DesignData_Monster_Monster_Crocodilian",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.5,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

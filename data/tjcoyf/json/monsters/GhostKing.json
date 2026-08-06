@@ -1,0 +1,98 @@
+{
+  "name": "GhostKing",
+  "translation": "鬼王",
+  "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -25.0,
+      "yaw": 180.0,
+      "map": "Crypt_DarkRitualRoom_01",
+      "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+      "version": "",
+      "label": "GhostKing",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "sub_group_parent": "BP_GameObjectLinker_C_0",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "DarkRitualRoom_04",
+      "file": "DarkRitualRoom_04_HR_D.json",
+      "version": "",
+      "label": "GhostKing",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_GameObjectLinker_C_0",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        }
+      ],
+      "parent_pool_size": 1
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "鬼王",
+        "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "鬼王",
+        "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

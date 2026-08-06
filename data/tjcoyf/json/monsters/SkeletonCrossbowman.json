@@ -1,0 +1,541 @@
+{
+  "name": "SkeletonCrossbowman",
+  "translation": "骷髅弩手",
+  "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+  "coords": [
+    {
+      "x": -548.0,
+      "y": 574.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": 572.0,
+      "y": -586.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        }
+      ]
+    },
+    {
+      "x": 327.0,
+      "y": 1120.000006,
+      "z": 0.0001,
+      "yaw": 180.0,
+      "map": "Crypt_AltarRoomAB",
+      "file": "Crypt_AltarRoomAB_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        }
+      ]
+    },
+    {
+      "x": -100.0,
+      "y": 490.0,
+      "z": -1600.0,
+      "yaw": 270.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_D.json",
+      "version": "(D)",
+      "label": "SkeletonCrossbowman",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "sub_group_parent": "BP_GameObjectLinker_C_9",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "Text_DesignData_Item_Item_GrimveilCloak_5001",
+          "name": "阴森帷幕披风"
+        }
+      ],
+      "parent_pool_size": 6,
+      "variant_count": 11,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "",
+          "name": "金矿"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "",
+          "name": "GrimveilCloak"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        }
+      ]
+    },
+    {
+      "x": 485.0,
+      "y": 105.00001,
+      "z": -1600.0,
+      "yaw": 180.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_D.json",
+      "version": "(D)",
+      "label": "SkeletonCrossbowman",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "sub_group_parent": "BP_GameObjectLinker_C_9",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "Text_DesignData_Item_Item_GrimveilCloak_5001",
+          "name": "阴森帷幕披风"
+        }
+      ],
+      "parent_pool_size": 6,
+      "variant_count": 11,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "",
+          "name": "金矿"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "",
+          "name": "GrimveilCloak"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        }
+      ]
+    },
+    {
+      "x": -485.0,
+      "y": -50.00003000000001,
+      "z": -1600.0,
+      "yaw": 0.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_D.json",
+      "version": "(D)",
+      "label": "SkeletonCrossbowman",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "sub_group_parent": "BP_GameObjectLinker_C_9",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "Text_DesignData_Item_Item_GrimveilCloak_5001",
+          "name": "阴森帷幕披风"
+        }
+      ],
+      "parent_pool_size": 6,
+      "variant_count": 11,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "",
+          "name": "金矿"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "",
+          "name": "GrimveilCloak"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        }
+      ]
+    },
+    {
+      "x": -94.99998,
+      "y": -490.0,
+      "z": -1600.0,
+      "yaw": 90.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_D.json",
+      "version": "(D)",
+      "label": "SkeletonCrossbowman",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "sub_group_parent": "BP_GameObjectLinker_C_9",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "Text_DesignData_Item_Item_GrimveilCloak_5001",
+          "name": "阴森帷幕披风"
+        }
+      ],
+      "parent_pool_size": 6,
+      "variant_count": 11,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "",
+          "name": "金矿"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "",
+          "name": "GrimveilCloak"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        }
+      ]
+    },
+    {
+      "x": 495.0,
+      "y": 100.00002,
+      "z": -1600.0,
+      "yaw": 180.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_D.json",
+      "version": "(D)",
+      "label": "SkeletonCrossbowman",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "sub_group_parent": "BP_GameObjectLinker_C_11",
+      "sub_pool_size": 7,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Item_Item_GrimveilCloak_5001",
+          "name": "阴森帷幕披风"
+        }
+      ],
+      "parent_pool_size": 6,
+      "variant_count": 11,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "",
+          "name": "金矿"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "",
+          "name": "GrimveilCloak"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        }
+      ]
+    },
+    {
+      "x": -1400.9872,
+      "y": -698.094,
+      "z": 600.0002,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman"
+    },
+    {
+      "x": 790.0,
+      "y": 1435.0,
+      "z": 600.0002,
+      "yaw": 270.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman"
+    },
+    {
+      "x": -556.28156,
+      "y": -497.00272,
+      "z": 590.0005,
+      "yaw": 90.0,
+      "map": "Crypt_Ramparts",
+      "file": "Crypt_Ramparts_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman"
+    },
+    {
+      "x": 1260.0,
+      "y": -1275.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman"
+    },
+    {
+      "x": -450.0,
+      "y": 0.0,
+      "z": 550.0,
+      "yaw": 0.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman"
+    },
+    {
+      "x": 450.0,
+      "y": 0.0,
+      "z": 550.0,
+      "yaw": 180.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "SkeletonCrossbowman"
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "骷髅弩手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "骷髅弩手",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

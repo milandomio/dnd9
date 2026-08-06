@@ -1,0 +1,45 @@
+{
+  "map_base": "Firedeep_MagmaFalls_Elevator",
+  "entities": [
+    {
+      "name": "AkPostEventSequencerSection",
+      "translation": "音效序列器",
+      "translation_key": "df5.hardcoded.AkPostEventSequencerSection",
+      "type": "decoration",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "音效序列器",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "AkPostEventSequencerTrack",
+      "translation": "音效序列轨道",
+      "translation_key": "df5.hardcoded.AkPostEventSequencerTrack",
+      "type": "decoration",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "音效序列轨道",
+          "group_parent": "",
+          "sub_group_parent": ""
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

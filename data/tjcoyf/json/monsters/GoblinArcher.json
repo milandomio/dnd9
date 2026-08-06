@@ -1,0 +1,124 @@
+{
+  "name": "GoblinArcher",
+  "translation": "哥布林弓手",
+  "translation_key": "Text_DesignData_Monster_Monster_GoblinArcher",
+  "coords": [
+    {
+      "x": -1015.0,
+      "y": 225.0,
+      "z": 244.0,
+      "yaw": 0.0,
+      "map": "CaveTown",
+      "file": "CaveTown_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 641.72485,
+      "y": -342.25842,
+      "z": 0.0,
+      "yaw": 80.0,
+      "map": "Cave_Valley",
+      "file": "Cave_Valley_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 38.99999799999998,
+      "y": -191.0,
+      "z": -11.767966000000001,
+      "yaw": 180.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GoblinArcher",
+          "name": "哥布林弓手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GoblinWarrior",
+          "name": "哥布林战士"
+        }
+      ]
+    },
+    {
+      "x": 640.6413,
+      "y": -349.9334,
+      "z": -400.0,
+      "yaw": 70.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 1228.2703,
+      "y": -393.05533,
+      "z": -400.0,
+      "yaw": 70.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 1360.0,
+      "y": 252.85301,
+      "z": -384.10046,
+      "yaw": 160.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": -803.068,
+      "y": -703.3091,
+      "z": -539.9999,
+      "yaw": 65.0,
+      "map": "GoblinMineCenter_01",
+      "file": "GoblinMineCenter_01_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 120.0,
+      "y": 1040.0,
+      "z": 200.0001,
+      "yaw": 350.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    },
+    {
+      "x": 1379.1334,
+      "y": 159.2963,
+      "z": -399.9999,
+      "yaw": 230.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinArcher"
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "哥布林弓手",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinArcher",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}
