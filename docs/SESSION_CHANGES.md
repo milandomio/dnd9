@@ -2,6 +2,22 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-08-06
+
+### docs: 登记生成概率未校验楼层登记的 Bug
+
+- **改动原因**：用户反馈 `SoulDevotedFolio` 页面「生成概率 普通 0.05%」存疑——游戏里根本没有 2002 的生成登记。核查确认：爆率 100% 正确（`lootdrop_groups` 对 2002 登记了 `ID_Lootdrop_Quest_FlameButterfly → ID_Droprate_UniqueMonsterDrop`），但生成概率存在一致性缺陷，需先登记留档。
+- **变更文件**：`docs/SPAWN_RATE_GRADE_MISMATCH_ISSUE.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：FlameButterfly 坐标全部落在 `Firedeep_*` 模块（分组 FireDeep），游戏 `Id_Dungeon_FloorRule_Firedeep.json` 的 `DefaultDungeonGrade=2002`；但其 spawner（`Id_Spawner_Monster_FlameButterfly.json`）的 `DungeonGrades` 白名单（0.05 那条 = `[2001,2011,2012,2021,2022,2023,2031,3001,3002,…]`）**不含 2002**，普通模式唯独缺 suffix=2。根因：生成概率按「模式聚合、与楼层无关」（`drop_rate.py:238-275` 只按 grade 千位分模式），坐标归属按「map_base → 分组」（`lootdrop_builder.py:798-839`），两者间缺少用 spawner `dungeon_grades` 对分组对应楼层（FireDeep→2002）的二次校验。修复方向记录为待评估（先全量交叉核对，再决定置 0/剔除或补数据）。
+- **验证**：未改生产代码；`git diff --check` 通过。
+
+### fix: 全 10 种语言页面双向补全 hreflang 并加 x-default
+
+- **改动原因**：用户反馈 en 系列带语言前缀的页面「几乎不被 Google 收录」。排查确认根因是 hreflang 信号单向且缺 `x-default`：`ssg.mjs` 生成默认语言（zh-Hans）页面时以 `includeAlternates=false` 跳过 hreflang（实测 zh-Hans 列表/详情页 `hreflang=0`），而非默认语言页面却注入全部 10 个 alternate；加之 `alternateLinks` 未输出 `x-default`，Google 无法把 10 个语言版本确认成互认的 hreflang 簇，于是把 en 等变体当作主语言的翻译近重复而不单独收录。另确认详情页（如 `/lootdrops/FlameButterfly/`）为 JS 空壳（`__SSR_DATA__=0`、body 正文仅 23 字节），加剧搜索引擎对 133k 页面的渲染缺失。
+- **变更文件**：`web/scripts/ssg.mjs`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`alternateLinks()` 在 10 个 `<link rel="alternate" hreflang="{lang}">` 之后追加 `hreflang="x-default"`，指向默认语言版本 `localizedPath(path, DEFAULT_LANG)`；主循环为默认语言生成页面时 `localizePage(..., includeAlternates=true)`，使 10 种语言的每个页面都输出一致的 11 条 hreflang（10 语言 + x-default），形成双向互认的完整 hreflang 簇；sitemap 生成处每个 `<url>` 的 `alts` 同样追加 `x-default` 指向 `/zh-Hans/…`，让 HTML 与 10 个 `sitemap-{lang}.xml` 保持一致（根 `sitemap.xml` 为合并结果自动同步）。
+- **验证**：`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 错误，20 条既有 warning）均通过；quick SSG 构建成功（3067 路由、12007 本地化 HTML、`sitemap.xml` 13340 URL）；核实 10 种语言的 `/props/LavaMushroom/`、`/lootdrops/` 页面 11 条 hreflang 一致（zh-Hans 由 0 → 11），`sitemap-en.xml` 首块含 `x-default`；`BASE_URL=http://localhost:8080 npm run test:i18n` 通过（27/27）；`git diff --check` 通过。真机收录效果需部署后 Google 重新抓取生效。
+
 ## 2026-08-05
 
 ### docs: 优化测试通过后的 Git 本地提交流程
