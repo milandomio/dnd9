@@ -151,6 +151,12 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
         else:
             filtered = dict(all_translations)
         filtered.update(hardcoded_locale_entries(lang, used_keys))
+        # Apply rare module translation key overrides
+        from config import RARE_MODULE_TRANSLATIONS
+
+        for tk, translations in RARE_MODULE_TRANSLATIONS.items():
+            if tk in used_keys:
+                filtered[tk] = translations.get(lang, translations.get("zh-Hans", tk))
         # Re-apply SuperHoard after hardcoded overrides because it shares the same synthetic key.
         sh_val = SUPERHOARD_I18N.get(lang) or SUPERHOARD_I18N.get("zh-Hans")
         if sh_val:

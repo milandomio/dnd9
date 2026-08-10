@@ -914,6 +914,69 @@ SUPERHOARD_I18N: dict[str, str] = {
     "ru": "Супер Гора Сокровищ",
 }
 
+RARE_MODULE_TRANSLATIONS: dict[str, dict[str, str]] = {
+    "Text_DesignData_Dungeon_DungeonModule_BlindfallPit": {
+        "zh-Hans": "盲坑",
+        "zh-Hant": "盲坑",
+        "en": "Blindfall Pit",
+        "de": "Fackelgrab",
+        "es": "Foso sin Fondo",
+        "fr": "Fosse de la Chute Aveugle",
+        "ja": "盲目の奈落",
+        "ko": "미지의 구덩이",
+        "pt-BR": "Poço da Queda Cega",
+        "ru": "Яма Слепоты",
+    },
+    "Text_DesignData_Dungeon_DungeonModule_LightlessChamber_01": {
+        "zh-Hans": "无光密室",
+        "zh-Hant": "無光密室",
+        "en": "Lightless Chamber",
+        "de": "Finster-Kammer",
+        "es": "Cámara Lóbrega",
+        "fr": "Chambre Sans Lumière",
+        "ja": "光無き部屋",
+        "ko": "암흑의 방",
+        "pt-BR": "Câmara Sombria",
+        "ru": "Безсветная Камера",
+    },
+    "Text_DesignData_Dungeon_DungeonModule_LightlessTomb_01": {
+        "zh-Hans": "无光陵墓",
+        "zh-Hant": "無光陵墓",
+        "en": "Lightless Tomb",
+        "de": "Lichtloses Grab",
+        "es": "Tumba Lóbrega",
+        "fr": "Tombe Sans Lumière",
+        "ja": "光無き墓",
+        "ko": "암흑의 무덤",
+        "pt-BR": "Túmulo Sombrio",
+        "ru": "Безсветная Гробница",
+    },
+    "Text_DesignData_Dungeon_DungeonModule_MadCorridors": {
+        "zh-Hans": "失心长廊",
+        "zh-Hant": "失心長廊",
+        "en": "Mad Corridors",
+        "de": "Verrückte Korridore",
+        "es": "Corredores de la Demencia",
+        "fr": "Couloirs Démentiels",
+        "ja": "狂気の回廊",
+        "ko": "광기의 회랑",
+        "pt-BR": "Corredores Insanos",
+        "ru": "Безумные Коридоры",
+    },
+    "Text_DesignData_Dungeon_DungeonModule_TorchboundVault": {
+        "zh-Hans": "炬封宝库",
+        "zh-Hant": "炬封寶庫",
+        "en": "Torchbound Vault",
+        "de": "Fackelbann-Gewölbe",
+        "es": "Bóveda Torchbound",
+        "fr": "Chambre Forte des Torches",
+        "ja": "縛られたたいまつの保管庫",
+        "ko": "횃불 금고",
+        "pt-BR": "Cofre Sob a Tocha",
+        "ru": "Гробница Факелов",
+    },
+}
+
 
 def superhoard_translation_key(name: str) -> str | None:
     """Return synthetic i18n key if name is a SuperHoard* entity."""

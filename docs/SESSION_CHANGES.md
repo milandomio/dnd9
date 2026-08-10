@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-08-11
+
+### feat: 为 5 个 Crypt 盲盒模块注入十语言名称，替换游戏占位符 "?"
+
+- **改动原因**：DB 重建后详情页（如 `zh-Hans/items/GrimveilCloak/`）地图模块名显示为 `?`。核查确认游戏导出 `Localization/Game/{lang}/Game.json` 中 `Text_DesignData_Dungeon_DungeonModule_{BlindfallPit,LightlessChamber_01,LightlessTomb_01,MadCorridors,TorchboundVault}` 这 5 个稀有（盲盒）模块的官方翻译就是占位符 `?`——开发方有意隐藏其名字。作为攻略站不能向玩家只展示问号，故以人工翻译覆盖。
+- **变更文件**：`api/src/config.py`；`api/src/module_builder.py`；`api/src/locale_builder.py`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：新增 `RARE_MODULE_TRANSLATIONS: dict[str, dict[str, str]]` 提供 10 语言人工名（zh-Hans/zh-Hant 复用 dist 旧数据确认值：盲坑/无光密室/无光陵墓/失心长廊/炬封宝库，其余语言取自旧 locale 快照）；`locale_builder.py` 在 `hardcoded_locale_entries` 之后按 `translation_key ∈ used_keys` 覆盖 `filtered[tk]`；`module_builder.py` 生成 `dungeon_modules.json` 时 `translation` 字段优先取 `RARE_MODULE_TRANSLATIONS[translation_key]["zh-Hans"]`（作为默认语言 fallback），否则回落 `resolve_name()`。同时在 import 顶部加入 `RARE_MODULE_TRANSLATIONS`。
+- **验证**：`python -m py_compile api/src/config.py api/src/module_builder.py api/src/locale_builder.py` 通过；完整 `python main.py` 管道通过（26.32s，无 ERROR/Traceback，`[VALIDATE] all module images OK`）；`data/json/locale/zh-Hans.json` 中 5 个 key 输出为 `盲坑/无光密室/无光陵墓/失心长廊/炬封宝库`；`data/json/dungeon_modules.json` 对应模块 `translation` 同步正确；quick SSG 构建成功（3073 页、12061 本地化 HTML）；`vite preview` 8080 启动，`zh-Hans/items/GrimveilCloak/` HTTP 200，Playwright 实测页面标题改为「盲坑 0.84%」及「包含地图：盲坑」。
+
 ## 2026-08-06
 
 ### docs: 登记生成概率未校验楼层登记的 Bug

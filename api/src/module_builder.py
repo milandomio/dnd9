@@ -11,6 +11,7 @@ from config import (
     MODULE_DISPLAY_OVERRIDE,
     MODULE_NAME_OVERRIDE,
     MODULE_OFFSET_MAP,
+    RARE_MODULE_TRANSLATIONS,
     SUPERHOARD_I18N_KEY,
 )
 from translator import (
@@ -156,7 +157,10 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
         modules_map[r["module_name"]] = {
             "name": r["module_name"],
             "translation_key": translation_key,
-            "translation": resolve_name(r["module_name"], translation_key, "module"),
+            "translation": RARE_MODULE_TRANSLATIONS.get(translation_key, {}).get(
+                "zh-Hans",
+                resolve_name(r["module_name"], translation_key, "module"),
+            ),
             "group": r["module_group"],
             "size_x": sx,
             "size_y": sy,
