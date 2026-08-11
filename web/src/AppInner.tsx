@@ -6,7 +6,6 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { useTheme } from './hooks/useTheme';
-import { useDungeonModules } from './hooks/useDungeonModules';
 import HomePage from './pages/HomePage';
 import ListPage from './pages/ListPage';
 import DetailPage from './pages/DetailPage';
@@ -111,7 +110,6 @@ function LocalizedApp() {
 }
 
 export function AppInner() {
-  useDungeonModules(); // preload data version and module data before locale gate opens
   return (
     <LanguageProvider>
       <LocalizedApp />

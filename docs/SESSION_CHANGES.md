@@ -4,6 +4,13 @@
 
 ## 2026-08-11
 
+### fix: 延后普通页面的地图模块缓存预热
+
+- **改动原因**：线上首次加载时全局 HTML preload 与 App 根部预取会让 `dungeon_modules.json` 参与所有页面的关键网络竞争；该文件仍需由详情页及时加载，并继续通过 Service Worker 和模块级缓存跨页面复用。
+- **变更文件**：`web/src/hooks/useDungeonModules.ts`；`web/src/AppInner.tsx`；`web/src/components/NavBar.tsx`；`web/vite.config.ts`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`useDungeonModules({ defer: true })` 使用 `requestAnimationFrame` 后再以 timer 启动全局缓存预热，及时模式保持详情、探索和地图模块页面原有加载行为；删除 `AppInner` 无消费者的顶层 hook；NavBar 改为首屏提交后后台预热；Vite 全局仅保留 `meta.json` preload，删除 `dungeon_modules.json` preload，不改 Workbox `df5-data-json` StaleWhileRevalidate 缓存。
+- **验证**：`web` 下 `npm run format:check`、`npm run lint`（0 errors，20 条既有 warnings）、`npx tsc --noEmit`、quick SSG 构建、preview HTTP 200 通过；Playwright 确认首页 preload 仅包含 `meta.json`，模块请求由 `fetch` 在首屏绘制后发起，控制台无错误。
+
 ### fix: 稳定首屏布局并增加 CLS Playwright 基线
 
 - **改动原因**：CLS 基线显示详情页、lootdrop 页和移动端在首帧到数据稳定期间存在明显布局位移；根因包括 body 默认 8px margin、locale 整页 loading 替换、详情 loading 高度过小、导航自动换行以及动态识图预览无尺寸。

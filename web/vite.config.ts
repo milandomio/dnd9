@@ -29,10 +29,8 @@ export default defineConfig(() => {
           const ver = process.env.VITE_DATA_VERSION;
           const out = html.replaceAll(' crossorigin', '');
           if (!ver) return out;
-          const short = Number(ver).toString(36);
           const preloads = [
             `<link rel="preload" href="/data/json/meta.json" as="fetch" crossorigin="anonymous">`,
-            `<link rel="preload" href="/data/${short}/json/dungeon_modules.json" as="fetch" crossorigin="anonymous">`,
           ];
           return out.replace(
             '</title>',
