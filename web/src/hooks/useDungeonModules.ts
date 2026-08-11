@@ -41,8 +41,9 @@ function fetchModules(version: string): Promise<Map<string, DungeonModule>> {
   return cachedPromise;
 }
 
-export function useDungeonModules() {
+export function useDungeonModules(options?: { defer?: boolean }) {
   const dataVersion = useDataVersion();
+  const defer = options?.defer ?? false;
   const [modules, setModules] = useState<Map<string, DungeonModule>>(
     () => cachedModules ?? new Map()
   );
@@ -55,11 +56,37 @@ export function useDungeonModules() {
       setLoading(false);
       return;
     }
-    fetchModules(dataVersion).then((mm) => {
-      setModules(mm);
-      setLoading(false);
-    });
-  }, [dataVersion]);
+
+    let active = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let frame: number | undefined;
+    const load = () => {
+      fetchModules(dataVersion)
+        .then((mm) => {
+          if (!active) return;
+          setModules(mm);
+          setLoading(false);
+        })
+        .catch(() => {
+          if (active) setLoading(false);
+        });
+    };
+
+    if (defer) {
+      // Let the current page paint before the global cache warm-up starts.
+      frame = window.requestAnimationFrame(() => {
+        timer = setTimeout(load, 0);
+      });
+    } else {
+      load();
+    }
+
+    return () => {
+      active = false;
+      if (frame !== undefined) window.cancelAnimationFrame(frame);
+      if (timer !== undefined) clearTimeout(timer);
+    };
+  }, [dataVersion, defer]);
 
   return { modules, loading };
 }

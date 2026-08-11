@@ -80,7 +80,7 @@ export default function NavBar() {
   const { dark, tokens, toggle } = useTheme();
   const { lang, withLangPrefix } = useLanguage();
   const { t, ut } = useLocale();
-  const { modules } = useDungeonModules();
+  const { modules } = useDungeonModules({ defer: true });
   const isDetailTemplate = useSSRData<boolean>('__detailTemplate') === true;
   const { index: searchIndex, loading: searchLoading } = useSearchIndex(lang);
   const contentPath = stripLangPrefix(location.pathname);
