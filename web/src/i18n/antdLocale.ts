@@ -1,5 +1,4 @@
 import type { Locale } from 'antd/es/locale';
-import { useEffect, useState } from 'react';
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import deDE from 'antd/locale/de_DE';
@@ -28,11 +27,5 @@ const ANTD_LOCALE_MAP: Record<SupportedLang, Locale> = {
 
 export function useAntdLocale(): Locale {
   const { lang } = useLanguage();
-  const [locale, setLocale] = useState<Locale>(ANTD_LOCALE_MAP[lang] ?? zhCN);
-
-  useEffect(() => {
-    setLocale(ANTD_LOCALE_MAP[lang] ?? zhCN);
-  }, [lang]);
-
-  return locale;
+  return ANTD_LOCALE_MAP[lang] ?? zhCN;
 }

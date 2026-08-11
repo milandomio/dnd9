@@ -724,9 +724,27 @@ export default function LootdropDetailPage({
     return (
       <div
         aria-busy="true"
-        style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}
+        style={{
+          minHeight: '60vh',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
+          alignItems: 'stretch',
+          color: tokens.muted,
+        }}
       >
-        {ut('ui.common.loading')}
+        <div style={{ height: 38, width: 'min(520px, 85%)' }} />
+        <div style={{ height: 32, width: 'min(760px, 100%)' }} />
+        <div
+          style={{
+            minHeight: 360,
+            aspectRatio: '16 / 9',
+            maxWidth: '100%',
+            background: tokens.surface,
+            borderRadius: 6,
+          }}
+        />
+        <span style={{ textAlign: 'center' }}>{ut('ui.common.loading')}</span>
       </div>
     );
 

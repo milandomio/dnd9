@@ -83,24 +83,7 @@ function AppRoutes() {
 /** Shared page content (routes only, no router wrapper). */
 function LocalizedApp() {
   const { tokens } = useTheme();
-  const { localeReady, ut } = useLocale();
-
-  if (!localeReady) {
-    return (
-      <div
-        style={{
-          minHeight: '100vh',
-          padding: '16px',
-          background: tokens.bg,
-          boxSizing: 'border-box',
-          color: tokens.text,
-          textAlign: 'center',
-        }}
-      >
-        {ut('ui.common.loading')}
-      </div>
-    );
-  }
+  const { localeReady } = useLocale();
 
   return (
     <AntdLocaleProvider>
@@ -118,7 +101,9 @@ function LocalizedApp() {
         <OfflineDetector />
         <InstallPrompt />
         <NavBar />
-        <AppRoutes />
+        <div aria-busy={!localeReady}>
+          <AppRoutes />
+        </div>
         <Footer />
       </div>
     </AntdLocaleProvider>

@@ -61,7 +61,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     );
     document.documentElement.style.background = bg;
     document.body.style.background = bg;
-    document.body.style.margin = '0';
   }, [dark]);
 
   return (

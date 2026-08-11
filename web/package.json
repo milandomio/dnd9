@@ -18,7 +18,8 @@
     "check": "npm run lint && npm run format:check && npm run typecheck",
     "test": "npm run check",
     "test:i18n": "node tests/i18n.mjs",
-    "test:map-recognition": "node tests/map-recognition-consent.mjs"
+    "test:map-recognition": "node tests/map-recognition-consent.mjs",
+    "test:cls": "node tests/cls.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.0",
