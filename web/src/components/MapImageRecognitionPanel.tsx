@@ -617,7 +617,8 @@ export default function MapImageRecognitionPanel({
         onClick={() => pasteAreaRef.current?.focus()}
         onPaste={handlePaste}
         style={{
-          minHeight: previewUrl ? undefined : 84,
+          minHeight: 180,
+          aspectRatio: '16 / 9',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -636,9 +637,12 @@ export default function MapImageRecognitionPanel({
           <img
             src={previewUrl}
             alt={ut('ui.map_recognition.preview_alt')}
+            width={620}
+            height={349}
             style={{
               display: 'block',
               width: '100%',
+              height: '100%',
               maxHeight: 460,
               objectFit: 'contain',
             }}

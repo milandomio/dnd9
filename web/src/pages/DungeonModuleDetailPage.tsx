@@ -107,13 +107,41 @@ export default function DungeonModuleDetailPage() {
 
   if (loading)
     return (
-      <div style={{ textAlign: 'center', color: tokens.muted, marginTop: 100 }}>
-        {ut('ui.common.loading')}
+      <div
+        aria-busy="true"
+        style={{
+          minHeight: '60vh',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
+          color: tokens.muted,
+        }}
+      >
+        <div style={{ height: 38, width: 'min(520px, 85%)' }} />
+        <div
+          style={{
+            minHeight: 360,
+            aspectRatio: '16 / 9',
+            maxWidth: '100%',
+            background: tokens.surface,
+            borderRadius: 6,
+          }}
+        />
+        <span>{ut('ui.common.loading')}</span>
       </div>
     );
   if (!mod)
     return (
-      <div style={{ textAlign: 'center', color: '#ff6b6b', marginTop: 100 }}>
+      <div
+        aria-busy="true"
+        style={{
+          minHeight: '60vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: tokens.muted,
+        }}
+      >
         {ut('ui.common.loading')}
       </div>
     );

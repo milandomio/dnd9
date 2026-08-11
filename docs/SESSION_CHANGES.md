@@ -4,6 +4,13 @@
 
 ## 2026-08-11
 
+### fix: 稳定首屏布局并增加 CLS Playwright 基线
+
+- **改动原因**：CLS 基线显示详情页、lootdrop 页和移动端在首帧到数据稳定期间存在明显布局位移；根因包括 body 默认 8px margin、locale 整页 loading 替换、详情 loading 高度过小、导航自动换行以及动态识图预览无尺寸。
+- **变更文件**：`web/index.html`、`web/src/hooks/useTheme.tsx`、`web/src/AppInner.tsx`、`web/src/i18n/antdLocale.ts`、`web/src/pages/DetailPage.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`web/src/pages/DungeonModuleDetailPage.tsx`、`web/src/components/NavBar.tsx`、`web/src/components/MapImageRecognitionPanel.tsx`；新增 `web/tests/cls.mjs` 并在 `web/package.json` 增加 `test:cls`；同步修正 `web/tests/map-recognition-consent.mjs` 对 Ant Design 按钮文本的空格容错。
+- **关键逻辑/映射关系**：`index.html` 首屏直接 reset html/body/root margin、padding 和 box sizing；主题 effect 不再负责移除 body margin；locale 未完成时保留 AppRoutes/NavBar/Footer 外壳，仅以 `aria-busy` 标记页面；AntD locale 按当前语言同步派生；详情和模块详情 loading 分支保留 60vh 与标题/地图比例骨架；详情模板不再删除入口 reset/style，确保静态 placeholder 首帧也具备相同的 reset；NavBar 增加稳定最小高度和移动端明确纵向布局；识图预览增加 16:9 容器、宽高属性和 object-fit。
+- **验证**：`npm run format:check`、`npm run lint`（0 errors，既有 warnings）、`npx tsc --noEmit`、`npm run build`、preview HTTP 200、`BASE_URL=http://localhost:8080 npm run test:i18n`（27/27）、`BASE_URL=http://localhost:8080 npm run test:map-recognition`（通过）、`BASE_URL=http://localhost:8080 npm run test:cls`（27 cases，13 cases over 0.1 告警，脚本默认非硬失败）。CLS 归因显示剩余主要位移来自详情异步内容/引用坐标与 Footer mounted/unmounted，而非 body margin。
+
 ### feat: 为 5 个 Crypt 盲盒模块注入十语言名称，替换游戏占位符 "?"
 
 - **改动原因**：DB 重建后详情页（如 `zh-Hans/items/GrimveilCloak/`）地图模块名显示为 `?`。核查确认游戏导出 `Localization/Game/{lang}/Game.json` 中 `Text_DesignData_Dungeon_DungeonModule_{BlindfallPit,LightlessChamber_01,LightlessTomb_01,MadCorridors,TorchboundVault}` 这 5 个稀有（盲盒）模块的官方翻译就是占位符 `?`——开发方有意隐藏其名字。作为攻略站不能向玩家只展示问号，故以人工翻译覆盖。

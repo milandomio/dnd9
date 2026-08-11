@@ -45,7 +45,7 @@ async function main() {
     }
 
     const requestsBeforeCancel = recognitionRequests.length;
-    await consentDialog.getByRole('button', { name: '取消' }).click();
+    await consentDialog.getByRole('button', { name: /取\s*消/ }).click();
     if (await toggle.isChecked()) throw new Error('cancel enabled recognition');
     if (recognitionRequests.length !== requestsBeforeCancel) {
       throw new Error(

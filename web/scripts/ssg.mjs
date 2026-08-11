@@ -996,12 +996,10 @@ function detailPlaceholder(title, modules, localeDict, lang) {
 }
 
 function detailTemplate() {
-  return template
-    .replace(/\s*<style>[\s\S]*?<\/style>/, '')
-    .replace(
-      /\s*<link rel="preload" href="\/data\/(?:[^"/]+\/json\/(?:dungeon_modules|index|search_index)\.json)" as="fetch" crossorigin="anonymous">/g,
-      ''
-    );
+  return template.replace(
+    /\s*<link rel="preload" href="\/data\/(?:[^"/]+\/json\/(?:dungeon_modules|index|search_index)\.json)" as="fetch" crossorigin="anonymous">/g,
+    ''
+  );
 }
 
 function createTemplateDetailPage(route, routeData, lang, localeDict) {

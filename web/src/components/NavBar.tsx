@@ -246,7 +246,33 @@ export default function NavBar() {
   return (
     <>
       <DataVersionLoader />
+      <style>{`
+        .navbar-shell {
+          min-height: 58px;
+        }
+        .navbar-search-container {
+          flex: 0 1 360px !important;
+          width: min(360px, 100%);
+        }
+        .navbar-actions {
+          min-height: 32px;
+        }
+        @media (max-width: 600px) {
+          .navbar-shell {
+            align-items: stretch !important;
+            flex-direction: column;
+          }
+          .navbar-search-container {
+            flex-basis: 40px !important;
+            width: 100%;
+          }
+          .navbar-actions {
+            justify-content: flex-end;
+          }
+        }
+      `}</style>
       <div
+        className="navbar-shell"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -263,6 +289,7 @@ export default function NavBar() {
       >
         <div
           ref={searchRef}
+          className="navbar-search-container"
           style={{ position: 'relative', flex: '0 0 360px', minWidth: 0 }}
         >
           <Input
@@ -417,6 +444,7 @@ export default function NavBar() {
         </div>
 
         <div
+          className="navbar-actions"
           style={{
             display: 'flex',
             alignItems: 'center',

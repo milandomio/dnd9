@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Typography } from 'antd';
 import type {
   ItemEntity,
   MonsterEntity,
@@ -241,7 +240,29 @@ export default function DetailPage() {
   const routeName = name ? decodeURIComponent(name) : '';
   if (!entity || entity.name !== routeName)
     return (
-      <Typography.Text type="danger">{ut('ui.common.loading')}</Typography.Text>
+      <div
+        aria-busy="true"
+        style={{
+          minHeight: '60vh',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
+          color: tokens.muted,
+        }}
+      >
+        <div style={{ height: 38, width: 'min(420px, 80%)' }} />
+        <div style={{ height: 32, width: 'min(760px, 100%)' }} />
+        <div
+          style={{
+            minHeight: 360,
+            aspectRatio: '16 / 9',
+            maxWidth: '100%',
+            background: tokens.surface,
+            borderRadius: 6,
+          }}
+        />
+        <span>{ut('ui.common.loading')}</span>
+      </div>
     );
 
   const entityLabel = t(

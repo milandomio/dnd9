@@ -17,6 +17,22 @@
     <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
     <link rel="apple-touch-icon" href="/icons/icon-192-v2.png?v=3" />
     <style>
+      html,
+      body,
+      #root {
+        margin: 0;
+        padding: 0;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        min-height: 100%;
+        background: #2c2c2c;
+      }
       @media (max-width: 950px) {
         [style*='repeat(4, 1fr)'] {
           grid-template-columns: repeat(3, 1fr) !important;
