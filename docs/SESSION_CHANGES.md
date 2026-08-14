@@ -4,12 +4,12 @@
 
 ## 2026-08-15
 
-### chore: 将指令文件改造为多 agent 兼容的 agent.md
+### chore: 将指令文件改造为多 agent 兼容的 AGENTS.md 规范源
 
-- **改动原因**：原 `CLAUDE.md` 仅 Claude 自动读取；改为以 `agent.md` 作为统一的规范源文件，使各类 agent（Claude/Codex/Cursor/Gemini 等）都能读取同一份项目指令，避免多份重复维护。
-- **变更文件**：新增 `agent.md`（规范源，内容与原文一致且措辞保持 agent 无关）；`CLAUDE.md` 由普通文件改为指向 `agent.md` 的软链接；新增 `claude.md` 软链接指向 `agent.md`；`docs/SESSION_CHANGES.md`。
-- **关键逻辑/映射关系**：单一事实源 = `agent.md`；`CLAUDE.md -> agent.md` 保证 Claude 仍自动加载原有指令，`claude.md -> agent.md` 提供小写别名；原文内容本身已是 agent 无关的项目规则，无需改写。
-- **验证**：`ls -la agent.md CLAUDE.md claude.md` 确认两者均为指向 `agent.md` 的软链接；`git status` 显示 `CLAUDE.md` 为 typechange（symlink），`agent.md`/`claude.md` 为 new file；`readlink` 均解析为 `agent.md`。
+- **改动原因**：原 `CLAUDE.md` 仅 Claude 自动读取；改为以 `AGENTS.md` 作为统一的规范源文件（业界通用约定），使各类 agent（Claude/Codex/Cursor/Gemini 等）都能读取同一份项目指令，避免多份重复维护。
+- **变更文件**：新增 `AGENTS.md`（规范源，内容与原文一致且措辞保持 agent 无关）；`CLAUDE.md` 由普通文件改为指向 `AGENTS.md` 的软链接；新增 `claude.md` 软链接指向 `AGENTS.md`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：单一事实源 = `AGENTS.md`；`CLAUDE.md -> AGENTS.md` 保证 Claude 仍自动加载原有指令，`claude.md -> AGENTS.md` 提供小写别名；原文内容本身已是 agent 无关的项目规则，无需改写。
+- **验证**：`ls -la AGENTS.md CLAUDE.md claude.md` 确认两者均为指向 `AGENTS.md` 的软链接；`git status` 显示 `CLAUDE.md` 为 typechange（symlink），`AGENTS.md`/`claude.md` 为 new file；`readlink` 均解析为 `AGENTS.md`。
 
 ## 2026-08-11
 
