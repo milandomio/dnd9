@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-08-17
+
+### chore: 删除错误的 ShipGraveyard_FloatingIsland 地图图片
+
+- **改动原因**：`ShipGraveyard_FloatingIsland` 未出现在两个 7x7 Layout（`ShipGraveyard_7x7_01_HR_P`/`7x7_02_N_P`）的 95 个 LevelStreaming 条目中，是未被 7x7 布局实例化的模块，其地图图片内容错误，前端不应再展示。
+- **变更文件**：删除 `api/src/img/ShipGraveyard_FloatingIsland.webp`（git 跟踪源文件）；同步清理交付目录副本 `data/img/ShipGraveyard_FloatingIsland.webp`（data/ 为可再生交付目录，不入 git）。
+- **关键逻辑/映射关系**：删除源文件后，下次管道 `_deliver` 不再复制该图；`module_builder.py:_resolve_img` 匹配不到 → `has_img=false` → 回退 `RareModule_1x1` 占位图；`main.py:_validate_images` 兜底将缺失 img_name 替换为占位图。
+- **验证**：`git ls-files` 确认源文件已从版本库移除；`data/img/` 残留已清理；`RareModule_1x1.webp` 占位图存在。
+
 ## 2026-08-15
 
 ### chore: 将指令文件改造为多 agent 兼容的 AGENTS.md 规范源
