@@ -1199,6 +1199,29 @@ for (const r of routes) {
 }
 console.log(`[ssg] legacy redirects generated: ${legacyRedirectCount}`);
 
+// ---- step 5d: Cloudflare Pages 301 redirects for non-language legacy URLs ----
+// Non-language URLs (e.g. /props, /props/LavaMushroom, /) must 301 to their
+// zh-Hans counterparts. Cloudflare Pages consults _redirects before static
+// files, so these rules return real 301 instead of the 200 meta-refresh pages.
+const redirectRules = [];
+redirectRules.push(`/ /${DEFAULT_LANG}/ 301`);
+for (const r of routes) {
+  if (!r.redirect) continue;
+  const legacyPath = r.path.replace(new RegExp(`^/${DEFAULT_LANG}`), '');
+  redirectRules.push(`${legacyPath} ${r.redirect} 301`);
+  redirectRules.push(`${legacyPath}/ ${r.redirect} 301`);
+}
+for (const section of [...PAGES, ...SINGLE]) {
+  redirectRules.push(`/${section} /${DEFAULT_LANG}/${section}/ 301`);
+  redirectRules.push(`/${section}/* /${DEFAULT_LANG}/${section}/:splat 301`);
+}
+writeFileSync(
+  join(DIST, '_redirects'),
+  `${redirectRules.join('\n')}\n`,
+  'utf-8'
+);
+console.log(`[ssg] _redirects generated: ${redirectRules.length} rules`);
+
 // ---- step 6: 404.html ----
 writeFileSync(join(DIST, '404.html'), template, 'utf-8');
 
