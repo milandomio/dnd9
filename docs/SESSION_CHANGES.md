@@ -4,6 +4,15 @@
 
 ## 2026-08-17
 
+### feat: 为无语言前缀 URL 生成 Cloudflare Pages 301 重定向（_redirects）
+
+- **改动原因**：无语言 URL（如 `/props`、`/props/LavaMushroom`、`/`）此前仅返回 HTTP 200 的 meta-refresh 客户端跳转页（step 5c），不是真 301；根路径 `/` 直接服务首页。需要在 Cloudflare Pages 上用 `_redirects` 提供真正的 301。网站地图（本地与线上）经验证已无无语言 URL，无需改动 sitemap 生成逻辑。
+- **变更文件**：`web/scripts/ssg.mjs`（新增 step 5d，生成 `web/dist/_redirects`，共 543 条规则）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`_redirects` 规则 = 根规则 `/ /zh-Hans/ 301` → 多变体 lootdrop 基底精确规则（对每个带 `r.redirect` 的路由生成带/不带尾斜杠两条，直达默认变体如 `/zh-Hans/lootdrops/GoldBangle1I_5001/`）→ 8 个 section（`items`/`monsters`/`props`/`lootdrops`/`explore`/`quest_items`/`quest_npc`/`dungeon_modules`）各一条静态规则 `/${section} /zh-Hans/${section}/ 301` 加一条通配 `/${section}/* /zh-Hans/${section}/:splat 301`。具体规则在前、通配在后，首条命中生效；总条数 543，低于 CF Pages 的 2000 静态 + 100 动态上限。CF Pages 在静态文件之前解析 `_redirects`，因此非语言 URL 返回真 301，本地 `vite preview` 不处理 `_redirects`，仍由 step 5c 的静态页兜底。
+- **验证**：`npx prettier --write scripts/ssg.mjs`、`node --check scripts/ssg.mjs` 通过；`npm run build` 成功（`_redirects generated: 543 rules`，sitemap 13400 URLs）；`dist/sitemap.xml` 无语言 `<loc>` 数量为 0 且不含裸根 URL；`npm test`（lint 0 errors / 20 既有 warnings、format:check、tsc --noEmit）通过；preview HTTP 200。注意：构建需用 Node 20（`~/.nvm/versions/node/v20.20.0/bin`），Node 22 的 `globalThis.navigator` getter-only 会导致 SSR bundle 报错。
+
+## 2026-08-17
+
 ### chore: 删除错误的 ShipGraveyard_FloatingIsland 地图图片
 
 - **改动原因**：`ShipGraveyard_FloatingIsland` 未出现在两个 7x7 Layout（`ShipGraveyard_7x7_01_HR_P`/`7x7_02_N_P`）的 95 个 LevelStreaming 条目中，是未被 7x7 布局实例化的模块，其地图图片内容错误，前端不应再展示。
