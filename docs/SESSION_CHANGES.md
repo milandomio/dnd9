@@ -1152,3 +1152,17 @@
 - **变更文件**：`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：删除 DB 后 `python main.py` 重新执行翻译、实体、模块、spawner、任务和爆率导入，并由交付阶段写入新的 `data/json/meta.json`；其中 `dataDate` 取运行当天系统日期，`seasonVersion` 固定为 `9`。
 - **验证**：完整冷重建管道通过；quick SSG 通过（3067 路由、15202 HTML、17011 文件），生产预览首页 HTTP 200。
+
+# 2026-08-21 会话修改记录
+
+## 同步游戏数据并重新生成数据库
+
+**改动原因**：运行同步脚本以获取最新游戏数据，删除旧数据库并重新生成以确保数据一致性，然后推送新生成的数据库到主分支
+
+**变更文件**：api/data/darkfindv5.db
+
+**关键逻辑/映射关系**：
+- 运行 ~/sync_fmod.sh 同步 FMOD Output 数据
+- 删除 api/data/darkfindv5.db
+- 运行 api/main.py 重新生成数据库和相关数据文件
+- 新生成的数据库包含更新的游戏数据（物品、怪物、道具、掉落等）
