@@ -1,0 +1,72 @@
+{
+  "name": "Emberwing",
+  "translation": "余烬之翼",
+  "translation_key": "Text_DesignData_Monster_Monster_Emberwing",
+  "coords": [
+    {
+      "x": -513.16986,
+      "y": -265.1314,
+      "z": 210.80829,
+      "yaw": 245.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": -586.70465,
+      "y": 393.10104,
+      "z": 14.359681,
+      "yaw": 265.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": 760.0,
+      "y": -490.0,
+      "z": 900.0,
+      "yaw": 145.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": -164.76007,
+      "y": -543.98004,
+      "z": 517.93085,
+      "yaw": 230.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": -60.0,
+      "y": 195.0,
+      "z": 165.0,
+      "yaw": 265.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "余烬之翼",
+        "translation_key": "Text_DesignData_Monster_Monster_Emberwing",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.0,
+          "普通": 10.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

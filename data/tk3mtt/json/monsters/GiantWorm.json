@@ -1,0 +1,42 @@
+{
+  "name": "GiantWorm",
+  "translation": "巨型蠕虫",
+  "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+  "coords": [
+    {
+      "x": -105.00002,
+      "y": 955.0,
+      "z": -899.6859,
+      "yaw": 270.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "GiantWorm"
+    },
+    {
+      "x": 41.00001,
+      "y": 390.0,
+      "z": -599.999899,
+      "yaw": 90.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_HR_D.json",
+      "version": "",
+      "label": "GiantWorm"
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "巨型蠕虫",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 25.0
+        }
+      }
+    ]
+  }
+}

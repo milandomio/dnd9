@@ -1,0 +1,122 @@
+{
+  "name": "LittleToad_Poison",
+  "translation": "小蛤蟆",
+  "translation_key": "Text_DesignData_Monster_Monster_LittleToad",
+  "coords": [
+    {
+      "x": 400.0,
+      "y": 200.0,
+      "z": -450.0,
+      "yaw": 0.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": 550.0,
+      "y": -300.0,
+      "z": -150.0,
+      "yaw": 95.0,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": -550.0,
+      "y": -350.0,
+      "z": -150.0,
+      "yaw": 90.0,
+      "map": "Cave_Altar_02",
+      "file": "Cave_Altar_02_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -219.68593,
+      "yaw": 0.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": 150.0,
+      "y": 1250.0,
+      "z": -350.0,
+      "yaw": 0.0,
+      "map": "Cave_Valley",
+      "file": "Cave_Valley_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": -300.0,
+      "y": -550.0,
+      "z": -350.0,
+      "yaw": 0.0,
+      "map": "Cave_Valley",
+      "file": "Cave_Valley_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": 800.0,
+      "y": 1150.0,
+      "z": -350.0,
+      "yaw": 0.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": -650.0,
+      "y": -50.0,
+      "z": -344.54056,
+      "yaw": 0.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": -900.0,
+      "y": 600.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    },
+    {
+      "x": -150.0,
+      "y": 50.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "LittleToad_Poison"
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "小蛤蟆",
+        "translation_key": "Text_DesignData_Monster_Monster_LittleToad",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.7111,
+          "普通": 2.615,
+          "豪客赛": 3.9722,
+          "逆袭赛": 3.9722
+        }
+      }
+    ]
+  }
+}
