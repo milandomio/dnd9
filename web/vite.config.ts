@@ -16,6 +16,9 @@ export default defineConfig(() => {
           output: { format: 'cjs' },
         },
       },
+      define: {
+        'global.navigator': {},
+      },
     };
   }
 

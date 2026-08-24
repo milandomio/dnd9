@@ -112,6 +112,20 @@ execSync(
   { cwd: WEB, stdio: 'pipe' }
 );
 
+// Fix: prevent error when setting globalThis.navigator (getter-only in some Node builds)
+const ssrBundlePath = join(SSR_OUT, 'ssr.cjs');
+try {
+  let content = readFileSync(ssrBundlePath, 'utf8');
+  // Replace the problematic assignment with a safe version
+const fixed = content.replace(
+     /globalThis\.navigator\s*=\s*\{ userAgent\s*:\s*"node" \};/g,
+     ''
+   );
+   writeFileSync(ssrBundlePath, fixed, 'utf8');
+} catch (e) {
+  console.warn('[ssg] failed to patch navigator assignment:', e);
+}
+
 // ---- step 3: load SSR renderer ----
 process.env.NODE_ENV = 'production';
 const ssrMod = await import(join(SSR_OUT, 'ssr.cjs'));
@@ -596,7 +610,7 @@ const SSR_SCRIPT_RE = /<script>window\.__SSR_DATA__=(.*?)<\/script>/s;
 function isTemplateDetailRoute(path) {
   const match = path.match(/^\/(?:[^/]+\/)?([^/]+)\/[^/]+$/);
   if (match && DETAIL_TEMPLATE_PAGES.has(match[1])) return true;
-  return /^\/(?:[^/]+\/)?dungeon_modules\/[^/]+\/[^/]+$/.test(path);
+  return false;
 }
 
 /**
