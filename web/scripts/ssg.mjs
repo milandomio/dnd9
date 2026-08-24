@@ -126,7 +126,6 @@ try {
   console.warn('[ssg] failed to patch navigator assignment:', e);
 }
 
-
 // ---- step 3: load SSR renderer ----
 process.env.NODE_ENV = 'production';
 const ssrMod = await import(join(SSR_OUT, 'ssr.cjs'));
