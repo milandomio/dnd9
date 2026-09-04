@@ -251,13 +251,21 @@ def extract_spawners(
     _sc_entries: list[tuple[int, dict]] = []  # (array_index, entry)
     _scene_comp_types = {"SphereComponent", "SceneComponent"}
 
-    # Build map from DefaultSceneRoot entry index → BP_GameSpawnerGroup_C name
+    # Build map from DefaultSceneRoot entry index → BP_GameSpawnerGroup_C name.
+    # Some map exports omit actor Properties.RootComponent, so also collect group
+    # actor names and resolve their DefaultSceneRoot through the component Outer.
     group_root_to_name: dict[int, str] = {}
+    group_actor_names: set[str] = set()
     # Build map for sub-group containers (ObjectLinker, TriggerBox) → name
     sub_group_root_to_name: dict[int, str] = {}
-    _sub_group_types = {"BP_GameObjectLinker_C", "BP_ObjectLinkWithTriggerBox_C"}
+    _sub_group_types = {"BP_GameObjectLinker_C", "BP_ObjectLinkWithTriggerBox_C", "BP_SubGroup_C"}
     for _idx, entry in enumerate(data):
+        if not isinstance(entry, dict):
+            continue
         t = entry.get("Type", "")
+        entry_name = entry.get("Name", "")
+        if t == "BP_GameSpawnerGroup_C" and entry_name:
+            group_actor_names.add(entry_name)
         props = entry.get("Properties", {}) or {}
         root = props.get("RootComponent", {}) or {}
         op = root.get("ObjectPath", "")
@@ -266,9 +274,23 @@ def extract_spawners(
             continue
         idx = int(m.group(1))
         if t == "BP_GameSpawnerGroup_C":
-            group_root_to_name[idx] = entry.get("Name", "")
+            group_root_to_name[idx] = entry_name
         elif t in _sub_group_types:
-            sub_group_root_to_name[idx] = entry.get("Name", "")
+            sub_group_root_to_name[idx] = entry_name
+
+    for idx, entry in enumerate(data):
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("Type") != "SceneComponent" or entry.get("Name") != "DefaultSceneRoot":
+            continue
+        outer_raw = entry.get("Outer", "")
+        if isinstance(outer_raw, dict):
+            outer_raw = outer_raw.get("ObjectName", "")
+        if not isinstance(outer_raw, str):
+            continue
+        actor_name = _extract_actor_name(outer_raw)
+        if actor_name in group_actor_names:
+            group_root_to_name.setdefault(idx, actor_name)
 
     for idx, entry in enumerate(data):
         if not isinstance(entry, dict):

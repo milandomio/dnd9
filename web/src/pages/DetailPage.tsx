@@ -1124,27 +1124,31 @@ export default function DetailPage() {
                           }
                           if (varPosCount > 0) {
                             if (names.length > 0) {
-                              if (varPosCount > 1) {
-                                parts.push(
-                                  `(${ut('ui.detail.pool_positions')
-                                    .replace('{count}', String(varPosCount))
-                                    .replace(
-                                      '{select}',
-                                      String(vc.variant_count)
-                                    )})`
-                                );
-                              } else {
-                                const nameStr = names
-                                  .map((entry) =>
-                                    t(entry.translation_key, entry.name)
-                                  )
-                                  .join(ut('ui.location.map_sep'));
-                                parts.push(
-                                  `(${nameStr}${ut('ui.detail.pool_select')
-                                    .replace('{count}', String(names.length))
-                                    .replace('{positions}', '1')})`
-                                );
-                              }
+                              const isCurrent = (
+                                entry: (typeof names)[number]
+                              ) =>
+                                (entity.translation_key &&
+                                  entry.translation_key ===
+                                    entity.translation_key) ||
+                                entry.name === entity.name;
+                              const orderedNames = [
+                                ...names.filter(isCurrent),
+                                ...names.filter((entry) => !isCurrent(entry)),
+                              ];
+                              const nameStr = orderedNames
+                                .map((entry) =>
+                                  t(entry.translation_key, entry.name)
+                                )
+                                .join(ut('ui.location.map_sep'));
+                              parts.push(
+                                `(${nameStr}${ut('ui.detail.pool_select')
+                                  .replace('{count}', String(names.length))
+                                  .replace('{positions}', '1')})${
+                                  varPosCount > 1
+                                    ? ` (${ut('ui.detail.position_count').replace('{count}', String(varPosCount))})`
+                                    : ''
+                                }`
+                              );
                             } else {
                               const groupPosCount = new Set(
                                 varCoords.map((c) => c.group_parent)

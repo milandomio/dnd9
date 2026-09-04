@@ -2,6 +2,19 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-09-04
+
+### fix: 修复生成组候选池显示与概率折算
+
+- **改动原因**：`Firedeep_StonepillarHall_D.json` 中的 BlazeToad 与 FlameBoar 通过缺少显式 `RootComponent` 的 `BP_GameSpawnerGroup_C_3` 共享生成组，旧解析无法建立 `group_parent`，导致页面不显示“2种选1”；同时多物理位置的具名候选池被错误显示为“点选”。
+- **变更文件**：`api/src/db/importers/spawner_coordinates.py`、`api/tests/test_spawner_coordinates.py`、`web/src/pages/DetailPage.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 当生成组 actor 没有 `Properties.RootComponent` 时，通过 `DefaultSceneRoot.Outer.ObjectName` 回填根索引；继续识别 `BP_SubGroup_C` 父级并沿 AttachParent 链累计坐标与旋转。
+  2. 共享 `group_parent` 的 BlazeToad/FlameBoar 聚合为 `variant_count=2` 和 `variant_names` 候选池，复用 Wraith 已有的具名候选池显示分支。
+  3. 具名候选池统一显示候选名称、`2种选1`，多物理点追加 `(2点)`；当前详情实体按 `translation_key` 置于候选列表第一位。
+  4. 现有 `variant_count` 概率折算保持按候选种类数均分，本例每个候选关联概率为 50%。
+- **验证**：删除旧 DB 后全量重建成功；API 38 项单测、后端 lint、前端 TypeScript 检查、目标文件 Prettier 和 `git diff --check` 通过；SSG 成功生成 3,089 个页面；本地预览中 BlazeToad 与 SearingSlime 均 HTTP 200，并显示 `(烈焰蛤蟆、烈焰野猪2种选1) (2点)`。
+
 ## 2026-08-17
 
 ### feat: 为无语言前缀 URL 生成 Cloudflare Pages 301 重定向（_redirects）

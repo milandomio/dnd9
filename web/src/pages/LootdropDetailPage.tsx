@@ -2072,30 +2072,34 @@ export default function LootdropDetailPage({
                                   0
                                 );
                                 if (names.length > 0) {
-                                  if (totalVarPos > 1) {
-                                    parts.push(
-                                      `(${ut('ui.detail.pool_positions')
-                                        .replace('{count}', String(totalVarPos))
-                                        .replace(
-                                          '{select}',
-                                          String(varDots[0].variant_count)
-                                        )})`
-                                    );
-                                  } else {
-                                    const nameStr = names
-                                      .map((entry) =>
-                                        t(entry.translation_key, entry.name)
-                                      )
-                                      .join(ut('ui.location.map_sep'));
-                                    parts.push(
-                                      `(${nameStr}${ut('ui.detail.pool_select')
-                                        .replace(
-                                          '{count}',
-                                          String(names.length)
-                                        )
-                                        .replace('{positions}', '1')})`
-                                    );
-                                  }
+                                  const currentName = m.name || m.entity_name;
+                                  const isCurrent = (
+                                    entry: (typeof names)[number]
+                                  ) =>
+                                    (m.translation_key &&
+                                      entry.translation_key ===
+                                        m.translation_key) ||
+                                    entry.name === currentName;
+                                  const orderedNames = [
+                                    ...names.filter(isCurrent),
+                                    ...names.filter(
+                                      (entry) => !isCurrent(entry)
+                                    ),
+                                  ];
+                                  const nameStr = orderedNames
+                                    .map((entry) =>
+                                      t(entry.translation_key, entry.name)
+                                    )
+                                    .join(ut('ui.location.map_sep'));
+                                  parts.push(
+                                    `(${nameStr}${ut('ui.detail.pool_select')
+                                      .replace('{count}', String(names.length))
+                                      .replace('{positions}', '1')})${
+                                      totalVarPos > 1
+                                        ? ` (${ut('ui.detail.position_count').replace('{count}', String(totalVarPos))})`
+                                        : ''
+                                    }`
+                                  );
                                 } else {
                                   parts.push(
                                     varGps.length === 1
