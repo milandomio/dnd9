@@ -4,11 +4,11 @@
 > 状态: **草案 / 待执行**（仅文档，未改代码）  
 > 基线: `api/logs/pipeline_20260727_005114.log`（热 DB，总 **98.18s**）  
 > 关联历史:
-> - `docs/PERF_LOOTDROPS_OPTIMIZATION.md`（已完成：compact / fuzzy / 去 variant_suffixes；当时 loot ~25s，现状回升）
-> - `docs/PERF_VARIANT_DROP_RATE_CACHE.md`（**废弃**，勿再按该文实施）
-> - `docs/plans/P005_coord_reference.md`（坐标 ref 已部分落地，仍有 `MAX_COORDS_PER_PAGE` 内联）
-> - `docs/CACHE_OPTIMIZATION_PLAN.md`（版本化路径 + SW 规则，大部分已实施）
-> - `docs/MODULES_LOAD_PERF.md`（详情页 `_modules` 内联，已修复加载链）
+> - `docs/archive/fixes/PERF_LOOTDROPS_OPTIMIZATION.md`（已完成：compact / fuzzy / 去 variant_suffixes；当时 loot ~25s，现状回升）
+> - `docs/archive/fixes/PERF_VARIANT_DROP_RATE_CACHE.md`（**废弃**，勿再按该文实施）
+> - `docs/archive/plans/P005_coord_reference.md`（坐标 ref 已部分落地，仍有 `MAX_COORDS_PER_PAGE` 内联）
+> - `docs/archive/fixes/CACHE_OPTIMIZATION_PLAN.md`（版本化路径 + SW 规则，大部分已实施）
+> - `docs/archive/fixes/MODULES_LOAD_PERF.md`（详情页 `_modules` 内联，已修复加载链）
 
 ---
 
@@ -281,7 +281,7 @@
 
 | 项 | 说明 |
 |----|------|
-| `PERF_VARIANT_DROP_RATE_CACHE.md` 内层 grade_data 微缓存 | 已废弃；结果级 `_variant_rate_cache` 已存在 |
+| `docs/archive/fixes/PERF_VARIANT_DROP_RATE_CACHE.md` 内层 grade_data 微缓存 | 已废弃；结果级 `_variant_rate_cache` 已存在 |
 | 为省时间改掉落公式 / 砍变体 | 属产品决策，不在本草案 |
 | 每次 dev 都全量管线压测 | dev 用 8090 HMR；验收用日志重定向的 `python main.py` |
 

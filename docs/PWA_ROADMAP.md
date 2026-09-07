@@ -72,7 +72,7 @@
 
 | 特性 | 原因 |
 |------|------|
-| `navigateFallback`（SW 级） | 会与 SSG NetworkFirst 缓存冲突，详见 `docs/PWA_SW_PLAN.md` |
+| `navigateFallback`（SW 级） | 会与 SSG NetworkFirst 缓存冲突，详见 `docs/archive/fixes/PWA_SW_PLAN.md`（已归档） |
 | Background Sync | 当前无离线提交需求 |
 | Push Notification | 无需推送 |
 | Periodic Sync | 数据更新由用户主动刷新触发 |

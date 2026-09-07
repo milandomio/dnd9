@@ -1,6 +1,6 @@
 # Agent Reference Archive
 
-从 `CLAUDE.md` 拆出的长期参考内容。主文档只保留高频执行规则，本文件保存低频但仍有价值的项目背景、页面结构、架构约定和历史索引。
+从 `AGENTS.md` 拆出的长期参考内容。主文档只保留高频执行规则，本文件保存低频但仍有价值的项目背景、页面结构、架构约定和历史索引。
 
 ## V4 参考
 
@@ -209,7 +209,7 @@ const [data, setData] = useState(
 4. **前端渲染**：`web/src/pages/DetailPage.tsx` — 按 `sub_group_parent` 分组，显示 `(entityName1、entityName2、...poolSize种选uniquePos · uniquePos点选1)`
 5. **最大同时存在**：包含该实体的 distinct linker 数量（每个 linker 只生成 1 个实体，不因多个 spawn 点而增加）
 
-详细分析见 `docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md`。
+详细分析见 `docs/archive/fixes/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md`（已归档）。
 
 ## PWA / Service Worker 缓存规则
 
@@ -261,29 +261,19 @@ git update-index --skip-worktree api/data/darkfindv5.db
 | `DEBUG_HYDRATION_WITH_PLAYWRIGHT.md` | 前端水合错误 Playwright 排错方案 |
 | `SESSION_CHANGES.md` | 当前会话修改记录（按日期追加） |
 | `SESSION_CHANGES_ARCHIVE.md` | 历史会话修改记录，只读 |
-| `ALIAS_ROTATION_OVERWRITE.md` | 别名旋转覆盖修复 |
-| `BACKEND_AUDIT_FIX_PLAN.md` | 后端审计修复计划 |
-| `CACHE_FIXES.md` | 缓存修复记录 |
-| `DROP_RATE_INVESTIGATION.md` | 爆率问题调查 |
-| `FIX_ARTIFACT_VARIANT_SWITCH.md` | 神器变体切换修复 |
-| `FIX_ENTITY_CLASS_REBUILD.md` | 实体分类重建修复 |
-| `FIX_PLAN_lootdrop_module_sort_by_score.md` | lootdrop 模块按 score 排序修复 |
-| `FIX_PLAN_lootdrop_ref_coord_filter.md` | lootdrop 引用坐标过滤修复 |
-| `FIX_SPAWN_RATE_PER_TYPE_AND_INLINE_COORDS.md` | 刷怪率按类型修复 + 内联坐标 |
-| `LOOTDROP_CHAIN.md` | 掉落链分析 |
-| `MODULES_LOAD_PERF.md` | 地图模块加载性能 |
-| `NAVIGATION_FETCH_BUG.md` | 导航 fetch 路径 Bug |
-| `P001_AUDIT_FIX_PLAN.md` | 审计修复计划 P001 |
-| `PERF_LOOTDROPS_OPTIMIZATION.md` | lootdrops 性能优化（历史已完成） |
-| `PERF_VARIANT_DROP_RATE_CACHE.md` | 变体爆率缓存（**废弃**） |
+| `SPAWN_RATE_GRADE_MISMATCH_ISSUE.md` | SpawnRate 楼层不匹配问题 |
 | `plans/PERF_PIPELINE_AND_RUNTIME.md` | 管线+运行时性能优化草案（待执行） |
-| `PLAN_CONTAINER_GENERATOR_ENTITIES.md` | 容器生成器实体页计划 |
-| `PLAN_FIX_SPAWN_RATE.md` | 刷怪率修复计划 |
-| `PWA_SW_PLAN.md` | Service Worker 计划 |
-| `QUEST_DUNGEON_TYPE.md` | 任务地下城类型 |
-| `SPAWN_RATE_SCALE_FIX.md` | 刷怪率缩放修复 |
-| `SSR_FIELD_VALIDATION.md` | SSR 字段验证 |
-| `SUPERHOARD_FIX.md` | Superhoard 修复 |
-| `VARIANT_RATES_FIX.md` | 变体爆率修复 |
-| `BLINDFALL_PIT_PROBABILITY_ANALYSIS.md` | Blindfall Pit 子池概率分析 |
-| `plans/` | 历史方案（P001-P005） |
+| `plans/PERF_RATE_ITEM_LOOKUP_CACHE.md` | 爆率项查找缓存方案 |
+| `plans/CF_PAGES_DETAIL_FALLBACK.md` | Cloudflare Pages 详情页回退方案 |
+| `plans/DB_FRESHNESS_AND_IMPORT_LIFECYCLE.md` | DB 新鲜度与导出生命周期 |
+| `plans/DB_ONLY_RUNTIME_IO_PLAN.md` | DB 仅运行时 IO 方案 |
+| `plans/DETAILPAGE_VAR_REG_SPLIT.md` | 详情页变体正则拆分 |
+| `plans/DUNGEON_GROUP_I18N.md` | 地下城分组国际化 |
+| `plans/HARDCODED_I18N.md` | 硬编码 i18n 迁移 |
+| `plans/JA_DETAIL_I18N_BACKLOG.md` | 日语详情页 i18n 待办 |
+| `plans/LOCATION_STATS_I18N.md` | 位置统计国际化 |
+| `plans/LOOTDROP_ITEM_TYPE_GROUPING.md` | 掉落物品类型分组 |
+| `plans/LOOTDROP_VARIANT_JSON_MERGE.md` | 变体 JSON 合并方案 |
+| `plans/META_DESCRIPTION_OPTIMIZATION.md` | Meta 描述优化 |
+
+**已归档文档**（历史修复记录、废弃方案、旧计划）：见 `docs/archive/fixes/`、`docs/archive/plans/`、`docs/archive/investigations/`
