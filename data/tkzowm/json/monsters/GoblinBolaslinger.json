@@ -1,0 +1,52 @@
+{
+  "name": "GoblinBolaslinger",
+  "translation": "哥布林投石手",
+  "translation_key": "Text_DesignData_Monster_Monster_GoblinBolaslinger",
+  "coords": [
+    {
+      "x": 810.622,
+      "y": -680.5764,
+      "z": -510.0,
+      "yaw": 105.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "GoblinBolaslinger"
+    },
+    {
+      "x": -440.0,
+      "y": -210.0,
+      "z": 0.0001,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinBolaslinger"
+    },
+    {
+      "x": -495.0,
+      "y": 557.0,
+      "z": 111.23729,
+      "yaw": 180.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinBolaslinger"
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "哥布林投石手",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinBolaslinger",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

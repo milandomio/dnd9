@@ -1,0 +1,64 @@
+{
+  "name": "GiantJellyfish",
+  "translation": "巨型水母",
+  "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+  "coords": [
+    {
+      "x": -42.660778,
+      "y": -184.62463,
+      "z": -871.3096,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "GiantJellyfish"
+    },
+    {
+      "x": -300.0,
+      "y": 65.0,
+      "z": -380.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "GiantJellyfish",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+          "name": "巨型水母"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+          "name": "大白鲨"
+        }
+      ]
+    },
+    {
+      "x": 768.53955,
+      "y": -2019.1057,
+      "z": -653.9147,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "GiantJellyfish"
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "巨型水母",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.4457,
+          "普通": 1.2632,
+          "豪客赛": 1.5789,
+          "逆袭赛": 2.1053
+        }
+      }
+    ]
+  }
+}
