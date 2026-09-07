@@ -4,6 +4,13 @@
 
 ## 2026-09-07
 
+### chore: 推送 main 并更新远程数据库快照
+
+- **改动原因**：本地 `main` 相对 `origin/main` 有 3 个未推送提交（共享生成组修复、页尾统计脚本、文档归档），且本地 `darkfindv5.db` 新于远程快照。
+- **变更文件**：`api/data/darkfindv5.db`（远程临时跟踪）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：先 rebase 到远程 `chore: update DB`，再按 `docs/BUILD_AND_DEPLOY.md` 强制加入 DB、推送 `origin/main`，随后本地 `reset HEAD~1` 并恢复 `skip-worktree`。远程 DB 为 43,294,720 字节、37 张表。
+- **验证**：rebase 无冲突；SQLite 可读且表数量为 37。
+
 ### docs: 归档历史修复与计划文档
 
 - **改动原因**：活跃 `docs/` 中堆积大量已完成修复记录、废弃方案和旧计划，索引与交叉引用难以维护；同时 `SESSION_CHANGES.md` 仍包含 2026-08 及更早的完整历史，当前会话文件过长。
