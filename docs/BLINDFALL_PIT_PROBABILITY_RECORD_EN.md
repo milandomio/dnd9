@@ -590,7 +590,7 @@ changes, verify the model again instead of replacing numbers in the formula.
    no weight field is exposed. It does not prove from Unreal binaries that the
    runtime selection is uniform.
 6. The original detailed variant and item-drop analysis is recorded in commit
-   `501d7b59` and `docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md`. Commit
+   `501d7b59` and `docs/archive/fixes/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md`. Commit
    `4a469816` added the CenterTower coverage correction without changing the
    original `2/40` layout factor or `1/5` rare-pool factor.
 

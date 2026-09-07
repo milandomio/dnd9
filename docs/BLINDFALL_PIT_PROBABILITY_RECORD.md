@@ -364,7 +364,7 @@ effective_rate_percent
 3. `bIsRare` 是稀有池成员判定，不能把所有 `ModuleType=Crypt` 的模块都放入稀有池。
 4. `NumMaxRares` 决定当前“每局最多一次稀有抽取”的前提；该字段变化时必须重新判断概率模型。
 5. 当前 `1/5` 是在没有权重字段时的均匀池假设，不代表已从 Unreal 二进制中证明了运行时一定均匀。
-6. 历史原始记录为提交 `501d7b59` 的 `docs/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md`；后续 `4a469816` 只增加中心塔覆盖修正，没有改变布局层 `2/40` 与稀有池 `1/5` 的原始推导。
+6. 历史原始记录为提交 `501d7b59` 的 `docs/archive/fixes/BLINDFALL_PIT_PROBABILITY_ANALYSIS.md`；后续 `4a469816` 只增加中心塔覆盖修正，没有改变布局层 `2/40` 与稀有池 `1/5` 的原始推导。
 
 ## 变更检查清单
 

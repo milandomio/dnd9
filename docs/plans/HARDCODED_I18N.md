@@ -249,7 +249,7 @@ df5.hardcoded.SuperHoard → SuperHoard* 共用（历史）
 
 ## 8. 参考
 
-- `docs/plans/SUPERHOARD_I18N.md` — 已落地特例
+- `docs/archive/plans/SUPERHOARD_I18N.md` — 已落地特例
 - `docs/plans/MULTILANG_PLAN.md` — translation_key / locale 总设计
 - `docs/plans/DUNGEON_GROUP_I18N.md` — 存 key 不存拼好的中文
 - `api/src/locale_builder.py` / `config.py` / `translator.py` / `lootdrop_builder.py`
