@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-09-07
+
+### feat: 将全站统计脚本集中到页尾
+
+- **改动原因**：统一由所有路由共用的 `Footer` 管理 Google Analytics 和 Cloudflare Web Analytics，避免模板与组件双重加载；Bing 统计因未提供 Clarity/验证 ID，本次不接入。
+- **变更文件**：`web/src/components/Footer.tsx`、`web/index.html`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：Footer 客户端 `useEffect` 以固定 DOM ID 为 Google gtag (`G-0SHM5GPXYN`) 与 Cloudflare beacon 注入异步脚本；`window.gtagInitialized` 防止 StrictMode 或重复挂载重复执行 Google 配置；`index.html` 移除旧 Cloudflare head 脚本，确保每次页面加载各统计脚本只存在一个。
+- **验证**：`npx tsc --noEmit` 通过；ESLint 无 error（保留既有 warning）；`npm run build` 成功生成 3,089 路由和 17,278 个文件；生产预览首页及 `/en/monsters/DeathSkull/` 均 HTTP 200；Playwright 确认两个统计 script 各一个、Footer 存在且 head 无旧 Cloudflare script。`npm run format:check` 仅剩 `MapImageRecognitionPanel.tsx` 与 `main.tsx` 两个既有格式问题；浏览器仅报已知的 localhost Cloudflare Insights CORS 噪声。
+
 ## 2026-09-04
 
 ### fix: 修复生成组候选池显示与概率折算
