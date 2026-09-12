@@ -22,8 +22,10 @@ export default function Footer() {
     analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
     analyticsWindow.gtag =
       analyticsWindow.gtag ||
-      function gtag(...args: unknown[]) {
-        analyticsWindow.dataLayer?.push(args);
+      function gtag() {
+        // GA4 只处理 Arguments 对象；rest 参数会变成 Array，config 被静默丢弃。
+        // eslint-disable-next-line prefer-rest-params -- 必须 push(arguments)，不能用 rest 数组
+        analyticsWindow.dataLayer?.push(arguments);
       };
     if (!analyticsWindow.gtagInitialized) {
       analyticsWindow.gtag('js', new Date());
