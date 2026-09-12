@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-09-12
+
+### fix: 修正 gtag stub，使 GA4 能发出 collect
+
+- **改动原因**：线上 `https://dnd9.icetar.com/zh-Hans/` 已加载 `gtag/js?id=G-0SHM5GPXYN` 且 dataLayer 有 `js`/`config`，但实时报表无用户。根因是 Footer stub 用 rest 参数 `push(args)`，把真正的 Array 推进 dataLayer；官方 snippet 必须 `push(arguments)`。GA4 只处理 Arguments 对象，Array 形态的 `config` 被静默丢弃，因此不发 `/g/collect`。
+- **变更文件**：`web/src/components/Footer.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`gtag` stub 改回无 rest 参数、`dataLayer.push(arguments)`；对该行关闭 `prefer-rest-params`。测量 ID 仍为 `G-0SHM5GPXYN`。
+- **验证**：`npx tsc --noEmit`、`eslint src/components/Footer.tsx`、`prettier --check` 通过。线上实测 dataLayer 前两条为 `Array`（`callee` 为 undefined），对照官方 stub 为 Arguments 对象。本次未跑全站 SSG（仅 stub 三行）。部署后需再看 GA4 实时。
+
 ## 2026-09-07
 
 ### chore: 推送 main 并更新远程数据库快照
