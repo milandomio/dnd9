@@ -539,6 +539,7 @@ def run(
             entity_data_by_type["monsters"],
             db,
             translations,
+            drop_engine,
         )
         pipe.log(
             f"[JSON] monster loot_pools: {_monster_drops_n} monsters "

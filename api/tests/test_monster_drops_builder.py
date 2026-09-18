@@ -8,7 +8,9 @@ from monster_drops_builder import (  # noqa: E402
     build_loot_pools,
     fold_item_page,
     is_quest_pool,
+    item_has_positive_rate,
     lootdrop_stem,
+    monster_map_groups,
 )
 
 
@@ -152,6 +154,64 @@ class BuildLootPoolsTest(unittest.TestCase):
         self.assertIn("ArmingSword", drop_pages)
         for name in artifacts:
             self.assertNotIn(name, drop_pages)
+
+    def test_zero_rate_artifacts_filtered_before_fold(self):
+        translations = {
+            "Text_DesignData_Item_Item_CrystalBall_8001": "茨戈奇之眼",
+            "Text_DesignData_Item_Item_CrystalBall_5001": "水晶球",
+            "Text_DesignData_Item_Item_BansheeSonnet": "狺女的十四行诗",
+        }
+        item_keys = {
+            "CrystalBall": "Text_DesignData_Item_Item_CrystalBall_5001",
+            "BansheeSonnet": "Text_DesignData_Item_Item_BansheeSonnet",
+        }
+        rows = [
+            _row("Banshee_Common", "ID_Lootdrop_Quest_Banshee", "BansheeSonnet", 5),
+            _row("Banshee_Elite", "ID_Lootdrop_Drop_Banshee", "CrystalBall_5001", 5),
+            _row("Banshee_Elite", "ID_Lootdrop_Drop_Banshee", "CrystalBall_8001", 8),
+        ]
+
+        class FakeEngine:
+            def get_group_drop_rates(self, item_name, monster_name, group_key, profile=None):
+                if item_name.endswith("_8001"):
+                    return {"PVE": 0, "普通": 0, "豪客赛": 0, "逆袭赛": 0}
+                return {"PVE": 1.0, "普通": 2.0, "豪客赛": 3.0, "逆袭赛": 0}
+
+        pools = build_loot_pools(
+            monster_names={"Banshee"},
+            rows=rows,
+            translations=translations,
+            item_keys=item_keys,
+            drop_engine=FakeEngine(),
+            monster_groups={"Banshee": {"Ruins"}},
+        )["Banshee"]
+        kinds = [p["kind"] for p in pools]
+        self.assertNotIn("artifact", kinds)
+        by_kind = {p["kind"]: p for p in pools}
+        self.assertEqual([i["page"] for i in by_kind["quest"]["items"]], ["BansheeSonnet"])
+        drop_pool = next(p for p in pools if p["id"] == "ID_Lootdrop_Drop_Banshee")
+        self.assertEqual({i["page"] for i in drop_pool["items"]}, {"CrystalBall"})
+
+
+class RateFilterHelpersTest(unittest.TestCase):
+    def test_monster_map_groups(self):
+        entity = {"coords": [{"map": "Ruins_GreatHall_01_Destroyed"}, {"map": "Crypt_Chapel"}]}
+        groups = monster_map_groups(
+            entity,
+            {"Ruins_GreatHall_01_Destroyed": "Ruins", "Crypt_Chapel": "Crypt"},
+        )
+        self.assertEqual(groups, {"Ruins", "Crypt"})
+
+    def test_item_has_positive_rate(self):
+        class FakeEngine:
+            def get_group_drop_rates(self, item_name, monster_name, group_key, profile=None):
+                if group_key == "Ruins":
+                    return {"豪客赛": 0, "PVE": 0}
+                return {"豪客赛": 0.12}
+
+        self.assertFalse(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", {"Ruins"}))
+        self.assertTrue(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", {"Ruins", "Crypt"}))
+        self.assertTrue(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", set()))
 
 
 if __name__ == "__main__":
