@@ -4,6 +4,16 @@
 
 ## 2026-09-18
 
+### chore: 更新部署（修复 FModel GameSpawner 后重建 DB 并推送）
+
+- **改动原因**：上一轮更新部署用的地图 JSON 缺 `BP_GameSpawner_C.Properties`（FModel unversioned 反序列化失败），坐标无法绑定 `Id_Spawner_*`，物品/实体/怪物表数量崩掉。用户重新导出后再跑独立「更新部署」。
+- **变更文件**：`docs/SESSION_CHANGES.md`；`api/data/darkfindv5.db`（远程临时跟踪）。
+- **关键逻辑/映射关系**：
+  1. `~/sync_fmod.sh` 增量同步；Chapel `Crypt_Chapel_HR_D.json` 363KB→506KB，64/64 GameSpawner 恢复 `SpawnerDataAsset`/`PreviewData`。
+  2. `Chapel01_Spawner_SkeletonArcher_11` → `Id_Spawner_New_Monster_SkeletonMage`；`BP_WoodenBarrel_C_*` → `WoodenBarrel01`。
+  3. 删除 `api/data/darkfindv5.db` 后 `python main.py` 全量重建。现有 `extract_spawners` 无需改解析逻辑。
+- **验证**：管道 TOTAL 39.60s，`[VALIDATE] all module images OK`；DB 约 44 MiB、37 张表、59473 spawners。index：物品 96、实体 249、怪物 151、掉落 493。HoneyblissPear：木桶 678、矮人木桶 `coord_count` 130、木桶(随机) 12。Chapel 14×WoodenBarrel01 + 1×SkeletonMage。本次不跑本地 SSG。
+
 ### chore: 更新部署（同步 FMOD、全量重建 DB 并推送）
 
 - **改动原因**：执行独立于完整构建的「更新部署」：同步最新游戏解包、删库全量重建 SQLite，并把含新 DB 的 `main` 推到 `origin/main`。同时把该流程写入主文档，避免再误走完整构建/仅前端构建。
