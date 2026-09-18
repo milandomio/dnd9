@@ -1,0 +1,327 @@
+{
+  "name": "DemonFly",
+  "translation": "恶魔蜉蝣",
+  "translation_key": "Text_DesignData_Monster_Monster_Demonfly",
+  "coords": [
+    {
+      "x": -143.0,
+      "y": -194.0,
+      "z": -61.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -143.0,
+      "y": 74.0,
+      "z": -61.0,
+      "yaw": 90.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -1143.0,
+      "y": -870.0,
+      "z": 233.0,
+      "yaw": 90.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -599.0,
+      "y": -914.0,
+      "z": 233.0,
+      "yaw": 90.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -705.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -965.0,
+      "y": 1190.0,
+      "z": -675.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": -1135.0,
+      "y": 1190.0,
+      "z": -675.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": 1200.0,
+      "y": -1190.0,
+      "z": -720.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    },
+    {
+      "x": 1015.0,
+      "y": -1190.0,
+      "z": -720.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "DemonFly"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "SmokyPoisonPowder",
+          "page": "SmokyPoisonPowder",
+          "translation": "毒烟粉尘",
+          "translation_key": "Text_DesignData_Item_Item_SmokyPoisonPowder",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DemonFly",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DemonFly",
+      "items": [
+        {
+          "name": "GoldBangle1I_6001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1J_6001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1C_6001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1D_6001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemRing_6001",
+          "page": "GemRing",
+          "translation": "宝石戒指（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemNecklace_6001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2G_6001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1H_6001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PearlNecklace_6001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1B_6001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Ruby_6001",
+          "page": "Ruby",
+          "translation": "红宝石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2D_6001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1E_6001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Emerald_6001",
+          "page": "Emerald",
+          "translation": "翡翠（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BlueSapphire_6001",
+          "page": "BlueSapphire",
+          "translation": "蓝宝石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_BlueSapphire_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBand_6001",
+          "page": "GoldBand",
+          "translation": "金环（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Diamond_6001",
+          "page": "Diamond",
+          "translation": "钻石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Diamond_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MetalCup_6001",
+          "page": "MetalCup",
+          "translation": "银圣杯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2H_6001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔蜉蝣",
+        "translation_key": "Text_DesignData_Monster_Monster_Demonfly",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

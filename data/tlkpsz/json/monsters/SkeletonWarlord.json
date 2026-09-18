@@ -1,0 +1,685 @@
+{
+  "name": "SkeletonWarlord",
+  "translation": "骷髅督军",
+  "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -25.0,
+      "yaw": 180.0,
+      "map": "Crypt_DarkRitualRoom_01",
+      "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+      "version": "",
+      "label": "SkeletonWarlord",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "sub_group_parent": "BP_GameObjectLinker_C_0",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "WarlordsBrokenSwordBlade",
+          "page": "WarlordsBrokenSwordBlade",
+          "translation": "督军的断剑",
+          "translation_key": "Text_DesignData_Item_Item_WarlordsBrokenSwordBlade",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "WarlordsArmorShard",
+          "page": "WarlordsArmorShard",
+          "translation": "督军的铠甲残片",
+          "translation_key": "Text_DesignData_Item_Item_WarlordsArmorShard",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "GraveEssence",
+          "page": "GraveEssence",
+          "translation": "坟墓精华",
+          "translation_key": "Text_DesignData_Item_Item_GraveEssence",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "OldCloth",
+          "page": "OldCloth",
+          "translation": "旧布",
+          "translation_key": "Text_DesignData_Item_Item_OldCloth",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Maggots",
+          "page": "Maggots",
+          "translation": "蛆虫",
+          "translation_key": "Text_DesignData_Item_Item_Maggots",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "Zweihander_8001",
+          "page": "Zweihander_8001",
+          "translation": "嗜血",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "ArmingSword_8001",
+          "page": "ArmingSword_8001",
+          "translation": "库玛龙爪",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Falchion_8001",
+          "page": "Falchion_8001",
+          "translation": "库玛龙牙",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "RondelDagger_8001",
+          "page": "RondelDagger_8001",
+          "translation": "影噬",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Rapier_8001",
+          "page": "Rapier_8001",
+          "translation": "紫罗兰",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Longsword_8001",
+          "page": "Longsword_8001",
+          "translation": "雷剑璨光",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_CursedBell",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_CursedBell",
+      "items": [
+        {
+          "name": "CursedBell",
+          "page": "CursedBell",
+          "translation": "毒咒铃铛",
+          "translation_key": "Text_DesignData_Item_Item_CursedBell",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_GoldenKey",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_GoldenKey",
+      "items": [
+        {
+          "name": "GoldenKey",
+          "page": "GoldenKey",
+          "translation": "黄金钥匙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Warlord",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Warlord",
+      "items": [
+        {
+          "name": "Mitre_7001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CeremonialHeaddress_7001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StefanBeret_7001",
+          "page": "StefanBeret",
+          "translation": "作家帽",
+          "translation_key": "Text_DesignData_Item_Item_StefanBeret_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Gjermundbu_7001",
+          "page": "Gjermundbu",
+          "translation": "北境战盔",
+          "translation_key": "Text_DesignData_Item_Item_Gjermundbu_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NormanNasalHelm_7001",
+          "page": "NormanNasalHelm",
+          "translation": "北境护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_NormanNasalHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderHelm_7001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredSallet_7001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Topfhelm_7001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KettleHat_7001",
+          "page": "KettleHat",
+          "translation": "壶盔",
+          "translation_key": "Text_DesignData_Item_Item_KettleHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Chaperon_7001",
+          "page": "Chaperon",
+          "translation": "头巾帽",
+          "translation_key": "Text_DesignData_Item_Item_Chaperon_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneHood_7001",
+          "page": "ArcaneHood",
+          "translation": "奥术兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterCap_7001",
+          "page": "JesterCap",
+          "translation": "小丑帽子",
+          "translation_key": "Text_DesignData_Item_Item_JesterCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BarbutaHelm_7001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Zweihander_7001",
+          "page": "Zweihander",
+          "translation": "巨剑",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Coif_7001",
+          "page": "Coif",
+          "translation": "巫师帽",
+          "translation_key": "Text_DesignData_Item_Item_Coif_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OpenSallet_7001",
+          "page": "OpenSallet",
+          "translation": "开面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_OpenSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Falchion_7001",
+          "page": "Falchion",
+          "translation": "弯刃大刀",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherBonnet_7001",
+          "page": "LeatherBonnet",
+          "translation": "无檐羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherBonnet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShadowHood_7001",
+          "page": "ShadowHood",
+          "translation": "暗影兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ShadowHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShadowMask_7001",
+          "page": "ShadowMask",
+          "translation": "暗影面罩",
+          "translation_key": "Text_DesignData_Item_Item_ShadowMask_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkgroveHood_7001",
+          "page": "DarkgroveHood",
+          "translation": "暗林兜帽",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RondelDagger_7001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistHood_7001",
+          "page": "OccultistHood",
+          "translation": "术士兜帽",
+          "translation_key": "Text_DesignData_Item_Item_OccultistHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestHood_7001",
+          "page": "ForestHood",
+          "translation": "林地兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ForestHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DryadMask_7001",
+          "page": "DryadMask",
+          "translation": "树妖面具",
+          "translation_key": "Text_DesignData_Item_Item_DryadMask_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArmingSword_7001",
+          "page": "ArmingSword",
+          "translation": "武装剑",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Armet_7001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardHat_7001",
+          "page": "WizardHat",
+          "translation": "法师帽",
+          "translation_key": "Text_DesignData_Item_Item_WizardHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RangerHood_7001",
+          "page": "RangerHood",
+          "translation": "游侠兜帽",
+          "translation_key": "Text_DesignData_Item_Item_RangerHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hounskull_7001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrapperHat_7001",
+          "page": "TrapperHat",
+          "translation": "猎人帽",
+          "translation_key": "Text_DesignData_Item_Item_TrapperHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherCap_7001",
+          "page": "LeatherCap",
+          "translation": "皮帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RogueCowl_7001",
+          "page": "RogueCowl",
+          "translation": "盗贼风帽",
+          "translation_key": "Text_DesignData_Item_Item_RogueCowl_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShortSword_7001",
+          "page": "ShortSword",
+          "translation": "短剑",
+          "translation_key": "Text_DesignData_Item_Item_ShortSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Rapier_7001",
+          "page": "Rapier",
+          "translation": "细剑",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingSword_7001",
+          "page": "VikingSword",
+          "translation": "维京剑",
+          "translation_key": "Text_DesignData_Item_Item_VikingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingHelm_7001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WoolenCap_7001",
+          "page": "WoolenCap",
+          "translation": "羊毛帽",
+          "translation_key": "Text_DesignData_Item_Item_WoolenCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FeatheredHat_7001",
+          "page": "FeatheredHat",
+          "translation": "羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_FeatheredHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StrawHat_7001",
+          "page": "StrawHat",
+          "translation": "草帽",
+          "translation_key": "Text_DesignData_Item_Item_StrawHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredBarbutaHelm_7001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RegalMitre_7001",
+          "page": "RegalMitre",
+          "translation": "豪华主教冠",
+          "translation_key": "Text_DesignData_Item_Item_RegalMitre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Sallet_7001",
+          "page": "Sallet",
+          "translation": "轻盔",
+          "translation_key": "Text_DesingData_Item_Item_Sallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spangenhelm_7001",
+          "page": "Spangenhelm",
+          "translation": "铆钉护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_Spangenhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChapelDeFer_7001",
+          "page": "ChapelDeFer",
+          "translation": "锅盔",
+          "translation_key": "Text_DesignData_Item_Item_ChapelDeFer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longsword_7001",
+          "page": "Longsword",
+          "translation": "长剑",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bycocket_7001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodCrown_7001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "骷髅督军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

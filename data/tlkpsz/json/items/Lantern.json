@@ -1,0 +1,189 @@
+{
+  "name": "Lantern",
+  "translation": "灯笼",
+  "translation_key": "Text_DesignData_Item_Item_Lantern_1001",
+  "category": "",
+  "variant_count": 7,
+  "monsters": [
+    "AshPile",
+    "BlazeToad",
+    "Bookshelf",
+    "Crocodilian",
+    "DemonDog",
+    "DemonImp",
+    "FallenDwarf01",
+    "FallenDwarf02",
+    "FallenDwarf03",
+    "FireElemental",
+    "FireSpirit",
+    "FlameButterfly",
+    "FrostGiantShielder",
+    "FrostImp",
+    "FrostImp_Unique",
+    "FrozenGhost",
+    "Ghoul",
+    "Ground",
+    "HellMaggot",
+    "IceHound",
+    "Ifrit",
+    "Jellyfish",
+    "LavaSlime",
+    "Mummy",
+    "Pot01",
+    "Pot01_UnderSea",
+    "Pot02",
+    "Pot02_UnderSea",
+    "Pot03",
+    "Pot03_UnderSea",
+    "Pot04",
+    "Pot04_UnderSea",
+    "SimpleChestSmall",
+    "SimpleChestSmall_UnderSea",
+    "SkeletonCorpse01",
+    "SkeletonCorpse01_UnderSea",
+    "SkeletonCorpse02",
+    "SkeletonCorpse02_UnderSea",
+    "SkeletonCorpse03",
+    "SkeletonCorpse03_UnderSea",
+    "Slime",
+    "Slime_Unique",
+    "SpectralKnight",
+    "SpiderPot",
+    "SpiderPot_Elite",
+    "SpiderPot_Nightmare",
+    "Wendigo",
+    "WhiteShark",
+    "Wisp",
+    "WoodenBarrel",
+    "WoodenBarrel01",
+    "WoodenBarrel02",
+    "WoodenBarrel04",
+    "WoodenBarrel_Firedeep",
+    "WoodenBarrel_UnderSea",
+    "WoodenCrateMedium01",
+    "WoodenCrateMedium_UnderSea",
+    "WoodenCrateSmall",
+    "WoodenCrateSmall_UnderSea",
+    "WoodenCrate_Firedeep_01",
+    "WoodenCrate_Firedeep_02",
+    "Wraith"
+  ],
+  "coords": [
+    {
+      "x": -920.0,
+      "y": 240.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 840.0,
+      "y": -25.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 1115.0,
+      "y": 59.0,
+      "z": -438.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": -801.0,
+      "y": 243.0,
+      "z": -352.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 563.0,
+      "y": -569.0,
+      "z": -52.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "BlazeToad",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "sub_group_parent": "BP_SubGroup_C_1",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ]
+    },
+    {
+      "x": -930.0,
+      "y": 480.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "BlazeToad",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "sub_group_parent": "BP_SubGroup_C_1",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "灯笼",
+        "translation_key": "Text_DesignData_Item_Item_Lantern_1001",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "普通": 0.3,
+          "豪客赛": 0.6,
+          "逆袭赛": 0.6
+        }
+      }
+    ]
+  }
+}

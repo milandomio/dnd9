@@ -1,0 +1,703 @@
+{
+  "name": "WhiteShark",
+  "translation": "大白鲨",
+  "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+  "coords": [
+    {
+      "x": 2800.0,
+      "y": 1300.0,
+      "z": -350.0,
+      "yaw": 290.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "WhiteShark"
+    },
+    {
+      "x": 215.0,
+      "y": 65.0,
+      "z": -110.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "WhiteShark",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+          "name": "巨型水母"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+          "name": "大白鲨"
+        }
+      ]
+    },
+    {
+      "x": 1004.0,
+      "y": -1230.0,
+      "z": -530.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "WhiteShark"
+    },
+    {
+      "x": 501.979454,
+      "y": -1447.4524999999999,
+      "z": -254.0,
+      "yaw": 175.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "WhiteShark",
+      "group_parent": "BP_GameSpawnerGroup_C_10",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+          "name": "大白鲨"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Octopus",
+          "name": "章鱼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+          "name": "乌贼"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "WhiteSharkFin",
+          "page": "WhiteSharkFin",
+          "translation": "大白鲨的背鳍",
+          "translation_key": "Text_DesignData_Item_Item_WhiteSharkFin",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "WhiteSharkTooth",
+          "page": "WhiteSharkTooth",
+          "translation": "大白鲨的利齿",
+          "translation_key": "Text_DesignData_Item_Item_WhiteSharkTooth",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "WhiteSharkHide",
+          "page": "WhiteSharkHide",
+          "translation": "大白鲨的皮",
+          "translation_key": "Text_DesignData_Item_Item_WhiteSharkHide",
+          "suffix": null,
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RingsPendants",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RingsPendants",
+      "items": [
+        {
+          "name": "OxPendant_5001",
+          "page": "OxPendant",
+          "translation": "公牛吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FrostAmulet_5001",
+          "page": "FrostAmulet",
+          "translation": "冰霜护符",
+          "translation_key": "Text_DesignData_Item_Item_FrostAmulet_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfResolve_5001",
+          "page": "RingOfResolve",
+          "translation": "决心之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfResolve_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PhoenixChoker_5001",
+          "page": "PhoenixChoker",
+          "translation": "凤凰项圈",
+          "translation_key": "Text_DesignData_Item_Item_PhoenixChoker_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfCourage_5001",
+          "page": "RingOfCourage",
+          "translation": "勇气之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfCourage_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "NecklaceOfPeace_5001",
+          "page": "NecklaceOfPeace",
+          "translation": "和平项链",
+          "translation_key": "Text_DesignData_Item_Item_NecklaceOfPeace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfFinesse_5001",
+          "page": "RingOfFinesse",
+          "translation": "技巧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfFinesse_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfWisdom_5001",
+          "page": "RingOfWisdom",
+          "translation": "智慧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfWisdom_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfVitality_5001",
+          "page": "RingOfVitality",
+          "translation": "活力之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfVitality_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "SoulTorq_5001",
+          "page": "SoulTorq",
+          "translation": "灵魂颈饰",
+          "translation_key": "Text_DesignData_Item_Item_SoulTorq_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BearPendant_5001",
+          "page": "BearPendant",
+          "translation": "熊吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BearPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FoxPendant_5001",
+          "page": "FoxPendant",
+          "translation": "狐狸吊坠",
+          "translation_key": "Text_DesignData_Item_Item_FoxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "OwlPendant_5001",
+          "page": "OwlPendant",
+          "translation": "猫头鹰吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OwlPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MonkeyPendant_5001",
+          "page": "MonkeyPendant",
+          "translation": "猴子吊坠",
+          "translation_key": "Text_DesignData_Item_Item_MonkeyPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BadgerPendant_5001",
+          "page": "BadgerPendant",
+          "translation": "獾吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BadgerPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfSurvival_5001",
+          "page": "RingOfSurvival",
+          "translation": "生存之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfSurvival_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RatPendant_5001",
+          "page": "RatPendant",
+          "translation": "老鼠吊坠",
+          "translation_key": "Text_DesignData_Item_Item_RatPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfQuickness_5001",
+          "page": "RingOfQuickness",
+          "translation": "速度之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfQuickness_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "WindLocket_5001",
+          "page": "WindLocket",
+          "translation": "风之吊坠",
+          "translation_key": "Text_DesignData_Item_Item_WindLocket_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Trinkets",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Trinkets",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1I_5001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1J_5001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1C_5001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1D_5001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GemRing_5001",
+          "page": "GemRing",
+          "translation": "宝石戒指（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GemNecklace_5001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle2G_5001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1H_5001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PearlNecklace_5001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（完美）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1B_5001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle2D_5001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1E_5001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBand_5001",
+          "page": "GoldBand",
+          "translation": "金环（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MetalCup_5001",
+          "page": "MetalCup",
+          "translation": "银圣杯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle2H_5001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_WhiteShark",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_WhiteShark",
+      "items": [
+        {
+          "name": "Gjermundbu_7001",
+          "page": "Gjermundbu",
+          "translation": "北境战盔",
+          "translation_key": "Text_DesignData_Item_Item_Gjermundbu_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NormanNasalHelm_7001",
+          "page": "NormanNasalHelm",
+          "translation": "北境护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_NormanNasalHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderHelm_7001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredSallet_7001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Topfhelm_7001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KettleHat_7001",
+          "page": "KettleHat",
+          "translation": "壶盔",
+          "translation_key": "Text_DesignData_Item_Item_KettleHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BarbutaHelm_7001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OpenSallet_7001",
+          "page": "OpenSallet",
+          "translation": "开面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_OpenSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HandCannon_7001",
+          "page": "HandCannon",
+          "translation": "手铳",
+          "translation_key": "Text_DesignData_Item_Item_HandCannon_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Armet_7001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Cutlass_7001",
+          "page": "Cutlass",
+          "translation": "海盗弯刀",
+          "translation_key": "Text_DesignData_Item_Item_Cutlass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lantern_7001",
+          "page": "Lantern",
+          "translation": "灯笼",
+          "translation_key": "Text_DesignData_Item_Item_Lantern_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hounskull_7001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FineCuirass_7001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingHelm_7001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredBarbutaHelm_7001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Sallet_7001",
+          "page": "Sallet",
+          "translation": "轻盔",
+          "translation_key": "Text_DesingData_Item_Item_Sallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spangenhelm_7001",
+          "page": "Spangenhelm",
+          "translation": "铆钉护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_Spangenhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChapelDeFer_7001",
+          "page": "ChapelDeFer",
+          "translation": "锅盔",
+          "translation_key": "Text_DesignData_Item_Item_ChapelDeFer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCuirass_7001",
+          "page": "DarkCuirass",
+          "translation": "黑暗胸甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HuntingTrap_4001",
+          "page": "HuntingTrap",
+          "translation": "捕兽夹",
+          "translation_key": "Text_DesignData_Item_Item_HuntingTrap_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "大白鲨",
+        "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

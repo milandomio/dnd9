@@ -1,0 +1,246 @@
+{
+  "name": "BabyTurtle",
+  "translation": "海龟幼崽",
+  "translation_key": "Text_DesignData_Monster_Monster_BabyTurtle",
+  "coords": [
+    {
+      "x": 3501.0,
+      "y": 3394.0,
+      "z": 172.47304,
+      "yaw": 110.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": 3622.0,
+      "y": 3621.0,
+      "z": 87.17125,
+      "yaw": 350.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": 3931.0,
+      "y": 3307.0,
+      "z": 45.32756,
+      "yaw": 350.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": 3931.0,
+      "y": 2959.0,
+      "z": 127.610306,
+      "yaw": 85.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": 3210.0,
+      "y": 3695.0,
+      "z": 160.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": 3501.0,
+      "y": 3096.0,
+      "z": 256.00204,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": -558.0,
+      "y": -3120.0,
+      "z": 83.0,
+      "yaw": 175.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": -513.0,
+      "y": -2878.0,
+      "z": 132.0,
+      "yaw": 175.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": -244.0,
+      "y": -2969.0,
+      "z": 74.0,
+      "yaw": 40.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": -793.0,
+      "y": -2975.0,
+      "z": 169.0,
+      "yaw": 40.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": -497.0,
+      "y": -3161.0,
+      "z": 86.0,
+      "yaw": 300.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    },
+    {
+      "x": -274.0,
+      "y": -2678.0,
+      "z": 58.0,
+      "yaw": 260.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "BabyTurtle"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_BabyTurtle",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_BabyTurtle",
+      "items": [
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Gems",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Gems",
+      "items": [
+        {
+          "name": "Ruby_7001",
+          "page": "Ruby",
+          "translation": "红宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Emerald_7001",
+          "page": "Emerald",
+          "translation": "翡翠（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BlueSapphire_7001",
+          "page": "BlueSapphire",
+          "translation": "蓝宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_BlueSapphire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Diamond_7001",
+          "page": "Diamond",
+          "translation": "钻石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Diamond_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "海龟幼崽",
+        "translation_key": "Text_DesignData_Monster_Monster_BabyTurtle",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 47.5,
+          "普通": 52.5,
+          "豪客赛": 60.0,
+          "逆袭赛": 68.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,459 @@
+{
+  "name": "Ifrit",
+  "translation": "炎魔",
+  "translation_key": "Text_DesignData_Monster_Monster_Ifrit",
+  "coords": [
+    {
+      "x": -145.0,
+      "y": 380.0,
+      "z": -87.62408,
+      "yaw": 120.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -45.0,
+      "y": -250.0,
+      "z": 2.8484504,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -132.0,
+      "y": 1217.0,
+      "z": 6.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ifrit",
+          "name": "火元素"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DwarfKnight",
+          "name": "矮人骑士"
+        }
+      ]
+    },
+    {
+      "x": 110.0,
+      "y": -65.0,
+      "z": 195.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    },
+    {
+      "x": -385.0,
+      "y": 210.0,
+      "z": -580.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    },
+    {
+      "x": -144.0,
+      "y": -3.0,
+      "z": 204.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_Ifrit",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Ifrit",
+      "items": [
+        {
+          "name": "KrisDagger_7001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerBoots_7001",
+          "page": "AdventurerBoots",
+          "translation": "冒险者长靴",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RuggedBoots_7001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DashingBoots_7001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CastillonDagger_7001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneEssence_7001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BuckledBoots_7001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkleafBoots_7001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RondelDagger_7001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistBoots_7001",
+          "page": "OccultistBoots",
+          "translation": "术士长靴",
+          "translation_key": "Text_DesignData_Item_Item_OccultistBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestBoots_7001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lantern_7001",
+          "page": "Lantern",
+          "translation": "灯笼",
+          "translation_key": "Text_DesignData_Item_Item_Lantern_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShortSword_7001",
+          "page": "ShortSword",
+          "translation": "短剑",
+          "translation_key": "Text_DesignData_Item_Item_ShortSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SturdyBoots_7001",
+          "page": "SturdyBoots",
+          "translation": "粗厚皮靴",
+          "translation_key": "Text_DesignData_Item_Item_SturdyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedBoots_7001",
+          "page": "ButtonedBoots",
+          "translation": "纽扣长靴",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CuffedBoots_7001",
+          "page": "CuffedBoots",
+          "translation": "翻边皮靴",
+          "translation_key": "Text_DesignData_Item_Item_CuffedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyBoots_7001",
+          "page": "HeavyBoots",
+          "translation": "重型长靴",
+          "translation_key": "Text_DesignData_Item_Item_HeavyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StilettoDagger_7001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RingsPendants",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RingsPendants",
+      "items": [
+        {
+          "name": "OxPendant_5001",
+          "page": "OxPendant",
+          "translation": "公牛吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FrostAmulet_5001",
+          "page": "FrostAmulet",
+          "translation": "冰霜护符",
+          "translation_key": "Text_DesignData_Item_Item_FrostAmulet_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfResolve_5001",
+          "page": "RingOfResolve",
+          "translation": "决心之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfResolve_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PhoenixChoker_5001",
+          "page": "PhoenixChoker",
+          "translation": "凤凰项圈",
+          "translation_key": "Text_DesignData_Item_Item_PhoenixChoker_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfCourage_5001",
+          "page": "RingOfCourage",
+          "translation": "勇气之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfCourage_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "NecklaceOfPeace_5001",
+          "page": "NecklaceOfPeace",
+          "translation": "和平项链",
+          "translation_key": "Text_DesignData_Item_Item_NecklaceOfPeace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfFinesse_5001",
+          "page": "RingOfFinesse",
+          "translation": "技巧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfFinesse_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfWisdom_5001",
+          "page": "RingOfWisdom",
+          "translation": "智慧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfWisdom_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfVitality_5001",
+          "page": "RingOfVitality",
+          "translation": "活力之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfVitality_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "SoulTorq_5001",
+          "page": "SoulTorq",
+          "translation": "灵魂颈饰",
+          "translation_key": "Text_DesignData_Item_Item_SoulTorq_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BearPendant_5001",
+          "page": "BearPendant",
+          "translation": "熊吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BearPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FoxPendant_5001",
+          "page": "FoxPendant",
+          "translation": "狐狸吊坠",
+          "translation_key": "Text_DesignData_Item_Item_FoxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "OwlPendant_5001",
+          "page": "OwlPendant",
+          "translation": "猫头鹰吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OwlPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MonkeyPendant_5001",
+          "page": "MonkeyPendant",
+          "translation": "猴子吊坠",
+          "translation_key": "Text_DesignData_Item_Item_MonkeyPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BadgerPendant_5001",
+          "page": "BadgerPendant",
+          "translation": "獾吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BadgerPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfSurvival_5001",
+          "page": "RingOfSurvival",
+          "translation": "生存之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfSurvival_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RatPendant_5001",
+          "page": "RatPendant",
+          "translation": "老鼠吊坠",
+          "translation_key": "Text_DesignData_Item_Item_RatPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfQuickness_5001",
+          "page": "RingOfQuickness",
+          "translation": "速度之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfQuickness_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "WindLocket_5001",
+          "page": "WindLocket",
+          "translation": "风之吊坠",
+          "translation_key": "Text_DesignData_Item_Item_WindLocket_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "炎魔",
+        "translation_key": "Text_DesignData_Monster_Monster_Ifrit",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.6842,
+          "普通": 3.8889,
+          "豪客赛": 2.8947,
+          "逆袭赛": 3.8889
+        }
+      }
+    ]
+  }
+}

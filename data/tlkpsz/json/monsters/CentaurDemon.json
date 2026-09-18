@@ -1,0 +1,435 @@
+{
+  "name": "CentaurDemon",
+  "translation": "恶魔半人马",
+  "translation_key": "Text_DesignData_Monster_Monster_CentaurDemon",
+  "coords": [
+    {
+      "x": 3.0,
+      "y": -45.0,
+      "z": 600.00006,
+      "yaw": 270.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "CentaurDemon"
+    },
+    {
+      "x": -732.0,
+      "y": -749.0,
+      "z": 14.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "CentaurDemon"
+    },
+    {
+      "x": -879.6467,
+      "y": -878.1911,
+      "z": 0.0,
+      "yaw": 50.0,
+      "map": "InfernoRiver",
+      "file": "InfernoRiver_HR_D.json",
+      "version": "",
+      "label": "CentaurDemon"
+    },
+    {
+      "x": -475.86713,
+      "y": 865.95435,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "CentaurDemon"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HornOfCentaur",
+          "page": "HornOfCentaur",
+          "translation": "半人马之角",
+          "translation_key": "Text_DesignData_Item_Item_HornOfCentaur",
+          "suffix": null,
+          "luck_grade": 6
+        },
+        {
+          "name": "TailOfCentaur",
+          "page": "TailOfCentaur",
+          "translation": "半人马之尾",
+          "translation_key": "Text_DesignData_Item_Item_TailOfCentaur",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "CentaurHoof",
+          "page": "CentaurHoof",
+          "translation": "半人马蹄子",
+          "translation_key": "Text_DesignData_Item_Item_CentaurHoof",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_CentaurDemon",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_CentaurDemon",
+      "items": [
+        {
+          "name": "CrusaderHelm_7001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredSallet_7001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Topfhelm_7001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bardiche_7001",
+          "page": "Bardiche",
+          "translation": "月刃斧",
+          "translation_key": "Text_DesignData_Item_Item_Bardiche_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Armet_7001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hounskull_7001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FineCuirass_7001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredBarbutaHelm_7001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Quarterstaff_7001",
+          "page": "Quarterstaff",
+          "translation": "铁头棒",
+          "translation_key": "Text_DesignData_Item_Item_Quarterstaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Halberd_7001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spear_7001",
+          "page": "Spear",
+          "translation": "长矛",
+          "translation_key": "Text_DesignData_Item_Item_Spear_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCuirass_7001",
+          "page": "DarkCuirass",
+          "translation": "黑暗胸甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_CursedBell",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_CursedBell",
+      "items": [
+        {
+          "name": "CursedBell",
+          "page": "CursedBell",
+          "translation": "毒咒铃铛",
+          "translation_key": "Text_DesignData_Item_Item_CursedBell",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RingsPendants",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RingsPendants",
+      "items": [
+        {
+          "name": "OxPendant_5001",
+          "page": "OxPendant",
+          "translation": "公牛吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FrostAmulet_5001",
+          "page": "FrostAmulet",
+          "translation": "冰霜护符",
+          "translation_key": "Text_DesignData_Item_Item_FrostAmulet_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfResolve_5001",
+          "page": "RingOfResolve",
+          "translation": "决心之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfResolve_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PhoenixChoker_5001",
+          "page": "PhoenixChoker",
+          "translation": "凤凰项圈",
+          "translation_key": "Text_DesignData_Item_Item_PhoenixChoker_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfCourage_5001",
+          "page": "RingOfCourage",
+          "translation": "勇气之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfCourage_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "NecklaceOfPeace_5001",
+          "page": "NecklaceOfPeace",
+          "translation": "和平项链",
+          "translation_key": "Text_DesignData_Item_Item_NecklaceOfPeace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfFinesse_5001",
+          "page": "RingOfFinesse",
+          "translation": "技巧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfFinesse_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfWisdom_5001",
+          "page": "RingOfWisdom",
+          "translation": "智慧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfWisdom_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfVitality_5001",
+          "page": "RingOfVitality",
+          "translation": "活力之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfVitality_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "SoulTorq_5001",
+          "page": "SoulTorq",
+          "translation": "灵魂颈饰",
+          "translation_key": "Text_DesignData_Item_Item_SoulTorq_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BearPendant_5001",
+          "page": "BearPendant",
+          "translation": "熊吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BearPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FoxPendant_5001",
+          "page": "FoxPendant",
+          "translation": "狐狸吊坠",
+          "translation_key": "Text_DesignData_Item_Item_FoxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "OwlPendant_5001",
+          "page": "OwlPendant",
+          "translation": "猫头鹰吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OwlPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MonkeyPendant_5001",
+          "page": "MonkeyPendant",
+          "translation": "猴子吊坠",
+          "translation_key": "Text_DesignData_Item_Item_MonkeyPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BadgerPendant_5001",
+          "page": "BadgerPendant",
+          "translation": "獾吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BadgerPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfSurvival_5001",
+          "page": "RingOfSurvival",
+          "translation": "生存之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfSurvival_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RatPendant_5001",
+          "page": "RatPendant",
+          "translation": "老鼠吊坠",
+          "translation_key": "Text_DesignData_Item_Item_RatPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfQuickness_5001",
+          "page": "RingOfQuickness",
+          "translation": "速度之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfQuickness_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "WindLocket_5001",
+          "page": "WindLocket",
+          "translation": "风之吊坠",
+          "translation_key": "Text_DesignData_Item_Item_WindLocket_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔半人马",
+        "translation_key": "Text_DesignData_Monster_Monster_CentaurDemon",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,989 @@
+{
+  "name": "DwarfHandcannoneer",
+  "translation": "矮人火铳手",
+  "translation_key": "Text_DesignData_Monster_Monster_DwarfHandcannoneer",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": -250.0,
+      "z": 300.0,
+      "yaw": 270.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -400.0,
+      "y": 930.0,
+      "z": 450.0,
+      "yaw": 270.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 400.0,
+      "y": 930.0,
+      "z": 450.0,
+      "yaw": 270.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 340.0,
+      "y": -95.0,
+      "z": 427.95013,
+      "yaw": 190.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -320.0,
+      "y": -255.0,
+      "z": 400.0,
+      "yaw": 355.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": 1305.0,
+      "y": 1340.0,
+      "z": 405.0,
+      "yaw": 0.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -1115.0,
+      "y": 535.0,
+      "z": 405.0,
+      "yaw": 0.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 92.28932,
+      "y": -751.29144,
+      "z": 17.000114,
+      "yaw": 225.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 871.31757,
+      "y": -270.7596,
+      "z": 355.0,
+      "yaw": 100.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -820.0,
+      "y": 235.0,
+      "z": 350.0001,
+      "yaw": 280.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 783.2127,
+      "y": 196.28392,
+      "z": 355.0,
+      "yaw": 275.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -815.0,
+      "y": -270.0,
+      "z": 355.0,
+      "yaw": 85.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -70.00001,
+      "y": -805.0,
+      "z": -15.038682999999999,
+      "yaw": 90.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_9",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DwarfMauler",
+          "name": "矮人重锤手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DwarfHandcannoneer",
+          "name": "矮人火铳手"
+        }
+      ]
+    },
+    {
+      "x": 120.0,
+      "y": 795.0,
+      "z": -25.0,
+      "yaw": 280.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_9",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DwarfMauler",
+          "name": "矮人重锤手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DwarfHandcannoneer",
+          "name": "矮人火铳手"
+        }
+      ]
+    },
+    {
+      "x": 443.67032,
+      "y": 1404.9248,
+      "z": 405.0,
+      "yaw": 55.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 760.0,
+      "y": -104.999985,
+      "z": 417.4208,
+      "yaw": 270.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -365.0,
+      "y": 150.0,
+      "z": 5.0,
+      "yaw": 90.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 306.07455,
+      "y": 310.528,
+      "z": -101.5023,
+      "yaw": 50.0,
+      "map": "Firedeep_FlameTerrace",
+      "file": "Firedeep_FlameTerrace_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 355.0,
+      "y": 345.0,
+      "z": 0.0,
+      "yaw": 235.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -285.0,
+      "y": -335.0,
+      "z": 0.0,
+      "yaw": 55.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 83.0,
+      "y": 1317.0,
+      "z": 402.0,
+      "yaw": 90.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 70.0,
+      "y": -1319.0,
+      "z": 403.0,
+      "yaw": 270.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 552.0,
+      "y": 61.000004,
+      "z": 1202.0,
+      "yaw": 180.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 620.0,
+      "y": 600.0,
+      "z": 460.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -775.2854,
+      "y": -631.5367,
+      "z": 455.0,
+      "yaw": 175.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -198.48624,
+      "y": -1394.8478,
+      "z": 5.0,
+      "yaw": 175.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 190.0,
+      "y": 1385.0,
+      "z": 5.0,
+      "yaw": 175.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 200.00001812228228,
+      "y": 1100.0000432361228,
+      "z": 515.704072,
+      "yaw": 0.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -178.67882,
+      "y": -1240.957603,
+      "z": 500.0,
+      "yaw": 145.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -20.0,
+      "y": 10.0,
+      "z": 160.71301,
+      "yaw": 0.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 1148.1631,
+      "y": 153.92805,
+      "z": 0.0,
+      "yaw": 205.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -5.0,
+      "y": -485.0,
+      "z": 0.0,
+      "yaw": 280.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 3.0,
+      "y": 1342.0,
+      "z": 0.0,
+      "yaw": 85.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": 542.0,
+      "y": 158.0,
+      "z": -1.0,
+      "yaw": 325.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    },
+    {
+      "x": -512.9076,
+      "y": 139.73508,
+      "z": 9.0,
+      "yaw": 215.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfHandCannoneer"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "MeltedPickaxeHead",
+          "page": "MeltedPickaxeHead",
+          "translation": "融化的十字镐头",
+          "translation_key": "Text_DesignData_Item_Item_MeltedPickaxeHead",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "SootyBeardHair",
+          "page": "SootyBeardHair",
+          "translation": "煤灰胡须",
+          "translation_key": "Text_DesignData_Item_Item_SootyBeardHair",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DwarfHandCannoneer",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DwarfHandCannoneer",
+      "items": [
+        {
+          "name": "RadiantCloak_6001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "AdventurerCloak_6001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "AdventurerBoots_6001",
+          "page": "AdventurerBoots",
+          "translation": "冒险者长靴",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RuggedBoots_6001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Gjermundbu_6001",
+          "page": "Gjermundbu",
+          "translation": "北境战盔",
+          "translation_key": "Text_DesignData_Item_Item_Gjermundbu_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "NormanNasalHelm_6001",
+          "page": "NormanNasalHelm",
+          "translation": "北境护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_NormanNasalHelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrusaderHelm_6001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Pickaxe_6001",
+          "page": "Pickaxe",
+          "translation": "十字镐",
+          "translation_key": "Text_DesignData_Item_Item_Pickaxe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VisoredSallet_6001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SplendidCloak_6001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DashingBoots_6001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Topfhelm_6001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "KettleHat_6001",
+          "page": "KettleHat",
+          "translation": "壶盔",
+          "translation_key": "Text_DesignData_Item_Item_KettleHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WatchmanCloak_6001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GlovesOfUtility_6001",
+          "page": "GlovesOfUtility",
+          "translation": "实用手套",
+          "translation_key": "Text_DesignData_Item_Item_GlovesOfUtility_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BarbutaHelm_6001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GreatHelm_6001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OpenSallet_6001",
+          "page": "OpenSallet",
+          "translation": "开面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_OpenSallet_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HandCannon_6001",
+          "page": "HandCannon",
+          "translation": "手铳",
+          "translation_key": "Text_DesignData_Item_Item_HandCannon_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BuckledBoots_6001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Sling_6001",
+          "page": "Sling",
+          "translation": "投石索",
+          "translation_key": "Text_DesignData_Item_Item_Sling_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SleekHidePants_6001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkleafBoots_6001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistBoots_6001",
+          "page": "OccultistBoots",
+          "translation": "术士长靴",
+          "translation_key": "Text_DesignData_Item_Item_OccultistBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PlatePants_6001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PlateBoots_6001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ForestBoots_6001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Armet_6001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MercurialCloak_6001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkPaddedHose_6001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Hounskull_6001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RawhideGloves_6001",
+          "page": "RawhideGloves",
+          "translation": "生皮手套",
+          "translation_key": "Text_DesignData_Item_Item_RawhideGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherGloves_6001",
+          "page": "LeatherGloves",
+          "translation": "皮革手套",
+          "translation_key": "Text_DesignData_Item_Item_LeatherGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherLeggings_6001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherChausses_6001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WoodsmanAxe_6001",
+          "page": "WoodsmanAxe",
+          "translation": "砍柴斧",
+          "translation_key": "Text_DesignData_Item_Item_WoodsmanAxe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TatteredCloak_6001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RunestoneGloves_6001",
+          "page": "RunestoneGloves",
+          "translation": "符石手套",
+          "translation_key": "Text_DesignData_Item_Item_RunestoneGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SturdyBoots_6001",
+          "page": "SturdyBoots",
+          "translation": "粗厚皮靴",
+          "translation_key": "Text_DesignData_Item_Item_SturdyBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "FineCuirass_6001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ButtonedBoots_6001",
+          "page": "ButtonedBoots",
+          "translation": "纽扣长靴",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Bolas_6001",
+          "page": "Bolas",
+          "translation": "绊石索",
+          "translation_key": "Text_DesignData_Item_Item_Bolas_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VikingHelm_6001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CuffedBoots_6001",
+          "page": "CuffedBoots",
+          "translation": "翻边皮靴",
+          "translation_key": "Text_DesignData_Item_Item_CuffedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BloodwovenGloves_6001",
+          "page": "BloodwovenGloves",
+          "translation": "血纹手套",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PaddedLeggings_6001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VisoredBarbutaHelm_6001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VigilantCloak_6001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LightGauntlets_6001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Sallet_6001",
+          "page": "Sallet",
+          "translation": "轻盔",
+          "translation_key": "Text_DesingData_Item_Item_Sallet_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HeavyGauntlet_6001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HeavyBoots_6001",
+          "page": "HeavyBoots",
+          "translation": "重型长靴",
+          "translation_key": "Text_DesignData_Item_Item_HeavyBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HeavyLeatherLeggings_6001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Spangenhelm_6001",
+          "page": "Spangenhelm",
+          "translation": "铆钉护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_Spangenhelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ChapelDeFer_6001",
+          "page": "ChapelDeFer",
+          "translation": "锅盔",
+          "translation_key": "Text_DesignData_Item_Item_ChapelDeFer_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BoneHelm_6001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ElkwoodGloves_6001",
+          "page": "ElkwoodGloves",
+          "translation": "鹿角木手套",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkPlateArmor_6001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkLeatherLeggings_6001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkCuirass_6001",
+          "page": "DarkCuirass",
+          "translation": "黑暗胸甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkCuirass_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OnyxGloves_6001",
+          "page": "OnyxGloves",
+          "translation": "黑玉手套",
+          "translation_key": "Text_DesignData_Item_Item_OnyxGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ThrowingKnife_4001",
+          "page": "ThrowingKnife",
+          "translation": "飞刀",
+          "translation_key": "Text_DesignData_Item_Item_ThrowingKnife_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "FranciscaAxe_4001",
+          "page": "FranciscaAxe",
+          "translation": "飞斧",
+          "translation_key": "Text_DesignData_Item_Item_FranciscaAxe_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Ball_2001",
+          "page": "Ball",
+          "translation": "弹丸",
+          "translation_key": "Text_DesignData_Item_Item_Ball_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "SlingStone_2001",
+          "page": "SlingStone",
+          "translation": "投石弹",
+          "translation_key": "Text_DesignData_Item_Item_SlingStone_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "矮人火铳手",
+        "translation_key": "Text_DesignData_Monster_Monster_DwarfHandcannoneer",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

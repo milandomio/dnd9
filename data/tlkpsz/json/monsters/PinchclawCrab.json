@@ -1,0 +1,185 @@
+{
+  "name": "PinchclawCrab",
+  "translation": "钳爪蟹",
+  "translation_key": "Text_DesignData_Monster_Monster_PinchclawCrab",
+  "coords": [
+    {
+      "x": 2943.0,
+      "y": -1206.0,
+      "z": 102.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": -9.0,
+      "y": 882.0,
+      "z": 298.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": 693.0,
+      "y": -168.0,
+      "z": 339.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": -1029.0,
+      "y": 422.0,
+      "z": 126.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": -228.0,
+      "y": -889.0,
+      "z": 88.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": 142.0,
+      "y": -398.0,
+      "z": 912.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HardCrabShell",
+          "page": "HardCrabShell",
+          "translation": "坚硬的蟹壳",
+          "translation_key": "Text_DesignData_Item_Item_HardCrabShell",
+          "suffix": null,
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_PinchclawCrab",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_PinchclawCrab",
+      "items": [
+        {
+          "name": "KrisDagger_6001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CastillonDagger_6001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RondelDagger_6001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StilettoDagger_6001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Ball_2001",
+          "page": "Ball",
+          "translation": "弹丸",
+          "translation_key": "Text_DesignData_Item_Item_Ball_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "SlingStone_2001",
+          "page": "SlingStone",
+          "translation": "投石弹",
+          "translation_key": "Text_DesignData_Item_Item_SlingStone_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "钳爪蟹",
+        "translation_key": "Text_DesignData_Monster_Monster_PinchclawCrab",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 12.0,
+          "逆袭赛": 13.6
+        }
+      }
+    ]
+  }
+}

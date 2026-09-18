@@ -1,0 +1,464 @@
+{
+  "name": "SeaHarpy",
+  "translation": "海洋鹰身女妖",
+  "translation_key": "Text_DesignData_Monster_Monster_SeaHarpy",
+  "coords": [
+    {
+      "x": 1028.1771,
+      "y": 704.3205,
+      "z": 670.0,
+      "yaw": 175.0,
+      "map": "EmptyModule_1F_09",
+      "file": "EmptyModule_1F_09_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 550.0802,
+      "y": 243.994,
+      "z": 670.0,
+      "yaw": 345.0,
+      "map": "EmptyModule_1F_13",
+      "file": "EmptyModule_1F_13_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": -578.0,
+      "y": -638.0,
+      "z": 1317.7876,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 635.0,
+      "y": 286.0,
+      "z": 1317.7876,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": -8.0,
+      "y": 379.0,
+      "z": 3291.8486,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": -167.0,
+      "y": 2445.0,
+      "z": 3291.8486,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 115.0,
+      "y": 322.0,
+      "z": 1259.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 180.0,
+      "y": 105.0,
+      "z": 3125.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    },
+    {
+      "x": 940.0,
+      "y": -1410.0,
+      "z": 670.0,
+      "yaw": 165.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "SeaHarpy"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_SeaHarpy",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_SeaHarpy",
+      "items": [
+        {
+          "name": "Mitre_6001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CeremonialHeaddress_6001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StefanBeret_6001",
+          "page": "StefanBeret",
+          "translation": "作家帽",
+          "translation_key": "Text_DesignData_Item_Item_StefanBeret_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "KrisDagger_6001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CastillonDagger_6001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Chaperon_6001",
+          "page": "Chaperon",
+          "translation": "头巾帽",
+          "translation_key": "Text_DesignData_Item_Item_Chaperon_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneHood_6001",
+          "page": "ArcaneHood",
+          "translation": "奥术兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "JesterCap_6001",
+          "page": "JesterCap",
+          "translation": "小丑帽子",
+          "translation_key": "Text_DesignData_Item_Item_JesterCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Coif_6001",
+          "page": "Coif",
+          "translation": "巫师帽",
+          "translation_key": "Text_DesignData_Item_Item_Coif_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherBonnet_6001",
+          "page": "LeatherBonnet",
+          "translation": "无檐羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherBonnet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ShadowHood_6001",
+          "page": "ShadowHood",
+          "translation": "暗影兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ShadowHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkgroveHood_6001",
+          "page": "DarkgroveHood",
+          "translation": "暗林兜帽",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RondelDagger_6001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistHood_6001",
+          "page": "OccultistHood",
+          "translation": "术士兜帽",
+          "translation_key": "Text_DesignData_Item_Item_OccultistHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ForestHood_6001",
+          "page": "ForestHood",
+          "translation": "林地兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ForestHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalSword_6001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalBall_6001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WizardHat_6001",
+          "page": "WizardHat",
+          "translation": "法师帽",
+          "translation_key": "Text_DesignData_Item_Item_WizardHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RangerHood_6001",
+          "page": "RangerHood",
+          "translation": "游侠兜帽",
+          "translation_key": "Text_DesignData_Item_Item_RangerHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TrapperHat_6001",
+          "page": "TrapperHat",
+          "translation": "猎人帽",
+          "translation_key": "Text_DesignData_Item_Item_TrapperHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherCap_6001",
+          "page": "LeatherCap",
+          "translation": "皮帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RogueCowl_6001",
+          "page": "RogueCowl",
+          "translation": "盗贼风帽",
+          "translation_key": "Text_DesignData_Item_Item_RogueCowl_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WoolenCap_6001",
+          "page": "WoolenCap",
+          "translation": "羊毛帽",
+          "translation_key": "Text_DesignData_Item_Item_WoolenCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "FeatheredHat_6001",
+          "page": "FeatheredHat",
+          "translation": "羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_FeatheredHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StrawHat_6001",
+          "page": "StrawHat",
+          "translation": "草帽",
+          "translation_key": "Text_DesignData_Item_Item_StrawHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RegalMitre_6001",
+          "page": "RegalMitre",
+          "translation": "豪华主教冠",
+          "translation_key": "Text_DesignData_Item_Item_RegalMitre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StilettoDagger_6001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Spellbook_6001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Bycocket_6001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ElkwoodCrown_6001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "OilLantern",
+          "page": "OilLantern",
+          "translation": "油灯笼",
+          "translation_key": "Text_DesignData_Item_Item_OilLantern",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "海洋鹰身女妖",
+        "translation_key": "Text_DesignData_Monster_Monster_SeaHarpy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.4394,
+          "普通": 1.6935,
+          "豪客赛": 1.9355,
+          "逆袭赛": 2.1935
+        }
+      }
+    ]
+  }
+}

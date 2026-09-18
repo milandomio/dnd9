@@ -1,0 +1,395 @@
+{
+  "name": "BlazeToad",
+  "translation": "烈焰蛤蟆",
+  "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+  "coords": [
+    {
+      "x": -920.0,
+      "y": 240.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 840.0,
+      "y": -25.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 1115.0,
+      "y": 59.0,
+      "z": -438.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": -801.0,
+      "y": 243.0,
+      "z": -352.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "BlazeToad"
+    },
+    {
+      "x": 563.0,
+      "y": -569.0,
+      "z": -52.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "BlazeToad",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "sub_group_parent": "BP_SubGroup_C_1",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ]
+    },
+    {
+      "x": -930.0,
+      "y": 480.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "BlazeToad",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "sub_group_parent": "BP_SubGroup_C_1",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ToadVocalSac",
+          "page": "ToadVocalSac",
+          "translation": "蛤蟆声囊",
+          "translation_key": "Text_DesignData_Item_Item_ToadVocalSac",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "SearingSlime",
+          "page": "SearingSlime",
+          "translation": "灼热粘液",
+          "translation_key": "Text_DesignData_Item_Item_SearingSlime",
+          "suffix": null,
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_BlazeToad",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_BlazeToad",
+      "items": [
+        {
+          "name": "GoldBangle1I_6001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1J_6001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1C_6001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1D_6001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemRing_6001",
+          "page": "GemRing",
+          "translation": "宝石戒指（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemNecklace_6001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2G_6001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1H_6001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Lantern_6001",
+          "page": "Lantern",
+          "translation": "灯笼",
+          "translation_key": "Text_DesignData_Item_Item_Lantern_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PearlNecklace_6001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1B_6001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2D_6001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1E_6001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBand_6001",
+          "page": "GoldBand",
+          "translation": "金环（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MetalCup_6001",
+          "page": "MetalCup",
+          "translation": "银圣杯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2H_6001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "OilLantern",
+          "page": "OilLantern",
+          "translation": "油灯笼",
+          "translation_key": "Text_DesignData_Item_Item_OilLantern",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "烈焰蛤蟆",
+        "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

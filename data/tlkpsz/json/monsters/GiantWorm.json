@@ -1,0 +1,833 @@
+{
+  "name": "GiantWorm",
+  "translation": "巨型蠕虫",
+  "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+  "coords": [
+    {
+      "x": -105.00002,
+      "y": 955.0,
+      "z": -899.6859,
+      "yaw": 270.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "GiantWorm"
+    },
+    {
+      "x": 41.00001,
+      "y": 390.0,
+      "z": -599.999899,
+      "yaw": 90.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_HR_D.json",
+      "version": "",
+      "label": "GiantWorm",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+          "name": "巨型蠕虫"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_BreathOfTheDeceased",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_BreathOfTheDeceased",
+      "items": [
+        {
+          "name": "BreathOfTheDeceased",
+          "page": "BreathOfTheDeceased",
+          "translation": "死者之息",
+          "translation_key": "Text_DesignData_Item_Item_BreathOfTheDeceased",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_ChestArmors",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_ChestArmors",
+      "items": [
+        {
+          "name": "RusticTunic_7001",
+          "page": "RusticTunic",
+          "translation": "乡村束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_RusticTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RitualRobe_7001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Frock_7001",
+          "page": "Frock",
+          "translation": "修士袍",
+          "translation_key": "Text_DesignData_Item_Item_Frock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WardenOutfit_7001",
+          "page": "WardenOutfit",
+          "translation": "典狱长外套",
+          "translation_key": "Text_DesignData_Item_Item_WardenOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerTunic_7001",
+          "page": "AdventurerTunic",
+          "translation": "冒险者外衣",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChampionArmor_7001",
+          "page": "ChampionArmor",
+          "translation": "冠军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_ChampionArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ValiantAttire_7001",
+          "page": "ValiantAttire",
+          "translation": "勇者礼服",
+          "translation_key": "Text_DesignData_Item_Item_ValiantAttire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NorthernFullTunic_7001",
+          "page": "NorthernFullTunic",
+          "translation": "北境战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernFullTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NorthernHalfTunic_7001",
+          "page": "NorthernHalfTunic",
+          "translation": "北境短战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernHalfTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderArmor_7001",
+          "page": "CrusaderArmor",
+          "translation": "十字军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_CrusaderArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LavishShirt_7001",
+          "page": "LavishShirt",
+          "translation": "华丽衬衫",
+          "translation_key": "Text_DesignData_Item_Item_LavishShirt_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GrandBrigandine_7001",
+          "page": "GrandBrigandine",
+          "translation": "华丽镶嵌甲",
+          "translation_key": "Text_DesignData_Item_Item_GrandBrigandine_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TimewornRobe_7001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TemplarArmor_7001",
+          "page": "TemplarArmor",
+          "translation": "圣殿铠甲",
+          "translation_key": "Text_DesignData_Item_Item_TemplarArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGarb_7001",
+          "page": "ArcaneGarb",
+          "translation": "奥术法袍",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGarb_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CourtlyDress_7001",
+          "page": "CourtlyDress",
+          "translation": "宫廷礼服",
+          "translation_key": "Text_DesignData_Item_Item_CourtlyDress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterOutfit_7001",
+          "page": "JesterOutfit",
+          "translation": "小丑外套",
+          "translation_key": "Text_DesignData_Item_Item_JesterOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MarauderOutfit_7001",
+          "page": "MarauderOutfit",
+          "translation": "强盗外套",
+          "translation_key": "Text_DesignData_Item_Item_MarauderOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkgroveRobe_7001",
+          "page": "DarkgroveRobe",
+          "translation": "暗林长袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HolyRobe_7001",
+          "page": "HolyRobe",
+          "translation": "朝圣袍",
+          "translation_key": "Text_DesignData_Item_Item_HolyRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistTunic_7001",
+          "page": "OccultistTunic",
+          "translation": "术士法衣",
+          "translation_key": "Text_DesignData_Item_Item_OccultistTunic_0001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistRobe_7001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedTunic_7001",
+          "page": "PaddedTunic",
+          "translation": "束腰棉外套",
+          "translation_key": "Text_DesignData_Item_Item_PaddedTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WandererAttire_7001",
+          "page": "WandererAttire",
+          "translation": "流浪者外衣",
+          "translation_key": "Text_DesignData_Item_Item_WandererAttire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightCassock_7001",
+          "page": "LightCassock",
+          "translation": "浅色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_LightCassock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCassock_7001",
+          "page": "DarkCassock",
+          "translation": "深色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkCassock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PastoralTunic_7001",
+          "page": "PastoralTunic",
+          "translation": "田园束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_PastoralTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLamellar_7001",
+          "page": "LeatherLamellar",
+          "translation": "皮革札甲",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLamellar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticVestments_7001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OracleRobe_7001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FineCuirass_7001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Poupoint_7001",
+          "page": "Poupoint",
+          "translation": "紧身棉外套",
+          "translation_key": "Text_DesignData_Item_Item_Poupoint_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Doublet_7001",
+          "page": "Doublet",
+          "translation": "紧身衣",
+          "translation_key": "Text_DesignData_Item_Item_Doublet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BloodwovenRobe_7001",
+          "page": "BloodwovenRobe",
+          "translation": "血纹长袍",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TroubadourOutfit_7001",
+          "page": "TroubadourOutfit",
+          "translation": "诗人外套",
+          "translation_key": "Text_DesignData_Item_Item_TroubadourOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OrnateJazerant_7001",
+          "page": "OrnateJazerant",
+          "translation": "豪华布面锁子甲",
+          "translation_key": "Text_DesignData_Item_Item_OrnateJazerant_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RegalGambeson_7001",
+          "page": "RegalGambeson",
+          "translation": "豪华棉甲",
+          "translation_key": "Text_DesignData_Item_Item_RegalGambeson_0001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GallantOutfit_7001",
+          "page": "GallantOutfit",
+          "translation": "贵族外套",
+          "translation_key": "Text_DesignData_Item_Item_GallantOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightAketon_7001",
+          "page": "LightAketon",
+          "translation": "轻型布面甲",
+          "translation_key": "Text_DesignData_Item_Item_LightAketon_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGambeson_7001",
+          "page": "HeavyGambeson",
+          "translation": "重型棉甲",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGambeson_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StuddedLeather_7001",
+          "page": "StuddedLeather",
+          "translation": "镶钉皮甲",
+          "translation_key": "Text_DesignData_Item_Item_StuddedLeather_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ScaledArmor_7001",
+          "page": "ScaledArmor",
+          "translation": "鳞甲",
+          "translation_key": "Text_DesignData_Item_Item_ScaledArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCuirass_7001",
+          "page": "DarkCuirass",
+          "translation": "黑暗胸甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_GiantWorm",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_GiantWorm",
+      "items": [
+        {
+          "name": "WarMaul_7001",
+          "page": "WarMaul",
+          "translation": "大铁锤",
+          "translation_key": "Text_DesignData_Item_Item_WarMaul_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bardiche_7001",
+          "page": "Bardiche",
+          "translation": "月刃斧",
+          "translation_key": "Text_DesignData_Item_Item_Bardiche_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Quarterstaff_7001",
+          "page": "Quarterstaff",
+          "translation": "铁头棒",
+          "translation_key": "Text_DesignData_Item_Item_Quarterstaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Halberd_7001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spear_7001",
+          "page": "Spear",
+          "translation": "长矛",
+          "translation_key": "Text_DesignData_Item_Item_Spear_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Herbs",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Herbs",
+      "items": [
+        {
+          "name": "PhantomFlower_4001",
+          "page": "PhantomFlower",
+          "translation": "幻影花",
+          "translation_key": "Text_DesignData_Item_Item_PhantomFlower_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Wardweed_4001",
+          "page": "Wardweed",
+          "translation": "护符草",
+          "translation_key": "Text_DesignData_Item_Item_Wardweed_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Lifeleaf_4001",
+          "page": "Lifeleaf",
+          "translation": "生命之叶",
+          "translation_key": "Text_DesignData_Item_Item_Lifeleaf_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Pants",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Pants",
+      "items": [
+        {
+          "name": "LooseTrousers_7001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPants_7001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ClothPants_7001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SleekHidePants_7001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistPants_7001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPaddedHose_7001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrunkHose_7001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLeggings_7001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherChausses_7001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedLeggings_7001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedLeggings_7001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BardicPants_7001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyLeatherLeggings_7001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkLeatherLeggings_7001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RingsPendants",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RingsPendants",
+      "items": [
+        {
+          "name": "OxPendant_5001",
+          "page": "OxPendant",
+          "translation": "公牛吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FrostAmulet_5001",
+          "page": "FrostAmulet",
+          "translation": "冰霜护符",
+          "translation_key": "Text_DesignData_Item_Item_FrostAmulet_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfResolve_5001",
+          "page": "RingOfResolve",
+          "translation": "决心之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfResolve_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PhoenixChoker_5001",
+          "page": "PhoenixChoker",
+          "translation": "凤凰项圈",
+          "translation_key": "Text_DesignData_Item_Item_PhoenixChoker_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfCourage_5001",
+          "page": "RingOfCourage",
+          "translation": "勇气之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfCourage_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "NecklaceOfPeace_5001",
+          "page": "NecklaceOfPeace",
+          "translation": "和平项链",
+          "translation_key": "Text_DesignData_Item_Item_NecklaceOfPeace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfFinesse_5001",
+          "page": "RingOfFinesse",
+          "translation": "技巧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfFinesse_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfWisdom_5001",
+          "page": "RingOfWisdom",
+          "translation": "智慧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfWisdom_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfVitality_5001",
+          "page": "RingOfVitality",
+          "translation": "活力之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfVitality_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "SoulTorq_5001",
+          "page": "SoulTorq",
+          "translation": "灵魂颈饰",
+          "translation_key": "Text_DesignData_Item_Item_SoulTorq_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BearPendant_5001",
+          "page": "BearPendant",
+          "translation": "熊吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BearPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FoxPendant_5001",
+          "page": "FoxPendant",
+          "translation": "狐狸吊坠",
+          "translation_key": "Text_DesignData_Item_Item_FoxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "OwlPendant_5001",
+          "page": "OwlPendant",
+          "translation": "猫头鹰吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OwlPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MonkeyPendant_5001",
+          "page": "MonkeyPendant",
+          "translation": "猴子吊坠",
+          "translation_key": "Text_DesignData_Item_Item_MonkeyPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BadgerPendant_5001",
+          "page": "BadgerPendant",
+          "translation": "獾吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BadgerPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfSurvival_5001",
+          "page": "RingOfSurvival",
+          "translation": "生存之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfSurvival_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RatPendant_5001",
+          "page": "RatPendant",
+          "translation": "老鼠吊坠",
+          "translation_key": "Text_DesignData_Item_Item_RatPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfQuickness_5001",
+          "page": "RingOfQuickness",
+          "translation": "速度之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfQuickness_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "WindLocket_5001",
+          "page": "WindLocket",
+          "translation": "风之吊坠",
+          "translation_key": "Text_DesignData_Item_Item_WindLocket_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "巨型蠕虫",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 25.0
+        }
+      }
+    ]
+  }
+}

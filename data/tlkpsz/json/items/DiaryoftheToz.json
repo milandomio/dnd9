@@ -1,0 +1,35 @@
+{
+  "name": "DiaryoftheToz",
+  "translation": "托兹的日记",
+  "translation_key": "Text_DesignData_Item_Item_DiaryoftheToz",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [],
+  "coords": [
+    {
+      "x": 605.0,
+      "y": 314.0,
+      "z": 99.0,
+      "yaw": 0.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_A.json",
+      "version": "(A)",
+      "label": "DiaryoftheToz"
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "托兹的日记",
+        "translation_key": "Text_DesignData_Item_Item_DiaryoftheToz",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 25.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

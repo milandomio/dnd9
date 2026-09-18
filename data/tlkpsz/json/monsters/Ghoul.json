@@ -1,0 +1,396 @@
+{
+  "name": "Ghoul",
+  "translation": "食尸鬼",
+  "translation_key": "Text_DesignData_Monster_Monster_Ghoul",
+  "coords": [
+    {
+      "x": 600.0,
+      "y": -585.0,
+      "z": 0.0,
+      "yaw": 135.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "Ghoul"
+    },
+    {
+      "x": -595.7538,
+      "y": 601.4645,
+      "z": 0.0,
+      "yaw": 315.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "Ghoul"
+    },
+    {
+      "x": 1355.0,
+      "y": 1310.0,
+      "z": 450.0,
+      "yaw": 180.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "Ghoul"
+    },
+    {
+      "x": 810.0,
+      "y": -891.60254,
+      "z": 0.0,
+      "yaw": 120.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "Ghoul"
+    },
+    {
+      "x": -1170.0,
+      "y": -89.0,
+      "z": 0.010099,
+      "yaw": 0.0,
+      "map": "Skull",
+      "file": "Skull_HR_D.json",
+      "version": "",
+      "label": "Ghoul"
+    },
+    {
+      "x": -539.0,
+      "y": 349.0,
+      "z": 9.0,
+      "yaw": 0.0,
+      "map": "Skull",
+      "file": "Skull_HR_D.json",
+      "version": "",
+      "label": "Ghoul"
+    },
+    {
+      "x": -989.48193,
+      "y": 963.9551,
+      "z": 0.0001,
+      "yaw": 280.0,
+      "map": "ThroneRoom_02",
+      "file": "ThroneRoom_02_HR_D.json",
+      "version": "",
+      "label": "Ghoul"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SkinnyFinger",
+          "page": "SkinnyFinger",
+          "translation": "干枯的手指",
+          "translation_key": "Text_DesignData_Item_Item_SkinnyFinger",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Ghoul",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Ghoul",
+      "items": [
+        {
+          "name": "RitualRobe_6001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Frock_6001",
+          "page": "Frock",
+          "translation": "修士袍",
+          "translation_key": "Text_DesignData_Item_Item_Frock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RadiantCloak_6001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "AdventurerCloak_6001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SplendidCloak_6001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TimewornRobe_6001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneHood_6001",
+          "page": "ArcaneHood",
+          "translation": "奥术兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WatchmanCloak_6001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WarHammer_6001",
+          "page": "WarHammer",
+          "translation": "战锤",
+          "translation_key": "Text_DesignData_Item_Item_WarHammer_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MorningStar_6001",
+          "page": "MorningStar",
+          "translation": "晨星",
+          "translation_key": "Text_DesignData_Item_Item_MorningStar_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ShadowHood_6001",
+          "page": "ShadowHood",
+          "translation": "暗影兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ShadowHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkgroveHood_6001",
+          "page": "DarkgroveHood",
+          "translation": "暗林兜帽",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HolyRobe_6001",
+          "page": "HolyRobe",
+          "translation": "朝圣袍",
+          "translation_key": "Text_DesignData_Item_Item_HolyRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistHood_6001",
+          "page": "OccultistHood",
+          "translation": "术士兜帽",
+          "translation_key": "Text_DesignData_Item_Item_OccultistHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistRobe_6001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ForestHood_6001",
+          "page": "ForestHood",
+          "translation": "林地兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ForestHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Club_6001",
+          "page": "Club",
+          "translation": "棍棒",
+          "translation_key": "Text_DesignData_Item_Item_Club_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalSword_6001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalBall_6001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MercurialCloak_6001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "FlangedMace_6001",
+          "page": "FlangedMace",
+          "translation": "法兰锤",
+          "translation_key": "Text_DesignData_Item_Item_FlangedMace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LightCassock_6001",
+          "page": "LightCassock",
+          "translation": "浅色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_LightCassock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkCassock_6001",
+          "page": "DarkCassock",
+          "translation": "深色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkCassock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RangerHood_6001",
+          "page": "RangerHood",
+          "translation": "游侠兜帽",
+          "translation_key": "Text_DesignData_Item_Item_RangerHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Lantern_6001",
+          "page": "Lantern",
+          "translation": "灯笼",
+          "translation_key": "Text_DesignData_Item_Item_Lantern_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RogueCowl_6001",
+          "page": "RogueCowl",
+          "translation": "盗贼风帽",
+          "translation_key": "Text_DesignData_Item_Item_RogueCowl_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Hatchet_6001",
+          "page": "Hatchet",
+          "translation": "短柄斧",
+          "translation_key": "Text_DesignData_Item_Item_Hatchet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TatteredCloak_6001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MysticVestments_6001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OracleRobe_6001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BloodwovenRobe_6001",
+          "page": "BloodwovenRobe",
+          "translation": "血纹长袍",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VigilantCloak_6001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HorsemansAxe_6001",
+          "page": "HorsemansAxe",
+          "translation": "骑士斧",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Spellbook_6001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Torch_1001",
+          "page": "Torch",
+          "translation": "火把",
+          "translation_key": "Text_DesignData_Item_Item_Torch_1001",
+          "suffix": "1001",
+          "luck_grade": 1
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "食尸鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_Ghoul",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "name": "Harpy",
+  "translation": "鹰身女妖",
+  "translation_key": "Text_DesignData_Monster_Monster_Harpy",
+  "coords": [
+    {
+      "x": -183.00000000000006,
+      "y": -1204.0,
+      "z": -443.99887,
+      "yaw": 95.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 667.0000000000001,
+      "y": 891.0,
+      "z": -518.99887,
+      "yaw": 95.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -185.99998,
+      "y": -160.99997,
+      "z": 600.0,
+      "yaw": 180.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "Harpy"
+    },
+    {
+      "x": 189.0,
+      "y": 197.00003,
+      "z": 487.0001,
+      "yaw": 180.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "Harpy"
+    },
+    {
+      "x": 860.0,
+      "y": 589.99998,
+      "z": -434.9999,
+      "yaw": 180.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 684.9999999999999,
+      "y": -785.00002,
+      "z": -336.902,
+      "yaw": 235.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_Harpy",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Harpy",
+      "items": [
+        {
+          "name": "KrisDagger_6001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CastillonDagger_6001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RondelDagger_6001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StilettoDagger_6001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "OilLantern",
+          "page": "OilLantern",
+          "translation": "油灯笼",
+          "translation_key": "Text_DesignData_Item_Item_OilLantern",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "鹰身女妖",
+        "translation_key": "Text_DesignData_Monster_Monster_Harpy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.7143,
+          "普通": 8.0,
+          "豪客赛": 14.5,
+          "逆袭赛": 14.3
+        }
+      }
+    ]
+  }
+}

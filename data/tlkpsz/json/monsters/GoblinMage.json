@@ -1,0 +1,503 @@
+{
+  "name": "GoblinMage",
+  "translation": "哥布林法师",
+  "translation_key": "Text_DesignData_Monster_Monster_GoblinMage",
+  "coords": [
+    {
+      "x": 1107.6002,
+      "y": -1039.733,
+      "z": -959.9999,
+      "yaw": 155.0,
+      "map": "CaveTown",
+      "file": "CaveTown_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 1107.6002,
+      "y": -1039.733,
+      "z": -959.9999,
+      "yaw": 155.0,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 983.9388,
+      "y": 606.51196,
+      "z": -430.9999,
+      "yaw": 180.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 1107.6002,
+      "y": -187.73303,
+      "z": -596.6183,
+      "yaw": 155.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinMage"
+    },
+    {
+      "x": -613.0,
+      "y": -582.0,
+      "z": 0.314089,
+      "yaw": 0.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_D.json",
+      "version": "(D)",
+      "label": "GoblinMage"
+    },
+    {
+      "x": -546.5519,
+      "y": 366.12552,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Cave_MoleTunnel",
+      "file": "Cave_MoleTunnel_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 84.932,
+      "y": 80.690895,
+      "z": -219.68593,
+      "yaw": 65.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 144.2649,
+      "y": 679.29333,
+      "z": 0.0,
+      "yaw": 140.0,
+      "map": "Cave_Valley",
+      "file": "Cave_Valley_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 460.93845,
+      "y": 1087.5117,
+      "z": -349.9999,
+      "yaw": 270.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 1005.00366,
+      "y": -449.0887,
+      "z": -510.0,
+      "yaw": 150.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 540.0,
+      "y": 1220.0,
+      "z": 15.144034,
+      "yaw": 270.0,
+      "map": "CavernLake_03",
+      "file": "CavernLake_03_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 307.4139,
+      "y": 235.01752,
+      "z": 0.0001,
+      "yaw": 275.0,
+      "map": "GoblinCaveCorner_01",
+      "file": "GoblinCaveCorner_01_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": -710.0,
+      "y": -60.0,
+      "z": 202.0,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 580.0,
+      "y": 1222.0,
+      "z": 0.314065,
+      "yaw": 0.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 799.0,
+      "y": 218.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 792.8479,
+      "y": -872.5006,
+      "z": -399.9999,
+      "yaw": 230.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    },
+    {
+      "x": 112.924644,
+      "y": 215.2274,
+      "z": 0.0,
+      "yaw": 55.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinMage"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "GoblinEars",
+          "page": "GoblinEars",
+          "translation": "哥布林耳朵",
+          "translation_key": "Text_DesignData_Item_Item_GoblinEars",
+          "suffix": null,
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_GoblinMage",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_GoblinMage",
+      "items": [
+        {
+          "name": "Mitre_6001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CeremonialStaff_6001",
+          "page": "CeremonialStaff",
+          "translation": "仪式权杖",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialStaff_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CeremonialHeaddress_6001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RitualRobe_6001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StefanBeret_6001",
+          "page": "StefanBeret",
+          "translation": "作家帽",
+          "translation_key": "Text_DesignData_Item_Item_StefanBeret_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Frock_6001",
+          "page": "Frock",
+          "translation": "修士袍",
+          "translation_key": "Text_DesignData_Item_Item_Frock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TimewornRobe_6001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Chaperon_6001",
+          "page": "Chaperon",
+          "translation": "头巾帽",
+          "translation_key": "Text_DesignData_Item_Item_Chaperon_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "JesterCap_6001",
+          "page": "JesterCap",
+          "translation": "小丑帽子",
+          "translation_key": "Text_DesignData_Item_Item_JesterCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Coif_6001",
+          "page": "Coif",
+          "translation": "巫师帽",
+          "translation_key": "Text_DesignData_Item_Item_Coif_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherBonnet_6001",
+          "page": "LeatherBonnet",
+          "translation": "无檐羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherBonnet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HolyRobe_6001",
+          "page": "HolyRobe",
+          "translation": "朝圣袍",
+          "translation_key": "Text_DesignData_Item_Item_HolyRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistRobe_6001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalSword_6001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalBall_6001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WizardHat_6001",
+          "page": "WizardHat",
+          "translation": "法师帽",
+          "translation_key": "Text_DesignData_Item_Item_WizardHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LightCassock_6001",
+          "page": "LightCassock",
+          "translation": "浅色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_LightCassock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkCassock_6001",
+          "page": "DarkCassock",
+          "translation": "深色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkCassock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TrapperHat_6001",
+          "page": "TrapperHat",
+          "translation": "猎人帽",
+          "translation_key": "Text_DesignData_Item_Item_TrapperHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherCap_6001",
+          "page": "LeatherCap",
+          "translation": "皮帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MysticVestments_6001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OracleRobe_6001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WoolenCap_6001",
+          "page": "WoolenCap",
+          "translation": "羊毛帽",
+          "translation_key": "Text_DesignData_Item_Item_WoolenCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "FeatheredHat_6001",
+          "page": "FeatheredHat",
+          "translation": "羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_FeatheredHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StrawHat_6001",
+          "page": "StrawHat",
+          "translation": "草帽",
+          "translation_key": "Text_DesignData_Item_Item_StrawHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BloodwovenRobe_6001",
+          "page": "BloodwovenRobe",
+          "translation": "血纹长袍",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RegalMitre_6001",
+          "page": "RegalMitre",
+          "translation": "豪华主教冠",
+          "translation_key": "Text_DesignData_Item_Item_RegalMitre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Quarterstaff_6001",
+          "page": "Quarterstaff",
+          "translation": "铁头棒",
+          "translation_key": "Text_DesignData_Item_Item_Quarterstaff_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Spellbook_6001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WizardStaff_6001",
+          "page": "WizardStaff",
+          "translation": "魔法杖",
+          "translation_key": "Text_DesignData_Item_Item_WizardStaff_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Bycocket_6001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ElkwoodCrown_6001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "哥布林法师",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

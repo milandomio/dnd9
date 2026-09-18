@@ -1,0 +1,594 @@
+{
+  "name": "Slime",
+  "translation": "史莱姆",
+  "translation_key": "Text_DesignData_Monster_Monster_Slime",
+  "coords": [
+    {
+      "x": -250.00002,
+      "y": 650.0,
+      "z": 0.0,
+      "yaw": 70.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 1340.8682,
+      "y": -39.60041,
+      "z": 0.0,
+      "yaw": 135.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 1040.0,
+      "y": 1205.9999,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": 1461.0,
+      "y": 889.9999,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": -1350.0,
+      "y": 1065.0001,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": -1099.0,
+      "y": -190.99994,
+      "z": 0.0001,
+      "yaw": 180.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 210.0,
+      "y": 376.99990000000014,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": -464.0000000000002,
+      "y": -324.00009999999975,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": -51.4854,
+      "y": -162.39166,
+      "z": 0.0,
+      "yaw": 145.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": -169.0,
+      "y": 208.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 518.0,
+      "y": 603.00002,
+      "z": 0.0001,
+      "yaw": 35.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wisp",
+          "name": "幻灵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Slime",
+          "name": "史莱姆"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "RedApple",
+          "page": "RedApple",
+          "translation": "红苹果",
+          "translation_key": "Text_DesignData_Item_Item_RedApple",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Slime",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Slime",
+      "items": [
+        {
+          "name": "KrisDagger_7001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Gjermundbu_7001",
+          "page": "Gjermundbu",
+          "translation": "北境战盔",
+          "translation_key": "Text_DesignData_Item_Item_Gjermundbu_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NormanNasalHelm_7001",
+          "page": "NormanNasalHelm",
+          "translation": "北境护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_NormanNasalHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CastillonDagger_7001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KettleHat_7001",
+          "page": "KettleHat",
+          "translation": "壶盔",
+          "translation_key": "Text_DesignData_Item_Item_KettleHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGloves_7001",
+          "page": "ArcaneGloves",
+          "translation": "奥术手套",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPoulaines_7001",
+          "page": "JesterPoulaines",
+          "translation": "小丑尖头鞋",
+          "translation_key": "Text_DesignData_Item_Item_JesterPoulaines_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Buckler_7001",
+          "page": "Buckler",
+          "translation": "小圆盾",
+          "translation_key": "Text_DesignData_Item_Item_Buckler_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BarbutaHelm_7001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardShoes_7001",
+          "page": "WizardShoes",
+          "translation": "巫师鞋",
+          "translation_key": "Text_DesignData_Item_Item_WizardShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OpenSallet_7001",
+          "page": "OpenSallet",
+          "translation": "开面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_OpenSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Falchion_7001",
+          "page": "Falchion",
+          "translation": "弯刃大刀",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WarHammer_7001",
+          "page": "WarHammer",
+          "translation": "战锤",
+          "translation_key": "Text_DesignData_Item_Item_WarHammer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HandCrossbow_7001",
+          "page": "HandCrossbow",
+          "translation": "手弩",
+          "translation_key": "Text_DesignData_Item_Item_HandCrossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OldShoes_7001",
+          "page": "OldShoes",
+          "translation": "旧鞋",
+          "translation_key": "Text_DesignData_Item_Item_OldShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MorningStar_7001",
+          "page": "MorningStar",
+          "translation": "晨星",
+          "translation_key": "Text_DesignData_Item_Item_MorningStar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RondelDagger_7001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArmingSword_7001",
+          "page": "ArmingSword",
+          "translation": "武装剑",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FlangedMace_7001",
+          "page": "FlangedMace",
+          "translation": "法兰锤",
+          "translation_key": "Text_DesignData_Item_Item_FlangedMace_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ProwlerGloves_7001",
+          "page": "ProwlerGloves",
+          "translation": "潜行者手套",
+          "translation_key": "Text_DesignData_Item_Item_ProwlerGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lantern_7001",
+          "page": "Lantern",
+          "translation": "灯笼",
+          "translation_key": "Text_DesignData_Item_Item_Lantern_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hatchet_7001",
+          "page": "Hatchet",
+          "translation": "短柄斧",
+          "translation_key": "Text_DesignData_Item_Item_Hatchet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LowBoots_7001",
+          "page": "LowBoots",
+          "translation": "短靴",
+          "translation_key": "Text_DesignData_Item_Item_LowBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticGloves_7001",
+          "page": "MysticGloves",
+          "translation": "秘法手套",
+          "translation_key": "Text_DesignData_Item_Item_MysticGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LacedTurnshoe_7001",
+          "page": "LacedTurnshoe",
+          "translation": "系带翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_LacedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Rapier_7001",
+          "page": "Rapier",
+          "translation": "细剑",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingSword_7001",
+          "page": "VikingSword",
+          "translation": "维京剑",
+          "translation_key": "Text_DesignData_Item_Item_VikingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingHelm_7001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StitchedTurnshoe_7001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pigache_7001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Turnshoe_7001",
+          "page": "Turnshoe",
+          "translation": "翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_Turnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightfootBoots_7001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Sallet_7001",
+          "page": "Sallet",
+          "translation": "轻盔",
+          "translation_key": "Text_DesingData_Item_Item_Sallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spangenhelm_7001",
+          "page": "Spangenhelm",
+          "translation": "铆钉护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_Spangenhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChapelDeFer_7001",
+          "page": "ChapelDeFer",
+          "translation": "锅盔",
+          "translation_key": "Text_DesignData_Item_Item_ChapelDeFer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StilettoDagger_7001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HorsemansAxe_7001",
+          "page": "HorsemansAxe",
+          "translation": "骑士斧",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Ale_3001",
+          "page": "Ale",
+          "translation": "麦酒",
+          "translation_key": "Text_DesignData_Item_Item_Ale_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "Lockpick",
+          "page": "Lockpick",
+          "translation": "开锁器",
+          "translation_key": "Text_DesignData_Item_Item_Lockpick",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Bolt_2001",
+          "page": "Bolt",
+          "translation": "弩矢",
+          "translation_key": "Text_DesignData_Item_Item_Bolt_2001",
+          "suffix": "2001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "Arrow_2001",
+          "page": "Arrow",
+          "translation": "箭",
+          "translation_key": "Text_DesignData_Item_Item_Arrow_2001",
+          "suffix": "2001",
+          "luck_grade": 6
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "Id_Lootdrop_Spawn_Slime_Unique",
+      "kind": "pool",
+      "lootdrop_id": "Id_Lootdrop_Spawn_Slime_Unique",
+      "items": [
+        {
+          "name": "HazeBlade_5001",
+          "page": "HazeBlade",
+          "translation": "迷乱之刃",
+          "translation_key": "Text_DesignData_Item_Item_HazeBlade_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "史莱姆",
+        "translation_key": "Text_DesignData_Monster_Monster_Slime",
+        "spawn_rate": 99.9546,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

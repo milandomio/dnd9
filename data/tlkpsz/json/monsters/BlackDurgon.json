@@ -1,0 +1,216 @@
+{
+  "name": "BlackDurgon",
+  "translation": "黑炮弹鱼",
+  "translation_key": "Text_DesignData_Monster_Monster_BlackDurgon",
+  "coords": [
+    {
+      "x": 195.0,
+      "y": 195.0,
+      "z": -655.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_14",
+      "file": "EmptyModule_1F_14_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 290.0,
+      "y": 195.0,
+      "z": -655.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_14",
+      "file": "EmptyModule_1F_14_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 20.0,
+      "y": 195.0,
+      "z": -655.0,
+      "yaw": 0.0,
+      "map": "EmptyModule_1F_14",
+      "file": "EmptyModule_1F_14_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 95.0,
+      "y": 430.0,
+      "z": -495.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 215.0,
+      "y": 430.0,
+      "z": -495.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": 215.0,
+      "y": 240.0,
+      "z": -370.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": -145.0,
+      "y": 15.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": -60.0,
+      "y": 15.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    },
+    {
+      "x": -110.0,
+      "y": 140.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "BlackDurgon"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_BlueMarlin",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_BlueMarlin",
+      "items": [
+        {
+          "name": "SurgicalKit_4001",
+          "page": "SurgicalKit",
+          "translation": "手术包",
+          "translation_key": "Text_DesignData_Item_Item_SurgicalKit_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Bandage_4001",
+          "page": "Bandage",
+          "translation": "绷带",
+          "translation_key": "Text_DesignData_Item_Item_Bandage_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "Lockpick",
+          "page": "Lockpick",
+          "translation": "开锁器",
+          "translation_key": "Text_DesignData_Item_Item_Lockpick",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "黑炮弹鱼",
+        "translation_key": "Text_DesignData_Monster_Monster_BlackDurgon",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 23.75,
+          "普通": 26.25,
+          "豪客赛": 30.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

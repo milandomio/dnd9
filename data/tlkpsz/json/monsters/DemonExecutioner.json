@@ -1,0 +1,552 @@
+{
+  "name": "DemonExecutioner",
+  "translation": "恶魔处刑者",
+  "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+  "coords": [
+    {
+      "x": 568.3833,
+      "y": 533.7097,
+      "z": 0.0,
+      "yaw": 41.2,
+      "map": "InfernoCastleConner",
+      "file": "InfernoCastleConner_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 1025.0,
+      "y": -482.0,
+      "z": 14.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -665.0,
+      "y": -800.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "InfernoRooms",
+      "file": "InfernoRooms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 670.0,
+      "y": 660.0,
+      "z": 500.0,
+      "yaw": 220.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -5.0,
+      "y": -10.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+          "name": "地狱三头犬"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+          "name": "地狱猎手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+          "name": "憎恶"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        }
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": -375.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "sub_group_parent": "BP_SubGroup_C_2",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 357.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "sub_group_parent": "BP_SubGroup_C_3",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "TwistedAbyssHorn",
+          "page": "TwistedAbyssHorn",
+          "translation": "扭曲的深渊巨角",
+          "translation_key": "Text_DesignData_Item_Item_TwistedAbyssHorn",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "MisshapenBladeShard",
+          "page": "MisshapenBladeShard",
+          "translation": "畸形刃片",
+          "translation_key": "Text_DesignData_Item_Item_MisshapenBladeShard",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DemonExecutioner",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DemonExecutioner",
+      "items": [
+        {
+          "name": "FellingAxe_7001",
+          "page": "FellingAxe",
+          "translation": "伐木斧",
+          "translation_key": "Text_DesignData_Item_Item_FellingAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DoubleAxe_7001",
+          "page": "DoubleAxe",
+          "translation": "双刃斧",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LooseTrousers_7001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPants_7001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ClothPants_7001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BattleAxe_7001",
+          "page": "BattleAxe",
+          "translation": "战斗斧",
+          "translation_key": "Text_DesignData_Item_Item_BattleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SleekHidePants_7001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistPants_7001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPaddedHose_7001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrunkHose_7001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLeggings_7001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherChausses_7001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedLeggings_7001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedLeggings_7001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BardicPants_7001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyLeatherLeggings_7001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longsword_7001",
+          "page": "Longsword",
+          "translation": "长剑",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HorsemansAxe_7001",
+          "page": "HorsemansAxe",
+          "translation": "骑士斧",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkLeatherLeggings_7001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RingsPendants",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RingsPendants",
+      "items": [
+        {
+          "name": "OxPendant_5001",
+          "page": "OxPendant",
+          "translation": "公牛吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FrostAmulet_5001",
+          "page": "FrostAmulet",
+          "translation": "冰霜护符",
+          "translation_key": "Text_DesignData_Item_Item_FrostAmulet_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfResolve_5001",
+          "page": "RingOfResolve",
+          "translation": "决心之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfResolve_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PhoenixChoker_5001",
+          "page": "PhoenixChoker",
+          "translation": "凤凰项圈",
+          "translation_key": "Text_DesignData_Item_Item_PhoenixChoker_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfCourage_5001",
+          "page": "RingOfCourage",
+          "translation": "勇气之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfCourage_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "NecklaceOfPeace_5001",
+          "page": "NecklaceOfPeace",
+          "translation": "和平项链",
+          "translation_key": "Text_DesignData_Item_Item_NecklaceOfPeace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfFinesse_5001",
+          "page": "RingOfFinesse",
+          "translation": "技巧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfFinesse_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfWisdom_5001",
+          "page": "RingOfWisdom",
+          "translation": "智慧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfWisdom_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfVitality_5001",
+          "page": "RingOfVitality",
+          "translation": "活力之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfVitality_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "SoulTorq_5001",
+          "page": "SoulTorq",
+          "translation": "灵魂颈饰",
+          "translation_key": "Text_DesignData_Item_Item_SoulTorq_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BearPendant_5001",
+          "page": "BearPendant",
+          "translation": "熊吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BearPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FoxPendant_5001",
+          "page": "FoxPendant",
+          "translation": "狐狸吊坠",
+          "translation_key": "Text_DesignData_Item_Item_FoxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "OwlPendant_5001",
+          "page": "OwlPendant",
+          "translation": "猫头鹰吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OwlPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MonkeyPendant_5001",
+          "page": "MonkeyPendant",
+          "translation": "猴子吊坠",
+          "translation_key": "Text_DesignData_Item_Item_MonkeyPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BadgerPendant_5001",
+          "page": "BadgerPendant",
+          "translation": "獾吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BadgerPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfSurvival_5001",
+          "page": "RingOfSurvival",
+          "translation": "生存之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfSurvival_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RatPendant_5001",
+          "page": "RatPendant",
+          "translation": "老鼠吊坠",
+          "translation_key": "Text_DesignData_Item_Item_RatPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfQuickness_5001",
+          "page": "RingOfQuickness",
+          "translation": "速度之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfQuickness_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "WindLocket_5001",
+          "page": "WindLocket",
+          "translation": "风之吊坠",
+          "translation_key": "Text_DesignData_Item_Item_WindLocket_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔处刑者",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

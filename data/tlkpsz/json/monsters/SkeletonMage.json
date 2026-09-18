@@ -1,0 +1,911 @@
+{
+  "name": "SkeletonMage",
+  "translation": "骷髅法师",
+  "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+  "coords": [
+    {
+      "x": 175.0,
+      "y": 320.0,
+      "z": -446.491019,
+      "yaw": 0.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+          "name": "骷髅法师"
+        }
+      ]
+    },
+    {
+      "x": 716.0,
+      "y": -404.00003,
+      "z": -499.9999,
+      "yaw": 360.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -160.0,
+      "y": 1130.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Cemetery_03",
+      "file": "Cemetery_03_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -1602.0,
+      "y": 3960.0,
+      "z": 287.98273,
+      "yaw": 270.0,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 1175.0,
+      "y": 25.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 1100.0,
+      "y": 1095.0,
+      "z": 0.0,
+      "yaw": 220.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -540.0,
+      "y": 1110.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -455.0,
+      "y": 10.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -1100.0,
+      "y": -1125.0,
+      "z": 0.0,
+      "yaw": 50.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -1175.0,
+      "y": 325.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": []
+    },
+    {
+      "x": -60.000015,
+      "y": -19.99999,
+      "z": -189.99966,
+      "yaw": 90.0,
+      "map": "Crypt_Atrium",
+      "file": "Crypt_Atrium_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -18.511719,
+      "y": 1038.9376,
+      "z": 100.98538,
+      "yaw": 270.0,
+      "map": "Crypt_Chapel",
+      "file": "Crypt_Chapel_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 3.718422,
+      "y": -2.002717,
+      "z": 390.00027,
+      "yaw": 90.0,
+      "map": "Crypt_Ramparts",
+      "file": "Crypt_Ramparts_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 185.0,
+      "y": 665.0,
+      "z": 0.31406483,
+      "yaw": 0.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_D.json",
+      "version": "(D)",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 24.0,
+      "y": -1093.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 675.0,
+      "y": -4.5474735e-13,
+      "z": 300.0,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -469.99466,
+      "y": -809.9908,
+      "z": 100.0,
+      "yaw": 90.0,
+      "map": "FishingGround",
+      "file": "FishingGround_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 1300.0,
+      "y": 80.0,
+      "z": -350.0,
+      "yaw": 180.0,
+      "map": "HBridge",
+      "file": "HBridge_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 87.70965,
+      "y": -107.94037,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 1275.0,
+      "y": -1275.0,
+      "z": 80.0,
+      "yaw": 110.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -15.0,
+      "y": 695.0,
+      "z": 450.0,
+      "yaw": 270.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 835.0,
+      "y": -735.0,
+      "z": -250.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 830.0,
+      "y": 765.0,
+      "z": -255.0,
+      "yaw": 270.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 920.0,
+      "y": 975.0,
+      "z": -150.0,
+      "yaw": 230.0,
+      "map": "Inferno_LavaCorner",
+      "file": "Inferno_LavaCorner_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -4e-06,
+      "y": -1150.0,
+      "z": 850.0,
+      "yaw": 90.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -470.0,
+      "y": 1295.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "OssuaryEdge",
+      "file": "OssuaryEdge_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -730.0,
+      "y": 5.0000706,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -1325.4623,
+      "y": 114.69384,
+      "z": 0.0,
+      "yaw": 60.0,
+      "map": "Ruins_Forest_02",
+      "file": "Ruins_Forest_02_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -876.75974,
+      "y": -412.92563,
+      "z": 0.0,
+      "yaw": 230.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 175.58310000000006,
+      "y": 848.7372300000001,
+      "z": 0.0,
+      "yaw": 170.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 10.0,
+      "y": 1055.0,
+      "z": 60.0,
+      "yaw": 260.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 465.6006,
+      "y": 299.00955,
+      "z": 0.313934,
+      "yaw": 180.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 1309.0,
+      "y": -50.0,
+      "z": -510.0,
+      "yaw": 180.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -71.0,
+      "y": -543.0,
+      "z": 600.0,
+      "yaw": 340.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+          "name": "骷髅法师"
+        }
+      ]
+    },
+    {
+      "x": 1320.0,
+      "y": -50.00008199999995,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    },
+    {
+      "x": 152.00002,
+      "y": 360.0,
+      "z": 0.0,
+      "yaw": 160.0,
+      "map": "Ruins_Stonehenge",
+      "file": "Ruins_Stonehenge_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 2365.0,
+      "y": 1335.0,
+      "z": 700.0,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -808.14905,
+      "y": 825.0536,
+      "z": 1011.0,
+      "yaw": 325.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 110.9999,
+      "y": -536.99994,
+      "z": 0.0,
+      "yaw": 60.0,
+      "map": "Storeroom",
+      "file": "Storeroom_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -135.0554,
+      "y": -812.49115,
+      "z": -400.0,
+      "yaw": 352.7,
+      "map": "Swamp",
+      "file": "Swamp_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": -1.8189894e-12,
+      "y": 990.0,
+      "z": -500.0,
+      "yaw": 270.0,
+      "map": "TheCage",
+      "file": "TheCage_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 160.0,
+      "y": 1105.0,
+      "z": -149.9999,
+      "yaw": 0.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 1150.0,
+      "y": 150.0,
+      "z": 10.0,
+      "yaw": 180.0,
+      "map": "Tomb_Center",
+      "file": "Tomb_Center_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    },
+    {
+      "x": 1019.0,
+      "y": -1020.0,
+      "z": -285.0,
+      "yaw": 135.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonMage"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "VolcanicAsh",
+          "page": "VolcanicAsh",
+          "translation": "火山灰",
+          "translation_key": "Text_DesignData_Item_Item_VolcanicAsh",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "StoneMortar",
+          "page": "StoneMortar",
+          "translation": "石臼",
+          "translation_key": "Text_DesignData_Item_Item_StoneMortar",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "GoldenTeeth",
+          "page": "GoldenTeeth",
+          "translation": "金牙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenTeeth",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "IntactSkull",
+          "page": "IntactSkull",
+          "translation": "完整头骨",
+          "translation_key": "Text_DesignData_Item_Item_IntactSkull",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "EnchantedDarkFabric",
+          "page": "EnchantedDarkFabric",
+          "translation": "附魔的黑暗织物",
+          "translation_key": "Text_DesignData_Item_Item_EnchantedDarkFabric",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "MoldyBread",
+          "page": "MoldyBread",
+          "translation": "发霉的面包",
+          "translation_key": "Text_DesignData_Item_Item_MoldyBread",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "BrokenSkull",
+          "page": "BrokenSkull",
+          "translation": "破碎的头骨",
+          "translation_key": "Text_DesignData_Item_Item_BrokenSkull",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Bone",
+          "page": "Bone",
+          "translation": "骨头棒",
+          "translation_key": "Text_DesignData_Item_Item_Bone",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_SkeletonMage",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_SkeletonMage",
+      "items": [
+        {
+          "name": "CeremonialStaff_6001",
+          "page": "CeremonialStaff",
+          "translation": "仪式权杖",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialStaff_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RitualRobe_6001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Frock_6001",
+          "page": "Frock",
+          "translation": "修士袍",
+          "translation_key": "Text_DesignData_Item_Item_Frock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TimewornRobe_6001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneHood_6001",
+          "page": "ArcaneHood",
+          "translation": "奥术兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ShadowHood_6001",
+          "page": "ShadowHood",
+          "translation": "暗影兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ShadowHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkgroveHood_6001",
+          "page": "DarkgroveHood",
+          "translation": "暗林兜帽",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HolyRobe_6001",
+          "page": "HolyRobe",
+          "translation": "朝圣袍",
+          "translation_key": "Text_DesignData_Item_Item_HolyRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistHood_6001",
+          "page": "OccultistHood",
+          "translation": "术士兜帽",
+          "translation_key": "Text_DesignData_Item_Item_OccultistHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistRobe_6001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ForestHood_6001",
+          "page": "ForestHood",
+          "translation": "林地兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ForestHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalSword_6001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalBall_6001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LightCassock_6001",
+          "page": "LightCassock",
+          "translation": "浅色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_LightCassock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkCassock_6001",
+          "page": "DarkCassock",
+          "translation": "深色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkCassock_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RangerHood_6001",
+          "page": "RangerHood",
+          "translation": "游侠兜帽",
+          "translation_key": "Text_DesignData_Item_Item_RangerHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RogueCowl_6001",
+          "page": "RogueCowl",
+          "translation": "盗贼风帽",
+          "translation_key": "Text_DesignData_Item_Item_RogueCowl_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MysticVestments_6001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OracleRobe_6001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BloodwovenRobe_6001",
+          "page": "BloodwovenRobe",
+          "translation": "血纹长袍",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Quarterstaff_6001",
+          "page": "Quarterstaff",
+          "translation": "铁头棒",
+          "translation_key": "Text_DesignData_Item_Item_Quarterstaff_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Spellbook_6001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WizardStaff_6001",
+          "page": "WizardStaff",
+          "translation": "魔法杖",
+          "translation_key": "Text_DesignData_Item_Item_WizardStaff_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "骷髅法师",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonMage",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,467 @@
+{
+  "name": "FlameBoar",
+  "translation": "烈焰野猪",
+  "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+  "coords": [
+    {
+      "x": 150.0,
+      "y": -200.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": -1332.5881,
+      "y": -219.65926,
+      "z": -100.0,
+      "yaw": 75.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": -200.0,
+      "y": -20.0,
+      "z": -140.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": -125.0,
+      "y": 200.0,
+      "z": -275.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": -900.0,
+      "y": -900.0,
+      "z": 500.0,
+      "yaw": 45.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": 600.0,
+      "y": -650.0,
+      "z": 500.0,
+      "yaw": 270.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": 600.0,
+      "y": 950.0,
+      "z": 500.0,
+      "yaw": 270.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": -850.0,
+      "y": 750.0,
+      "z": 500.0,
+      "yaw": 270.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "FlameBoar"
+    },
+    {
+      "x": 487.0,
+      "y": -858.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "FlameBoar",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "sub_group_parent": "BP_SubGroup_C_3",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ]
+    },
+    {
+      "x": -639.0,
+      "y": 528.0,
+      "z": -40.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "FlameBoar",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "sub_group_parent": "BP_SubGroup_C_3",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+          "name": "烈焰野猪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_BlazeToad",
+          "name": "烈焰蛤蟆"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CrackedTusk",
+          "page": "CrackedTusk",
+          "translation": "开裂长牙",
+          "translation_key": "Text_DesignData_Item_Item_CrackedTusk",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_FlameBoar",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FlameBoar",
+      "items": [
+        {
+          "name": "GlovesOfUtility_6001",
+          "page": "GlovesOfUtility",
+          "translation": "实用手套",
+          "translation_key": "Text_DesignData_Item_Item_GlovesOfUtility_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LooseTrousers_6001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "JesterPoulaines_6001",
+          "page": "JesterPoulaines",
+          "translation": "小丑尖头鞋",
+          "translation_key": "Text_DesignData_Item_Item_JesterPoulaines_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "JesterPants_6001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WizardShoes_6001",
+          "page": "WizardShoes",
+          "translation": "巫师鞋",
+          "translation_key": "Text_DesignData_Item_Item_WizardShoes_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ClothPants_6001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SleekHidePants_6001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OldShoes_6001",
+          "page": "OldShoes",
+          "translation": "旧鞋",
+          "translation_key": "Text_DesignData_Item_Item_OldShoes_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistPants_6001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkPaddedHose_6001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TrunkHose_6001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RawhideGloves_6001",
+          "page": "RawhideGloves",
+          "translation": "生皮手套",
+          "translation_key": "Text_DesignData_Item_Item_RawhideGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherGloves_6001",
+          "page": "LeatherGloves",
+          "translation": "皮革手套",
+          "translation_key": "Text_DesignData_Item_Item_LeatherGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherLeggings_6001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherChausses_6001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LowBoots_6001",
+          "page": "LowBoots",
+          "translation": "短靴",
+          "translation_key": "Text_DesignData_Item_Item_LowBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RunestoneGloves_6001",
+          "page": "RunestoneGloves",
+          "translation": "符石手套",
+          "translation_key": "Text_DesignData_Item_Item_RunestoneGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LacedTurnshoe_6001",
+          "page": "LacedTurnshoe",
+          "translation": "系带翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_LacedTurnshoe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ButtonedLeggings_6001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StitchedTurnshoe_6001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Pigache_6001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Turnshoe_6001",
+          "page": "Turnshoe",
+          "translation": "翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_Turnshoe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BloodwovenGloves_6001",
+          "page": "BloodwovenGloves",
+          "translation": "血纹手套",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PaddedLeggings_6001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Plunderhosen_6001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BardicPants_6001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LightfootBoots_6001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HeavyLeatherLeggings_6001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ElkwoodGloves_6001",
+          "page": "ElkwoodGloves",
+          "translation": "鹿角木手套",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkLeatherLeggings_6001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OnyxGloves_6001",
+          "page": "OnyxGloves",
+          "translation": "黑玉手套",
+          "translation_key": "Text_DesignData_Item_Item_OnyxGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TrapDisarmingKit",
+          "page": "TrapDisarmingKit",
+          "translation": "陷阱解除工具",
+          "translation_key": "Text_DesignData_Item_Item_TrapDisarmingKit",
+          "suffix": null,
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "烈焰野猪",
+        "translation_key": "Text_DesignData_Monster_Monster_FlameBoar",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

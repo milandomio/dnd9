@@ -1,0 +1,402 @@
+{
+  "name": "FrostGiantShielder",
+  "translation": "冰霜持盾巨人",
+  "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+  "coords": [
+    {
+      "x": 161.0,
+      "y": -112.0,
+      "z": -198.9999,
+      "yaw": 180.0,
+      "map": "IceCave_CaveSwamp",
+      "file": "IceCave_CaveSwamp_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder"
+    },
+    {
+      "x": -254.0,
+      "y": 1038.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_IcicleCave",
+      "file": "IceCave_IcicleCave_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder"
+    },
+    {
+      "x": 289.0,
+      "y": -40.0,
+      "z": -399.999895,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder",
+      "group_parent": "BP_GameSpawner_C_29",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonCrossbowman",
+          "name": "冰霜骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostGiantBerserker",
+          "name": "冰霜巨人狂战士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+          "name": "冰霜持盾巨人"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "GiantToe",
+          "page": "GiantToe",
+          "translation": "巨人脚趾",
+          "translation_key": "Text_DesignData_Item_Item_GiantToe",
+          "suffix": null,
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_FrostGiantSheilder",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FrostGiantSheilder",
+      "items": [
+        {
+          "name": "ReinforcedGloves_7001",
+          "page": "ReinforcedGloves",
+          "translation": "加固手套",
+          "translation_key": "Text_DesignData_Item_Item_ReinforcedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RoundShield_7001",
+          "page": "RoundShield",
+          "translation": "圆盾",
+          "translation_key": "Text_DesignData_Item_Item_RoundShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LooseTrousers_7001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPants_7001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Buckler_7001",
+          "page": "Buckler",
+          "translation": "小圆盾",
+          "translation_key": "Text_DesignData_Item_Item_Buckler_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pavise_7001",
+          "page": "Pavise",
+          "translation": "巨盾",
+          "translation_key": "Text_DesignData_Item_Item_Pavise_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ClothPants_7001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeaterShield_7001",
+          "page": "HeaterShield",
+          "translation": "斗盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistPants_7001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LanternShield_7001",
+          "page": "LanternShield",
+          "translation": "机关盾",
+          "translation_key": "Text_DesignData_Item_Item_LanternShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lantern_7001",
+          "page": "Lantern",
+          "translation": "灯笼",
+          "translation_key": "Text_DesignData_Item_Item_Lantern_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrunkHose_7001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedLeggings_7001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BardicPants_7001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RivetedGloves_7001",
+          "page": "RivetedGloves",
+          "translation": "铆接手套",
+          "translation_key": "Text_DesignData_Item_Item_RivetedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RingsPendants",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RingsPendants",
+      "items": [
+        {
+          "name": "OxPendant_5001",
+          "page": "OxPendant",
+          "translation": "公牛吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FrostAmulet_5001",
+          "page": "FrostAmulet",
+          "translation": "冰霜护符",
+          "translation_key": "Text_DesignData_Item_Item_FrostAmulet_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfResolve_5001",
+          "page": "RingOfResolve",
+          "translation": "决心之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfResolve_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PhoenixChoker_5001",
+          "page": "PhoenixChoker",
+          "translation": "凤凰项圈",
+          "translation_key": "Text_DesignData_Item_Item_PhoenixChoker_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfCourage_5001",
+          "page": "RingOfCourage",
+          "translation": "勇气之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfCourage_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "NecklaceOfPeace_5001",
+          "page": "NecklaceOfPeace",
+          "translation": "和平项链",
+          "translation_key": "Text_DesignData_Item_Item_NecklaceOfPeace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfFinesse_5001",
+          "page": "RingOfFinesse",
+          "translation": "技巧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfFinesse_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfWisdom_5001",
+          "page": "RingOfWisdom",
+          "translation": "智慧之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfWisdom_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfVitality_5001",
+          "page": "RingOfVitality",
+          "translation": "活力之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfVitality_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "SoulTorq_5001",
+          "page": "SoulTorq",
+          "translation": "灵魂颈饰",
+          "translation_key": "Text_DesignData_Item_Item_SoulTorq_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BearPendant_5001",
+          "page": "BearPendant",
+          "translation": "熊吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BearPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "FoxPendant_5001",
+          "page": "FoxPendant",
+          "translation": "狐狸吊坠",
+          "translation_key": "Text_DesignData_Item_Item_FoxPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "OwlPendant_5001",
+          "page": "OwlPendant",
+          "translation": "猫头鹰吊坠",
+          "translation_key": "Text_DesignData_Item_Item_OwlPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MonkeyPendant_5001",
+          "page": "MonkeyPendant",
+          "translation": "猴子吊坠",
+          "translation_key": "Text_DesignData_Item_Item_MonkeyPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "BadgerPendant_5001",
+          "page": "BadgerPendant",
+          "translation": "獾吊坠",
+          "translation_key": "Text_DesignData_Item_Item_BadgerPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfSurvival_5001",
+          "page": "RingOfSurvival",
+          "translation": "生存之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfSurvival_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RatPendant_5001",
+          "page": "RatPendant",
+          "translation": "老鼠吊坠",
+          "translation_key": "Text_DesignData_Item_Item_RatPendant_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "RingOfQuickness_5001",
+          "page": "RingOfQuickness",
+          "translation": "速度之戒",
+          "translation_key": "Text_DesignData_Item_Item_RingOfQuickness_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "WindLocket_5001",
+          "page": "WindLocket",
+          "translation": "风之吊坠",
+          "translation_key": "Text_DesignData_Item_Item_WindLocket_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_EventCurrency",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_EventCurrency",
+      "items": [
+        {
+          "name": "GoldCoins",
+          "page": "GoldCoins",
+          "translation": "金币",
+          "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+          "suffix": null,
+          "luck_grade": 7
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰霜持盾巨人",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}
