@@ -18,6 +18,25 @@ sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
 管道、构建和 preview 都必须检查后台日志/进程状态，确认命令成功后才能进行适用的功能回归。HTTP 200 和功能测试通过后，回到 `docs/DEVELOPMENT_WORKFLOW.md` 执行 `SESSION_CHANGES`、精确 staging 和正式 commit。测试失败或中断时才使用 `wip:` 保存状态。
 `python main.py` 在 search_index 步骤后自动运行 `build_locale_files`，生成 `data/json/locale/{lang}.json`（10种语言）。`npm run build` 中的 `ssg.mjs` 使用这些 locale 字典为每种语言生成 HTML 副本（dist/{lang}/...）。完整构建产物约 1.28 GB。
 
+## 更新部署
+
+与「完整构建」独立。用户说「更新部署」「补丁部署」时执行本流程，不要改走完整构建或仅前端构建。目的是同步最新游戏解包、全量重建 SQLite，并把含新 DB 的 `main` 推到 `origin/main`（供 Actions 无游戏源时导出 JSON）。
+
+```bash
+git status --short
+~/sync_fmod.sh                                      # 1. 同步 FMOD Output → ~/fmod/Output/
+rm -f api/data/darkfindv5.db                        # 2. 删除本地 DB，强制全量重建
+cd api && nohup python main.py > pipeline.log 2>&1 &  # 3. 数据管道生成新 DB 与 JSON
+# 4. 管道成功且 DB 可用后，按下方「推送到 dnd9（含 DB）」提交并推送 origin/main
+```
+
+规则：
+- 同步脚本路径固定为 `/home/mio/sync_fmod.sh`（`rsync -avu /mnt/e/Game/fmod/Output/ ~/fmod/Output/`）。
+- 管道必须后台跑并检查 `api/pipeline.log`；成功后用 sqlite-debug 确认 DB 可读、表数量正常。
+- 不在本流程中跑 `npm run build` / `vite preview`；前端 SSG 由 GitHub Actions 在拿到新 DB 后完成。
+- 推送前更新 `docs/SESSION_CHANGES.md`；只 stage 本次文档与临时跟踪的 DB，不要混入 `.playwright-mcp/` 等无关文件。
+- 本地 DB 默认 `skip-worktree`；rebase/checkout 被 DB 挡住时，先 `--no-skip-worktree` 并移走文件，完成后再恢复。
+
 ## Lootdrop 变体构建范围
 
 SSG 不为普通 lootdrop 变体生成全量实体文件，避免每个品质变体重复占用静态文件预算：
