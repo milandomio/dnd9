@@ -99,12 +99,29 @@ export interface ItemEntity {
   isDetailTemplate?: boolean;
 }
 
+export interface MonsterLootItem {
+  name: string;
+  page: string;
+  translation: string;
+  translation_key?: string;
+  suffix: string | null;
+  luck_grade: number;
+}
+
+export interface MonsterLootPool {
+  id: string;
+  kind: 'quest' | 'artifact' | 'pool';
+  lootdrop_id: string | null;
+  items: MonsterLootItem[];
+}
+
 export interface MonsterEntity {
   name: string;
   translation: string;
   translation_key?: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  loot_pools?: MonsterLootPool[];
   isDetailTemplate?: boolean;
 }
 

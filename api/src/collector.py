@@ -27,6 +27,7 @@ from module_builder import (
     build_map_mappings,
     build_modules_map,
 )
+from monster_drops_builder import attach_loot_pools
 from pipeline import Pipeline
 from quest_collector import run_quest_extraction
 from search_engine import load_all_spawner_data
@@ -532,6 +533,17 @@ def run(
         )
         pipe.log(f"[PERF] lootdrops details: {time.perf_counter() - _lootdrop_details_started:.3f}s")
         pipe.log("[JSON] lootdrops detail files DONE")
+
+        _monster_drops_started = time.perf_counter()
+        _monster_drops_n = attach_loot_pools(
+            entity_data_by_type["monsters"],
+            db,
+            translations,
+        )
+        pipe.log(
+            f"[JSON] monster loot_pools: {_monster_drops_n} monsters "
+            f"({time.perf_counter() - _monster_drops_started:.3f}s)"
+        )
 
         _lootdrop_enrichment_started = time.perf_counter()
         enrich_all_entities(
