@@ -2,6 +2,19 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-09-18
+
+### chore: 更新部署（同步 FMOD、全量重建 DB 并推送）
+
+- **改动原因**：执行独立于完整构建的「更新部署」：同步最新游戏解包、删库全量重建 SQLite，并把含新 DB 的 `main` 推到 `origin/main`。同时把该流程写入主文档，避免再误走完整构建/仅前端构建。
+- **变更文件**：`docs/BUILD_AND_DEPLOY.md`、`AGENTS.md`、`docs/SESSION_CHANGES.md`；`api/data/darkfindv5.db`（远程临时跟踪）。
+- **关键逻辑/映射关系**：
+  1. `~/sync_fmod.sh`：`rsync -avu /mnt/e/Game/fmod/Output/ ~/fmod/Output/`，约 2.08 GB，含 2026-09-18 FModel 日志。
+  2. 删除 `api/data/darkfindv5.db` 后 `python main.py` 全量重建。
+  3. 推送前将「更新部署」写入 `docs/BUILD_AND_DEPLOY.md`，并在 `AGENTS.md` 查阅表增加对应入口。
+  4. 本地 `main` 已 rebase 到远程 `chore: update DB`，其上还有未推送的 GA4 gtag 修复。
+- **验证**：管道 TOTAL 44.02s，`[VALIDATE] all module images OK`；新 DB 约 38 MiB、37 张表，sqlite-debug 可读。本次不跑本地 SSG；前端由 Actions 在拿到新 DB 后构建。
+
 ## 2026-09-12
 
 ### fix: 修正 gtag stub，使 GA4 能发出 collect

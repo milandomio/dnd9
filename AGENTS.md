@@ -18,6 +18,7 @@
 |------|----------|
 | 改代码、提交、预检、pre-commit/TS/Prettier 问题 | `docs/DEVELOPMENT_WORKFLOW.md` |
 | 数据管道、前端构建、启动 web、HTTP 200 验证、部署、DB 推送 | `docs/BUILD_AND_DEPLOY.md` |
+| 更新部署 / 补丁部署（同步 FMOD、删库、重建管道、推送含 DB 的 main） | `docs/BUILD_AND_DEPLOY.md` 的「更新部署」；不要走完整构建 |
 | 项目结构、页面布局、组件职责、Hydration 排障、数据管道细节、子池、PWA 缓存、文档索引 | `docs/AGENT_REFERENCE.md` |
 | 数据管道、Spawner、坐标和实体分类 | `docs/REFERENCE_DATA_PIPELINE.md` |
 | 生成概率、物品爆率和掉落详情 | `docs/REFERENCE_DROP_RATES.md` |
