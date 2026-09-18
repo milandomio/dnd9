@@ -4,6 +4,13 @@
 
 ## 2026-09-19
 
+### chore: 推送 main 并更新远程数据库快照
+
+- **改动原因**：本地 `main` 有未推送的怪物列表分组/种族标签提交，且重建后的 `darkfindv5.db` 新于远程快照；按文档把含最新 DB 的 `main` 推到 `origin/main`。
+- **变更文件**：`api/data/darkfindv5.db`（远程临时跟踪）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：按 `docs/BUILD_AND_DEPLOY.md` 强制加入 DB、推送 `origin/main`，随后本地 `reset HEAD~1` 并恢复 `skip-worktree`。
+- **验证**：sqlite-debug 可读。本次不跑本地 SSG；前端由 Actions 在拿到新 DB 后构建。本地 Vite 8080/8090 已关闭。
+
 ### feat: 怪物列表种族改卡片标签，组内仍按种族排序
 
 - **改动原因**：DemonOverseer 同时有 `Type.Character.Demon.Demon` 与 `Type.Character.Humanoid.Human`，不能再按单一种族独占分组。列表仍按 Boss / 小Boss / 一般 / 杂项，去掉种族小标题；同种族仍排在一起；全部叶子种族写在卡片名下方，字更小、颜色更淡。
