@@ -4,6 +4,13 @@
 
 ## 2026-09-18
 
+### chore: 推送 main 并更新远程数据库快照
+
+- **改动原因**：本地 `main` 有未推送的怪物掉落池芯片提交，且本地 `darkfindv5.db`（管道重建后）新于远程快照；按文档把含最新 DB 的 `main` 推到 `origin/main`。
+- **变更文件**：`api/data/darkfindv5.db`（远程临时跟踪）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：先 rebase 到远程 `chore: update DB`（`7723617b3`），再按 `docs/BUILD_AND_DEPLOY.md` 强制加入 DB、推送 `origin/main`，随后本地 `reset HEAD~1` 并恢复 `skip-worktree`。远程 DB 约 44 MiB、37 张表。
+- **验证**：rebase 无冲突；SQLite 可读且表数量为 37。本次不跑本地 SSG；前端由 Actions 在拿到新 DB 后构建。
+
 ### feat: 怪物详情按掉落池显示掉落物芯片
 
 - **改动原因**：怪物详情页只有坐标和自身聚合爆率，无法从 `/zh-Hans/monsters/LootGoblin/` 直接跳到掉落表。需要类似稀有度切换的芯片，按掉落池分页、按品质着色排序，点击进入对应 lootdrop 页。
