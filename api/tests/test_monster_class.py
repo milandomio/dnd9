@@ -10,6 +10,7 @@ from db._helpers import (  # noqa: E402
     monster_is_passive,
     monster_list_type,
     monster_race_from_properties,
+    monster_races_from_properties,
     preferred_monster_class,
 )
 from entity_export import export_monsters  # noqa: E402
@@ -138,8 +139,23 @@ class MonsterClassHelpersTest(unittest.TestCase):
             "Ghost",
         )
         self.assertEqual(
+            monster_races_from_properties(
+                {
+                    "CharacterTypes": [
+                        {"TagName": "Type.Character.Undead.Ghost"},
+                        {"TagName": "Type.Character.Undead"},
+                    ]
+                }
+            ),
+            ["Ghost"],
+        )
+        self.assertEqual(
             monster_race_from_properties({"CharacterTypes": [{"TagName": "Type.Character.Beast.Aquatic"}]}),
             "Aquatic",
+        )
+        self.assertEqual(
+            monster_races_from_properties({"CharacterTypes": [{"TagName": "Type.Character.Beast.Aquatic"}]}),
+            ["Aquatic"],
         )
         self.assertEqual(
             monster_race_from_properties(
@@ -153,7 +169,32 @@ class MonsterClassHelpersTest(unittest.TestCase):
             ),
             "Demon",
         )
+        self.assertEqual(
+            monster_races_from_properties(
+                {
+                    "CharacterTypes": [
+                        {"TagName": "Type.Character.Demon.Demon"},
+                        {"TagName": "Type.Character.Aberration"},
+                        {"TagName": "Type.Character.Demon"},
+                    ]
+                }
+            ),
+            ["Demon", "Aberration"],
+        )
+        self.assertEqual(
+            monster_races_from_properties(
+                {
+                    "CharacterTypes": [
+                        {"TagName": "Type.Character.Demon.Demon"},
+                        {"TagName": "Type.Character.Humanoid.Human"},
+                        {"TagName": "Type.Character.Demon"},
+                    ]
+                }
+            ),
+            ["Demon", "Human"],
+        )
         self.assertEqual(monster_race_from_properties({}), "")
+        self.assertEqual(monster_races_from_properties({}), [])
 
 
 class ExportMonsterTypeTest(unittest.TestCase):
@@ -164,30 +205,42 @@ class ExportMonsterTypeTest(unittest.TestCase):
                 "translation_key": "Text_DesignData_Monster_Monster_Banshee",
                 "class_type": "Boss",
                 "race": "Ghost",
+                "races": ["Ghost"],
             },
             {
                 "monster_name": "Banshee_Elite",
                 "translation_key": "Text_DesignData_Monster_Monster_Banshee",
                 "class_type": "Normal",
-                "race": "Ghost",
+                "race": "Undead",
+                "races": ["Undead"],
             },
             {
                 "monster_name": "SkeletonChampion",
                 "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
                 "class_type": "SubBoss",
                 "race": "Skeleton",
+                "races": ["Skeleton"],
             },
             {
                 "monster_name": "SkeletonArcher",
                 "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
                 "class_type": "Normal",
                 "race": "Skeleton",
+                "races": ["Skeleton"],
             },
             {
                 "monster_name": "Salmon",
                 "translation_key": "Text_DesignData_Monster_Monster_Salmon",
                 "class_type": "Passive",
                 "race": "Aquatic",
+                "races": ["Aquatic"],
+            },
+            {
+                "monster_name": "DemonOverseer",
+                "translation_key": "Text_DesignData_Monster_Monster_DemonOverseer",
+                "class_type": "Boss",
+                "race": "Demon",
+                "races": ["Demon", "Human"],
             },
         ]
         names = {m["monster_name"] for m in monsters}
@@ -205,11 +258,15 @@ class ExportMonsterTypeTest(unittest.TestCase):
         by_name = {row["name"]: row for row in index}
         self.assertEqual(by_name["Banshee"]["type"], "boss")
         self.assertEqual(by_name["Banshee"]["race"], "Ghost")
+        self.assertEqual(by_name["Banshee"]["races"], ["Ghost"])
         self.assertEqual(by_name["SkeletonChampion"]["type"], "miniboss")
         self.assertEqual(by_name["SkeletonChampion"]["race"], "Skeleton")
         self.assertEqual(by_name["SkeletonArcher"]["type"], "normal")
         self.assertEqual(by_name["Salmon"]["type"], "misc")
         self.assertEqual(by_name["Salmon"]["race"], "Aquatic")
+        self.assertEqual(by_name["DemonOverseer"]["type"], "boss")
+        self.assertEqual(by_name["DemonOverseer"]["race"], "Demon")
+        self.assertEqual(by_name["DemonOverseer"]["races"], ["Demon", "Human"])
 
 
 if __name__ == "__main__":

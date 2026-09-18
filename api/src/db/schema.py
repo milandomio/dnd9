@@ -24,7 +24,8 @@ class SchemaManager:
                 raw_name TEXT NOT NULL,
                 translation_key TEXT NOT NULL DEFAULT '',
                 class_type TEXT NOT NULL DEFAULT '',
-                race TEXT NOT NULL DEFAULT ''
+                race TEXT NOT NULL DEFAULT '',
+                races TEXT NOT NULL DEFAULT '[]'
             );
 
             CREATE TABLE IF NOT EXISTS props_entities (
@@ -224,6 +225,8 @@ class SchemaManager:
             c.execute("ALTER TABLE monster_entities ADD COLUMN class_type TEXT NOT NULL DEFAULT ''")
         if "race" not in columns:
             c.execute("ALTER TABLE monster_entities ADD COLUMN race TEXT NOT NULL DEFAULT ''")
+        if "races" not in columns:
+            c.execute("ALTER TABLE monster_entities ADD COLUMN races TEXT NOT NULL DEFAULT '[]'")
 
     def _migrate_explore_targets_table(self):
         c = self.conn.cursor()

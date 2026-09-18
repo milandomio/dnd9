@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from db._helpers import monster_list_type, preferred_monster_class
+from db._helpers import monster_list_type, parse_monster_races, preferred_monster_class, preferred_monster_races
 from label_type import GOLDCHEST_SPECIAL, LABEL_TYPE_SUFFIX
 from translator import (
     ORE_ITEM_COORD_RE,
@@ -155,6 +155,15 @@ def export_monsters(
         )
         if not race:
             race = next((r.get("race") or "" for r in group if r.get("race")), "")
+        races: list[str] = []
+        for r in group:
+            if (r.get("class_type") or "") == class_type:
+                races = preferred_monster_races(races, parse_monster_races(r.get("races")))
+        if not races:
+            for r in group:
+                races = preferred_monster_races(races, parse_monster_races(r.get("races")))
+        if not races and race:
+            races = [race]
         monsters_index.append(
             {
                 "name": canonical["monster_name"],
@@ -163,6 +172,7 @@ def export_monsters(
                 "coordCount": len(merged_coords_list),
                 "type": list_type,
                 "race": race,
+                "races": races,
             }
         )
         entity_data = {

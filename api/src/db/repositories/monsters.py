@@ -1,11 +1,14 @@
 from typing import TypedDict
 
+from .._helpers import parse_monster_races
+
 
 class MonsterEntity(TypedDict):
     monster_name: str
     translation_key: str
     class_type: str
     race: str
+    races: list[str]
 
 
 class MonstersRepository:
@@ -18,10 +21,16 @@ class MonstersRepository:
         columns = {row[1] for row in c.fetchall()}
         class_expr = "class_type" if "class_type" in columns else "'' AS class_type"
         race_expr = "race" if "race" in columns else "'' AS race"
+        races_expr = "races" if "races" in columns else "'[]' AS races"
         c.execute(
-            f"SELECT monster_name, translation_key, {class_expr}, {race_expr} FROM monster_entities ORDER BY monster_name"
+            f"SELECT monster_name, translation_key, {class_expr}, {race_expr}, {races_expr} FROM monster_entities ORDER BY monster_name"
         )
-        return [dict(r) for r in c.fetchall()]
+        rows = []
+        for r in c.fetchall():
+            row = dict(r)
+            row["races"] = parse_monster_races(row.get("races"))
+            rows.append(row)
+        return rows
 
     def get_name_map(self) -> dict[str, str]:
         c = self.conn.cursor()

@@ -139,14 +139,33 @@ def monster_list_type(class_type: str) -> str:
     return _MONSTER_CLASS_TO_LIST_TYPE.get(class_type, "normal")
 
 
-def monster_race_from_properties(properties: dict | None) -> str:
-    """Most specific CharacterTypes suffix, e.g. Type.Character.Undead.Ghost → Ghost."""
+def _character_type_tags(properties: dict | None) -> list[str]:
     types = (properties or {}).get("CharacterTypes") or []
     tags: list[str] = []
     for entry in types:
         tag = entry.get("TagName", "") if isinstance(entry, dict) else ""
         if tag.startswith("Type.Character."):
             tags.append(tag)
+    return tags
+
+
+def monster_races_from_properties(properties: dict | None) -> list[str]:
+    """Unique leaf CharacterTypes suffixes, e.g. Demon.Demon + Humanoid.Human → Demon, Human."""
+    tags = _character_type_tags(properties)
+    leaves = [tag for tag in tags if not any(other != tag and other.startswith(tag + ".") for other in tags)]
+    races: list[str] = []
+    seen: set[str] = set()
+    for tag in leaves:
+        suffix = tag.rsplit(".", 1)[-1]
+        if suffix and suffix not in seen:
+            seen.add(suffix)
+            races.append(suffix)
+    return races
+
+
+def monster_race_from_properties(properties: dict | None) -> str:
+    """Most specific CharacterTypes suffix, used as list sort key."""
+    tags = _character_type_tags(properties)
     if not tags:
         return ""
     tags.sort(key=len, reverse=True)
@@ -155,6 +174,34 @@ def monster_race_from_properties(properties: dict | None) -> str:
 
 def preferred_monster_race(current: str, incoming: str) -> str:
     return current or incoming
+
+
+def preferred_monster_races(current: list[str], incoming: list[str]) -> list[str]:
+    seen = set(current)
+    out = list(current)
+    for race in incoming:
+        if race and race not in seen:
+            seen.add(race)
+            out.append(race)
+    return out
+
+
+def parse_monster_races(value: str | list | None) -> list[str]:
+    if isinstance(value, list):
+        return [str(item) for item in value if item]
+    if not value:
+        return []
+    try:
+        parsed = json.loads(value)
+    except (TypeError, json.JSONDecodeError):
+        return [value] if isinstance(value, str) else []
+    if isinstance(parsed, list):
+        return [str(item) for item in parsed if item]
+    return []
+
+
+def dump_monster_races(races: list[str]) -> str:
+    return json.dumps(races, ensure_ascii=False)
 
 
 def extract_props_name(raw_name: str) -> str:

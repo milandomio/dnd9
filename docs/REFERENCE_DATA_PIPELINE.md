@@ -29,7 +29,7 @@ Spawner 坐标必须沿 `AttachParent` 链递归累加，并按父级累计 Yaw 
 - `_Hard`、`_VeryHard`、`_Unique` 等掉落实体后缀在 lootdrop 解析阶段合并，避免重复掉落源。
 - 怪物质量变体优先按翻译键合并；翻译失败时才对 `_Common`、`_Elite`、`_Nightmare`、`_Unique` 使用基础名兜底。
 - 怪物列表一级分组取 `DCMonsterDataAsset.ClassType`：`Type.Monster.Class.Boss` → `boss`，`SubBoss` → `miniboss`，其余 → `normal`。`Id.NPC.*` 或技能只有死亡/逃跑/闲置（无攻击技能）的 Normal 记为 `Passive` → 列表 `misc`。同一页合并多变体时保留最高等级（Boss > SubBoss > Normal > Passive）。
-- 二级分组取 `CharacterTypes` 中最长的 `Type.Character.*` 后缀（如 `Undead.Ghost` → `Ghost`，`Beast.Aquatic` → `Aquatic`）。写入 `monster_entities.race`，导出到 `monsters.json` / search_index 的 `race`。未知种族走 `ui.list.item_group_unknown`。
+- 列表排序键取 `CharacterTypes` 中最长的 `Type.Character.*` 后缀（如 `Undead.Ghost` → `Ghost`），写入 `monster_entities.race`。卡片标签取全部叶子后缀（父标签被更具体子标签覆盖时去掉），如 DemonOverseer：`Demon.Demon` + `Humanoid.Human` → `Demon`、`Human`。写入 `monster_entities.races`，导出 `monsters.json` / search_index 的 `race` 与 `races`。列表只按 Class 分组，组内按 `race` 再按名字排，标签写在卡片名下方。
 
 ## 物品坐标链式反查
 
