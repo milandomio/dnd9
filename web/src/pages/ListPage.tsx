@@ -17,6 +17,7 @@ type IndexEntry = SearchEntry & {
   coordCount?: number;
   type?: string;
   race?: string;
+  races?: string[];
   // lootdrops SSR data fields
   variant_count?: number;
   translation_key?: string;
@@ -286,12 +287,19 @@ function monsterClassKey(
     : 'normal';
 }
 
+function compareMonsterRaceThenName(a: IndexEntry, b: IndexEntry): number {
+  if (!a.race && b.race) return 1;
+  if (a.race && !b.race) return -1;
+  const raceCmp = (a.race || '').localeCompare(b.race || '');
+  if (raceCmp) return raceCmp;
+  return a.name.localeCompare(b.name);
+}
+
 function groupMonsters(items: IndexEntry[]): {
   key: string;
   labelKey: string;
   icon: string;
   items: IndexEntry[];
-  subgroups: { key: string; race: string; items: IndexEntry[] }[];
 }[] {
   const buckets: Record<(typeof MONSTER_GROUP_ORDER)[number], IndexEntry[]> = {
     boss: [],
@@ -303,33 +311,12 @@ function groupMonsters(items: IndexEntry[]): {
     buckets[monsterClassKey(item.type)].push(item);
   }
   return MONSTER_GROUP_ORDER.filter((key) => buckets[key].length > 0).map(
-    (key) => {
-      const raceBuckets = new Map<string, IndexEntry[]>();
-      for (const item of buckets[key]) {
-        const race = item.race || '';
-        const list = raceBuckets.get(race);
-        if (list) list.push(item);
-        else raceBuckets.set(race, [item]);
-      }
-      const subgroups = [...raceBuckets.entries()]
-        .sort((a, b) => {
-          if (!a[0]) return 1;
-          if (!b[0]) return -1;
-          return a[0].localeCompare(b[0]);
-        })
-        .map(([race, raceItems]) => ({
-          key: race || 'unknown',
-          race,
-          items: raceItems,
-        }));
-      return {
-        key,
-        labelKey: MONSTER_GROUP_META[key].labelKey,
-        icon: MONSTER_GROUP_META[key].icon,
-        items: buckets[key],
-        subgroups,
-      };
-    }
+    (key) => ({
+      key,
+      labelKey: MONSTER_GROUP_META[key].labelKey,
+      icon: MONSTER_GROUP_META[key].icon,
+      items: [...buckets[key]].sort(compareMonsterRaceThenName),
+    })
   );
 }
 
@@ -382,51 +369,74 @@ export default function ListPage() {
   const selectedLootGroup =
     lootGroups.find((group) => group.key === activeLootGroup) ?? lootGroups[0];
 
-  const renderListCard = (entity: IndexEntry) => (
-    <Link
-      key={entity.name}
-      to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
-      style={{
-        textDecoration: 'none',
-        display: 'block',
-        background: tokens.surface,
-        border: `1px solid ${tokens.border}`,
-        borderRadius: 8,
-        padding: 20,
-        textAlign: 'center',
-        transition: 'transform 0.2s, box-shadow 0.2s',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-5px)';
-        e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.5)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'none';
-        e.currentTarget.style.boxShadow = 'none';
-      }}
-    >
-      <div
+  const renderListCard = (entity: IndexEntry) => {
+    const raceTags = (
+      entity.races?.length ? entity.races : entity.race ? [entity.race] : []
+    )
+      .map((race) => {
+        const raceKey = `ui.list.monster_race.${race}`;
+        const label = ut(raceKey);
+        return label === raceKey ? race : label;
+      })
+      .filter(Boolean);
+    return (
+      <Link
+        key={entity.name}
+        to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
         style={{
-          color: tokens.text,
-          fontSize: 18,
-          fontWeight: 'bold',
+          textDecoration: 'none',
+          display: 'block',
+          background: tokens.surface,
+          border: `1px solid ${tokens.border}`,
+          borderRadius: 8,
+          padding: 20,
+          textAlign: 'center',
+          transition: 'transform 0.2s, box-shadow 0.2s',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-5px)';
+          e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.5)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'none';
+          e.currentTarget.style.boxShadow = 'none';
         }}
       >
-        {t(entity.translation_key, entity.translation || entity.name)}
-      </div>
-      {debug && (
         <div
           style={{
-            color: tokens.muted,
-            fontSize: 12,
-            marginTop: 4,
+            color: tokens.text,
+            fontSize: 18,
+            fontWeight: 'bold',
           }}
         >
-          {t(entity.translation_key, entity.translation)}【{entity.name}】
+          {t(entity.translation_key, entity.translation || entity.name)}
         </div>
-      )}
-    </Link>
-  );
+        {page === 'monsters' && raceTags.length > 0 && (
+          <div
+            style={{
+              color: tokens.muted,
+              fontSize: 12,
+              fontWeight: 'normal',
+              marginTop: 4,
+            }}
+          >
+            {raceTags.join(delimiter)}
+          </div>
+        )}
+        {debug && (
+          <div
+            style={{
+              color: tokens.muted,
+              fontSize: 12,
+              marginTop: 4,
+            }}
+          >
+            {t(entity.translation_key, entity.translation)}【{entity.name}】
+          </div>
+        )}
+      </Link>
+    );
+  };
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -562,42 +572,15 @@ export default function ListPage() {
                   >
                     {group.icon} {ut(group.labelKey)}（{group.items.length}）
                   </div>
-                  {group.subgroups.map((subgroup) => {
-                    const raceKey = subgroup.race
-                      ? `ui.list.monster_race.${subgroup.race}`
-                      : 'ui.list.item_group_unknown';
-                    const raceLabel = subgroup.race
-                      ? ut(raceKey) === raceKey
-                        ? subgroup.race
-                        : ut(raceKey)
-                      : ut(raceKey);
-                    return (
-                      <div key={`${group.key}-${subgroup.key}`}>
-                        <div
-                          style={{
-                            fontSize: 16,
-                            fontWeight: 'bold',
-                            color: tokens.muted,
-                            margin: '8px 0 10px 4px',
-                          }}
-                        >
-                          {raceLabel}（{subgroup.items.length}）
-                        </div>
-                        <div
-                          style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
-                            gap: 20,
-                            marginBottom: 16,
-                          }}
-                        >
-                          {subgroup.items.map((entity) =>
-                            renderListCard(entity)
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(3, 1fr)',
+                      gap: 20,
+                    }}
+                  >
+                    {group.items.map((entity) => renderListCard(entity))}
+                  </div>
                 </div>
               ))
             : page === 'lootdrops'

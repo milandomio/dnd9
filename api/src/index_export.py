@@ -290,6 +290,8 @@ def build_and_save_indexes(
             si_entry["type"] = entry["type"]
         if entry.get("race"):
             si_entry["race"] = entry["race"]
+        if entry.get("races"):
+            si_entry["races"] = entry["races"]
         search_index.append(si_entry)
     for entry in props_index:
         si_entry = {

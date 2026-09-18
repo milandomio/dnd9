@@ -4,6 +4,18 @@
 
 ## 2026-09-19
 
+### feat: 怪物列表种族改卡片标签，组内仍按种族排序
+
+- **改动原因**：DemonOverseer 同时有 `Type.Character.Demon.Demon` 与 `Type.Character.Humanoid.Human`，不能再按单一种族独占分组。列表仍按 Boss / 小Boss / 一般 / 杂项，去掉种族小标题；同种族仍排在一起；全部叶子种族写在卡片名下方，字更小、颜色更淡。
+- **变更文件**：`api/src/db/_helpers.py`、`api/src/db/schema.py`、`api/src/db/importers/monsters.py`、`api/src/db/repositories/monsters.py`、`api/src/entity_export.py`、`api/src/index_export.py`、`api/src/db_freshness.py`、`api/tests/test_monster_class.py`、`web/src/pages/ListPage.tsx`、`docs/REFERENCE_DATA_PIPELINE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `race` 仍取最长 `Type.Character.*` 后缀，只作组内排序键。
+  2. `races` 取叶子后缀（被更具体子标签覆盖的父标签去掉）：DemonOverseer → `Demon`、`Human`。写入 `monster_entities.races`，导出 `monsters.json` / search_index。
+  3. 变体合并时 `races` 只取最高 Class 那条，避免 Banshee Boss 卡片带上 FogMissile 变体的 `Undead`。
+  4. 列表卡片：`races` 用 `ui.list.monster_race.*`，12px、`tokens.muted`，中日文用顿号。
+  5. `GENERATOR_VERSION` 升到 `db-lifecycle-v6-monster-race-tags`。
+- **验证**：`python3 -m unittest tests.test_monster_class` 5 项通过；`./lint.sh`、`npx tsc --noEmit`、prettier 通过；eslint 仅既有 `ssrData` warning。管道 `--rebuild-db` TOTAL 65.20s，再导出 50.21s。DemonOverseer `boss` + `races: [Demon, Human]`；Banshee `[Ghost]`；CaveTroll `[Troll, Beast]`。8090 `/zh-Hans/monsters/` HTTP 200。本次不跑全站 SSG，不 push。
+
 ### feat: 怪物列表一级 Class、二级种族嵌套，无攻击性归入杂项
 
 - **改动原因**：鲑鱼、快递员等无攻击性实体与一般怪物共用 `ClassType.Normal`。列表需要先按 Boss / 小Boss / 一般 / 杂项，再按 `CharacterTypes` 种族拆开，避免一般怪物过长、Boss 仍一眼可见。`CharacterTypes` 是种族不是敌对性，不能单独用来分杂项。
