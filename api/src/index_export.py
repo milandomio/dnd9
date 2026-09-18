@@ -279,15 +279,16 @@ def build_and_save_indexes(
             }
         )
     for entry in monsters_index:
-        search_index.append(
-            {
-                "name": entry["name"],
-                "translation": entry.get("translation", ""),
-                "translation_key": entry.get("translation_key", ""),
-                "page": "monsters",
-                "url": f"/monsters/{urllib.parse.quote(entry['name'], safe='')}/",
-            }
-        )
+        si_entry = {
+            "name": entry["name"],
+            "translation": entry.get("translation", ""),
+            "translation_key": entry.get("translation_key", ""),
+            "page": "monsters",
+            "url": f"/monsters/{urllib.parse.quote(entry['name'], safe='')}/",
+        }
+        if entry.get("type"):
+            si_entry["type"] = entry["type"]
+        search_index.append(si_entry)
     for entry in props_index:
         si_entry = {
             "name": entry["name"],

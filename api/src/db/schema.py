@@ -22,7 +22,8 @@ class SchemaManager:
             CREATE TABLE IF NOT EXISTS monster_entities (
                 monster_name TEXT PRIMARY KEY,
                 raw_name TEXT NOT NULL,
-                translation_key TEXT NOT NULL DEFAULT ''
+                translation_key TEXT NOT NULL DEFAULT '',
+                class_type TEXT NOT NULL DEFAULT ''
             );
 
             CREATE TABLE IF NOT EXISTS props_entities (
@@ -174,6 +175,7 @@ class SchemaManager:
             );
         """)
         self._migrate_item_entities_table()
+        self._migrate_monster_entities_table()
         self._migrate_spawners_table()
         self._migrate_explore_targets_table()
         self.conn.commit()
@@ -212,6 +214,13 @@ class SchemaManager:
         ):
             if column not in columns:
                 c.execute(f"ALTER TABLE item_entities ADD COLUMN {column} {definition}")
+
+    def _migrate_monster_entities_table(self):
+        c = self.conn.cursor()
+        c.execute("PRAGMA table_info(monster_entities)")
+        columns = {row[1] for row in c.fetchall()}
+        if "class_type" not in columns:
+            c.execute("ALTER TABLE monster_entities ADD COLUMN class_type TEXT NOT NULL DEFAULT ''")
 
     def _migrate_explore_targets_table(self):
         c = self.conn.cursor()

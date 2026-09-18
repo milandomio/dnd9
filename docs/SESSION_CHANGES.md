@@ -4,6 +4,17 @@
 
 ## 2026-09-19
 
+### feat: 怪物列表按 Boss / 小Boss / 一般怪物分组
+
+- **改动原因**：`/zh-Hans/monsters/` 原先平铺卡片。按 `/zh-Hans/props/` 的全宽分组标题 + 三列卡片样式，用游戏 `DCMonsterDataAsset.ClassType` 分成 Boss、小Boss、一般怪物。
+- **变更文件**：`api/src/db/_helpers.py`、`api/src/db/schema.py`、`api/src/db/importers/monsters.py`、`api/src/db/repositories/monsters.py`、`api/src/entity_export.py`、`api/src/index_export.py`、`api/src/db_freshness.py`、`api/tests/test_monster_class.py`、`web/src/pages/ListPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/REFERENCE_DATA_PIPELINE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `ClassType.TagName`：`Type.Monster.Class.Boss` → `boss`，`SubBoss` → `miniboss`，其余/缺失 → `normal`。
+  2. `monster_entities.class_type`；质量变体合并时保留最高级（Boss > SubBoss > Normal）。
+  3. `export_monsters` 把 `type` 写入 `monsters.json`，`search_index` 原样拷贝；列表 CSR 读 search_index。
+  4. `GENERATOR_VERSION` 升到 `db-lifecycle-v3-monster-class-type`，强制重建导入。
+- **验证**：`python3 -m unittest tests.test_monster_class` 3 项通过；`./lint.sh`、`npx tsc --noEmit`、目标文件 prettier 通过；eslint 仅既有 `ssrData` warning。管道 `--rebuild-db` TOTAL 62.88s。列表 151：Boss 13 / 小Boss 23 / 一般 115。Playwright 8090：`👑 Boss（13）`、`⚔️ 小Boss（23）`、`💀 一般怪物（115）`。本次不跑全站 SSG，不 push。
+
 ### fix: 怪物掉落芯片过滤实际爆率为 0 的条目
 
 - **改动原因**：`/zh-Hans/monsters/Banshee/` 掉落芯片列出了神器（如 `CrystalBall_8001`），但打开对应 lootdrop 页没有 Banshee 来源按钮。芯片原先只反映掉落表成员关系；物品页来源按钮用 `get_group_drop_rates`，任一模式均为 0 则隐藏。Banshee 只在 Ruins HR_D，实际 grade 的 luck-8 权重为 0。

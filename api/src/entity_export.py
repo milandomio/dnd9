@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+from db._helpers import monster_list_type, preferred_monster_class
 from label_type import GOLDCHEST_SPECIAL, LABEL_TYPE_SUFFIX
 from translator import (
     ORE_ITEM_COORD_RE,
@@ -144,12 +145,17 @@ def export_monsters(
                     merged_coords_list.append(c)
         if not merged_coords_list:
             continue
+        class_type = ""
+        for r in group:
+            class_type = preferred_monster_class(class_type, r.get("class_type") or "")
+        list_type = monster_list_type(class_type)
         monsters_index.append(
             {
                 "name": canonical["monster_name"],
                 "translation": translation,
                 "translation_key": translation_key,
                 "coordCount": len(merged_coords_list),
+                "type": list_type,
             }
         )
         entity_data = {
