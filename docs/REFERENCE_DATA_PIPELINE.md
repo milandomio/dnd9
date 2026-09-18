@@ -28,7 +28,8 @@ Spawner 坐标必须沿 `AttachParent` 链递归累加，并按父级累计 Yaw 
 - 翻译键从实体 JSON 的 `Properties.Name.Key` 在导入阶段获取并写入实体表/翻译表；后续导出和 locale 收集只使用 DB 中的 key。
 - `_Hard`、`_VeryHard`、`_Unique` 等掉落实体后缀在 lootdrop 解析阶段合并，避免重复掉落源。
 - 怪物质量变体优先按翻译键合并；翻译失败时才对 `_Common`、`_Elite`、`_Nightmare`、`_Unique` 使用基础名兜底。
-- 怪物列表分组取 `DCMonsterDataAsset.ClassType`：`Type.Monster.Class.Boss` → `boss`，`SubBoss` → `miniboss`，其余 → `normal`；同一页合并多变体时保留最高等级（Boss > SubBoss > Normal）。
+- 怪物列表一级分组取 `DCMonsterDataAsset.ClassType`：`Type.Monster.Class.Boss` → `boss`，`SubBoss` → `miniboss`，其余 → `normal`。`Id.NPC.*` 或技能只有死亡/逃跑/闲置（无攻击技能）的 Normal 记为 `Passive` → 列表 `misc`。同一页合并多变体时保留最高等级（Boss > SubBoss > Normal > Passive）。
+- 二级分组取 `CharacterTypes` 中最长的 `Type.Character.*` 后缀（如 `Undead.Ghost` → `Ghost`，`Beast.Aquatic` → `Aquatic`）。写入 `monster_entities.race`，导出到 `monsters.json` / search_index 的 `race`。未知种族走 `ui.list.item_group_unknown`。
 
 ## 物品坐标链式反查
 

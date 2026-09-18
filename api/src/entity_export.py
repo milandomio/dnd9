@@ -149,6 +149,12 @@ def export_monsters(
         for r in group:
             class_type = preferred_monster_class(class_type, r.get("class_type") or "")
         list_type = monster_list_type(class_type)
+        race = next(
+            (r.get("race") or "" for r in group if (r.get("class_type") or "") == class_type and r.get("race")),
+            "",
+        )
+        if not race:
+            race = next((r.get("race") or "" for r in group if r.get("race")), "")
         monsters_index.append(
             {
                 "name": canonical["monster_name"],
@@ -156,6 +162,7 @@ def export_monsters(
                 "translation_key": translation_key,
                 "coordCount": len(merged_coords_list),
                 "type": list_type,
+                "race": race,
             }
         )
         entity_data = {

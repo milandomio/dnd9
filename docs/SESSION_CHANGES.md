@@ -4,6 +4,17 @@
 
 ## 2026-09-19
 
+### feat: 怪物列表一级 Class、二级种族嵌套，无攻击性归入杂项
+
+- **改动原因**：鲑鱼、快递员等无攻击性实体与一般怪物共用 `ClassType.Normal`。列表需要先按 Boss / 小Boss / 一般 / 杂项，再按 `CharacterTypes` 种族拆开，避免一般怪物过长、Boss 仍一眼可见。`CharacterTypes` 是种族不是敌对性，不能单独用来分杂项。
+- **变更文件**：`api/src/db/_helpers.py`、`api/src/db/schema.py`、`api/src/db/importers/monsters.py`、`api/src/db/repositories/monsters.py`、`api/src/entity_export.py`、`api/src/index_export.py`、`api/src/db_freshness.py`、`api/tests/test_monster_class.py`、`web/src/pages/ListPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/REFERENCE_DATA_PIPELINE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 杂项：`Id.NPC.*`，或 Normal 且技能全是死亡/逃跑/闲置（无 Attack/Melee/Bite 等战斗词）。空技能不算被动（训练假人靠 NPC 标签）。LootGoblin 的 Surprised/Provocation/GoldDrop 不算被动。
+  2. 种族：`CharacterTypes` 里最长的 `Type.Character.*` 后缀（`Undead.Ghost` → `Ghost`）。写入 `monster_entities.race`，导出 `monsters.json` / search_index 的 `race`。
+  3. 列表：一级 `boss/miniboss/normal/misc`，二级按 `race`；未知种族走 `ui.list.item_group_unknown`。
+  4. `GENERATOR_VERSION` 升到 `db-lifecycle-v5-monster-race-nest`。
+- **验证**：`python3 -m unittest tests.test_monster_class` 5 项通过；`./lint.sh`、`npx tsc --noEmit`、prettier 通过；eslint 仅既有 `ssrData` warning。管道 `--rebuild-db` TOTAL 63.34s。列表 151：Boss 13 / 小Boss 23 / 一般 101 / 杂项 14。鲑鱼 `misc+Aquatic`，快递员 `misc+Human`，LootGoblin `normal+Goblin`，Banshee `boss+Ghost`。本次不跑全站 SSG，不 push。
+
 ### feat: 怪物列表按 Boss / 小Boss / 一般怪物分组
 
 - **改动原因**：`/zh-Hans/monsters/` 原先平铺卡片。按 `/zh-Hans/props/` 的全宽分组标题 + 三列卡片样式，用游戏 `DCMonsterDataAsset.ClassType` 分成 Boss、小Boss、一般怪物。
