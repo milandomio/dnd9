@@ -4,6 +4,17 @@
 
 ## 2026-09-18
 
+### feat: 怪物详情按掉落池显示掉落物芯片
+
+- **改动原因**：怪物详情页只有坐标和自身聚合爆率，无法从 `/zh-Hans/monsters/LootGoblin/` 直接跳到掉落表。需要类似稀有度切换的芯片，按掉落池分页、按品质着色排序，点击进入对应 lootdrop 页。
+- **变更文件**：`api/src/monster_drops_builder.py`、`api/src/collector.py`、`api/tests/test_monster_drops_builder.py`、`web/src/components/MonsterDropSwitch.tsx`、`web/src/pages/DetailPage.tsx`、`web/src/types/data.ts`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `spawner_entries.entity_name` 剥品质后缀后对齐 canonical 怪物页；经 `lootdrop_groups` → `lootdrop_rate_items` 聚合物品。
+  2. 新键 `loot_pools` 写入 `monsters/{name}.json`，不改 `group_drop_info`。tab 顺序：任务（合并 `Quest*`/`QuestSpecial*`，默认）→ 神器（全池 `*_8001` 合成）→ 其余每个 `lootdrop_id`。神器只出现在神器 tab。
+  3. 物品名折叠与掉落页一致：非 `_8001` 去掉 `_\d{4}`；`GoldCoinPouch` → `/lootdrops/GoldCoinPouch/`，`CrystalBall_8001` 独立页。
+  4. 前端 `MonsterDropSwitch` 挂在 `DetailPage` 免责声明之后；池标签走 `ui.monster_drops.*`（十语言）。
+- **验证**：`python3 -m unittest tests.test_monster_drops_builder` 7 项通过；`./lint.sh`、`npx tsc --noEmit`、目标文件 prettier/eslint 通过。管道 TOTAL 50.69s，`[VALIDATE] all module images OK`。LootGoblin：任务 GoblinEars、金币容器 3、赃物 14、无神器 tab。SkeletonMage：神器 5 件且 `Drop_SkeletonMage` 不含 `_8001`。Playwright（8090）：默认任务「哥布林耳朵」；切金币容器点「小型金币袋」→ `/zh-Hans/lootdrops/GoldCoinPouch/`；SkeletonMage 神器「茨戈奇之眼」→ `/zh-Hans/lootdrops/CrystalBall_8001/`。本次不跑全站 SSG，不 push。
+
 ### chore: 更新部署（修复 FModel GameSpawner 后重建 DB 并推送）
 
 - **改动原因**：上一轮更新部署用的地图 JSON 缺 `BP_GameSpawner_C.Properties`（FModel unversioned 反序列化失败），坐标无法绑定 `Id_Spawner_*`，物品/实体/怪物表数量崩掉。用户重新导出后再跑独立「更新部署」。

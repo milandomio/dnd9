@@ -23,6 +23,7 @@ import {
   type AdjState,
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
+import MonsterDropSwitch from '../components/MonsterDropSwitch';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
@@ -703,6 +704,12 @@ export default function DetailPage() {
       )}
 
       <Disclaimer />
+
+      {page === 'monsters' &&
+        (entity as MonsterEntity).loot_pools &&
+        (entity as MonsterEntity).loot_pools!.length > 0 && (
+          <MonsterDropSwitch pools={(entity as MonsterEntity).loot_pools!} />
+        )}
 
       <div
         style={{
