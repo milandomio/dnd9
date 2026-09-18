@@ -2,6 +2,19 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-09-19
+
+### fix: 怪物掉落芯片过滤实际爆率为 0 的条目
+
+- **改动原因**：`/zh-Hans/monsters/Banshee/` 掉落芯片列出了神器（如 `CrystalBall_8001`），但打开对应 lootdrop 页没有 Banshee 来源按钮。芯片原先只反映掉落表成员关系；物品页来源按钮用 `get_group_drop_rates`，任一模式均为 0 则隐藏。Banshee 只在 Ruins HR_D，实际 grade 的 luck-8 权重为 0。
+- **变更文件**：`api/src/monster_drops_builder.py`、`api/src/collector.py`、`api/tests/test_monster_drops_builder.py`、`docs/REFERENCE_DROP_RATES.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `monster_map_groups` 从怪物坐标 `map` 经 `drop_engine.map_base_to_group` 取实际地图组。
+  2. `item_has_positive_rate` 与物品页一致：任一地图组任一模式 `> 0` 才保留；无地图组时不过滤。
+  3. `build_loot_pools` 在 `fold_item_page` 之前按 `(item_name, canonical)` 缓存过滤，避免 `_8001` 被丢掉后把同页 `_5001` 一并折叠掉。
+  4. `attach_loot_pools` 传入 `drop_engine`。
+- **验证**：`python3 -m unittest tests.test_monster_drops_builder` 10 项通过；`./lint.sh` 通过。管道 TOTAL 52.61s。Banshee 无神器 tab、无 `_8001`；`CrystalBall_8001.json` 的 `monsters` 不含 Banshee。SkeletonMage / LootGoblin 同样无神器 tab 与 `_8001` 残留。本次不跑全站 SSG，不 push。
+
 ## 2026-09-18
 
 ### chore: 推送 main 并更新远程数据库快照

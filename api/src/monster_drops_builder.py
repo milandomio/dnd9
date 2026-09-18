@@ -76,21 +76,54 @@ def _dedupe_items(items: list[dict]) -> list[dict]:
     return sorted(by_page.values(), key=_item_sort_key)
 
 
+def monster_map_groups(entity: dict, map_base_to_group: dict[str, str]) -> set[str]:
+    groups: set[str] = set()
+    for coord in entity.get("coords") or []:
+        map_name = coord.get("map") or ""
+        group = map_base_to_group.get(map_name, "")
+        if group:
+            groups.add(group)
+    return groups
+
+
+def item_has_positive_rate(drop_engine, item_name: str, monster_name: str, group_keys: set[str]) -> bool:
+    """True if any mode on any of the monster's map groups has drop rate > 0."""
+    if not group_keys:
+        return True
+    for group_key in group_keys:
+        rates = drop_engine.get_group_drop_rates(item_name, monster_name, group_key) or {}
+        if any(value > 0 for value in rates.values()):
+            return True
+    return False
+
+
 def build_loot_pools(
     *,
     monster_names: set[str],
     rows: list[tuple[str, str, str, int]],
     translations: dict[str, str],
     item_keys: dict[str, str],
+    drop_engine=None,
+    monster_groups: dict[str, set[str]] | None = None,
 ) -> dict[str, list[dict]]:
     """rows: (entity_name, lootdrop_id, item_name, luck_grade)."""
     grouped: dict[str, dict[str, list[dict]]] = {}
+    rate_ok: dict[tuple[str, str], bool] = {}
     for entity_name, lootdrop_id, item_name, luck_grade in rows:
         if not entity_name or not lootdrop_id or not item_name:
             continue
         canonical = canonical_monster_name(entity_name, monster_names)
         if canonical not in monster_names:
             continue
+        if drop_engine is not None:
+            cache_key = (item_name, canonical)
+            ok = rate_ok.get(cache_key)
+            if ok is None:
+                groups = (monster_groups or {}).get(canonical, set())
+                ok = item_has_positive_rate(drop_engine, item_name, canonical, groups)
+                rate_ok[cache_key] = ok
+            if not ok:
+                continue
         page, suffix = fold_item_page(item_name)
         translation, translation_key = _resolve_item_text(item_name, page, translations, item_keys)
         grouped.setdefault(canonical, {}).setdefault(lootdrop_id, []).append(
@@ -163,15 +196,19 @@ def load_item_keys(db) -> dict[str, str]:
     }
 
 
-def attach_loot_pools(monster_data: dict[str, dict], db, translations: dict[str, str]) -> int:
+def attach_loot_pools(monster_data: dict[str, dict], db, translations: dict[str, str], drop_engine=None) -> int:
     """Inject loot_pools onto in-memory monster detail dicts. Returns monster count updated."""
     if not monster_data:
         return 0
+    map_base_to_group = drop_engine.map_base_to_group if drop_engine is not None else {}
+    monster_groups = {name: monster_map_groups(entity, map_base_to_group) for name, entity in monster_data.items()}
     pools = build_loot_pools(
         monster_names=set(monster_data),
         rows=load_drop_rows(db),
         translations=translations,
         item_keys=load_item_keys(db),
+        drop_engine=drop_engine,
+        monster_groups=monster_groups,
     )
     updated = 0
     for name, entity in monster_data.items():
