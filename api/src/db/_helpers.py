@@ -81,6 +81,28 @@ def extract_monster_name(raw_name: str) -> str:
     return name
 
 
+_MONSTER_CLASS_RANK = {"Boss": 2, "SubBoss": 1, "Normal": 0}
+_MONSTER_CLASS_TO_LIST_TYPE = {"Boss": "boss", "SubBoss": "miniboss"}
+
+
+def monster_class_from_properties(properties: dict | None) -> str:
+    """Map DCMonsterDataAsset ClassType tag to Boss / SubBoss / Normal."""
+    class_type = (properties or {}).get("ClassType")
+    tag = class_type.get("TagName", "") if isinstance(class_type, dict) else ""
+    suffix = tag.rsplit(".", 1)[-1] if tag else ""
+    return suffix if suffix in _MONSTER_CLASS_RANK else ""
+
+
+def preferred_monster_class(current: str, incoming: str) -> str:
+    if _MONSTER_CLASS_RANK.get(incoming, -1) > _MONSTER_CLASS_RANK.get(current, -1):
+        return incoming
+    return current or incoming
+
+
+def monster_list_type(class_type: str) -> str:
+    return _MONSTER_CLASS_TO_LIST_TYPE.get(class_type, "normal")
+
+
 def extract_props_name(raw_name: str) -> str:
     name = raw_name.removeprefix("Id_Props_")
     name = DUMMY_SUFFIX_RE.sub("", name)

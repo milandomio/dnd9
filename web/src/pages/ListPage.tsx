@@ -266,6 +266,42 @@ function formatLootGroupLabel(
   return subtype || unknownLabel;
 }
 
+const MONSTER_GROUP_ORDER = ['boss', 'miniboss', 'normal'] as const;
+const MONSTER_GROUP_META: Record<
+  (typeof MONSTER_GROUP_ORDER)[number],
+  { labelKey: string; icon: string }
+> = {
+  boss: { labelKey: 'ui.list.boss', icon: '👑' },
+  miniboss: { labelKey: 'ui.list.miniboss', icon: '⚔️' },
+  normal: { labelKey: 'ui.list.normal_monster', icon: '💀' },
+};
+
+function groupMonsters(items: IndexEntry[]): {
+  key: string;
+  labelKey: string;
+  icon: string;
+  items: IndexEntry[];
+}[] {
+  const buckets: Record<(typeof MONSTER_GROUP_ORDER)[number], IndexEntry[]> = {
+    boss: [],
+    miniboss: [],
+    normal: [],
+  };
+  for (const item of items) {
+    const key =
+      item.type === 'boss' || item.type === 'miniboss' ? item.type : 'normal';
+    buckets[key].push(item);
+  }
+  return MONSTER_GROUP_ORDER.filter((key) => buckets[key].length > 0).map(
+    (key) => ({
+      key,
+      labelKey: MONSTER_GROUP_META[key].labelKey,
+      icon: MONSTER_GROUP_META[key].icon,
+      items: buckets[key],
+    })
+  );
+}
+
 function formatLootGroupCategoryLabel(
   group: LootGroup,
   t: (key: string | undefined, fallback: string) => string,
@@ -386,31 +422,48 @@ export default function ListPage() {
           gap: 20,
         }}
       >
-        {page === 'props'
-          ? // Group props by type (decoration vs props)
-            (() => {
-              const decorations = data.filter((e) => e.type === 'decoration');
-              const propsEntities = data.filter((e) => e.type !== 'decoration');
-              const groups: {
-                label: string;
-                icon: string;
-                items: IndexEntry[];
-              }[] = [];
-              if (propsEntities.length > 0)
-                groups.push({
-                  label: ut('ui.list.prop'),
-                  icon: '🏛️',
-                  items: propsEntities,
-                });
-              if (decorations.length > 0)
-                groups.push({
-                  label: ut('ui.list.decoration'),
-                  icon: '🔥',
-                  items: decorations,
-                });
+        {page === 'props' || page === 'monsters'
+          ? (() => {
+              const groups =
+                page === 'props'
+                  ? (() => {
+                      const decorations = data.filter(
+                        (e) => e.type === 'decoration'
+                      );
+                      const propsEntities = data.filter(
+                        (e) => e.type !== 'decoration'
+                      );
+                      const next: {
+                        key: string;
+                        label: string;
+                        icon: string;
+                        items: IndexEntry[];
+                      }[] = [];
+                      if (propsEntities.length > 0)
+                        next.push({
+                          key: 'prop',
+                          label: ut('ui.list.prop'),
+                          icon: '🏛️',
+                          items: propsEntities,
+                        });
+                      if (decorations.length > 0)
+                        next.push({
+                          key: 'decoration',
+                          label: ut('ui.list.decoration'),
+                          icon: '🔥',
+                          items: decorations,
+                        });
+                      return next;
+                    })()
+                  : groupMonsters(data).map((group) => ({
+                      key: group.key,
+                      label: ut(group.labelKey),
+                      icon: group.icon,
+                      items: group.items,
+                    }));
 
               return groups.map((group) => (
-                <div key={group.label} style={{ gridColumn: '1 / -1' }}>
+                <div key={group.key} style={{ gridColumn: '1 / -1' }}>
                   <div
                     style={{
                       fontSize: 22,
@@ -432,7 +485,7 @@ export default function ListPage() {
                     {group.items.map((entity) => (
                       <Link
                         key={entity.name}
-                        to={withLangPrefix(`/props/${entity.name}/`, lang)}
+                        to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
                         style={{
                           textDecoration: 'none',
                           display: 'block',

@@ -1,6 +1,13 @@
 from config import MONSTER_DIR, SPAWNER_DIR
 
-from .._helpers import MONSTER_SUBTYPE_RE, QUALITY_RE, extract_monster_name, load_json_dir
+from .._helpers import (
+    MONSTER_SUBTYPE_RE,
+    QUALITY_RE,
+    extract_monster_name,
+    load_json_dir,
+    monster_class_from_properties,
+    preferred_monster_class,
+)
 
 
 class MonstersImporter:
@@ -20,7 +27,8 @@ class MonstersImporter:
             name_key = (props.get("Name") or {}).get("Key", "")
             name_key = MONSTER_SUBTYPE_RE.sub("", name_key)
             monster_name = extract_monster_name(raw_name)
-            rows.append((monster_name, raw_name, name_key))
+            class_type = monster_class_from_properties(props)
+            rows.append((monster_name, raw_name, name_key, class_type))
         seen_lower: dict[str, int] = {}
         deduped = []
         for r in rows:
@@ -31,11 +39,17 @@ class MonstersImporter:
             else:
                 idx = seen_lower[key]
                 existing = deduped[idx]
+                name_key = existing[2]
                 if r[2] and (
                     not existing[2]
                     or (r[2].startswith("Text_DesignData_") and not existing[2].startswith("Text_DesignData_"))
                 ):
-                    deduped[idx] = (existing[0], existing[1], r[2])
+                    name_key = r[2]
+                class_type = preferred_monster_class(existing[3], r[3])
+                raw_name = existing[1]
+                if class_type != existing[3] and r[3] == class_type:
+                    raw_name = r[1]
+                deduped[idx] = (existing[0], raw_name, name_key, class_type)
         spawner_files = load_json_dir(SPAWNER_DIR)
         for raw_name, data_list in spawner_files.items():
             if not data_list:
@@ -47,7 +61,8 @@ class MonstersImporter:
                 props = entry.get("Properties", {}) or {}
                 name_key = (props.get("Name") or {}).get("Key", "")
                 name_key = MONSTER_SUBTYPE_RE.sub("", name_key)
-                deduped.append((raw, raw_name, name_key))
+                class_type = monster_class_from_properties(props)
+                deduped.append((raw, raw_name, name_key, class_type))
         for raw_name, data_list in files.items():
             if not data_list:
                 continue
@@ -68,9 +83,10 @@ class MonstersImporter:
                 key = quality_name.lower()
                 if key not in seen_lower:
                     seen_lower[key] = len(deduped)
-                    deduped.append((quality_name, raw_name, name_key))
+                    class_type = monster_class_from_properties(props)
+                    deduped.append((quality_name, raw_name, name_key, class_type))
         c.executemany(
-            "INSERT OR REPLACE INTO monster_entities (monster_name, raw_name, translation_key) VALUES (?, ?, ?)",
+            "INSERT OR REPLACE INTO monster_entities (monster_name, raw_name, translation_key, class_type) VALUES (?, ?, ?, ?)",
             deduped,
         )
         self._rebuild_fts("monsters_fts")
