@@ -16,6 +16,7 @@ type IndexEntry = SearchEntry & {
   category?: string;
   coordCount?: number;
   type?: string;
+  race?: string;
   // lootdrops SSR data fields
   variant_count?: number;
   translation_key?: string;
@@ -266,7 +267,7 @@ function formatLootGroupLabel(
   return subtype || unknownLabel;
 }
 
-const MONSTER_GROUP_ORDER = ['boss', 'miniboss', 'normal'] as const;
+const MONSTER_GROUP_ORDER = ['boss', 'miniboss', 'normal', 'misc'] as const;
 const MONSTER_GROUP_META: Record<
   (typeof MONSTER_GROUP_ORDER)[number],
   { labelKey: string; icon: string }
@@ -274,31 +275,61 @@ const MONSTER_GROUP_META: Record<
   boss: { labelKey: 'ui.list.boss', icon: '👑' },
   miniboss: { labelKey: 'ui.list.miniboss', icon: '⚔️' },
   normal: { labelKey: 'ui.list.normal_monster', icon: '💀' },
+  misc: { labelKey: 'ui.list.misc_monster', icon: '🐟' },
 };
+
+function monsterClassKey(
+  type: string | undefined
+): (typeof MONSTER_GROUP_ORDER)[number] {
+  return type === 'boss' || type === 'miniboss' || type === 'misc'
+    ? type
+    : 'normal';
+}
 
 function groupMonsters(items: IndexEntry[]): {
   key: string;
   labelKey: string;
   icon: string;
   items: IndexEntry[];
+  subgroups: { key: string; race: string; items: IndexEntry[] }[];
 }[] {
   const buckets: Record<(typeof MONSTER_GROUP_ORDER)[number], IndexEntry[]> = {
     boss: [],
     miniboss: [],
     normal: [],
+    misc: [],
   };
   for (const item of items) {
-    const key =
-      item.type === 'boss' || item.type === 'miniboss' ? item.type : 'normal';
-    buckets[key].push(item);
+    buckets[monsterClassKey(item.type)].push(item);
   }
   return MONSTER_GROUP_ORDER.filter((key) => buckets[key].length > 0).map(
-    (key) => ({
-      key,
-      labelKey: MONSTER_GROUP_META[key].labelKey,
-      icon: MONSTER_GROUP_META[key].icon,
-      items: buckets[key],
-    })
+    (key) => {
+      const raceBuckets = new Map<string, IndexEntry[]>();
+      for (const item of buckets[key]) {
+        const race = item.race || '';
+        const list = raceBuckets.get(race);
+        if (list) list.push(item);
+        else raceBuckets.set(race, [item]);
+      }
+      const subgroups = [...raceBuckets.entries()]
+        .sort((a, b) => {
+          if (!a[0]) return 1;
+          if (!b[0]) return -1;
+          return a[0].localeCompare(b[0]);
+        })
+        .map(([race, raceItems]) => ({
+          key: race || 'unknown',
+          race,
+          items: raceItems,
+        }));
+      return {
+        key,
+        labelKey: MONSTER_GROUP_META[key].labelKey,
+        icon: MONSTER_GROUP_META[key].icon,
+        items: buckets[key],
+        subgroups,
+      };
+    }
   );
 }
 
@@ -350,6 +381,52 @@ export default function ListPage() {
   const lootGroupRows = groupLootGroupsByCategory(lootGroups);
   const selectedLootGroup =
     lootGroups.find((group) => group.key === activeLootGroup) ?? lootGroups[0];
+
+  const renderListCard = (entity: IndexEntry) => (
+    <Link
+      key={entity.name}
+      to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
+      style={{
+        textDecoration: 'none',
+        display: 'block',
+        background: tokens.surface,
+        border: `1px solid ${tokens.border}`,
+        borderRadius: 8,
+        padding: 20,
+        textAlign: 'center',
+        transition: 'transform 0.2s, box-shadow 0.2s',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-5px)';
+        e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.5)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'none';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
+    >
+      <div
+        style={{
+          color: tokens.text,
+          fontSize: 18,
+          fontWeight: 'bold',
+        }}
+      >
+        {t(entity.translation_key, entity.translation || entity.name)}
+      </div>
+      {debug && (
+        <div
+          style={{
+            color: tokens.muted,
+            fontSize: 12,
+            marginTop: 4,
+          }}
+        >
+          {t(entity.translation_key, entity.translation)}【{entity.name}】
+        </div>
+      )}
+    </Link>
+  );
 
   useEffect(() => {
     if (!dataVersion) return;
@@ -422,46 +499,30 @@ export default function ListPage() {
           gap: 20,
         }}
       >
-        {page === 'props' || page === 'monsters'
+        {page === 'props'
           ? (() => {
-              const groups =
-                page === 'props'
-                  ? (() => {
-                      const decorations = data.filter(
-                        (e) => e.type === 'decoration'
-                      );
-                      const propsEntities = data.filter(
-                        (e) => e.type !== 'decoration'
-                      );
-                      const next: {
-                        key: string;
-                        label: string;
-                        icon: string;
-                        items: IndexEntry[];
-                      }[] = [];
-                      if (propsEntities.length > 0)
-                        next.push({
-                          key: 'prop',
-                          label: ut('ui.list.prop'),
-                          icon: '🏛️',
-                          items: propsEntities,
-                        });
-                      if (decorations.length > 0)
-                        next.push({
-                          key: 'decoration',
-                          label: ut('ui.list.decoration'),
-                          icon: '🔥',
-                          items: decorations,
-                        });
-                      return next;
-                    })()
-                  : groupMonsters(data).map((group) => ({
-                      key: group.key,
-                      label: ut(group.labelKey),
-                      icon: group.icon,
-                      items: group.items,
-                    }));
-
+              const decorations = data.filter((e) => e.type === 'decoration');
+              const propsEntities = data.filter((e) => e.type !== 'decoration');
+              const groups: {
+                key: string;
+                label: string;
+                icon: string;
+                items: IndexEntry[];
+              }[] = [];
+              if (propsEntities.length > 0)
+                groups.push({
+                  key: 'prop',
+                  label: ut('ui.list.prop'),
+                  icon: '🏛️',
+                  items: propsEntities,
+                });
+              if (decorations.length > 0)
+                groups.push({
+                  key: 'decoration',
+                  label: ut('ui.list.decoration'),
+                  icon: '🔥',
+                  items: decorations,
+                });
               return groups.map((group) => (
                 <div key={group.key} style={{ gridColumn: '1 / -1' }}>
                   <div
@@ -482,358 +543,372 @@ export default function ListPage() {
                       gap: 20,
                     }}
                   >
-                    {group.items.map((entity) => (
-                      <Link
-                        key={entity.name}
-                        to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
-                        style={{
-                          textDecoration: 'none',
-                          display: 'block',
-                          background: tokens.surface,
-                          border: `1px solid ${tokens.border}`,
-                          borderRadius: 8,
-                          padding: 20,
-                          textAlign: 'center',
-                          transition: 'transform 0.2s, box-shadow 0.2s',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-5px)';
-                          e.currentTarget.style.boxShadow =
-                            '0 5px 15px rgba(0,0,0,0.5)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'none';
-                          e.currentTarget.style.boxShadow = 'none';
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: tokens.text,
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                          }}
-                        >
-                          {t(
-                            entity.translation_key,
-                            entity.translation || entity.name
-                          )}
-                        </div>
-                        {debug && (
-                          <div
-                            style={{
-                              color: tokens.muted,
-                              fontSize: 12,
-                              marginTop: 4,
-                            }}
-                          >
-                            {t(entity.translation_key, entity.translation)}【
-                            {entity.name}】
-                          </div>
-                        )}
-                      </Link>
-                    ))}
+                    {group.items.map((entity) => renderListCard(entity))}
                   </div>
                 </div>
               ));
             })()
-          : page === 'lootdrops'
-            ? (() => {
-                return (
-                  <>
-                    <div
-                      role="tablist"
-                      aria-label={pageLabel}
-                      style={{
-                        gridColumn: '1 / -1',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 8,
-                        marginBottom: 4,
-                      }}
-                    >
-                      {lootGroupRows.map((row, rowIndex) => {
-                        const categoryLabel = formatLootGroupCategoryLabel(
-                          row[0],
-                          t,
-                          ut
-                        );
-                        return (
-                          <div
-                            key={rowIndex}
-                            style={{
-                              display: 'flex',
-                              flexWrap: 'wrap',
-                              gap: 4,
-                            }}
-                          >
-                            {categoryLabel && (
-                              <span
-                                style={{
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  color: tokens.accent,
-                                  fontSize: 15,
-                                  fontWeight: 'bold',
-                                  whiteSpace: 'nowrap',
-                                }}
-                              >
-                                {row[0].icon}
-                                {categoryLabel}
-                              </span>
-                            )}
-                            {row.map((group) => {
-                              const isActive =
-                                selectedLootGroup?.key === group.key;
-                              const label = formatLootGroupLabel(
-                                group,
-                                t,
-                                ut,
-                                delimiter
-                              );
-                              const displayLabel = group.categoryKey
-                                ? `${label}(${group.items.length})`
-                                : `${group.icon}${label}(${group.items.length})`;
-                              return (
-                                <button
-                                  key={group.key}
-                                  type="button"
-                                  role="tab"
-                                  aria-selected={isActive}
-                                  onClick={() => setActiveLootGroup(group.key)}
-                                  style={{
-                                    flex: '0 1 auto',
-                                    minHeight: 54,
-                                    padding: '6px 12px',
-                                    color: isActive ? tokens.bg : tokens.accent,
-                                    background: isActive
-                                      ? tokens.accent
-                                      : tokens.surface,
-                                    border: `1px solid ${tokens.accent}`,
-                                    borderRadius: 9,
-                                    cursor: 'pointer',
-                                    fontSize: 22.5,
-                                    fontWeight: 'bold',
-                                    transition: 'background 0.2s, color 0.2s',
-                                  }}
-                                >
-                                  {displayLabel}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {selectedLootGroup && (
+          : page === 'monsters'
+            ? groupMonsters(data).map((group) => (
+                <div key={group.key} style={{ gridColumn: '1 / -1' }}>
+                  <div
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 'bold',
+                      color: tokens.accent,
+                      marginBottom: 12,
+                      paddingLeft: 4,
+                    }}
+                  >
+                    {group.icon} {ut(group.labelKey)}（{group.items.length}）
+                  </div>
+                  {group.subgroups.map((subgroup) => {
+                    const raceKey = subgroup.race
+                      ? `ui.list.monster_race.${subgroup.race}`
+                      : 'ui.list.item_group_unknown';
+                    const raceLabel = subgroup.race
+                      ? ut(raceKey) === raceKey
+                        ? subgroup.race
+                        : ut(raceKey)
+                      : ut(raceKey);
+                    return (
+                      <div key={`${group.key}-${subgroup.key}`}>
+                        <div
+                          style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            color: tokens.muted,
+                            margin: '8px 0 10px 4px',
+                          }}
+                        >
+                          {raceLabel}（{subgroup.items.length}）
+                        </div>
+                        <div
+                          style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gap: 20,
+                            marginBottom: 16,
+                          }}
+                        >
+                          {subgroup.items.map((entity) =>
+                            renderListCard(entity)
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))
+            : page === 'lootdrops'
+              ? (() => {
+                  return (
+                    <>
                       <div
-                        key={selectedLootGroup.key}
-                        role="tabpanel"
+                        role="tablist"
+                        aria-label={pageLabel}
                         style={{
                           gridColumn: '1 / -1',
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(3, 1fr)',
-                          gap: 20,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 8,
+                          marginBottom: 4,
                         }}
                       >
-                        {selectedLootGroup.items.map((entity) => {
-                          const vc = entity.variant_count ?? 1;
-                          const isAlreadyVariant = /_\d{4}$/.test(entity.name);
-                          const target =
-                            vc > 1 &&
-                            !isAlreadyVariant &&
-                            !entity.name.endsWith('_8001')
-                              ? `${entity.name}_5001`
-                              : entity.name;
+                        {lootGroupRows.map((row, rowIndex) => {
+                          const categoryLabel = formatLootGroupCategoryLabel(
+                            row[0],
+                            t,
+                            ut
+                          );
                           return (
-                            <Link
-                              key={entity.name}
-                              to={withLangPrefix(`/lootdrops/${target}/`, lang)}
+                            <div
+                              key={rowIndex}
                               style={{
-                                textDecoration: 'none',
-                                display: 'block',
-                                background: tokens.surface,
-                                border: `1px solid ${tokens.border}`,
-                                borderRadius: 8,
-                                padding: 20,
-                                textAlign: 'center',
-                                transition: 'transform 0.2s, box-shadow 0.2s',
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.transform =
-                                  'translateY(-5px)';
-                                e.currentTarget.style.boxShadow =
-                                  '0 5px 15px rgba(0,0,0,0.5)';
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'none';
-                                e.currentTarget.style.boxShadow = 'none';
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                gap: 4,
                               }}
                             >
-                              <div
+                              {categoryLabel && (
+                                <span
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    color: tokens.accent,
+                                    fontSize: 15,
+                                    fontWeight: 'bold',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
+                                  {row[0].icon}
+                                  {categoryLabel}
+                                </span>
+                              )}
+                              {row.map((group) => {
+                                const isActive =
+                                  selectedLootGroup?.key === group.key;
+                                const label = formatLootGroupLabel(
+                                  group,
+                                  t,
+                                  ut,
+                                  delimiter
+                                );
+                                const displayLabel = group.categoryKey
+                                  ? `${label}(${group.items.length})`
+                                  : `${group.icon}${label}(${group.items.length})`;
+                                return (
+                                  <button
+                                    key={group.key}
+                                    type="button"
+                                    role="tab"
+                                    aria-selected={isActive}
+                                    onClick={() =>
+                                      setActiveLootGroup(group.key)
+                                    }
+                                    style={{
+                                      flex: '0 1 auto',
+                                      minHeight: 54,
+                                      padding: '6px 12px',
+                                      color: isActive
+                                        ? tokens.bg
+                                        : tokens.accent,
+                                      background: isActive
+                                        ? tokens.accent
+                                        : tokens.surface,
+                                      border: `1px solid ${tokens.accent}`,
+                                      borderRadius: 9,
+                                      cursor: 'pointer',
+                                      fontSize: 22.5,
+                                      fontWeight: 'bold',
+                                      transition: 'background 0.2s, color 0.2s',
+                                    }}
+                                  >
+                                    {displayLabel}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      {selectedLootGroup && (
+                        <div
+                          key={selectedLootGroup.key}
+                          role="tabpanel"
+                          style={{
+                            gridColumn: '1 / -1',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gap: 20,
+                          }}
+                        >
+                          {selectedLootGroup.items.map((entity) => {
+                            const vc = entity.variant_count ?? 1;
+                            const isAlreadyVariant = /_\d{4}$/.test(
+                              entity.name
+                            );
+                            const target =
+                              vc > 1 &&
+                              !isAlreadyVariant &&
+                              !entity.name.endsWith('_8001')
+                                ? `${entity.name}_5001`
+                                : entity.name;
+                            return (
+                              <Link
+                                key={entity.name}
+                                to={withLangPrefix(
+                                  `/lootdrops/${target}/`,
+                                  lang
+                                )}
                                 style={{
-                                  color: tokens.text,
-                                  fontSize: 18,
-                                  fontWeight: 'bold',
+                                  textDecoration: 'none',
+                                  display: 'block',
+                                  background: tokens.surface,
+                                  border: `1px solid ${tokens.border}`,
+                                  borderRadius: 8,
+                                  padding: 20,
+                                  textAlign: 'center',
+                                  transition: 'transform 0.2s, box-shadow 0.2s',
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.transform =
+                                    'translateY(-5px)';
+                                  e.currentTarget.style.boxShadow =
+                                    '0 5px 15px rgba(0,0,0,0.5)';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.transform = 'none';
+                                  e.currentTarget.style.boxShadow = 'none';
                                 }}
                               >
-                                {t(
-                                  entity.translation_key,
-                                  entity.translation || entity.name
-                                )}
-                              </div>
-                              {debug && (
                                 <div
                                   style={{
-                                    color: tokens.muted,
-                                    fontSize: 12,
-                                    marginTop: 4,
+                                    color: tokens.text,
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
                                   }}
                                 >
                                   {t(
                                     entity.translation_key,
-                                    entity.translation
+                                    entity.translation || entity.name
                                   )}
-                                  【{entity.name}】
                                 </div>
-                              )}
-                              {entity.monsters &&
-                                entity.monsters.length > 0 && (
+                                {debug && (
                                   <div
                                     style={{
-                                      color: tokens.text,
-                                      fontSize: 13,
-                                      marginTop: 6,
-                                      lineHeight: 1.5,
+                                      color: tokens.muted,
+                                      fontSize: 12,
+                                      marginTop: 4,
                                     }}
                                   >
-                                    {ut('ui.list.target')}{' '}
-                                    <span style={{ color: tokens.muted }}>
-                                      {entity.monster_translations &&
-                                        (entity.monster_translations.length <= 6
-                                          ? entity.monster_translations
-                                          : entity.monster_translations.slice(
-                                              0,
-                                              5
-                                            )
-                                        )
-                                          .map((mt, i) =>
-                                            t(
-                                              entity.monster_translation_keys?.[
-                                                i
-                                              ] ?? '',
-                                              mt
-                                            )
-                                          )
-                                          .join(delimiter)}
-                                      {entity.monster_translations &&
-                                        entity.monster_translations.length >
-                                          6 &&
-                                        '...'}
-                                    </span>
+                                    {t(
+                                      entity.translation_key,
+                                      entity.translation
+                                    )}
+                                    【{entity.name}】
                                   </div>
                                 )}
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </>
-                );
-              })()
-            : // Default rendering for non-props, non-lootdrops pages
-              data.map((entity) => (
-                <Link
-                  key={entity.name}
-                  to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
-                  style={{
-                    textDecoration: 'none',
-                    display: 'block',
-                    background: tokens.surface,
-                    border: `1px solid ${tokens.border}`,
-                    borderRadius: 8,
-                    padding: 20,
-                    textAlign: 'center',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow =
-                      '0 5px 15px rgba(0,0,0,0.5)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'none';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  <div
+                                {entity.monsters &&
+                                  entity.monsters.length > 0 && (
+                                    <div
+                                      style={{
+                                        color: tokens.text,
+                                        fontSize: 13,
+                                        marginTop: 6,
+                                        lineHeight: 1.5,
+                                      }}
+                                    >
+                                      {ut('ui.list.target')}{' '}
+                                      <span style={{ color: tokens.muted }}>
+                                        {entity.monster_translations &&
+                                          (entity.monster_translations.length <=
+                                          6
+                                            ? entity.monster_translations
+                                            : entity.monster_translations.slice(
+                                                0,
+                                                5
+                                              )
+                                          )
+                                            .map((mt, i) =>
+                                              t(
+                                                entity
+                                                  .monster_translation_keys?.[
+                                                  i
+                                                ] ?? '',
+                                                mt
+                                              )
+                                            )
+                                            .join(delimiter)}
+                                        {entity.monster_translations &&
+                                          entity.monster_translations.length >
+                                            6 &&
+                                          '...'}
+                                      </span>
+                                    </div>
+                                  )}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
+                  );
+                })()
+              : // Default rendering for non-props, non-lootdrops pages
+                data.map((entity) => (
+                  <Link
+                    key={entity.name}
+                    to={withLangPrefix(`/${page}/${entity.name}/`, lang)}
                     style={{
-                      color: tokens.text,
-                      fontSize: 18,
-                      fontWeight: 'bold',
+                      textDecoration: 'none',
+                      display: 'block',
+                      background: tokens.surface,
+                      border: `1px solid ${tokens.border}`,
+                      borderRadius: 8,
+                      padding: 20,
+                      textAlign: 'center',
+                      transition: 'transform 0.2s, box-shadow 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow =
+                        '0 5px 15px rgba(0,0,0,0.5)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'none';
+                      e.currentTarget.style.boxShadow = 'none';
                     }}
                   >
-                    {t(
-                      entity.translation_key,
-                      entity.translation || entity.name
-                    )}
-                  </div>
-                  {debug && (
                     <div
                       style={{
-                        color: tokens.muted,
-                        fontSize: 12,
-                        marginTop: 4,
+                        color: tokens.text,
+                        fontSize: 18,
+                        fontWeight: 'bold',
                       }}
                     >
-                      {t(entity.translation_key, entity.translation)}【
-                      {entity.name}】
+                      {t(
+                        entity.translation_key,
+                        entity.translation || entity.name
+                      )}
                     </div>
-                  )}
-                  {entity.monsters &&
-                    entity.monsters.length > 0 &&
-                    page === 'lootdrops' && (
+                    {debug && (
                       <div
                         style={{
-                          color: tokens.text,
-                          fontSize: 13,
-                          marginTop: 6,
-                          lineHeight: 1.5,
+                          color: tokens.muted,
+                          fontSize: 12,
+                          marginTop: 4,
                         }}
                       >
-                        {entity.variant_count && entity.variant_count > 1 ? (
-                          <>
-                            {' '}
-                            [
-                            {ut('ui.list.variant').replace(
-                              '{count}',
-                              String(entity.variant_count)
-                            )}
-                            ] {ut('ui.list.target')}{' '}
-                          </>
-                        ) : (
-                          <> {ut('ui.list.target')} </>
-                        )}
-                        <span style={{ color: tokens.muted }}>
-                          {entity.monster_translations &&
-                            (entity.monster_translations.length <= 6
-                              ? entity.monster_translations
-                              : entity.monster_translations.slice(0, 5)
-                            )
-                              .map((mt, i) =>
-                                t(
-                                  entity.monster_translation_keys?.[i] ?? '',
-                                  mt
-                                )
-                              )
-                              .join(delimiter)}
-                          {entity.monster_translations &&
-                            entity.monster_translations.length > 6 &&
-                            '...'}
-                        </span>
+                        {t(entity.translation_key, entity.translation)}【
+                        {entity.name}】
                       </div>
                     )}
-                </Link>
-              ))}
+                    {entity.monsters &&
+                      entity.monsters.length > 0 &&
+                      page === 'lootdrops' && (
+                        <div
+                          style={{
+                            color: tokens.text,
+                            fontSize: 13,
+                            marginTop: 6,
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          {entity.variant_count && entity.variant_count > 1 ? (
+                            <>
+                              {' '}
+                              [
+                              {ut('ui.list.variant').replace(
+                                '{count}',
+                                String(entity.variant_count)
+                              )}
+                              ] {ut('ui.list.target')}{' '}
+                            </>
+                          ) : (
+                            <> {ut('ui.list.target')} </>
+                          )}
+                          <span style={{ color: tokens.muted }}>
+                            {entity.monster_translations &&
+                              (entity.monster_translations.length <= 6
+                                ? entity.monster_translations
+                                : entity.monster_translations.slice(0, 5)
+                              )
+                                .map((mt, i) =>
+                                  t(
+                                    entity.monster_translation_keys?.[i] ?? '',
+                                    mt
+                                  )
+                                )
+                                .join(delimiter)}
+                            {entity.monster_translations &&
+                              entity.monster_translations.length > 6 &&
+                              '...'}
+                          </span>
+                        </div>
+                      )}
+                  </Link>
+                ))}
       </div>
     </div>
   );

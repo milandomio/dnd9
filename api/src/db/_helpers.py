@@ -81,16 +81,52 @@ def extract_monster_name(raw_name: str) -> str:
     return name
 
 
-_MONSTER_CLASS_RANK = {"Boss": 2, "SubBoss": 1, "Normal": 0}
-_MONSTER_CLASS_TO_LIST_TYPE = {"Boss": "boss", "SubBoss": "miniboss"}
+_MONSTER_CLASS_RANK = {"Boss": 3, "SubBoss": 2, "Normal": 1, "Passive": 0}
+_MONSTER_CLASS_TO_LIST_TYPE = {"Boss": "boss", "SubBoss": "miniboss", "Passive": "misc"}
+_PASSIVE_ABILITY_RE = re.compile(
+    r"(?:^|_)(?:Death|RunState|RunAway|PeaceAbility|Gesture|"
+    r"Idle|Stand|Sit|Lie|Sleep|Howl|Bark|Yawn|Scratch|Smell|"
+    r"Look|No|Yes)(?:_|$)",
+    re.IGNORECASE,
+)
+_COMBAT_ABILITY_RE = re.compile(
+    r"Attack|Melee|Bite|Shot|Missile|FaceHug|Bleeding|Combat|Dispell|Ultrasonic",
+    re.IGNORECASE,
+)
+
+
+def _ability_asset_stem(ability: dict | None) -> str:
+    path = (ability or {}).get("AssetPathName") or ""
+    return path.rsplit("/", 1)[-1].split(".", 1)[0]
+
+
+def _ability_is_passive(stem: str) -> bool:
+    name = re.sub(r"^Id_(?:Monster|NPC)Ability_", "", stem)
+    return bool(_PASSIVE_ABILITY_RE.search(f"_{name}_")) and not _COMBAT_ABILITY_RE.search(name)
+
+
+def monster_is_passive(properties: dict | None) -> bool:
+    """NPC or Normal monsters whose abilities are only death/flee/idle."""
+    props = properties or {}
+    id_tag = (props.get("IdTag") or {}).get("TagName", "") if isinstance(props.get("IdTag"), dict) else ""
+    if id_tag.startswith("Id.NPC."):
+        return True
+    abilities = props.get("Abilities") or []
+    if not abilities:
+        return False
+    return all(_ability_is_passive(_ability_asset_stem(ability)) for ability in abilities)
 
 
 def monster_class_from_properties(properties: dict | None) -> str:
-    """Map DCMonsterDataAsset ClassType tag to Boss / SubBoss / Normal."""
+    """Map DCMonsterDataAsset ClassType tag to Boss / SubBoss / Normal / Passive."""
     class_type = (properties or {}).get("ClassType")
     tag = class_type.get("TagName", "") if isinstance(class_type, dict) else ""
     suffix = tag.rsplit(".", 1)[-1] if tag else ""
-    return suffix if suffix in _MONSTER_CLASS_RANK else ""
+    if suffix not in _MONSTER_CLASS_RANK:
+        suffix = ""
+    if suffix in ("", "Normal") and monster_is_passive(properties):
+        return "Passive"
+    return suffix
 
 
 def preferred_monster_class(current: str, incoming: str) -> str:
@@ -101,6 +137,24 @@ def preferred_monster_class(current: str, incoming: str) -> str:
 
 def monster_list_type(class_type: str) -> str:
     return _MONSTER_CLASS_TO_LIST_TYPE.get(class_type, "normal")
+
+
+def monster_race_from_properties(properties: dict | None) -> str:
+    """Most specific CharacterTypes suffix, e.g. Type.Character.Undead.Ghost → Ghost."""
+    types = (properties or {}).get("CharacterTypes") or []
+    tags: list[str] = []
+    for entry in types:
+        tag = entry.get("TagName", "") if isinstance(entry, dict) else ""
+        if tag.startswith("Type.Character."):
+            tags.append(tag)
+    if not tags:
+        return ""
+    tags.sort(key=len, reverse=True)
+    return tags[0].rsplit(".", 1)[-1]
+
+
+def preferred_monster_race(current: str, incoming: str) -> str:
+    return current or incoming
 
 
 def extract_props_name(raw_name: str) -> str:
