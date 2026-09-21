@@ -2,6 +2,22 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-09-21
+
+### feat: 实体详情复用掉落芯片，并隐藏活动货币池
+
+- **改动原因**：`MonsterDropSwitch` 只挂在怪物详情；箱子/桶/矿等 props 也有 `lootdrop_group_id`，详情页看不到掉落芯片。活动货币池 `Spawn_EventCurrency` 内容是金币/银币，干扰阅读。
+- **变更文件**：`api/src/monster_drops_builder.py`、`api/src/collector.py`、`api/tests/test_monster_drops_builder.py`、`web/src/components/MonsterDropSwitch.tsx`、`web/src/pages/DetailPage.tsx`、`web/src/types/data.ts`、`web/src/i18n/uiLocale.ts`、`docs/REFERENCE_DROP_RATES.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `is_event_currency_pool`：`EventCurrency` 池不进 `loot_pools`；前端再滤一次。
+  2. `build_loot_pools(..., fold_quality=)`：怪物默认 True，剥 `Common/Elite/Nightmare/Unique`。实体 False，仍对齐导出页：`LivingArmor_Elite` → `LivingArmor`，`Ore_CopperOre_Med` → `CopperOre`。
+  3. collector 在 enrich 写 JSON 前给 monsters 和 props 都 `attach_loot_pools`。
+  4. `DetailPage`：`page === 'monsters' || page === 'props'` 且有 `loot_pools` 时渲染同一组件。
+  5. 补常见池 i18n：Trinkets / Utility / Barrels / Treasure。
+  6. 单物品且子类 `Utility_Consumable` 的池并成 `kind=consumable`（消耗品），与掉落表消耗品分组一致。
+  7. `MonsterDropSwitch` 页签贴在内容框上沿，选中页签去掉底边框盖住面板上沿。
+- **验证**：`python3 -m unittest tests.test_monster_drops_builder` 通过；`./lint.sh`、`npx tsc --noEmit` 通过。管道后 `WoodenBarrel`/`GoldChest`/`LivingArmor` 有芯片无活动货币；`OrnateChestLarge` 钥匙/宝石单物品池并入「消耗品」。页签贴在内容框上沿。
+
 ## 2026-09-19
 
 ### chore: 推送 main 并更新远程数据库快照

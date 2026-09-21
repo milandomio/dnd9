@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from monster_drops_builder import (  # noqa: E402
     build_loot_pools,
     fold_item_page,
+    is_event_currency_pool,
     is_quest_pool,
     item_has_positive_rate,
     lootdrop_stem,
@@ -30,6 +31,12 @@ class QuestPoolTest(unittest.TestCase):
         self.assertTrue(is_quest_pool("ID_Lootdrop_Quest_Goblins"))
         self.assertTrue(is_quest_pool("ID_Lootdrop_QuestSpecial_Cockatrices"))
         self.assertFalse(is_quest_pool("Id_Lootdrop_LootGoblin_StolenGoods"))
+        self.assertFalse(is_quest_pool("ID_Lootdrop_Spawn_EventCurrency"))
+
+    def test_event_currency(self):
+        self.assertTrue(is_event_currency_pool("ID_Lootdrop_Spawn_EventCurrency"))
+        self.assertTrue(is_event_currency_pool("ID_Lootdrop_Spawn_SpecialEventCurrency"))
+        self.assertFalse(is_event_currency_pool("ID_Lootdrop_Drop_Coin"))
 
     def test_stem(self):
         self.assertEqual(lootdrop_stem("Id_Lootdrop_LootGoblin_StolenGoods"), "LootGoblin_StolenGoods")
@@ -154,6 +161,8 @@ class BuildLootPoolsTest(unittest.TestCase):
         self.assertIn("ArmingSword", drop_pages)
         for name in artifacts:
             self.assertNotIn(name, drop_pages)
+        self.assertFalse(any("EventCurrency" in (p.get("id") or "") for p in pools))
+        self.assertFalse(any("EventCurrency" in (p.get("lootdrop_id") or "") for p in pools))
 
     def test_zero_rate_artifacts_filtered_before_fold(self):
         translations = {
@@ -192,6 +201,29 @@ class BuildLootPoolsTest(unittest.TestCase):
         drop_pool = next(p for p in pools if p["id"] == "ID_Lootdrop_Drop_Banshee")
         self.assertEqual({i["page"] for i in drop_pool["items"]}, {"CrystalBall"})
 
+    def test_zero_rate_uses_raw_entity_name(self):
+        translations = {"Text_DesignData_Item_Item_CopperOre": "铜矿"}
+        item_keys = {"CopperOre": "Text_DesignData_Item_Item_CopperOre"}
+        rows = [_row("Ore_CopperOre_Med", "ID_Lootdrop_Spawn_CopperOre", "CopperOres_3001", 3)]
+
+        class FakeEngine:
+            def get_group_drop_rates(self, item_name, monster_name, group_key, profile=None):
+                if monster_name == "Ore_CopperOre_Med":
+                    return {"PVE": 12.0}
+                return {"PVE": 0}
+
+        pools = build_loot_pools(
+            monster_names={"CopperOre"},
+            rows=rows,
+            translations=translations,
+            item_keys=item_keys,
+            drop_engine=FakeEngine(),
+            monster_groups={"CopperOre": {"GoblinCave"}},
+            fold_quality=False,
+        )
+        self.assertIn("CopperOre", pools)
+        self.assertEqual(pools["CopperOre"][0]["items"][0]["page"], "CopperOres")
+
 
 class RateFilterHelpersTest(unittest.TestCase):
     def test_monster_map_groups(self):
@@ -212,6 +244,101 @@ class RateFilterHelpersTest(unittest.TestCase):
         self.assertFalse(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", {"Ruins"}))
         self.assertTrue(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", {"Ruins", "Crypt"}))
         self.assertTrue(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", set()))
+
+
+class PropsLootPoolsTest(unittest.TestCase):
+    def test_fold_quality_false_keeps_elite_page(self):
+        translations = {
+            "Text_DesignData_Item_Item_BrokenSkull": "破碎的头骨",
+            "Text_DesignData_Item_Item_GoldCoins": "金币",
+            "Text_DesignData_Item_Item_CopperOre": "铜矿",
+        }
+        item_keys = {
+            "BrokenSkull": "Text_DesignData_Item_Item_BrokenSkull",
+            "GoldCoins": "Text_DesignData_Item_Item_GoldCoins",
+            "CopperOre": "Text_DesignData_Item_Item_CopperOre",
+        }
+        rows = [
+            _row("LivingArmor", "ID_Lootdrop_Drop_LivingArmor", "BrokenSkull", 3),
+            _row("LivingArmor_Elite", "ID_Lootdrop_Quest_LivingArmor", "BrokenSkull", 3),
+            _row("LivingArmor_Elite", "ID_Lootdrop_Spawn_EventCurrency", "GoldCoins", 4),
+            _row("Ore_CopperOre_Med", "ID_Lootdrop_Spawn_CopperOre", "CopperOre", 3),
+            _row("WoodenBarrel", "ID_Lootdrop_Drop_Barrels", "GoldCoins", 2),
+            _row("WoodenBarrel", "ID_Lootdrop_Spawn_EventCurrency", "GoldCoins", 4),
+            _row("BossRewardDoor", "ID_Lootdrop_Spawn_EventCurrency", "GoldCoins", 4),
+        ]
+        names = {"LivingArmor", "WoodenBarrel", "CopperOre", "BossRewardDoor"}
+        pools = build_loot_pools(
+            monster_names=names,
+            rows=rows,
+            translations=translations,
+            item_keys=item_keys,
+            fold_quality=False,
+        )
+        self.assertIn("LivingArmor", pools)
+        self.assertNotIn("LivingArmor_Elite", pools)
+        living_ids = {p["id"] for p in pools["LivingArmor"]}
+        self.assertIn("ID_Lootdrop_Drop_LivingArmor", living_ids)
+        self.assertIn("quest", living_ids)
+        self.assertFalse(any("EventCurrency" in (p.get("id") or "") for p in pools["LivingArmor"]))
+        self.assertIn("CopperOre", pools)
+        copper_ids = {p["id"] for p in pools["CopperOre"]}
+        self.assertIn("ID_Lootdrop_Spawn_CopperOre", copper_ids)
+        barrel_ids = {p["id"] for p in pools["WoodenBarrel"]}
+        self.assertIn("ID_Lootdrop_Drop_Barrels", barrel_ids)
+        self.assertFalse(any("EventCurrency" in (p.get("id") or "") for p in pools["WoodenBarrel"]))
+        self.assertNotIn("BossRewardDoor", pools)
+
+    def test_single_item_consumables_merge(self):
+        translations = {
+            "Text_DesignData_Item_Item_CaptainsCorrodedKey": "船长的锈钥匙",
+            "Text_DesignData_Item_Item_EmberGem": "余烬宝石",
+            "Text_DesignData_Item_Item_GoldCoins": "金币",
+        }
+        item_keys = {
+            "CaptainsCorrodedKey": "Text_DesignData_Item_Item_CaptainsCorrodedKey",
+            "EmberGem": "Text_DesignData_Item_Item_EmberGem",
+            "GoldCoins": "Text_DesignData_Item_Item_GoldCoins",
+        }
+        subtypes = {
+            "CaptainsCorrodedKey": {"Text_Code_DCDataBlueprintLibrary_Type_Item_Utility_Consumable"},
+            "EmberGem": {"Text_Code_DCDataBlueprintLibrary_Type_Item_Utility_Consumable"},
+        }
+        rows = [
+            _row("OrnateChestLarge", "ID_Lootdrop_Drop_CorrodedKey", "CaptainsCorrodedKey", 5),
+            _row("OrnateChestLarge", "ID_Lootdrop_Drop_EmberGem", "EmberGem", 5),
+            _row("OrnateChestLarge", "ID_Lootdrop_Drop_Gems", "GoldCoins", 4),
+        ]
+        pools = build_loot_pools(
+            monster_names={"OrnateChestLarge"},
+            rows=rows,
+            translations=translations,
+            item_keys=item_keys,
+            fold_quality=False,
+            item_subtypes=subtypes,
+        )["OrnateChestLarge"]
+        ids = {p["id"] for p in pools}
+        self.assertIn("consumable", ids)
+        self.assertNotIn("ID_Lootdrop_Drop_CorrodedKey", ids)
+        self.assertNotIn("ID_Lootdrop_Drop_EmberGem", ids)
+        self.assertIn("ID_Lootdrop_Drop_Gems", ids)
+        pages = {i["page"] for i in next(p for p in pools if p["id"] == "consumable")["items"]}
+        self.assertEqual(pages, {"CaptainsCorrodedKey", "EmberGem"})
+
+    def test_fold_quality_true_still_merges_elite(self):
+        translations = {"Text_DesignData_Item_Item_BrokenSkull": "破碎的头骨"}
+        item_keys = {"BrokenSkull": "Text_DesignData_Item_Item_BrokenSkull"}
+        rows = [
+            _row("LivingArmor_Elite", "ID_Lootdrop_Drop_LivingArmor", "BrokenSkull", 3),
+        ]
+        pools = build_loot_pools(
+            monster_names={"LivingArmor"},
+            rows=rows,
+            translations=translations,
+            item_keys=item_keys,
+        )
+        self.assertIn("LivingArmor", pools)
+        self.assertNotIn("LivingArmor_Elite", pools)
 
 
 if __name__ == "__main__":

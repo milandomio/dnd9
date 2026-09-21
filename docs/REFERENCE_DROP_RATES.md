@@ -42,7 +42,7 @@ SpawnerDataAsset
 - `variant_count > 1` 时，详情页展示有爆率的多个品质变体，变体爆率合计应为 100%。
 - 变体集合以 `LootDropItemArray` 实际引用的后缀为准；不存在于掉落表的品质不得借用其他品质的 LuckGrade 或权重。
 - 游戏资产存在但没有掉落配置的品质可保留直接访问路由，显示 0% 并从稀有度切换组件隐藏；列表页只列出实际可掉落的品质族。
-- 怪物详情 `loot_pools` 在按页去重前丢弃该怪物实际地图组上 `get_group_drop_rates` 全模式均为 0 的条目；无地图组时不过滤。
+- 怪物/实体详情 `loot_pools` 在按页去重前丢弃该实体实际地图组上 `get_group_drop_rates` 全模式均为 0 的条目；无地图组时不过滤。
 - 变体查询必须先使用 spawner 的 `lootdrop_group_id` 精确匹配 LootDrop，再从该 LootDrop 反查变体；不能只按物品名全局搜索。
 - 普通 `_1001` 到 `_7001` 变体可按基底详情共享来源数据；独立 `_8001` 保留自身详情和翻译键。
 - 未带品质后缀的基底名仅可优先回退到真实存在的 `_5001`，否则使用最高真实品质；带品质后缀的查询必须精确命中，否则为 0。
@@ -55,7 +55,10 @@ SpawnerDataAsset
 - 怪物来源按钮按 `max_score` 降序；没有爆率数据的条目排最后并保持可见。
 - 变体点按 `group_parent` 去重计算有效刷怪位，不能直接用坐标点数代替互斥组数。
 - 无变体运算时，模块卡片不重复渲染与分组头相同的参考爆率。
-- 怪物详情掉落芯片与物品页来源按钮共用 `get_group_drop_rates`：任一模式 `> 0` 才保留。
+- 怪物/实体详情掉落芯片与物品页来源按钮共用 `get_group_drop_rates`：任一模式 `> 0` 才保留。
+- `ID_Lootdrop_Spawn_EventCurrency`（活动货币）不进入 `loot_pools`；`MonsterDropSwitch` 也会再过滤一次。金币 tab（`Drop_Coin` 等）不受影响。
+- 实体详情复用同一套 `loot_pools` / `MonsterDropSwitch`。怪物 `fold_quality=True`（Elite 并入基底页）。实体 `fold_quality=False` 仍对齐导出页：`LivingArmor_Elite` → `LivingArmor`，`Ore_CopperOre_Med` → `CopperOre`。无掉落组的装饰实体不写该字段。
+- 只有一件物品、且物品子类是 `Utility_Consumable` 的掉落池，合并为 `kind=consumable`（消耗品），与掉落表消耗品分组一致。`Drop_Gems` 等多物品池不合并。
 
 ## 常见错误
 
