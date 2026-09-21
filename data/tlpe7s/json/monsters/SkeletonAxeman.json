@@ -1,0 +1,806 @@
+{
+  "name": "SkeletonAxeman",
+  "translation": "骷髅斧兵",
+  "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+  "coords": [
+    {
+      "x": 1057.0,
+      "y": -245.0,
+      "z": 9.999999999976694e-05,
+      "yaw": 0.0,
+      "map": "Cemetery_01",
+      "file": "Cemetery_01_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        }
+      ]
+    },
+    {
+      "x": -437.99936,
+      "y": -1063.99897,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Cemetery_02",
+      "file": "Cemetery_02_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        }
+      ]
+    },
+    {
+      "x": 642.0,
+      "y": 554.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": 662.0,
+      "y": -586.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        }
+      ]
+    },
+    {
+      "x": 15.00003000000001,
+      "y": -490.0,
+      "z": -1600.0,
+      "yaw": 90.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_D.json",
+      "version": "(D)",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "sub_group_parent": "BP_GameObjectLinker_C_7",
+      "sub_pool_size": 5,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Item_Item_GrimveilCloak_5001",
+          "name": "阴森帷幕披风"
+        }
+      ],
+      "parent_pool_size": 6,
+      "variant_count": 11,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "",
+          "name": "金矿"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "",
+          "name": "GrimveilCloak"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        }
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 450.0,
+      "z": -1600.0,
+      "yaw": 270.0,
+      "map": "Crypt_BlindfallPit",
+      "file": "Crypt_BlindfallPit_D.json",
+      "version": "(D)",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "sub_group_parent": "BP_GameObjectLinker_C_7",
+      "sub_pool_size": 5,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Item_Item_GrimveilCloak_5001",
+          "name": "阴森帷幕披风"
+        }
+      ],
+      "parent_pool_size": 6,
+      "variant_count": 11,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "",
+          "name": "金矿"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonCrossbowman",
+          "name": "骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonArcher",
+          "name": "骷髅弓箭手"
+        },
+        {
+          "translation_key": "",
+          "name": "GrimveilCloak"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wraith",
+          "name": "幽鬼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        }
+      ]
+    },
+    {
+      "x": 9.999999,
+      "y": -1050.0,
+      "z": 600.0002,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": 40.0,
+      "y": 1015.0,
+      "z": 600.0002,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": -805.0,
+      "y": -780.0,
+      "z": 0.000126,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": 710.0,
+      "y": 695.0,
+      "z": 0.000126,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": 1197.0,
+      "y": -603.1596,
+      "z": -399.9999,
+      "yaw": 0.0,
+      "map": "DeathHall",
+      "file": "DeathHall_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": -350.0,
+      "y": 230.0,
+      "z": 150.0001,
+      "yaw": 0.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 350.0,
+      "y": -235.0,
+      "z": 150.0001,
+      "yaw": 180.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 769.68774,
+      "y": -769.68774,
+      "z": 700.0,
+      "yaw": 135.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": -737.868,
+      "y": -737.868,
+      "z": 698.41736,
+      "yaw": 45.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": 45.0,
+      "y": -705.0,
+      "z": -450.0,
+      "yaw": 180.0,
+      "map": "Ruins_Tower_01_Destroyed",
+      "file": "Ruins_Tower_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman"
+    },
+    {
+      "x": -448.00001,
+      "y": 517.000004,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+      "variant_count": 5,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        }
+      ]
+    },
+    {
+      "x": 879.99999,
+      "y": 664.000004,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_2",
+      "variant_count": 5,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        }
+      ]
+    },
+    {
+      "x": 806.99999,
+      "y": 955.000004,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_3",
+      "variant_count": 5,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        }
+      ]
+    },
+    {
+      "x": 634.99999,
+      "y": -448.999996,
+      "z": -409.0,
+      "yaw": 0.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_4",
+      "variant_count": 5,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        }
+      ]
+    },
+    {
+      "x": -733.00001,
+      "y": 419.000004,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_1",
+      "variant_count": 5,
+      "variant_names": [
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        }
+      ]
+    },
+    {
+      "x": 443.99999,
+      "y": -823.999996,
+      "z": -409.0,
+      "yaw": 0.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_5",
+      "variant_count": 5,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        }
+      ]
+    },
+    {
+      "x": -883.00001,
+      "y": -1097.999996,
+      "z": 24.000193,
+      "yaw": 0.0,
+      "map": "UndergroundAltar",
+      "file": "UndergroundAltar_HR_D.json",
+      "version": "",
+      "label": "SkeletonAxeman",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_6",
+      "variant_count": 5,
+      "variant_names": [
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "骷髅卫兵（装死）"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSwordman",
+          "name": "骷髅双手剑士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonSpearman",
+          "name": "骷髅长枪兵"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+          "name": "骷髅斧兵"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "GoldenTeeth",
+          "page": "GoldenTeeth",
+          "translation": "金牙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenTeeth",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "IntactSkull",
+          "page": "IntactSkull",
+          "translation": "完整头骨",
+          "translation_key": "Text_DesignData_Item_Item_IntactSkull",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "MoldyBread",
+          "page": "MoldyBread",
+          "translation": "发霉的面包",
+          "translation_key": "Text_DesignData_Item_Item_MoldyBread",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "BrokenSkull",
+          "page": "BrokenSkull",
+          "translation": "破碎的头骨",
+          "translation_key": "Text_DesignData_Item_Item_BrokenSkull",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Bone",
+          "page": "Bone",
+          "translation": "骨头棒",
+          "translation_key": "Text_DesignData_Item_Item_Bone",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_SkeletonAxeman",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_SkeletonAxeman",
+      "items": [
+        {
+          "name": "FellingAxe_6001",
+          "page": "FellingAxe",
+          "translation": "伐木斧",
+          "translation_key": "Text_DesignData_Item_Item_FellingAxe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ReinforcedGloves_6001",
+          "page": "ReinforcedGloves",
+          "translation": "加固手套",
+          "translation_key": "Text_DesignData_Item_Item_ReinforcedGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrusaderHelm_6001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VisoredSallet_6001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DoubleAxe_6001",
+          "page": "DoubleAxe",
+          "translation": "双刃斧",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Topfhelm_6001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GreatHelm_6001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BattleAxe_6001",
+          "page": "BattleAxe",
+          "translation": "战斗斧",
+          "translation_key": "Text_DesignData_Item_Item_BattleAxe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Armet_6001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Hounskull_6001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Hatchet_6001",
+          "page": "Hatchet",
+          "translation": "短柄斧",
+          "translation_key": "Text_DesignData_Item_Item_Hatchet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VisoredBarbutaHelm_6001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RivetedGloves_6001",
+          "page": "RivetedGloves",
+          "translation": "铆接手套",
+          "translation_key": "Text_DesignData_Item_Item_RivetedGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HorsemansAxe_6001",
+          "page": "HorsemansAxe",
+          "translation": "骑士斧",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "骷髅斧兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "骷髅斧兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "骷髅斧兵",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonAxeman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

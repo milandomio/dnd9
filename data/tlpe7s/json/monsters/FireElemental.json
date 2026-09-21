@@ -1,0 +1,266 @@
+{
+  "name": "FireElemental",
+  "translation": "火元素",
+  "translation_key": "Text_DesignData_Monster_Monster_FireElemental",
+  "coords": [
+    {
+      "x": -75.0,
+      "y": 155.0,
+      "z": -110.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "FireElemental"
+    },
+    {
+      "x": 455.0,
+      "y": -405.0,
+      "z": -149.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireElemental",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -470.0,
+      "y": 480.0,
+      "z": -149.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireElemental",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CoreofCinder",
+          "page": "CoreofCinder",
+          "translation": "灰烬之核",
+          "translation_key": "Text_DesignData_Item_Item_CoreofCinder",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_FireElemental",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FireElemental",
+      "items": [
+        {
+          "name": "RadiantCloak_6001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "AdventurerCloak_6001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SplendidCloak_6001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneHood_6001",
+          "page": "ArcaneHood",
+          "translation": "奥术兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WatchmanCloak_6001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ShadowHood_6001",
+          "page": "ShadowHood",
+          "translation": "暗影兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ShadowHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkgroveHood_6001",
+          "page": "DarkgroveHood",
+          "translation": "暗林兜帽",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistHood_6001",
+          "page": "OccultistHood",
+          "translation": "术士兜帽",
+          "translation_key": "Text_DesignData_Item_Item_OccultistHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ForestHood_6001",
+          "page": "ForestHood",
+          "translation": "林地兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ForestHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalSword_6001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalBall_6001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MercurialCloak_6001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RangerHood_6001",
+          "page": "RangerHood",
+          "translation": "游侠兜帽",
+          "translation_key": "Text_DesignData_Item_Item_RangerHood_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Lantern_6001",
+          "page": "Lantern",
+          "translation": "灯笼",
+          "translation_key": "Text_DesignData_Item_Item_Lantern_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RogueCowl_6001",
+          "page": "RogueCowl",
+          "translation": "盗贼风帽",
+          "translation_key": "Text_DesignData_Item_Item_RogueCowl_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TatteredCloak_6001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "VigilantCloak_6001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Lyre_6001",
+          "page": "Lyre",
+          "translation": "里拉琴",
+          "translation_key": "Text_DesignData_Item_Item_Lyre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Flute_6001",
+          "page": "Flute",
+          "translation": "长笛",
+          "translation_key": "Text_DesignData_Item_Item_Flute_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Spellbook_6001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Lute_6001",
+          "page": "Lute",
+          "translation": "鲁特琴",
+          "translation_key": "Text_DesignData_Item_Item_Lute_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Drum_6001",
+          "page": "Drum",
+          "translation": "鼓",
+          "translation_key": "Text_DesignData_Item_Item_Drum_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "火元素",
+        "translation_key": "Text_DesignData_Monster_Monster_FireElemental",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

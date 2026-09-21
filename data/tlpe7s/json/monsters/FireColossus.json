@@ -1,0 +1,487 @@
+{
+  "name": "FireColossus",
+  "translation": "赤焰巨像",
+  "translation_key": "Text_DesignData_Monster_Monster_FireColossus",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -3450.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "FireColossus",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "TearoftheVolcano",
+          "page": "TearoftheVolcano",
+          "translation": "火山之泪",
+          "translation_key": "Text_DesignData_Item_Item_TearoftheVolcano",
+          "suffix": null,
+          "luck_grade": 6
+        },
+        {
+          "name": "WarpedAdamantineShackles",
+          "page": "WarpedAdamantineShackles",
+          "translation": "扭曲的精炼枷锁",
+          "translation_key": "Text_DesignData_Item_Item_WarpedAdamantineShackles",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "BattleAxe_8001",
+          "page": "BattleAxe_8001",
+          "translation": "哀嚎回响",
+          "translation_key": "Text_DesignData_Item_Item_BattleAxe_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "WizardStaff_8001",
+          "page": "WizardStaff_8001",
+          "translation": "幻象",
+          "translation_key": "Text_DesignData_Item_Item_WizardStaff_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "FellingAxe_8001",
+          "page": "FellingAxe_8001",
+          "translation": "摄魂斧",
+          "translation_key": "Text_DesignData_Item_Item_FellingAxe_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "DoubleAxe_8001",
+          "page": "DoubleAxe_8001",
+          "translation": "来世",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Halberd_8001",
+          "page": "Halberd_8001",
+          "translation": "灰烬",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Pavise_8001",
+          "page": "Pavise_8001",
+          "translation": "钛金巨盾",
+          "translation_key": "Text_DesignData_Item_Item_Pavise_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "HorsemansAxe_8001",
+          "page": "HorsemansAxe_8001",
+          "translation": "饥荒",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "EmberGem",
+          "page": "EmberGem",
+          "translation": "余烬宝石",
+          "translation_key": "Text_DesignData_Item_Item_EmberGem",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_FireColossus",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FireColossus",
+      "items": [
+        {
+          "name": "CeremonialStaff_7001",
+          "page": "CeremonialStaff",
+          "translation": "仪式权杖",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialStaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FellingAxe_7001",
+          "page": "FellingAxe",
+          "translation": "伐木斧",
+          "translation_key": "Text_DesignData_Item_Item_FellingAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerBoots_7001",
+          "page": "AdventurerBoots",
+          "translation": "冒险者长靴",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ReinforcedGloves_7001",
+          "page": "ReinforcedGloves",
+          "translation": "加固手套",
+          "translation_key": "Text_DesignData_Item_Item_ReinforcedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RuggedBoots_7001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DashingBoots_7001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DoubleAxe_7001",
+          "page": "DoubleAxe",
+          "translation": "双刃斧",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGloves_7001",
+          "page": "ArcaneGloves",
+          "translation": "奥术手套",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GlovesOfUtility_7001",
+          "page": "GlovesOfUtility",
+          "translation": "实用手套",
+          "translation_key": "Text_DesignData_Item_Item_GlovesOfUtility_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPoulaines_7001",
+          "page": "JesterPoulaines",
+          "translation": "小丑尖头鞋",
+          "translation_key": "Text_DesignData_Item_Item_JesterPoulaines_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pavise_7001",
+          "page": "Pavise",
+          "translation": "巨盾",
+          "translation_key": "Text_DesignData_Item_Item_Pavise_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardShoes_7001",
+          "page": "WizardShoes",
+          "translation": "巫师鞋",
+          "translation_key": "Text_DesignData_Item_Item_WizardShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BattleAxe_7001",
+          "page": "BattleAxe",
+          "translation": "战斗斧",
+          "translation_key": "Text_DesignData_Item_Item_BattleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BuckledBoots_7001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OldShoes_7001",
+          "page": "OldShoes",
+          "translation": "旧鞋",
+          "translation_key": "Text_DesignData_Item_Item_OldShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkleafBoots_7001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistBoots_7001",
+          "page": "OccultistBoots",
+          "translation": "术士长靴",
+          "translation_key": "Text_DesignData_Item_Item_OccultistBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestBoots_7001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ProwlerGloves_7001",
+          "page": "ProwlerGloves",
+          "translation": "潜行者手套",
+          "translation_key": "Text_DesignData_Item_Item_ProwlerGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RawhideGloves_7001",
+          "page": "RawhideGloves",
+          "translation": "生皮手套",
+          "translation_key": "Text_DesignData_Item_Item_RawhideGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherGloves_7001",
+          "page": "LeatherGloves",
+          "translation": "皮革手套",
+          "translation_key": "Text_DesignData_Item_Item_LeatherGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LowBoots_7001",
+          "page": "LowBoots",
+          "translation": "短靴",
+          "translation_key": "Text_DesignData_Item_Item_LowBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticGloves_7001",
+          "page": "MysticGloves",
+          "translation": "秘法手套",
+          "translation_key": "Text_DesignData_Item_Item_MysticGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RunestoneGloves_7001",
+          "page": "RunestoneGloves",
+          "translation": "符石手套",
+          "translation_key": "Text_DesignData_Item_Item_RunestoneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SturdyBoots_7001",
+          "page": "SturdyBoots",
+          "translation": "粗厚皮靴",
+          "translation_key": "Text_DesignData_Item_Item_SturdyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LacedTurnshoe_7001",
+          "page": "LacedTurnshoe",
+          "translation": "系带翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_LacedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedBoots_7001",
+          "page": "ButtonedBoots",
+          "translation": "纽扣长靴",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StitchedTurnshoe_7001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pigache_7001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CuffedBoots_7001",
+          "page": "CuffedBoots",
+          "translation": "翻边皮靴",
+          "translation_key": "Text_DesignData_Item_Item_CuffedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Turnshoe_7001",
+          "page": "Turnshoe",
+          "translation": "翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_Turnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BloodwovenGloves_7001",
+          "page": "BloodwovenGloves",
+          "translation": "血纹手套",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightfootBoots_7001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyBoots_7001",
+          "page": "HeavyBoots",
+          "translation": "重型长靴",
+          "translation_key": "Text_DesignData_Item_Item_HeavyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RivetedGloves_7001",
+          "page": "RivetedGloves",
+          "translation": "铆接手套",
+          "translation_key": "Text_DesignData_Item_Item_RivetedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Halberd_7001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HorsemansAxe_7001",
+          "page": "HorsemansAxe",
+          "translation": "骑士斧",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardStaff_7001",
+          "page": "WizardStaff",
+          "translation": "魔法杖",
+          "translation_key": "Text_DesignData_Item_Item_WizardStaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodGloves_7001",
+          "page": "ElkwoodGloves",
+          "translation": "鹿角木手套",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OnyxGloves_7001",
+          "page": "OnyxGloves",
+          "translation": "黑玉手套",
+          "translation_key": "Text_DesignData_Item_Item_OnyxGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "赤焰巨像",
+        "translation_key": "Text_DesignData_Monster_Monster_FireColossus",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

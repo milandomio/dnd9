@@ -1,0 +1,212 @@
+{
+  "name": "LivingStatue",
+  "translation": "石像鬼",
+  "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+  "coords": [
+    {
+      "x": 200.00000000000009,
+      "y": 0.0,
+      "z": -200.0,
+      "yaw": 185.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "LivingStatue",
+      "group_parent": "BP_GameSpawnerGroup_C_2"
+    },
+    {
+      "x": -205.0,
+      "y": 10.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "LivingStatue",
+      "group_parent": "BP_GameSpawnerGroup_C_1"
+    },
+    {
+      "x": -555.0,
+      "y": 15.0,
+      "z": 105.0,
+      "yaw": 180.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -320.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 330.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -320.00003,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 329.99997,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 505.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -515.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -3905.0,
+      "y": -315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -3905.0,
+      "y": 315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_LivingStatue",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_LivingStatue",
+      "items": [
+        {
+          "name": "Bardiche_6001",
+          "page": "Bardiche",
+          "translation": "月刃斧",
+          "translation_key": "Text_DesignData_Item_Item_Bardiche_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrystalSword_6001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Halberd_6001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "OilLantern",
+          "page": "OilLantern",
+          "translation": "油灯笼",
+          "translation_key": "Text_DesignData_Item_Item_OilLantern",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "石像鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 9.8,
+          "普通": 10.0,
+          "豪客赛": 18.125,
+          "逆袭赛": 17.875
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "石像鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 9.1667,
+          "普通": 13.75,
+          "豪客赛": 15.0,
+          "逆袭赛": 15.25
+        }
+      }
+    ]
+  }
+}

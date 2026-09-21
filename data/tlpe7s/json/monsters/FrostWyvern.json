@@ -1,0 +1,351 @@
+{
+  "name": "FrostWyvern",
+  "translation": "冰霜飞龙",
+  "translation_key": "Text_DesignData_Monster_Monster_FrostWyvern",
+  "coords": [
+    {
+      "x": -1600.0,
+      "y": 1600.0,
+      "z": 1000.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_WyvernLair",
+      "file": "IceAbyss_WyvernLair_HR_D.json",
+      "version": "",
+      "label": "FrostWyvern",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "FrostWyvernClaws",
+          "page": "FrostWyvernClaws",
+          "translation": "冰霜巨龙的利爪",
+          "translation_key": "Text_DesignData_Item_Item_FrostWyvernClaws",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "FrostWyvernsHide",
+          "page": "FrostWyvernsHide",
+          "translation": "冰霜飞龙皮",
+          "translation_key": "Text_DesignData_Item_Item_FrostWyvernsHide",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "Spellbook_8001",
+          "page": "Spellbook_8001",
+          "translation": "咒纹法典",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Longbow_8001",
+          "page": "Longbow_8001",
+          "translation": "尼帕兰",
+          "translation_key": "Text_DesignData_Item_Item_Longbow_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Bardiche_8001",
+          "page": "Bardiche_8001",
+          "translation": "掠风",
+          "translation_key": "Text_DesignData_Item_Item_Bardiche_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "RecurveBow_8001",
+          "page": "RecurveBow_8001",
+          "translation": "瘟疫",
+          "translation_key": "Text_DesignData_Item_Item_RecurveBow_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "SurvivalBow_8001",
+          "page": "SurvivalBow_8001",
+          "translation": "真言精灵弓",
+          "translation_key": "Text_DesignData_Item_Item_SurvivalBow_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "CrystalSword_8001",
+          "page": "CrystalSword_8001",
+          "translation": "碎莹",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Rapier_8001",
+          "page": "Rapier_8001",
+          "translation": "紫罗兰",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "FrozenIronKey",
+          "page": "FrozenIronKey",
+          "translation": "寒铁钥匙",
+          "translation_key": "Text_DesignData_Item_Item_FrozenIronKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_FrostWyvern",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FrostWyvern",
+      "items": [
+        {
+          "name": "Crossbow_7001",
+          "page": "Crossbow",
+          "translation": "十字弩",
+          "translation_key": "Text_DesignData_Item_Item_Crossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RecurveBow_7001",
+          "page": "RecurveBow",
+          "translation": "反曲弓",
+          "translation_key": "Text_DesignData_Item_Item_RecurveBow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LooseTrousers_7001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPants_7001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ClothPants_7001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HandCrossbow_7001",
+          "page": "HandCrossbow",
+          "translation": "手弩",
+          "translation_key": "Text_DesignData_Item_Item_HandCrossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SleekHidePants_7001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bardiche_7001",
+          "page": "Bardiche",
+          "translation": "月刃斧",
+          "translation_key": "Text_DesignData_Item_Item_Bardiche_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistPants_7001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrystalSword_7001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPaddedHose_7001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrunkHose_7001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SurvivalBow_7001",
+          "page": "SurvivalBow",
+          "translation": "生存弓",
+          "translation_key": "Text_DesignData_Item_Item_SurvivalBow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLeggings_7001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherChausses_7001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedLeggings_7001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Rapier_7001",
+          "page": "Rapier",
+          "translation": "细剑",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WindlassCrossbow_7001",
+          "page": "WindlassCrossbow",
+          "translation": "绞盘弩",
+          "translation_key": "Text_DesignData_Item_Item_WindlassCrossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedLeggings_7001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BardicPants_7001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyLeatherLeggings_7001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longbow_7001",
+          "page": "Longbow",
+          "translation": "长弓",
+          "translation_key": "Text_DesignData_Item_Item_Longbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spellbook_7001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkLeatherLeggings_7001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceAbyss": [
+      {
+        "translation": "冰霜飞龙",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostWyvern",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

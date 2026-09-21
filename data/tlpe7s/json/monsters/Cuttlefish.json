@@ -1,0 +1,399 @@
+{
+  "name": "Cuttlefish",
+  "translation": "乌贼",
+  "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+  "coords": [
+    {
+      "x": 914.0,
+      "y": 1009.0,
+      "z": -556.90904,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+          "name": "乌贼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mermaid",
+          "name": "人鱼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Octopus",
+          "name": "章鱼"
+        }
+      ]
+    },
+    {
+      "x": -700.0,
+      "y": -100.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": 2800.0,
+      "y": 1100.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": -3800.0,
+      "y": 3700.0,
+      "z": -700.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": -19.0,
+      "y": 111.0,
+      "z": -1155.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_MermaidTomb",
+      "file": "ShipGraveyard_MermaidTomb_HR_D.json",
+      "version": "",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+          "name": "乌贼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Octopus",
+          "name": "章鱼"
+        }
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 400.0,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish"
+    },
+    {
+      "x": -1009.0,
+      "y": 38.0,
+      "z": -1637.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_9",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Octopus",
+          "name": "章鱼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+          "name": "乌贼"
+        }
+      ]
+    },
+    {
+      "x": 555.0,
+      "y": -746.0,
+      "z": -2413.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish",
+      "group_parent": "BP_GameSpawnerGroup_C_10",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+          "name": "大白鲨"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Octopus",
+          "name": "章鱼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+          "name": "乌贼"
+        }
+      ]
+    },
+    {
+      "x": 400.0,
+      "y": -200.0,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "Cuttlefish"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CuttlefishInkSac",
+          "page": "CuttlefishInkSac",
+          "translation": "乌贼墨汁袋",
+          "translation_key": "Text_DesignData_Item_Item_CuttlefishInkSac",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cuttlefish",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cuttlefish",
+      "items": [
+        {
+          "name": "GoldBangle1I_6001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1J_6001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1C_6001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1D_6001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemRing_6001",
+          "page": "GemRing",
+          "translation": "宝石戒指（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemNecklace_6001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2G_6001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1H_6001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PearlNecklace_6001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1B_6001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2D_6001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1E_6001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBand_6001",
+          "page": "GoldBand",
+          "translation": "金环（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MetalCup_6001",
+          "page": "MetalCup",
+          "translation": "银圣杯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2H_6001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Bandage_4001",
+          "page": "Bandage",
+          "translation": "绷带",
+          "translation_key": "Text_DesignData_Item_Item_Bandage_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "OilLantern",
+          "page": "OilLantern",
+          "translation": "油灯笼",
+          "translation_key": "Text_DesignData_Item_Item_OilLantern",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Gems",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Gems",
+      "items": [
+        {
+          "name": "Ruby_7001",
+          "page": "Ruby",
+          "translation": "红宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Emerald_7001",
+          "page": "Emerald",
+          "translation": "翡翠（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BlueSapphire_7001",
+          "page": "BlueSapphire",
+          "translation": "蓝宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_BlueSapphire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Diamond_7001",
+          "page": "Diamond",
+          "translation": "钻石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Diamond_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "乌贼",
+        "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 11.25
+        }
+      }
+    ]
+  }
+}

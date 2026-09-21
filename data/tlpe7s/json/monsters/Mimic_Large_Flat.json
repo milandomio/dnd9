@@ -1,0 +1,4096 @@
+{
+  "name": "Mimic_Large_Flat",
+  "translation": "巨型宝箱怪",
+  "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+  "coords": [
+    {
+      "x": -568.0,
+      "y": -613.0,
+      "z": -486.0,
+      "yaw": 360.0,
+      "map": "Armory",
+      "file": "Armory_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 539.999999,
+      "y": 340.000003,
+      "z": -449.9999,
+      "yaw": 180.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_11",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 1408.0,
+      "y": 777.9016,
+      "z": -322.67715,
+      "yaw": 180.0,
+      "map": "CaveMaze_Center_02",
+      "file": "CaveMaze_Center_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -287.53845,
+      "y": 425.69138,
+      "z": 0.000106822255,
+      "yaw": 220.0,
+      "map": "Cave_MoleTunnel",
+      "file": "Cave_MoleTunnel_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1254.133514,
+      "y": -478.866486,
+      "z": -400.0,
+      "yaw": 315.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": 241.0,
+      "y": 549.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "Cave_PitHall",
+      "file": "Cave_PitHall_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": 1281.6885,
+      "y": -466.41025,
+      "z": -500.0,
+      "yaw": 170.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -113.4203,
+      "y": -782.7463,
+      "z": 0.0,
+      "yaw": 155.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 425.0,
+      "y": -695.0,
+      "z": -404.9999,
+      "yaw": 0.0,
+      "map": "Cemetery_02",
+      "file": "Cemetery_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -909.0,
+      "y": 2004.0,
+      "z": 17.0,
+      "yaw": 180.0,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -537.0,
+      "y": 4430.0,
+      "z": 551.9827,
+      "yaw": 180.0,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 418.77472,
+      "y": -155.36243,
+      "z": 2.0001,
+      "yaw": 290.0,
+      "map": "CliffBridge",
+      "file": "CliffBridge_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1400.7959,
+      "y": -1275.7476,
+      "z": -959.9999,
+      "yaw": 47.3,
+      "map": "CliffBridge",
+      "file": "CliffBridge_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 900.0,
+      "y": -1187.0,
+      "z": -487.0,
+      "yaw": 90.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1.8189894e-12,
+      "y": -341.0,
+      "z": -174.51836,
+      "yaw": 270.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 624.999997,
+      "y": -821.0,
+      "z": -399.9999,
+      "yaw": 90.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": -635.0,
+      "y": 819.0,
+      "z": -399.9999,
+      "yaw": 270.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": -1170.0,
+      "y": -9.999998,
+      "z": 9.9e-05,
+      "yaw": 360.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1227.0,
+      "y": 480.0,
+      "z": 0.0,
+      "yaw": 270.3,
+      "map": "Crypt_AltarRoomAB",
+      "file": "Crypt_AltarRoomAB_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 47.0,
+      "y": -136.0,
+      "z": 0.0,
+      "yaw": 107.1,
+      "map": "Crypt_AltarRoomAB",
+      "file": "Crypt_AltarRoomAB_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -320.0,
+      "y": 490.0,
+      "z": -399.9999,
+      "yaw": 270.0,
+      "map": "Crypt_Atrium",
+      "file": "Crypt_Atrium_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 274.99997,
+      "y": -515.0,
+      "z": -399.9999,
+      "yaw": 90.0,
+      "map": "Crypt_Atrium",
+      "file": "Crypt_Atrium_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -18.0,
+      "y": 1212.0,
+      "z": 96.3361,
+      "yaw": 270.0,
+      "map": "Crypt_Chapel",
+      "file": "Crypt_Chapel_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1360.0,
+      "y": -1320.0,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "Crypt_Dungeon",
+      "file": "Crypt_Dungeon_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 700.0003,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1470.0,
+      "y": -50.0,
+      "z": 600.0001,
+      "yaw": 180.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 143.0,
+      "y": -382.0,
+      "z": -9.999702,
+      "yaw": 90.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -276.87006,
+      "y": 276.36752,
+      "z": 150.0,
+      "yaw": 315.0,
+      "map": "Crypt_LightlessChamber_01",
+      "file": "Crypt_LightlessChamber_01_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+          "name": "黄金宝箱"
+        }
+      ]
+    },
+    {
+      "x": 276.08743,
+      "y": -276.58997999999997,
+      "z": 150.0,
+      "yaw": 135.0,
+      "map": "Crypt_LightlessChamber_01",
+      "file": "Crypt_LightlessChamber_01_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+          "name": "黄金宝箱"
+        }
+      ]
+    },
+    {
+      "x": 555.0,
+      "y": -535.0,
+      "z": 400.0,
+      "yaw": 135.0,
+      "map": "Crypt_MadCorridors",
+      "file": "Crypt_MadCorridors_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_33",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_Hoard",
+          "name": "宝藏堆"
+        }
+      ]
+    },
+    {
+      "x": -550.0,
+      "y": 550.0,
+      "z": 400.0,
+      "yaw": 315.0,
+      "map": "Crypt_MadCorridors",
+      "file": "Crypt_MadCorridors_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -540.0,
+      "y": -540.0,
+      "z": 400.0,
+      "yaw": 45.0,
+      "map": "Crypt_MadCorridors",
+      "file": "Crypt_MadCorridors_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -607.92896,
+      "y": 609.64465,
+      "z": 590.0006,
+      "yaw": 315.0,
+      "map": "Crypt_Ramparts",
+      "file": "Crypt_Ramparts_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 611.83026,
+      "y": -610.11456,
+      "z": 590.0006,
+      "yaw": 135.0,
+      "map": "Crypt_Ramparts",
+      "file": "Crypt_Ramparts_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -231.08388,
+      "y": -233.033,
+      "z": -150.0,
+      "yaw": 45.0,
+      "map": "Crypt_TorchboundVault",
+      "file": "Crypt_TorchboundVault_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 236.0,
+      "y": -233.0,
+      "z": 0.0,
+      "yaw": 130.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1150.0,
+      "y": 1353.0,
+      "z": -610.9999,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": 1120.0,
+      "y": 3.4906586e-07,
+      "z": 300.0,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1150.0,
+      "y": -1357.0,
+      "z": -609.9999,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": -1119.0,
+      "y": 829.0,
+      "z": -399.9999,
+      "yaw": 270.0,
+      "map": "DeathHall",
+      "file": "DeathHall_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 277.0,
+      "z": 600.0,
+      "yaw": 270.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 290.0,
+      "y": -1360.0,
+      "z": 1028.0,
+      "yaw": 90.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -100.0,
+      "yaw": 360.0,
+      "map": "EightToOne_01",
+      "file": "EightToOne_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -462.32982000000004,
+      "y": 816.325905,
+      "z": -199.9999,
+      "yaw": 180.0,
+      "map": "EightToOne_01",
+      "file": "EightToOne_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_SubGroup_C_4",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ],
+      "parent_pool_size": 4,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ]
+    },
+    {
+      "x": -805.0,
+      "y": -485.0,
+      "z": -200.0,
+      "yaw": 270.0,
+      "map": "EightToOne_01",
+      "file": "EightToOne_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_SubGroup_C_3",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ],
+      "parent_pool_size": 4,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ]
+    },
+    {
+      "x": 480.0,
+      "y": -820.0,
+      "z": -200.0,
+      "yaw": 360.0,
+      "map": "EightToOne_01",
+      "file": "EightToOne_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_SubGroup_C_2",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ],
+      "parent_pool_size": 4,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ]
+    },
+    {
+      "x": 810.00002,
+      "y": 500.0,
+      "z": -200.0,
+      "yaw": 90.0,
+      "map": "EightToOne_01",
+      "file": "EightToOne_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_SubGroup_C_1",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ],
+      "parent_pool_size": 4,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mummy",
+          "name": "木乃伊"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ]
+    },
+    {
+      "x": 78.390175,
+      "y": -165.47495,
+      "z": -82.051094,
+      "yaw": 285.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 748.0705,
+      "y": -873.6595,
+      "z": -525.0,
+      "yaw": 355.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -751.2132,
+      "y": 896.2132,
+      "z": 0.0,
+      "yaw": 315.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1030.0,
+      "y": 315.0,
+      "z": 1300.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 6.0,
+      "y": 1217.0,
+      "z": 6.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": -1280.0,
+      "z": 500.0,
+      "yaw": 90.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 1280.0,
+      "z": 500.0,
+      "yaw": 270.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 350.0,
+      "y": 485.0,
+      "z": 400.0,
+      "yaw": 90.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1.8251937e-06,
+      "y": -100.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -495.1314,
+      "y": -934.50964,
+      "z": 200.0,
+      "yaw": 60.0,
+      "map": "Firedeep_FlameTerrace",
+      "file": "Firedeep_FlameTerrace_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 650.0,
+      "y": 650.0,
+      "z": 100.0,
+      "yaw": 225.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 40,
+      "variant_names": []
+    },
+    {
+      "x": 650.0,
+      "y": -650.0,
+      "z": 100.0,
+      "yaw": 135.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 40,
+      "variant_names": []
+    },
+    {
+      "x": -650.0,
+      "y": 650.0,
+      "z": 100.0,
+      "yaw": 315.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 40,
+      "variant_names": []
+    },
+    {
+      "x": -650.0,
+      "y": -650.0,
+      "z": 100.0,
+      "yaw": 45.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 40,
+      "variant_names": []
+    },
+    {
+      "x": -1413.0,
+      "y": -506.0,
+      "z": 1201.0,
+      "yaw": 0.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 830.0,
+      "y": 0.0,
+      "z": 800.0,
+      "yaw": 0.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -404.18182,
+      "y": -1318.6647,
+      "z": 10.0,
+      "yaw": 340.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -219.68777,
+      "y": -1070.6929,
+      "z": 280.0,
+      "yaw": 325.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 204.18655,
+      "y": 1334.1123,
+      "z": 505.0,
+      "yaw": 185.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": -207.44603,
+      "y": -1380.6287,
+      "z": 500.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": -650.0,
+      "y": 650.0,
+      "z": -110.0,
+      "yaw": 330.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 105.0,
+      "y": 1332.0,
+      "z": -345.0,
+      "yaw": 245.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -900.0,
+      "y": -400.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 975.0,
+      "y": 49.999991482425,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 60,
+      "variant_names": []
+    },
+    {
+      "x": 1149.8372,
+      "y": 1206.7606,
+      "z": -500.0,
+      "yaw": 40.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 60,
+      "variant_names": []
+    },
+    {
+      "x": -1010.0,
+      "y": 1250.0,
+      "z": -500.0,
+      "yaw": 90.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 60,
+      "variant_names": []
+    },
+    {
+      "x": -1215.0,
+      "y": -285.0,
+      "z": -500.0,
+      "yaw": 180.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 60,
+      "variant_names": []
+    },
+    {
+      "x": -825.0,
+      "y": -1430.0,
+      "z": -500.0,
+      "yaw": 90.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 60,
+      "variant_names": []
+    },
+    {
+      "x": 951.7157,
+      "y": -946.71576,
+      "z": -500.0,
+      "yaw": 315.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 60,
+      "variant_names": []
+    },
+    {
+      "x": -803.7916,
+      "y": -814.15063,
+      "z": 0.0,
+      "yaw": 30.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 796.9234,
+      "y": 786.6654,
+      "z": -1.4510752,
+      "yaw": 245.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 200.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 590.0,
+      "y": -655.0,
+      "z": -450.0,
+      "yaw": 25.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 999.9844,
+      "y": -259.99774,
+      "z": -320.0,
+      "yaw": 90.0,
+      "map": "FishingGround",
+      "file": "FishingGround_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 464.0,
+      "y": 1214.0,
+      "z": 100.43287,
+      "yaw": 180.0,
+      "map": "FourWayConnect",
+      "file": "FourWayConnect_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_8",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.Ground",
+          "name": "地面"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        }
+      ]
+    },
+    {
+      "x": -1226.0,
+      "y": 116.0,
+      "z": -399.9999,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center_02",
+      "file": "GoblinJail_Center_02_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 670.7016,
+      "y": -35.180233,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "GoblinJail_Center_02",
+      "file": "GoblinJail_Center_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1239.0251,
+      "y": -986.1308,
+      "z": -539.9999,
+      "yaw": 45.0,
+      "map": "GoblinMineCenter_01",
+      "file": "GoblinMineCenter_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 807.7668,
+      "y": -127.99407,
+      "z": 500.0001,
+      "yaw": 175.0,
+      "map": "GuardPost",
+      "file": "GuardPost_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 235.0,
+      "y": -435.0,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "Hallways",
+      "file": "Hallways_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -440.0,
+      "y": -26.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Hallways",
+      "file": "Hallways_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -825.9932,
+      "y": -1405.154,
+      "z": -399.9999,
+      "yaw": 90.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -450.0,
+      "y": -725.0,
+      "z": -350.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_AbyssTooth",
+      "file": "IceAbyss_AbyssTooth_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 807.0,
+      "y": -828.0,
+      "z": -338.96628,
+      "yaw": 91.8,
+      "map": "IceAbyss_CharnelHouse",
+      "file": "IceAbyss_CharnelHouse_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1350.0,
+      "y": 8.999999e-06,
+      "z": 101.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_CharnelHouse",
+      "file": "IceAbyss_CharnelHouse_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 2.842171e-14,
+      "y": -244.00635,
+      "z": 1.0001142,
+      "yaw": 90.0,
+      "map": "IceAbyss_DeathPit",
+      "file": "IceAbyss_DeathPit_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -7.4843047e-07,
+      "y": 2.1175824e-22,
+      "z": -477.51306,
+      "yaw": 270.0,
+      "map": "IceAbyss_DeathPit",
+      "file": "IceAbyss_DeathPit_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1390.0,
+      "y": -320.0,
+      "z": -100.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": -83.0,
+      "z": -102.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_DemonicDen",
+      "file": "IceAbyss_DemonicDen_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 87.0,
+      "z": -102.0,
+      "yaw": 270.0,
+      "map": "IceAbyss_DemonicDen",
+      "file": "IceAbyss_DemonicDen_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -653.0,
+      "y": -416.00635,
+      "z": 0.000112,
+      "yaw": 90.0,
+      "map": "IceAbyss_DividingHill",
+      "file": "IceAbyss_DividingHill_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 750.0,
+      "y": -1110.0,
+      "z": -1050.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -3.1900065e-08,
+      "y": -402.89847,
+      "z": 4.4100727e-07,
+      "yaw": 90.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -90.0,
+      "y": -1390.0,
+      "z": -139.99548,
+      "yaw": 75.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -332.39273,
+      "y": -1402.0123,
+      "z": -149.9999,
+      "yaw": 40.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1337.0,
+      "y": 1347.0,
+      "z": -599.9999,
+      "yaw": 225.0,
+      "map": "IceAbyss_FrostwovenPillars",
+      "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1304.0,
+      "y": -1329.0,
+      "z": -599.9999,
+      "yaw": 135.0,
+      "map": "IceAbyss_FrostwovenPillars",
+      "file": "IceAbyss_FrostwovenPillars_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -203.52652,
+      "y": -548.7225,
+      "z": 90.446594,
+      "yaw": 43.5,
+      "map": "IceAbyss_Glacivia",
+      "file": "IceAbyss_Glacivia_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -181.76147,
+      "y": -46.811733,
+      "z": 0.0,
+      "yaw": 195.0,
+      "map": "IceAbyss_GrandHollow",
+      "file": "IceAbyss_GrandHollow_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 118.98464,
+      "y": -284.9897,
+      "z": -1297.3738,
+      "yaw": 315.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -385.0,
+      "y": 25.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -850.0,
+      "y": 25.0,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 416.3769,
+      "y": 415.00485,
+      "z": 0.0,
+      "yaw": 40.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 323.58185,
+      "y": -354.90668,
+      "z": -599.9999,
+      "yaw": 90.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -640.0,
+      "y": 1000.0,
+      "z": 570.0,
+      "yaw": 225.0,
+      "map": "IceAbyss_Monoliths",
+      "file": "IceAbyss_Monoliths_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -329.1165,
+      "y": -21.02877,
+      "z": -599.9999,
+      "yaw": 360.0,
+      "map": "IceAbyss_Pillars",
+      "file": "IceAbyss_Pillars_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 20.0,
+      "y": -253.00635,
+      "z": 800.0001,
+      "yaw": 90.0,
+      "map": "IceAbyss_ReversedPyramid",
+      "file": "IceAbyss_ReversedPyramid_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 196.88351,
+      "y": 234.99367,
+      "z": -299.9999,
+      "yaw": 270.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -246.1264,
+      "y": 405.0299,
+      "z": 9.6e-05,
+      "yaw": 360.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -100.42746,
+      "y": 385.05582,
+      "z": 0.0,
+      "yaw": 267.6,
+      "map": "IceAbyss_SinkingPillars",
+      "file": "IceAbyss_SinkingPillars_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 380.85742,
+      "y": -388.525,
+      "z": 0.0,
+      "yaw": 85.0,
+      "map": "IceAbyss_SinkingPillars",
+      "file": "IceAbyss_SinkingPillars_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 806.0,
+      "y": 293.0,
+      "z": 600.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_StaircaseHill",
+      "file": "IceAbyss_StaircaseHill_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -80.116486,
+      "y": 6.971229,
+      "z": 0.000111083,
+      "yaw": 360.0,
+      "map": "IceAbyss_StaircaseHill",
+      "file": "IceAbyss_StaircaseHill_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 530.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Barricade",
+      "file": "IceCave_Barricade_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 844.88934,
+      "y": -908.02954,
+      "z": -636.99994,
+      "yaw": 135.0,
+      "map": "IceCave_Cabin_Raft",
+      "file": "IceCave_Cabin_Raft_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -805.0,
+      "y": -805.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "IceCave_CavePathway",
+      "file": "IceCave_CavePathway_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 65.0,
+      "y": 300.0,
+      "z": 0.0,
+      "yaw": 315.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1548.3494,
+      "y": 439.5,
+      "z": 729.0,
+      "yaw": 270.0,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 272.63254,
+      "y": -1356.2473,
+      "z": -499.9999,
+      "yaw": 119.9,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -117.99143,
+      "y": 1381.7451,
+      "z": 7.220764e-05,
+      "yaw": 270.0,
+      "map": "IceCave_Hut_03",
+      "file": "IceCave_Hut_03_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1141.567,
+      "y": -1364.1693,
+      "z": 610.0,
+      "yaw": 100.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1379.6982,
+      "y": -1124.6307,
+      "z": 610.0,
+      "yaw": 355.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 630.0,
+      "y": 140.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -145.0,
+      "y": 125.0,
+      "z": -400.0,
+      "yaw": 330.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_A.json",
+      "version": "(A)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 240.0,
+      "y": 245.0,
+      "z": 350.0,
+      "yaw": 230.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 609.0,
+      "y": -419.0,
+      "z": -398.64142,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -480.0,
+      "y": 831.0,
+      "z": -416.0,
+      "yaw": 270.0,
+      "map": "IceCave_Turnnel_01",
+      "file": "IceCave_Turnnel_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1390.0,
+      "y": 1390.0,
+      "z": 0.0,
+      "yaw": 225.0,
+      "map": "InfernoCastleConner",
+      "file": "InfernoCastleConner_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1220.0,
+      "y": -791.0,
+      "z": 500.0,
+      "yaw": 90.0,
+      "map": "InfernoCastleConner",
+      "file": "InfernoCastleConner_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 565.0,
+      "y": 503.0,
+      "z": -448.74405,
+      "yaw": 180.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -925.8392,
+      "y": -1112.2727,
+      "z": 0.00010558624,
+      "yaw": 45.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1102.6158,
+      "y": -935.496,
+      "z": 0.00010367889,
+      "yaw": 45.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 10.0,
+      "y": 1100.0,
+      "z": 1000.0,
+      "yaw": 180.0,
+      "map": "InfernoGate",
+      "file": "InfernoGate_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1273.0,
+      "y": 4.000001,
+      "z": -299.9999,
+      "yaw": 360.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -312.0,
+      "y": -1331.0,
+      "z": -805.0,
+      "yaw": 0.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1395.6597,
+      "y": -1191.2341,
+      "z": 0.0001,
+      "yaw": 0.0,
+      "map": "InfernoRiver",
+      "file": "InfernoRiver_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -440.0,
+      "y": -430.0,
+      "z": -165.0,
+      "yaw": 45.0,
+      "map": "InfernoRiver",
+      "file": "InfernoRiver_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -510.0,
+      "y": -890.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "InfernoRooms",
+      "file": "InfernoRooms_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1.8813452e-07,
+      "y": -1.8813452e-07,
+      "z": -350.0,
+      "yaw": 315.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 920.0,
+      "y": -895.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": -895.0,
+      "y": 920.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 20,
+      "variant_names": []
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 60.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 800.0,
+      "y": 1169.0,
+      "z": 500.0,
+      "yaw": 270.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 962.2218,
+      "y": 962.2218,
+      "z": -200.0,
+      "yaw": 225.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1185.9619,
+      "y": 1185.9619,
+      "z": -500.0,
+      "yaw": 315.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1178.2843,
+      "y": -1178.7867,
+      "z": -500.0,
+      "yaw": 135.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 120.0,
+      "z": -690.0,
+      "yaw": 270.0,
+      "map": "Inferno_DownStair",
+      "file": "Inferno_DownStair_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1410.0,
+      "y": 1420.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -265.0,
+      "y": 40.0,
+      "z": -850.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 110.0,
+      "y": 0.0,
+      "z": 400.0,
+      "yaw": 180.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 235.0,
+      "y": 1400.0,
+      "z": -850.0,
+      "yaw": 180.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -230.0,
+      "y": -1400.0,
+      "z": -850.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 320.0,
+      "y": -140.00002,
+      "z": 150.0001,
+      "yaw": 270.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -325.0,
+      "y": 145.00002,
+      "z": 150.0001,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1200.0,
+      "y": -870.0,
+      "z": 300.0,
+      "yaw": 0.0,
+      "map": "Inferno_LavaCorner",
+      "file": "Inferno_LavaCorner_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -835.0,
+      "y": -1219.0,
+      "z": 300.0,
+      "yaw": 90.0,
+      "map": "Inferno_LavaCorner",
+      "file": "Inferno_LavaCorner_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -440.0,
+      "y": -1380.0,
+      "z": -150.0,
+      "yaw": 90.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 466.6432,
+      "y": -1386.7122,
+      "z": -150.0,
+      "yaw": 135.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": -20.0,
+      "z": -120.0,
+      "yaw": 90.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 300.0,
+      "z": 260.0001,
+      "yaw": 90.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": -300.0,
+      "z": 260.00012,
+      "yaw": 270.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1255.0,
+      "y": -1410.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1345.5635,
+      "y": -1339.2893,
+      "z": 700.0,
+      "yaw": 45.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 21.130913,
+      "y": -420.3154,
+      "z": 850.0,
+      "yaw": 295.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -0.00011976622,
+      "y": -105.0,
+      "z": 490.0,
+      "yaw": 270.0,
+      "map": "LowPyramid",
+      "file": "LowPyramid_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.000120951314,
+      "y": 105.0,
+      "z": 490.0,
+      "yaw": 90.0,
+      "map": "LowPyramid",
+      "file": "LowPyramid_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -589.98724,
+      "y": 49.99661,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "Maze",
+      "file": "Maze_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1390.0,
+      "y": -1070.0,
+      "z": 50.0,
+      "yaw": 0.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1173.0,
+      "y": -274.0,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "OldTomb",
+      "file": "OldTomb_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 789.56213,
+      "y": -505.8048,
+      "z": 5.0,
+      "yaw": 195.0,
+      "map": "Ruins_BanditCamp",
+      "file": "Ruins_BanditCamp_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -699.86945,
+      "y": 1201.9438,
+      "z": -600.0,
+      "yaw": 239.5,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 718.0,
+      "y": -216.0,
+      "z": 650.0,
+      "yaw": 90.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -133.99995,
+      "y": 1484.0,
+      "z": -1099.9999,
+      "yaw": 270.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -895.8957,
+      "y": 881.6408,
+      "z": -650.0,
+      "yaw": 315.0,
+      "map": "Ruins_Cemetery_01",
+      "file": "Ruins_Cemetery_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -70.0,
+      "y": 0.0,
+      "z": -1000.0,
+      "yaw": 0.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": -214.07326,
+      "z": -490.01804,
+      "yaw": 340.6,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -696.0,
+      "y": -1226.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_GreatHall_02_Destroyed",
+      "file": "Ruins_GreatHall_02_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 511.0,
+      "y": -184.0,
+      "z": -599.9999,
+      "yaw": 90.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1350.0,
+      "y": -400.0,
+      "z": 0.0,
+      "yaw": 60.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1505.0,
+      "y": 15.999832,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 388.0,
+      "y": 632.0,
+      "z": -599.9999,
+      "yaw": 270.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -365.23703,
+      "y": 397.0001,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "Ruins_Stonehenge",
+      "file": "Ruins_Stonehenge_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 267.0,
+      "y": 1033.0,
+      "z": -599.9999,
+      "yaw": 180.0,
+      "map": "Ruins_UndergroundAltar_01",
+      "file": "Ruins_UndergroundAltar_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1385.0,
+      "y": 395.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "Ruins_Watchtower",
+      "file": "Ruins_Watchtower_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1369.9999,
+      "y": 1300.0001,
+      "z": -599.9999,
+      "yaw": 360.0,
+      "map": "Ruins_WaterHole",
+      "file": "Ruins_WaterHole_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1392.0,
+      "y": -1108.0,
+      "z": -399.9999,
+      "yaw": 180.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1.8189894e-11,
+      "y": 1402.0,
+      "z": 0.0001,
+      "yaw": 270.0,
+      "map": "Sanctum",
+      "file": "Sanctum_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 372.0,
+      "y": 1122.0,
+      "z": 0.000101,
+      "yaw": 180.0,
+      "map": "Sanctum",
+      "file": "Sanctum_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -483.08804,
+      "y": -65.715965,
+      "z": 13.768767,
+      "yaw": 25.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -240.52084000000002,
+      "y": -752.74554,
+      "z": 569.58105,
+      "yaw": 140.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    },
+    {
+      "x": -189.0,
+      "y": 3117.0,
+      "z": 2358.0002,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 10.0,
+      "y": 480.0,
+      "z": 200.0,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 89.79192,
+      "y": -45.092415,
+      "z": 2517.0,
+      "yaw": 320.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -547.95636,
+      "y": 186.95033,
+      "z": 1418.7218,
+      "yaw": 215.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1362.5026,
+      "y": 1370.321,
+      "z": -730.0,
+      "yaw": 220.0,
+      "map": "SingleLogBridge",
+      "file": "SingleLogBridge_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -380.00085,
+      "y": 1180.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "Skull",
+      "file": "Skull_D.json",
+      "version": "(D)",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 479.99915,
+      "y": 1440.0,
+      "z": -600.0,
+      "yaw": 270.0,
+      "map": "Skull",
+      "file": "Skull_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": -950.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Skull",
+      "file": "Skull_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -469.29706,
+      "y": -663.14154,
+      "z": 9.963574e-05,
+      "yaw": 5.0,
+      "map": "SpiderCave_01",
+      "file": "SpiderCave_01_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 1387.7104,
+      "y": -1102.7164,
+      "z": -399.9999,
+      "yaw": 195.0,
+      "map": "SpiderCave_02",
+      "file": "SpiderCave_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 810.0,
+      "y": -140.00001,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        }
+      ]
+    },
+    {
+      "x": 45.862125,
+      "y": -276.89432,
+      "z": -399.9999,
+      "yaw": 45.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 460.99997,
+      "y": -102.000015,
+      "z": -300.0,
+      "yaw": 0.0,
+      "map": "Storeroom",
+      "file": "Storeroom_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -611.0,
+      "y": -983.0,
+      "z": -400.0,
+      "yaw": 71.0,
+      "map": "Swamp",
+      "file": "Swamp_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -85.0,
+      "y": 47.0,
+      "z": -200.0,
+      "yaw": 270.0,
+      "map": "TheCage",
+      "file": "TheCage_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1.0000008e-06,
+      "y": 1190.0,
+      "z": -490.0,
+      "yaw": 270.0,
+      "map": "TheCage",
+      "file": "TheCage_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 80.0,
+      "y": 47.000004,
+      "z": -200.0,
+      "yaw": 270.0,
+      "map": "TheCage",
+      "file": "TheCage_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 125.0,
+      "y": 0.0,
+      "z": -499.9999,
+      "yaw": 0.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -95.0,
+      "y": 0.0,
+      "z": -499.9999,
+      "yaw": 180.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -1.6410959e-06,
+      "y": 130.0,
+      "z": -229.18231,
+      "yaw": 180.0,
+      "map": "ThePit",
+      "file": "ThePit_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": -820.0,
+      "y": 0.0,
+      "z": 400.0,
+      "yaw": 360.0,
+      "map": "ThroneRoom_02",
+      "file": "ThroneRoom_02_HR_D.json",
+      "version": "",
+      "label": "ChestSpecial"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "SkeletonPit",
+      "file": "SkeletonPit_HR_D.json",
+      "version": "",
+      "label": "Mimic_Large_Simple"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "TongueOfMimic",
+          "page": "TongueOfMimic",
+          "translation": "宝箱怪舌头",
+          "translation_key": "Text_DesignData_Item_Item_TongueOfMimic",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "MimicTooth",
+          "page": "MimicTooth",
+          "translation": "拟态獠牙",
+          "translation_key": "Text_DesignData_Item_Item_MimicTooth",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Mimic",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Mimic",
+      "items": [
+        {
+          "name": "Mitre_7001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RusticTunic_7001",
+          "page": "RusticTunic",
+          "translation": "乡村束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_RusticTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CeremonialStaff_7001",
+          "page": "CeremonialStaff",
+          "translation": "仪式权杖",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialStaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CeremonialHeaddress_7001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RitualRobe_7001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FellingAxe_7001",
+          "page": "FellingAxe",
+          "translation": "伐木斧",
+          "translation_key": "Text_DesignData_Item_Item_FellingAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StefanBeret_7001",
+          "page": "StefanBeret",
+          "translation": "作家帽",
+          "translation_key": "Text_DesignData_Item_Item_StefanBeret_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Frock_7001",
+          "page": "Frock",
+          "translation": "修士袍",
+          "translation_key": "Text_DesignData_Item_Item_Frock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KrisDagger_7001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WardenOutfit_7001",
+          "page": "WardenOutfit",
+          "translation": "典狱长外套",
+          "translation_key": "Text_DesignData_Item_Item_WardenOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerTunic_7001",
+          "page": "AdventurerTunic",
+          "translation": "冒险者外衣",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerBoots_7001",
+          "page": "AdventurerBoots",
+          "translation": "冒险者长靴",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChampionArmor_7001",
+          "page": "ChampionArmor",
+          "translation": "冠军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_ChampionArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ReinforcedGloves_7001",
+          "page": "ReinforcedGloves",
+          "translation": "加固手套",
+          "translation_key": "Text_DesignData_Item_Item_ReinforcedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RuggedBoots_7001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ValiantAttire_7001",
+          "page": "ValiantAttire",
+          "translation": "勇者礼服",
+          "translation_key": "Text_DesignData_Item_Item_ValiantAttire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Gjermundbu_7001",
+          "page": "Gjermundbu",
+          "translation": "北境战盔",
+          "translation_key": "Text_DesignData_Item_Item_Gjermundbu_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NorthernFullTunic_7001",
+          "page": "NorthernFullTunic",
+          "translation": "北境战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernFullTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NormanNasalHelm_7001",
+          "page": "NormanNasalHelm",
+          "translation": "北境护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_NormanNasalHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NorthernHalfTunic_7001",
+          "page": "NorthernHalfTunic",
+          "translation": "北境短战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernHalfTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderHelm_7001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderArmor_7001",
+          "page": "CrusaderArmor",
+          "translation": "十字军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_CrusaderArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Crossbow_7001",
+          "page": "Crossbow",
+          "translation": "十字弩",
+          "translation_key": "Text_DesignData_Item_Item_Crossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredSallet_7001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LavishShirt_7001",
+          "page": "LavishShirt",
+          "translation": "华丽衬衫",
+          "translation_key": "Text_DesignData_Item_Item_LavishShirt_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GrandBrigandine_7001",
+          "page": "GrandBrigandine",
+          "translation": "华丽镶嵌甲",
+          "translation_key": "Text_DesignData_Item_Item_GrandBrigandine_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DashingBoots_7001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CastillonDagger_7001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DoubleAxe_7001",
+          "page": "DoubleAxe",
+          "translation": "双刃斧",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RecurveBow_7001",
+          "page": "RecurveBow",
+          "translation": "反曲弓",
+          "translation_key": "Text_DesignData_Item_Item_RecurveBow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TimewornRobe_7001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RoundShield_7001",
+          "page": "RoundShield",
+          "translation": "圆盾",
+          "translation_key": "Text_DesignData_Item_Item_RoundShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Topfhelm_7001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TemplarArmor_7001",
+          "page": "TemplarArmor",
+          "translation": "圣殿铠甲",
+          "translation_key": "Text_DesignData_Item_Item_TemplarArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KettleHat_7001",
+          "page": "KettleHat",
+          "translation": "壶盔",
+          "translation_key": "Text_DesignData_Item_Item_KettleHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WarMaul_7001",
+          "page": "WarMaul",
+          "translation": "大铁锤",
+          "translation_key": "Text_DesignData_Item_Item_WarMaul_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Chaperon_7001",
+          "page": "Chaperon",
+          "translation": "头巾帽",
+          "translation_key": "Text_DesignData_Item_Item_Chaperon_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneHood_7001",
+          "page": "ArcaneHood",
+          "translation": "奥术兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGloves_7001",
+          "page": "ArcaneGloves",
+          "translation": "奥术手套",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGarb_7001",
+          "page": "ArcaneGarb",
+          "translation": "奥术法袍",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGarb_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneEssence_7001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GlovesOfUtility_7001",
+          "page": "GlovesOfUtility",
+          "translation": "实用手套",
+          "translation_key": "Text_DesignData_Item_Item_GlovesOfUtility_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CourtlyDress_7001",
+          "page": "CourtlyDress",
+          "translation": "宫廷礼服",
+          "translation_key": "Text_DesignData_Item_Item_CourtlyDress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LooseTrousers_7001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterOutfit_7001",
+          "page": "JesterOutfit",
+          "translation": "小丑外套",
+          "translation_key": "Text_DesignData_Item_Item_JesterOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPoulaines_7001",
+          "page": "JesterPoulaines",
+          "translation": "小丑尖头鞋",
+          "translation_key": "Text_DesignData_Item_Item_JesterPoulaines_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterCap_7001",
+          "page": "JesterCap",
+          "translation": "小丑帽子",
+          "translation_key": "Text_DesignData_Item_Item_JesterCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPants_7001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Buckler_7001",
+          "page": "Buckler",
+          "translation": "小圆盾",
+          "translation_key": "Text_DesignData_Item_Item_Buckler_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BarbutaHelm_7001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Zweihander_7001",
+          "page": "Zweihander",
+          "translation": "巨剑",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pavise_7001",
+          "page": "Pavise",
+          "translation": "巨盾",
+          "translation_key": "Text_DesignData_Item_Item_Pavise_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Coif_7001",
+          "page": "Coif",
+          "translation": "巫师帽",
+          "translation_key": "Text_DesignData_Item_Item_Coif_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardShoes_7001",
+          "page": "WizardShoes",
+          "translation": "巫师鞋",
+          "translation_key": "Text_DesignData_Item_Item_WizardShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ClothPants_7001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OpenSallet_7001",
+          "page": "OpenSallet",
+          "translation": "开面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_OpenSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Falchion_7001",
+          "page": "Falchion",
+          "translation": "弯刃大刀",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MarauderOutfit_7001",
+          "page": "MarauderOutfit",
+          "translation": "强盗外套",
+          "translation_key": "Text_DesignData_Item_Item_MarauderOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BattleAxe_7001",
+          "page": "BattleAxe",
+          "translation": "战斗斧",
+          "translation_key": "Text_DesignData_Item_Item_BattleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WarHammer_7001",
+          "page": "WarHammer",
+          "translation": "战锤",
+          "translation_key": "Text_DesignData_Item_Item_WarHammer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HandCrossbow_7001",
+          "page": "HandCrossbow",
+          "translation": "手弩",
+          "translation_key": "Text_DesignData_Item_Item_HandCrossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BuckledBoots_7001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SleekHidePants_7001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeaterShield_7001",
+          "page": "HeaterShield",
+          "translation": "斗盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherBonnet_7001",
+          "page": "LeatherBonnet",
+          "translation": "无檐羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherBonnet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OldShoes_7001",
+          "page": "OldShoes",
+          "translation": "旧鞋",
+          "translation_key": "Text_DesignData_Item_Item_OldShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MorningStar_7001",
+          "page": "MorningStar",
+          "translation": "晨星",
+          "translation_key": "Text_DesignData_Item_Item_MorningStar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkleafBoots_7001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShadowHood_7001",
+          "page": "ShadowHood",
+          "translation": "暗影兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ShadowHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShadowMask_7001",
+          "page": "ShadowMask",
+          "translation": "暗影面罩",
+          "translation_key": "Text_DesignData_Item_Item_ShadowMask_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkgroveHood_7001",
+          "page": "DarkgroveHood",
+          "translation": "暗林兜帽",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkgroveRobe_7001",
+          "page": "DarkgroveRobe",
+          "translation": "暗林长袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bardiche_7001",
+          "page": "Bardiche",
+          "translation": "月刃斧",
+          "translation_key": "Text_DesignData_Item_Item_Bardiche_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RondelDagger_7001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HolyRobe_7001",
+          "page": "HolyRobe",
+          "translation": "朝圣袍",
+          "translation_key": "Text_DesignData_Item_Item_HolyRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistHood_7001",
+          "page": "OccultistHood",
+          "translation": "术士兜帽",
+          "translation_key": "Text_DesignData_Item_Item_OccultistHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistTunic_7001",
+          "page": "OccultistTunic",
+          "translation": "术士法衣",
+          "translation_key": "Text_DesignData_Item_Item_OccultistTunic_0001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistRobe_7001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistPants_7001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistBoots_7001",
+          "page": "OccultistBoots",
+          "translation": "术士长靴",
+          "translation_key": "Text_DesignData_Item_Item_OccultistBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LanternShield_7001",
+          "page": "LanternShield",
+          "translation": "机关盾",
+          "translation_key": "Text_DesignData_Item_Item_LanternShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedTunic_7001",
+          "page": "PaddedTunic",
+          "translation": "束腰棉外套",
+          "translation_key": "Text_DesignData_Item_Item_PaddedTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestHood_7001",
+          "page": "ForestHood",
+          "translation": "林地兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ForestHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestBoots_7001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DryadMask_7001",
+          "page": "DryadMask",
+          "translation": "树妖面具",
+          "translation_key": "Text_DesignData_Item_Item_DryadMask_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Club_7001",
+          "page": "Club",
+          "translation": "棍棒",
+          "translation_key": "Text_DesignData_Item_Item_Club_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArmingSword_7001",
+          "page": "ArmingSword",
+          "translation": "武装剑",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Armet_7001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrystalSword_7001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrystalBall_7001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FlangedMace_7001",
+          "page": "FlangedMace",
+          "translation": "法兰锤",
+          "translation_key": "Text_DesignData_Item_Item_FlangedMace_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardHat_7001",
+          "page": "WizardHat",
+          "translation": "法师帽",
+          "translation_key": "Text_DesignData_Item_Item_WizardHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WandererAttire_7001",
+          "page": "WandererAttire",
+          "translation": "流浪者外衣",
+          "translation_key": "Text_DesignData_Item_Item_WandererAttire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightCassock_7001",
+          "page": "LightCassock",
+          "translation": "浅色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_LightCassock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCassock_7001",
+          "page": "DarkCassock",
+          "translation": "深色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkCassock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPaddedHose_7001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RangerHood_7001",
+          "page": "RangerHood",
+          "translation": "游侠兜帽",
+          "translation_key": "Text_DesignData_Item_Item_RangerHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ProwlerGloves_7001",
+          "page": "ProwlerGloves",
+          "translation": "潜行者手套",
+          "translation_key": "Text_DesignData_Item_Item_ProwlerGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrunkHose_7001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hounskull_7001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrapperHat_7001",
+          "page": "TrapperHat",
+          "translation": "猎人帽",
+          "translation_key": "Text_DesignData_Item_Item_TrapperHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SurvivalBow_7001",
+          "page": "SurvivalBow",
+          "translation": "生存弓",
+          "translation_key": "Text_DesignData_Item_Item_SurvivalBow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RawhideGloves_7001",
+          "page": "RawhideGloves",
+          "translation": "生皮手套",
+          "translation_key": "Text_DesignData_Item_Item_RawhideGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PastoralTunic_7001",
+          "page": "PastoralTunic",
+          "translation": "田园束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_PastoralTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherCap_7001",
+          "page": "LeatherCap",
+          "translation": "皮帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherGloves_7001",
+          "page": "LeatherGloves",
+          "translation": "皮革手套",
+          "translation_key": "Text_DesignData_Item_Item_LeatherGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLeggings_7001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLamellar_7001",
+          "page": "LeatherLamellar",
+          "translation": "皮革札甲",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLamellar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherChausses_7001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RogueCowl_7001",
+          "page": "RogueCowl",
+          "translation": "盗贼风帽",
+          "translation_key": "Text_DesignData_Item_Item_RogueCowl_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShortSword_7001",
+          "page": "ShortSword",
+          "translation": "短剑",
+          "translation_key": "Text_DesignData_Item_Item_ShortSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hatchet_7001",
+          "page": "Hatchet",
+          "translation": "短柄斧",
+          "translation_key": "Text_DesignData_Item_Item_Hatchet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LowBoots_7001",
+          "page": "LowBoots",
+          "translation": "短靴",
+          "translation_key": "Text_DesignData_Item_Item_LowBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticVestments_7001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OracleRobe_7001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticGloves_7001",
+          "page": "MysticGloves",
+          "translation": "秘法手套",
+          "translation_key": "Text_DesignData_Item_Item_MysticGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RunestoneGloves_7001",
+          "page": "RunestoneGloves",
+          "translation": "符石手套",
+          "translation_key": "Text_DesignData_Item_Item_RunestoneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SturdyBoots_7001",
+          "page": "SturdyBoots",
+          "translation": "粗厚皮靴",
+          "translation_key": "Text_DesignData_Item_Item_SturdyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FineCuirass_7001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LacedTurnshoe_7001",
+          "page": "LacedTurnshoe",
+          "translation": "系带翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_LacedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Poupoint_7001",
+          "page": "Poupoint",
+          "translation": "紧身棉外套",
+          "translation_key": "Text_DesignData_Item_Item_Poupoint_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Doublet_7001",
+          "page": "Doublet",
+          "translation": "紧身衣",
+          "translation_key": "Text_DesignData_Item_Item_Doublet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedLeggings_7001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedBoots_7001",
+          "page": "ButtonedBoots",
+          "translation": "纽扣长靴",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Rapier_7001",
+          "page": "Rapier",
+          "translation": "细剑",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WindlassCrossbow_7001",
+          "page": "WindlassCrossbow",
+          "translation": "绞盘弩",
+          "translation_key": "Text_DesignData_Item_Item_WindlassCrossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingSword_7001",
+          "page": "VikingSword",
+          "translation": "维京剑",
+          "translation_key": "Text_DesignData_Item_Item_VikingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingHelm_7001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StitchedTurnshoe_7001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WoolenCap_7001",
+          "page": "WoolenCap",
+          "translation": "羊毛帽",
+          "translation_key": "Text_DesignData_Item_Item_WoolenCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FeatheredHat_7001",
+          "page": "FeatheredHat",
+          "translation": "羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_FeatheredHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pigache_7001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CuffedBoots_7001",
+          "page": "CuffedBoots",
+          "translation": "翻边皮靴",
+          "translation_key": "Text_DesignData_Item_Item_CuffedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Turnshoe_7001",
+          "page": "Turnshoe",
+          "translation": "翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_Turnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StrawHat_7001",
+          "page": "StrawHat",
+          "translation": "草帽",
+          "translation_key": "Text_DesignData_Item_Item_StrawHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BloodwovenGloves_7001",
+          "page": "BloodwovenGloves",
+          "translation": "血纹手套",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BloodwovenRobe_7001",
+          "page": "BloodwovenRobe",
+          "translation": "血纹长袍",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedLeggings_7001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredBarbutaHelm_7001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TroubadourOutfit_7001",
+          "page": "TroubadourOutfit",
+          "translation": "诗人外套",
+          "translation_key": "Text_DesignData_Item_Item_TroubadourOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BardicPants_7001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RegalMitre_7001",
+          "page": "RegalMitre",
+          "translation": "豪华主教冠",
+          "translation_key": "Text_DesignData_Item_Item_RegalMitre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OrnateJazerant_7001",
+          "page": "OrnateJazerant",
+          "translation": "豪华布面锁子甲",
+          "translation_key": "Text_DesignData_Item_Item_OrnateJazerant_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RegalGambeson_7001",
+          "page": "RegalGambeson",
+          "translation": "豪华棉甲",
+          "translation_key": "Text_DesignData_Item_Item_RegalGambeson_0001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GallantOutfit_7001",
+          "page": "GallantOutfit",
+          "translation": "贵族外套",
+          "translation_key": "Text_DesignData_Item_Item_GallantOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightfootBoots_7001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightAketon_7001",
+          "page": "LightAketon",
+          "translation": "轻型布面甲",
+          "translation_key": "Text_DesignData_Item_Item_LightAketon_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Sallet_7001",
+          "page": "Sallet",
+          "translation": "轻盔",
+          "translation_key": "Text_DesingData_Item_Item_Sallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lyre_7001",
+          "page": "Lyre",
+          "translation": "里拉琴",
+          "translation_key": "Text_DesignData_Item_Item_Lyre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGambeson_7001",
+          "page": "HeavyGambeson",
+          "translation": "重型棉甲",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGambeson_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyBoots_7001",
+          "page": "HeavyBoots",
+          "translation": "重型长靴",
+          "translation_key": "Text_DesignData_Item_Item_HeavyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyLeatherLeggings_7001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Quarterstaff_7001",
+          "page": "Quarterstaff",
+          "translation": "铁头棒",
+          "translation_key": "Text_DesignData_Item_Item_Quarterstaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RivetedGloves_7001",
+          "page": "RivetedGloves",
+          "translation": "铆接手套",
+          "translation_key": "Text_DesignData_Item_Item_RivetedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spangenhelm_7001",
+          "page": "Spangenhelm",
+          "translation": "铆钉护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_Spangenhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChapelDeFer_7001",
+          "page": "ChapelDeFer",
+          "translation": "锅盔",
+          "translation_key": "Text_DesignData_Item_Item_ChapelDeFer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StilettoDagger_7001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StuddedLeather_7001",
+          "page": "StuddedLeather",
+          "translation": "镶钉皮甲",
+          "translation_key": "Text_DesignData_Item_Item_StuddedLeather_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longsword_7001",
+          "page": "Longsword",
+          "translation": "长剑",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longbow_7001",
+          "page": "Longbow",
+          "translation": "长弓",
+          "translation_key": "Text_DesignData_Item_Item_Longbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Halberd_7001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spear_7001",
+          "page": "Spear",
+          "translation": "长矛",
+          "translation_key": "Text_DesignData_Item_Item_Spear_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Flute_7001",
+          "page": "Flute",
+          "translation": "长笛",
+          "translation_key": "Text_DesignData_Item_Item_Flute_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HorsemansAxe_7001",
+          "page": "HorsemansAxe",
+          "translation": "骑士斧",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spellbook_7001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardStaff_7001",
+          "page": "WizardStaff",
+          "translation": "魔法杖",
+          "translation_key": "Text_DesignData_Item_Item_WizardStaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lute_7001",
+          "page": "Lute",
+          "translation": "鲁特琴",
+          "translation_key": "Text_DesignData_Item_Item_Lute_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ScaledArmor_7001",
+          "page": "ScaledArmor",
+          "translation": "鳞甲",
+          "translation_key": "Text_DesignData_Item_Item_ScaledArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bycocket_7001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodCrown_7001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodGloves_7001",
+          "page": "ElkwoodGloves",
+          "translation": "鹿角木手套",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkLeatherLeggings_7001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCuirass_7001",
+          "page": "DarkCuirass",
+          "translation": "黑暗胸甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OnyxGloves_7001",
+          "page": "OnyxGloves",
+          "translation": "黑玉手套",
+          "translation_key": "Text_DesignData_Item_Item_OnyxGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Drum_7001",
+          "page": "Drum",
+          "translation": "鼓",
+          "translation_key": "Text_DesignData_Item_Item_Drum_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "FireDeep": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Flat",
+        "spawn_rate": 0.8965,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

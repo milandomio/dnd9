@@ -1,0 +1,6530 @@
+{
+  "name": "Mimic_Medium_MidLevel",
+  "translation": "宝箱怪",
+  "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+  "coords": [
+    {
+      "x": -83.0,
+      "y": 492.0,
+      "z": -399.0,
+      "yaw": 240.0,
+      "map": "Armory",
+      "file": "Armory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 579.0,
+      "y": -794.0,
+      "z": 59.314064,
+      "yaw": 90.0,
+      "map": "Armory",
+      "file": "Armory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -975.0,
+      "y": -536.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Armory",
+      "file": "Armory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -805.0,
+      "y": -450.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "Barracks",
+      "file": "Barracks_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1215.0,
+      "y": 160.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "Barracks",
+      "file": "Barracks_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel"
+    },
+    {
+      "x": 500.0,
+      "y": 1456.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Barracks",
+      "file": "Barracks_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 329.0,
+      "y": -182.0,
+      "z": -420.0,
+      "yaw": 180.0,
+      "map": "Catacomb",
+      "file": "Catacomb_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 480.0,
+      "y": 160.0,
+      "z": -420.0,
+      "yaw": 180.0,
+      "map": "Catacomb",
+      "file": "Catacomb_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 480.0,
+      "y": 100.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 855.0,
+      "y": 430.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 539.999999,
+      "y": 340.000003,
+      "z": -449.9999,
+      "yaw": 180.0,
+      "map": "CaveMaze",
+      "file": "CaveMaze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_11",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -50.0,
+      "y": -930.0,
+      "z": -430.9999,
+      "yaw": 110.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 369.0,
+      "y": 47.0,
+      "z": -430.9999,
+      "yaw": 355.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 906.0,
+      "y": -984.0,
+      "z": -430.9999,
+      "yaw": 90.0,
+      "map": "Cave_Altar_Center",
+      "file": "Cave_Altar_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1322.7392725823413,
+      "y": 1299.3780082399371,
+      "z": 9.999999999976694e-05,
+      "yaw": 355.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        }
+      ]
+    },
+    {
+      "x": 1273.999985,
+      "y": 354.999936,
+      "z": 9.999999999976694e-05,
+      "yaw": 275.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 1338.000015,
+      "y": -405.00006,
+      "z": 9.999999999976694e-05,
+      "yaw": 95.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -693.1733,
+      "y": -327.3267,
+      "z": -499.9999,
+      "yaw": 20.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1262.000015,
+      "y": 431.00005600000003,
+      "z": 9.999999999976694e-05,
+      "yaw": 275.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -1232.999985,
+      "y": -410.99994,
+      "z": 9.999999999976694e-05,
+      "yaw": 95.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 840.7468917049465,
+      "y": -1312.758026722963,
+      "z": 9.999999999976694e-05,
+      "yaw": 180.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_8",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 1018.78757,
+      "y": 522.91325,
+      "z": -499.999907,
+      "yaw": 150.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    },
+    {
+      "x": -365.57274568578936,
+      "y": -1308.9208901889879,
+      "z": 9.999999999976694e-05,
+      "yaw": 10.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_9",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -1260.7469517049465,
+      "y": -1260.241873277037,
+      "z": 9.999999999976694e-05,
+      "yaw": 0.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_10",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -675.2531082950535,
+      "y": -1277.758026722963,
+      "z": 9.999999999976694e-05,
+      "yaw": 180.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_11",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -495.8137,
+      "y": -509.43536,
+      "z": -499.9999,
+      "yaw": 90.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 105.7580867229629,
+      "y": 1364.7469517049465,
+      "z": 9.999999999976694e-05,
+      "yaw": 270.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 456.75808672296284,
+      "y": 1344.7469517049465,
+      "z": 9.999999999976694e-05,
+      "yaw": 270.0,
+      "map": "Cave_Rooms",
+      "file": "Cave_Rooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_12",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestSmall",
+          "name": "小宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 120.0,
+      "y": 1090.0,
+      "z": 0.0,
+      "yaw": 255.0,
+      "map": "Cave_Valley",
+      "file": "Cave_Valley_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1342.4265,
+      "y": -170.4003,
+      "z": -349.9999,
+      "yaw": 0.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1381.8344,
+      "y": 805.9702,
+      "z": -349.9999,
+      "yaw": 265.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 906.0,
+      "y": -984.0,
+      "z": -349.9999,
+      "yaw": 90.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1179.6183,
+      "y": -208.74936,
+      "z": -313.99704,
+      "yaw": 45.0,
+      "map": "CavernLake_03",
+      "file": "CavernLake_03_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1393.0,
+      "y": 4314.0,
+      "z": 0.0,
+      "yaw": 270.7,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -4527.647,
+      "y": -1156.7367,
+      "z": 0.0,
+      "yaw": 90.3,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1291.5721,
+      "y": -1305.6604,
+      "z": 0.31406483,
+      "yaw": 90.0,
+      "map": "Cistern",
+      "file": "Cistern_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1.8189894e-12,
+      "y": -1135.0,
+      "z": -400.0,
+      "yaw": 95.7,
+      "map": "Cistern",
+      "file": "Cistern_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1195.3184,
+      "y": 1350.9089,
+      "z": -959.6859,
+      "yaw": 235.0,
+      "map": "CliffBridge",
+      "file": "CliffBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 277.0,
+      "y": -1402.0,
+      "z": -960.0,
+      "yaw": 90.0,
+      "map": "CliffBridge",
+      "file": "CliffBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 25.999996,
+      "y": 1358.0,
+      "z": -960.0,
+      "yaw": 270.0,
+      "map": "CliffBridge",
+      "file": "CliffBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1426.0,
+      "y": -217.0,
+      "z": -450.0,
+      "yaw": 180.0,
+      "map": "CliffBridge",
+      "file": "CliffBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1384.7301,
+      "y": 1394.4789,
+      "z": 0.0,
+      "yaw": 220.0,
+      "map": "ComplexHall",
+      "file": "ComplexHall_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 965.0,
+      "y": 560.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "Connector_Trap_02",
+      "file": "Connector_Trap_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1442.0,
+      "y": -1287.0,
+      "z": 9.9e-05,
+      "yaw": 90.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1010.0,
+      "y": 400.0,
+      "z": 9.9e-05,
+      "yaw": 270.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 470.0,
+      "y": -1140.0,
+      "z": 9.9e-05,
+      "yaw": 90.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -55.0,
+      "y": -1253.0,
+      "z": 9.9e-05,
+      "yaw": 110.0,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -676.90826,
+      "y": 838.7873,
+      "z": 25.26596,
+      "yaw": 279.9,
+      "map": "CorridorofDarkPriests",
+      "file": "CorridorofDarkPriests_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -9.0,
+      "y": -101.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "CrossRoad",
+      "file": "CrossRoad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -37.00002,
+      "y": 18.999971,
+      "z": 0.0,
+      "yaw": 34.6,
+      "map": "CrossRoad",
+      "file": "CrossRoad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 855.0,
+      "y": 180.0,
+      "z": 0.0,
+      "yaw": 273.9,
+      "map": "Crypt_AltarRoomAB",
+      "file": "Crypt_AltarRoomAB_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 24.0,
+      "y": 175.0,
+      "z": 0.0,
+      "yaw": 188.3,
+      "map": "Crypt_AltarRoomAB",
+      "file": "Crypt_AltarRoomAB_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -152.0,
+      "y": 382.0,
+      "z": -9.999702,
+      "yaw": 270.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1463.0,
+      "y": 1425.0,
+      "z": 600.00024,
+      "yaw": 0.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1405.0,
+      "y": -1477.0,
+      "z": 600.00024,
+      "yaw": 90.0,
+      "map": "Crypt_GreatWalkway",
+      "file": "Crypt_GreatWalkway_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -934.0001,
+      "y": -739.9995,
+      "z": -648.99994,
+      "yaw": 360.0,
+      "map": "Crypt_LargeRoomPit",
+      "file": "Crypt_LargeRoomPit_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 985.0,
+      "y": -746.00635,
+      "z": -649.9999,
+      "yaw": 180.0,
+      "map": "Crypt_LargeRoomPit",
+      "file": "Crypt_LargeRoomPit_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 6.830738,
+      "y": 1189.2589,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Crypt_LightlessChamber_01",
+      "file": "Crypt_LightlessChamber_01_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1184.6893,
+      "y": 3.1854641,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Crypt_LightlessChamber_01",
+      "file": "Crypt_LightlessChamber_01_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 565.0,
+      "y": 570.0,
+      "z": 400.0,
+      "yaw": 225.0,
+      "map": "Crypt_MadCorridors",
+      "file": "Crypt_MadCorridors_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 0.0,
+      "y": -610.0,
+      "z": -50.0,
+      "yaw": 90.0,
+      "map": "Crypt_Vault",
+      "file": "Crypt_Vault_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -610.0,
+      "y": 0.0,
+      "z": -50.0,
+      "yaw": 360.0,
+      "map": "Crypt_Vault",
+      "file": "Crypt_Vault_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 0.0,
+      "y": 610.0,
+      "z": -50.0,
+      "yaw": 270.0,
+      "map": "Crypt_Vault",
+      "file": "Crypt_Vault_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 610.0,
+      "y": 10.0,
+      "z": -50.0,
+      "yaw": 180.0,
+      "map": "Crypt_Vault",
+      "file": "Crypt_Vault_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1120.0,
+      "y": -300.0,
+      "z": 300.0,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1120.0,
+      "y": 300.0,
+      "z": 300.0,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1429.0,
+      "y": -536.0,
+      "z": -400.0,
+      "yaw": 275.0,
+      "map": "DeathHall",
+      "file": "DeathHall_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1358.0,
+      "y": -1385.0,
+      "z": 1303.0,
+      "yaw": 180.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -550.0,
+      "y": 1195.0,
+      "z": 1025.0,
+      "yaw": 0.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1338.1885,
+      "y": -1362.4976,
+      "z": 0.0,
+      "yaw": 130.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -358.5946,
+      "y": 1271.3392,
+      "z": 450.0,
+      "yaw": 335.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -975.5446,
+      "y": -954.903,
+      "z": 0.0,
+      "yaw": 65.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -566.24176,
+      "y": -92.45237,
+      "z": -9.611279,
+      "yaw": 222.3,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1385.0,
+      "y": -575.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1425.0,
+      "y": 1250.0,
+      "z": 405.0,
+      "yaw": 180.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 647.2873,
+      "y": 533.60364,
+      "z": 5.0,
+      "yaw": 305.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1055.2084,
+      "y": 116.72077,
+      "z": 0.0,
+      "yaw": 335.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 158.85204,
+      "y": 594.7976,
+      "z": 0.0,
+      "yaw": 200.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -955.0,
+      "y": -590.0,
+      "z": -460.0,
+      "yaw": 85.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1077.7738,
+      "y": 330.06308,
+      "z": 405.0,
+      "yaw": 25.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -957.59766,
+      "y": 305.8744,
+      "z": 405.0,
+      "yaw": 130.0,
+      "map": "Firedeep_CollapsedDigSite",
+      "file": "Firedeep_CollapsedDigSite_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1240.0,
+      "y": 20.0,
+      "z": 1805.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -765.0,
+      "y": -1180.0,
+      "z": 900.0,
+      "yaw": 225.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 18,
+      "variant_names": []
+    },
+    {
+      "x": -770.32089,
+      "y": 1197.1443,
+      "z": 905.0,
+      "yaw": 130.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 18,
+      "variant_names": []
+    },
+    {
+      "x": -501.0,
+      "y": 629.0,
+      "z": 3.0,
+      "yaw": 0.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 553.0,
+      "y": -621.0,
+      "z": 4.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1450.0,
+      "y": -35.0,
+      "z": 350.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1460.8906,
+      "y": -89.60227,
+      "z": 350.0,
+      "yaw": 5.0,
+      "map": "Firedeep_DwarvenLockWay",
+      "file": "Firedeep_DwarvenLockWay_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 385.0,
+      "y": -645.0,
+      "z": -90.0,
+      "yaw": 50.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1445.0,
+      "y": 345.0,
+      "z": -100.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Emberflow",
+      "file": "Firedeep_Emberflow_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1360.0,
+      "y": -160.0,
+      "z": 400.0,
+      "yaw": 90.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1415.0,
+      "y": -150.0,
+      "z": 400.0,
+      "yaw": 180.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 900.0,
+      "y": -935.0,
+      "z": 155.0,
+      "yaw": 135.0,
+      "map": "Firedeep_FlameTerrace",
+      "file": "Firedeep_FlameTerrace_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 885.23126,
+      "y": -381.86865,
+      "z": 155.0,
+      "yaw": 230.0,
+      "map": "Firedeep_FlameTerrace",
+      "file": "Firedeep_FlameTerrace_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1157.5,
+      "y": 306.65063,
+      "z": 5.0,
+      "yaw": 120.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -425.0,
+      "y": 565.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Forge",
+      "file": "Firedeep_Forge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1.0,
+      "y": 261.0,
+      "z": 2.0,
+      "yaw": 90.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -16.0,
+      "y": -259.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1383.7938,
+      "y": -1278.1595,
+      "z": 10.0,
+      "yaw": 200.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -156.47255,
+      "y": 596.1835,
+      "z": 455.0,
+      "yaw": 10.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1290.8367,
+      "y": -443.1014,
+      "z": 202.9004,
+      "yaw": 200.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1408.8702,
+      "y": -138.44005,
+      "z": 230.0,
+      "yaw": 345.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -399.6921,
+      "y": 1379.1804,
+      "z": 0.0,
+      "yaw": 285.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 475.25696,
+      "y": -642.53094,
+      "z": -25.0,
+      "yaw": 305.0,
+      "map": "Firedeep_MiningPassage",
+      "file": "Firedeep_MiningPassage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1150.0,
+      "y": 800.0,
+      "z": 450.0,
+      "yaw": 95.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -165.0,
+      "y": -100.0,
+      "z": 50.0,
+      "yaw": 360.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1455.7069,
+      "y": 1039.4719,
+      "z": -5.0,
+      "yaw": 335.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 192.84067,
+      "y": -376.70395,
+      "z": 0.0,
+      "yaw": 265.0,
+      "map": "Firedeep_MoltenQuarter",
+      "file": "Firedeep_MoltenQuarter_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 200.0,
+      "y": 689.0,
+      "z": 8.0,
+      "yaw": 200.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -428.0,
+      "y": -596.0,
+      "z": -346.0,
+      "yaw": 15.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 227.01610000000005,
+      "y": -1398.98694,
+      "z": 715.0,
+      "yaw": 115.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 45,
+      "variant_names": []
+    },
+    {
+      "x": 457.6146000000001,
+      "y": 589.8859,
+      "z": 510.0,
+      "yaw": 85.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 45,
+      "variant_names": []
+    },
+    {
+      "x": -1069.868603,
+      "y": 1406.4712,
+      "z": 500.0,
+      "yaw": 240.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 45,
+      "variant_names": []
+    },
+    {
+      "x": 1271.2941999999998,
+      "y": -1089.82962,
+      "z": 510.0,
+      "yaw": 105.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 45,
+      "variant_names": []
+    },
+    {
+      "x": -1300.0,
+      "y": -710.0,
+      "z": 510.0,
+      "yaw": 40.0,
+      "map": "Firedeep_ScorchedRange",
+      "file": "Firedeep_ScorchedRange_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 45,
+      "variant_names": []
+    },
+    {
+      "x": -237.67949,
+      "y": -131.33975,
+      "z": -550.0,
+      "yaw": 210.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 106.16978,
+      "y": -746.7861,
+      "z": 5.0,
+      "yaw": 140.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -835.8013,
+      "y": -406.02887,
+      "z": -5.0,
+      "yaw": 330.0,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 452.45712,
+      "y": 827.1607,
+      "z": 2.1227646,
+      "yaw": 309.9,
+      "map": "Firedeep_SinkingPlaza",
+      "file": "Firedeep_SinkingPlaza_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 651.65063,
+      "y": -896.1603,
+      "z": 0.0,
+      "yaw": 210.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -978.9109,
+      "y": 858.3488,
+      "z": 0.0,
+      "yaw": 175.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1244.524376,
+      "y": 103.90175,
+      "z": -0.4930106000000001,
+      "yaw": 180.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 18,
+      "variant_names": []
+    },
+    {
+      "x": -1252.4756000000002,
+      "y": 124.9017,
+      "z": -0.4930110000000001,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 18,
+      "variant_names": []
+    },
+    {
+      "x": -839.65186,
+      "y": 154.45764,
+      "z": -451.0,
+      "yaw": 310.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -874.0,
+      "y": -1186.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "FourWayConnect",
+      "file": "FourWayConnect_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_14",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 133.29384,
+      "y": 227.08144,
+      "z": 0.0001,
+      "yaw": 285.0,
+      "map": "GoblinCaveCorner_01",
+      "file": "GoblinCaveCorner_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 200.0,
+      "y": -312.0,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -907.0,
+      "y": -260.0,
+      "z": 202.0,
+      "yaw": 90.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -267.0,
+      "y": -1247.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center_02",
+      "file": "GoblinJail_Center_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -764.5477,
+      "y": -835.4523,
+      "z": -220.0,
+      "yaw": 135.0,
+      "map": "GuardPost",
+      "file": "GuardPost_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -830.09143,
+      "y": 129.75494,
+      "z": -294.64236,
+      "yaw": 91.1,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -479.0,
+      "y": 324.0,
+      "z": 107.606576,
+      "yaw": 175.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 1459.0,
+      "y": -13.0,
+      "z": -700.0,
+      "yaw": 180.0,
+      "map": "HighPriestOssuary",
+      "file": "HighPriestOssuary_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 566.3582,
+      "y": -1379.609,
+      "z": 0.0,
+      "yaw": 50.0,
+      "map": "IceAbyss_CharnelHouse",
+      "file": "IceAbyss_CharnelHouse_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1376.0,
+      "y": -600.0,
+      "z": 0.0,
+      "yaw": 245.0,
+      "map": "IceAbyss_CharnelHouse",
+      "file": "IceAbyss_CharnelHouse_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 241.00304,
+      "y": 513.0292,
+      "z": 400.0,
+      "yaw": 25.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -770.0,
+      "y": 710.0,
+      "z": -110.0,
+      "yaw": 279.7,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -46.0,
+      "y": -1435.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 215.0,
+      "y": 800.0,
+      "z": 400.0,
+      "yaw": 355.0,
+      "map": "IceAbyss_DeepFlow",
+      "file": "IceAbyss_DeepFlow_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -425.0,
+      "y": 235.0,
+      "z": -1050.0,
+      "yaw": 270.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 4.809449e-09,
+      "y": -765.0,
+      "z": 2.6895297,
+      "yaw": 270.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 425.0,
+      "y": 232.79903,
+      "z": -1050.0,
+      "yaw": 270.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 311.71405,
+      "y": -679.5183,
+      "z": -149.9999,
+      "yaw": 195.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_A.json",
+      "version": "(A)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 744.5066,
+      "y": -318.81467,
+      "z": 400.0001,
+      "yaw": 270.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_A.json",
+      "version": "(A)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1435.4934,
+      "y": -1243.8146,
+      "z": 400.0001,
+      "yaw": 0.0,
+      "map": "IceAbyss_FrostMaw",
+      "file": "IceAbyss_FrostMaw_A.json",
+      "version": "(A)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -955.0,
+      "y": -1430.0,
+      "z": 500.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1455.0,
+      "y": -1380.0,
+      "z": -0.49300304,
+      "yaw": 180.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -887.99426,
+      "y": -163.52084,
+      "z": -500.0,
+      "yaw": 330.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1430.0,
+      "y": -595.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1435.0,
+      "y": 1415.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_FrozenHold",
+      "file": "IceAbyss_FrozenHold_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 700.0,
+      "y": 255.0,
+      "z": 150.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_GrandHollow",
+      "file": "IceAbyss_GrandHollow_A.json",
+      "version": "(A)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -710.0,
+      "y": -267.0,
+      "z": 150.0001,
+      "yaw": 270.0,
+      "map": "IceAbyss_GrandHollow",
+      "file": "IceAbyss_GrandHollow_A.json",
+      "version": "(A)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 445.0,
+      "y": -785.0,
+      "z": -1299.9619,
+      "yaw": 90.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -465.21533,
+      "y": 785.0,
+      "z": -1299.9619,
+      "yaw": 270.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1150.0,
+      "y": -785.0,
+      "z": -999.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1050.0,
+      "y": 775.0,
+      "z": -999.9121,
+      "yaw": 270.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1200.0,
+      "y": -1285.0,
+      "z": -500.493,
+      "yaw": 90.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1200.0,
+      "y": 1275.0,
+      "z": -500.493,
+      "yaw": 270.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1430.0,
+      "y": -530.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1200.0,
+      "y": 1104.0063,
+      "z": -5.5292105e-08,
+      "yaw": 360.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -440.0,
+      "y": -1485.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1056.0,
+      "y": 415.00302,
+      "z": 8.0001,
+      "yaw": 360.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1452.0,
+      "y": 1427.0,
+      "z": 490.0001,
+      "yaw": 0.8,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1475.0,
+      "y": -1446.0,
+      "z": 490.0001,
+      "yaw": 0.8,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1453.0,
+      "y": -1446.0,
+      "z": 490.0001,
+      "yaw": 180.8,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -530.0,
+      "y": 1400.0,
+      "z": 0.0,
+      "yaw": 0.8,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1461.0,
+      "y": 1438.0,
+      "z": 490.0001,
+      "yaw": 180.8,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 431.3769,
+      "y": -1204.9951,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -868.6231,
+      "y": 800.0049,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1134.241,
+      "y": -1227.717,
+      "z": 0.0,
+      "yaw": 130.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 416.3769,
+      "y": 1145.0049,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1136.3768,
+      "y": 435.00485,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -753.6231,
+      "y": 800.0049,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "IceAbyss_ImpRitualRooms",
+      "file": "IceAbyss_ImpRitualRooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1255.1416,
+      "y": -20.834652,
+      "z": 302.0,
+      "yaw": 130.0,
+      "map": "IceAbyss_Monoliths",
+      "file": "IceAbyss_Monoliths_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -285.0,
+      "y": -925.0,
+      "z": 603.00006,
+      "yaw": 130.0,
+      "map": "IceAbyss_Monoliths",
+      "file": "IceAbyss_Monoliths_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 38.461945,
+      "y": 692.0133,
+      "z": -400.0,
+      "yaw": 345.0,
+      "map": "IceAbyss_Monoliths",
+      "file": "IceAbyss_Monoliths_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -327.00012,
+      "y": 1415.0005,
+      "z": -299.99988,
+      "yaw": 270.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 555.0,
+      "y": -806.00635,
+      "z": -299.9999,
+      "yaw": 180.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 382.60556,
+      "y": 248.236,
+      "z": 0.0,
+      "yaw": 135.0,
+      "map": "IceAbyss_SinkingPillars",
+      "file": "IceAbyss_SinkingPillars_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -161.76262,
+      "y": -108.8529,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "IceAbyss_SinkingPillars",
+      "file": "IceAbyss_SinkingPillars_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1220.3662,
+      "y": -1407.9938,
+      "z": 7.7357845,
+      "yaw": 85.0,
+      "map": "IceAbyss_SinkingPillars",
+      "file": "IceAbyss_SinkingPillars_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 974.62463,
+      "y": 1004.81335,
+      "z": 8.567547,
+      "yaw": 225.0,
+      "map": "IceAbyss_SinkingPillars",
+      "file": "IceAbyss_SinkingPillars_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -61.748764,
+      "y": 1345.1953,
+      "z": 0.0,
+      "yaw": 230.0,
+      "map": "IceCave_Altar",
+      "file": "IceCave_Altar_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 11.736482,
+      "y": -530.0,
+      "z": -90.151825,
+      "yaw": 270.0,
+      "map": "IceCave_Altar",
+      "file": "IceCave_Altar_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -60.0,
+      "y": -1220.0,
+      "z": -299.9999,
+      "yaw": 90.0,
+      "map": "IceCave_Barricade",
+      "file": "IceCave_Barricade_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 414.0,
+      "y": 1124.0,
+      "z": -637.0,
+      "yaw": 230.0,
+      "map": "IceCave_Cabin_Raft",
+      "file": "IceCave_Cabin_Raft_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1091.7468,
+      "y": -1285.0833,
+      "z": -500.0,
+      "yaw": 120.0,
+      "map": "IceCave_CavePathway",
+      "file": "IceCave_CavePathway_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 21.793821,
+      "y": 1355.8607,
+      "z": -574.9999,
+      "yaw": 270.0,
+      "map": "IceCave_CaveSwamp",
+      "file": "IceCave_CaveSwamp_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 212.37822,
+      "y": 996.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -220.62178,
+      "y": -1365.0,
+      "z": -599.9999,
+      "yaw": 180.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1303.6218,
+      "y": -314.0,
+      "z": -599.9999,
+      "yaw": 90.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -251.62178,
+      "y": -181.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "IceCave_CrossRoad",
+      "file": "IceCave_CrossRoad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -244.6218,
+      "y": 1376.0,
+      "z": 0.3140651,
+      "yaw": 270.0,
+      "map": "IceCave_FourRoute",
+      "file": "IceCave_FourRoute_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1017.62177,
+      "y": -316.0,
+      "z": 0.31406525,
+      "yaw": 270.0,
+      "map": "IceCave_FourRoute",
+      "file": "IceCave_FourRoute_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -20.0,
+      "y": -1130.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 460.0,
+      "y": 970.0,
+      "z": -400.0,
+      "yaw": 190.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1405.0,
+      "y": 670.0,
+      "z": 391.0,
+      "yaw": 10.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1379.0,
+      "y": -55.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -2702.0,
+      "y": -1268.0001,
+      "z": -476.9999,
+      "yaw": 175.0,
+      "map": "IceCave_Hive_03",
+      "file": "IceCave_Hive_03_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 864.76074,
+      "y": -960.5137,
+      "z": -589.0621,
+      "yaw": 90.0,
+      "map": "IceCave_Hut_01",
+      "file": "IceCave_Hut_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -911.23926,
+      "y": 624.4863,
+      "z": -599.9999,
+      "yaw": 360.0,
+      "map": "IceCave_Hut_01",
+      "file": "IceCave_Hut_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1216.7799,
+      "y": 340.46686,
+      "z": 5.0,
+      "yaw": 252.9,
+      "map": "IceCave_Hut_01",
+      "file": "IceCave_Hut_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1341.0931,
+      "y": -104.50928,
+      "z": 10.0,
+      "yaw": 182.5,
+      "map": "IceCave_Hut_01",
+      "file": "IceCave_Hut_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 352.23923,
+      "y": -1218.4863,
+      "z": -599.99994,
+      "yaw": 350.0,
+      "map": "IceCave_Hut_02",
+      "file": "IceCave_Hut_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1054.0,
+      "y": -47.0,
+      "z": 8.12207e-05,
+      "yaw": 90.0,
+      "map": "IceCave_Hut_02",
+      "file": "IceCave_Hut_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 17.239235,
+      "y": -1384.4863,
+      "z": -599.99994,
+      "yaw": 90.0,
+      "map": "IceCave_Hut_02",
+      "file": "IceCave_Hut_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1040.2393,
+      "y": 846.5137,
+      "z": -587.9999,
+      "yaw": 180.0,
+      "map": "IceCave_Hut_02",
+      "file": "IceCave_Hut_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1365.915,
+      "y": -446.3543,
+      "z": 9.9817866e-05,
+      "yaw": 270.0,
+      "map": "IceCave_Hut_03",
+      "file": "IceCave_Hut_03_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1232.4496,
+      "y": -1084.9681,
+      "z": -584.9999,
+      "yaw": 140.0,
+      "map": "IceCave_Hut_03",
+      "file": "IceCave_Hut_03_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1408.8059,
+      "y": 216.96803,
+      "z": -26.350796,
+      "yaw": 45.0,
+      "map": "IceCave_Hut_03",
+      "file": "IceCave_Hut_03_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -211.59866,
+      "y": 1371.3785,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "IceCave_IcicleCave",
+      "file": "IceCave_IcicleCave_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1380.2736,
+      "y": 122.613525,
+      "z": 0.0,
+      "yaw": 355.0,
+      "map": "IceCave_IcicleCave",
+      "file": "IceCave_IcicleCave_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 237.54259,
+      "y": 1350.8654,
+      "z": -599.9999,
+      "yaw": 290.0,
+      "map": "IceCave_Maze",
+      "file": "IceCave_Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -617.60266,
+      "y": -1301.9578,
+      "z": -599.9999,
+      "yaw": 25.0,
+      "map": "IceCave_Maze",
+      "file": "IceCave_Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1424.6218,
+      "y": -94.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "IceCave_Maze",
+      "file": "IceCave_Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 551.47876,
+      "y": -613.90643,
+      "z": -599.9999,
+      "yaw": 155.0,
+      "map": "IceCave_Maze",
+      "file": "IceCave_Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 931.37823,
+      "y": -1299.0,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "IceCave_Maze",
+      "file": "IceCave_Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -260.0,
+      "y": -350.0,
+      "z": -450.0,
+      "yaw": 340.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1240.0,
+      "y": -585.0,
+      "z": -450.0,
+      "yaw": 90.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -440.0,
+      "y": 460.0,
+      "z": -450.0,
+      "yaw": 90.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 480.0,
+      "y": 615.0,
+      "z": 760.0005,
+      "yaw": 255.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 199.37822,
+      "y": 1365.0,
+      "z": -599.9999,
+      "yaw": 0.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -220.62178,
+      "y": -1365.0,
+      "z": -599.9999,
+      "yaw": 180.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1330.6218,
+      "y": 275.0,
+      "z": -599.9999,
+      "yaw": 90.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1369.3782,
+      "y": 215.0,
+      "z": -599.9999,
+      "yaw": 90.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 153.37822,
+      "y": -57.0,
+      "z": -599.9999,
+      "yaw": 340.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -244.34937,
+      "y": 57.499996,
+      "z": -599.9999,
+      "yaw": 145.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -457.1435,
+      "y": -45.694324,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1138.8031,
+      "y": -370.8593,
+      "z": -600.0,
+      "yaw": 39.1,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -870.15405,
+      "y": 1263.4048,
+      "z": -600.0,
+      "yaw": 299.1,
+      "map": "IceCave_Path",
+      "file": "IceCave_Path_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1340.0,
+      "y": -470.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "IceCave_Pyramid",
+      "file": "IceCave_Pyramid_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -15.000006,
+      "y": -470.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "IceCave_Pyramid",
+      "file": "IceCave_Pyramid_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -775.0,
+      "y": 1395.0,
+      "z": -400.0,
+      "yaw": 265.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1170.0,
+      "y": -1170.0,
+      "z": -400.0,
+      "yaw": 190.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -285.0,
+      "y": -180.0,
+      "z": 350.0,
+      "yaw": 0.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1155.0,
+      "y": -1070.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 403.3782,
+      "y": 1375.0,
+      "z": 6.0,
+      "yaw": 270.0,
+      "map": "IceCave_Sanctum",
+      "file": "IceCave_Sanctum_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -705.62177,
+      "y": 21.0,
+      "z": -188.0,
+      "yaw": 360.0,
+      "map": "IceCave_Sanctum",
+      "file": "IceCave_Sanctum_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -314.6218,
+      "y": -855.0,
+      "z": 6.0,
+      "yaw": 270.0,
+      "map": "IceCave_Sanctum",
+      "file": "IceCave_Sanctum_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1202.7327,
+      "y": -223.35564,
+      "z": -298.9999,
+      "yaw": 30.0,
+      "map": "IceCave_Turnnel_01",
+      "file": "IceCave_Turnnel_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -557.09235,
+      "y": -565.281,
+      "z": -299.9999,
+      "yaw": 35.0,
+      "map": "IceCave_Turnnel_01",
+      "file": "IceCave_Turnnel_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1367.2736,
+      "y": -13.386474,
+      "z": -268.03076,
+      "yaw": 0.0,
+      "map": "IceCave_WolfCave",
+      "file": "IceCave_WolfCave_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -500.18887,
+      "y": -414.3169,
+      "z": -299.9999,
+      "yaw": 340.0,
+      "map": "IceCave_WolfCave",
+      "file": "IceCave_WolfCave_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 853.0,
+      "y": 156.0,
+      "z": 200.0,
+      "yaw": 270.0,
+      "map": "InfernoGate",
+      "file": "InfernoGate_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    },
+    {
+      "x": 853.0,
+      "y": -162.0,
+      "z": 200.0,
+      "yaw": 90.0,
+      "map": "InfernoGate",
+      "file": "InfernoGate_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    },
+    {
+      "x": 800.0,
+      "y": -4.5474735e-13,
+      "z": -150.0,
+      "yaw": 0.0,
+      "map": "InfernoGate",
+      "file": "InfernoGate_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 500.0,
+      "y": -510.0,
+      "z": -660.0,
+      "yaw": 135.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1276.0,
+      "y": 510.0,
+      "z": -299.9998,
+      "yaw": 185.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 193.6765,
+      "y": 504.20557,
+      "z": -660.0,
+      "yaw": 270.0,
+      "map": "InfernoMouth",
+      "file": "InfernoMouth_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 184.0,
+      "y": -1360.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "InfernoRooms",
+      "file": "InfernoRooms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1435.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1435.0,
+      "y": 0.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -560.0,
+      "y": -355.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 760.0,
+      "y": 125.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Inferno_Batroost",
+      "file": "Inferno_Batroost_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -370.0,
+      "y": 1085.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 380.0,
+      "y": 1085.0,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 1090.0,
+      "y": 385.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": -1095.0,
+      "y": -390.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 1090.0,
+      "y": -385.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 385.0,
+      "y": -1080.0,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": -385.0,
+      "y": -1080.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": -1095.0,
+      "y": 390.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Inferno_Bloodyfalls",
+      "file": "Inferno_Bloodyfalls_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 190.0,
+      "y": 190.0,
+      "z": -200.0,
+      "yaw": 45.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 500.0,
+      "y": 1201.0,
+      "z": 500.0,
+      "yaw": 270.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1202.0,
+      "y": 490.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -415.0,
+      "y": -440.0,
+      "z": -500.0,
+      "yaw": 90.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 440.0,
+      "y": 415.0,
+      "z": -500.0,
+      "yaw": 180.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -940.0,
+      "y": -530.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 940.0,
+      "y": 580.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1400.0,
+      "y": -360.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1400.0,
+      "y": 360.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -50.0,
+      "y": 1280.0,
+      "z": -300.0,
+      "yaw": 270.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 50.0,
+      "y": -1270.0,
+      "z": -300.0,
+      "yaw": 90.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 915.0,
+      "y": 1275.0,
+      "z": -100.0,
+      "yaw": 270.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -780.0,
+      "y": -1025.0,
+      "z": -100.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1180.0,
+      "y": -875.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1390.0,
+      "y": -1400.0,
+      "z": 80.0001,
+      "yaw": 135.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1430.0,
+      "y": 170.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1400.0,
+      "y": 330.0,
+      "z": -500.0,
+      "yaw": 270.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1175.0,
+      "y": -1430.0,
+      "z": -500.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1430.0,
+      "y": -1175.0,
+      "z": -500.0,
+      "yaw": 180.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1410.0,
+      "y": 1160.0,
+      "z": 450.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1385.0,
+      "y": -1200.0,
+      "z": -850.0,
+      "yaw": 180.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1390.0,
+      "y": -1205.0,
+      "z": -850.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1380.0,
+      "y": 1205.0,
+      "z": -850.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1350.0,
+      "y": 1160.0,
+      "z": -850.0,
+      "yaw": 90.0,
+      "map": "Inferno_Hellwind",
+      "file": "Inferno_Hellwind_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 320.0,
+      "y": 860.0,
+      "z": 150.0,
+      "yaw": 270.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -330.0,
+      "y": -865.0,
+      "z": 150.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1000.0,
+      "y": 115.0,
+      "z": -250.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1000.0,
+      "y": -115.0,
+      "z": -250.0,
+      "yaw": 270.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1165.0,
+      "y": 440.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1165.0,
+      "y": -480.0,
+      "z": -200.0,
+      "yaw": 11.2,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -250.0,
+      "y": 1450.0,
+      "z": 1.2559699999999907,
+      "yaw": 270.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 250.0,
+      "y": 1450.0,
+      "z": 1.2559699999999907,
+      "yaw": 270.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": -1450.0,
+      "y": -250.0,
+      "z": 1.2559699999999907,
+      "yaw": 0.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": -1450.0,
+      "y": 250.0,
+      "z": 1.2559699999999907,
+      "yaw": 0.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 1450.0,
+      "y": 250.0,
+      "z": 1.2559699999999907,
+      "yaw": 180.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 1450.0,
+      "y": -250.0,
+      "z": 1.2559699999999907,
+      "yaw": 180.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 250.0,
+      "y": -1450.0,
+      "z": 1.2559699999999907,
+      "yaw": 90.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": -250.0,
+      "y": -1450.0,
+      "z": 1.2559699999999907,
+      "yaw": 90.0,
+      "map": "Inferno_Obelisk",
+      "file": "Inferno_Obelisk_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_16",
+      "variant_count": 72,
+      "variant_names": []
+    },
+    {
+      "x": 800.0,
+      "y": -1050.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1040.0,
+      "y": -800.0,
+      "z": 700.0,
+      "yaw": 360.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1445.0,
+      "y": 1250.0,
+      "z": 400.0,
+      "yaw": 360.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1180.0,
+      "y": 1440.0,
+      "z": 400.0,
+      "yaw": 270.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1425.0,
+      "y": 1025.0,
+      "z": 400.0,
+      "yaw": 180.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 155.0,
+      "y": 500.0,
+      "z": -399.9999,
+      "yaw": 270.0,
+      "map": "LowPyramid",
+      "file": "LowPyramid_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 154.999992,
+      "y": -245.0,
+      "z": -399.9999,
+      "yaw": 90.0,
+      "map": "LowPyramid",
+      "file": "LowPyramid_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 10.0,
+      "y": 689.99243,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Maze",
+      "file": "Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1109.9897,
+      "y": 833.99316,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Maze",
+      "file": "Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 555.9938,
+      "y": 49.999294,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Maze",
+      "file": "Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1099.214,
+      "y": 87.83022,
+      "z": 307.0,
+      "yaw": 130.0,
+      "map": "Maze",
+      "file": "Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1384.1825,
+      "y": -242.28676,
+      "z": 307.0,
+      "yaw": 90.0,
+      "map": "Maze",
+      "file": "Maze_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 800.0,
+      "y": -258.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+          "name": "宝箱怪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_Simple",
+          "name": "宝箱怪"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+          "name": "木桶"
+        }
+      ]
+    },
+    {
+      "x": -1390.0,
+      "y": -1380.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel"
+    },
+    {
+      "x": 110.065796,
+      "y": 417.9504,
+      "z": 0.0,
+      "yaw": 40.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel"
+    },
+    {
+      "x": 872.0658,
+      "y": 401.9504,
+      "z": 0.0,
+      "yaw": 140.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel"
+    },
+    {
+      "x": 108.065796,
+      "y": 1199.9504,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel"
+    },
+    {
+      "x": -798.0,
+      "y": 409.0,
+      "z": -400.0,
+      "yaw": 90.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel"
+    },
+    {
+      "x": -1390.0,
+      "y": -780.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_MidLevel"
+    },
+    {
+      "x": 10.0,
+      "y": 335.0,
+      "z": 200.0,
+      "yaw": 90.0,
+      "map": "OssuaryEdge",
+      "file": "OssuaryEdge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 5.0,
+      "y": -330.0,
+      "z": 200.0,
+      "yaw": 270.0,
+      "map": "OssuaryEdge",
+      "file": "OssuaryEdge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1274.0,
+      "y": 317.0,
+      "z": 1.0,
+      "yaw": 90.0,
+      "map": "Ruins_Armory",
+      "file": "Ruins_Armory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -218.0,
+      "y": -894.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -140.0,
+      "y": 1340.0,
+      "z": -600.0,
+      "yaw": 270.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 26.695389,
+      "y": 389.7431,
+      "z": 200.32407,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1480.0,
+      "y": -901.00006,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 242.32233,
+      "y": -204.74873,
+      "z": -250.0,
+      "yaw": 135.0,
+      "map": "Ruins_EndWall",
+      "file": "Ruins_EndWall_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 580.0,
+      "y": 125.0,
+      "z": -250.0,
+      "yaw": 180.0,
+      "map": "Ruins_EndWall",
+      "file": "Ruins_EndWall_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -455.0,
+      "y": -585.0,
+      "z": -250.0,
+      "yaw": 90.0,
+      "map": "Ruins_EndWall",
+      "file": "Ruins_EndWall_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1263.2963,
+      "y": -1362.0591,
+      "z": -50.0,
+      "yaw": 105.0,
+      "map": "Ruins_EndWall",
+      "file": "Ruins_EndWall_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -269.37146,
+      "y": 209.62648,
+      "z": 328.92203,
+      "yaw": 260.0,
+      "map": "Ruins_Forest_01",
+      "file": "Ruins_Forest_01_A.json",
+      "version": "(A)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1028.8324951538232,
+      "y": 815.3636694098268,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_Forest_02",
+      "file": "Ruins_Forest_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "sub_group_parent": "BP_SubGroup_C_1",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "ui.pool.skeleton_guard_fake_death",
+          "name": "SkeletonFootmanFromFakeDeath"
+        },
+        {
+          "translation_key": "",
+          "name": "遗骸"
+        }
+      ]
+    },
+    {
+      "x": -1358.3148,
+      "y": 1369.6024,
+      "z": 0.31406426,
+      "yaw": 310.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 410.00003,
+      "y": 850.0,
+      "z": -12.977841,
+      "yaw": 180.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -850.0,
+      "y": -1150.0,
+      "z": -600.0,
+      "yaw": 205.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 875.0,
+      "y": 300.0,
+      "z": -1000.0,
+      "yaw": 180.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1395.0,
+      "y": 1405.0,
+      "z": 0.0,
+      "yaw": 255.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 300.0,
+      "y": -1335.0,
+      "z": -500.0,
+      "yaw": 15.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 684.03595,
+      "y": 121.74486,
+      "z": 0.313934,
+      "yaw": 85.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1420.0,
+      "y": -50.0,
+      "z": -510.0,
+      "yaw": 180.0,
+      "map": "Ruins_GreatHall_03_Destroyed",
+      "file": "Ruins_GreatHall_03_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -412.42562499999997,
+      "y": -77.33067,
+      "z": 1.3848994,
+      "yaw": 250.0,
+      "map": "Ruins_Passage_Inner_02",
+      "file": "Ruins_Passage_Inner_02_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 799.78595,
+      "y": -5.7642820000000015,
+      "z": 0.00010000000000331966,
+      "yaw": 230.0,
+      "map": "Ruins_Passage_Inner_04",
+      "file": "Ruins_Passage_Inner_04_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "sub_group_parent": "BP_SubGroup_C_0",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 197.27184,
+      "y": 434.28424,
+      "z": -9.632545000000007,
+      "yaw": 343.9,
+      "map": "Ruins_Passage_Inner_04",
+      "file": "Ruins_Passage_Inner_04_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "sub_group_parent": "BP_SubGroup_C_0",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -178.70671,
+      "y": 301.07828,
+      "z": -18.633757,
+      "yaw": 64.8,
+      "map": "Ruins_Passage_Outer_02",
+      "file": "Ruins_Passage_Outer_02_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": -287.021263,
+      "y": -87.38309999999998,
+      "z": 0.0,
+      "yaw": 145.0,
+      "map": "Ruins_Passage_Outer_03",
+      "file": "Ruins_Passage_Outer_03_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": -945.0,
+      "y": 81.54764,
+      "z": -13.126159999999999,
+      "yaw": 45.2,
+      "map": "Ruins_Passage_Outer_04",
+      "file": "Ruins_Passage_Outer_04_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_SubGroup_C_2",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cockatrice",
+          "name": "蛇尾鸡"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": 230.0,
+      "y": 25.0,
+      "z": -10.0,
+      "yaw": 144.4,
+      "map": "Ruins_Passage_Outer_04",
+      "file": "Ruins_Passage_Outer_04_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_SubGroup_C_2",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cockatrice",
+          "name": "蛇尾鸡"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        }
+      ]
+    },
+    {
+      "x": -209.24112,
+      "y": 84.80330000000001,
+      "z": -20.243744,
+      "yaw": 320.0,
+      "map": "Ruins_Passage_Outer_05",
+      "file": "Ruins_Passage_Outer_05_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 28.546690000000012,
+      "y": 405.99806,
+      "z": 17.184662,
+      "yaw": 140.2,
+      "map": "Ruins_Passage_Outer_06",
+      "file": "Ruins_Passage_Outer_06_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 1145.08108,
+      "y": -389.803764,
+      "z": 0.0,
+      "yaw": 245.0,
+      "map": "Ruins_Passage_Outer_07",
+      "file": "Ruins_Passage_Outer_07_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 86.17704000000003,
+      "y": -276.68101,
+      "z": -20.0,
+      "yaw": 280.7,
+      "map": "Ruins_Passage_Outer_08",
+      "file": "Ruins_Passage_Outer_08_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 136.177056,
+      "y": -196.681005,
+      "z": -5.0,
+      "yaw": 345.4,
+      "map": "Ruins_Passage_Outer_09",
+      "file": "Ruins_Passage_Outer_09_D.json",
+      "version": "(D)",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 9,
+      "variant_names": []
+    },
+    {
+      "x": 2.0,
+      "y": -700.0,
+      "z": 0.0,
+      "yaw": 15.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -300.0,
+      "y": 1400.0,
+      "z": 0.0,
+      "yaw": 250.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -350.0,
+      "y": -1150.0,
+      "z": -599.9999,
+      "yaw": 70.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -250.0,
+      "y": 1034.0,
+      "z": -599.9999,
+      "yaw": 215.0,
+      "map": "Ruins_Refectory",
+      "file": "Ruins_Refectory_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1399.0,
+      "y": 3.000032,
+      "z": 0.0,
+      "yaw": 360.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1430.0,
+      "y": 278.00003,
+      "z": -499.9999,
+      "yaw": 270.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1417.0,
+      "y": -959.99994,
+      "z": -499.9999,
+      "yaw": 90.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1277.0,
+      "y": 495.99997,
+      "z": -499.9999,
+      "yaw": 270.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 497.99997,
+      "y": -766.0,
+      "z": -499.9999,
+      "yaw": 360.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -3913.0,
+      "y": 554.0,
+      "z": -899.99994,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -3923.0,
+      "y": 1.0,
+      "z": -899.99994,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1283.0,
+      "y": 1.0,
+      "z": -899.99994,
+      "yaw": 180.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1032.0,
+      "y": 51.0,
+      "z": -899.999922,
+      "yaw": 180.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.Ground",
+          "name": "地面"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_Pot",
+          "name": "罐子"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        }
+      ]
+    },
+    {
+      "x": 856.0,
+      "y": -161.0,
+      "z": -899.999922,
+      "yaw": 90.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.Ground",
+          "name": "地面"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_Pot",
+          "name": "罐子"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        }
+      ]
+    },
+    {
+      "x": 485.0,
+      "y": -1354.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_Tower_01_Destroyed",
+      "file": "Ruins_Tower_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1461.00001,
+      "y": -801.99999,
+      "z": -599.9999,
+      "yaw": 180.0,
+      "map": "Ruins_UndergroundAltar_01",
+      "file": "Ruins_UndergroundAltar_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "",
+          "name": "狮头宝箱"
+        }
+      ]
+    },
+    {
+      "x": -1041.8667,
+      "y": -681.36273,
+      "z": -599.9999,
+      "yaw": 280.0,
+      "map": "Ruins_UndergroundAltar_01",
+      "file": "Ruins_UndergroundAltar_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1088.3453,
+      "y": 1091.6547,
+      "z": 0.0,
+      "yaw": 135.0,
+      "map": "Ruins_Watchtower",
+      "file": "Ruins_Watchtower_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -225.0,
+      "y": 755.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_Watchtower",
+      "file": "Ruins_Watchtower_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 585.54065,
+      "y": -816.0891,
+      "z": 625.0,
+      "yaw": 105.0,
+      "map": "Ruins_Watchtower",
+      "file": "Ruins_Watchtower_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1335.0000300000002,
+      "y": 214.99994000000004,
+      "z": -600.0,
+      "yaw": 270.0,
+      "map": "Ruins_WaterHole",
+      "file": "Ruins_WaterHole_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 27,
+      "variant_names": []
+    },
+    {
+      "x": 1169.471996,
+      "y": -938.92551,
+      "z": -600.0,
+      "yaw": 140.0,
+      "map": "Ruins_WaterHole",
+      "file": "Ruins_WaterHole_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 27,
+      "variant_names": []
+    },
+    {
+      "x": -924.7831999999999,
+      "y": -1336.6788899999997,
+      "z": -600.0,
+      "yaw": 0.0,
+      "map": "Ruins_WaterHole",
+      "file": "Ruins_WaterHole_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 27,
+      "variant_names": []
+    },
+    {
+      "x": -1481.0,
+      "y": -120.00001,
+      "z": -399.9999,
+      "yaw": 360.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -417.99997,
+      "y": -788.0,
+      "z": -399.9999,
+      "yaw": 180.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1166.0,
+      "y": 1132.0,
+      "z": -399.9999,
+      "yaw": 180.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -178.97667,
+      "y": 397.76077,
+      "z": 9.965576e-05,
+      "yaw": 274.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1387.0,
+      "y": 466.00003,
+      "z": -399.9999,
+      "yaw": 180.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -249.0,
+      "y": -191.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_WollfColony",
+      "file": "Ruins_WollfColony_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 729.0,
+      "y": 1441.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "Sewers",
+      "file": "Sewers_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 3979.1748,
+      "y": -119.24706,
+      "z": 372.0,
+      "yaw": 165.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 3803.1777,
+      "y": -776.07666,
+      "z": 371.0,
+      "yaw": 165.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 4241.56,
+      "y": -536.12976,
+      "z": 820.0,
+      "yaw": 165.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 15.442239,
+      "y": 1004.92615,
+      "z": 25.722137,
+      "yaw": 307.2,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 3198.822,
+      "y": 2640.4993,
+      "z": 337.89142,
+      "yaw": 290.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1918.0952,
+      "y": 4390.7314,
+      "z": 229.28392,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 3819.9973,
+      "y": 1429.7026,
+      "z": 334.37946,
+      "yaw": 130.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 407.29282,
+      "y": -1261.0732,
+      "z": 461.5913,
+      "yaw": 95.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -988.3913,
+      "y": 1077.6876,
+      "z": 285.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingHouse_01",
+      "file": "ShipGraveyard_FloatingHouse_01_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -410.0,
+      "y": -445.0,
+      "z": 205.0,
+      "yaw": 360.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1375.0,
+      "y": -1420.0,
+      "z": 5.0,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1074.2836,
+      "y": -2127.9814,
+      "z": 575.0,
+      "yaw": 230.0,
+      "map": "ShipGraveyard_FloatingVillage",
+      "file": "ShipGraveyard_FloatingVillage_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -397.37692,
+      "y": 771.408,
+      "z": 628.0,
+      "yaw": 325.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 130.0,
+      "y": 395.0,
+      "z": 380.0,
+      "yaw": 260.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1342.0,
+      "y": 1781.0,
+      "z": 1204.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1175.0,
+      "y": 3800.0,
+      "z": 200.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1981.5328,
+      "y": 903.17566,
+      "z": 1206.0,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 5220.0,
+      "y": 1100.0,
+      "z": 200.0,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_PiratePrison",
+      "file": "ShipGraveyard_PiratePrison_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 479.07443,
+      "y": -446.8011,
+      "z": 1050.0,
+      "yaw": 185.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -896.4661,
+      "y": 153.97107,
+      "z": 1414.7108,
+      "yaw": 343.8,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 3096.135,
+      "y": 137.19708,
+      "z": 397.13492,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -792.3902,
+      "y": -2038.9167,
+      "z": 401.7467,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -209.98921,
+      "y": -2527.9448,
+      "z": 402.65552,
+      "yaw": 60.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1192.0084,
+      "y": 1006.6404,
+      "z": 23.2771,
+      "yaw": 199.6,
+      "map": "ShipGraveyard_StarfishValley",
+      "file": "ShipGraveyard_StarfishValley_D.json",
+      "version": "(D)",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 529.9922,
+      "y": 811.99677,
+      "z": -730.0,
+      "yaw": 360.0,
+      "map": "SingleLogBridge",
+      "file": "SingleLogBridge_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1204.1003,
+      "y": -797.5731,
+      "z": -81.60438,
+      "yaw": 175.0,
+      "map": "SpiderCave_02",
+      "file": "SpiderCave_02_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 791.99999,
+      "y": -140.00001,
+      "z": -400.0,
+      "yaw": 180.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonChampion",
+          "name": "骷髅冠军"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestSpecial",
+          "name": "特殊宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "df5.hardcoded.ChestMedium",
+          "name": "中宝箱"
+        }
+      ]
+    },
+    {
+      "x": 1275.027142023354,
+      "y": 416.17827664639526,
+      "z": -347.72374900000005,
+      "yaw": 265.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ChestLarge",
+          "name": "大宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+          "name": "黄金宝箱"
+        }
+      ]
+    },
+    {
+      "x": -14.880154,
+      "y": 116.067825,
+      "z": 57.89752,
+      "yaw": 45.0,
+      "map": "StoneGrave_Center",
+      "file": "StoneGrave_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1405.0,
+      "y": -1385.0,
+      "z": -50.0,
+      "yaw": 45.0,
+      "map": "Storeroom",
+      "file": "Storeroom_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 639.9941,
+      "y": 819.9915,
+      "z": -90.0,
+      "yaw": 223.1,
+      "map": "Swamp",
+      "file": "Swamp_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -346.0,
+      "y": -965.0,
+      "z": -400.0,
+      "yaw": 135.0,
+      "map": "Swamp",
+      "file": "Swamp_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -996.5034,
+      "y": -1251.4639,
+      "z": -499.9999,
+      "yaw": 140.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1.6e-05,
+      "y": -1185.0,
+      "z": -499.9999,
+      "yaw": 90.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1227.4181,
+      "y": 1105.0934,
+      "z": -499.9999,
+      "yaw": 220.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 8.999984,
+      "y": 1220.0,
+      "z": -499.9999,
+      "yaw": 270.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1220.0,
+      "y": -50.00002,
+      "z": -499.9999,
+      "yaw": 270.0,
+      "map": "TheMiniWheel",
+      "file": "TheMiniWheel_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1500.0,
+      "y": 60.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "ThePit",
+      "file": "ThePit_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 545.0,
+      "y": 1415.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "ThePit",
+      "file": "ThePit_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -545.0,
+      "y": 1415.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "ThePit",
+      "file": "ThePit_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1375.0,
+      "y": -240.0,
+      "z": 0.0,
+      "yaw": 90.0,
+      "map": "ThePit",
+      "file": "ThePit_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 1380.0,
+      "y": 275.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "ThePit",
+      "file": "ThePit_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -70.0,
+      "y": -1300.0,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Tomb_Center",
+      "file": "Tomb_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": 597.0,
+      "y": 1380.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Tomb_Center",
+      "file": "Tomb_Center_HR_D.json",
+      "version": "",
+      "label": "ChestLarge"
+    },
+    {
+      "x": -1512.7874,
+      "y": 4371.3076,
+      "z": -1333.0,
+      "yaw": 349.3,
+      "map": "CenterTower",
+      "file": "CenterTower_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_Simple"
+    },
+    {
+      "x": -165.0,
+      "y": 1128.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "HBridge",
+      "file": "HBridge_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_Simple"
+    },
+    {
+      "x": 470.0,
+      "y": 1128.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "HBridge",
+      "file": "HBridge_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_Simple"
+    },
+    {
+      "x": 560.0,
+      "y": -1023.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "MimicRoom",
+      "file": "MimicRoom_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_Simple",
+      "group_parent": "BP_SingleGameSpawnerGroup_C_0",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+          "name": "宝箱怪"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_Simple",
+          "name": "宝箱怪"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+          "name": "木桶"
+        }
+      ]
+    },
+    {
+      "x": 1338.0797,
+      "y": -266.84,
+      "z": 0.000208,
+      "yaw": 225.0,
+      "map": "Ruins_GreatHall_01_Destroyed",
+      "file": "Ruins_GreatHall_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "Mimic_Medium_Simple"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "TongueOfMimic",
+          "page": "TongueOfMimic",
+          "translation": "宝箱怪舌头",
+          "translation_key": "Text_DesignData_Item_Item_TongueOfMimic",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "MimicTooth",
+          "page": "MimicTooth",
+          "translation": "拟态獠牙",
+          "translation_key": "Text_DesignData_Item_Item_MimicTooth",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Mimic",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Mimic",
+      "items": [
+        {
+          "name": "Mitre_7001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RusticTunic_7001",
+          "page": "RusticTunic",
+          "translation": "乡村束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_RusticTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CeremonialStaff_7001",
+          "page": "CeremonialStaff",
+          "translation": "仪式权杖",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialStaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CeremonialHeaddress_7001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RitualRobe_7001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FellingAxe_7001",
+          "page": "FellingAxe",
+          "translation": "伐木斧",
+          "translation_key": "Text_DesignData_Item_Item_FellingAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StefanBeret_7001",
+          "page": "StefanBeret",
+          "translation": "作家帽",
+          "translation_key": "Text_DesignData_Item_Item_StefanBeret_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Frock_7001",
+          "page": "Frock",
+          "translation": "修士袍",
+          "translation_key": "Text_DesignData_Item_Item_Frock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KrisDagger_7001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WardenOutfit_7001",
+          "page": "WardenOutfit",
+          "translation": "典狱长外套",
+          "translation_key": "Text_DesignData_Item_Item_WardenOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerTunic_7001",
+          "page": "AdventurerTunic",
+          "translation": "冒险者外衣",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerBoots_7001",
+          "page": "AdventurerBoots",
+          "translation": "冒险者长靴",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChampionArmor_7001",
+          "page": "ChampionArmor",
+          "translation": "冠军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_ChampionArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ReinforcedGloves_7001",
+          "page": "ReinforcedGloves",
+          "translation": "加固手套",
+          "translation_key": "Text_DesignData_Item_Item_ReinforcedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RuggedBoots_7001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ValiantAttire_7001",
+          "page": "ValiantAttire",
+          "translation": "勇者礼服",
+          "translation_key": "Text_DesignData_Item_Item_ValiantAttire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Gjermundbu_7001",
+          "page": "Gjermundbu",
+          "translation": "北境战盔",
+          "translation_key": "Text_DesignData_Item_Item_Gjermundbu_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NorthernFullTunic_7001",
+          "page": "NorthernFullTunic",
+          "translation": "北境战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernFullTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NormanNasalHelm_7001",
+          "page": "NormanNasalHelm",
+          "translation": "北境护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_NormanNasalHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NorthernHalfTunic_7001",
+          "page": "NorthernHalfTunic",
+          "translation": "北境短战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernHalfTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderHelm_7001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderArmor_7001",
+          "page": "CrusaderArmor",
+          "translation": "十字军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_CrusaderArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Crossbow_7001",
+          "page": "Crossbow",
+          "translation": "十字弩",
+          "translation_key": "Text_DesignData_Item_Item_Crossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredSallet_7001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LavishShirt_7001",
+          "page": "LavishShirt",
+          "translation": "华丽衬衫",
+          "translation_key": "Text_DesignData_Item_Item_LavishShirt_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GrandBrigandine_7001",
+          "page": "GrandBrigandine",
+          "translation": "华丽镶嵌甲",
+          "translation_key": "Text_DesignData_Item_Item_GrandBrigandine_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DashingBoots_7001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CastillonDagger_7001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DoubleAxe_7001",
+          "page": "DoubleAxe",
+          "translation": "双刃斧",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RecurveBow_7001",
+          "page": "RecurveBow",
+          "translation": "反曲弓",
+          "translation_key": "Text_DesignData_Item_Item_RecurveBow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TimewornRobe_7001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RoundShield_7001",
+          "page": "RoundShield",
+          "translation": "圆盾",
+          "translation_key": "Text_DesignData_Item_Item_RoundShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Topfhelm_7001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TemplarArmor_7001",
+          "page": "TemplarArmor",
+          "translation": "圣殿铠甲",
+          "translation_key": "Text_DesignData_Item_Item_TemplarArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KettleHat_7001",
+          "page": "KettleHat",
+          "translation": "壶盔",
+          "translation_key": "Text_DesignData_Item_Item_KettleHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WarMaul_7001",
+          "page": "WarMaul",
+          "translation": "大铁锤",
+          "translation_key": "Text_DesignData_Item_Item_WarMaul_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Chaperon_7001",
+          "page": "Chaperon",
+          "translation": "头巾帽",
+          "translation_key": "Text_DesignData_Item_Item_Chaperon_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneHood_7001",
+          "page": "ArcaneHood",
+          "translation": "奥术兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGloves_7001",
+          "page": "ArcaneGloves",
+          "translation": "奥术手套",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGarb_7001",
+          "page": "ArcaneGarb",
+          "translation": "奥术法袍",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGarb_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneEssence_7001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GlovesOfUtility_7001",
+          "page": "GlovesOfUtility",
+          "translation": "实用手套",
+          "translation_key": "Text_DesignData_Item_Item_GlovesOfUtility_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CourtlyDress_7001",
+          "page": "CourtlyDress",
+          "translation": "宫廷礼服",
+          "translation_key": "Text_DesignData_Item_Item_CourtlyDress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LooseTrousers_7001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterOutfit_7001",
+          "page": "JesterOutfit",
+          "translation": "小丑外套",
+          "translation_key": "Text_DesignData_Item_Item_JesterOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPoulaines_7001",
+          "page": "JesterPoulaines",
+          "translation": "小丑尖头鞋",
+          "translation_key": "Text_DesignData_Item_Item_JesterPoulaines_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterCap_7001",
+          "page": "JesterCap",
+          "translation": "小丑帽子",
+          "translation_key": "Text_DesignData_Item_Item_JesterCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPants_7001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Buckler_7001",
+          "page": "Buckler",
+          "translation": "小圆盾",
+          "translation_key": "Text_DesignData_Item_Item_Buckler_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BarbutaHelm_7001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Zweihander_7001",
+          "page": "Zweihander",
+          "translation": "巨剑",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pavise_7001",
+          "page": "Pavise",
+          "translation": "巨盾",
+          "translation_key": "Text_DesignData_Item_Item_Pavise_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Coif_7001",
+          "page": "Coif",
+          "translation": "巫师帽",
+          "translation_key": "Text_DesignData_Item_Item_Coif_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardShoes_7001",
+          "page": "WizardShoes",
+          "translation": "巫师鞋",
+          "translation_key": "Text_DesignData_Item_Item_WizardShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ClothPants_7001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OpenSallet_7001",
+          "page": "OpenSallet",
+          "translation": "开面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_OpenSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Falchion_7001",
+          "page": "Falchion",
+          "translation": "弯刃大刀",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MarauderOutfit_7001",
+          "page": "MarauderOutfit",
+          "translation": "强盗外套",
+          "translation_key": "Text_DesignData_Item_Item_MarauderOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BattleAxe_7001",
+          "page": "BattleAxe",
+          "translation": "战斗斧",
+          "translation_key": "Text_DesignData_Item_Item_BattleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WarHammer_7001",
+          "page": "WarHammer",
+          "translation": "战锤",
+          "translation_key": "Text_DesignData_Item_Item_WarHammer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HandCrossbow_7001",
+          "page": "HandCrossbow",
+          "translation": "手弩",
+          "translation_key": "Text_DesignData_Item_Item_HandCrossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BuckledBoots_7001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SleekHidePants_7001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeaterShield_7001",
+          "page": "HeaterShield",
+          "translation": "斗盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherBonnet_7001",
+          "page": "LeatherBonnet",
+          "translation": "无檐羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherBonnet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OldShoes_7001",
+          "page": "OldShoes",
+          "translation": "旧鞋",
+          "translation_key": "Text_DesignData_Item_Item_OldShoes_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MorningStar_7001",
+          "page": "MorningStar",
+          "translation": "晨星",
+          "translation_key": "Text_DesignData_Item_Item_MorningStar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkleafBoots_7001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShadowHood_7001",
+          "page": "ShadowHood",
+          "translation": "暗影兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ShadowHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShadowMask_7001",
+          "page": "ShadowMask",
+          "translation": "暗影面罩",
+          "translation_key": "Text_DesignData_Item_Item_ShadowMask_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkgroveHood_7001",
+          "page": "DarkgroveHood",
+          "translation": "暗林兜帽",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkgroveRobe_7001",
+          "page": "DarkgroveRobe",
+          "translation": "暗林长袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkgroveRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bardiche_7001",
+          "page": "Bardiche",
+          "translation": "月刃斧",
+          "translation_key": "Text_DesignData_Item_Item_Bardiche_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RondelDagger_7001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HolyRobe_7001",
+          "page": "HolyRobe",
+          "translation": "朝圣袍",
+          "translation_key": "Text_DesignData_Item_Item_HolyRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistHood_7001",
+          "page": "OccultistHood",
+          "translation": "术士兜帽",
+          "translation_key": "Text_DesignData_Item_Item_OccultistHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistTunic_7001",
+          "page": "OccultistTunic",
+          "translation": "术士法衣",
+          "translation_key": "Text_DesignData_Item_Item_OccultistTunic_0001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistRobe_7001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistPants_7001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistBoots_7001",
+          "page": "OccultistBoots",
+          "translation": "术士长靴",
+          "translation_key": "Text_DesignData_Item_Item_OccultistBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LanternShield_7001",
+          "page": "LanternShield",
+          "translation": "机关盾",
+          "translation_key": "Text_DesignData_Item_Item_LanternShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedTunic_7001",
+          "page": "PaddedTunic",
+          "translation": "束腰棉外套",
+          "translation_key": "Text_DesignData_Item_Item_PaddedTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestHood_7001",
+          "page": "ForestHood",
+          "translation": "林地兜帽",
+          "translation_key": "Text_DesignData_Item_Item_ForestHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestBoots_7001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DryadMask_7001",
+          "page": "DryadMask",
+          "translation": "树妖面具",
+          "translation_key": "Text_DesignData_Item_Item_DryadMask_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Club_7001",
+          "page": "Club",
+          "translation": "棍棒",
+          "translation_key": "Text_DesignData_Item_Item_Club_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArmingSword_7001",
+          "page": "ArmingSword",
+          "translation": "武装剑",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Armet_7001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrystalSword_7001",
+          "page": "CrystalSword",
+          "translation": "水晶剑",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrystalBall_7001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FlangedMace_7001",
+          "page": "FlangedMace",
+          "translation": "法兰锤",
+          "translation_key": "Text_DesignData_Item_Item_FlangedMace_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardHat_7001",
+          "page": "WizardHat",
+          "translation": "法师帽",
+          "translation_key": "Text_DesignData_Item_Item_WizardHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WandererAttire_7001",
+          "page": "WandererAttire",
+          "translation": "流浪者外衣",
+          "translation_key": "Text_DesignData_Item_Item_WandererAttire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightCassock_7001",
+          "page": "LightCassock",
+          "translation": "浅色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_LightCassock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCassock_7001",
+          "page": "DarkCassock",
+          "translation": "深色圣袍",
+          "translation_key": "Text_DesignData_Item_Item_DarkCassock_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPaddedHose_7001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RangerHood_7001",
+          "page": "RangerHood",
+          "translation": "游侠兜帽",
+          "translation_key": "Text_DesignData_Item_Item_RangerHood_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ProwlerGloves_7001",
+          "page": "ProwlerGloves",
+          "translation": "潜行者手套",
+          "translation_key": "Text_DesignData_Item_Item_ProwlerGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrunkHose_7001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hounskull_7001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TrapperHat_7001",
+          "page": "TrapperHat",
+          "translation": "猎人帽",
+          "translation_key": "Text_DesignData_Item_Item_TrapperHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SurvivalBow_7001",
+          "page": "SurvivalBow",
+          "translation": "生存弓",
+          "translation_key": "Text_DesignData_Item_Item_SurvivalBow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RawhideGloves_7001",
+          "page": "RawhideGloves",
+          "translation": "生皮手套",
+          "translation_key": "Text_DesignData_Item_Item_RawhideGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PastoralTunic_7001",
+          "page": "PastoralTunic",
+          "translation": "田园束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_PastoralTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherCap_7001",
+          "page": "LeatherCap",
+          "translation": "皮帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherGloves_7001",
+          "page": "LeatherGloves",
+          "translation": "皮革手套",
+          "translation_key": "Text_DesignData_Item_Item_LeatherGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLeggings_7001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLamellar_7001",
+          "page": "LeatherLamellar",
+          "translation": "皮革札甲",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLamellar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherChausses_7001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RogueCowl_7001",
+          "page": "RogueCowl",
+          "translation": "盗贼风帽",
+          "translation_key": "Text_DesignData_Item_Item_RogueCowl_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ShortSword_7001",
+          "page": "ShortSword",
+          "translation": "短剑",
+          "translation_key": "Text_DesignData_Item_Item_ShortSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hatchet_7001",
+          "page": "Hatchet",
+          "translation": "短柄斧",
+          "translation_key": "Text_DesignData_Item_Item_Hatchet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LowBoots_7001",
+          "page": "LowBoots",
+          "translation": "短靴",
+          "translation_key": "Text_DesignData_Item_Item_LowBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticVestments_7001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OracleRobe_7001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticGloves_7001",
+          "page": "MysticGloves",
+          "translation": "秘法手套",
+          "translation_key": "Text_DesignData_Item_Item_MysticGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RunestoneGloves_7001",
+          "page": "RunestoneGloves",
+          "translation": "符石手套",
+          "translation_key": "Text_DesignData_Item_Item_RunestoneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SturdyBoots_7001",
+          "page": "SturdyBoots",
+          "translation": "粗厚皮靴",
+          "translation_key": "Text_DesignData_Item_Item_SturdyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FineCuirass_7001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LacedTurnshoe_7001",
+          "page": "LacedTurnshoe",
+          "translation": "系带翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_LacedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Poupoint_7001",
+          "page": "Poupoint",
+          "translation": "紧身棉外套",
+          "translation_key": "Text_DesignData_Item_Item_Poupoint_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Doublet_7001",
+          "page": "Doublet",
+          "translation": "紧身衣",
+          "translation_key": "Text_DesignData_Item_Item_Doublet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedLeggings_7001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ButtonedBoots_7001",
+          "page": "ButtonedBoots",
+          "translation": "纽扣长靴",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Rapier_7001",
+          "page": "Rapier",
+          "translation": "细剑",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WindlassCrossbow_7001",
+          "page": "WindlassCrossbow",
+          "translation": "绞盘弩",
+          "translation_key": "Text_DesignData_Item_Item_WindlassCrossbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingSword_7001",
+          "page": "VikingSword",
+          "translation": "维京剑",
+          "translation_key": "Text_DesignData_Item_Item_VikingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingHelm_7001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StitchedTurnshoe_7001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WoolenCap_7001",
+          "page": "WoolenCap",
+          "translation": "羊毛帽",
+          "translation_key": "Text_DesignData_Item_Item_WoolenCap_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FeatheredHat_7001",
+          "page": "FeatheredHat",
+          "translation": "羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_FeatheredHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pigache_7001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CuffedBoots_7001",
+          "page": "CuffedBoots",
+          "translation": "翻边皮靴",
+          "translation_key": "Text_DesignData_Item_Item_CuffedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Turnshoe_7001",
+          "page": "Turnshoe",
+          "translation": "翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_Turnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StrawHat_7001",
+          "page": "StrawHat",
+          "translation": "草帽",
+          "translation_key": "Text_DesignData_Item_Item_StrawHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BloodwovenGloves_7001",
+          "page": "BloodwovenGloves",
+          "translation": "血纹手套",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BloodwovenRobe_7001",
+          "page": "BloodwovenRobe",
+          "translation": "血纹长袍",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedLeggings_7001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredBarbutaHelm_7001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TroubadourOutfit_7001",
+          "page": "TroubadourOutfit",
+          "translation": "诗人外套",
+          "translation_key": "Text_DesignData_Item_Item_TroubadourOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BardicPants_7001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RegalMitre_7001",
+          "page": "RegalMitre",
+          "translation": "豪华主教冠",
+          "translation_key": "Text_DesignData_Item_Item_RegalMitre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OrnateJazerant_7001",
+          "page": "OrnateJazerant",
+          "translation": "豪华布面锁子甲",
+          "translation_key": "Text_DesignData_Item_Item_OrnateJazerant_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RegalGambeson_7001",
+          "page": "RegalGambeson",
+          "translation": "豪华棉甲",
+          "translation_key": "Text_DesignData_Item_Item_RegalGambeson_0001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GallantOutfit_7001",
+          "page": "GallantOutfit",
+          "translation": "贵族外套",
+          "translation_key": "Text_DesignData_Item_Item_GallantOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightfootBoots_7001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightAketon_7001",
+          "page": "LightAketon",
+          "translation": "轻型布面甲",
+          "translation_key": "Text_DesignData_Item_Item_LightAketon_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Sallet_7001",
+          "page": "Sallet",
+          "translation": "轻盔",
+          "translation_key": "Text_DesingData_Item_Item_Sallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lyre_7001",
+          "page": "Lyre",
+          "translation": "里拉琴",
+          "translation_key": "Text_DesignData_Item_Item_Lyre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGambeson_7001",
+          "page": "HeavyGambeson",
+          "translation": "重型棉甲",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGambeson_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyBoots_7001",
+          "page": "HeavyBoots",
+          "translation": "重型长靴",
+          "translation_key": "Text_DesignData_Item_Item_HeavyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyLeatherLeggings_7001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Quarterstaff_7001",
+          "page": "Quarterstaff",
+          "translation": "铁头棒",
+          "translation_key": "Text_DesignData_Item_Item_Quarterstaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RivetedGloves_7001",
+          "page": "RivetedGloves",
+          "translation": "铆接手套",
+          "translation_key": "Text_DesignData_Item_Item_RivetedGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spangenhelm_7001",
+          "page": "Spangenhelm",
+          "translation": "铆钉护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_Spangenhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChapelDeFer_7001",
+          "page": "ChapelDeFer",
+          "translation": "锅盔",
+          "translation_key": "Text_DesignData_Item_Item_ChapelDeFer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StilettoDagger_7001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StuddedLeather_7001",
+          "page": "StuddedLeather",
+          "translation": "镶钉皮甲",
+          "translation_key": "Text_DesignData_Item_Item_StuddedLeather_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longsword_7001",
+          "page": "Longsword",
+          "translation": "长剑",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longbow_7001",
+          "page": "Longbow",
+          "translation": "长弓",
+          "translation_key": "Text_DesignData_Item_Item_Longbow_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Halberd_7001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spear_7001",
+          "page": "Spear",
+          "translation": "长矛",
+          "translation_key": "Text_DesignData_Item_Item_Spear_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Flute_7001",
+          "page": "Flute",
+          "translation": "长笛",
+          "translation_key": "Text_DesignData_Item_Item_Flute_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HorsemansAxe_7001",
+          "page": "HorsemansAxe",
+          "translation": "骑士斧",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spellbook_7001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WizardStaff_7001",
+          "page": "WizardStaff",
+          "translation": "魔法杖",
+          "translation_key": "Text_DesignData_Item_Item_WizardStaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Lute_7001",
+          "page": "Lute",
+          "translation": "鲁特琴",
+          "translation_key": "Text_DesignData_Item_Item_Lute_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ScaledArmor_7001",
+          "page": "ScaledArmor",
+          "translation": "鳞甲",
+          "translation_key": "Text_DesignData_Item_Item_ScaledArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bycocket_7001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodCrown_7001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodGloves_7001",
+          "page": "ElkwoodGloves",
+          "translation": "鹿角木手套",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkLeatherLeggings_7001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCuirass_7001",
+          "page": "DarkCuirass",
+          "translation": "黑暗胸甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OnyxGloves_7001",
+          "page": "OnyxGloves",
+          "translation": "黑玉手套",
+          "translation_key": "Text_DesignData_Item_Item_OnyxGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Drum_7001",
+          "page": "Drum",
+          "translation": "鼓",
+          "translation_key": "Text_DesignData_Item_Item_Drum_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "Id_Lootdrop_Spawn_Mimic_Medium_MidLevel_Unique",
+      "kind": "pool",
+      "lootdrop_id": "Id_Lootdrop_Spawn_Mimic_Medium_MidLevel_Unique",
+      "items": [
+        {
+          "name": "WanderlightLantern_5001",
+          "page": "WanderlightLantern",
+          "translation": "流光灯笼",
+          "translation_key": "Text_DesignData_Item_Item_WanderlightLantern_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "ShipGraveyard": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "FireDeep": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

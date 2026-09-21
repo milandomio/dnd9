@@ -1,0 +1,513 @@
+{
+  "name": "PirateCrossbowman",
+  "translation": "海盗弩手",
+  "translation_key": "Text_DesignData_Monster_Monster_PirateCrossbowman",
+  "coords": [
+    {
+      "x": -178.0,
+      "y": 11.0,
+      "z": 1103.0002,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_HangingShip",
+      "file": "ShipGraveyard_HangingShip_HR_D.json",
+      "version": "",
+      "label": "PirateCrossbow"
+    },
+    {
+      "x": 100.0,
+      "y": 850.0,
+      "z": 800.0,
+      "yaw": 150.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "PirateCrossbow"
+    },
+    {
+      "x": -900.0,
+      "y": 150.0,
+      "z": 1500.0,
+      "yaw": 255.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "PirateCrossbow"
+    },
+    {
+      "x": -618.68274,
+      "y": 631.31726,
+      "z": 100.0,
+      "yaw": 45.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "PirateCrossbow"
+    },
+    {
+      "x": 200.0,
+      "y": -959.0,
+      "z": 415.47705,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "PirateCrossbow"
+    },
+    {
+      "x": 2945.0,
+      "y": 145.0,
+      "z": 385.0,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateCrossbow",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 14,
+      "variant_names": []
+    },
+    {
+      "x": 970.0,
+      "y": -695.0,
+      "z": 1800.0,
+      "yaw": 135.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateCrossbow"
+    },
+    {
+      "x": -52.52718,
+      "y": 1132.6338,
+      "z": 2070.0,
+      "yaw": 360.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "PirateCrossbow"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_PirateCrossbow",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_PirateCrossbow",
+      "items": [
+        {
+          "name": "AdventurerBoots_6001",
+          "page": "AdventurerBoots",
+          "translation": "冒险者长靴",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RuggedBoots_6001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Crossbow_6001",
+          "page": "Crossbow",
+          "translation": "十字弩",
+          "translation_key": "Text_DesignData_Item_Item_Crossbow_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DashingBoots_6001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ArcaneGloves_6001",
+          "page": "ArcaneGloves",
+          "translation": "奥术手套",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HandCrossbow_6001",
+          "page": "HandCrossbow",
+          "translation": "手弩",
+          "translation_key": "Text_DesignData_Item_Item_HandCrossbow_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HandCannon_6001",
+          "page": "HandCannon",
+          "translation": "手铳",
+          "translation_key": "Text_DesignData_Item_Item_HandCannon_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BuckledBoots_6001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Sling_6001",
+          "page": "Sling",
+          "translation": "投石索",
+          "translation_key": "Text_DesignData_Item_Item_Sling_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SleekHidePants_6001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkleafBoots_6001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ShadowMask_6001",
+          "page": "ShadowMask",
+          "translation": "暗影面罩",
+          "translation_key": "Text_DesignData_Item_Item_ShadowMask_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistBoots_6001",
+          "page": "OccultistBoots",
+          "translation": "术士长靴",
+          "translation_key": "Text_DesignData_Item_Item_OccultistBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ForestBoots_6001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DryadMask_6001",
+          "page": "DryadMask",
+          "translation": "树妖面具",
+          "translation_key": "Text_DesignData_Item_Item_DryadMask_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkPaddedHose_6001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ProwlerGloves_6001",
+          "page": "ProwlerGloves",
+          "translation": "潜行者手套",
+          "translation_key": "Text_DesignData_Item_Item_ProwlerGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherLeggings_6001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherChausses_6001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MysticGloves_6001",
+          "page": "MysticGloves",
+          "translation": "秘法手套",
+          "translation_key": "Text_DesignData_Item_Item_MysticGloves_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SturdyBoots_6001",
+          "page": "SturdyBoots",
+          "translation": "粗厚皮靴",
+          "translation_key": "Text_DesignData_Item_Item_SturdyBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ButtonedBoots_6001",
+          "page": "ButtonedBoots",
+          "translation": "纽扣长靴",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Bolas_6001",
+          "page": "Bolas",
+          "translation": "绊石索",
+          "translation_key": "Text_DesignData_Item_Item_Bolas_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WindlassCrossbow_6001",
+          "page": "WindlassCrossbow",
+          "translation": "绞盘弩",
+          "translation_key": "Text_DesignData_Item_Item_WindlassCrossbow_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CuffedBoots_6001",
+          "page": "CuffedBoots",
+          "translation": "翻边皮靴",
+          "translation_key": "Text_DesignData_Item_Item_CuffedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PaddedLeggings_6001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HeavyBoots_6001",
+          "page": "HeavyBoots",
+          "translation": "重型长靴",
+          "translation_key": "Text_DesignData_Item_Item_HeavyBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HeavyLeatherLeggings_6001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkLeatherLeggings_6001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ThrowingKnife_4001",
+          "page": "ThrowingKnife",
+          "translation": "飞刀",
+          "translation_key": "Text_DesignData_Item_Item_ThrowingKnife_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "FranciscaAxe_4001",
+          "page": "FranciscaAxe",
+          "translation": "飞斧",
+          "translation_key": "Text_DesignData_Item_Item_FranciscaAxe_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Bolt_2001",
+          "page": "Bolt",
+          "translation": "弩矢",
+          "translation_key": "Text_DesignData_Item_Item_Bolt_2001",
+          "suffix": "2001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Ball_2001",
+          "page": "Ball",
+          "translation": "弹丸",
+          "translation_key": "Text_DesignData_Item_Item_Ball_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "SlingStone_2001",
+          "page": "SlingStone",
+          "translation": "投石弹",
+          "translation_key": "Text_DesignData_Item_Item_SlingStone_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_Treasure",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_Treasure",
+      "items": [
+        {
+          "name": "GoldBangle1I_6001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1J_6001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1C_6001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1D_6001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemRing_6001",
+          "page": "GemRing",
+          "translation": "宝石戒指（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemNecklace_6001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2G_6001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1H_6001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PearlNecklace_6001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1B_6001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2D_6001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1E_6001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBand_6001",
+          "page": "GoldBand",
+          "translation": "金环（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MetalCup_6001",
+          "page": "MetalCup",
+          "translation": "银圣杯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2H_6001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "海盗弩手",
+        "translation_key": "Text_DesignData_Monster_Monster_PirateCrossbowman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 3.6667,
+          "普通": 3.6,
+          "豪客赛": 3.1667,
+          "逆袭赛": 3.7333
+        }
+      }
+    ]
+  }
+}

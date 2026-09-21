@@ -1,0 +1,143 @@
+{
+  "name": "Sheepshead",
+  "translation": "羊头鲷",
+  "translation_key": "Text_DesignData_Monster_Monster_Sheepshead",
+  "coords": [
+    {
+      "x": -500.0,
+      "y": 60.0,
+      "z": -595.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -500.0,
+      "y": 165.0,
+      "z": -595.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -500.0,
+      "y": 165.0,
+      "z": -520.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -1110.0,
+      "y": -505.0,
+      "z": -1130.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_UnderSeaCave_01",
+      "file": "ShipGraveyard_UnderSeaCave_01_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_BlueMarlin",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_BlueMarlin",
+      "items": [
+        {
+          "name": "SurgicalKit_4001",
+          "page": "SurgicalKit",
+          "translation": "手术包",
+          "translation_key": "Text_DesignData_Item_Item_SurgicalKit_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Bandage_4001",
+          "page": "Bandage",
+          "translation": "绷带",
+          "translation_key": "Text_DesignData_Item_Item_Bandage_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "Lockpick",
+          "page": "Lockpick",
+          "translation": "开锁器",
+          "translation_key": "Text_DesignData_Item_Item_Lockpick",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "羊头鲷",
+        "translation_key": "Text_DesignData_Monster_Monster_Sheepshead",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 23.75,
+          "普通": 26.25,
+          "豪客赛": 30.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}

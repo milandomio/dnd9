@@ -1,0 +1,448 @@
+{
+  "name": "Emberwing",
+  "translation": "余火翼魔",
+  "translation_key": "Text_DesignData_Monster_Monster_Emberwing",
+  "coords": [
+    {
+      "x": -513.16986,
+      "y": -265.1314,
+      "z": 210.80829,
+      "yaw": 245.0,
+      "map": "Firedeep_BurningCourt",
+      "file": "Firedeep_BurningCourt_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": -586.70465,
+      "y": 393.10104,
+      "z": 14.359681,
+      "yaw": 265.0,
+      "map": "Firedeep_BurningPond",
+      "file": "Firedeep_BurningPond_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": 760.0,
+      "y": -490.0,
+      "z": 900.0,
+      "yaw": 145.0,
+      "map": "Firedeep_DripstoneHollow",
+      "file": "Firedeep_DripstoneHollow_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": -164.76007,
+      "y": -543.98004,
+      "z": 517.93085,
+      "yaw": 230.0,
+      "map": "Firedeep_FallenRampart",
+      "file": "Firedeep_FallenRampart_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    },
+    {
+      "x": -60.0,
+      "y": 195.0,
+      "z": 165.0,
+      "yaw": 265.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "Emberwing"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HardenedBeak",
+          "page": "HardenedBeak",
+          "translation": "硬化尖喙",
+          "translation_key": "Text_DesignData_Item_Item_HardenedBeak",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_MoltenBat",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_MoltenBat",
+      "items": [
+        {
+          "name": "Mitre_6001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RusticTunic_6001",
+          "page": "RusticTunic",
+          "translation": "乡村束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_RusticTunic_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CeremonialHeaddress_6001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StefanBeret_6001",
+          "page": "StefanBeret",
+          "translation": "作家帽",
+          "translation_key": "Text_DesignData_Item_Item_StefanBeret_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "AdventurerTunic_6001",
+          "page": "AdventurerTunic",
+          "translation": "冒险者外衣",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerTunic_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ValiantAttire_6001",
+          "page": "ValiantAttire",
+          "translation": "勇者礼服",
+          "translation_key": "Text_DesignData_Item_Item_ValiantAttire_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LavishShirt_6001",
+          "page": "LavishShirt",
+          "translation": "华丽衬衫",
+          "translation_key": "Text_DesignData_Item_Item_LavishShirt_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Chaperon_6001",
+          "page": "Chaperon",
+          "translation": "头巾帽",
+          "translation_key": "Text_DesignData_Item_Item_Chaperon_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CourtlyDress_6001",
+          "page": "CourtlyDress",
+          "translation": "宫廷礼服",
+          "translation_key": "Text_DesignData_Item_Item_CourtlyDress_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LooseTrousers_6001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "JesterOutfit_6001",
+          "page": "JesterOutfit",
+          "translation": "小丑外套",
+          "translation_key": "Text_DesignData_Item_Item_JesterOutfit_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "JesterCap_6001",
+          "page": "JesterCap",
+          "translation": "小丑帽子",
+          "translation_key": "Text_DesignData_Item_Item_JesterCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "JesterPants_6001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Zweihander_6001",
+          "page": "Zweihander",
+          "translation": "巨剑",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Coif_6001",
+          "page": "Coif",
+          "translation": "巫师帽",
+          "translation_key": "Text_DesignData_Item_Item_Coif_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ClothPants_6001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherBonnet_6001",
+          "page": "LeatherBonnet",
+          "translation": "无檐羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherBonnet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistPants_6001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WizardHat_6001",
+          "page": "WizardHat",
+          "translation": "法师帽",
+          "translation_key": "Text_DesignData_Item_Item_WizardHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WandererAttire_6001",
+          "page": "WandererAttire",
+          "translation": "流浪者外衣",
+          "translation_key": "Text_DesignData_Item_Item_WandererAttire_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TrunkHose_6001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TrapperHat_6001",
+          "page": "TrapperHat",
+          "translation": "猎人帽",
+          "translation_key": "Text_DesignData_Item_Item_TrapperHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PastoralTunic_6001",
+          "page": "PastoralTunic",
+          "translation": "田园束腰外衣",
+          "translation_key": "Text_DesignData_Item_Item_PastoralTunic_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LeatherCap_6001",
+          "page": "LeatherCap",
+          "translation": "皮帽",
+          "translation_key": "Text_DesignData_Item_Item_LeatherCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Doublet_6001",
+          "page": "Doublet",
+          "translation": "紧身衣",
+          "translation_key": "Text_DesignData_Item_Item_Doublet_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ButtonedLeggings_6001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "WoolenCap_6001",
+          "page": "WoolenCap",
+          "translation": "羊毛帽",
+          "translation_key": "Text_DesignData_Item_Item_WoolenCap_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "FeatheredHat_6001",
+          "page": "FeatheredHat",
+          "translation": "羽毛帽",
+          "translation_key": "Text_DesignData_Item_Item_FeatheredHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StrawHat_6001",
+          "page": "StrawHat",
+          "translation": "草帽",
+          "translation_key": "Text_DesignData_Item_Item_StrawHat_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Plunderhosen_6001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BardicPants_6001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RegalMitre_6001",
+          "page": "RegalMitre",
+          "translation": "豪华主教冠",
+          "translation_key": "Text_DesignData_Item_Item_RegalMitre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GallantOutfit_6001",
+          "page": "GallantOutfit",
+          "translation": "贵族外套",
+          "translation_key": "Text_DesignData_Item_Item_GallantOutfit_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Lyre_6001",
+          "page": "Lyre",
+          "translation": "里拉琴",
+          "translation_key": "Text_DesignData_Item_Item_Lyre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Longsword_6001",
+          "page": "Longsword",
+          "translation": "长剑",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Flute_6001",
+          "page": "Flute",
+          "translation": "长笛",
+          "translation_key": "Text_DesignData_Item_Item_Flute_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Lute_6001",
+          "page": "Lute",
+          "translation": "鲁特琴",
+          "translation_key": "Text_DesignData_Item_Item_Lute_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Bycocket_6001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ElkwoodCrown_6001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Drum_6001",
+          "page": "Drum",
+          "translation": "鼓",
+          "translation_key": "Text_DesignData_Item_Item_Drum_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ExplosiveBottle_4001",
+          "page": "ExplosiveBottle",
+          "translation": "炸药瓶",
+          "translation_key": "Text_DesignData_Item_Item_ExplosiveBottle_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "GhostdustPouch_3001",
+          "page": "GhostdustPouch",
+          "translation": "幽尘袋子",
+          "translation_key": "Text_DesignData_Item_Item_GhostdustPouch_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "OilLantern",
+          "page": "OilLantern",
+          "translation": "油灯笼",
+          "translation_key": "Text_DesignData_Item_Item_OilLantern",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "余火翼魔",
+        "translation_key": "Text_DesignData_Monster_Monster_Emberwing",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

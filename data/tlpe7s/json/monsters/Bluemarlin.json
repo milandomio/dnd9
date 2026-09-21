@@ -1,0 +1,173 @@
+{
+  "name": "Bluemarlin",
+  "translation": "蓝枪鱼",
+  "translation_key": "Text_DesignData_Monster_Monster_Bluemarlin",
+  "coords": [
+    {
+      "x": 357.0,
+      "y": -587.0,
+      "z": -791.9999,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -665.0,
+      "y": -328.0,
+      "z": -874.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": 442.0,
+      "y": 532.0,
+      "z": -871.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": 3125.0,
+      "y": -115.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -3470.0,
+      "y": 335.0,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -1246.6575,
+      "y": 4585.4707,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -985.38196,
+      "y": -3041.3232,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_BlueMarlin",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_BlueMarlin",
+      "items": [
+        {
+          "name": "SurgicalKit_4001",
+          "page": "SurgicalKit",
+          "translation": "手术包",
+          "translation_key": "Text_DesignData_Item_Item_SurgicalKit_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "Bandage_4001",
+          "page": "Bandage",
+          "translation": "绷带",
+          "translation_key": "Text_DesignData_Item_Item_Bandage_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "ProtectionPotion_2001",
+          "page": "ProtectionPotion",
+          "translation": "保护药水",
+          "translation_key": "Text_DesignData_Item_Item_ProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "Lockpick",
+          "page": "Lockpick",
+          "translation": "开锁器",
+          "translation_key": "Text_DesignData_Item_Item_Lockpick",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "PotionofWaterBreathing_2001",
+          "page": "PotionofWaterBreathing",
+          "translation": "水息药剂",
+          "translation_key": "Text_DesignData_Item_Item_PotionofWaterBreathing_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "HealingPotion_2001",
+          "page": "HealingPotion",
+          "translation": "治疗药水",
+          "translation_key": "Text_DesignData_Item_Item_HealingPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "ClarityPotion_2001",
+          "page": "ClarityPotion",
+          "translation": "清晰药水",
+          "translation_key": "Text_DesignData_Item_Item_ClarityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "InvisibilityPotion_2001",
+          "page": "InvisibilityPotion",
+          "translation": "隐身药水",
+          "translation_key": "Text_DesignData_Item_Item_InvisibilityPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "MagicProtectionPotion_2001",
+          "page": "MagicProtectionPotion",
+          "translation": "魔法保护药水",
+          "translation_key": "Text_DesignData_Item_Item_MagicProtectionPotion_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "蓝枪鱼",
+        "translation_key": "Text_DesignData_Monster_Monster_Bluemarlin",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 23.75,
+          "普通": 26.25,
+          "豪客赛": 30.0,
+          "逆袭赛": 34.0
+        }
+      }
+    ]
+  }
+}
