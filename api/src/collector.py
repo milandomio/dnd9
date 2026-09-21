@@ -546,6 +546,18 @@ def run(
             f"({time.perf_counter() - _monster_drops_started:.3f}s)"
         )
 
+        _props_drops_started = time.perf_counter()
+        _props_drops_n = attach_loot_pools(
+            entity_data_by_type["props"],
+            db,
+            translations,
+            drop_engine,
+            fold_quality=False,
+        )
+        pipe.log(
+            f"[JSON] props loot_pools: {_props_drops_n} props " f"({time.perf_counter() - _props_drops_started:.3f}s)"
+        )
+
         _lootdrop_enrichment_started = time.perf_counter()
         enrich_all_entities(
             drop_engine,

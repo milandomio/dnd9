@@ -1,11 +1,14 @@
-"""Build per-monster loot_pools for monster detail JSON."""
+"""Build loot_pools for monster and props detail JSON."""
 
 from __future__ import annotations
 
-from translator import QUALITY_RE, VARIANT_RE
+import json
+
+from translator import ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE
 
 _LOOTDROP_PREFIXES = ("Id_Lootdrop_", "ID_Lootdrop_")
 _LUCK_TO_SUFFIX = {n: f"{n}001" for n in range(1, 9)}
+_CONSUMABLE_SUBTYPE = "Text_Code_DCDataBlueprintLibrary_Type_Item_Utility_Consumable"
 
 
 def fold_item_page(item_name: str) -> tuple[str, str | None]:
@@ -32,6 +35,11 @@ def is_quest_pool(lootdrop_id: str) -> bool:
     return stem.startswith("Quest_") or stem.startswith("QuestSpecial_")
 
 
+def is_event_currency_pool(lootdrop_id: str) -> bool:
+    stem = lootdrop_stem(lootdrop_id)
+    return "EventCurrency" in stem
+
+
 def canonical_monster_name(entity_name: str, monster_names: set[str]) -> str:
     stripped = QUALITY_RE.sub("", entity_name)
     if stripped in monster_names:
@@ -40,6 +48,27 @@ def canonical_monster_name(entity_name: str, monster_names: set[str]) -> str:
         return entity_name
     lower_map = {name.lower(): name for name in monster_names}
     return lower_map.get(stripped.lower()) or lower_map.get(entity_name.lower()) or stripped
+
+
+def canonical_entity_name(entity_name: str, entity_names: set[str], *, fold_quality: bool) -> str:
+    if fold_quality:
+        return canonical_monster_name(entity_name, entity_names)
+    lower_map = {name.lower(): name for name in entity_names}
+    candidates: list[str] = [entity_name]
+    stripped = QUALITY_RE.sub("", entity_name)
+    if stripped != entity_name:
+        candidates.append(stripped)
+    ore = ORE_QUALITY_RE.match(entity_name)
+    if ore:
+        base = ore.group(1)
+        candidates.extend([base, f"Ore_{base}"])
+    for cand in candidates:
+        if cand in entity_names:
+            return cand
+        hit = lower_map.get(cand.lower())
+        if hit:
+            return hit
+    return entity_name
 
 
 def _item_sort_key(item: dict) -> tuple[int, str]:
@@ -86,6 +115,13 @@ def monster_map_groups(entity: dict, map_base_to_group: dict[str, str]) -> set[s
     return groups
 
 
+def item_is_consumable(item: dict, item_subtypes: dict[str, set[str]]) -> bool:
+    for key in (item.get("name"), item.get("page")):
+        if key and _CONSUMABLE_SUBTYPE in item_subtypes.get(key, set()):
+            return True
+    return False
+
+
 def item_has_positive_rate(drop_engine, item_name: str, monster_name: str, group_keys: set[str]) -> bool:
     """True if any mode on any of the monster's map groups has drop rate > 0."""
     if not group_keys:
@@ -105,22 +141,25 @@ def build_loot_pools(
     item_keys: dict[str, str],
     drop_engine=None,
     monster_groups: dict[str, set[str]] | None = None,
+    fold_quality: bool = True,
+    item_subtypes: dict[str, set[str]] | None = None,
 ) -> dict[str, list[dict]]:
     """rows: (entity_name, lootdrop_id, item_name, luck_grade)."""
+    subtypes = item_subtypes or {}
     grouped: dict[str, dict[str, list[dict]]] = {}
     rate_ok: dict[tuple[str, str], bool] = {}
     for entity_name, lootdrop_id, item_name, luck_grade in rows:
         if not entity_name or not lootdrop_id or not item_name:
             continue
-        canonical = canonical_monster_name(entity_name, monster_names)
+        canonical = canonical_entity_name(entity_name, monster_names, fold_quality=fold_quality)
         if canonical not in monster_names:
             continue
         if drop_engine is not None:
-            cache_key = (item_name, canonical)
+            cache_key = (item_name, entity_name)
             ok = rate_ok.get(cache_key)
             if ok is None:
                 groups = (monster_groups or {}).get(canonical, set())
-                ok = item_has_positive_rate(drop_engine, item_name, canonical, groups)
+                ok = item_has_positive_rate(drop_engine, item_name, entity_name, groups)
                 rate_ok[cache_key] = ok
             if not ok:
                 continue
@@ -141,8 +180,11 @@ def build_loot_pools(
     for monster, pools in grouped.items():
         quest_items: list[dict] = []
         artifact_items: list[dict] = []
+        consumable_items: list[dict] = []
         other: list[tuple[str, list[dict]]] = []
         for lootdrop_id, items in pools.items():
+            if is_event_currency_pool(lootdrop_id):
+                continue
             if is_quest_pool(lootdrop_id):
                 quest_items.extend(items)
                 continue
@@ -152,8 +194,13 @@ def build_loot_pools(
                     artifact_items.append(item)
                 else:
                     remaining.append(item)
-            if remaining:
-                other.append((lootdrop_id, remaining))
+            if not remaining:
+                continue
+            remaining_deduped = _dedupe_items(remaining)
+            if len(remaining_deduped) == 1 and item_is_consumable(remaining_deduped[0], subtypes):
+                consumable_items.extend(remaining)
+                continue
+            other.append((lootdrop_id, remaining))
 
         loot_pools: list[dict] = []
         quest_deduped = _dedupe_items(quest_items)
@@ -162,6 +209,11 @@ def build_loot_pools(
         artifact_deduped = _dedupe_items(artifact_items)
         if artifact_deduped:
             loot_pools.append({"id": "artifact", "kind": "artifact", "lootdrop_id": None, "items": artifact_deduped})
+        consumable_deduped = _dedupe_items(consumable_items)
+        if consumable_deduped:
+            loot_pools.append(
+                {"id": "consumable", "kind": "consumable", "lootdrop_id": None, "items": consumable_deduped}
+            )
         other.sort(key=lambda pair: lootdrop_stem(pair[0]).lower())
         for lootdrop_id, items in other:
             loot_pools.append(
@@ -196,8 +248,27 @@ def load_item_keys(db) -> dict[str, str]:
     }
 
 
-def attach_loot_pools(monster_data: dict[str, dict], db, translations: dict[str, str], drop_engine=None) -> int:
-    """Inject loot_pools onto in-memory monster detail dicts. Returns monster count updated."""
+def load_item_subtypes(db) -> dict[str, set[str]]:
+    subtypes: dict[str, set[str]] = {}
+    for row in db.connect().execute("SELECT item_name, item_subtype_keys FROM item_entities"):
+        raw = row["item_subtype_keys"] or "[]"
+        try:
+            keys = json.loads(raw)
+        except json.JSONDecodeError:
+            keys = []
+        subtypes[row["item_name"]] = {str(key) for key in keys if key}
+    return subtypes
+
+
+def attach_loot_pools(
+    monster_data: dict[str, dict],
+    db,
+    translations: dict[str, str],
+    drop_engine=None,
+    *,
+    fold_quality: bool = True,
+) -> int:
+    """Inject loot_pools onto in-memory detail dicts. Returns entity count updated."""
     if not monster_data:
         return 0
     map_base_to_group = drop_engine.map_base_to_group if drop_engine is not None else {}
@@ -207,8 +278,10 @@ def attach_loot_pools(monster_data: dict[str, dict], db, translations: dict[str,
         rows=load_drop_rows(db),
         translations=translations,
         item_keys=load_item_keys(db),
+        item_subtypes=load_item_subtypes(db),
         drop_engine=drop_engine,
         monster_groups=monster_groups,
+        fold_quality=fold_quality,
     )
     updated = 0
     for name, entity in monster_data.items():

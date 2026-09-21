@@ -110,7 +110,7 @@ export interface MonsterLootItem {
 
 export interface MonsterLootPool {
   id: string;
-  kind: 'quest' | 'artifact' | 'pool';
+  kind: 'quest' | 'artifact' | 'consumable' | 'pool';
   lootdrop_id: string | null;
   items: MonsterLootItem[];
 }
@@ -131,6 +131,7 @@ export interface PropsEntity {
   translation_key?: string;
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
+  loot_pools?: MonsterLootPool[];
   isDetailTemplate?: boolean;
 }
 

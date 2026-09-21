@@ -45,9 +45,15 @@ function rarityColor(item: MonsterLootItem, fallback: string): string {
   return rarity ? (RARITY_COLORS[rarity] ?? fallback) : fallback;
 }
 
+function isEventCurrencyPool(pool: MonsterLootPool): boolean {
+  const raw = pool.lootdrop_id || pool.id;
+  return /EventCurrency/i.test(raw);
+}
+
 function poolLabel(pool: MonsterLootPool, ut: (key: string) => string): string {
   if (pool.kind === 'quest') return ut('ui.monster_drops.quest');
   if (pool.kind === 'artifact') return ut('ui.monster_drops.artifact');
+  if (pool.kind === 'consumable') return ut('ui.monster_drops.consumable');
   const raw = pool.lootdrop_id || pool.id;
   const stem = raw.replace(/^Id_Lootdrop_/i, '').replace(/^ID_Lootdrop_/i, '');
   const mapped = ut(`ui.monster_drops.pool.${stem}`);
@@ -64,7 +70,10 @@ export default function MonsterDropSwitch({ pools }: MonsterDropSwitchProps) {
   const { lang } = useLanguage();
   const { t, ut } = useLocale();
   const visiblePools = useMemo(
-    () => pools.filter((pool) => pool.items.length > 0),
+    () =>
+      pools.filter(
+        (pool) => pool.items.length > 0 && !isEventCurrencyPool(pool)
+      ),
     [pools]
   );
   const [activeId, setActiveId] = useState(() => visiblePools[0]?.id ?? '');
@@ -72,16 +81,20 @@ export default function MonsterDropSwitch({ pools }: MonsterDropSwitchProps) {
   const selected =
     visiblePools.find((pool) => pool.id === activeId) ?? visiblePools[0];
 
+  const multi = visiblePools.length > 1;
+
   return (
     <div style={{ margin: '15px 0' }}>
-      {visiblePools.length > 1 && (
+      {multi && (
         <div
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: 8,
-            justifyContent: 'center',
-            marginBottom: 8,
+            alignItems: 'flex-end',
+            gap: 4,
+            marginBottom: -1,
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           {visiblePools.map((pool) => {
@@ -92,15 +105,17 @@ export default function MonsterDropSwitch({ pools }: MonsterDropSwitchProps) {
                 type="button"
                 onClick={() => setActiveId(pool.id)}
                 style={{
-                  padding: '6px 12px',
-                  border: `2px solid ${tokens.accent}`,
-                  borderRadius: 5,
+                  padding: '7px 14px',
+                  border: `1px solid ${tokens.border}`,
+                  borderBottom: isActive
+                    ? 'none'
+                    : `1px solid ${tokens.border}`,
+                  borderRadius: '6px 6px 0 0',
                   cursor: 'pointer',
                   fontSize: 13,
                   fontWeight: 'bold',
-                  color: isActive ? '#000' : tokens.text,
-                  background: isActive ? tokens.accent : 'transparent',
-                  opacity: isActive ? 1 : 0.6,
+                  color: isActive ? tokens.text : tokens.muted,
+                  background: isActive ? tokens.surface : tokens.card,
                 }}
               >
                 {poolLabel(pool, ut)}
@@ -117,7 +132,8 @@ export default function MonsterDropSwitch({ pools }: MonsterDropSwitchProps) {
           justifyContent: 'center',
           padding: 10,
           background: tokens.surface,
-          borderRadius: 5,
+          border: `1px solid ${tokens.border}`,
+          borderRadius: multi ? '0 5px 5px 5px' : 5,
         }}
       >
         {selected.items.map((item) => {

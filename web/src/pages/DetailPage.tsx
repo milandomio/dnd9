@@ -705,10 +705,12 @@ export default function DetailPage() {
 
       <Disclaimer />
 
-      {page === 'monsters' &&
-        (entity as MonsterEntity).loot_pools &&
-        (entity as MonsterEntity).loot_pools!.length > 0 && (
-          <MonsterDropSwitch pools={(entity as MonsterEntity).loot_pools!} />
+      {(page === 'monsters' || page === 'props') &&
+        (entity as MonsterEntity | PropsEntity).loot_pools &&
+        (entity as MonsterEntity | PropsEntity).loot_pools!.length > 0 && (
+          <MonsterDropSwitch
+            pools={(entity as MonsterEntity | PropsEntity).loot_pools!}
+          />
         )}
 
       <div
