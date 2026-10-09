@@ -36,7 +36,9 @@ git status --short
 
 ### 1. 静态预检
 
-提交前必须手动运行适用的静态检查；不要只依赖 commit hook：
+提交前必须手动运行适用的静态检查；不要只依赖 commit hook。
+
+前端发布验证前先在 `web/` 执行 `npm ci`，按 `package-lock.json` 对齐 CI 依赖；不要依赖可能漂移的现有 `node_modules`。尤其 Prettier 不同版本可能对同一 TypeScript 源码给出相反的检查结果，格式修复和预检必须使用锁文件安装的版本。与 Actions 对照验证时使用 Node 20：
 
 ```bash
 # 前端（在 web/ 下）
