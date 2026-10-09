@@ -18,6 +18,16 @@
 - **关键逻辑/映射关系**：仅由 Prettier 规范类型联合和类型断言换行，不改变运行逻辑。
 - **验证**：`npm test` 通过（ESLint 0 error、20 条 warning）；`npm run build` 成功，Quick SSG 生成 3,091 routes、15,466 HTML、17,302 个 dist 文件；现有 8080 预览 HTTP 200；`git diff --check` 通过。
 
+### perf: 用掉率预加载索引生成实体掉落池行
+
+- **改动原因**：profile 和计时日志确认 `load_drop_rows()` 的 `spawner_entries → lootdrop_groups → lootdrop_rate_items` JOIN/GROUP BY 被 monster、props 分别执行；仅共享查询后仍要 21.09s。`DropRateEngine.preload()` 已把相同关系载入内存，可直接重建相同行集。
+- **变更文件**：`api/src/collector.py`、`api/src/drop_rate.py`、`api/src/monster_drops_builder.py`、`api/tests/test_drop_rate.py`、`api/tests/test_monster_drops_builder.py`、`docs/plans/PERF_PIPELINE_AND_RUNTIME.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 预加载保留原始 `entity_name → lootdrop_group_id`，结合已有 `group_id → lootdrop_id`、`lootdrop_id → item/luck_grade` 索引，按 `(entity_name, lootdrop_id, item_name)` 去重并取最大 luck grade，与原 SQL GROUP BY 等价；缺少新接口的调用方仍可走 SQL fallback。
+  2. collector 只构造一次共用 rows，并传给 monster / props 池构造，避免第二遍关系扫描。
+  3. 掉率计算增加 `(ldg_id,item_name,full_grade)` 结果缓存和「是否存在可显示正爆率」短路；显示边界仍与 4 位小数输出一致。
+- **验证**：API 全量 67 项 unittest、Ruff、Black 通过；完整 `python main.py` 热 DB 管线 **28.68s**（先前基线 74.12s；低于 40s 目标），167,335 行内存构造耗时 0.150s；151 monster / 249 props 的 `loot_pools` 与稳定产物逐文件无语义差异。日志：`/tmp/darkfindv5-engine-rows-pipeline.log`、`api/logs/pipeline_20261009_125654.log`。未 push。
+
 ## 2026-09-21
 
 ### feat: 实体详情复用掉落芯片，并隐藏活动货币池

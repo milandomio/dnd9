@@ -1,15 +1,18 @@
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from monster_drops_builder import (  # noqa: E402
+    attach_loot_pools,
     build_loot_pools,
     fold_item_page,
     is_event_currency_pool,
     is_quest_pool,
     item_has_positive_rate,
+    load_drop_rows,
     lootdrop_stem,
     monster_map_groups,
 )
@@ -244,6 +247,43 @@ class RateFilterHelpersTest(unittest.TestCase):
         self.assertFalse(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", {"Ruins"}))
         self.assertTrue(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", {"Ruins", "Crypt"}))
         self.assertTrue(item_has_positive_rate(FakeEngine(), "CrystalBall_8001", "Banshee", set()))
+
+    def test_item_has_positive_rate_uses_engine_shortcut(self):
+        class FastEngine:
+            def has_positive_group_drop_rate(self, item_name, monster_name, group_key):
+                return group_key == "Crypt"
+
+            def get_group_drop_rates(self, *args, **kwargs):
+                raise AssertionError("the full rate calculation should be bypassed")
+
+        self.assertTrue(item_has_positive_rate(FastEngine(), "CrystalBall_8001", "Banshee", {"Crypt"}))
+
+
+class AttachLootPoolsTest(unittest.TestCase):
+    def test_supplied_drop_rows_skip_duplicate_query(self):
+        rows = [_row("Goblin", "DropGoblin", "Bone", 3)]
+        entity_data = {"Goblin": {"coords": []}}
+        with (
+            patch("monster_drops_builder.load_drop_rows") as load_rows,
+            patch("monster_drops_builder.load_item_keys", return_value={}),
+            patch("monster_drops_builder.load_item_subtypes", return_value={}),
+            patch("monster_drops_builder.build_loot_pools", return_value={}) as build_pools,
+        ):
+            self.assertEqual(
+                attach_loot_pools(entity_data, object(), {}, rows=rows),
+                0,
+            )
+        load_rows.assert_not_called()
+        self.assertIs(build_pools.call_args.kwargs["rows"], rows)
+
+    def test_drop_rows_use_engine_preload(self):
+        rows = [_row("Goblin", "DropGoblin", "Bone", 3)]
+
+        class FakeEngine:
+            def get_entity_drop_rows(self):
+                return rows
+
+        self.assertIs(load_drop_rows(object(), FakeEngine()), rows)
 
 
 class PropsLootPoolsTest(unittest.TestCase):

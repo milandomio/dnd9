@@ -27,7 +27,7 @@ from module_builder import (
     build_map_mappings,
     build_modules_map,
 )
-from monster_drops_builder import attach_loot_pools
+from monster_drops_builder import attach_loot_pools, load_drop_rows
 from pipeline import Pipeline
 from quest_collector import run_quest_extraction
 from search_engine import load_all_spawner_data
@@ -534,12 +534,19 @@ def run(
         pipe.log(f"[PERF] lootdrops details: {time.perf_counter() - _lootdrop_details_started:.3f}s")
         pipe.log("[JSON] lootdrops detail files DONE")
 
+        _drop_rows_started = time.perf_counter()
+        loot_pool_rows = load_drop_rows(db, drop_engine)
+        pipe.log(
+            f"[PERF] loot pool rows: {len(loot_pool_rows)} rows " f"({time.perf_counter() - _drop_rows_started:.3f}s)"
+        )
+
         _monster_drops_started = time.perf_counter()
         _monster_drops_n = attach_loot_pools(
             entity_data_by_type["monsters"],
             db,
             translations,
             drop_engine,
+            rows=loot_pool_rows,
         )
         pipe.log(
             f"[JSON] monster loot_pools: {_monster_drops_n} monsters "
@@ -553,6 +560,7 @@ def run(
             translations,
             drop_engine,
             fold_quality=False,
+            rows=loot_pool_rows,
         )
         pipe.log(
             f"[JSON] props loot_pools: {_props_drops_n} props " f"({time.perf_counter() - _props_drops_started:.3f}s)"

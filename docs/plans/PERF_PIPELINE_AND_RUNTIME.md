@@ -1,8 +1,9 @@
 # 性能优化草案：管线 + 运行时
 
-> 创建日期: 2026-07-27  
-> 状态: **草案 / 待执行**（仅文档，未改代码）  
-> 基线: `api/logs/pipeline_20260727_005114.log`（热 DB，总 **98.18s**）  
+> 创建日期: 2026-07-27；最新更新: 2026-10-09
+> 状态: **热 DB 管线总时长目标已达成；地图渲染 / PWA 运行时项目仍待逐项核验**
+> 初始基线: `api/logs/pipeline_20260727_005114.log`（热 DB，总 **98.18s**）
+> 最新实测: `api/logs/pipeline_20261009_125654.log`（热 DB，总 **28.68s**）
 > 关联历史:
 > - `docs/archive/fixes/PERF_LOOTDROPS_OPTIMIZATION.md`（已完成：compact / fuzzy / 去 variant_suffixes；当时 loot ~25s，现状回升）
 > - `docs/archive/fixes/PERF_VARIANT_DROP_RATE_CACHE.md`（**废弃**，勿再按该文实施）
@@ -25,7 +26,19 @@
 | 其余 export | <1s | <1% |
 | **合计** | **98.18s** | 100% |
 
-数据规模（约）:
+### 当前热 DB 实测（2026-10-09）
+
+| 步骤 | 耗时 |
+|------|------|
+| **lootdrops** | **23.55s** |
+| dungeon_modules export | 2.04s |
+| locale export | 1.66s |
+| 其余 export / delivery | 1.43s |
+| **合计** | **28.68s** |
+
+lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引构造 167,335 行 0.15s；monster/props 掉落池分别 2.21s / 4.40s。与同数据稳定产物比较，151 个 monster、249 个 props 的 `loot_pools` 均无差异。当前总时长已低于 40s 目标；locale 仍略高于 1s 的 stretch 指标。
+
+数据规模（约，初始基线）:
 
 | 产物 | 规模 |
 |------|------|
@@ -201,8 +214,9 @@
   A3  P1-1 全量 compact JSON
 
 阶段 B（loot 主降耗）
+  B0  P0-4 使用 DropRateEngine 预加载索引构造实体掉落行（2026-10-09 完成）
   B1  P0-3 变体批量 rates + 结构复用 + 外层结果缓存
-  B2  固定样例 JSON diff / drop_rates 抽样
+  B2  固定样例 JSON diff / drop_rates 抽样（loot_pools 语义 diff 已完成；drop_rates 抽样仍待做）
   B3  （可选）P1-3 并行写盘
 
 阶段 C（前端体感）
@@ -222,10 +236,11 @@
 
 ### 4.1 管线
 
-- [ ] 热 DB 总时长 vs 基线 98s（记新 log 路径）
-- [ ] lootdrops / locale 分步秒数
+- [x] 热 DB 总时长 **28.68s** vs 初始基线 98.18s；日志 `api/logs/pipeline_20261009_125654.log`
+- [x] lootdrops / locale 分步秒数已记录（23.55s / 1.66s）
 - [ ] `used_keys` 或 locale 文件：key 集合无减少（允许新增）
-- [ ] 抽样对比（建议固定）:
+- [x] monster / props `loot_pools` 对照：151 / 249 文件均无语义差异
+- [ ] `drop_rates` 固定样例抽样（建议固定）:
   - 多变体装备（如 `HeaterShield_8001` 及 rarity 变体）
   - 大坐标物品（helm 类 ~660KB 级）
   - props 参考爆率（`GoldChest` / `FlatChestLarge` 结构化标签仍在）
@@ -301,4 +316,5 @@
 
 | 日期 | 说明 |
 |------|------|
-| 2026-07-27 | 初稿：基于热 DB 98s 剖析；分 P0–P3 与阶段 A–D；待执行 |
+| 2026-07-27 | 初稿：基于热 DB 98s 剖析；分 P0–P3 与阶段 A–D |
+| 2026-10-09 | 更新热 DB 基准为 28.68s；完成内存复用掉落行生成；目标 ≤40s 达成，运行时地图密集渲染仍待实测 |
