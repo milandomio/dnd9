@@ -2,6 +2,18 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-10
+
+### chore: 执行补丁部署并重建数据库快照
+
+- **改动原因**：按用户确认的补丁部署流程同步最新 FMOD Output，删除旧数据库后全量重建，准备将新 DB 随 `main` 推送到远程。
+- **变更文件**：`api/data/darkfindv5.db`（远程 DB 提交；本地恢复 `skip-worktree`）；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `~/sync_fmod.sh` 把 `/mnt/e/Game/fmod/Output/` 同步到 `~/fmod/Output/`，对应数据管道 `GAME_ROOT` 的输入。
+  2. 删除 `api/data/darkfindv5.db` 后运行 `api/main.py`，从同步源全量导入并生成 DB、JSON 和 10 种语言的 locale/search index。
+  3. 按 `docs/BUILD_AND_DEPLOY.md` 临时提交更新后的 DB 和本次会话记录；Actions 负责后续 SSG 构建，补丁流程不做本地 `npm run build`。
+- **验证**：FMOD rsync 完成（total size 1,688,019,723 bytes）；数据管道退出码 0、总耗时 37.32s，导出 items 72、monsters 152、props 253、lootdrops 521、dungeon_modules 260，10 个 locale；项目 `inspect_database()` 返回 `DB_READY`（source manifest current），DB 大小 47,255,552 bytes。
+
 ## 2026-10-09
 
 ### ci: 将测试加入发布门禁
