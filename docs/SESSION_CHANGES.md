@@ -35,6 +35,13 @@
 - **关键逻辑/映射关系**：从模块坐标 JSON 汇总 `entities.length` 和所有 `entity.coords.length`，仅把两个计数写入 `seoFacts`；Quick 模式仍保持 `coords: null`，Full 模式继续注入完整坐标。模块模板描述使用 `seoFacts`，并保留无法读取坐标时的空值 fallback。Playwright 增加中文、英文、日文原始静态 HTML 计数断言。另把 sitemap 构建日志的 URL 数改为从实际生成的 sitemap entries 统计，排除未静态生成的 variant 路由。
 - **验证**：`npm run format:check`、`npm run lint`（0 errors，20 条既有 warnings）、`npm run typecheck` 通过；Quick SSG 生成 3,091 routes / 15,466 HTML / 17,302 dist files，10 个 sitemap 各 1,358 URL、合计 13,580；全量 HTML audit 的 title/description/OG/canonical/lang/重复 URL 均 0 错误，根页 title 1 个且 canonical 保持 `/zh-Hans/`；Playwright 27/27 通过；预览 8081 首页、语言页、目标模块页 HTTP 200。未占用/终止被其他 WordPress 服务使用的 8080，未 push。
 
+### perf: Canvas 阈值渲染密集地图点位
+
+- **改动原因**：PiratePrison 模块“显示全部”会一次挂载 812 个点，旧版生成 2,436 个逐点 DOM 节点并触发 59ms Long Task，超过交互预算。
+- **变更文件**：`web/src/components/MapPanel.tsx`、`web/tests/i18n.mjs`、`docs/plans/PERF_PIPELINE_AND_RUNTIME.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`dots.length > 300` 时按既有 `applyTransform` / `computePixel` 映射到单个高 DPI canvas，保留点色、z 标签和 11px 标记尺寸；通过最近点命中恢复实体名悬停提示及 aria 标签。≤300 点仍用原 DOM 路径。
+- **验证**：改动前显示耗时 195ms、2,436 节点、59ms Long Task；改后显示耗时 131ms、仅新增 1 个 canvas 节点、该窗口无 >50ms Long Task，脚本/布局/样式耗时约 29.4/1.4/3.8ms。`npm run format:check`、lint（0 errors / 20 条既有 warnings）、`npm run typecheck` 通过；Quick SSG 3,091 routes / 15,466 HTML；Playwright 28/28（含 812 点 Canvas、正确 tooltip 与 ResizeObserver 高 DPI 缩放）；≤300 点详情页仍为 DOM。未 push。
+
 ## 2026-09-21
 
 ### feat: 实体详情复用掉落芯片，并隐藏活动货币池
