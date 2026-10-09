@@ -4,6 +4,13 @@
 
 ## 2026-10-09
 
+### ci: 将测试加入发布门禁
+
+- **改动原因**：main 发布流程原先只做静态质量检查，未运行 API 单测或浏览器行为回归，功能错误可能直接发布。
+- **变更文件**：`.github/workflows/deploy.yml`、`.github/workflows/deploy-dev.yml`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：main/dev 在数据管道前运行 `api/tests` 全量 unittest；main 构建后安装 Chromium、启动 preview，并复用 dev 已有的 `test:i18n` Playwright 回归后才部署。
+- **验证**：API 58 项 unittest 通过；两个工作流 Prettier 检查通过；当前构建在独立端口 HTTP 200，`BASE_URL=http://127.0.0.1:8081 npm run test:i18n` 27/27 通过；`git diff --check` 通过。
+
 ### fix: 修复前端格式检查
 
 - **改动原因**：`npm test` 中的 Prettier 检查因两个既有文件格式不符而失败，会阻断 main/dev 工作流。
