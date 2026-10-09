@@ -85,8 +85,8 @@ const GROUP_ORDER = [
 ];
 
 const VARIANT_RE = /^(.+?)_(\d{4})$/;
-// Load one referenced entity at a time so each response renders immediately.
-const REF_FETCH_BATCH_SIZE = 1;
+// Keep coordinate references progressive while amortizing the derived-data render cost.
+const REF_FETCH_BATCH_SIZE = 4;
 const LOOT_SOURCE_UI_KEYS: Record<string, string> = {
   Weapon_DualBoss: 'ui.loot_source.dual_boss_weapon',
   Weapon_MysticalTreasureRoom: 'ui.loot_source.mystical_treasure_weapon',
@@ -525,16 +525,18 @@ export default function LootdropDetailPage({
       observerRef.current = new IntersectionObserver(
         (entries) => {
           setVisibleMaps((prev) => {
+            let changed = false;
             const next = new Set(prev);
             for (const e of entries) {
               const mn = (e.target as HTMLElement).dataset.mapName!;
-              if (e.isIntersecting) {
+              if (e.isIntersecting && !next.has(mn)) {
                 next.add(mn);
-              } else {
-                next.delete(mn);
+                changed = true;
+              } else if (!e.isIntersecting && next.delete(mn)) {
+                changed = true;
               }
             }
-            return next;
+            return changed ? next : prev;
           });
         },
         { rootMargin: '600px' }
@@ -720,34 +722,6 @@ export default function LootdropDetailPage({
   const refsLoaded =
     !hasRefs || monsters.every((m) => !m.ref || refCoords.has(m.ref!));
 
-  if (!data)
-    return (
-      <div
-        aria-busy="true"
-        style={{
-          minHeight: '60vh',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 16,
-          alignItems: 'stretch',
-          color: tokens.muted,
-        }}
-      >
-        <div style={{ height: 38, width: 'min(520px, 85%)' }} />
-        <div style={{ height: 32, width: 'min(760px, 100%)' }} />
-        <div
-          style={{
-            minHeight: 360,
-            aspectRatio: '16 / 9',
-            maxWidth: '100%',
-            background: tokens.surface,
-            borderRadius: 6,
-          }}
-        />
-        <span style={{ textAlign: 'center' }}>{ut('ui.common.loading')}</span>
-      </div>
-    );
-
   function myGetAdj(mapName: string, mod: DungeonModule | undefined) {
     return getAdj(mapName, mod?.rotate, adjOffsets);
   }
@@ -787,74 +761,88 @@ export default function LootdropDetailPage({
       return next;
     });
   };
-  // Build per-map coordinate groups
-  const mapGroups = new Map<
-    string,
-    {
-      mod?: DungeonModule;
-      dots: {
-        monster: LootdropMonster;
-        x: number;
-        y: number;
-        z: number;
-        file: string;
-        idx: number;
-        spawn_rate?: number;
-        variant_count?: number;
-        variant_names?: VariantNameEntry[];
-        score?: number;
-        group_parent?: string;
-        sub_group_parent?: string;
-        sub_pool_size?: number;
-        sub_pool_entries?: VariantNameEntry[];
-        parent_pool_size?: number;
-        quality?: string;
-      }[];
-    }
-  >();
-  for (const m of resolvedMonsters) {
-    m.coords.forEach((c, j) => {
-      const visibilityKey = monsterVisibilityKey(m);
-      if (hidden.has(visibilityKey) || hiddenRows.has(`${visibilityKey}-${j}`))
-        return;
-      if (qualityFilter && c.quality && c.quality !== qualityFilter) return;
-      if (!mapGroups.has(c.map))
-        mapGroups.set(c.map, { mod: modules.get(c.map), dots: [] });
-      mapGroups.get(c.map)!.dots.push({
-        monster: m,
-        x: c.x,
-        y: c.y,
-        z: c.z,
-        file: c.file,
-        idx: j,
-        spawn_rate: c.spawn_rate,
-        variant_count: c.variant_count,
-        variant_names: c.variant_names,
-        score: c.score,
-        group_parent: c.group_parent,
-        sub_group_parent: c.sub_group_parent,
-        sub_pool_size: c.sub_pool_size,
-        sub_pool_entries: c.sub_pool_entries,
-        parent_pool_size: c.parent_pool_size,
-        quality: c.quality,
+  // Build per-map coordinate groups only when source/filter data changes.
+  const mapGroups = useMemo(() => {
+    const groups = new Map<
+      string,
+      {
+        mod?: DungeonModule;
+        dots: {
+          monster: LootdropMonster;
+          x: number;
+          y: number;
+          z: number;
+          file: string;
+          idx: number;
+          spawn_rate?: number;
+          variant_count?: number;
+          variant_names?: VariantNameEntry[];
+          score?: number;
+          group_parent?: string;
+          sub_group_parent?: string;
+          sub_pool_size?: number;
+          sub_pool_entries?: VariantNameEntry[];
+          parent_pool_size?: number;
+          quality?: string;
+        }[];
+      }
+    >();
+    for (const m of resolvedMonsters) {
+      m.coords.forEach((c, j) => {
+        const visibilityKey = monsterVisibilityKey(m);
+        if (
+          hidden.has(visibilityKey) ||
+          hiddenRows.has(`${visibilityKey}-${j}`)
+        )
+          return;
+        if (qualityFilter && c.quality && c.quality !== qualityFilter) return;
+        if (!groups.has(c.map))
+          groups.set(c.map, { mod: modules.get(c.map), dots: [] });
+        groups.get(c.map)!.dots.push({
+          monster: m,
+          x: c.x,
+          y: c.y,
+          z: c.z,
+          file: c.file,
+          idx: j,
+          spawn_rate: c.spawn_rate,
+          variant_count: c.variant_count,
+          variant_names: c.variant_names,
+          score: c.score,
+          group_parent: c.group_parent,
+          sub_group_parent: c.sub_group_parent,
+          sub_pool_size: c.sub_pool_size,
+          sub_pool_entries: c.sub_pool_entries,
+          parent_pool_size: c.parent_pool_size,
+          quality: c.quality,
+        });
       });
-    });
-  }
+    }
+    return groups;
+  }, [resolvedMonsters, hidden, hiddenRows, qualityFilter, modules]);
 
-  // Group by module group
-  const groupedByType = new Map<string, typeof items>();
-  const items = [...mapGroups.entries()].map(([mapName, { mod, dots }]) => ({
-    mapName,
-    mod,
-    dots,
-  }));
-  for (const item of items) {
-    const g = item.mod?.group || '';
-    if (!groupedByType.has(g)) groupedByType.set(g, []);
-    groupedByType.get(g)!.push(item);
-  }
+  const items = useMemo(
+    () =>
+      [...mapGroups.entries()].map(([mapName, { mod, dots }]) => ({
+        mapName,
+        mod,
+        dots,
+      })),
+    [mapGroups]
+  );
 
-  function computeModuleScore(
+  // Group by module group only when the map groups change.
+  const groupedByType = useMemo(() => {
+    const grouped = new Map<string, typeof items>();
+    for (const item of items) {
+      const groupName = item.mod?.group || '';
+      if (!grouped.has(groupName)) grouped.set(groupName, []);
+      grouped.get(groupName)!.push(item);
+    }
+    return grouped;
+  }, [items]);
+
+  const computeModuleScore = useCallback(function computeModuleScore(
     item: {
       mapName?: string;
       mod?: DungeonModule;
@@ -941,31 +929,32 @@ export default function LootdropDetailPage({
       }
     }
     return applyModuleSpawnRate(total, item.mod?.name || item.mapName);
-  }
+  }, []);
 
-  for (const group of groupedByType.values()) {
-    const _gName = group[0]?.mod?.group || '';
-    const _rl = groupDropRateLookup.get(_gName) ?? new Map();
-    group.sort((a, b) => {
-      const scoreA = computeModuleScore(a, _rl);
-      const scoreB = computeModuleScore(b, _rl);
-      if (scoreA !== scoreB) return scoreB - scoreA;
-      const hasVariantA = a.dots.some((d) => (d.variant_count ?? 1) > 1);
-      const hasVariantB = b.dots.some((d) => (d.variant_count ?? 1) > 1);
-      if (hasVariantA !== hasVariantB) return hasVariantA ? 1 : -1;
-      if (a.dots.length !== b.dots.length) return b.dots.length - a.dots.length;
-      const sy_a = a.mod?.size_y ?? 1;
-      const sy_b = b.mod?.size_y ?? 1;
-      if (sy_a !== sy_b) return sy_a - sy_b;
-      const sx_a = a.mod?.size_x ?? 1;
-      const sx_b = b.mod?.size_x ?? 1;
-      return sx_a - sx_b;
-    });
-  }
+  const sortedGroups = useMemo(() => {
+    for (const group of groupedByType.values()) {
+      const _gName = group[0]?.mod?.group || '';
+      const _rl = groupDropRateLookup.get(_gName) ?? new Map();
+      group.sort((a, b) => {
+        const scoreA = computeModuleScore(a, _rl);
+        const scoreB = computeModuleScore(b, _rl);
+        if (scoreA !== scoreB) return scoreB - scoreA;
+        const hasVariantA = a.dots.some((d) => (d.variant_count ?? 1) > 1);
+        const hasVariantB = b.dots.some((d) => (d.variant_count ?? 1) > 1);
+        if (hasVariantA !== hasVariantB) return hasVariantA ? 1 : -1;
+        if (a.dots.length !== b.dots.length)
+          return b.dots.length - a.dots.length;
+        const sy_a = a.mod?.size_y ?? 1;
+        const sy_b = b.mod?.size_y ?? 1;
+        if (sy_a !== sy_b) return sy_a - sy_b;
+        const sx_a = a.mod?.size_x ?? 1;
+        const sx_b = b.mod?.size_x ?? 1;
+        return sx_a - sx_b;
+      });
+    }
 
-  const groupOrder = GROUP_ORDER;
-  const sortedGroups = [...groupedByType.entries()].sort(
-    ([a, aItems], [b, bItems]) => {
+    const groupOrder = GROUP_ORDER;
+    return [...groupedByType.entries()].sort(([a, aItems], [b, bItems]) => {
       const _gA = aItems[0]?.mod?.group || '';
       const _gB = bItems[0]?.mod?.group || '';
       const _rlA = groupDropRateLookup.get(_gA) ?? new Map();
@@ -986,11 +975,13 @@ export default function LootdropDetailPage({
       if (!a) return 1;
       if (!b) return -1;
       return groupOrder.indexOf(a) - groupOrder.indexOf(b);
-    }
-  );
+    });
+  }, [groupedByType, groupDropRateLookup, computeModuleScore]);
 
-  const recognitionTemplates: MapImageTemplate[] = [];
-  if (mapRecognitionEnabled) {
+  const recognitionTemplates = useMemo(() => {
+    const templates: MapImageTemplate[] = [];
+    if (!mapRecognitionEnabled) return templates;
+
     const recognitionImageUrls = new Set<string>();
     for (const [, groupItems] of sortedGroups) {
       for (const item of groupItems) {
@@ -1015,7 +1006,7 @@ export default function LootdropDetailPage({
         )
           continue;
         recognitionImageUrls.add(imageUrl);
-        recognitionTemplates.push({
+        templates.push({
           id: item.mapName,
           url: imageUrl,
           label: t(module.translation_key, module.translation || item.mapName),
@@ -1024,47 +1015,28 @@ export default function LootdropDetailPage({
         });
       }
     }
-  }
+    return templates;
+  }, [
+    mapRecognitionEnabled,
+    sortedGroups,
+    hideZeroRate,
+    data?.group_drop_info,
+    modeFilter,
+    t,
+    ut,
+  ]);
 
-  const visibleCountByMonster = new Map<string, number>();
-  for (const m of resolvedMonsters) {
-    const visibilityKey = monsterVisibilityKey(m);
-    const seenPos = new Set<string>();
-    for (const c of m.coords) {
-      if (hideZeroRate) {
-        const mod = modules.get(c.map);
-        const groupName = mod?.group || '';
-        const gdi = data?.group_drop_info?.[groupName];
-        const entry = gdi?.find((e) => matchesGroupEntry(e, m));
-        if (entry) {
-          if (modeFilter) {
-            if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
-          } else {
-            if (!hasAnyRate(entry.drop_rates)) continue;
-          }
-        }
-      }
-      const posKey = `${c.x},${c.y},${c.z}`;
-      if (seenPos.has(posKey)) continue;
-      seenPos.add(posKey);
-      visibleCountByMonster.set(
-        visibilityKey,
-        (visibleCountByMonster.get(visibilityKey) ?? 0) + 1
-      );
-    }
-  }
-  const visibleMonsters = orderedMonsters.filter(
-    (m) => (visibleCountByMonster.get(monsterVisibilityKey(m)) ?? 0) > 0
-  );
-  let bottomCount = 0;
-  const visibleMapsSet = new Set<string>();
-  const bottomPosSet = new Set<string>();
-  for (const [groupName, groupItems] of sortedGroups) {
-    for (const item of groupItems) {
-      for (const d of item.dots) {
+  const visibleCountByMonster = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const m of resolvedMonsters) {
+      const visibilityKey = monsterVisibilityKey(m);
+      const seenPos = new Set<string>();
+      for (const c of m.coords) {
         if (hideZeroRate) {
+          const mod = modules.get(c.map);
+          const groupName = mod?.group || '';
           const gdi = data?.group_drop_info?.[groupName];
-          const entry = gdi?.find((e) => matchesGroupEntry(e, d.monster));
+          const entry = gdi?.find((e) => matchesGroupEntry(e, m));
           if (entry) {
             if (modeFilter) {
               if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
@@ -1073,21 +1045,107 @@ export default function LootdropDetailPage({
             }
           }
         }
-        const posKey = `${d.monster.translation}::${d.x},${d.y},${d.z}`;
-        if (bottomPosSet.has(posKey)) continue;
-        bottomPosSet.add(posKey);
-        bottomCount++;
-        visibleMapsSet.add(item.mapName);
+        const posKey = `${c.x},${c.y},${c.z}`;
+        if (seenPos.has(posKey)) continue;
+        seenPos.add(posKey);
+        counts.set(visibilityKey, (counts.get(visibilityKey) ?? 0) + 1);
       }
     }
-  }
-  const visibleCount = resolvedMonsters.filter(
-    (m) => !hidden.has(monsterVisibilityKey(m))
-  ).length;
-  const rawLocationCount = resolvedMonsters.reduce(
-    (count, monster) => count + monster.coords.length,
-    0
+    return counts;
+  }, [
+    resolvedMonsters,
+    hideZeroRate,
+    modules,
+    data?.group_drop_info,
+    modeFilter,
+  ]);
+  const visibleMonsters = useMemo(
+    () =>
+      orderedMonsters.filter(
+        (m) => (visibleCountByMonster.get(monsterVisibilityKey(m)) ?? 0) > 0
+      ),
+    [orderedMonsters, visibleCountByMonster]
   );
+  const { bottomCount, visibleMapsSet } = useMemo(() => {
+    let count = 0;
+    const maps = new Set<string>();
+    const bottomPosSet = new Set<string>();
+    for (const [groupName, groupItems] of sortedGroups) {
+      for (const item of groupItems) {
+        for (const d of item.dots) {
+          if (hideZeroRate) {
+            const gdi = data?.group_drop_info?.[groupName];
+            const entry = gdi?.find((e) => matchesGroupEntry(e, d.monster));
+            if (entry) {
+              if (modeFilter) {
+                if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
+              } else {
+                if (!hasAnyRate(entry.drop_rates)) continue;
+              }
+            }
+          }
+          const posKey = `${d.monster.translation}::${d.x},${d.y},${d.z}`;
+          if (bottomPosSet.has(posKey)) continue;
+          bottomPosSet.add(posKey);
+          count++;
+          maps.add(item.mapName);
+        }
+      }
+    }
+    return { bottomCount: count, visibleMapsSet: maps };
+  }, [sortedGroups, hideZeroRate, data?.group_drop_info, modeFilter]);
+  const visibleCount = useMemo(
+    () =>
+      resolvedMonsters.filter((m) => !hidden.has(monsterVisibilityKey(m)))
+        .length,
+    [resolvedMonsters, hidden]
+  );
+  const rawLocationCount = useMemo(
+    () =>
+      resolvedMonsters.reduce(
+        (count, monster) => count + monster.coords.length,
+        0
+      ),
+    [resolvedMonsters]
+  );
+  const qualitySet = useMemo(() => {
+    const qualities = new Set<string>();
+    for (const monster of resolvedMonsters) {
+      for (const coord of monster.coords) {
+        if (coord.quality) qualities.add(coord.quality);
+      }
+    }
+    return qualities;
+  }, [resolvedMonsters]);
+
+  if (!data)
+    return (
+      <div
+        aria-busy="true"
+        style={{
+          minHeight: '60vh',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
+          alignItems: 'stretch',
+          color: tokens.muted,
+        }}
+      >
+        <div style={{ height: 38, width: 'min(520px, 85%)' }} />
+        <div style={{ height: 32, width: 'min(760px, 100%)' }} />
+        <div
+          style={{
+            minHeight: 360,
+            aspectRatio: '16 / 9',
+            maxWidth: '100%',
+            background: tokens.surface,
+            borderRadius: 6,
+          }}
+        />
+        <span style={{ textAlign: 'center' }}>{ut('ui.common.loading')}</span>
+      </div>
+    );
+
   const questGroupLabel = questGroupData
     ? formatGroupLabel(questGroupData, t, ut)
     : data.translation || decodedName;
@@ -1259,14 +1317,7 @@ export default function LootdropDetailPage({
       )}
 
       {(() => {
-        const qualitySet = new Set<string>();
-        for (const m of resolvedMonsters) {
-          for (const c of m.coords) {
-            if (c.quality) qualitySet.add(c.quality);
-          }
-        }
-        const hasQuality = qualitySet.size > 0;
-        if (!hasQuality) return null;
+        if (qualitySet.size === 0) return null;
         const QUALITY_CONFIG: Record<string, { label: string; color: string }> =
           {
             VeryLow: { label: ut('ui.rate.very_low'), color: '#9E9E9E' },
@@ -1355,10 +1406,7 @@ export default function LootdropDetailPage({
       >
         <button
           onClick={() => {
-            const allHidden = visibleMonsters.every((m) =>
-              hidden.has(monsterVisibilityKey(m))
-            );
-            if (allHidden || hidden.size === visibleMonsters.length) {
+            if (hidden.size > 0) {
               setHidden(new Set());
             } else {
               setHidden(
