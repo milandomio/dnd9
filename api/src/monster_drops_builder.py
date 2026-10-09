@@ -126,6 +126,9 @@ def item_has_positive_rate(drop_engine, item_name: str, monster_name: str, group
     """True if any mode on any of the monster's map groups has drop rate > 0."""
     if not group_keys:
         return True
+    has_positive_rate = getattr(drop_engine, "has_positive_group_drop_rate", None)
+    if callable(has_positive_rate):
+        return any(has_positive_rate(item_name, monster_name, group_key) for group_key in group_keys)
     for group_key in group_keys:
         rates = drop_engine.get_group_drop_rates(item_name, monster_name, group_key) or {}
         if any(value > 0 for value in rates.values()):
@@ -229,7 +232,11 @@ def build_loot_pools(
     return result
 
 
-def load_drop_rows(db) -> list[tuple[str, str, str, int]]:
+def load_drop_rows(db, drop_engine=None) -> list[tuple[str, str, str, int]]:
+    if drop_engine is not None:
+        get_rows = getattr(drop_engine, "get_entity_drop_rows", None)
+        if callable(get_rows):
+            return get_rows()
     cursor = db.connect().execute("""
         SELECT se.entity_name, lg.lootdrop_id, r.item_name, MAX(r.luck_grade) AS luck_grade
         FROM spawner_entries se
@@ -267,15 +274,18 @@ def attach_loot_pools(
     drop_engine=None,
     *,
     fold_quality: bool = True,
+    rows: list[tuple[str, str, str, int]] | None = None,
 ) -> int:
     """Inject loot_pools onto in-memory detail dicts. Returns entity count updated."""
     if not monster_data:
         return 0
     map_base_to_group = drop_engine.map_base_to_group if drop_engine is not None else {}
     monster_groups = {name: monster_map_groups(entity, map_base_to_group) for name, entity in monster_data.items()}
+    if rows is None:
+        rows = load_drop_rows(db, drop_engine)
     pools = build_loot_pools(
         monster_names=set(monster_data),
-        rows=load_drop_rows(db),
+        rows=rows,
         translations=translations,
         item_keys=load_item_keys(db),
         item_subtypes=load_item_subtypes(db),

@@ -168,6 +168,121 @@ class DropRateVariantTest(unittest.TestCase):
         )
 
 
+class DropRatePositivePredicateTest(unittest.TestCase):
+    def setUp(self):
+        self.engine = DropRateEngine()
+        self.engine._spawner_ldg = {"Goblin": "primary"}
+        self.engine._entity_ldg_all = {"Goblin": {"primary", "fallback"}}
+        self.engine._ld_groups = {"primary": {}, "fallback": {}}
+        for mode_id in (1, 2, 3, 4):
+            grade = mode_id * 1000 + 1
+            self.engine._ld_groups["primary"][grade] = [("primary-drop", "rate", 1)]
+            self.engine._ld_groups["fallback"][grade] = [("fallback-drop", "rate", 1)]
+        self.engine._ld_rate_items = {
+            "primary-drop": {"OtherItem": [(2, 1)]},
+            "fallback-drop": {
+                "Potion_5001": [(5, 1)],
+                "Artifact_8001": [(8, 1)],
+                "Tiny_5001": [(7, 1)],
+            },
+        }
+        self.engine._ld_luck_grade_count = {
+            ("primary-drop", 2): 1,
+            ("fallback-drop", 5): 1,
+            ("fallback-drop", 8): 1,
+            ("fallback-drop", 7): 1000,
+        }
+        self.engine._ld_rate_weights = {"rate": {2: 1000, 5: 1000, 8: 1000, 7: 1}}
+        self.engine._ld_rate_totals = {"rate": 10000}
+
+    def test_predicate_matches_exported_rounded_rates(self):
+        cases = (
+            ("Potion_5001", True),
+            ("Artifact_8001", False),
+            ("Tiny_5001", False),
+            ("Missing_5001", False),
+        )
+        for item_name, expected in cases:
+            with self.subTest(item_name=item_name):
+                rates = self.engine.get_group_drop_rates(item_name, "Goblin", "GoblinCave")
+                self.assertEqual(any(rate > 0 for rate in rates.values()), expected)
+                self.assertEqual(
+                    self.engine.has_positive_group_drop_rate(item_name, "Goblin", "GoblinCave"),
+                    expected,
+                )
+
+    def test_predicate_short_circuits_and_caches(self):
+        calls = []
+
+        def positive_rate(*args):
+            calls.append(args)
+            return 0.1
+
+        self.engine.compute_drop_rate = positive_rate
+        self.assertTrue(self.engine.has_positive_group_drop_rate("Artifact_8001", "Goblin", "GoblinCave"))
+        self.assertEqual(len(calls), 1)
+        self.assertTrue(self.engine.has_positive_group_drop_rate("Artifact_8001", "Goblin", "GoblinCave"))
+        self.assertEqual(len(calls), 1)
+
+    def test_predicate_accepts_first_nonzero_rounding_boundary(self):
+        self.engine.compute_drop_rate = lambda *args: 0.0000005
+        self.assertTrue(self.engine.has_positive_group_drop_rate("Potion_5001", "Goblin", "GoblinCave"))
+
+    def test_compute_drop_rate_reuses_cached_result(self):
+        calls = []
+        resolve_rate_item = self.engine._resolve_rate_item
+
+        def count_resolutions(*args):
+            calls.append(args)
+            return resolve_rate_item(*args)
+
+        self.engine._resolve_rate_item = count_resolutions
+        first = self.engine.compute_drop_rate("primary", "OtherItem", 1001)
+        second = self.engine.compute_drop_rate("primary", "OtherItem", 1001)
+        self.assertEqual(first, second)
+        self.assertEqual(len(calls), 1)
+
+    def test_unknown_group_has_no_positive_rate(self):
+        self.assertFalse(self.engine.has_positive_group_drop_rate("Potion_5001", "Goblin", "Unknown"))
+
+
+class DropRateEntityDropRowsTest(unittest.TestCase):
+    def test_rows_match_grouped_entity_drop_item_semantics(self):
+        engine = DropRateEngine()
+        engine._entity_drop_groups = {
+            "Goblin": {"group-a", "group-b"},
+            "GoblinElite": {"group-a"},
+        }
+        engine._ld_groups = {
+            "group-a": {
+                1001: [
+                    ("drop-1", "rate-a", 1),
+                    ("drop-1", "rate-a", 2),
+                    ("drop-2", "rate-b", 1),
+                ]
+            },
+            "group-b": {2001: [("drop-1", "rate-a", 1), ("drop-3", "rate-c", 1)]},
+        }
+        engine._ld_rate_items = {
+            "drop-1": {"Bone": [(3, 1), (5, 2)], "Gem": [(8, 1)]},
+            "drop-2": {"Bone": [(2, 1)]},
+            "drop-3": {"Potion": [(4, 1)]},
+        }
+
+        self.assertEqual(
+            engine.get_entity_drop_rows(),
+            [
+                ("Goblin", "drop-1", "Bone", 5),
+                ("Goblin", "drop-1", "Gem", 8),
+                ("Goblin", "drop-2", "Bone", 2),
+                ("Goblin", "drop-3", "Potion", 4),
+                ("GoblinElite", "drop-1", "Bone", 5),
+                ("GoblinElite", "drop-1", "Gem", 8),
+                ("GoblinElite", "drop-2", "Bone", 2),
+            ],
+        )
+
+
 class DropRatePreloadIndexTest(unittest.TestCase):
     def test_base_item_spawner_index_matches_rate_item_join(self):
         conn = sqlite3.connect(":memory:")

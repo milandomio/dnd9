@@ -11,6 +11,7 @@ from translator import HARD_SUFFIX_RE, ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE, b
 _VARIANT_RE = VARIANT_RE
 
 _QUALITY_VARIANT_SUFFIXES = ["", "_Common", "_Elite", "_Nightmare", "_Unique"]
+_MIN_DISPLAYED_DROP_RATE = 0.0000005  # 0.00005% rounds up to the first non-zero 4dp percentage
 
 
 def _round_rate(v: float) -> float:
@@ -43,6 +44,7 @@ class DropRateEngine:
     def __init__(self):
         self._spawner_ldg: dict[str, str] = {}
         self._entity_ldg_all: dict[str, set[str]] = {}
+        self._entity_drop_groups: dict[str, set[str]] = {}
         self._ore_ldg: dict[str, str] = {}
         self._ld_groups: dict[str, dict[int, list[tuple[str, str, int]]]] = {}
         self._ld_rate_items: dict[str, dict[str, list[tuple[int, int]]]] = {}
@@ -73,6 +75,8 @@ class DropRateEngine:
         self._variant_rate_cache: dict[tuple, float] = {}
         self._candidate_ids_cache: dict[str, set[str]] = {}
         self._all_groups_cache: dict[tuple, dict[str, dict[str, float]]] = {}
+        self._drop_rate_cache: dict[tuple[str, str, int], float] = {}
+        self._positive_group_rate_cache: dict[tuple[str, str, str], bool] = {}
 
     @staticmethod
     def _build_preferred_base_items(
@@ -101,6 +105,9 @@ class DropRateEngine:
 
     def preload(self, db, modules_data: list[dict]) -> None:
         """Preload all drop rate data from DB."""
+        self._drop_rate_cache.clear()
+        self._positive_group_rate_cache.clear()
+        self._entity_drop_groups.clear()
         _c = db.connect().cursor()
 
         # Build map_base → group mapping
@@ -120,6 +127,8 @@ class DropRateEngine:
             "SELECT spawner_keyword, entity_name, lootdrop_group_id FROM spawner_entries WHERE lootdrop_group_id != ''"
         ):
             self._ordered_group_spawners.setdefault(_row["lootdrop_group_id"], []).append(_row["spawner_keyword"])
+            if _row["entity_name"]:
+                self._entity_drop_groups.setdefault(_row["entity_name"], set()).add(_row["lootdrop_group_id"])
             for _key in (_row["spawner_keyword"], _row["entity_name"]):
                 if _key and _key not in self._spawner_ldg:
                     self._spawner_ldg[_key] = _row["lootdrop_group_id"]
@@ -299,6 +308,29 @@ class DropRateEngine:
                     if _capped > self._combined_spawn_rate_cache.get(_base, 0.0):
                         self._combined_spawn_rate_cache[_base] = _capped
 
+    def get_entity_drop_rows(self) -> list[tuple[str, str, str, int]]:
+        """Build SQL-equivalent entity/drop/item rows from preloaded indexes."""
+        max_luck_by_drop: dict[str, dict[str, int]] = {}
+        for lootdrop_id, items in self._ld_rate_items.items():
+            max_luck_by_drop[lootdrop_id] = {
+                item_name: max((luck_grade for luck_grade, _ in entries), default=0)
+                for item_name, entries in items.items()
+            }
+
+        rows = []
+        for entity_name, group_ids in self._entity_drop_groups.items():
+            seen_drop_ids: set[str] = set()
+            for group_id in group_ids:
+                for grade_rows in self._ld_groups.get(group_id, {}).values():
+                    for lootdrop_id, _, _ in grade_rows:
+                        if lootdrop_id in seen_drop_ids:
+                            continue
+                        seen_drop_ids.add(lootdrop_id)
+                        for item_name, luck_grade in max_luck_by_drop.get(lootdrop_id, {}).items():
+                            rows.append((entity_name, lootdrop_id, item_name, luck_grade))
+        rows.sort()
+        return rows
+
     @property
     def spawner_ldg(self) -> dict[str, str]:
         return self._spawner_ldg
@@ -402,10 +434,20 @@ class DropRateEngine:
     ) -> float:
         """Compute drop rate for an item in a specific group+grade (0~1)."""
         _started = time.perf_counter() if profile is not None else 0.0
+        cache_key = (ldg_id, item_name, full_grade)
+        cached_rate = self._drop_rate_cache.get(cache_key)
+        if cached_rate is not None:
+            if profile is not None:
+                _total = time.perf_counter() - _started
+                profile["compute_drop_rate"] += _total
+                profile["compute_overhead"] += _total
+            return cached_rate
+
         _grade_lookup_started = time.perf_counter() if profile is not None else 0.0
         grade_data = self._ld_groups.get(ldg_id, {}).get(full_grade, [])
         _grade_lookup = time.perf_counter() - _grade_lookup_started if profile is not None else 0.0
         if not grade_data:
+            self._drop_rate_cache[cache_key] = 0.0
             if profile is not None:
                 _total = time.perf_counter() - _started
                 profile["compute_drop_rate"] += _total
@@ -433,6 +475,8 @@ class DropRateEngine:
                 total_weight += _pool_weight / _shared / _rate_total
             if profile is not None:
                 _weight_math += time.perf_counter() - _weight_math_started
+        result = total_weight if found else 0.0
+        self._drop_rate_cache[cache_key] = result
         if profile is not None:
             _total = time.perf_counter() - _started
             profile["compute_drop_rate"] += _total
@@ -440,9 +484,36 @@ class DropRateEngine:
             profile["item_lookup"] += _item_lookup
             profile["weight_math"] += _weight_math
             profile["compute_overhead"] += _total - _grade_lookup - _item_lookup - _weight_math
-        if found:
-            return total_weight
-        return 0.0
+        return result
+
+    def _resolve_group_rate_inputs(
+        self, item_name: str, monster_name: str, group_key: str
+    ) -> tuple[set[str], set[str], int | None, list[int]]:
+        primary_id = self._spawner_ldg.get(monster_name, "")
+        primary_ids: set[str] = {primary_id} if primary_id else set()
+        for quality_suffix in ("_Unique", "_Elite", "_Nightmare", "_Common"):
+            ldg_id = self._spawner_ldg.get(monster_name + quality_suffix, "")
+            if ldg_id:
+                primary_ids.add(ldg_id)
+        if not primary_ids:
+            lowered_name = monster_name.lower()
+            for name, ldg_id in self._spawner_ldg.items():
+                if name.lower() == lowered_name:
+                    primary_ids.add(ldg_id)
+                    break
+
+        all_groups = self._entity_ldg_all.get(monster_name, set())
+        if not all_groups:
+            all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
+        fallback_ids = set(all_groups)
+        no_numeric_suffix = re.sub(r"_\d+$", "", monster_name)
+        if no_numeric_suffix != monster_name:
+            fallback_ids.update(self._entity_ldg_all.get(no_numeric_suffix, set()))
+
+        luck_match = re.search(r"_(\d)\d{3}$", item_name) if item_name else None
+        variant_luck = int(luck_match.group(1)) if luck_match else None
+        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        return primary_ids, fallback_ids, variant_luck, suffixes
 
     def get_group_drop_rates(
         self,
@@ -454,34 +525,9 @@ class DropRateEngine:
         """Compute per-mode drop rates for an item/monster in a map group."""
         _started = time.perf_counter() if profile is not None else 0.0
         _candidate_started = time.perf_counter() if profile is not None else 0.0
-        _primary = self._spawner_ldg.get(monster_name, "")
-        _primary_set: set[str] = set()
-        if _primary:
-            _primary_set.add(_primary)
-        for _suffix in ("_Unique", "_Elite", "_Nightmare", "_Common"):
-            _v = self._spawner_ldg.get(monster_name + _suffix, "")
-            if _v:
-                _primary_set.add(_v)
-        if not _primary_set:
-            _lower = monster_name.lower()
-            for _k, _v in self._spawner_ldg.items():
-                if _k.lower() == _lower:
-                    _primary_set.add(_v)
-                    break
-        _all_groups = self._entity_ldg_all.get(monster_name, set())
-        if not _all_groups:
-            _all_groups = self._entity_ldg_all.get(QUALITY_RE.sub("", monster_name), set())
-        _fallback_set: set[str] = set(_all_groups)
-        # Also include LDGs from base name without trailing numeric suffix
-        _no_num = re.sub(r"_\d+$", "", monster_name)
-        if _no_num != monster_name:
-            _fallback_set.update(self._entity_ldg_all.get(_no_num, set()))
-        # Detect variant item (e.g. WarMaul_8001) — use primary LDG only for artifact rates
-        _variant_luck = None
-        _vluck_m = re.search(r"_(\d)\d{3}$", item_name) if item_name else None
-        if _vluck_m:
-            _variant_luck = int(_vluck_m.group(1))
-        suffixes = MODULE_GROUP_FLOOR_SUFFIXES.get(group_key, [])
+        primary_ids, fallback_ids, variant_luck, suffixes = self._resolve_group_rate_inputs(
+            item_name, monster_name, group_key
+        )
         _candidate_resolution = time.perf_counter() - _candidate_started if profile is not None else 0.0
         if not suffixes:
             if profile is not None:
@@ -497,16 +543,16 @@ class DropRateEngine:
             for suffix in suffixes:
                 full_grade = mode_id * 1000 + suffix
                 # Try primary LDGs first
-                for _ldg_id in _primary_set:
-                    rate = self.compute_drop_rate(_ldg_id, item_name, full_grade, profile)
+                for ldg_id in primary_ids:
+                    rate = self.compute_drop_rate(ldg_id, item_name, full_grade, profile)
                     if rate > best_rate:
                         best_rate = rate
                 # For high-luck variant items (LG>=8), only use primary LDGs
-                if _variant_luck is None or _variant_luck < 8:
-                    for _ldg_id in _fallback_set:
-                        if _ldg_id in _primary_set:
+                if variant_luck is None or variant_luck < 8:
+                    for ldg_id in fallback_ids:
+                        if ldg_id in primary_ids:
                             continue
-                        rate = self.compute_drop_rate(_ldg_id, item_name, full_grade, profile)
+                        rate = self.compute_drop_rate(ldg_id, item_name, full_grade, profile)
                         if rate > best_rate:
                             best_rate = rate
             mode_rates[mode_name] = _round_rate(best_rate * 100)
@@ -517,6 +563,41 @@ class DropRateEngine:
             profile["candidate_resolution"] += _candidate_resolution
             profile["mode_suffix_dispatch"] += _total - _candidate_resolution - _compute_total
         return mode_rates
+
+    def has_positive_group_drop_rate(self, item_name: str, monster_name: str, group_key: str) -> bool:
+        """Return whether any exported mode rate is positive, stopping at the first one."""
+        cache_key = (item_name, monster_name, group_key)
+        cached = self._positive_group_rate_cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+        primary_ids, fallback_ids, variant_luck, suffixes = self._resolve_group_rate_inputs(
+            item_name, monster_name, group_key
+        )
+        if not suffixes:
+            self._positive_group_rate_cache[cache_key] = False
+            return False
+
+        use_fallback = variant_luck is None or variant_luck < 8
+        for mode_id in DUNGEON_MODE_NAMES:
+            for suffix in suffixes:
+                full_grade = mode_id * 1000 + suffix
+                for ldg_id in primary_ids:
+                    rate = self.compute_drop_rate(ldg_id, item_name, full_grade)
+                    if rate >= _MIN_DISPLAYED_DROP_RATE:
+                        self._positive_group_rate_cache[cache_key] = True
+                        return True
+                if use_fallback:
+                    for ldg_id in fallback_ids:
+                        if ldg_id in primary_ids:
+                            continue
+                        rate = self.compute_drop_rate(ldg_id, item_name, full_grade)
+                        if rate >= _MIN_DISPLAYED_DROP_RATE:
+                            self._positive_group_rate_cache[cache_key] = True
+                            return True
+
+        self._positive_group_rate_cache[cache_key] = False
+        return False
 
     def _get_candidate_ids(self, monster_name: str) -> set[str]:
         """Get candidate lootdrop_group_ids for a monster (cached)."""
