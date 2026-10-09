@@ -1,7 +1,7 @@
 # 性能优化草案：管线 + 运行时
 
 > 创建日期: 2026-07-27；最新更新: 2026-10-09
-> 状态: **热 DB 管线总时长目标已达成；地图渲染 / PWA 运行时项目仍待逐项核验**
+> 状态: **热 DB 管线目标与密集地图 Canvas 阈值优化已完成；LootdropDetail 高负载路径 / PWA 尚待核验**
 > 初始基线: `api/logs/pipeline_20260727_005114.log`（热 DB，总 **98.18s**）
 > 最新实测: `api/logs/pipeline_20261009_125654.log`（热 DB，总 **28.68s**）
 > 关联历史:
@@ -152,6 +152,8 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
 | **风险** | 低 |
 | **工作量** | S–M |
 
+> **待处理样本（2026-10-09）**：`GemNecklace_5001` 首屏 3.2s 采样期内地图点从 131 增至 258，React root 约 9,109 节点，捕获 23 个 50ms 以上长任务（最大 115ms）。需先区分异步引用加载与筛选重组成本，再处理 P2-1。
+
 #### P2-2 MapPanel 密集点渲染
 
 | | |
@@ -162,6 +164,8 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
 | **预期** | 大图滚动/缩放不再卡 |
 | **风险** | 中 — 点击命中、高亮、SSR/hydration 需对齐 |
 | **工作量** | M–L |
+
+> **状态：已完成（2026-10-09）**。PiratePrison 模块显示 812 点时，旧版 2,436 个逐点 DOM 节点、交互 195ms 且出现 59ms Long Task；Canvas 版改为一个 canvas 节点，交互 131ms、该交互窗口无 >50ms Long Task，脚本/布局/样式耗时分别约 29.4/1.4/3.8ms。颜色、z 标签、实体悬停提示通过 Playwright 回归；≤300 点仍保留原 DOM。
 
 #### P2-3 搜索索引（按需）
 
@@ -220,8 +224,8 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
   B3  （可选）P1-3 并行写盘
 
 阶段 C（前端体感）
-  C1  P2-1 useMemo 重组
-  C2  P2-2 密集点 canvas/SVG（阈值触发）
+  C1  P2-2 密集点 Canvas（2026-10-09 完成）
+  C2  P2-1 LootdropDetail useMemo 重组（待定位/处理）
 
 阶段 D（按需）
   D1  P1-2 enrichment 合并
@@ -247,9 +251,11 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
 
 ### 4.2 前端
 
-- [ ] `npm run format` / `format:check` / `npx tsc --noEmit`
-- [ ] 大 loot 详情：质量筛选、隐藏模块、地图切换无长卡顿
-- [ ] Map 点击/高亮行为与优化前一致
+- [x] MapPanel Canvas 改动：`format:check`、lint（0 errors / 20 existing warnings）、`npx tsc --noEmit` 均通过
+- [x] `npm run build` quick：3,091 routes / 15,466 HTML；`BASE_URL=http://127.0.0.1:8081 npm run test:i18n` 28/28（含 812 点 Canvas 与悬停提示）
+- [x] 密集点颜色、z 标签、实体悬停提示；阈值以下仍保留 DOM 渲染
+- [ ] 大 loot 详情：质量筛选、隐藏模块、地图切换无长卡顿（`GemNecklace_5001` 尚待定位）
+- [ ] MapDebug 点击/高亮行为与优化前一致
 
 ### 4.3 流程纪律
 
@@ -317,4 +323,4 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
 | 日期 | 说明 |
 |------|------|
 | 2026-07-27 | 初稿：基于热 DB 98s 剖析；分 P0–P3 与阶段 A–D |
-| 2026-10-09 | 更新热 DB 基准为 28.68s；完成内存复用掉落行生成；目标 ≤40s 达成，运行时地图密集渲染仍待实测 |
+| 2026-10-09 | 更新热 DB 基准为 28.68s；完成预加载索引构造实体掉落行与 MapPanel 密集点 Canvas；P2-1 LootdropDetail 重组和 PWA 仍待处理 |
