@@ -2,6 +2,15 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-09
+
+### fix: 修复前端格式检查
+
+- **改动原因**：`npm test` 中的 Prettier 检查因两个既有文件格式不符而失败，会阻断 main/dev 工作流。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`、`web/src/main.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：仅由 Prettier 规范类型联合和类型断言换行，不改变运行逻辑。
+- **验证**：`npm test` 通过（ESLint 0 error、20 条 warning）；`npm run build` 成功，Quick SSG 生成 3,091 routes、15,466 HTML、17,302 个 dist 文件；现有 8080 预览 HTTP 200；`git diff --check` 通过。
+
 ## 2026-09-21
 
 ### feat: 实体详情复用掉落芯片，并隐藏活动货币池
