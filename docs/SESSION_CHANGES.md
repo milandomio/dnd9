@@ -4,6 +4,13 @@
 
 ## 2026-10-10
 
+### fix: 按 CI 锁定 Prettier 修复格式并重新发布
+
+- **改动原因**：远端 `6fd55dde8` 和 `b9bb1bf76` 都在 Web quality checks 的 Prettier 步骤失败；本地旧 `node_modules` 使用 3.9.6，但 Actions 的 `npm ci` 按锁文件安装 3.8.4，因此此前本地通过不能代表 CI 通过。
+- **变更文件**：`web/src/components/MapImageRecognitionPanel.tsx`、`web/src/main.tsx`、`docs/DEVELOPMENT_WORKFLOW.md`、`docs/SESSION_CHANGES.md`。保留已有最新 DB，未修改依赖锁文件或业务逻辑。
+- **关键逻辑/映射关系**：先执行 `npm ci` 恢复锁定依赖，再用 Prettier 3.8.4 将 RecognitionStatus 联合类型、SSR 数据类型断言改为该版本要求的多行前导 `|` 格式；开发规范增加发布前按锁文件安装依赖及与 Actions Node 20 对照验证的要求，防止 formatter 漂移导致误判。
+- **验证**：Node 20.20.0 + 锁定依赖下 `npm test` 通过（lint 0 errors / 20 条既有 warnings、Prettier 3.8.4、TypeScript）；`npm run build` 退出码 0（3,107 routes / 15,193 HTML / 17,057 files）；独立 8083 预览 HTTP 200，Playwright 多语言页面 29/29、截图识别同意弹窗回归通过；`git diff --check` 通过。本地 DB 与 HEAD blob 均为 `a9cce69a23a6941c6f69e6fb301c4fd77066bcb1`。
+
 ### perf: 提交本地掉落详情优化并重新发布当前版本
 
 - **改动原因**：用户确认发布当前本地代码及最新 DB，而非仅推送已有提交；先核对 `b2d213009`（2026-10-09 21:09:34 +0800）之后的已提交内容只有部署文档与 DB，本次将此前未提交的前端优化纳入发布。
