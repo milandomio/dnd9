@@ -27,12 +27,7 @@ interface MapImageRecognitionProps {
 }
 
 type RecognitionStatus =
-  | 'idle'
-  | 'loading'
-  | 'ready'
-  | 'recognizing'
-  | 'done'
-  | 'error';
+  'idle' | 'loading' | 'ready' | 'recognizing' | 'done' | 'error';
 
 type PrecisionPreset = 'standard' | 'high' | 'maximum' | 'custom';
 

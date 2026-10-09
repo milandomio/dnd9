@@ -7,8 +7,7 @@ if (!root) throw new Error('Root element not found');
 
 const isDetailPlaceholder = root.dataset.detailPlaceholder !== undefined;
 const ssrData = (window as any).__SSR_DATA__ as
-  | Record<string, unknown>
-  | undefined;
+  Record<string, unknown> | undefined;
 
 function hasRouteSsrData(): boolean {
   if (!ssrData) return false;
