@@ -104,7 +104,8 @@ const PAGES = [
     ],
   },
   {
-    path: '/en/lootdrops/Bandage_5001/',
+    // Epic Bandage now has drops; use the absent legendary variant for this regression.
+    path: '/en/lootdrops/Bandage_6001/',
     desc: 'LootdropDetail(Bandage)(en)',
     lang: 'en',
     textChecks: [
@@ -113,7 +114,7 @@ const PAGES = [
       { pattern: /\(\d+点(?:选\d+)?\)/, expected: false },
     ],
     expectedHrefs: ['/en/lootdrops/Bandage_4001/'],
-    forbiddenHrefs: ['/en/lootdrops/Bandage_5001/'],
+    forbiddenHrefs: ['/en/lootdrops/Bandage_6001/'],
   },
   {
     path: '/zh-Hans/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
@@ -446,6 +447,71 @@ async function testDenseMapLayer(browser) {
   }
 }
 
+async function testLargeLootdropReferenceLoading(browser) {
+  const page = await browser.newPage({
+    viewport: { width: 1440, height: 1000 },
+  });
+  const pageErrors = [];
+  const refStatuses = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.on('response', (response) => {
+    const url = response.url();
+    if (
+      url.includes('/data/') &&
+      /\/(props|monsters|items)\/[^/]+\.json(?:\?|$)/.test(url)
+    ) {
+      refStatuses.push(response.status());
+    }
+  });
+
+  try {
+    const response = await page.goto(`${BASE}/en/lootdrops/GemNecklace_5001/`, {
+      waitUntil: 'domcontentloaded',
+      timeout: TIMEOUT,
+    });
+    if (!response?.ok()) {
+      throw new Error(`document HTTP ${response?.status() ?? 'none'}`);
+    }
+    await page.waitForFunction(
+      () => {
+        const busy = [...document.querySelectorAll('#root [aria-busy]')];
+        return (
+          busy.length > 0 &&
+          busy.every((element) => element.getAttribute('aria-busy') === 'false')
+        );
+      },
+      undefined,
+      { timeout: TIMEOUT }
+    );
+    if (refStatuses.some((status) => status >= 400)) {
+      throw new Error(
+        `coordinate ref HTTP failures: ${refStatuses.join(', ')}`
+      );
+    }
+
+    const toggle = page.getByRole('button', {
+      name: /^(Show All|Hide All)$/,
+    });
+    await toggle.waitFor({ state: 'visible', timeout: TIMEOUT });
+    const initialLabel = (await toggle.textContent())?.trim();
+    if (initialLabel !== 'Show All' && initialLabel !== 'Hide All') {
+      throw new Error(`unexpected source toggle label: ${initialLabel}`);
+    }
+    const nextLabel = initialLabel === 'Show All' ? 'Hide All' : 'Show All';
+    await toggle.click();
+    await page
+      .getByRole('button', { name: nextLabel, exact: true })
+      .waitFor({ state: 'visible', timeout: TIMEOUT });
+
+    if (pageErrors.length) throw new Error(pageErrors.join(' | '));
+    return { ok: true, refs: refStatuses.length, initialLabel, nextLabel };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  } finally {
+    await page.close();
+  }
+}
+
 async function main() {
   const browser = await chromium.launch({ headless: true });
   const failures = [];
@@ -472,8 +538,24 @@ async function main() {
     console.error(`FAIL [zh-Hans] DenseMapCanvas: ${mapResult.error}`);
   }
 
+  const lootdropResult = await testLargeLootdropReferenceLoading(browser);
+  if (lootdropResult.ok) {
+    console.log(
+      `PASS [en] LootdropReferenceLoading: ${lootdropResult.refs} refs; ${lootdropResult.initialLabel} → ${lootdropResult.nextLabel}`
+    );
+  } else {
+    failures.push({
+      desc: 'LootdropReferenceLoading',
+      lang: 'en',
+      ...lootdropResult,
+    });
+    console.error(
+      `FAIL [en] LootdropReferenceLoading: ${lootdropResult.error}`
+    );
+  }
+
   await browser.close();
-  const testCount = PAGES.length + 1;
+  const testCount = PAGES.length + 2;
   console.log(
     `\nPass: ${testCount - failures.length}; Fail: ${failures.length}`
   );

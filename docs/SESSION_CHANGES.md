@@ -4,6 +4,14 @@
 
 ## 2026-10-10
 
+### perf: 提交本地掉落详情优化并重新发布当前版本
+
+- **改动原因**：用户确认发布当前本地代码及最新 DB，而非仅推送已有提交；先核对 `b2d213009`（2026-10-09 21:09:34 +0800）之后的已提交内容只有部署文档与 DB，本次将此前未提交的前端优化纳入发布。
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`、`web/tests/i18n.mjs`、`docs/SESSION_CHANGES.md`；发布提交树继续保留 `api/data/darkfindv5.db` 最新快照（47,255,552 bytes）。
+- **关键逻辑/映射关系**：引用坐标加载批量从 1 改为 4；地图分组、排序、识别模板和位置统计使用 memoization，相关 hooks 放在 loading return 之前；IntersectionObserver 状态未变化时复用原 Set；有隐藏来源时“显示全部”清空隐藏状态。新增大量引用加载及显隐切换回归。最新 DB 已加入史诗绷带掉落，因此无掉落变体测试从 `Bandage_5001` 改为缺失的 `Bandage_6001`，保留 0% 文案、无位置统计、有效品质链接及无无效品质链接的断言，不改业务输出。
+- **验证**：`npm test` 通过（lint 0 errors / 20 条既有 warnings、Prettier、TypeScript）；`npm run build` 退出码 0（3,107 routes、15,193 HTML、17,057 dist files）；8082 预览 HTTP 200；Playwright 首次 28/29（史诗绷带旧数据断言失效），更新测试后 29/29，通过 45 个引用加载及显隐切换；测试文件 Prettier 和 `git diff --check` 通过。DB 的本地及远端 blob 均为 `a9cce69a23a6941c6f69e6fb301c4fd77066bcb1`。
+- **发布策略**：按用户确认采用当前工作区代码，不回退到旧版 DB 或丢弃前端改动；仅暂存上述三份源码/文档，使用指定远端 SHA 的 `--force-with-lease` 推送 `main`，不混入未跟踪文件。
+
 ### chore: 执行补丁部署并重建数据库快照
 
 - **改动原因**：按用户确认的补丁部署流程同步最新 FMOD Output，删除旧数据库后全量重建，准备将新 DB 随 `main` 推送到远程。
