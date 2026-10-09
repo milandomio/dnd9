@@ -28,6 +28,13 @@
   3. 掉率计算增加 `(ldg_id,item_name,full_grade)` 结果缓存和「是否存在可显示正爆率」短路；显示边界仍与 4 位小数输出一致。
 - **验证**：API 全量 67 项 unittest、Ruff、Black 通过；完整 `python main.py` 热 DB 管线 **28.68s**（先前基线 74.12s；低于 40s 目标），167,335 行内存构造耗时 0.150s；151 monster / 249 props 的 `loot_pools` 与稳定产物逐文件无语义差异。日志：`/tmp/darkfindv5-engine-rows-pipeline.log`、`api/logs/pipeline_20261009_125654.log`。未 push。
 
+### fix: SSG 地图模块描述补入实体与坐标数量
+
+- **改动原因**：Quick SSG 为减小客户端首屏注入把模块 `coords` 置为 `null`，但静态 SEO 描述也因此丢掉模块实体/位置事实；客户端 `DungeonModuleDetailPage` 已有这些计数。
+- **变更文件**：`web/scripts/ssg.mjs`、`web/tests/i18n.mjs`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：从模块坐标 JSON 汇总 `entities.length` 和所有 `entity.coords.length`，仅把两个计数写入 `seoFacts`；Quick 模式仍保持 `coords: null`，Full 模式继续注入完整坐标。模块模板描述使用 `seoFacts`，并保留无法读取坐标时的空值 fallback。Playwright 增加中文、英文、日文原始静态 HTML 计数断言。另把 sitemap 构建日志的 URL 数改为从实际生成的 sitemap entries 统计，排除未静态生成的 variant 路由。
+- **验证**：`npm run format:check`、`npm run lint`（0 errors，20 条既有 warnings）、`npm run typecheck` 通过；Quick SSG 生成 3,091 routes / 15,466 HTML / 17,302 dist files，10 个 sitemap 各 1,358 URL、合计 13,580；全量 HTML audit 的 title/description/OG/canonical/lang/重复 URL 均 0 错误，根页 title 1 个且 canonical 保持 `/zh-Hans/`；Playwright 27/27 通过；预览 8081 首页、语言页、目标模块页 HTTP 200。未占用/终止被其他 WordPress 服务使用的 8080，未 push。
+
 ## 2026-09-21
 
 ### feat: 实体详情复用掉落芯片，并隐藏活动货币池

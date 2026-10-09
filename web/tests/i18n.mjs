@@ -112,16 +112,19 @@ const PAGES = [
     path: '/zh-Hans/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
     desc: 'ModuleDetail',
     lang: 'zh-Hans',
+    staticDescriptionChecks: [/包含 \d+ 个实体/, /和 \d+ 个位置点/],
   },
   {
     path: '/en/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
     desc: 'ModuleDetail(en)',
     lang: 'en',
+    staticDescriptionChecks: [/with \d+ entities/, /and \d+ positions/],
   },
   {
     path: '/ja/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
     desc: 'ModuleDetail(ja)',
     lang: 'ja',
+    staticDescriptionChecks: [/\d+ エンティティ/, /\d+ 地点/],
   },
 ];
 
@@ -148,7 +151,15 @@ async function contentLinkCount(page, href) {
 
 async function testPage(
   browser,
-  { path, desc, lang, textChecks = [], expectedHrefs = [], forbiddenHrefs = [] }
+  {
+    path,
+    desc,
+    lang,
+    textChecks = [],
+    staticDescriptionChecks = [],
+    expectedHrefs = [],
+    forbiddenHrefs = [],
+  }
 ) {
   const page = await browser.newPage();
   const consoleErrors = [];
@@ -198,6 +209,11 @@ async function testPage(
       throw new Error('missing static description metadata');
     if (staticDescription !== staticOgDescription)
       throw new Error('static description and OG description differ');
+    for (const pattern of staticDescriptionChecks) {
+      if (!pattern.test(staticDescription)) {
+        throw new Error(`static description check failed: ${pattern}`);
+      }
+    }
     const response = await page.goto(`${BASE}${path}`, {
       waitUntil: 'domcontentloaded',
       timeout: TIMEOUT,
