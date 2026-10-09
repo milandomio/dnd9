@@ -527,23 +527,20 @@ for (const p of PAGES) {
   }
 }
 
-// Dungeon module detail pages — SSR data injection (coords + module info)
+// Dungeon module detail pages — inject coordinates only in full mode, but keep SEO counts in both modes.
 for (const m of moduleData) {
   const group = m.group || '';
   const key = `dungeon_modules_detail/${group}/${m.name}`;
-  if (!QUICK) {
-    try {
-      const coordsFile = join(DATA, 'dungeon_modules_coords', `${m.name}.json`);
-      const coords = readJSON(coordsFile);
-      ssrDataMap[key] = { module: m, coords };
-    } catch {
-      ssrDataMap[key] = { module: m, coords: null };
-    }
-  } else {
+  try {
+    const coordsFile = join(DATA, 'dungeon_modules_coords', `${m.name}.json`);
+    const coords = readJSON(coordsFile);
     ssrDataMap[key] = {
       module: m,
-      coords: null,
+      coords: QUICK ? null : coords,
+      seoFacts: moduleSeoFacts(coords),
     };
+  } catch {
+    ssrDataMap[key] = { module: m, coords: null, seoFacts: {} };
   }
 }
 
@@ -822,6 +819,18 @@ function replaceDescriptionMeta(page, description) {
   );
 }
 
+function moduleSeoFacts(coords) {
+  const entities = coords?.entities ?? [];
+  return {
+    entities: entities.length || undefined,
+    locations:
+      entities.reduce(
+        (count, entity) => count + (entity.coords?.length || 0),
+        0
+      ) || undefined,
+  };
+}
+
 function templateDescription(route, routeData, localeDict, lang) {
   const parts = route.path.split('/').filter(Boolean);
   if (parts[0] === DEFAULT_LANG) parts.shift();
@@ -846,10 +855,12 @@ function templateDescription(route, routeData, localeDict, lang) {
   }
   if (section === 'dungeon_modules') {
     const module = routeData?.module;
+    const facts = routeData?.seoFacts ?? moduleSeoFacts(routeData?.coords);
     return buildSeoDescription(lang, 'module', {
       name,
       width: module?.size_x || undefined,
       height: module?.size_y || undefined,
+      ...facts,
     });
   }
   return buildSeoDescription(lang, 'entity', { name });
@@ -1346,8 +1357,10 @@ if (detachedSitemapLanguages.length > 0) {
     `[ssg] detached language sitemaps: ${detachedSitemapLanguages.join(', ')}`
   );
 }
+const urlsPerLanguage =
+  sitemapEntries.get(LANGS[0])?.match(/<url>/g)?.length ?? 0;
 console.log(
-  `[ssg] ${sitemapFiles.length} language sitemap files generated (${routes.length - routes.filter((r) => r.redirect).length} URLs per language)`
+  `[ssg] ${sitemapFiles.length} language sitemap files generated (${urlsPerLanguage} URLs per language)`
 );
 
 function countDistFiles(dir) {
