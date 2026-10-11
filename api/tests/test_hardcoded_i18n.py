@@ -10,10 +10,22 @@ from config import (  # noqa: E402
     hardcoded_locale_entries,
 )
 from locale_builder import SUPPORTED_LANGUAGES  # noqa: E402
-from translator import resolve_translation_key  # noqa: E402
+from translator import NameResolver, resolve_translation_key  # noqa: E402
 
 
 class HardcodedI18nTest(unittest.TestCase):
+    def test_name_resolver_prefers_explicit_key_over_hardcoded(self):
+        """Verify NameResolver uses EXPLICIT_TRANSLATION_KEY_OVERRIDES before HARDCODED_TRANSLATIONS."""
+        translations = {"Text_DesignData_Monster_NPC_GoblinSmuggler": "哥布林走私者"}
+        resolver = NameResolver(translations)
+        # GoblinSmuggler should resolve via explicit key, not via hardcoded fallback
+        self.assertEqual(resolver.resolve("GoblinSmuggler", None, "monster"), "哥布林走私者")
+        # When asset provides a translation_key, it wins over explicit override
+        self.assertEqual(
+            resolver.resolve("GoblinSmuggler", "Text_DesignData_Monster_NPC_GoblinSmuggler", "monster"),
+            "哥布林走私者",
+        )
+
     def test_user_facing_hardcoded_monsters_have_distinct_locale_values(self):
         keys = {
             resolve_translation_key(name)
@@ -42,6 +54,10 @@ class HardcodedI18nTest(unittest.TestCase):
         self.assertEqual(
             resolve_translation_key("Ruins_Chapel"),
             "Text_DesignData_Dungeon_DungeonModule_Abandoned_Sanctuary",
+        )
+        self.assertEqual(
+            resolve_translation_key("GoblinSmuggler"),
+            "Text_DesignData_Monster_NPC_GoblinSmuggler",
         )
 
     def test_lootdrop_weapon_sources_have_explicit_locale_values(self):
@@ -72,6 +88,7 @@ class HardcodedI18nTest(unittest.TestCase):
             "Coin": "Text_DesignData_Item_Item_GoldCoins",
             "DwarfHandCannoneer": "Text_DesignData_Monster_Monster_DwarfHandcannoneer",
             "Gems": "Text_Code_DCDataBlueprintLibrary_Type_Item_Misc_Gem",
+            "GoblinSmuggler": "Text_DesignData_Monster_NPC_GoblinSmuggler",
             "PirateCrossbow": "Text_DesignData_Monster_Monster_PirateCrossbowman",
             "PirateSwiftBlade": "Text_DesignData_Monster_Monster_PirateSwiftblade",
             "StingrayEgg": "Text_DesignData_Item_Item_AncientStingrayEgg",

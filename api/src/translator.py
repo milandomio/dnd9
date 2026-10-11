@@ -131,6 +131,10 @@ class NameResolver:
         translations = self._translations
         if translation_key and translation_key in translations:
             return translations[translation_key]
+        # Resolve verified name aliases only after an asset-provided key, so future game keys win.
+        explicit_key = EXPLICIT_TRANSLATION_KEY_OVERRIDES.get(name)
+        if explicit_key and explicit_key in translations:
+            return translations[explicit_key]
         alias_name = TRANSLATION_ALIAS_MAP.get(name, name)
         for prefix in _TRANSLATION_PREFIXES:
             alias_key = prefix + alias_name

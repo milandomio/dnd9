@@ -2,6 +2,18 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-12
+
+### fix: 修正 GoblinSmuggler 翻译映射到官方 NPC 键
+
+- **改动原因**：用户发现游戏本地化中存在 `Text_DesignData_Monster_NPC_GoblinSmuggler: "哥布林走私者"` 官方翻译键，而非之前认为的 Merchant 商人键；GoblinSmuggler 页面未正确显示翻译，需要建立正确的兜底映射。
+- **变更文件**：`api/src/config.py`、`api/src/translator.py`、`api/tests/test_hardcoded_i18n.py`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 在 `EXPLICIT_TRANSLATION_KEY_OVERRIDES` 添加 `GoblinSmuggler → Text_DesignData_Monster_NPC_GoblinSmuggler` 官方键映射。
+  2. 调整 `NameResolver._resolve_inner()` 逻辑：资产自带 `translation_key` > 显式官方键覆盖 > 别名前缀匹配 > 硬编码回退，确保未来游戏文件补充 `translation_key` 后自动优先使用。
+  3. 补充测试用例：`test_name_resolver_prefers_explicit_key_over_hardcoded` 验证 `NameResolver` 在游戏翻译字典中正确查找显式键；`test_verified_aliases_keep_official_game_keys` 和 `test_map_source_aliases_use_official_translation_keys` 加入 GoblinSmuggler 回归断言。
+- **验证**：`python3 -m unittest tests.test_hardcoded_i18n` 6/6 通过；`./lint.sh` 通过（ruff + black）。
+
 ## 2026-10-10
 
 ### fix: 按 CI 锁定 Prettier 修复格式并重新发布
