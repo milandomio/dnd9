@@ -353,6 +353,7 @@ EXPLICIT_TRANSLATION_KEY_OVERRIDES = {
     "Coin": "Text_DesignData_Item_Item_GoldCoins",
     "DwarfHandCannoneer": "Text_DesignData_Monster_Monster_DwarfHandcannoneer",
     "Gems": "Text_Code_DCDataBlueprintLibrary_Type_Item_Misc_Gem",
+    "GoblinSmuggler": "Text_DesignData_Monster_NPC_GoblinSmuggler",
     "LittleToad_Poison": "Text_DesignData_Monster_Monster_LittleToad",
     "PirateCrossbow": "Text_DesignData_Monster_Monster_PirateCrossbowman",
     "PirateSwiftBlade": "Text_DesignData_Monster_Monster_PirateSwiftblade",
