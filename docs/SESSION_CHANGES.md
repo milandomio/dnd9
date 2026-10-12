@@ -4,6 +4,13 @@
 
 ## 2026-10-12
 
+### docs: 同步性能计划与本地化文档计数
+
+- **改动原因**：`b9bb1bf76`（2026-10-10）已把 P2-1 LootdropDetail 优化发布，但 `docs/plans/PERF_PIPELINE_AND_RUNTIME.md` 仍把 P2-1 标为「待处理样本」；`MULTILANG_STATUS.md`、`HARDCODED_I18N.md`、`JA_DETAIL_I18N_BACKLOG.md` 仍写「当前输出使用 172 个 `df5.hardcoded.*` 键」，与最新 locale 产物不符，会误导后续本地化工作量判断。
+- **变更文件**：`docs/plans/PERF_PIPELINE_AND_RUNTIME.md`、`docs/plans/MULTILANG_STATUS.md`、`docs/plans/HARDCODED_I18N.md`、`docs/plans/JA_DETAIL_I18N_BACKLOG.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：性能计划 P2-1 改为已完成并引用提交 `b9bb1bf76`、记录引用批量 4 与 memo 化范围、`GemNecklace_5001` 回归方式；头部状态与阶段清单 C2、文档变更记录同步。本地化三份文档改用 2026-10-10 03:14 locale 产物实测：10 个 locale 各 2,426 键、无缺失/空值；`df5.hardcoded.*` 定义 150 个、产物实际引用 135 个、未引用 15 个；`HARDCODED_LOCALE_OVERRIDES` 38 条（36 条进入当前 locale）、自动技术词条 114 个；`HARDCODED_TRANSLATIONS` 由旧 230 改为实测 267 条。历史快照数字保留并标注复核值。
+- **验证**：只读统计脚本核对 locale 键数、空值、`df5.hardcoded.*` 定义/引用/未使用、覆盖条目与十语言完整度；`git status` 确认仅改动上述四份计划文档。
+
 ### fix: 修正 GoblinSmuggler 翻译映射到官方 NPC 键
 
 - **改动原因**：用户发现游戏本地化中存在 `Text_DesignData_Monster_NPC_GoblinSmuggler: "哥布林走私者"` 官方翻译键，而非之前认为的 Merchant 商人键；GoblinSmuggler 页面未正确显示翻译，需要建立正确的兜底映射。

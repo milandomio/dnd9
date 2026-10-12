@@ -1,7 +1,7 @@
 # 性能优化草案：管线 + 运行时
 
-> 创建日期: 2026-07-27；最新更新: 2026-10-09
-> 状态: **热 DB 管线目标与密集地图 Canvas 阈值优化已完成；LootdropDetail 高负载路径 / PWA 尚待核验**
+> 创建日期: 2026-07-27；最新更新: 2026-10-12
+> 状态: **热 DB 管线目标、密集地图 Canvas 阈值与 LootdropDetail 高负载路径已完成；PWA 尚待核验**
 > 初始基线: `api/logs/pipeline_20260727_005114.log`（热 DB，总 **98.18s**）
 > 最新实测: `api/logs/pipeline_20261009_125654.log`（热 DB，总 **28.68s**）
 > 关联历史:
@@ -152,7 +152,9 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
 | **风险** | 低 |
 | **工作量** | S–M |
 
-> **待处理样本（2026-10-09）**：`GemNecklace_5001` 首屏 3.2s 采样期内地图点从 131 增至 258，React root 约 9,109 节点，捕获 23 个 50ms 以上长任务（最大 115ms）。需先区分异步引用加载与筛选重组成本，再处理 P2-1。
+> **历史样本（2026-10-09，处理前）**：`GemNecklace_5001` 首屏 3.2s 采样期内地图点从 131 增至 258，React root 约 9,109 节点，捕获 23 个 50ms 以上长任务（最大 115ms）。
+>
+> **状态：已完成（2026-10-10，提交 `b9bb1bf76`）**。坐标引用加载批量由 1 改为 4，渐进显示不变；地图分组、模块分组、模块打分排序、地图识别模板、可见坐标统计、可见来源/地图汇总、SEO 位置数与品质集合改为按数据依赖 memo 化，相关 hooks 统一移到 loading early return 之前；`IntersectionObserver` 在可见地图集合未变化时复用原 `Set`；修复标签为「显示全部」时仍执行隐藏的问题（改为按 `hidden.size` 分支）。新增 `GemNecklace_5001` 高负载回归：等待 48 个坐标引用全部加载且无 HTTP 失败，再往返一次显隐切换。`npm test`、Quick SSG 构建与预览 HTTP 200 通过，Playwright 29/29 通过。
 
 #### P2-2 MapPanel 密集点渲染
 
@@ -225,7 +227,7 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
 
 阶段 C（前端体感）
   C1  P2-2 密集点 Canvas（2026-10-09 完成）
-  C2  P2-1 LootdropDetail useMemo 重组（待定位/处理）
+  C2  P2-1 LootdropDetail useMemo 重组（2026-10-10 完成）
 
 阶段 D（按需）
   D1  P1-2 enrichment 合并
@@ -323,4 +325,5 @@ lootdrops 子步骤：详情生成 16.12s；由 `DropRateEngine` 预加载索引
 | 日期 | 说明 |
 |------|------|
 | 2026-07-27 | 初稿：基于热 DB 98s 剖析；分 P0–P3 与阶段 A–D |
+| 2026-10-12 | 将 P2-1 LootdropDetail 重组由待处理更新为已完成（提交 `b9bb1bf76`，2026-10-10），状态改为仅剩 PWA 待核验 |
 | 2026-10-09 | 更新热 DB 基准为 28.68s；完成预加载索引构造实体掉落行与 MapPanel 密集点 Canvas；P2-1 LootdropDetail 重组和 PWA 仍待处理 |
