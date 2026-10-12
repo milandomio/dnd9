@@ -10,15 +10,15 @@
 
 ## 已实施状态（2026-08-01）
 
-- `hardcoded_translation_key()`、`resolve_translation_key()` 与 `hardcoded_locale_entries()` 已落地；当前输出中使用的 172 个 `df5.hardcoded.*` 键在 10 个 locale 文件中均有值。
+- `hardcoded_translation_key()`、`resolve_translation_key()` 与 `hardcoded_locale_entries()` 已落地；`data/json/locale/*.json` 中 `df5.hardcoded.*` 定义共 150 个，产物实际引用 135 个（另有 15 个定义暂未被引用），10 个 locale 均有值且无空值（2026-10-12 复核，locale 产物时间 2026-10-10 03:14）。
 - items、monsters、props、lootdrop 来源、模块坐标、任务目标与搜索索引的写出路径已复用合成键解析，不再因空 `translation_key` 直接丢失 i18n 入口。
 - `SuperHoard*` 继续使用专用的 `df5.hardcoded.SuperHoard` 十语言人工文案。
-- 与原计划的差异：`HARDCODED_LOCALE_OVERRIDES` 已为五个用户可见怪物和双 Boss 宝藏室提供十语言词条；其余技术实体仍由名称自动转为可读英文，而非 230 条人工十语言译文。因此“键体系和可显示回退”已完成，“全量人工本地化”仍未完成。
+- 与原计划的差异：`HARDCODED_LOCALE_OVERRIDES` 当前为 38 个实体提供十语言人工词条，其中 36 个已进入当前 locale；其余技术实体仍由名称自动转为可读英文（当前 114 个自动词条），而非全部 267 条人工十语言译文。因此“键体系和可显示回退”已完成，“全量人工本地化”仍未完成。
 - 原文中“未执行”“有空再执行”及未勾选验收项仅反映 2026-07-26 的计划快照；后续工作应以本节和日语详情 backlog 为准。
 
 ### 1.1 现象
 
-- `HARDCODED_TRANSLATIONS`（`api/src/config.py`）约 **230** 条，**仅 zh-Hans 中文**。
+- `HARDCODED_TRANSLATIONS`（`api/src/config.py`）原约 **230** 条，**仅 zh-Hans 中文**；2026-10-12 复核为 **267** 条。
 - 无 Game.json 的实体在详情/列表/掉落源常为 `translation_key=""`。
 - 前端 `t(key, fallback)`：`key` 空 → 直接 `fallback`（中文真值）→ **en 等语言页仍显示中文**。
 
@@ -37,7 +37,7 @@
 
 ### 1.3 现状数据（执行前快照）
 
-- HARDCODED：**230**；有 Game.json 前缀匹配：**~22**；无官方 key：**~208**
+- HARDCODED：**230**（2026-10-12 复核为 267）；有 Game.json 前缀匹配：**~22**；无官方 key：**~208**
 - `search_index` 空 `translation_key`：**~167**（其中 HARDCODED 命中 **~91**，多为 decoration）
 - locale 已有：`df5.hardcoded.SuperHoard` × 10 语
 - 同中文多实体共享短语：**11** 组
@@ -48,7 +48,7 @@
 
 | 项 | 选择 |
 |----|------|
-| 范围 | **全量 230 条**（含装饰/引擎内部） |
+| 范围 | **全量 `HARDCODED_TRANSLATIONS`**（含装饰/引擎内部；2026-10-12 复核为 267 条） |
 | 合成 key | **`df5.hardcoded.{EntityName}`**（与 `Text_*` / `ui.*` 隔离） |
 | 文案 | **AI 批量起草 10 语**整词（不运行时拼接）；可后续人工改 |
 | SuperHoard | 已落地共用 key；全量落地时**保留** `df5.hardcoded.SuperHoard` 作为 5 名别名目标，或映射表指向同一文案（见 §3.3） |
@@ -111,7 +111,7 @@ def hardcoded_i18n_bundle() -> dict[str, dict[str, str]]:
 ```
 
 - `HARDCODED_TRANSLATIONS[name]` 必须等于 `HARDCODED_I18N[name]["zh-Hans"]`（单源或构建时断言）。
-- 已有官方 `Text_*` 的 ~22 条：**不写** `df5` 条目；`hardcoded_translation_key` 返回 `None`，走 DB/Game key。
+- 已有官方 `Text_*` 的条目：**不写** `df5` 条目；`hardcoded_translation_key` 返回 `None`，走 DB/Game key。
 
 ### 3.3 SuperHoard 与全量关系
 
@@ -148,7 +148,7 @@ def hardcoded_i18n_bundle() -> dict[str, dict[str, str]]:
 
 1. `config.py`
    - `HARDCODED_I18N_PREFIX` / `hardcoded_translation_key(name)` / `hardcoded_i18n_for_locale()`
-   - 将 230 条扩成 `HARDCODED_I18N`（10 语）；AI 起草后人工抽检高频用户可见名
+   - 将 `HARDCODED_TRANSLATIONS`（当前 267 条）扩成 `HARDCODED_I18N`（10 语）；AI 起草后人工抽检高频用户可见名
    - 有 `Text_*` 的条目：不进合成 key 路径（函数内查 Game 或静态 denylist）
    - SuperHoard：保持现有常量，全量函数里 `superhoard` 优先
 2. 可选：大表拆到 `api/src/hardcoded_i18n.py` 或 `api/src/data/hardcoded_i18n.json`，`config` 只 re-export（避免 config.py 过长）
@@ -242,7 +242,7 @@ df5.hardcoded.SuperHoard → SuperHoard* 共用（历史）
 |----|-----|
 | 键函数 + locale 注入泛化 | 小（0.5h） |
 | 各 builder 赋 key | 中（2–4h，点多） |
-| 230 × 9 语 AI 表 + 抽检 | 中（主要体积在 config/数据文件） |
+| `HARDCODED_TRANSLATIONS` 全量 × 9 语 AI 表 + 抽检（当前 267 条） | 中（主要体积在 config/数据文件） |
 | 管道验证 | 中（一次 full pipeline） |
 
 ---

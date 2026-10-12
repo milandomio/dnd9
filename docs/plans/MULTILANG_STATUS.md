@@ -6,7 +6,7 @@
 - P9：Ant Design locale 切换和 locale 字典体积优化。
 - P10：Playwright 多语言回归框架。
 - P11：移除 `translation_EN` / `resolver_en`。
-- P12：硬编码实体使用 `df5.hardcoded.*` 合成键；当前输出使用的 172 个键在 10 个 locale 文件中均有值。已补齐五个怪物和五个场景实体的十语言名称，并为可确认的实体优先复用官方 key。
+- P12：硬编码实体使用 `df5.hardcoded.*` 合成键；10 个 locale 各 2,426 个键、无缺失或空值，其中 `df5.hardcoded.*` 定义 150 个（产物实际引用 135 个，未引用 15 个）。已为 36 个实体补齐十语言人工名称，其余 114 个为自动生成技术词条，并为可确认的实体优先复用官方 key。
 - 多语言标题、`description` 与 `og:description` 已由 SSG 注入本地化首屏值，客户端复用 `__localizedTitle` / `__localizedDescription`。
 
 当前主链路为：

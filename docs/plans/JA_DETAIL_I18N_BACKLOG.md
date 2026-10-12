@@ -7,7 +7,7 @@
 - **候选总数**：0 个未本地化标题。
 - **分类**：所有详情实体已具备官方或 `df5.hardcoded.*` key；五个怪物和五个场景实体已补十语言人工词条，`LittleToad_Poison`、`LivingArmor`、`LivingStatue`、`Morayeel`、`Rat`、`TrainingDummy_CharacterBase` 和 `Ruins_Chapel` 复用官方 key；其余技术实体使用十语言“技术对象 + 可读资产名”自动词条，后续仅做文案润色。
 - **排除项**：`EmptyModule_1F_09/13/14/15` 与 ShipGraveyard 的两个数字模块名是既定显示别名（如 `5-1`、`1-1`），不是待翻译 raw identifier。
-- **数据依据**：`data/json/{items,monsters,props,lootdrops,dungeon_modules.json,locale/{ja,en}.json}`；所有当前使用的 172 个 `df5.hardcoded.*` 键已在十语言 locale 中存在。
+- **数据依据**：`data/json/{items,monsters,props,lootdrops,dungeon_modules.json,locale/{ja,en}.json}`；当前 locale 中 `df5.hardcoded.*` 定义 150 个，产物引用 135 个，均已在十语言 locale 中存在（2026-10-12 复核）。
 - **清单说明**：下方逐项清单保留 2026-07-30 的人工核对记录，个别计数已被后续合成键落地改变；实施前先按上述当前基线重新导出候选，不以旧条目数量判断完成度。
 
 ## 处理顺序
