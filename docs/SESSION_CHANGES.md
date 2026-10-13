@@ -38,6 +38,17 @@
   - 大小写不敏感索引 `_build_entity_key_index`（`BlueMarlin`/`Bluemarlin`、`TideWalkerShaman`/`TidewalkerShaman`），预计算小写映射避免每次全表扫描。
 - **同名消歧**：子池复用宿主实体名会与宿主主池重名（页面上原本 66 处）。改用 `sub_label` 字段（合成键 `df5.lootpool.{Spoils|Gear|Jewelry|Ore|Misc}`），前端拼 `宿主名 · 后缀`。前端渲染后重名归零。注意该后缀**不能**用中文硬编码（此前误写 `f"{base} 战利品"` 会导致 10 语言页出现中文）。
 - **默认语言 locale 不加载的坑**：`useLocale()` 对 `DEFAULT_LANG`（zh-Hans）执行 `setDict(null)`、不 fetch locale 文件，只返回 UI 字典。因此 `df5.lootpool.*` 后缀键必须**同时**写入 `web/src/i18n/uiLocale.ts`（10 语言 × 5 键），否则仅中文页丢后缀而英文页正常。池主体名不受影响（中文走 `pool.translation` 兜底）。
+
+### fix: 补齐剩余掉落池标签（SkeletonWarlord 等 59 处英文残留）
+
+- **改动原因**：上一条提交后全站仍有 59 个池标签落到英文兜底（去重 26 个），用户反馈 `SkeletonWarlord` 页面显示 `Warlord` 而实际应为「骷髅督军」。根因有三：① `GradedRoll_CrackedTrinkets` 标签条目在先前编辑中被误删；② 池名只是宿主实体名的缩写（`SkeletonWarlord` → `Warlord`）时无从得知宿主；③ `_Spoils` 变体（`IceKoboldBowman_Spoils`）用未剥离后缀的 core 去查标签表，查不到。
+- **变更文件**：`api/src/monster_drops_builder.py`、`api/tests/test_monster_drops_builder.py`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `resolve_pool_text()` 新增 `host_entity` 参数：`build_loot_pools` 传入页面实体名 `monster`；当池名是宿主名的后缀且池名自身无官方键时（`host.lower().endswith(spoils.lower())` 且两者不等），回退到宿主的官方键。该分支位于硬编码名之后、英文兜底之前，避免抢先覆盖官方键。全站仅 `SkeletonWarlord` 的 `Drop_Warlord` / `Drop_Warlord_Spoils` 命中，无误伤。
+  2. 标签表查找改为依次尝试 `core` 与剥离 `_Spoils` 后的 `spoils` 两个候选，使 `X_Spoils` 能复用 `X` 的标签并保留 spoils 后缀。
+  3. `_lookup_entity_key()` 候选列表追加「剥离尾部数字」的变体（`Banshee2` → `Banshee`），命中官方键 `Text_DesignData_Monster_Monster_Banshee`=报丧女妖。
+  4. 补回 `GradedRoll_CrackedTrinkets`，并新增 25 个标签（10 语言）：`Accessory_Rare` 稀有饰品、`Quiver` 箭袋、`SkeletonSwordsman` 骷髅剑士、`SkeletonCorpses` 骷髅尸骸、`SkeletonBones` 骸骨、`Crate_Supplies` 木箱补给、`Barrel_Junk` 杂物桶、`Barrel_Stores` 储物桶、`PoorCoffins` 简陋棺材、`Stonetombs` 石墓、`Herbs` 草药、`Pants` 裤子、`Pots` 罐子、`Utility_CrateMedium`、`Trinkets_NoCoin`、`HoardWeaponArmor`、`Spawn_GoldCoinChest`、`Cyclops_TrollBlood`、`IceKoboldBowman`、`IceHarpy_Jewelry`、`Whitewalker` 白行者、`WebSpider` 网蛛、`Banshee2`、`FlameButterflyUnique`、`Slime_Quest`。
+- **验证**：`python3 -m unittest discover -s tests` 91/91 通过（新增 3 例：已知标签池被翻译、真正未知池走英文兜底、`_Spoils` 变体复用基础标签；原 `Barrel_Junk` 兜底用例改为断言其标签已生效）；`api/lint.sh` 通过；`python main.py` 全量重建后**全站纯英文池标签归零**；`npm run build` 退出码 0；Playwright 实机验证 zh-Hans/en：SkeletonWarlord 显示 `物理披风 / 骷髅督军 / 骷髅督军 · 战利品 / 坟墓精华 / …`（英文 `Skeleton Warlord / Skeleton Warlord · Loot`），FrostWalker 显示 `白行者 / 白行者 · 战利品`，IceKoboldArcher 与 SkeletonSwordman 同理，无 page error。
 - **locale 导出**：`locale_builder._collect_keys()` 的键名白名单新增 `sub_label`，否则 `df5.lootpool.*` 后缀键不会被收集、不会进入 `data/json/locale/*.json`。`build_locale_files()` 将这些合成键从 DB 查询中剥离并按语言注入（共 19 个键 × 10 语言）。
 - **前端渲染**：`MonsterLootPool` 新增 `translation`/`translation_key`/`sub_label`；`poolLabel(pool, ut, t)` 优先 `translation_key` → `translation` → 旧 `ui.monster_drops.pool.{stem}` → 去前缀 stem。保留旧 fallback，已生效的 12 个通用池不受影响。
 - **验证**：`python3 -m unittest discover -s tests` 87/87 通过（新增 `PoolLabelTest` 14 例：物品/怪物/任务物品/`_Spoils`/大小写变体/拼写别名/分类/容器/矿石/合成键/硬编码/可读英文兜底/子池借名/`Monster_` 前缀）；`api/lint.sh` 通过；`cd web && npm test` 通过（lint 0 errors / 20 既有 warnings、Prettier、tsc）；`python main.py` 全量重建（29.55s，0 错误）；全站扫描 686 个 pool 标签，**残留原始技术名 0 个**、前端渲染后页内重名 0 处；`npm run build` 退出码 0（3107 页 / 17058 文件）；Playwright 实机验证 zh-Hans/en/ja/de 四个语言页：SpectralKnight 显示 `血缚 / 物理披风 / 鬼灵骑士 / 冥界织物 / 幽冥剑柄`（英文 `Physical Cloaks / Spectral Knight`），CaveTroll 显示 `洞穴巨魔 / 洞穴巨魔·战利品 / 洞穴巨魔·杂项`（英文 `Cave Troll / Cave Troll · Loot / Cave Troll · Misc`），无 page error。
