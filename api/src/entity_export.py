@@ -110,6 +110,7 @@ def export_monsters(
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
     entity_data_out: dict[str, dict] | None = None,
+    session_spawn_limits: dict[str, int] | None = None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
     _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
@@ -183,6 +184,12 @@ def export_monsters(
                 build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
             ],
         }
+        # Per-session spawn cap (e.g. GoblinSmuggler): global, not per map.
+        session_limit = (
+            max((session_spawn_limits or {}).get(r["monster_name"], 0) for r in group) if session_spawn_limits else 0
+        )
+        if session_limit > 0:
+            entity_data["session_spawn_limit"] = session_limit
         _store_detail(
             output_dir,
             f"monsters/{canonical['monster_name']}.json",

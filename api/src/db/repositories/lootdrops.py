@@ -13,6 +13,7 @@ class SpawnerEntry(TypedDict):
     spawn_rate: float
     dungeon_grades: list[int]
     lootdrop_group_id: str
+    session_spawn_limit: int
 
 
 class LootdropsRepository:
@@ -27,7 +28,8 @@ class LootdropsRepository:
     def get_spawner_entries_for_keyword(self, keyword: str) -> list[SpawnerEntry]:
         c = self.conn.cursor()
         c.execute(
-            "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id "
+            "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id, "
+            "COALESCE(session_spawn_limit, 0) AS session_spawn_limit "
             "FROM spawner_entries WHERE spawner_keyword = ? OR entity_name = ?",
             (keyword, keyword),
         )
@@ -40,6 +42,7 @@ class LootdropsRepository:
                     "spawn_rate": r["spawn_rate"],
                     "dungeon_grades": json.loads(r["dungeon_grades"]),
                     "lootdrop_group_id": r["lootdrop_group_id"],
+                    "session_spawn_limit": r["session_spawn_limit"],
                 }
             )
         return results
@@ -47,7 +50,8 @@ class LootdropsRepository:
     def get_all_spawner_entries(self) -> list[SpawnerEntry]:
         c = self.conn.cursor()
         c.execute(
-            "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id FROM spawner_entries"
+            "SELECT spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id, "
+            "COALESCE(session_spawn_limit, 0) AS session_spawn_limit FROM spawner_entries"
         )
         results = []
         for r in c.fetchall():
@@ -58,9 +62,19 @@ class LootdropsRepository:
                     "spawn_rate": r["spawn_rate"],
                     "dungeon_grades": json.loads(r["dungeon_grades"]),
                     "lootdrop_group_id": r["lootdrop_group_id"],
+                    "session_spawn_limit": r["session_spawn_limit"],
                 }
             )
         return results
+
+    def get_session_spawn_limits(self) -> dict[str, int]:
+        """Max per-session spawn limit per entity name (0 = unlimited)."""
+        c = self.conn.cursor()
+        c.execute(
+            "SELECT entity_name, MAX(COALESCE(session_spawn_limit, 0)) AS limit_value "
+            "FROM spawner_entries WHERE entity_name != '' GROUP BY entity_name"
+        )
+        return {r["entity_name"]: r["limit_value"] for r in c.fetchall() if r["limit_value"] > 0}
 
     def get_item_drop_rate(self, lootdrop_group_id: str, item_name: str, full_grade: int) -> float:
         c = self.conn.cursor()

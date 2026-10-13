@@ -2,6 +2,23 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-13
+
+### feat: 展示 GoblinSmuggler 每局刷新上限
+
+- **改动原因**：用户反馈 GoblinSmuggler 页面没有生成率显示。排查发现该 NPC 的 24 个坐标全部为固定刷怪点（无 `sub_group_parent`、无 ObjectLinker 子池），但游戏资产 `Id_Spawner_New_NPC_GoblinSmuggler.json` 中 6 个区域变体（Crypts/Goblin/IceCavern × N/HR）均带 `SessionSpawnLimit: 1`，表示一次对局全局最多出现 1 个、从 24 个点位中随机择一。此前管道完全丢弃该字段，页面因此无法解释"为什么有时遇不到"。
+- **变更文件**：`api/src/db/schema.py`、`api/src/db/importers/spawners.py`、`api/src/db/repositories/lootdrops.py`、`api/src/db/__init__.py`、`api/src/collector.py`、`api/src/entity_export.py`、`api/tests/test_session_spawn_limit.py`、`web/src/types/data.ts`、`web/src/pages/DetailPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `spawner_entries` 表新增 `session_spawn_limit INTEGER NOT NULL DEFAULT 0` 列；`spawners.py:import_spawner_entries()` 从 `SpawnerItemArray[].SessionSpawnLimit` 取值（非 int 归一为 0）。
+  2. 原先 `if not ldg_path: continue` 会丢弃无掉落组的 NPC spawner；改为仅在 `session_spawn_limit > 0` 且能解析 `entity_name` 时保留该行（`spawn_rate=100.0`、`lootdrop_group_id=''`），使上限能到达实体导出。
+  3. 新增 `LootdropsRepository.get_session_spawn_limits()`：按 `entity_name` 取 `MAX(session_spawn_limit)`，仅返回 >0 的实体；`DatabaseManager.get_session_spawn_limits()` 透出，`collector.py` 在实体导出前一次性读取。
+  4. `entity_export.py:export_monsters()` 新增 `session_spawn_limits` 参数，按翻译键分组后取组内最大值写入详情 JSON 顶层 `session_spawn_limit`（0/缺失则不写）。
+  5. 前端 `MonsterEntity` 增加可选 `session_spawn_limit`；`DetailPage.tsx` 在 `<h1>` 标题之后、`<Disclaimer />` 之前渲染提示条。**不放在分组爆率行或单个模块图底下**：该属性是全局约束，而 GoblinSmuggler 横跨 8 个区域分组和 24 个模块卡片，放在任一副标题位置都会只出现一次或在每个卡片重复 24 次，且易被误读为区域/模块级限制。
+  6. `uiLocale.ts` 为 10 种语言新增 `ui.detail.session_spawn_limit`（`一次对局最多出现 {count} 个` 等）。UI 文案不走 locale 字典（`locale_builder.py:139` 显式过滤 `ui.` 前缀），故无需重建 locale 产物。
+- **数据范围**：全量扫描 541 个 Spawner 资产，`SessionSpawnLimit` 仅 6 项非零，全部属于 GoblinSmuggler 的 6 个区域变体且均为 1；其余 2303 项为 0（不限制）。导出产物中仅 `Id_NPC_GoblinSmuggler.json` 含该字段，验证无其他实体被误标。
+- **验证**：`python3 -m unittest discover -s tests` 73/73 通过（新增 `test_session_spawn_limit.py` 5 例，覆盖 NPC 无掉落组保留上限、普通 spawner 记录上限、缺省归零、按实体聚合、0 值被过滤）；`api/lint.sh` 通过（ruff + black）；`cd web && npm test` 通过（lint 0 errors / 20 既有 warnings、Prettier、tsc）；`python main.py` 全量重建（删库后 43.25s）确认 `data/json/monsters/Id_NPC_GoblinSmuggler.json` 含 `session_spawn_limit: 1`、`translation_key: Text_DesignData_Monster_NPC_GoblinSmuggler`、24 坐标；`npm run build` 退出码 0（3107 页 / 17058 文件），`dist/data/{ver}/json/monsters/Id_NPC_GoblinSmuggler.json` 含新字段；Playwright 实机验证 10 种语言文案全部正确渲染，CaveTroll/Abomination/LootGoblin 三个无限制实体页无泄漏、无 page error。
+- **环境备注**：本机 `npm` 不在默认 PATH，需使用 `~/.nvm/versions/node/v22.22.0/bin`；`python main.py` 只读查询大表时报 `unable to open database file`，需设置 `SQLITE_TMPDIR=/tmp`（sqlite 在同目录创建排序临时文件被沙箱拦截）。端口 8080 被本机 nginx 上的 WordPress（HBOT1 A4 Local）占用，本次预览服务改用 8081。
+
 ## 2026-10-12
 
 ### docs: 同步性能计划与本地化文档计数

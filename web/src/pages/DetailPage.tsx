@@ -637,6 +637,28 @@ export default function DetailPage() {
         {entityLabel} {ut('ui.list.locations')}
       </h1>
 
+      {(entity as MonsterEntity).session_spawn_limit ? (
+        <div
+          style={{
+            textAlign: 'center',
+            color: tokens.accent,
+            fontSize: 15,
+            margin: '0 0 12px',
+            padding: 8,
+            background: tokens.surface,
+            borderRadius: 5,
+            maxWidth: 700,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          {ut('ui.detail.session_spawn_limit').replace(
+            '{count}',
+            String((entity as MonsterEntity).session_spawn_limit)
+          )}
+        </div>
+      ) : null}
+
       <DebugPanel
         buttons={[
           {

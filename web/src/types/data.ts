@@ -122,6 +122,8 @@ export interface MonsterEntity {
   coords: Coord[];
   group_drop_info?: Record<string, GroupDropInfo[]>;
   loot_pools?: MonsterLootPool[];
+  /** Max instances allowed per run (0/undefined = unlimited). */
+  session_spawn_limit?: number;
   isDetailTemplate?: boolean;
 }
 
