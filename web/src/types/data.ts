@@ -112,6 +112,10 @@ export interface MonsterLootPool {
   id: string;
   kind: 'quest' | 'artifact' | 'consumable' | 'pool';
   lootdrop_id: string | null;
+  translation?: string;
+  translation_key?: string;
+  /** Sub-pool suffix locale key (`df5.lootpool.Spoils` etc.) appended to `translation`. */
+  sub_label?: string;
   items: MonsterLootItem[];
 }
 

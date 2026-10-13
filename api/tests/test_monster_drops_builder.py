@@ -381,5 +381,103 @@ class PropsLootPoolsTest(unittest.TestCase):
         self.assertNotIn("LivingArmor_Elite", pools)
 
 
+class PoolLabelTest(unittest.TestCase):
+    """Lootdrop pool tabs must show a translated label, never a raw id."""
+
+    TRANSLATIONS = {
+        "Text_DesignData_Item_Item_Bloodbound_5001": "血缚",
+        "Text_DesignData_Item_Item_CursedWater": "邪水",
+        "Text_DesignData_Item_Item_SpectralFabric": "冥界织物",
+        "Text_DesignData_Monster_Monster_CaveTroll": "洞穴巨魔",
+        "Text_DesignData_Monster_Monster_Yeti": "冰雪巨猿",
+        "Text_DesignData_Monster_Monster_TidewalkerShaman": "潮行者萨满",
+        "Text_DesignData_Props_Props_WoodBarrel": "木桶",
+        "Text_DesignData_Props_Props_Ore_IronOre": "铁矿",
+        "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Armor": "护甲",
+        "Text_DesignData_Item_Item_GoldCoins": "金币",
+    }
+
+    def _resolve(self, lootdrop_id):
+        from monster_drops_builder import _build_entity_key_index, resolve_pool_text
+
+        index = _build_entity_key_index(self.TRANSLATIONS)
+        return resolve_pool_text(lootdrop_id, self.TRANSLATIONS, index)
+
+    def test_item_named_pool_uses_official_key(self):
+        text, key, sub = self._resolve("ID_Lootdrop_Drop_Bloodbound_5001")
+        self.assertEqual(text, "血缚")
+        self.assertEqual(key, "Text_DesignData_Item_Item_Bloodbound_5001")
+        self.assertEqual(sub, "")
+
+    def test_quest_item_pool_strips_quest_prefix(self):
+        text, key, _ = self._resolve("ID_Lootdrop_QuestItem_SpectralFabric")
+        self.assertEqual(text, "冥界织物")
+        self.assertEqual(key, "Text_DesignData_Item_Item_SpectralFabric")
+
+    def test_monster_named_pool_uses_official_key(self):
+        text, key, sub = self._resolve("ID_Lootdrop_Drop_CaveTroll")
+        self.assertEqual(text, "洞穴巨魔")
+        self.assertEqual(key, "Text_DesignData_Monster_Monster_CaveTroll")
+        self.assertEqual(sub, "")
+
+    def test_spoils_pool_keeps_entity_name_and_marks_suffix(self):
+        text, key, sub = self._resolve("ID_Lootdrop_Drop_CaveTroll_Spoils")
+        self.assertEqual(text, "洞穴巨魔")
+        self.assertEqual(key, "Text_DesignData_Monster_Monster_CaveTroll")
+        self.assertEqual(sub, "df5.lootpool.Spoils")
+
+    def test_case_variant_entity_name_resolves(self):
+        text, key, _ = self._resolve("ID_Lootdrop_Drop_TideWalkerShaman")
+        self.assertEqual(text, "潮行者萨满")
+        self.assertEqual(key, "Text_DesignData_Monster_Monster_TidewalkerShaman")
+
+    def test_misspelled_entity_name_uses_alias(self):
+        text, _, _ = self._resolve("ID_Lootdrop_Drop_PirateSwiftBlade")
+        self.assertNotEqual(text, "PirateSwiftBlade")
+
+    def test_category_pool_uses_category_key(self):
+        text, key, _ = self._resolve("ID_Lootdrop_Drop_ChestArmors")
+        self.assertEqual(text, "护甲")
+        self.assertEqual(key, "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Armor")
+
+    def test_prop_pool_uses_prop_key(self):
+        text, key, _ = self._resolve("ID_Lootdrop_Drop_Barrels")
+        self.assertEqual(text, "木桶")
+        self.assertEqual(key, "Text_DesignData_Props_Props_WoodBarrel")
+
+    def test_ore_pool_uses_ore_key(self):
+        text, key, _ = self._resolve("ID_Lootdrop_Spawn_IronOre")
+        self.assertEqual(text, "铁矿")
+        self.assertEqual(key, "Text_DesignData_Props_Props_Ore_IronOre")
+
+    def test_label_only_pool_uses_synthetic_key(self):
+        text, key, _ = self._resolve("ID_Lootdrop_Drop_Cloak_Physical")
+        self.assertEqual(text, "物理披风")
+        self.assertEqual(key, "df5.lootpool.Cloak_Physical")
+
+    def test_hardcoded_name_pool(self):
+        text, _, _ = self._resolve("ID_Lootdrop_Drop_Lumber")
+        self.assertEqual(text, "木材")
+
+    def test_unknown_pool_falls_back_to_readable_english(self):
+        text, key, _ = self._resolve("ID_Lootdrop_Drop_Barrel_Junk")
+        self.assertEqual(text, "Barrel Junk")
+        self.assertEqual(key, "")
+
+    def test_sub_pool_borrows_owner_name_and_marks_suffix(self):
+        """Yeti_Gear resolves to Yeti but must stay distinct from Drop_Yeti."""
+        text, key, sub = self._resolve("ID_Lootdrop_Drop_Yeti_Gear")
+        self.assertEqual(text, "冰雪巨猿")
+        self.assertEqual(sub, "df5.lootpool.Gear")
+        own_text, _, own_sub = self._resolve("ID_Lootdrop_Drop_Yeti")
+        self.assertEqual(own_text, text)
+        self.assertEqual(own_sub, "")
+
+    def test_monster_prefixed_pool_strips_prefix(self):
+        text, key, _ = self._resolve("Id_Lootdrop_Monster_CaveTroll_Misc")
+        self.assertEqual(text, "洞穴巨魔")
+        self.assertEqual(key, "Text_DesignData_Monster_Monster_CaveTroll")
+
+
 if __name__ == "__main__":
     unittest.main()

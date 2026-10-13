@@ -3,12 +3,276 @@
 from __future__ import annotations
 
 import json
+import re
 
+from config import HARDCODED_TRANSLATIONS
 from translator import ORE_QUALITY_RE, QUALITY_RE, VARIANT_RE
 
 _LOOTDROP_PREFIXES = ("Id_Lootdrop_", "ID_Lootdrop_")
 _LUCK_TO_SUFFIX = {n: f"{n}001" for n in range(1, 9)}
 _CONSUMABLE_SUBTYPE = "Text_Code_DCDataBlueprintLibrary_Type_Item_Utility_Consumable"
+_POOL_DROP_PREFIX_RE = re.compile(r"^(?:Drop|Spawn|Monster)_", re.IGNORECASE)
+_POOL_QUEST_PREFIX_RE = re.compile(r"^Quest(?:Item|Special)_", re.IGNORECASE)
+_POOL_SPOILS_SUFFIX_RE = re.compile(r"_Spoils$", re.IGNORECASE)
+
+# Lootdrop pool names that name an item category rather than an entity.
+# Their display text comes from the item-category translation keys.
+_POOL_CATEGORY_KEYS = {
+    "ChestArmors": "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Armor",
+    "Cloak_All": "Text_DesignData_Item_Item_Cloak",
+    "Cloak_Magic": "Text_DesignData_Item_Item_Cloak",
+    "Cloak_Physical": "Text_DesignData_Item_Item_Cloak",
+    "Coin": "Text_DesignData_Item_Item_GoldCoins",
+    "Gems": "Text_Code_DCDataBlueprintLibrary_Type_Item_Misc_Gem",
+    "Trinkets": "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Accessory",
+    "Weapon": "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Weapon",
+    "Consumables": "Text_Code_DCDataBlueprintLibrary_Type_Item_Utility_Consumable",
+}
+
+# Lootdrop pool names that name a container prop rather than an entity.
+_POOL_PROP_KEYS = {
+    "Barrels": "Text_DesignData_Props_Props_WoodBarrel",
+    "Crates": "Text_DesignData_Props_Props_WoodenCrateSmall",
+    "CommonCoffins": "Text_DesignData_Props_Props_Coffin_01",
+    "Caskets": "Text_DesignData_Props_Props_SimpleChestLarge",
+    "FlatChestLarge": "Text_DesignData_Props_Props_FlatChestLarge",
+    "HoardTreasure": "Text_DesignData_Props_Props_Hoard",
+}
+
+# Lootdrop pool names with no Game.json key at all. These are display labels
+# only (never entity names), so they get a synthetic locale key plus the
+# 10-language phrases used elsewhere for hardcoded entities.
+POOL_LABEL_I18N_PREFIX = "df5.lootpool."
+POOL_LABEL_TRANSLATIONS: dict[str, dict[str, str]] = {
+    "Cloak_All": {
+        "zh-Hans": "披风",
+        "zh-Hant": "披風",
+        "en": "Cloaks",
+        "de": "Umhänge",
+        "es": "Capas",
+        "fr": "Capes",
+        "ja": "クローク",
+        "ko": "망토",
+        "pt-BR": "Capas",
+        "ru": "Плащи",
+    },
+    "Cloak_Magic": {
+        "zh-Hans": "魔法披风",
+        "zh-Hant": "魔法披風",
+        "en": "Magic Cloaks",
+        "de": "Magische Umhänge",
+        "es": "Capas mágicas",
+        "fr": "Capes magiques",
+        "ja": "魔法のクローク",
+        "ko": "마법 망토",
+        "pt-BR": "Capas mágicas",
+        "ru": "Магические плащи",
+    },
+    "Cloak_Physical": {
+        "zh-Hans": "物理披风",
+        "zh-Hant": "物理披風",
+        "en": "Physical Cloaks",
+        "de": "Physische Umhänge",
+        "es": "Capas físicas",
+        "fr": "Capes physiques",
+        "ja": "物理のクローク",
+        "ko": "물리 망토",
+        "pt-BR": "Capas físicas",
+        "ru": "Физические плащи",
+    },
+    "Treasure": {
+        "zh-Hans": "宝藏",
+        "zh-Hant": "寶藏",
+        "en": "Treasure",
+        "de": "Schatz",
+        "es": "Tesoro",
+        "fr": "Trésor",
+        "ja": "宝",
+        "ko": "보물",
+        "pt-BR": "Tesouro",
+        "ru": "Сокровище",
+    },
+    "Treasure_Both": {
+        "zh-Hans": "宝藏",
+        "zh-Hant": "寶藏",
+        "en": "Treasure",
+        "de": "Schatz",
+        "es": "Tesoro",
+        "fr": "Trésor",
+        "ja": "宝",
+        "ko": "보물",
+        "pt-BR": "Tesouro",
+        "ru": "Сокровище",
+    },
+    "Treasure_Large": {
+        "zh-Hans": "大型宝藏",
+        "zh-Hant": "大型寶藏",
+        "en": "Large Treasure",
+        "de": "Großer Schatz",
+        "es": "Tesoro grande",
+        "fr": "Grand trésor",
+        "ja": "大きな宝",
+        "ko": "대형 보물",
+        "pt-BR": "Tesouro grande",
+        "ru": "Большое сокровище",
+    },
+    "Utility": {
+        "zh-Hans": "工具",
+        "zh-Hant": "工具",
+        "en": "Utility",
+        "de": "Werkzeuge",
+        "es": "Utilidad",
+        "fr": "Utilitaires",
+        "ja": "道具",
+        "ko": "도구",
+        "pt-BR": "Utilidade",
+        "ru": "Инструменты",
+    },
+    "LootGoblin_StolenGoods": {
+        "zh-Hans": "赃物",
+        "zh-Hant": "贓物",
+        "en": "Stolen Goods",
+        "de": "Diebesgut",
+        "es": "Bienes robados",
+        "fr": "Biens volés",
+        "ja": "盗品",
+        "ko": "도난품",
+        "pt-BR": "Bens roubados",
+        "ru": "Краденое",
+    },
+    "LootGoblin_GoldContainer": {
+        "zh-Hans": "金币容器",
+        "zh-Hant": "金幣容器",
+        "en": "Gold Container",
+        "de": "Goldbehälter",
+        "es": "Contenedor de oro",
+        "fr": "Conteneur d'or",
+        "ja": "金貨容器",
+        "ko": "금화 용기",
+        "pt-BR": "Contenedor de ouro",
+        "ru": "Контейнер с золотом",
+    },
+    "GradedRoll_Ruby": {
+        "zh-Hans": "红宝石",
+        "zh-Hant": "紅寶石",
+        "en": "Ruby",
+        "de": "Rubin",
+        "es": "Rubí",
+        "fr": "Rubis",
+        "ja": "ルビー",
+        "ko": "루비",
+        "pt-BR": "Rubi",
+        "ru": "Рубин",
+    },
+    "GradedRoll_Emerald": {
+        "zh-Hans": "绿宝石",
+        "zh-Hant": "綠寶石",
+        "en": "Emerald",
+        "de": "Smaragd",
+        "es": "Esmeralda",
+        "fr": "Émeraude",
+        "ja": "エメラルド",
+        "ko": "에메랄드",
+        "pt-BR": "Esmeralda",
+        "ru": "Изумруд",
+    },
+    "GradedRoll_BlueSapphire": {
+        "zh-Hans": "蓝宝石",
+        "zh-Hant": "藍寶石",
+        "en": "Blue Sapphire",
+        "de": "Blauer Saphir",
+        "es": "Zafiro azul",
+        "fr": "Saphir bleu",
+        "ja": "ブルーサファイア",
+        "ko": "블루 사파이어",
+        "pt-BR": "Safira azul",
+        "ru": "Синий сапфир",
+    },
+    "GradedRoll_Diamond": {
+        "zh-Hans": "钻石",
+        "zh-Hant": "鑽石",
+        "en": "Diamond",
+        "de": "Diamant",
+        "es": "Diamante",
+        "fr": "Diamant",
+        "ja": "ダイヤモンド",
+        "ko": "다이아몬드",
+        "pt-BR": "Diamante",
+        "ru": "Алмаз",
+    },
+    "GradedRoll_ArcaneEssence": {
+        "zh-Hans": "秘术精华",
+        "zh-Hant": "秘術精華",
+        "en": "Arcane Essence",
+        "de": "Arkane Essenz",
+        "es": "Esencia arcana",
+        "fr": "Essence arcanique",
+        "ja": "秘術のエッセンス",
+        "ko": "비전의 정수",
+        "pt-BR": "Essência arcana",
+        "ru": "Тайная эссенция",
+    },
+    "Spoils": {
+        "zh-Hans": "战利品",
+        "zh-Hant": "戰利品",
+        "en": "Loot",
+        "de": "Beute",
+        "es": "Botín",
+        "fr": "Butin",
+        "ja": "戦利品",
+        "ko": "전리품",
+        "pt-BR": "Saque",
+        "ru": "Добыча",
+    },
+    "Gear": {
+        "zh-Hans": "装备",
+        "zh-Hant": "裝備",
+        "en": "Gear",
+        "de": "Ausrüstung",
+        "es": "Equipo",
+        "fr": "Équipement",
+        "ja": "装備",
+        "ko": "장비",
+        "pt-BR": "Equipamento",
+        "ru": "Снаряжение",
+    },
+    "Jewelry": {
+        "zh-Hans": "首饰",
+        "zh-Hant": "首飾",
+        "en": "Jewelry",
+        "de": "Schmuck",
+        "es": "Joyería",
+        "fr": "Bijoux",
+        "ja": "宝飾品",
+        "ko": "장신구",
+        "pt-BR": "Joias",
+        "ru": "Украшения",
+    },
+    "Ore": {
+        "zh-Hans": "矿石",
+        "zh-Hant": "礦石",
+        "en": "Ore",
+        "de": "Erz",
+        "es": "Mineral",
+        "fr": "Minerai",
+        "ja": "鉱石",
+        "ko": "광석",
+        "pt-BR": "Minério",
+        "ru": "Руда",
+    },
+    "Misc": {
+        "zh-Hans": "杂项",
+        "zh-Hant": "雜項",
+        "en": "Misc",
+        "de": "Sonstiges",
+        "es": "Varios",
+        "fr": "Divers",
+        "ja": "その他",
+        "ko": "기타",
+        "pt-BR": "Diversos",
+        "ru": "Разное",
+    },
+}
 
 
 def fold_item_page(item_name: str) -> tuple[str, str | None]:
@@ -38,6 +302,174 @@ def is_quest_pool(lootdrop_id: str) -> bool:
 def is_event_currency_pool(lootdrop_id: str) -> bool:
     stem = lootdrop_stem(lootdrop_id)
     return "EventCurrency" in stem
+
+
+def pool_core_name(lootdrop_id: str) -> str:
+    """Pool name without the Lootdrop prefix and the Drop_/Spawn_ marker."""
+    stem = lootdrop_stem(lootdrop_id)
+    return _POOL_DROP_PREFIX_RE.sub("", _POOL_QUEST_PREFIX_RE.sub("", stem))
+
+
+_ENTITY_KEY_PREFIXES = (
+    "Text_DesignData_Item_Item_",
+    "Text_DesignData_Monster_Monster_",
+    "Text_DesignData_Props_Props_",
+)
+
+
+def _build_entity_key_index(translations: dict[str, str]) -> dict[str, str]:
+    """Map lowercased entity name -> translation key for one-time lookups."""
+    index: dict[str, str] = {}
+    for key in translations:
+        for prefix in _ENTITY_KEY_PREFIXES:
+            if key.startswith(prefix):
+                index.setdefault(key[len(prefix) :].lower(), key)
+                break
+    return index
+
+
+# Lootdrop ids occasionally misspell or shorten the entity asset name. Map them
+# to the canonical name that owns the official translation key.
+_POOL_ENTITY_NAME_ALIASES = {
+    "FrostGiantSheilder": "FrostGiantShielder",
+    "FrostSkeletonGuardsman": "FrostSkeletonGuardman",
+    "PirateCrossbow": "PirateCrossbowman",
+    "PirateSwiftBlade": "PirateSwiftblade",
+    "TideWalkerClubFighter": "TidewalkerClubfighter",
+    "TideWalkerShaman": "TidewalkerShaman",
+    "TideWalkerSpearer": "TidewalkerSpearer",
+    "TidewalkerSlinger": "TidewalkerSlinger",
+    "DwarfHandCannoneer": "DwarfHandcannoneer",
+    "GoldChest": "GoldenChest",
+}
+
+
+_POOL_MISC_SUFFIX_RE = re.compile(r"_(?:Misc|Gear|Jewelry|Ore|Spoils)$", re.IGNORECASE)
+
+# Sub-pool markers -> synthetic locale key for the suffix the UI appends to the
+# owning entity's name. Keeps "Yeti" / "Yeti_Gear" / "Yeti_Spoils" apart.
+_POOL_SUBPOOL_SUFFIXES = {
+    "spoils": "df5.lootpool.Spoils",
+    "gear": "df5.lootpool.Gear",
+    "jewelry": "df5.lootpool.Jewelry",
+    "ore": "df5.lootpool.Ore",
+    "misc": "df5.lootpool.Misc",
+}
+
+
+def _english_pool_name(name: str) -> str:
+    """Readable English reading of a technical lootdrop pool name."""
+    spaced = name.replace("_", " ")
+    spaced = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", spaced)
+    spaced = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", spaced)
+    spaced = re.sub(r"\d+$", "", spaced)
+    return re.sub(r"\s+", " ", spaced).strip()
+
+
+def _lookup_entity_key(
+    core: str, translations: dict[str, str], index: dict[str, str] | None = None
+) -> tuple[str, bool]:
+    """Find the Text_DesignData_* key for a pool's entity name.
+
+    Returns (key, borrowed) where ``borrowed`` means the key came from a
+    fallback candidate (the owning entity of a `_Gear`/`_Ore` sub-pool, or a
+    case/spelling variant) rather than the pool name itself, so callers can keep
+    the rendered label distinguishable from the entity's own pool.
+    """
+    spoils = _POOL_SPOILS_SUFFIX_RE.sub("", core)
+    names = [spoils]
+    # Sub-pools carry a marker (Cyclops_TrollBlood, Yeti_Gear, LavaGolem_Ore);
+    # fall back to the owning entity name before giving up.
+    generic = _POOL_MISC_SUFFIX_RE.sub("", spoils)
+    if generic != spoils and generic != core:
+        names.append(generic)
+    alias = _POOL_ENTITY_NAME_ALIASES.get(spoils)
+    if alias and alias not in names:
+        names.append(alias)
+    for position, name in enumerate(names):
+        for key in (
+            f"Text_DesignData_Item_Item_{name}",
+            f"Text_DesignData_Monster_Monster_{name}",
+            f"Text_DesignData_Props_Props_{name}",
+            f"Text_DesignData_Props_Props_Ore_{name}",
+        ):
+            if key in translations:
+                return key, position > 0
+        # Case-insensitive fallback: lootdrop ids and entity tables disagree on
+        # casing (BlueMarlin/Bluemarlin, TideWalkerShaman/TidewalkerShaman).
+        if index is not None:
+            hit = index.get(name.lower())
+            if hit:
+                return hit, position > 0
+    return "", False
+
+
+def resolve_pool_text(
+    lootdrop_id: str,
+    translations: dict[str, str],
+    entity_index: dict[str, str] | None = None,
+) -> tuple[str, str, str]:
+    """Resolve a lootdrop pool id to (display text, translation key, sub_label).
+
+    Resolution order:
+    1. Label-only pools with no Game.json key (Cloak_Physical, ...) via the
+       synthetic df5.lootpool.* locale entries.
+    2. Item-category pools (ChestArmors, Consumables, ...) via category keys.
+    3. Container-prop pools (Barrels, Crates, ...) via prop keys.
+    4. Entity-named pools (Drop_CaveTroll, Drop_Bloodbound_5001) via the
+       canonical Text_DesignData_* key for that entity.
+    5. The project's hardcoded entity names (Lumber, Bones, ...).
+    6. A readable English reading of the technical pool name.
+
+    ``sub_label`` is the synthetic locale key of a suffix the UI appends to the
+    owning entity's name for sub-pools (`_Spoils`, `_Gear`, `_Ore`, ...), so
+    "Yeti" / "Yeti_Gear" / "Yeti_Spoils" stay distinguishable. Empty when the
+    pool name stands on its own.
+    """
+    core = pool_core_name(lootdrop_id)
+
+    label_key = f"{POOL_LABEL_I18N_PREFIX}{core}"
+    label_value = translations.get(label_key) or POOL_LABEL_TRANSLATIONS.get(core, {}).get("zh-Hans")
+    if label_value:
+        return label_value, label_key, ""
+
+    category_key = _POOL_CATEGORY_KEYS.get(core)
+    if category_key:
+        value = translations.get(category_key)
+        if value:
+            return value, category_key, ""
+
+    prop_key = _POOL_PROP_KEYS.get(core)
+    if prop_key:
+        value = translations.get(prop_key)
+        if value:
+            return value, prop_key, ""
+
+    spoils = _POOL_SPOILS_SUFFIX_RE.sub("", core)
+    sub_label = _POOL_SUBPOOL_SUFFIXES["spoils"] if spoils != core else ""
+    entity_key, borrowed = _lookup_entity_key(spoils, translations, entity_index)
+    if entity_key:
+        return translations[entity_key], entity_key, sub_label or _sub_label_of(spoils, borrowed)
+
+    # Fall back to the project's hardcoded entity names (Lumber, Bones, ...).
+    hardcoded = HARDCODED_TRANSLATIONS.get(spoils)
+    if hardcoded:
+        return hardcoded, "", sub_label
+
+    # Last resort: a readable English reading of the technical pool name so the
+    # UI never shows a raw id such as "Drop_Barrel_Junk".
+    return _english_pool_name(spoils), "", sub_label
+
+
+def _sub_label_of(core: str, borrowed: bool) -> str:
+    """Suffix key for a sub-pool resolved through its owning entity."""
+    if not borrowed:
+        return ""
+    match = _POOL_MISC_SUFFIX_RE.search(core)
+    if not match:
+        return ""
+    marker = match.group(0)[1:].lower()
+    return _POOL_SUBPOOL_SUFFIXES.get(marker, "")
 
 
 def canonical_monster_name(entity_name: str, monster_names: set[str]) -> str:
@@ -149,6 +581,7 @@ def build_loot_pools(
 ) -> dict[str, list[dict]]:
     """rows: (entity_name, lootdrop_id, item_name, luck_grade)."""
     subtypes = item_subtypes or {}
+    entity_index = _build_entity_key_index(translations)
     grouped: dict[str, dict[str, list[dict]]] = {}
     rate_ok: dict[tuple[str, str], bool] = {}
     for entity_name, lootdrop_id, item_name, luck_grade in rows:
@@ -219,11 +652,15 @@ def build_loot_pools(
             )
         other.sort(key=lambda pair: lootdrop_stem(pair[0]).lower())
         for lootdrop_id, items in other:
+            pool_translation, pool_key, pool_sub_label = resolve_pool_text(lootdrop_id, translations, entity_index)
             loot_pools.append(
                 {
                     "id": lootdrop_id,
                     "kind": "pool",
                     "lootdrop_id": lootdrop_id,
+                    "translation": pool_translation,
+                    "translation_key": pool_key,
+                    "sub_label": pool_sub_label,
                     "items": _dedupe_items(items),
                 }
             )

@@ -19,6 +19,29 @@
 - **验证**：`python3 -m unittest discover -s tests` 73/73 通过（新增 `test_session_spawn_limit.py` 5 例，覆盖 NPC 无掉落组保留上限、普通 spawner 记录上限、缺省归零、按实体聚合、0 值被过滤）；`api/lint.sh` 通过（ruff + black）；`cd web && npm test` 通过（lint 0 errors / 20 既有 warnings、Prettier、tsc）；`python main.py` 全量重建（删库后 43.25s）确认 `data/json/monsters/Id_NPC_GoblinSmuggler.json` 含 `session_spawn_limit: 1`、`translation_key: Text_DesignData_Monster_NPC_GoblinSmuggler`、24 坐标；`npm run build` 退出码 0（3107 页 / 17058 文件），`dist/data/{ver}/json/monsters/Id_NPC_GoblinSmuggler.json` 含新字段；Playwright 实机验证 10 种语言文案全部正确渲染，CaveTroll/Abomination/LootGoblin 三个无限制实体页无泄漏、无 page error。
 - **环境备注**：本机 `npm` 不在默认 PATH，需使用 `~/.nvm/versions/node/v22.22.0/bin`；`python main.py` 只读查询大表时报 `unable to open database file`，需设置 `SQLITE_TMPDIR=/tmp`（sqlite 在同目录创建排序临时文件被沙箱拦截）。端口 8080 被本机 nginx 上的 WordPress（HBOT1 A4 Local）占用，本次预览服务改用 8081。
 
+### feat: 掉落池标签全量 i18n（修复 SpectralKnight 等页面显示原始 id）
+
+- **改动原因**：`http://localhost:8081/zh-Hans/monsters/SpectralKnight/` 的掉落物分页标签显示未翻译的原始 token：`Bloodbound_5001`、`Cloak_Physical`、`SpectralKnight`、`QuestItem_SpectralFabric`、`QuestItem_SpectralHilt`。根因是 `MonsterDropSwitch.tsx` 的 `poolLabel()` 硬编码只查 `ui.monster_drops.pool.{stem}`（仅 12 个通用池有覆盖），其余 364 个掉落池全部回退到原始 id。
+- **变更文件**：`api/src/monster_drops_builder.py`、`api/src/locale_builder.py`、`api/tests/test_monster_drops_builder.py`、`web/src/types/data.ts`、`web/src/components/MonsterDropSwitch.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`resolve_pool_text(lootdrop_id, translations, entity_index) -> (text, key, sub_label)` 六级解析：
+  1. **纯标签池**（`Cloak_Physical`、`Treasure`、`Utility`、`GradedRoll_Ruby` 等无 Game.json 键）→ 合成键 `df5.lootpool.{core}`，10 语言值定义在 `POOL_LABEL_TRANSLATIONS`。
+  2. **物品分类池** → `_POOL_CATEGORY_KEYS`（`ChestArmors`→`...Type_Item_Category_Armor`、`Consumables`、`Gems`、`Trinkets`）。
+  3. **容器实体池** → `_POOL_PROP_KEYS`（`Barrels`→`Props_WoodBarrel`、`Crates`→`Props_WoodenCrateSmall`、`CommonCoffins`、`FlatChestLarge`、`HoardTreasure`→`Props_Hoard`）。
+  4. **实体同名池** → 官方 `Text_DesignData_{Item_Item|Monster_Monster|Props_Props|Props_Props_Ore}_{name}` 键。
+  5. **项目硬编码名**（`Lumber`→木材、`Bones`→骸骨）。
+  6. **兜底**：技术名可读化为英文（`Drop_Barrel_Junk`→`Barrel Junk`），保证永不显示原始 id。
+- **名称归一化规则**（`_lookup_entity_key`）：按候选顺序尝试，命中即返回 `(key, borrowed)`：
+  - 剥离 `Drop_/Spawn_/Monster_/QuestItem_/QuestSpecial_` 前缀；
+  - 剥离 `_Spoils` 后缀（`CaveTroll_Spoils`→`CaveTroll`）；
+  - 剥离子池标记 `_Misc/_Gear/_Jewelry/_Ore`（`Yeti_Gear`→`Yeti`、`LavaGolem_Ore`→`LavaGolem`），此类回退记 `borrowed=True`；
+  - 拼写别名 `_POOL_ENTITY_NAME_ALIASES`（`FrostGiantSheilder`→`FrostGiantShielder`、`PirateCrossbow`→`PirateCrossbowman`、`GoldChest`→`GoldenChest` 等 10 条）；
+  - 大小写不敏感索引 `_build_entity_key_index`（`BlueMarlin`/`Bluemarlin`、`TideWalkerShaman`/`TidewalkerShaman`），预计算小写映射避免每次全表扫描。
+- **同名消歧**：子池复用宿主实体名会与宿主主池重名（页面上原本 66 处）。改用 `sub_label` 字段（合成键 `df5.lootpool.{Spoils|Gear|Jewelry|Ore|Misc}`），前端拼 `宿主名 · 后缀`。前端渲染后重名归零。注意该后缀**不能**用中文硬编码（此前误写 `f"{base} 战利品"` 会导致 10 语言页出现中文）。
+- **默认语言 locale 不加载的坑**：`useLocale()` 对 `DEFAULT_LANG`（zh-Hans）执行 `setDict(null)`、不 fetch locale 文件，只返回 UI 字典。因此 `df5.lootpool.*` 后缀键必须**同时**写入 `web/src/i18n/uiLocale.ts`（10 语言 × 5 键），否则仅中文页丢后缀而英文页正常。池主体名不受影响（中文走 `pool.translation` 兜底）。
+- **locale 导出**：`locale_builder._collect_keys()` 的键名白名单新增 `sub_label`，否则 `df5.lootpool.*` 后缀键不会被收集、不会进入 `data/json/locale/*.json`。`build_locale_files()` 将这些合成键从 DB 查询中剥离并按语言注入（共 19 个键 × 10 语言）。
+- **前端渲染**：`MonsterLootPool` 新增 `translation`/`translation_key`/`sub_label`；`poolLabel(pool, ut, t)` 优先 `translation_key` → `translation` → 旧 `ui.monster_drops.pool.{stem}` → 去前缀 stem。保留旧 fallback，已生效的 12 个通用池不受影响。
+- **验证**：`python3 -m unittest discover -s tests` 87/87 通过（新增 `PoolLabelTest` 14 例：物品/怪物/任务物品/`_Spoils`/大小写变体/拼写别名/分类/容器/矿石/合成键/硬编码/可读英文兜底/子池借名/`Monster_` 前缀）；`api/lint.sh` 通过；`cd web && npm test` 通过（lint 0 errors / 20 既有 warnings、Prettier、tsc）；`python main.py` 全量重建（29.55s，0 错误）；全站扫描 686 个 pool 标签，**残留原始技术名 0 个**、前端渲染后页内重名 0 处；`npm run build` 退出码 0（3107 页 / 17058 文件）；Playwright 实机验证 zh-Hans/en/ja/de 四个语言页：SpectralKnight 显示 `血缚 / 物理披风 / 鬼灵骑士 / 冥界织物 / 幽冥剑柄`（英文 `Physical Cloaks / Spectral Knight`），CaveTroll 显示 `洞穴巨魔 / 洞穴巨魔·战利品 / 洞穴巨魔·杂项`（英文 `Cave Troll / Cave Troll · Loot / Cave Troll · Misc`），无 page error。
+
 ## 2026-10-12
 
 ### docs: 同步性能计划与本地化文档计数
