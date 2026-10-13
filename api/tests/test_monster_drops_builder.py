@@ -397,11 +397,11 @@ class PoolLabelTest(unittest.TestCase):
         "Text_DesignData_Item_Item_GoldCoins": "金币",
     }
 
-    def _resolve(self, lootdrop_id):
+    def _resolve(self, lootdrop_id, host_entity=""):
         from monster_drops_builder import _build_entity_key_index, resolve_pool_text
 
         index = _build_entity_key_index(self.TRANSLATIONS)
-        return resolve_pool_text(lootdrop_id, self.TRANSLATIONS, index)
+        return resolve_pool_text(lootdrop_id, self.TRANSLATIONS, index, host_entity=host_entity)
 
     def test_item_named_pool_uses_official_key(self):
         text, key, sub = self._resolve("ID_Lootdrop_Drop_Bloodbound_5001")
@@ -459,10 +459,23 @@ class PoolLabelTest(unittest.TestCase):
         text, _, _ = self._resolve("ID_Lootdrop_Drop_Lumber")
         self.assertEqual(text, "木材")
 
-    def test_unknown_pool_falls_back_to_readable_english(self):
+    def test_known_label_pool_is_translated(self):
+        """Pools with an explicit label entry never show the raw name."""
         text, key, _ = self._resolve("ID_Lootdrop_Drop_Barrel_Junk")
-        self.assertEqual(text, "Barrel Junk")
+        self.assertEqual(text, "杂物桶")
+        self.assertEqual(key, "df5.lootpool.Barrel_Junk")
+
+    def test_unknown_pool_falls_back_to_readable_english(self):
+        text, key, _ = self._resolve("ID_Lootdrop_Drop_SomeUnknownPool")
+        self.assertEqual(text, "Some Unknown Pool")
         self.assertEqual(key, "")
+
+    def test_spoils_variant_reuses_base_label(self):
+        """IceKoboldBowman_Spoils must not fall back to English."""
+        text, key, sub = self._resolve("ID_Lootdrop_Drop_IceKoboldBowman_Spoils")
+        self.assertEqual(text, "冰霜狗头人弓手")
+        self.assertEqual(key, "df5.lootpool.IceKoboldBowman")
+        self.assertEqual(sub, "df5.lootpool.Spoils")
 
     def test_sub_pool_borrows_owner_name_and_marks_suffix(self):
         """Yeti_Gear resolves to Yeti but must stay distinct from Drop_Yeti."""
@@ -477,6 +490,24 @@ class PoolLabelTest(unittest.TestCase):
         text, key, _ = self._resolve("Id_Lootdrop_Monster_CaveTroll_Misc")
         self.assertEqual(text, "洞穴巨魔")
         self.assertEqual(key, "Text_DesignData_Monster_Monster_CaveTroll")
+
+    def test_pool_abbreviating_host_uses_host_name(self):
+        """SkeletonWarlord's `Drop_Warlord` must read as the host, not "Warlord"."""
+        self.TRANSLATIONS["Text_DesignData_Monster_Monster_SkeletonWarlord"] = "骷髅督军"
+        text, key, sub = self._resolve("ID_Lootdrop_Drop_Warlord", host_entity="SkeletonWarlord")
+        self.assertEqual(text, "骷髅督军")
+        self.assertEqual(key, "Text_DesignData_Monster_Monster_SkeletonWarlord")
+        self.assertEqual(sub, "")
+
+        spoils_text, _, spoils_sub = self._resolve("ID_Lootdrop_Drop_Warlord_Spoils", host_entity="SkeletonWarlord")
+        self.assertEqual(spoils_text, text)
+        self.assertEqual(spoils_sub, "df5.lootpool.Spoils")
+
+    def test_host_fallback_needs_matching_host(self):
+        """Without a matching host the English fallback still applies."""
+        text, key, _ = self._resolve("ID_Lootdrop_Drop_Warlord", host_entity="CaveTroll")
+        self.assertEqual(text, "Warlord")
+        self.assertEqual(key, "")
 
 
 if __name__ == "__main__":

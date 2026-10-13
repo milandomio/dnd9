@@ -212,6 +212,318 @@ POOL_LABEL_TRANSLATIONS: dict[str, dict[str, str]] = {
         "pt-BR": "Essência arcana",
         "ru": "Тайная эссенция",
     },
+    "GradedRoll_CrackedTrinkets": {
+        "zh-Hans": "裂开的饰品",
+        "zh-Hant": "裂開的飾品",
+        "en": "Cracked Trinkets",
+        "de": "Rissige Schmuckstücke",
+        "es": "Abalorios agrietados",
+        "fr": "Bijoux fissurés",
+        "ja": "割れたアクセサリー",
+        "ko": "금간 장신구",
+        "pt-BR": "Berloques rachados",
+        "ru": "Треснувшие безделушки",
+    },
+    "Accessory_Rare": {
+        "zh-Hans": "稀有饰品",
+        "zh-Hant": "稀有飾品",
+        "en": "Rare Accessories",
+        "de": "Seltene Accessoires",
+        "es": "Accesorios raros",
+        "fr": "Accessoires rares",
+        "ja": "レアアクセサリー",
+        "ko": "희귀 장신구",
+        "pt-BR": "Acessórios raros",
+        "ru": "Редкие аксессуары",
+    },
+    "Quiver": {
+        "zh-Hans": "箭袋",
+        "zh-Hant": "箭袋",
+        "en": "Quiver",
+        "de": "Köcher",
+        "es": "Carcaj",
+        "fr": "Carquois",
+        "ja": "矢筒",
+        "ko": "화살통",
+        "pt-BR": "Aljava",
+        "ru": "Колчан",
+    },
+    "SkeletonSwordsman": {
+        "zh-Hans": "骷髅剑士",
+        "zh-Hant": "骷髏劍士",
+        "en": "Skeleton Swordsman",
+        "de": "Skelett-Schwertkämpfer",
+        "es": "Espadachín esqueleto",
+        "fr": "Squelette escrimeur",
+        "ja": "スケルトン剣士",
+        "ko": "해골 검사",
+        "pt-BR": "Esqueleto espadachim",
+        "ru": "Скелет-мечник",
+    },
+    "SkeletonCorpses": {
+        "zh-Hans": "骷髅尸骸",
+        "zh-Hant": "骷髏屍骸",
+        "en": "Skeleton Corpses",
+        "de": "Skelett-Leichen",
+        "es": "Cadáveres esqueleto",
+        "fr": "Cadavres de squelette",
+        "ja": "スケルトンの死体",
+        "ko": "해골 시체",
+        "pt-BR": "Corpos de esqueleto",
+        "ru": "Скелеты-трупы",
+    },
+    "SkeletonBones": {
+        "zh-Hans": "骸骨",
+        "zh-Hant": "骸骨",
+        "en": "Bones",
+        "de": "Knochen",
+        "es": "Huesos",
+        "fr": "Os",
+        "ja": "骨",
+        "ko": "뼈",
+        "pt-BR": "Ossos",
+        "ru": "Кости",
+    },
+    "Crate_Supplies": {
+        "zh-Hans": "木箱补给",
+        "zh-Hant": "木箱補給",
+        "en": "Supply Crates",
+        "de": "Vorratskisten",
+        "es": "Cajas de suministros",
+        "fr": "Caisses de ravitaillement",
+        "ja": "補給木箱",
+        "ko": "보급 상자",
+        "pt-BR": "Caixas de suprimentos",
+        "ru": "Ящики с припасами",
+    },
+    "Barrel_Junk": {
+        "zh-Hans": "杂物桶",
+        "zh-Hant": "雜物桶",
+        "en": "Junk Barrels",
+        "de": "Trümmerfässer",
+        "es": "Barriles de chatarra",
+        "fr": "Tonneaux de rebuts",
+        "ja": "がらくた樽",
+        "ko": "잡동사니 통",
+        "pt-BR": "Barris de sucata",
+        "ru": "Бочки с хламом",
+    },
+    "Barrel_Stores": {
+        "zh-Hans": "储物桶",
+        "zh-Hant": "儲物桶",
+        "en": "Storage Barrels",
+        "de": "Vorratsfässer",
+        "es": "Barriles de almacenamiento",
+        "fr": "Tonneaux de stockage",
+        "ja": "貯蔵樽",
+        "ko": "저장 통",
+        "pt-BR": "Barris de armazenamento",
+        "ru": "Бочки с запасами",
+    },
+    "PoorCoffins": {
+        "zh-Hans": "简陋棺材",
+        "zh-Hant": "簡陋棺材",
+        "en": "Poor Coffins",
+        "de": "Armselige Särge",
+        "es": "Ataúdes pobres",
+        "fr": "Cercueils modestes",
+        "ja": "粗末な棺",
+        "ko": "조잡한 관",
+        "pt-BR": "Caixões pobres",
+        "ru": "Убогие гробы",
+    },
+    "Stonetombs": {
+        "zh-Hans": "石墓",
+        "zh-Hant": "石墓",
+        "en": "Stone Tombs",
+        "de": "Steingräber",
+        "es": "Tumbas de piedra",
+        "fr": "Tombeaux de pierre",
+        "ja": "石の墓",
+        "ko": "석묘",
+        "pt-BR": "Túmulos de pedra",
+        "ru": "Каменные гробницы",
+    },
+    "Herbs": {
+        "zh-Hans": "草药",
+        "zh-Hant": "草藥",
+        "en": "Herbs",
+        "de": "Kräuter",
+        "es": "Hierbas",
+        "fr": "Herbes",
+        "ja": "薬草",
+        "ko": "약초",
+        "pt-BR": "Ervas",
+        "ru": "Травы",
+    },
+    "Pants": {
+        "zh-Hans": "裤子",
+        "zh-Hant": "褲子",
+        "en": "Pants",
+        "de": "Hosen",
+        "es": "Pantalones",
+        "fr": "Pantalons",
+        "ja": "ズボン",
+        "ko": "바지",
+        "pt-BR": "Calças",
+        "ru": "Штаны",
+    },
+    "Pots": {
+        "zh-Hans": "罐子",
+        "zh-Hant": "罐子",
+        "en": "Pots",
+        "de": "Töpfe",
+        "es": "Ollas",
+        "fr": "Pots",
+        "ja": "壺",
+        "ko": "항아리",
+        "pt-BR": "Vasos",
+        "ru": "Горшки",
+    },
+    "Utility_CrateMedium": {
+        "zh-Hans": "中型木箱道具",
+        "zh-Hant": "中型木箱道具",
+        "en": "Medium Crate Utility",
+        "de": "Mittlere Kisten-Werkzeuge",
+        "es": "Utilidad de caja mediana",
+        "fr": "Utilitaires de caisse moyenne",
+        "ja": "中型木箱の道具",
+        "ko": "중형 상자 도구",
+        "pt-BR": "Utilidades de caixa média",
+        "ru": "Инструменты среднего ящика",
+    },
+    "Trinkets_NoCoin": {
+        "zh-Hans": "饰品（不含金币）",
+        "zh-Hant": "飾品（不含金幣）",
+        "en": "Trinkets (No Coin)",
+        "de": "Schmuckstücke (ohne Münzen)",
+        "es": "Abalorios (sin monedas)",
+        "fr": "Bijoux (sans pièces)",
+        "ja": "アクセサリー（金貨なし）",
+        "ko": "장신구 (동전 없음)",
+        "pt-BR": "Berloques (sem moedas)",
+        "ru": "Безделушки (без монет)",
+    },
+    "HoardWeaponArmor": {
+        "zh-Hans": "宝藏武器护甲",
+        "zh-Hant": "寶藏武器護甲",
+        "en": "Hoard Weapon & Armor",
+        "de": "Hort-Waffen & Rüstung",
+        "es": "Armas y armadura del tesoro",
+        "fr": "Armes et armure du trésor",
+        "ja": "宝物の武器と鎧",
+        "ko": "보물 무기 및 방어구",
+        "pt-BR": "Armas e armaduras do tesouro",
+        "ru": "Оружие и броня из клада",
+    },
+    "Spawn_GoldCoinChest": {
+        "zh-Hans": "金币宝箱",
+        "zh-Hant": "金幣寶箱",
+        "en": "Gold Coin Chest",
+        "de": "Goldmünzen-Truhe",
+        "es": "Cofre de monedas de oro",
+        "fr": "Coffre de pièces d'or",
+        "ja": "金貨の宝箱",
+        "ko": "금화 보물상자",
+        "pt-BR": "Baú de moedas de ouro",
+        "ru": "Сундук с золотыми монетами",
+    },
+    "Cyclops_TrollBlood": {
+        "zh-Hans": "独眼巨人之血",
+        "zh-Hant": "獨眼巨人之血",
+        "en": "Cyclops Troll Blood",
+        "de": "Zyklopen-Trollblut",
+        "es": "Sangre de trol cíclope",
+        "fr": "Sang de troll cyclope",
+        "ja": "サイクロプスのトロールの血",
+        "ko": "키클롭스 트롤의 피",
+        "pt-BR": "Sangue de troll ciclope",
+        "ru": "Кровь тролля-циклопа",
+    },
+    "IceKoboldBowman": {
+        "zh-Hans": "冰霜狗头人弓手",
+        "zh-Hant": "冰霜狗頭人弓手",
+        "en": "Ice Kobold Bowman",
+        "de": "Eiskobold-Bogenschütze",
+        "es": "Arquero kobold de hielo",
+        "fr": "Archer kobold des glaces",
+        "ja": "氷のコボルド弓兵",
+        "ko": "얼음 코볼드 궁수",
+        "pt-BR": "Arqueiro kobold de gelo",
+        "ru": "Ледяной кобольд-лучник",
+    },
+    "IceHarpy_Jewelry": {
+        "zh-Hans": "冰霜鹰身女妖首饰",
+        "zh-Hant": "冰霜鷹身女妖首飾",
+        "en": "Ice Harpy Jewelry",
+        "de": "Eisharpyen-Schmuck",
+        "es": "Joyas de arpía de hielo",
+        "fr": "Bijoux de harpie des glaces",
+        "ja": "氷のハーピーの宝飾品",
+        "ko": "얼음 하피 장신구",
+        "pt-BR": "Joias de harpia de gelo",
+        "ru": "Украшения ледяной гарпии",
+    },
+    "Whitewalker": {
+        "zh-Hans": "白行者",
+        "zh-Hant": "白行者",
+        "en": "Whitewalker",
+        "de": "Weißwandler",
+        "es": "Caminante blanco",
+        "fr": "Marcheur blanc",
+        "ja": "ホワイトウォーカー",
+        "ko": "화이트워커",
+        "pt-BR": "Caminhante branco",
+        "ru": "Белый ходок",
+    },
+    "WebSpider": {
+        "zh-Hans": "网蛛",
+        "zh-Hant": "網蛛",
+        "en": "Web Spider",
+        "de": "Netzspinne",
+        "es": "Araña de telaraña",
+        "fr": "Araignée des toiles",
+        "ja": "ウェブスパイダー",
+        "ko": "거미줄 거미",
+        "pt-BR": "Aranha-teia",
+        "ru": "Паук-тенётник",
+    },
+    "Banshee2": {
+        "zh-Hans": "报丧女妖",
+        "zh-Hant": "報喪女妖",
+        "en": "Banshee",
+        "de": "Banshee",
+        "es": "Banshee",
+        "fr": "Banshee",
+        "ja": "バンシー",
+        "ko": "밴시",
+        "pt-BR": "Banshee",
+        "ru": "Банши",
+    },
+    "FlameButterflyUnique": {
+        "zh-Hans": "赤焰蝶（独特）",
+        "zh-Hant": "赤焰蝶（獨特）",
+        "en": "Flame Butterfly (Unique)",
+        "de": "Flammenschmetterling (Einzigartig)",
+        "es": "Mariposa de llama (única)",
+        "fr": "Papillon de flamme (unique)",
+        "ja": "炎の蝶（ユニーク）",
+        "ko": "불꽃 나비 (고유)",
+        "pt-BR": "Borboleta de chama (única)",
+        "ru": "Пламенная бабочка (уникальная)",
+    },
+    "Slime_Quest": {
+        "zh-Hans": "史莱姆任务",
+        "zh-Hant": "史萊姆任務",
+        "en": "Slime Quest",
+        "de": "Schleim-Quest",
+        "es": "Misión de slime",
+        "fr": "Quête de slime",
+        "ja": "スライムクエスト",
+        "ko": "슬라임 퀘스트",
+        "pt-BR": "Missão de slime",
+        "ru": "Задание слизи",
+    },
     "Spoils": {
         "zh-Hans": "战利品",
         "zh-Hant": "戰利品",
@@ -345,6 +657,7 @@ _POOL_ENTITY_NAME_ALIASES = {
 
 
 _POOL_MISC_SUFFIX_RE = re.compile(r"_(?:Misc|Gear|Jewelry|Ore|Spoils)$", re.IGNORECASE)
+_POOL_TRAILING_DIGITS_RE = re.compile(r"\d+$")
 
 # Sub-pool markers -> synthetic locale key for the suffix the UI appends to the
 # owning entity's name. Keeps "Yeti" / "Yeti_Gear" / "Yeti_Spoils" apart.
@@ -386,6 +699,10 @@ def _lookup_entity_key(
     alias = _POOL_ENTITY_NAME_ALIASES.get(spoils)
     if alias and alias not in names:
         names.append(alias)
+    # Variant pools append an index (Banshee2 -> Banshee).
+    digits = _POOL_TRAILING_DIGITS_RE.sub("", spoils)
+    if digits != spoils and digits not in names:
+        names.append(digits)
     for position, name in enumerate(names):
         for key in (
             f"Text_DesignData_Item_Item_{name}",
@@ -408,6 +725,7 @@ def resolve_pool_text(
     lootdrop_id: str,
     translations: dict[str, str],
     entity_index: dict[str, str] | None = None,
+    host_entity: str = "",
 ) -> tuple[str, str, str]:
     """Resolve a lootdrop pool id to (display text, translation key, sub_label).
 
@@ -425,13 +743,22 @@ def resolve_pool_text(
     owning entity's name for sub-pools (`_Spoils`, `_Gear`, `_Ore`, ...), so
     "Yeti" / "Yeti_Gear" / "Yeti_Spoils" stay distinguishable. Empty when the
     pool name stands on its own.
+
+    ``host_entity`` is the page's entity name. When the pool merely abbreviates
+    it (`SkeletonWarlord` -> `Warlord`) and no official key exists under the
+    short name, the host's own name is used instead of an English fallback.
     """
     core = pool_core_name(lootdrop_id)
+    spoils = _POOL_SPOILS_SUFFIX_RE.sub("", core)
+    sub_label = _POOL_SUBPOOL_SUFFIXES["spoils"] if spoils != core else ""
 
-    label_key = f"{POOL_LABEL_I18N_PREFIX}{core}"
-    label_value = translations.get(label_key) or POOL_LABEL_TRANSLATIONS.get(core, {}).get("zh-Hans")
-    if label_value:
-        return label_value, label_key, ""
+    # Label-only pools with no Game.json key. Try the bare name too so a
+    # `_Spoils` variant reuses the base pool's label (IceKoboldBowman_Spoils).
+    for candidate in (core, spoils):
+        label_key = f"{POOL_LABEL_I18N_PREFIX}{candidate}"
+        label_value = translations.get(label_key) or POOL_LABEL_TRANSLATIONS.get(candidate, {}).get("zh-Hans")
+        if label_value:
+            return label_value, label_key, sub_label
 
     category_key = _POOL_CATEGORY_KEYS.get(core)
     if category_key:
@@ -445,8 +772,6 @@ def resolve_pool_text(
         if value:
             return value, prop_key, ""
 
-    spoils = _POOL_SPOILS_SUFFIX_RE.sub("", core)
-    sub_label = _POOL_SUBPOOL_SUFFIXES["spoils"] if spoils != core else ""
     entity_key, borrowed = _lookup_entity_key(spoils, translations, entity_index)
     if entity_key:
         return translations[entity_key], entity_key, sub_label or _sub_label_of(spoils, borrowed)
@@ -455,6 +780,13 @@ def resolve_pool_text(
     hardcoded = HARDCODED_TRANSLATIONS.get(spoils)
     if hardcoded:
         return hardcoded, "", sub_label
+
+    # The pool may just abbreviate the host (SkeletonWarlord -> Warlord); reuse
+    # the host's name rather than showing an English fallback on its own page.
+    if host_entity and host_entity.lower().endswith(spoils.lower()) and spoils.lower() != host_entity.lower():
+        host_key, _ = _lookup_entity_key(host_entity, translations, entity_index)
+        if host_key:
+            return translations[host_key], host_key, sub_label
 
     # Last resort: a readable English reading of the technical pool name so the
     # UI never shows a raw id such as "Drop_Barrel_Junk".
@@ -652,7 +984,9 @@ def build_loot_pools(
             )
         other.sort(key=lambda pair: lootdrop_stem(pair[0]).lower())
         for lootdrop_id, items in other:
-            pool_translation, pool_key, pool_sub_label = resolve_pool_text(lootdrop_id, translations, entity_index)
+            pool_translation, pool_key, pool_sub_label = resolve_pool_text(
+                lootdrop_id, translations, entity_index, host_entity=monster
+            )
             loot_pools.append(
                 {
                     "id": lootdrop_id,
