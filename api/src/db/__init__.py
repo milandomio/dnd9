@@ -173,6 +173,9 @@ class DatabaseManager:
     def get_all_spawner_entries(self) -> list[dict]:
         return self.repos.lootdrops.get_all_spawner_entries()
 
+    def get_session_spawn_limits(self) -> dict[str, int]:
+        return self.repos.lootdrops.get_session_spawn_limits()
+
     def get_item_drop_rate(self, lootdrop_group_id: str, item_name: str, full_grade: int) -> float:
         return self.repos.lootdrops.get_item_drop_rate(lootdrop_group_id, item_name, full_grade)
 

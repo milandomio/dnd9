@@ -178,6 +178,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate': '该品质未配置掉落，爆率：0%',
     'ui.detail.ref_rate': '参考爆率：',
+    'ui.detail.session_spawn_limit': '一次对局最多出现 {count} 个',
     'ui.detail.color_legend': '颜色说明：',
     'ui.detail.z_above_ground': 'Z > 299 (高于地面)',
     'ui.detail.z_normal_height': '-299 ≤ Z ≤ 299 (正常高度)',
@@ -472,6 +473,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       'This rarity is not configured to drop. Drop rate: 0%',
     'ui.detail.ref_rate': 'Reference rates: ',
+    'ui.detail.session_spawn_limit': 'At most {count} per run',
     'ui.detail.color_legend': 'Color legend:',
     'ui.detail.z_above_ground': 'Z > 299 (Above ground)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Normal height)',
@@ -771,6 +773,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       'Diese Seltenheit ist nicht als Drop konfiguriert. Droprate: 0%',
     'ui.detail.ref_rate': 'Referenzraten: ',
+    'ui.detail.session_spawn_limit': 'Maximal {count} pro Durchgang',
     'ui.detail.color_legend': 'Farblegende:',
     'ui.detail.z_above_ground': 'Z > 299 (Oberhalb des Bodens)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Normale Hoehe)',
@@ -1073,6 +1076,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       'Esta rareza no esta configurada como botin. Probabilidad: 0%',
     'ui.detail.ref_rate': 'Tasas de referencia: ',
+    'ui.detail.session_spawn_limit': 'Máximo {count} por partida',
     'ui.detail.color_legend': 'Leyenda de color:',
     'ui.detail.z_above_ground': 'Z > 299 (Por encima del suelo)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Altura normal)',
@@ -1374,6 +1378,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       "Cette rarete n'est pas configuree comme butin. Taux: 0%",
     'ui.detail.ref_rate': 'Taux de référence : ',
+    'ui.detail.session_spawn_limit': 'Au maximum {count} par partie',
     'ui.detail.color_legend': 'Légende des couleurs :',
     'ui.detail.z_above_ground': 'Z > 299 (Au-dessus du sol)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Hauteur normale)',
@@ -1672,6 +1677,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       'このレアリティはドロップに設定されていません。ドロップ率: 0%',
     'ui.detail.ref_rate': '参考ドロップ率: ',
+    'ui.detail.session_spawn_limit': '1回のプレイで最大{count}体',
     'ui.detail.color_legend': '色の凡例:',
     'ui.detail.z_above_ground': 'Z > 299 (地上より上)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (通常の高さ)',
@@ -1965,6 +1971,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       '이 등급은 드롭으로 설정되지 않았습니다. 드롭률: 0%',
     'ui.detail.ref_rate': '참고 드롭률: ',
+    'ui.detail.session_spawn_limit': '한 판당 최대 {count}마리',
     'ui.detail.color_legend': '색상 설명:',
     'ui.detail.z_above_ground': 'Z > 299 (지면 위)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (정상 높이)',
@@ -2264,6 +2271,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       'Esta raridade nao esta configurada para cair. Taxa: 0%',
     'ui.detail.ref_rate': 'Taxas de referência: ',
+    'ui.detail.session_spawn_limit': 'Máximo {count} por partida',
     'ui.detail.color_legend': 'Legenda de cores:',
     'ui.detail.z_above_ground': 'Z > 299 (Acima do solo)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Altura normal)',
@@ -2563,6 +2571,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.no_drop_rate':
       'Эта редкость не настроена для выпадения. Шанс: 0%',
     'ui.detail.ref_rate': 'Справочные шансы: ',
+    'ui.detail.session_spawn_limit': 'Не более {count} за забег',
     'ui.detail.color_legend': 'Цветовая легенда:',
     'ui.detail.z_above_ground': 'Z > 299 (Выше земли)',
     'ui.detail.z_normal_height': '-299 <= Z <= 299 (Нормальная высота)',
@@ -2854,6 +2863,7 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.detail.module_spawn_rate': '{rate}%',
     'ui.detail.no_drop_rate': '此稀有度未設定掉落。掉落率：0%',
     'ui.detail.ref_rate': '參考爆率：',
+    'ui.detail.session_spawn_limit': '一次對局最多出現 {count} 個',
     'ui.detail.color_legend': '顏色說明：',
     'ui.detail.z_above_ground': 'Z > 299 (高於地面)',
     'ui.detail.z_normal_height': '-299 ≤ Z ≤ 299 (正常高度)',

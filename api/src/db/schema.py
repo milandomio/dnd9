@@ -135,7 +135,8 @@ class SchemaManager:
                 entity_name TEXT NOT NULL DEFAULT '',
                 spawn_rate REAL NOT NULL DEFAULT 100.0,
                 dungeon_grades TEXT NOT NULL DEFAULT '[]',
-                lootdrop_group_id TEXT NOT NULL DEFAULT ''
+                lootdrop_group_id TEXT NOT NULL DEFAULT '',
+                session_spawn_limit INTEGER NOT NULL DEFAULT 0
             );
 
             CREATE TABLE IF NOT EXISTS lootdrop_groups (

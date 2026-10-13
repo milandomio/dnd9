@@ -122,10 +122,24 @@ class SpawnersImporter:
             for item in items:
                 ldg = item.get("LootDropGroupId", {}) or {}
                 ldg_path = ldg.get("AssetPathName", "")
-                if not ldg_path:
-                    continue
                 raw_rate = item.get("SpawnRate", 10000)
                 dungeon_grades = item.get("DungeonGrades", []) or []
+                session_spawn_limit = item.get("SessionSpawnLimit") or 0
+                if not isinstance(session_spawn_limit, int):
+                    session_spawn_limit = 0
+                entity_name = ""
+                for id_key in ("MonsterId", "PropsId"):
+                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
+                    if id_path:
+                        raw = ue_asset_base_name(id_path) or ""
+                        entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
+                        break
+                # NPC spawners (e.g. GoblinSmuggler) carry no lootdrop group; keep
+                # the row so the per-session spawn limit reaches the entity export.
+                if not ldg_path:
+                    if session_spawn_limit > 0 and entity_name:
+                        rows.append((keyword, entity_name, 100.0, json.dumps(dungeon_grades), "", session_spawn_limit))
+                    continue
                 if dungeon_grades:
                     _suffixes = set()
                     for g in dungeon_grades:
@@ -139,16 +153,18 @@ class SpawnersImporter:
                     spawn_rate = _round_rate(float(Decimal(str(100 * raw_rate)) / Decimal("10000")))
                 spawn_rate = min(spawn_rate, 100.0)
                 ldg_id = ue_asset_base_name(ldg_path) or ""
-                entity_name = ""
-                for id_key in ("MonsterId", "PropsId"):
-                    id_path = (item.get(id_key, {}) or {}).get("AssetPathName", "")
-                    if id_path:
-                        raw = ue_asset_base_name(id_path) or ""
-                        entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
-                        break
-                rows.append((keyword, entity_name, spawn_rate, json.dumps(dungeon_grades), ldg_id))
+                rows.append(
+                    (
+                        keyword,
+                        entity_name,
+                        spawn_rate,
+                        json.dumps(dungeon_grades),
+                        ldg_id,
+                        session_spawn_limit,
+                    )
+                )
         c.executemany(
-            "INSERT INTO spawner_entries (spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO spawner_entries (spawner_keyword, entity_name, spawn_rate, dungeon_grades, lootdrop_group_id, session_spawn_limit) VALUES (?, ?, ?, ?, ?, ?)",
             rows,
         )
         self.conn.commit()

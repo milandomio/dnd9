@@ -411,6 +411,7 @@ def run(
             "monsters": {},
             "props": {},
         }
+        session_spawn_limits = db.get_session_spawn_limits()
 
         with pipe.step("items export") as ctx:
             items_index = export_items(
@@ -443,6 +444,7 @@ def run(
                 map_to_module,
                 _sub_pool_info,
                 entity_data_by_type["monsters"],
+                session_spawn_limits,
             )
             for e in monsters_index:
                 entity_page_map[e["name"]] = f"monsters/{e['name']}"
