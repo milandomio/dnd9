@@ -50,15 +50,39 @@ function isEventCurrencyPool(pool: MonsterLootPool): boolean {
   return /EventCurrency/i.test(raw);
 }
 
-function poolLabel(pool: MonsterLootPool, ut: (key: string) => string): string {
+function poolLabel(
+  pool: MonsterLootPool,
+  ut: (key: string) => string,
+  t: (key: string | undefined, fallback: string) => string
+): string {
   if (pool.kind === 'quest') return ut('ui.monster_drops.quest');
   if (pool.kind === 'artifact') return ut('ui.monster_drops.artifact');
   if (pool.kind === 'consumable') return ut('ui.monster_drops.consumable');
-  const raw = pool.lootdrop_id || pool.id;
-  const stem = raw.replace(/^Id_Lootdrop_/i, '').replace(/^ID_Lootdrop_/i, '');
-  const mapped = ut(`ui.monster_drops.pool.${stem}`);
-  if (mapped !== `ui.monster_drops.pool.${stem}`) return mapped;
-  return stem.replace(/^(Drop_|Spawn_)/, '');
+  // Backend-resolved label (official Game.json key or synthetic df5.lootpool.*)
+  let label: string | null = null;
+  if (pool.translation_key) {
+    const resolved = t(pool.translation_key, pool.translation || '');
+    if (resolved) label = resolved;
+  }
+  if (label === null && pool.translation) label = pool.translation;
+  if (label === null) {
+    const raw = pool.lootdrop_id || pool.id;
+    const stem = raw
+      .replace(/^Id_Lootdrop_/i, '')
+      .replace(/^ID_Lootdrop_/i, '');
+    const mapped = ut(`ui.monster_drops.pool.${stem}`);
+    label =
+      mapped !== `ui.monster_drops.pool.${stem}`
+        ? mapped
+        : stem.replace(/^(Drop_|Spawn_)/, '');
+  }
+  // Sub-pools (`_Spoils`, `_Gear`, `_Ore`) reuse the owning entity name; append
+  // the localized sub-label so two pools of the same entity stay distinct.
+  if (pool.sub_label) {
+    const sub = t(pool.sub_label, '');
+    if (sub) return `${label} · ${sub}`;
+  }
+  return label;
 }
 
 interface MonsterDropSwitchProps {
@@ -118,7 +142,7 @@ export default function MonsterDropSwitch({ pools }: MonsterDropSwitchProps) {
                   background: isActive ? tokens.surface : tokens.card,
                 }}
               >
-                {poolLabel(pool, ut)}
+                {poolLabel(pool, ut, t)}
               </button>
             );
           })}

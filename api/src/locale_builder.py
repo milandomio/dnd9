@@ -8,6 +8,7 @@ from config import (
     SUPERHOARD_I18N_KEY,
     hardcoded_locale_entries,
 )
+from monster_drops_builder import POOL_LABEL_I18N_PREFIX, POOL_LABEL_TRANSLATIONS
 
 SUPPORTED_LANGUAGES = (
     "zh-Hans",
@@ -42,6 +43,7 @@ def _collect_keys(obj, used: set[str]):
             "dungeon_translation_key",
             "rarity_translation_key",
             "item_category_key",
+            "sub_label",
         ):
             tk = obj.get(key)
             if tk and isinstance(tk, str):
@@ -139,6 +141,8 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
     used_keys = {key for key in used_keys if not key.startswith("ui.")}
     used_keys.add(SUPERHOARD_I18N_KEY)
     used_keys.update(FILTER_MODE_LOCALE_KEYS)
+    pool_label_keys = {key for key in used_keys if key.startswith(POOL_LABEL_I18N_PREFIX)}
+    used_keys -= pool_label_keys
     fallback_translations = db.get_translations_map("zh-Hans")
 
     exported: list[str] = []
@@ -151,6 +155,14 @@ def build_locale_files(db, output_dir: Path, lootdrop_keys: set[str] | None = No
         else:
             filtered = dict(all_translations)
         filtered.update(hardcoded_locale_entries(lang, used_keys))
+        # Lootdrop pool labels have no Game.json key; inject the synthetic ones.
+        for key in pool_label_keys:
+            name = key[len(POOL_LABEL_I18N_PREFIX) :]
+            value = POOL_LABEL_TRANSLATIONS.get(name, {}).get(lang) or POOL_LABEL_TRANSLATIONS.get(name, {}).get(
+                "zh-Hans"
+            )
+            if value:
+                filtered[key] = value
         # Apply rare module translation key overrides
         from config import RARE_MODULE_TRANSLATIONS
 
