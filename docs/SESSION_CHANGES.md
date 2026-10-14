@@ -98,6 +98,14 @@
   7. 详情页字号整体上调一档（h1 32→34、槽位标题 16→17、物品名与价格 14→15、辅助信息 11→12）。
 - **验证**：`python3 -m unittest discover -s tests` 123/123 通过（新增 2 例：区域计数等于详情页实际渲染卡片数、区域计数取各难度最大值）；`api/lint.sh` 通过；`cd web && npm run lint` 0 errors / 20 既有 warnings、Prettier 与 `npx tsc --noEmit` 通过；`python main.py` 重建后列表页 3 区域计数为 73/62/60（含 12/7/6 限定）；`npm run build` 退出码 0（3111 页）；Playwright 实机验证：头部「共 73 种商品」与实际 73 张卡片一致、列表页 Crypts 73 = 详情页 73、说明文案全文仅 1 次、`100%` 已消失、概率统一为 2 位有效数字、390px 单列且卡片满宽、无 page error。
 
+### fix: 地牢商店商品点击改为触发搜索，避免死链
+
+- **改动原因**：用户反馈 `zh-Hans/dungeon_shops/IceCavern` 详情页点击幸运药水不一定能跳转。排查确认 `LuckPotion` **从不出现在掉落表中**（`lootdrops.json` 521 条页面里没有它），而商店商品卡片此前统一 `Link` 到 `/${lang}/lootdrops/${item.page}/`，因此是一枚死链。全站扫描 387 条商品条目、70 个不重复物品，其中仅 `LuckPotion` 缺页面（12 条条目受影响）。
+- **变更文件**：`web/src/pages/DungeonShopDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`ShopItemCard` 由 `<Link>` 改为 `<div role="button" tabIndex={0}>`，点击与回车/空格均执行 `navigate(location.pathname, { state: { searchQuery: label } })`，复用 NavBar 已有的 `location.state.searchQuery` 机制把物品名灌进顶部搜索框（与商人名、任务目标放大镜同一套通路）。保留键盘可达性（`onKeyDown` 处理 Enter/Space 并 `preventDefault`），并加 `title` 提示。移除不再使用的 `Link` 导入。
+- **已知限制**：`LuckPotion` 本身也不在 `search_index` 中，因此搜"幸运药水"仍无结果——用户已确认接受此权衡。若后续要让它可搜，需把商店商品补进 `index_export.build_and_save_indexes()` 的搜索索引。
+- **验证**：`npx tsc --noEmit` 通过、`npm run lint` 0 errors / 20 既有 warnings、Prettier 通过；`npm run build` 退出码 0（3111 页）；Playwright 实机验证 IceCavern 详情页：指向 `/lootdrops/LuckPotion` 的链接数 **0**（死链已移除），点击幸运药水后搜索框内容为 `幸运药水`，点击治疗药水后为 `治疗药水`，卡片 `tabindex=0`，无 page error。
+
 ## 2026-10-12
 
 ### docs: 同步性能计划与本地化文档计数
