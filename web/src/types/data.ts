@@ -110,7 +110,7 @@ export interface MonsterLootItem {
 
 export interface MonsterLootPool {
   id: string;
-  kind: 'quest' | 'artifact' | 'consumable' | 'pool';
+  kind: 'quest' | 'artifact' | 'consumable' | 'misc' | 'pool';
   lootdrop_id: string | null;
   translation?: string;
   translation_key?: string;

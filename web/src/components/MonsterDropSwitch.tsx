@@ -58,6 +58,7 @@ function poolLabel(
   if (pool.kind === 'quest') return ut('ui.monster_drops.quest');
   if (pool.kind === 'artifact') return ut('ui.monster_drops.artifact');
   if (pool.kind === 'consumable') return ut('ui.monster_drops.consumable');
+  if (pool.kind === 'misc') return ut('ui.monster_drops.misc');
   // Backend-resolved label (official Game.json key or synthetic df5.lootpool.*)
   let label: string | null = null;
   if (pool.translation_key) {

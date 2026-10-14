@@ -53,6 +53,18 @@
 - **前端渲染**：`MonsterLootPool` 新增 `translation`/`translation_key`/`sub_label`；`poolLabel(pool, ut, t)` 优先 `translation_key` → `translation` → 旧 `ui.monster_drops.pool.{stem}` → 去前缀 stem。保留旧 fallback，已生效的 12 个通用池不受影响。
 - **验证**：`python3 -m unittest discover -s tests` 87/87 通过（新增 `PoolLabelTest` 14 例：物品/怪物/任务物品/`_Spoils`/大小写变体/拼写别名/分类/容器/矿石/合成键/硬编码/可读英文兜底/子池借名/`Monster_` 前缀）；`api/lint.sh` 通过；`cd web && npm test` 通过（lint 0 errors / 20 既有 warnings、Prettier、tsc）；`python main.py` 全量重建（29.55s，0 错误）；全站扫描 686 个 pool 标签，**残留原始技术名 0 个**、前端渲染后页内重名 0 处；`npm run build` 退出码 0（3107 页 / 17058 文件）；Playwright 实机验证 zh-Hans/en/ja/de 四个语言页：SpectralKnight 显示 `血缚 / 物理披风 / 鬼灵骑士 / 冥界织物 / 幽冥剑柄`（英文 `Physical Cloaks / Spectral Knight`），CaveTroll 显示 `洞穴巨魔 / 洞穴巨魔·战利品 / 洞穴巨魔·杂项`（英文 `Cave Troll / Cave Troll · Loot / Cave Troll · Misc`），无 page error。
 
+### feat: 单物品掉落池合并为【杂项】标签页
+
+- **改动原因**：用户反馈掉落物表被大量「一个池只装一个物品」的标签割裂——例如 `SkeletonWarlord` 页有 `坟墓精华 / 蛆虫 / 旧布 / 督军的铠甲残片 / 督军的断剑` 等独立标签，每个标签内容与标签名完全重复，既占满标签栏又无信息量。全站扫描确认共 340 个单物品池分布在 148 个页面上，其中 216 个是 `QuestItem_*` 池（**全部**恰好只有 1 个物品）。
+- **变更文件**：`api/src/monster_drops_builder.py`、`api/tests/test_monster_drops_builder.py`、`web/src/types/data.ts`、`web/src/components/MonsterDropSwitch.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `build_loot_pools()` 新增 `misc_items` 收集容器。在既有的「单物品消耗品并入 consumable」判定**之后**追加分支：`len(remaining_deduped) == 1` 的池不再独立成 tab，而是并入 `misc_items`。顺序很重要——消耗品优先，保持原有 `consumable` 行为不变。
+  2. 合并后的杂项池以 `{"id": "misc", "kind": "misc", "lootdrop_id": None, "items": _dedupe_items(misc_items)}` 形式**追加到池列表末尾**，使具名池（金币、宝藏、披风等）继续保持前置标签位。物品按 `page` 去重（`_dedupe_items`），与既有合并池一致。
+  3. 前端 `MonsterLootPool.kind` 联合类型新增 `'misc'`；`poolLabel()` 增加 `pool.kind === 'misc'` → `ut('ui.monster_drops.misc')` 分支，与 `quest`/`artifact`/`consumable` 走同一套渲染路径（无需改动渲染与事件逻辑）。
+  4. `uiLocale.ts` 为 10 种语言新增 `ui.monster_drops.misc`（杂项/Misc/Sonstiges/Varios/Divers/その他/기타/Diversos/Разное/雜項）。UI 文案不走 locale 字典（`locale_builder.py` 过滤 `ui.` 前缀），故无需重建 locale 产物。
+- **不误伤重要池的验证**：具名通用池在真实数据中均为多物品，不受影响——`Drop_Gems` 4 项、`Spawn_Treasure` 15 项、`Drop_Trinkets` 17 项、`Drop_Utility` 17 项、`Drop_HoardTreasure` 26 项、`Drop_Crates` 166 项、`Drop_Coin` 2 项、`LootGoblin_StolenGoods` 14 项。`RuinsGolem` 的 `_Ore` 子池有 4 项，保留独立标签「废墟魔像 · 矿石」；其单物品 `_Spoils` 池才并入 misc。
+- **验证**：`python3 -m unittest discover -s tests` 95/95 通过（新增 `MiscPoolMergeTest` 4 例：多个单物品池合并为单一 misc、多物品池保留独立标签且 misc 置尾、misc 内按 page 去重、无单物品池时不生成 misc；另更新 4 个以单物品池为夹具的既有用例，其核心断言意图保持不变）；`api/lint.sh` 通过；`cd web && npm run lint` 0 errors / 20 既有 warnings、`npx tsc --noEmit` 通过；`python main.py` 全量重建后 `data/json/monsters/SkeletonWarlord.json` 由 11 个池变为 5 个（`artifact / consumable / 物理披风 / 骷髅督军 / misc`），misc 内 6 个物品与合并前逐一对应、无丢失；全站标签总数 **745 → 554（减少 191，约 25%）**，148 个页面获得杂项标签；`npm run build` 退出码 0（3107 页 / 17058 文件）；Playwright 实机验证 zh-Hans/en/ja：SkeletonWarlord 标签栏为 `神器 / 消耗品 / 物理披风 / 骷髅督军 / 杂项`（英文 `Artifact / Consumable / Physical Cloaks / Skeleton Warlord / Misc`，日文 `その他`），点击杂项后正确列出 6 个物品，RuinsGolem 保留 `废墟魔像 · 矿石` 独立标签且 misc 仅含 `小碎石 / 萤火虫之腹`，无 page error。
+
 ## 2026-10-12
 
 ### docs: 同步性能计划与本地化文档计数
