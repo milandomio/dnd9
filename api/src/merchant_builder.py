@@ -11,6 +11,7 @@ shop pages read the same region names as the module pages (哥布林洞穴 / 寒
 import json
 from pathlib import Path
 
+from consumable_effects import resolve_item_effects
 from monster_drops_builder import fold_item_page
 
 # Merchant variant regions -> the single dungeon-floor label that names that
@@ -53,6 +54,8 @@ def build_shop_data(
     translations: dict[str, str],
     item_index: dict[str, dict],
     region_labels: dict[str, str],
+    effect_index: dict[str, dict] | None = None,
+    item_ability_dir: Path | None = None,
 ) -> dict[str, object]:
     """Assemble the index + per-region shop payloads.
 
@@ -63,6 +66,13 @@ def build_shop_data(
     language does not load the locale dictionary on the client, so anything the
     UI must show in zh-Hans has to travel inside the JSON.
     """
+    # Consumables keep their numbers in gameplay-effect assets rather than in the
+    # item JSON, so resolve them once for every item the shop sells.
+    item_effects: dict[str, dict] = {}
+    if effect_index and item_ability_dir:
+        sold = {row["item_name"] for row in merchant_data["stock"]}
+        item_effects = resolve_item_effects(sold, effect_index, item_ability_dir)
+
     merchants = {}
     for m in merchant_data["merchants"]:
         entry = dict(m)
@@ -159,6 +169,7 @@ def build_shop_data(
                     "chance": chance,
                     "rarity": SUFFIX_RARITY.get(suffix or "", ""),
                     "map_exclusive": page not in other_items,
+                    "effect": item_effects.get(row["item_name"]),
                     "_miss": 1 - chance,
                 }
 

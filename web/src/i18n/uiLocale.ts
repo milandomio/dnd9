@@ -21,6 +21,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance} 概率',
     'ui.shops.chance_hint':
       '每个槽位每局随机刷出商品：多数槽位抽 1 种，材料槽位抽 2 种（同一张表抽两次）。下方百分比是该商品当次出现的概率。',
+    'ui.shops.effect.luck': '幸运',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': '随机获得以下效果之一',
     'ui.shops.rarity.poor': '粗糙',
     'ui.shops.rarity.common': '普通',
     'ui.shops.rarity.uncommon': '优秀',
@@ -353,6 +356,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance} chance',
     'ui.shops.chance_hint':
       'Each slot rolls per run: most slots pick 1 item, the material slot picks 2 (the same table twice). The percentage is that item’s chance of appearing.',
+    'ui.shops.effect.luck': 'Luck',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': 'Randomly grants one of the following',
     'ui.shops.rarity.poor': 'Poor',
     'ui.shops.rarity.common': 'Common',
     'ui.shops.rarity.uncommon': 'Uncommon',
@@ -690,6 +696,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance} Chance',
     'ui.shops.chance_hint':
       'Jeder Slot zieht pro Run: die meisten 1 Artikel, der Material-Slot 2 (dieselbe Tabelle zweimal). Der Prozentsatz ist die Chance, dass der Artikel erscheint.',
+    'ui.shops.effect.luck': 'Glück',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': 'Gewährt zufällig einen der folgenden Effekte',
     'ui.shops.rarity.poor': 'Roh',
     'ui.shops.rarity.common': 'Gewöhnlich',
     'ui.shops.rarity.uncommon': 'Ungewöhnlich',
@@ -1031,6 +1040,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance} prob.',
     'ui.shops.chance_hint':
       'Cada ranura sortea por partida: la mayoría 1 artículo, la ranura de materiales 2 (la misma tabla dos veces). El porcentaje es la probabilidad de que aparezca.',
+    'ui.shops.effect.luck': 'Suerte',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': 'Otorga aleatoriamente uno de los siguientes',
     'ui.shops.rarity.poor': 'Tosco',
     'ui.shops.rarity.common': 'Común',
     'ui.shops.rarity.uncommon': 'Poco común',
@@ -1375,6 +1387,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance} chance',
     'ui.shops.chance_hint':
       'Chaque emplacement tire par partie : la plupart 1 article, l’emplacement de matériaux 2 (deux fois la même table). Le pourcentage est la chance d’apparition.',
+    'ui.shops.effect.luck': 'Chance',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': 'Accorde aléatoirement l’un des effets suivants',
     'ui.shops.rarity.poor': 'Brut',
     'ui.shops.rarity.common': 'Commun',
     'ui.shops.rarity.uncommon': 'Peu commun',
@@ -1718,6 +1733,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance}',
     'ui.shops.chance_hint':
       '各スロットは1回につき抽選します。多くは1種、素材スロットは2種（同じ表を2回）。割合はその商品が出現する確率です。',
+    'ui.shops.effect.luck': '幸運',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': '以下のいずれかの効果をランダムで獲得',
     'ui.shops.rarity.poor': '粗悪',
     'ui.shops.rarity.common': 'コモン',
     'ui.shops.rarity.uncommon': 'アンコモン',
@@ -2057,6 +2075,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance}',
     'ui.shops.chance_hint':
       '각 슬롯은 판당 추첨합니다. 대부분 1종, 재료 슬롯은 2종(같은 표를 두 번). 표시된 비율은 해당 상품이 등장할 확률입니다.',
+    'ui.shops.effect.luck': '행운',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': '다음 중 하나를 무작위로 획득',
     'ui.shops.rarity.poor': '조악',
     'ui.shops.rarity.common': '일반',
     'ui.shops.rarity.uncommon': '고급',
@@ -2392,6 +2413,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance} chance',
     'ui.shops.chance_hint':
       'Cada slot sorteia por partida: a maioria 1 item, o slot de materiais 2 (a mesma tabela duas vezes). A porcentagem é a chance de o item aparecer.',
+    'ui.shops.effect.luck': 'Sorte',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': 'Concede aleatoriamente um dos seguintes',
     'ui.shops.rarity.poor': 'Bruto',
     'ui.shops.rarity.common': 'Comum',
     'ui.shops.rarity.uncommon': 'Incomum',
@@ -2734,6 +2758,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance}',
     'ui.shops.chance_hint':
       'Каждый слот выдаёт за забег: большинство 1 предмет, слот материалов 2 (одна таблица дважды). Процент — шанс появления предмета.',
+    'ui.shops.effect.luck': 'Удача',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': 'Случайно даёт один из эффектов',
     'ui.shops.rarity.poor': 'Грубый',
     'ui.shops.rarity.common': 'Обычный',
     'ui.shops.rarity.uncommon': 'Необычный',
@@ -3075,6 +3102,9 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.chance': '{chance} 機率',
     'ui.shops.chance_hint':
       '每個槽位每局隨機刷出商品：多數槽位抽 1 種，材料槽位抽 2 種（同一張表抽兩次）。下方百分比是該商品當次出現的機率。',
+    'ui.shops.effect.luck': '幸運',
+    'ui.shops.effect.range': '+{min}~{max}',
+    'ui.shops.effect.hint': '隨機獲得以下效果之一',
     'ui.shops.rarity.poor': '粗糙',
     'ui.shops.rarity.common': '普通',
     'ui.shops.rarity.uncommon': '優秀',
