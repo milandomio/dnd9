@@ -6,6 +6,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from config import ITEM_ABILITY_DIR  # noqa: E402
+from consumable_effects import build_effect_index  # noqa: E402
 from db.importers.merchants import parse_asset_name, parse_merchant_name  # noqa: E402
 from merchant_builder import (  # noqa: E402
     REGION_LABEL_KEY,
@@ -288,6 +290,65 @@ class BuildShopDataTest(unittest.TestCase):
                 detail = json.loads((out / "dungeon_shops" / f"{region}.json").read_text(encoding="utf-8"))
                 self.assertEqual(detail["region"], region)
                 self.assertEqual(len(detail["difficulties"]), 2)
+
+
+class ShopItemEffectTest(unittest.TestCase):
+    """Consumable effects resolved from gameplay assets ride along in the JSON."""
+
+    def _plain(self):
+        return build_shop_data(
+            _merchant_data(),
+            {},
+            ITEM_INDEX,
+            {r: r for r in REGION_LABEL_KEY},
+        )
+
+    def _build_with_effects(self):
+        merchant = _merchant_data()
+        for row in merchant["stock"]:
+            if row["slot_index"] == 1:
+                row["item_name"] = "LuckPotion_5001"
+        item_index = dict(ITEM_INDEX)
+        item_index["LuckPotion"] = {
+            "page": "LuckPotion",
+            "translation": "幸运药水",
+            "translation_key": "Text_DesignData_Item_Item_GreatLuckPotion",
+        }
+        return build_shop_data(
+            merchant,
+            {"Text_DesignData_Item_Item_GreatLuckPotion": "大型幸运药水"},
+            item_index,
+            {r: r for r in REGION_LABEL_KEY},
+            effect_index=build_effect_index(),
+            item_ability_dir=ITEM_ABILITY_DIR,
+        )
+
+    def test_effect_range_is_attached(self):
+        payload = self._build_with_effects()
+        item = payload["details"]["Crypts"]["difficulties"][0]["slots"][0]["items"][0]
+        self.assertEqual(item["name"], "LuckPotion_5001")
+        self.assertEqual(item["effect"]["values"]["Luck"], [100, 200])
+
+    def test_rolls_carry_value_and_chance(self):
+        payload = self._build_with_effects()
+        item = payload["details"]["Crypts"]["difficulties"][0]["slots"][0]["items"][0]
+        rolls = {r["effect"]: (r["Luck"], r["chance"]) for r in item["effect"]["rolls"]}
+        self.assertEqual(rolls["Luck10"], (100, 0.2))
+        self.assertEqual(rolls["Luck15"], (150, 0.4))
+        self.assertEqual(rolls["Luck20"], (200, 0.4))
+
+    def test_items_without_effects_carry_none(self):
+        data = self._plain()
+        detail = data["details"]["Crypts"]["difficulties"][0]
+        for slot in detail["slots"]:
+            for item in slot["items"]:
+                self.assertIsNone(item["effect"])
+
+    def test_effects_are_absent_when_not_requested(self):
+        """Omitting the effect index keeps the payload free of the field."""
+        data = self._plain()
+        item = data["details"]["Crypts"]["difficulties"][0]["slots"][0]["items"][0]
+        self.assertIsNone(item["effect"])
 
 
 class ShopChanceTest(unittest.TestCase):

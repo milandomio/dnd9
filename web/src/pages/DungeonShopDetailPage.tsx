@@ -284,6 +284,20 @@ function ShopItemCard({
       )
     : '';
 
+  // Resolved gameplay effect: the value range shown on the card plus a hover
+  // breakdown of every weighted outcome.
+  const luckRange = item.effect?.values?.Luck;
+  const effectRange = luckRange
+    ? ut('ui.shops.effect.range')
+        .replace('{min}', String(luckRange[0]))
+        .replace('{max}', String(luckRange[1]))
+    : '';
+  const effectHint = item.effect?.rolls?.length
+    ? `${ut('ui.shops.effect.hint')}：${item.effect.rolls
+        .map((r) => `+${r.Luck} (${Math.round(r.chance * 100)}%)`)
+        .join(' / ')}`
+    : null;
+
   // Shop goods do not always have a lootdrop page (LuckPotion never drops), so
   // clicking feeds the name to the search box instead of risking a dead link.
   const searchForItem = () =>
@@ -350,6 +364,14 @@ function ShopItemCard({
         >
           {rarityLabel && (
             <span style={{ color: rarityColor }}>{rarityLabel}</span>
+          )}
+          {effectRange && (
+            <span
+              style={{ color: tokens.text, fontWeight: 'bold' }}
+              title={effectHint ?? undefined}
+            >
+              {ut('ui.shops.effect.luck')} {effectRange}
+            </span>
           )}
           {showChance && (
             <span style={{ color: tokens.muted }}>

@@ -106,6 +106,21 @@
 - **已知限制**：`LuckPotion` 本身也不在 `search_index` 中，因此搜"幸运药水"仍无结果——用户已确认接受此权衡。若后续要让它可搜，需把商店商品补进 `index_export.build_and_save_indexes()` 的搜索索引。
 - **验证**：`npx tsc --noEmit` 通过、`npm run lint` 0 errors / 20 既有 warnings、Prettier 通过；`npm run build` 退出码 0（3111 页）；Playwright 实机验证 IceCavern 详情页：指向 `/lootdrops/LuckPotion` 的链接数 **0**（死链已移除），点击幸运药水后搜索框内容为 `幸运药水`，点击治疗药水后为 `治疗药水`，卡片 `tabindex=0`，无 page error。
 
+### feat: 商店消耗品展示真实效果区间（幸运药水 +100~200 等）
+
+- **改动原因**：用户要求「详情页的幸运药卡片上写上具体幸运区间 比如200-300」。此前卡片只能显示名字，而两档幸运药水**游戏内名称完全相同**（都叫"大型幸运药水"），玩家无法判断差异。数值不在物品 JSON 里，需要新解一条数据链。
+- **变更文件**：`api/src/consumable_effects.py`（新增）、`api/src/config.py`、`api/src/merchant_builder.py`、`api/src/collector.py`、`api/tests/test_consumable_effects.py`（新增）、`api/tests/test_merchant_builder.py`、`web/src/types/data.ts`、`web/src/pages/DungeonShopDetailPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **数据链（三段，此前完全未接入管道）**：
+  1. `Item/Item/Id_Item_LuckPotion_5001` → `Abilities` 指向 `Id_ItemAbility_LuckPotion_5001`
+  2. `V2/Item/ItemAbility/Id_ItemAbility_LuckPotion_5001` 的 `Class` 指向蓝图 `GA_LuckPotion_5001_Consume`
+  3. `Item/Utility/Potion/GameplayAbility/GA_LuckPotion_5001_Consume` 的 **`RandomEffectDataArray`** 给出三档权重，每档指向 `Id_ActorStatusEffect_Luck{N}`
+  4. `Data/Generated/V2/ActorStatus/StatusEffect/Id_ActorStatusEffect_Luck{N}` 的 **`Luck` 字段**才是真实数值
+- **关键坑：资产后缀是缩放 10 倍的简称**。`Id_ActorStatusEffect_Luck10` 里的 `Luck` 值是 **100**，不是 10（`Luck02`=20、`Luck30`=300）。最初误以为「区间均匀随机」，实际是三档**加权抽取**。
+- **四档真实数据**：3001 = +20/50/80（45/35/20%，期望 +42.5）；4001 = +50/100/150（25/50/25%，期望 +100）；**5001 = +100/150/200（20/40/40%，期望 +160）**；**6001 = +200/250/300（各 33.3%，期望 +250）**。哥布林走私者卖的是 5001（100 金）与 6001（250 金），6001 保底值 = 5001 中位档，两者区间**完全不重叠**。
+- **实现**：`consumable_effects.py` 提供 `build_effect_index()`（解析蓝图权重 + 状态效果数值，算出各档概率）、`resolve_item_effects()`（按 `Id_ItemAbility_{item}` → `Class` 名反查蓝图）。`merchant_builder` 新增 `effect_index` / `item_ability_dir` 参数，为每个商品写入 `effect: {values: {Luck: [min,max]}, rolls: [{effect, rate, chance, Luck}]}`；未命中时为 `null`。`config.py` 新增 `ITEM_ABILITY_DIR`、`ACTOR_STATUS_EFFECT_DIR`、`POTION_ABILITY_DIR`。
+- **前端**：`ShopItemCard` 在稀有度后渲染 `幸运 +100~200`（`title` 悬停显示完整分布「随机获得以下效果之一：+100 (20%) / +150 (40%) / +200 (40%)」）；`uiLocale` 新增 `ui.shops.effect.luck|range|hint` 三键 × 10 语言。
+- **验证**：`python3 -m unittest discover -s tests` 140/140 通过（新增 `test_consumable_effects.py` 13 例：状态效果数值读取、8 档后缀×10 关系、缺目录返回空、蓝图权重解析、四档区间断言、概率和为 1、6001 三档等概率、物品名经能力资产映射、无效果物品被跳过、源目录存在性；`test_merchant_builder.py` 新增 4 例：区间附加、各档数值与概率、无效果物品为 null、不传索引时字段为空）；`api/lint.sh` 通过；`npm run lint` 0 errors / 20 既有 warnings、Prettier 与 `npx tsc --noEmit` 通过；`python main.py` 重建后 3 个区域内共 2 个物品带 `effect`（5001/6001），无「有 effect 但缺 Luck」的异常；`npm run build` 退出码 0（3111 页）；Playwright 实机验证 zh-Hans/en/ja/zh-Hant：卡片显示 `幸运 +200~300`（传奇 250 金）与 `幸运 +100~200`（史诗 100 金），英文 `Luck +200~300`、日文 `幸運 +200~300`，悬停提示含三档概率，无 page error。
+
 ## 2026-10-12
 
 ### docs: 同步性能计划与本地化文档计数

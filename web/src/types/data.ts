@@ -164,6 +164,21 @@ export interface DungeonModule {
   range: number;
 }
 
+/** One weighted outcome of a consumable's randomized effect. */
+export interface ShopItemEffectRoll {
+  effect: string;
+  rate: number;
+  chance: number;
+  /** Numeric effect values keyed by field name (e.g. `Luck`). */
+  [field: string]: number | string;
+}
+
+export interface ShopItemEffect {
+  /** `{field: [min, max]}` across all rolls. */
+  values: Record<string, [number, number]>;
+  rolls: ShopItemEffectRoll[];
+}
+
 export interface ShopItem {
   name: string;
   page: string;
@@ -182,6 +197,8 @@ export interface ShopItem {
   rarity?: string;
   /** Sold by this region only (not present in any other region's stock). */
   map_exclusive?: boolean;
+  /** Resolved gameplay effect (only consumables that roll an effect have it). */
+  effect?: ShopItemEffect | null;
 }
 
 export interface ShopSlot {
