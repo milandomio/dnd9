@@ -93,7 +93,9 @@ export default function DungeonShopsPage() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          // 3 across on desktop, collapsing to 1 on narrow phones instead of
+          // squeezing three fixed columns into ~110px each.
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: 16,
           maxWidth: 900,
           margin: '0 auto',
