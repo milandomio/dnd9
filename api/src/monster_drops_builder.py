@@ -949,6 +949,7 @@ def build_loot_pools(
         quest_items: list[dict] = []
         artifact_items: list[dict] = []
         consumable_items: list[dict] = []
+        misc_items: list[dict] = []
         other: list[tuple[str, list[dict]]] = []
         for lootdrop_id, items in pools.items():
             if is_event_currency_pool(lootdrop_id):
@@ -967,6 +968,13 @@ def build_loot_pools(
             remaining_deduped = _dedupe_items(remaining)
             if len(remaining_deduped) == 1 and item_is_consumable(remaining_deduped[0], subtypes):
                 consumable_items.extend(remaining)
+                continue
+            # A pool holding a single item does not earn its own tab: the label
+            # just repeats the item name (216 QuestItem_* pools, plus ore/gear
+            # drops). Merge them into one localized "Misc" tab so a monster page
+            # shows a handful of meaningful tabs instead of dozens of singletons.
+            if len(remaining_deduped) == 1:
+                misc_items.extend(remaining)
                 continue
             other.append((lootdrop_id, remaining))
 
@@ -998,6 +1006,10 @@ def build_loot_pools(
                     "items": _dedupe_items(items),
                 }
             )
+        # Appended last so the named pools keep the leading tabs.
+        misc_deduped = _dedupe_items(misc_items)
+        if misc_deduped:
+            loot_pools.append({"id": "misc", "kind": "misc", "lootdrop_id": None, "items": misc_deduped})
         if loot_pools:
             result[monster] = loot_pools
     return result

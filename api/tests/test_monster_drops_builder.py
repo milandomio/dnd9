@@ -159,7 +159,7 @@ class BuildLootPoolsTest(unittest.TestCase):
         artifact_pages = [i["page"] for i in by_kind["artifact"]["items"]]
         self.assertEqual(set(artifact_pages), set(artifacts))
         self.assertEqual(artifact_pages[0].endswith("_8001"), True)
-        drop_pool = next(p for p in pools if p["id"] == "ID_Lootdrop_Drop_SkeletonMage")
+        drop_pool = next(p for p in pools if p["id"] == "misc")
         drop_pages = {i["page"] for i in drop_pool["items"]}
         self.assertIn("ArmingSword", drop_pages)
         for name in artifacts:
@@ -201,7 +201,7 @@ class BuildLootPoolsTest(unittest.TestCase):
         self.assertNotIn("artifact", kinds)
         by_kind = {p["kind"]: p for p in pools}
         self.assertEqual([i["page"] for i in by_kind["quest"]["items"]], ["BansheeSonnet"])
-        drop_pool = next(p for p in pools if p["id"] == "ID_Lootdrop_Drop_Banshee")
+        drop_pool = next(p for p in pools if p["id"] == "misc")
         self.assertEqual({i["page"] for i in drop_pool["items"]}, {"CrystalBall"})
 
     def test_zero_rate_uses_raw_entity_name(self):
@@ -300,6 +300,7 @@ class PropsLootPoolsTest(unittest.TestCase):
         }
         rows = [
             _row("LivingArmor", "ID_Lootdrop_Drop_LivingArmor", "BrokenSkull", 3),
+            _row("LivingArmor", "ID_Lootdrop_Drop_LivingArmor", "CopperOre", 3),
             _row("LivingArmor_Elite", "ID_Lootdrop_Quest_LivingArmor", "BrokenSkull", 3),
             _row("LivingArmor_Elite", "ID_Lootdrop_Spawn_EventCurrency", "GoldCoins", 4),
             _row("Ore_CopperOre_Med", "ID_Lootdrop_Spawn_CopperOre", "CopperOre", 3),
@@ -321,24 +322,30 @@ class PropsLootPoolsTest(unittest.TestCase):
         self.assertIn("ID_Lootdrop_Drop_LivingArmor", living_ids)
         self.assertIn("quest", living_ids)
         self.assertFalse(any("EventCurrency" in (p.get("id") or "") for p in pools["LivingArmor"]))
+        # Single-item pools collapse into the shared "misc" tab.
         self.assertIn("CopperOre", pools)
         copper_ids = {p["id"] for p in pools["CopperOre"]}
-        self.assertIn("ID_Lootdrop_Spawn_CopperOre", copper_ids)
+        self.assertIn("misc", copper_ids)
+        self.assertNotIn("ID_Lootdrop_Spawn_CopperOre", copper_ids)
         barrel_ids = {p["id"] for p in pools["WoodenBarrel"]}
-        self.assertIn("ID_Lootdrop_Drop_Barrels", barrel_ids)
+        self.assertIn("misc", barrel_ids)
+        self.assertNotIn("ID_Lootdrop_Drop_Barrels", barrel_ids)
         self.assertFalse(any("EventCurrency" in (p.get("id") or "") for p in pools["WoodenBarrel"]))
         self.assertNotIn("BossRewardDoor", pools)
 
     def test_single_item_consumables_merge(self):
+        """Single-item consumables still win over the generic misc tab."""
         translations = {
             "Text_DesignData_Item_Item_CaptainsCorrodedKey": "船长的锈钥匙",
             "Text_DesignData_Item_Item_EmberGem": "余烬宝石",
             "Text_DesignData_Item_Item_GoldCoins": "金币",
+            "Text_DesignData_Item_Item_CursedWater": "邪水",
         }
         item_keys = {
             "CaptainsCorrodedKey": "Text_DesignData_Item_Item_CaptainsCorrodedKey",
             "EmberGem": "Text_DesignData_Item_Item_EmberGem",
             "GoldCoins": "Text_DesignData_Item_Item_GoldCoins",
+            "CursedWater": "Text_DesignData_Item_Item_CursedWater",
         }
         subtypes = {
             "CaptainsCorrodedKey": {"Text_Code_DCDataBlueprintLibrary_Type_Item_Utility_Consumable"},
@@ -348,6 +355,7 @@ class PropsLootPoolsTest(unittest.TestCase):
             _row("OrnateChestLarge", "ID_Lootdrop_Drop_CorrodedKey", "CaptainsCorrodedKey", 5),
             _row("OrnateChestLarge", "ID_Lootdrop_Drop_EmberGem", "EmberGem", 5),
             _row("OrnateChestLarge", "ID_Lootdrop_Drop_Gems", "GoldCoins", 4),
+            _row("OrnateChestLarge", "ID_Lootdrop_Drop_Gems", "CursedWater", 4),
         ]
         pools = build_loot_pools(
             monster_names={"OrnateChestLarge"},
@@ -358,10 +366,15 @@ class PropsLootPoolsTest(unittest.TestCase):
             item_subtypes=subtypes,
         )["OrnateChestLarge"]
         ids = {p["id"] for p in pools}
+        by_id = {p["id"]: p for p in pools}
         self.assertIn("consumable", ids)
         self.assertNotIn("ID_Lootdrop_Drop_CorrodedKey", ids)
         self.assertNotIn("ID_Lootdrop_Drop_EmberGem", ids)
+        # The two-item pool stays a named tab; it is not merged into misc.
         self.assertIn("ID_Lootdrop_Drop_Gems", ids)
+        self.assertNotIn("misc", ids)
+        consumable_pages = {i["page"] for i in by_id["consumable"]["items"]}
+        self.assertEqual(consumable_pages, {"CaptainsCorrodedKey", "EmberGem"})
         pages = {i["page"] for i in next(p for p in pools if p["id"] == "consumable")["items"]}
         self.assertEqual(pages, {"CaptainsCorrodedKey", "EmberGem"})
 
@@ -508,6 +521,99 @@ class PoolLabelTest(unittest.TestCase):
         text, key, _ = self._resolve("ID_Lootdrop_Drop_Warlord", host_entity="CaveTroll")
         self.assertEqual(text, "Warlord")
         self.assertEqual(key, "")
+
+
+class MiscPoolMergeTest(unittest.TestCase):
+    """Pools holding a single item collapse into one shared "misc" tab."""
+
+    TRANSLATIONS = {
+        "Text_DesignData_Item_Item_GraveEssence": "坟墓精华",
+        "Text_DesignData_Item_Item_Maggots": "蛆虫",
+        "Text_DesignData_Item_Item_OldCloth": "旧布",
+        "Text_DesignData_Item_Item_WarlordsArmorShard": "督军的铠甲残片",
+        "Text_DesignData_Item_Item_WarlordsBrokenSwordBlade": "督军的断剑",
+        "Text_DesignData_Monster_Monster_SkeletonWarlord": "骷髅督军",
+        "Text_DesignData_Item_Item_Longsword_5001": "长剑",
+        "Text_DesignData_Item_Item_PlateArmor_5001": "板甲",
+        "Text_DesignData_Item_Item_Helmet_5001": "头盔",
+    }
+
+    def _build(self, rows):
+        item_keys = {
+            name: f"Text_DesignData_Item_Item_{name}"
+            for name in (
+                "GraveEssence",
+                "Maggots",
+                "OldCloth",
+                "WarlordsArmorShard",
+                "WarlordsBrokenSwordBlade",
+                "Longsword_5001",
+                "PlateArmor_5001",
+                "Helmet_5001",
+            )
+        }
+        return build_loot_pools(
+            monster_names={"SkeletonWarlord"},
+            rows=rows,
+            translations=self.TRANSLATIONS,
+            item_keys=item_keys,
+            fold_quality=False,
+        )["SkeletonWarlord"]
+
+    def test_single_item_pools_merge_into_one_misc_tab(self):
+        pools = self._build(
+            [
+                _row("SkeletonWarlord", "ID_Lootdrop_QuestItem_GraveEssence", "GraveEssence", 2),
+                _row("SkeletonWarlord", "ID_Lootdrop_QuestItem_Maggots", "Maggots", 2),
+                _row("SkeletonWarlord", "ID_Lootdrop_QuestItem_OldCloth", "OldCloth", 2),
+                _row("SkeletonWarlord", "ID_Lootdrop_QuestItem_WarlordsArmorShard", "WarlordsArmorShard", 2),
+                _row(
+                    "SkeletonWarlord", "ID_Lootdrop_QuestItem_WarlordsBrokenSwordBlade", "WarlordsBrokenSwordBlade", 2
+                ),
+            ]
+        )
+        ids = [p["id"] for p in pools]
+        self.assertEqual(ids, ["misc"])
+        misc = pools[0]
+        self.assertEqual(misc["kind"], "misc")
+        self.assertEqual(
+            {i["page"] for i in misc["items"]},
+            {"GraveEssence", "Maggots", "OldCloth", "WarlordsArmorShard", "WarlordsBrokenSwordBlade"},
+        )
+
+    def test_multi_item_pool_keeps_its_own_tab_and_misc_is_appended_last(self):
+        pools = self._build(
+            [
+                _row("SkeletonWarlord", "ID_Lootdrop_QuestItem_GraveEssence", "GraveEssence", 2),
+                _row("SkeletonWarlord", "ID_Lootdrop_Drop_SkeletonWarlord", "Longsword_5001", 5),
+                _row("SkeletonWarlord", "ID_Lootdrop_Drop_SkeletonWarlord", "PlateArmor_5001", 5),
+                _row("SkeletonWarlord", "ID_Lootdrop_Drop_SkeletonWarlord", "Helmet_5001", 5),
+            ]
+        )
+        # Named pools keep the leading tabs; misc is appended at the end.
+        self.assertEqual(pools[0]["id"], "ID_Lootdrop_Drop_SkeletonWarlord")
+        self.assertEqual(pools[-1]["id"], "misc")
+        self.assertEqual({i["page"] for i in pools[-1]["items"]}, {"GraveEssence"})
+
+    def test_misc_items_are_deduped_by_page(self):
+        pools = self._build(
+            [
+                _row("SkeletonWarlord", "ID_Lootdrop_QuestItem_GraveEssence", "GraveEssence", 2),
+                _row("SkeletonWarlord", "ID_Lootdrop_QuestItem_GraveEssenceElite", "GraveEssence", 2),
+            ]
+        )
+        self.assertEqual([p["id"] for p in pools], ["misc"])
+        self.assertEqual(len(pools[0]["items"]), 1)
+
+    def test_no_misc_tab_when_every_pool_has_multiple_items(self):
+        pools = self._build(
+            [
+                _row("SkeletonWarlord", "ID_Lootdrop_Drop_SkeletonWarlord", "Longsword_5001", 5),
+                _row("SkeletonWarlord", "ID_Lootdrop_Drop_SkeletonWarlord", "PlateArmor_5001", 5),
+                _row("SkeletonWarlord", "ID_Lootdrop_Drop_SkeletonWarlord", "Helmet_5001", 5),
+            ]
+        )
+        self.assertNotIn("misc", {p["id"] for p in pools})
 
 
 if __name__ == "__main__":
