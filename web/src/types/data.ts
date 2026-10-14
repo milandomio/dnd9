@@ -163,3 +163,63 @@ export interface DungeonModule {
   rotate: number;
   range: number;
 }
+
+export interface ShopItem {
+  name: string;
+  page: string;
+  translation: string;
+  translation_key?: string;
+  price: number;
+  currency: string;
+  count: number;
+  stock: number;
+  rate: number;
+  /** Sold by this region only (not present in any other region's stock). */
+  map_exclusive?: boolean;
+}
+
+export interface ShopSlot {
+  slot: number;
+  items: ShopItem[];
+}
+
+export interface ShopDifficulty {
+  difficulty: string;
+  variant_id: string;
+  item_count: number;
+  slots: ShopSlot[];
+}
+
+export interface ShopRegionSummary {
+  region: string;
+  label_key?: string;
+  display: string;
+  item_count: number;
+  exclusive_count: number;
+}
+
+export interface ShopMerchant {
+  merchant_name: string;
+  translation_key: string;
+  greeting_key: string;
+  npc_id: string;
+  /** Default-language label, embedded because zh-Hans does not load the locale dict. */
+  display?: string;
+  /** Default-language greeting text. */
+  greeting?: string;
+}
+
+export interface ShopIndex {
+  merchants: ShopMerchant[];
+  regions: ShopRegionSummary[];
+}
+
+export interface ShopDetail {
+  region: string;
+  label_key?: string;
+  display: string;
+  merchant: ShopMerchant;
+  exclusive_count: number;
+  total_items: number;
+  difficulties: ShopDifficulty[];
+}

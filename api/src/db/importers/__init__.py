@@ -1,5 +1,6 @@
 from .items import ItemsImporter
 from .lootdrops import LootdropsImporter
+from .merchants import InGameMerchantImporter
 from .modules import ModulesImporter
 from .monsters import MonstersImporter
 from .props import PropsImporter
@@ -18,3 +19,4 @@ class ImporterRegistry:
         self.quests = QuestsImporter(conn)
         self.spawners = SpawnersImporter(conn)
         self.translations = TranslationsImporter(conn)
+        self.merchants = InGameMerchantImporter(conn)

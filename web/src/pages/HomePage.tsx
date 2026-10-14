@@ -87,6 +87,14 @@ const CARD_THEME: Record<string, CardTheme> = {
     titleColor: '#AED581',
     titleColorLight: '#558b2f',
   },
+  dungeon_shops: {
+    border: '#FF9800',
+    hoverBg: 'linear-gradient(145deg, #4a3a2a, #5a4a3a)',
+    hoverBgLight: 'linear-gradient(145deg, #fff3e0, #ffe0b2)',
+    icon: '🏪',
+    titleColor: '#FFB74D',
+    titleColorLight: '#ef6c00',
+  },
 };
 
 const DEFAULT_THEME: CardTheme = {
@@ -227,6 +235,8 @@ export default function HomePage() {
                   {entry.page === 'quest_npc' && ut('ui.home.view_quest_npc')}
                   {entry.page === 'dungeon_modules' &&
                     ut('ui.home.view_dungeon_modules')}
+                  {entry.page === 'dungeon_shops' &&
+                    ut('ui.home.view_dungeon_shops')}
                 </div>
               </Link>
             );

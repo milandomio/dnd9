@@ -249,6 +249,7 @@ def build_and_save_indexes(
     quest_npcs_data: list[dict],
     output_dir: Path,
     group_label_resolver=None,
+    shop_regions: int = 0,
 ):
     """Build and save index.json + search_index.json."""
     index_data = [
@@ -263,6 +264,7 @@ def build_and_save_indexes(
         {"page": "explore", "label": "任务探索表", "count": explore_count},
         {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
         {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
+        {"page": "dungeon_shops", "label": "地牢商店", "count": shop_regions},
     ]
     _save(output_dir, "index.json", index_data)
 
@@ -380,6 +382,7 @@ def build_and_save_indexes(
         {"name": "explore", "translation": "任务探索表", "page": "_nav", "url": "/explore/"},
         {"name": "quest_npc", "translation": "任务NPC表", "page": "_nav", "url": "/quest_npc/"},
         {"name": "dungeon_modules", "translation": "地图模块表", "page": "_nav", "url": "/dungeon_modules/"},
+        {"name": "dungeon_shops", "translation": "地牢商店", "page": "_nav", "url": "/dungeon_shops/"},
     ]
     search_index.extend(LIST_PAGES)
     _save(output_dir, "search_index.json", search_index)

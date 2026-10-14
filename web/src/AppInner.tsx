@@ -17,6 +17,8 @@ import QuestNPCDetailPage from './pages/QuestNPCDetailPage';
 import DungeonModulesPage from './pages/DungeonModulesPage';
 import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
+import DungeonShopsPage from './pages/DungeonShopsPage';
+import DungeonShopDetailPage from './pages/DungeonShopDetailPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import SWUpdateBanner from './components/SWUpdateBanner';
@@ -71,6 +73,11 @@ function AppRoutes() {
       <Route
         path="/:lang/dungeon_modules/:group/:name"
         element={<DungeonModuleDetailPage />}
+      />
+      <Route path="/:lang/dungeon_shops" element={<DungeonShopsPage />} />
+      <Route
+        path="/:lang/dungeon_shops/:region"
+        element={<DungeonShopDetailPage />}
       />
       <Route path="/:lang/lootdrops/:name" element={<LootdropDetailPage />} />
       <Route path="/:lang/:page" element={<ListPage />} />

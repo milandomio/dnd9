@@ -65,6 +65,23 @@
 - **不误伤重要池的验证**：具名通用池在真实数据中均为多物品，不受影响——`Drop_Gems` 4 项、`Spawn_Treasure` 15 项、`Drop_Trinkets` 17 项、`Drop_Utility` 17 项、`Drop_HoardTreasure` 26 项、`Drop_Crates` 166 项、`Drop_Coin` 2 项、`LootGoblin_StolenGoods` 14 项。`RuinsGolem` 的 `_Ore` 子池有 4 项，保留独立标签「废墟魔像 · 矿石」；其单物品 `_Spoils` 池才并入 misc。
 - **验证**：`python3 -m unittest discover -s tests` 95/95 通过（新增 `MiscPoolMergeTest` 4 例：多个单物品池合并为单一 misc、多物品池保留独立标签且 misc 置尾、misc 内按 page 去重、无单物品池时不生成 misc；另更新 4 个以单物品池为夹具的既有用例，其核心断言意图保持不变）；`api/lint.sh` 通过；`cd web && npm run lint` 0 errors / 20 既有 warnings、`npx tsc --noEmit` 通过；`python main.py` 全量重建后 `data/json/monsters/SkeletonWarlord.json` 由 11 个池变为 5 个（`artifact / consumable / 物理披风 / 骷髅督军 / misc`），misc 内 6 个物品与合并前逐一对应、无丢失；全站标签总数 **745 → 554（减少 191，约 25%）**，148 个页面获得杂项标签；`npm run build` 退出码 0（3107 页 / 17058 文件）；Playwright 实机验证 zh-Hans/en/ja：SkeletonWarlord 标签栏为 `神器 / 消耗品 / 物理披风 / 骷髅督军 / 杂项`（英文 `Artifact / Consumable / Physical Cloaks / Skeleton Warlord / Misc`，日文 `その他`），点击杂项后正确列出 6 个物品，RuinsGolem 保留 `废墟魔像 · 矿石` 独立标签且 misc 仅含 `小碎石 / 萤火虫之腹`，无 page error。
 
+### feat: 新增【地牢商店】页面（哥布林走私者商品表）
+
+- **改动原因**：用户要求把 `InGameMerchant` 解包数据做成类似【地图模块表】的页面——第一层列出各地图（Crypts / Goblin / IceCavern），点进去看该地图哥布林走私者的商品表，每件商品标明价格，跨区域独有的商品标注【地图限定】，页面内用标签切换 N（普通）/ HR（豪客赛）两套货品。
+- **变更文件**：`api/src/config.py`、`api/src/db/schema.py`、`api/src/db/importers/merchants.py`（新增）、`api/src/db/importers/__init__.py`、`api/src/db/repositories/merchants.py`（新增）、`api/src/db/repositories/__init__.py`、`api/src/db/__init__.py`、`api/src/merchant_builder.py`（新增）、`api/src/collector.py`、`api/src/index_export.py`、`api/src/locale_builder.py`、`api/tests/test_merchant_builder.py`（新增）、`web/src/types/data.ts`、`web/src/hooks/useDungeonShops.ts`（新增）、`web/src/pages/DungeonShopsPage.tsx`（新增）、`web/src/pages/DungeonShopDetailPage.tsx`（新增）、`web/src/AppInner.tsx`、`web/src/components/NavBar.tsx`、`web/src/pages/HomePage.tsx`、`web/src/i18n/uiLocale.ts`、`web/src/i18n/seoTemplate.mjs`、`web/src/i18n/seoTemplate.d.mts`、`web/scripts/ssg.mjs`、`docs/SESSION_CHANGES.md`。
+- **数据来源与结构**：`V2/InGameMerchant/` 下三个子目录构成三层——`InGameMerchant/`（NPC 身份 + 问候语）、`InGameMerchantSchedule/`（每变体挂 12 个 StockBuy）、`InGameMerchantStockBuy/`（实际商品池，含 `ItemId`/`ItemCount`/`ItemRate`权重/`Stock`库存/`RequiredItemId_01`+`RequiredAmount01` 价格）。该目录**只有哥布林走私者**一个商人，6 个变体 = 3 区域 × 2 难度；另有 `V2/Merchant/`（据点炼金术士等）属另一套系统，本次未涉及。
+- **关键逻辑/映射关系**：
+  1. **解析**（`merchants.py`）：`parse_asset_name()` 用统一正则剥离 `Id_InGameMerchant{Schedule|StockBuy}?` 前缀，把三类资源归一到同一个 `variant_id`（`GoblinSmuggler_Crypts_N`），StockBuy 额外取出 `slot`。物品名经 `_asset_item_name()` 去掉 `Id_Item_` 前缀（`ue_asset_base_name` 会返回带前缀的 asset 名）。
+  2. **三张表**：`ingame_merchants`（商人身份）、`ingame_merchant_variants`（变体）、`ingame_merchant_stock`（商品行，主键 `variant_id+slot_index+item_name`）。入库 1 商人 / 6 变体 / 579 行，与源文件逐条一致。
+  3. **槽位 8/9 合并**：数据验证发现每个变体的槽位 08 与 09 **内容逐字节相同**（游戏对同一张材料表掷两次），合并为一个显示槽位并按物品名去重，否则会出现 78 项的重复清单。
+  4. **地图限定判定**：按**折叠后的物品基础名**跨区域比较（`fold_item_page`），区域独有才标 `map_exclusive`。这样 `Ruby_4001`（某区）与 `Ruby_7001`（另一区）视为同一物品，品质档位差异不误报限定。
+  5. **物品链接与翻译**：商店行带品质后缀（`HealingPotion_5001`），而详情页用折叠名（`HealingPotion`），故用 `fold_item_page` 取页面名；翻译来自 `loot_index`（521 条）。**商店专属物品不在掉落索引**（`LuckPotion` 从不出现在 `lootdrops.json`），追加 `Text_DesignData_Item_Item_{page}` 兜底查询，最终全站商店物品 0 个未翻译。
+  6. **区域标签**：复用官方 `Text_UI_WB_DungeonSlot_*` 楼层键（Crypts→`TheCrypts_2ndFloor`「地穴」、Goblin→`GoblinCave_1stFloor`「哥布林洞穴」、IceCavern→`IceCavern_1stFloor`「寒冰洞穴」），比模块页的合成标签（如「废墟2层（地穴）」）更贴合商店所在地图。
+  7. **默认语言兜底**：`useLocale()` 对 zh-Hans 不加载 locale 字典，因此 `merchant.display` / `merchant.greeting` 由后端直接写入 JSON（与 `region.display` 同款做法），否则中文页会显示英文 ID `GoblinSmuggler` 和空的 `「」`。
+  8. **前端**：`useDungeonShops` 提供 `useShopIndex`/`useShopDetail`（按版本缓存）；列表页渲染区域卡片（商品数 + 限定数），详情页用 `useState` 切换 N/HR 并分组渲染槽位，限定商品以粉色边框 + 【地图限定】标注。
+  9. **SSG**：`dungeon_shops` 加入 `SINGLE` 列表、`routeDataKey()`、`templateDescription()`（新增 `shops`/`shopRegion` SEO 类型），路由为用户可见的 `/:lang/dungeon_shops/:region`；区域详情在 quick/full 两种模式下都整体注入 `ssrDataMap`。
+- **验证**：`python3 -m unittest discover -s tests` 115/115 通过（新增 `test_merchant_builder.py` 20 例：资源名解析 5 例、区域顺序、N/HR 双难度、8/9 槽位合并、价格降序、限定标记与计数、物品链接元数据、品质后缀折叠、`_8001` 神器不折叠、品质档位差异不算限定、商人 display/greeting 解析与兜底、商店专属物品回退 Game.json 键、落盘文件校验）；`api/lint.sh` 通过；`cd web && npm run lint` 0 errors / 20 既有 warnings、Prettier 与 `npx tsc --noEmit` 通过；`python main.py --rebuild-db` 全量重建，导出 3 区域 / 57·46·44 种商品（含 12·7·6 种地图限定）；`npm run build` 退出码 0（3111 页 / 17106 文件，新增 4 个商店路由）；Playwright 实机验证 zh-Hans/en/ja：列表页标题「【地牢商店】哥布林走私者」并显示商人名与问候语，Crypts 详情页显示 `治疗药水 / 绷带与手术包 / 幸运药水 / 邪水 / 十字镐 / 营火工具 / 宝石 / 怪物材料 / 钥匙与开锁器 / 金币 / 油灯笼` 共 11 个分组，普通↔豪客赛切换正常（HR 出现巨魔之血、宝石升为传说档），限定商品带【地图限定】标记，三语言均无原始 token、无 page error。
+
 ## 2026-10-12
 
 ### docs: 同步性能计划与本地化文档计数

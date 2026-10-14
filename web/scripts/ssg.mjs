@@ -250,7 +250,13 @@ const DETAIL_TEMPLATE_PAGES = new Set([
   'lootdrops',
   'quest_items',
 ]);
-const SINGLE = ['explore', 'quest_items', 'quest_npc', 'dungeon_modules'];
+const SINGLE = [
+  'explore',
+  'quest_items',
+  'quest_npc',
+  'dungeon_modules',
+  'dungeon_shops',
+];
 const DEFAULT_LANG = 'zh-Hans';
 const LANGS = [
   'zh-Hans',
@@ -300,6 +306,18 @@ for (const m of moduleData) {
   routes.push({
     path: `/${DEFAULT_LANG}/dungeon_modules/${group}/${m.name}`,
     file: `${DEFAULT_LANG}/dungeon_modules/${group}/${m.name}/index.html`,
+  });
+}
+
+// Dungeon shops: one index page plus a detail page per merchant region.
+let shopRegions = [];
+try {
+  shopRegions = readJSON(join(DATA, 'dungeon_shops.json')).regions ?? [];
+} catch {}
+for (const r of shopRegions) {
+  routes.push({
+    path: `/${DEFAULT_LANG}/dungeon_shops/${r.region}`,
+    file: `${DEFAULT_LANG}/dungeon_shops/${r.region}/index.html`,
   });
 }
 
@@ -391,6 +409,11 @@ for (const p of SINGLE) {
     ssrDataMap['dungeon_modules'] = [...groupMap.values()].sort(
       (a, b) => groupOrder.indexOf(a.group) - groupOrder.indexOf(b.group)
     );
+    continue;
+  }
+  // dungeon_shops: the index file already carries the region list and counts.
+  if (p === 'dungeon_shops') {
+    ssrDataMap['dungeon_shops'] = readJSON(join(DATA, 'dungeon_shops.json'));
     continue;
   }
   // quest_items: pipeline-internal file, use quest_items_groups.json instead
@@ -544,6 +567,16 @@ for (const m of moduleData) {
   }
 }
 
+// Dungeon shop region detail pages — each region file already holds its full
+// stock (N and HR), so it is injected whole in both build modes.
+for (const r of shopRegions) {
+  try {
+    ssrDataMap[`dungeon_shops/${r.region}`] = readJSON(
+      join(DATA, 'dungeon_shops', `${r.region}.json`)
+    );
+  } catch {}
+}
+
 // ---- step 4b: P005 — preload referenced entity coords for lootdrop detail pages ----
 if (!QUICK) {
   console.log('[ssg] preloading referenced coords for lootdrop detail pages…');
@@ -641,6 +674,12 @@ function routeDataKey(path) {
     if (parts.length >= 4)
       return `dungeon_modules_detail/${parts[2]}/${parts[3]}`;
     return '';
+  }
+  if (stripped === '/dungeon_shops') return 'dungeon_shops';
+  if (stripped.startsWith('/dungeon_shops/')) {
+    const parts = stripped.split('/').filter(Boolean);
+    if (parts.length >= 2) return `dungeon_shops/${parts[1]}`;
+    return 'dungeon_shops';
   }
   if (stripped === '/explore') return 'explore';
   return `list-${stripped.slice(1)}`;
@@ -861,6 +900,17 @@ function templateDescription(route, routeData, localeDict, lang) {
       width: module?.size_x || undefined,
       height: module?.size_y || undefined,
       ...facts,
+    });
+  }
+  if (section === 'dungeon_shops') {
+    if (routeData?.region) {
+      return buildSeoDescription(lang, 'shopRegion', {
+        name,
+        items: routeData.total_items || undefined,
+      });
+    }
+    return buildSeoDescription(lang, 'shops', {
+      regions: routeData?.regions?.length || undefined,
     });
   }
   return buildSeoDescription(lang, 'entity', { name });

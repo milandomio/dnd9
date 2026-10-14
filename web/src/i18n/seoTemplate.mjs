@@ -23,6 +23,10 @@ const COPY = {
       `${name} 的《越来越黑暗》地图模块${modules ? `，收录 ${modules} 个模块` : ''}。查看模块布局、可用实体和坐标信息，为地牢探索与资源搜索规划路线。`,
     module: ({ name, group, width, height, entities, locations }) =>
       `${name} 的《越来越黑暗》地图模块详情${group ? `，属于 ${group}` : ''}${width && height ? `，尺寸 ${width}x${height}` : ''}${entities ? `，包含 ${entities} 个实体` : ''}${locations ? `和 ${locations} 个位置点` : ''}。查看布局与坐标。`,
+    shops: ({ regions }) =>
+      `《越来越黑暗》地牢商店一览${regions ? `，覆盖 ${regions} 个地图` : ''}。查看哥布林走私者在各地图出售的商品、价格与库存。`,
+    shopRegion: ({ name, items }) =>
+      `${name} 的《越来越黑暗》哥布林走私者商店${items ? `，收录 ${items} 种商品` : ''}，含价格与库存。浏览当地限定商品与不同难度下的货品差异。`,
     categories: {
       items: '物品',
       monsters: '怪物',
@@ -54,6 +58,10 @@ const COPY = {
       `${name} dungeon modules in Dark and Darker${modules ? ` include ${modules} modules` : ''}. Inspect layouts, available entities, and coordinates to plan dungeon exploration and resource searches.`,
     module: ({ name, group, width, height, entities, locations }) =>
       `${name} dungeon module in Dark and Darker${group ? ` for ${group}` : ''}${width && height ? `, sized ${width}x${height}` : ''}${entities ? ` with ${entities} entities` : ''}${locations ? ` and ${locations} positions` : ''}. Inspect its layout and coordinates.`,
+    shops: ({ regions }) =>
+      `Dark and Darker dungeon shops${regions ? ` across ${regions} maps` : ''}. Browse what the Goblin Smuggler sells on each map, with prices and stock.`,
+    shopRegion: ({ name, items }) =>
+      `Goblin Smuggler shop in ${name}${items ? ` with ${items} items` : ''}, with prices and stock. See map-exclusive goods and how stock differs by difficulty.`,
     categories: {
       items: 'items',
       monsters: 'monsters',
@@ -85,6 +93,10 @@ const COPY = {
       `${name}-Dungeon-Module in Dark and Darker${modules ? ` mit ${modules} Modulen` : ''}. Prüfe Layouts, verfügbare Entitäten und Koordinaten für Erkundung und Ressourcensuche.`,
     module: ({ name, group, width, height, entities, locations }) =>
       `${name}-Dungeon-Modul in Dark and Darker${group ? ` für ${group}` : ''}${width && height ? ` mit Größe ${width}x${height}` : ''}${entities ? ` und ${entities} Entitäten` : ''}${locations ? ` an ${locations} Positionen` : ''}. Prüfe Layout und Koordinaten.`,
+    shops: ({ regions }) =>
+      `Dungeon-Läden in Dark and Darker${regions ? ` in ${regions} Karten` : ''}. Durchsuche das Angebot des Goblin-Schmugglers je Karte mit Preisen und Bestand.`,
+    shopRegion: ({ name, items }) =>
+      `Goblin-Schmuggler-Laden in ${name}${items ? ` mit ${items} Artikeln` : ''}, mit Preisen und Bestand. Sieh dir kartenspezifische Ware und Unterschiede nach Schwierigkeit an.`,
     categories: {
       items: 'Gegenstände',
       monsters: 'Monster',
@@ -116,6 +128,10 @@ const COPY = {
       `Módulos de mazmorra de ${name} en Dark and Darker${modules ? ` con ${modules} módulos` : ''}. Consulta diseños, entidades disponibles y coordenadas para explorar y buscar recursos.`,
     module: ({ name, group, width, height, entities, locations }) =>
       `Módulo ${name} de Dark and Darker${group ? ` para ${group}` : ''}${width && height ? `, tamaño ${width}x${height}` : ''}${entities ? `, ${entities} entidades` : ''}${locations ? ` y ${locations} posiciones` : ''}. Consulta diseño y coordenadas.`,
+    shops: ({ regions }) =>
+      `Tiendas de mazmorra en Dark and Darker${regions ? ` en ${regions} mapas` : ''}. Consulta lo que vende el contrabandista goblin en cada mapa, con precios y existencias.`,
+    shopRegion: ({ name, items }) =>
+      `Tienda del contrabandista goblin en ${name}${items ? ` con ${items} artículos` : ''}, con precios y existencias. Descubre artículos exclusivos del mapa y diferencias por dificultad.`,
     categories: {
       items: 'objetos',
       monsters: 'monstruos',
@@ -147,6 +163,10 @@ const COPY = {
       `Modules de donjon ${name} dans Dark and Darker${modules ? ` avec ${modules} modules` : ''}. Consultez agencements, entités disponibles et coordonnées pour explorer et chercher des ressources.`,
     module: ({ name, group, width, height, entities, locations }) =>
       `Module ${name} de Dark and Darker${group ? ` pour ${group}` : ''}${width && height ? `, taille ${width}x${height}` : ''}${entities ? `, ${entities} entités` : ''}${locations ? ` et ${locations} positions` : ''}. Consultez agencement et coordonnées.`,
+    shops: ({ regions }) =>
+      `Boutiques de donjon dans Dark and Darker${regions ? ` sur ${regions} cartes` : ''}. Découvrez ce que vend le contrebandier gobelin sur chaque carte, avec prix et stock.`,
+    shopRegion: ({ name, items }) =>
+      `Boutique du contrebandier gobelin à ${name}${items ? ` avec ${items} articles` : ''}, avec prix et stock. Consultez les articles exclusifs à la carte et les différences de difficulté.`,
     categories: {
       items: 'objets',
       monsters: 'monstres',
@@ -178,6 +198,10 @@ const COPY = {
       `Dark and Darker の${name}ダンジョンモジュール${modules ? ` ${modules} 件` : ''}です。レイアウト、利用可能なエンティティ、座標を確認して探索と資源探しを計画できます。`,
     module: ({ name, group, width, height, entities, locations }) =>
       `Dark and Darker の${name}ダンジョンモジュール詳細${group ? `、${group}` : ''}${width && height ? `、サイズ ${width}x${height}` : ''}${entities ? `、${entities} エンティティ` : ''}${locations ? `、${locations} 地点` : ''}。レイアウトと座標を確認できます。`,
+    shops: ({ regions }) =>
+      `『Dark and Darker』ダンジョンショップ一覧${regions ? `（${regions} マップ）` : ''}。各マップでゴブリン密輸業者が売る商品・価格・在庫を確認できます。`,
+    shopRegion: ({ name, items }) =>
+      `${name} のゴブリン密輸業者ショップ${items ? `（${items} 種）` : ''}。価格と在庫を掲載。マップ限定品や難易度ごとの差異も確認できます。`,
     categories: {
       items: 'アイテム',
       monsters: 'モンスター',
@@ -209,6 +233,10 @@ const COPY = {
       `Dark and Darker ${name} 던전 모듈${modules ? ` ${modules}개` : ''}입니다. 레이아웃, 사용 가능한 엔티티, 좌표를 확인해 탐험과 자원 탐색을 계획하세요.`,
     module: ({ name, group, width, height, entities, locations }) =>
       `Dark and Darker ${name} 던전 모듈 상세${group ? `, ${group}` : ''}${width && height ? `, 크기 ${width}x${height}` : ''}${entities ? `, ${entities}개 엔티티` : ''}${locations ? `, ${locations}개 위치` : ''}입니다. 레이아웃과 좌표를 확인하세요.`,
+    shops: ({ regions }) =>
+      `Dark and Darker 던전 상점 목록${regions ? ` (${regions}개 맵)` : ''}. 각 맵에서 고블린 밀수업자가 파는 상품과 가격, 재고를 확인하세요.`,
+    shopRegion: ({ name, items }) =>
+      `${name}의 고블린 밀수업자 상점${items ? ` (${items}종)` : ''}. 가격과 재고를 확인하고 맵 한정 품목과 난이도별 차이를 살펴보세요.`,
     categories: {
       items: '아이템',
       monsters: '몬스터',
@@ -240,6 +268,10 @@ const COPY = {
       `Módulos de masmorra de ${name} em Dark and Darker${modules ? ` com ${modules} módulos` : ''}. Consulte layouts, entidades disponíveis e coordenadas para exploração e recursos.`,
     module: ({ name, group, width, height, entities, locations }) =>
       `Módulo ${name} de Dark and Darker${group ? ` para ${group}` : ''}${width && height ? `, tamanho ${width}x${height}` : ''}${entities ? `, ${entities} entidades` : ''}${locations ? ` e ${locations} posições` : ''}. Consulte layout e coordenadas.`,
+    shops: ({ regions }) =>
+      `Lojas de masmorra em Dark and Darker${regions ? ` em ${regions} mapas` : ''}. Veja o que o contrabandista goblin vende em cada mapa, com preços e estoque.`,
+    shopRegion: ({ name, items }) =>
+      `Loja do contrabandista goblin em ${name}${items ? ` com ${items} itens` : ''}, com preços e estoque. Confira itens exclusivos do mapa e diferenças por dificuldade.`,
     categories: {
       items: 'itens',
       monsters: 'monstros',
@@ -271,6 +303,10 @@ const COPY = {
       `Модули подземелий ${name} в Dark and Darker${modules ? `: ${modules} модулей` : ''}. Просматривайте схемы, доступные сущности и координаты для поиска ресурсов.`,
     module: ({ name, group, width, height, entities, locations }) =>
       `Модуль ${name} в Dark and Darker${group ? ` для ${group}` : ''}${width && height ? `, размер ${width}x${height}` : ''}${entities ? `, ${entities} сущностей` : ''}${locations ? ` и ${locations} точек` : ''}. Просматривайте схему и координаты.`,
+    shops: ({ regions }) =>
+      `Магазины подземелий в Dark and Darker${regions ? ` (${regions} карт)` : ''}. Смотрите, что продаёт гоблин-контрабандист на каждой карте, с ценами и запасами.`,
+    shopRegion: ({ name, items }) =>
+      `Магазин гоблина-контрабандиста в ${name}${items ? ` (${items} предметов)` : ''}, с ценами и запасами. Уникальные для карты товары и различия по сложности.`,
     categories: {
       items: 'предметы',
       monsters: 'монстров',
@@ -302,6 +338,10 @@ const COPY = {
       `${name} 的《越來越黑暗》地圖模組${modules ? `，收錄 ${modules} 個模組` : ''}。查看模組布局、可用實體與座標資訊，規劃地城探索與資源搜尋路線。`,
     module: ({ name, group, width, height, entities, locations }) =>
       `${name} 的《越來越黑暗》地圖模組詳情${group ? `，屬於 ${group}` : ''}${width && height ? `，尺寸 ${width}x${height}` : ''}${entities ? `，包含 ${entities} 個實體` : ''}${locations ? `與 ${locations} 個位置點` : ''}。查看布局與座標。`,
+    shops: ({ regions }) =>
+      `《越來越黑暗》地牢商店一覽${regions ? `，覆蓋 ${regions} 個地圖` : ''}。查看哥布林走私者在各地圖出售的商品、價格與庫存。`,
+    shopRegion: ({ name, items }) =>
+      `${name} 的《越來越黑暗》哥布林走私者商店${items ? `，收錄 ${items} 種商品` : ''}，含價格與庫存。瀏覽當地限定商品與不同難度下的貨品差異。`,
     categories: {
       items: '物品',
       monsters: '怪物',

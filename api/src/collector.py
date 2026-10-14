@@ -21,6 +21,7 @@ from lootdrop_builder import (
     build_loot_index,
     build_merged_loot_map,
 )
+from merchant_builder import REGION_LABEL_KEY, build_shop_data, save_shop_data
 from module_builder import (
     build_and_save_module_coords,
     build_and_save_modules_data,
@@ -97,6 +98,12 @@ def run(
             with pipe.phase("import_dungeon_modules", 11) as ctx:
                 count = db.import_dungeon_modules()
                 ctx.set_result(f"{count}")
+
+            with pipe.phase("import_ingame_merchants", 11) as ctx:
+                counts = db.import_ingame_merchants()
+                ctx.set_result(
+                    f"{counts['merchants']} merchants, {counts['variants']} variants, {counts['stock']} stock rows"
+                )
 
             with pipe.phase("import_spawner_entries", 11) as ctx:
                 count = db.import_spawner_entries()
@@ -568,6 +575,28 @@ def run(
             f"[JSON] props loot_pools: {_props_drops_n} props " f"({time.perf_counter() - _props_drops_started:.3f}s)"
         )
 
+        with pipe.step("dungeon shops export") as ctx:
+            region_labels = {region: translations.get(key, region) for region, key in REGION_LABEL_KEY.items()}
+            # Shop rows carry quality-suffixed names (HealingPotion_5001) while
+            # the detail page uses the folded name (HealingPotion); index the
+            # already-resolved lootdrop labels by page so items link and label.
+            shop_item_index = {
+                entry["name"]: {
+                    "page": entry["name"],
+                    "translation": entry.get("translation", ""),
+                    "translation_key": entry.get("translation_key", ""),
+                }
+                for entry in loot_index
+            }
+            shop_data = build_shop_data(
+                db.get_ingame_merchants(),
+                translations,
+                shop_item_index,
+                region_labels,
+            )
+            save_shop_data(shop_data, OUTPUT_DIR)
+            ctx.set_result(f"{len(shop_data['index']['regions'])} regions")
+
         _lootdrop_enrichment_started = time.perf_counter()
         enrich_all_entities(
             drop_engine,
@@ -609,6 +638,7 @@ def run(
                 quest_npcs_data,
                 OUTPUT_DIR,
                 group_label_resolver=lambda g: _resolve_group_display(g, translations),
+                shop_regions=len(shop_data["index"]["regions"]),
             )
             ctx.set_result("DONE")
 

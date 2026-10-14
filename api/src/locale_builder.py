@@ -44,6 +44,8 @@ def _collect_keys(obj, used: set[str]):
             "rarity_translation_key",
             "item_category_key",
             "sub_label",
+            "label_key",
+            "greeting_key",
         ):
             tk = obj.get(key)
             if tk and isinstance(tk, str):
@@ -72,14 +74,21 @@ def _load_used_keys(output_dir: Path, lootdrop_keys: set[str] | None = None) -> 
                 used.add(tk)
 
     subdirs = (
-        ("items", "monsters", "props", "quest_items_groups")
+        ("items", "monsters", "props", "quest_items_groups", "dungeon_shops")
         if lootdrop_keys is not None
-        else ("items", "monsters", "props", "lootdrops", "quest_items_groups")
+        else ("items", "monsters", "props", "lootdrops", "quest_items_groups", "dungeon_shops")
     )
     loot_index_path = output_dir / "lootdrops.json"
     if loot_index_path.exists():
         try:
             with open(loot_index_path, encoding="utf-8") as f:
+                _collect_keys(json.load(f), used)
+        except (json.JSONDecodeError, OSError):
+            pass
+    shops_index_path = output_dir / "dungeon_shops.json"
+    if shops_index_path.exists():
+        try:
+            with open(shops_index_path, encoding="utf-8") as f:
                 _collect_keys(json.load(f), used)
         except (json.JSONDecodeError, OSError):
             pass
