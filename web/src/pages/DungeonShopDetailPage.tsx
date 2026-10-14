@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useShopDetail } from '../hooks/useDungeonShops';
@@ -270,7 +270,9 @@ function ShopItemCard({
   showChance: boolean;
 }) {
   const { tokens } = useTheme();
-  const { t, ut, lang } = useLocale();
+  const { t, ut } = useLocale();
+  const location = useLocation();
+  const navigate = useNavigate();
   const label = t(item.translation_key, item.translation || item.name);
   const rarityColor = item.rarity
     ? (RARITY_COLORS[item.rarity] ?? tokens.border)
@@ -282,90 +284,101 @@ function ShopItemCard({
       )
     : '';
 
+  // Shop goods do not always have a lootdrop page (LuckPotion never drops), so
+  // clicking feeds the name to the search box instead of risking a dead link.
+  const searchForItem = () =>
+    navigate(location.pathname, { state: { searchQuery: label } });
+
   return (
-    <Link
-      to={`/${lang}/lootdrops/${item.page}/`}
-      style={{ textDecoration: 'none' }}
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={searchForItem}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          searchForItem();
+        }
+      }}
+      title={ut('ui.search.search')}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 10,
+        padding: '10px 12px',
+        // Rarity drives the border; region exclusives add a magenta accent bar.
+        border: `1px solid ${rarityColor}`,
+        borderLeft: item.map_exclusive
+          ? `4px solid #E91E63`
+          : `4px solid ${rarityColor}`,
+        borderRadius: 6,
+        background: tokens.surface,
+        height: '100%',
+        boxSizing: 'border-box',
+        cursor: 'pointer',
+      }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 10,
-          padding: '10px 12px',
-          // Rarity drives the border; region exclusives add a magenta accent bar.
-          border: `1px solid ${rarityColor}`,
-          borderLeft: item.map_exclusive
-            ? `4px solid #E91E63`
-            : `4px solid ${rarityColor}`,
-          borderRadius: 6,
-          background: tokens.surface,
-          height: '100%',
-          boxSizing: 'border-box',
-        }}
-      >
-        <div style={{ minWidth: 0 }}>
-          <div
-            style={{
-              color: rarityColor,
-              fontSize: 15,
-              fontWeight: 'bold',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {label}
-            {item.count > 1 && (
-              <span style={{ color: tokens.muted, fontWeight: 'normal' }}>
-                {' '}
-                ×{item.count}
-              </span>
-            )}
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 6,
-              alignItems: 'center',
-              marginTop: 4,
-              fontSize: 12,
-            }}
-          >
-            {rarityLabel && (
-              <span style={{ color: rarityColor }}>{rarityLabel}</span>
-            )}
-            {showChance && (
-              <span style={{ color: tokens.muted }}>
-                {ut('ui.shops.chance').replace(
-                  '{chance}',
-                  formatChance(item.chance)
-                )}
-              </span>
-            )}
-            {item.map_exclusive && (
-              <span style={{ color: '#E91E63' }}>
-                {ut('ui.shops.map_exclusive')}
-              </span>
-            )}
-          </div>
-        </div>
+      <div style={{ minWidth: 0 }}>
         <div
           style={{
-            color: '#F39C12',
+            color: rarityColor,
             fontSize: 15,
             fontWeight: 'bold',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}
         >
-          {item.price}
-          <span style={{ fontSize: 12, marginLeft: 2 }}>
-            {ut('ui.shops.gold')}
-          </span>
+          {label}
+          {item.count > 1 && (
+            <span style={{ color: tokens.muted, fontWeight: 'normal' }}>
+              {' '}
+              ×{item.count}
+            </span>
+          )}
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 6,
+            alignItems: 'center',
+            marginTop: 4,
+            fontSize: 12,
+          }}
+        >
+          {rarityLabel && (
+            <span style={{ color: rarityColor }}>{rarityLabel}</span>
+          )}
+          {showChance && (
+            <span style={{ color: tokens.muted }}>
+              {ut('ui.shops.chance').replace(
+                '{chance}',
+                formatChance(item.chance)
+              )}
+            </span>
+          )}
+          {item.map_exclusive && (
+            <span style={{ color: '#E91E63' }}>
+              {ut('ui.shops.map_exclusive')}
+            </span>
+          )}
         </div>
       </div>
-    </Link>
+      <div
+        style={{
+          color: '#F39C12',
+          fontSize: 15,
+          fontWeight: 'bold',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {item.price}
+        <span style={{ fontSize: 12, marginLeft: 2 }}>
+          {ut('ui.shops.gold')}
+        </span>
+      </div>
+    </div>
   );
 }
