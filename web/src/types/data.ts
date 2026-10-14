@@ -174,6 +174,12 @@ export interface ShopItem {
   count: number;
   stock: number;
   rate: number;
+  /** Sum of the rates in this item's pool (the slot rolls once). */
+  slot_total: number;
+  /** Drop chance 0-1; already folded over duplicate slots (8/9). */
+  chance: number;
+  /** Poor | Common | Uncommon | Rare | Epic | Legend | Unique | Artifact. */
+  rarity?: string;
   /** Sold by this region only (not present in any other region's stock). */
   map_exclusive?: boolean;
 }
@@ -181,12 +187,18 @@ export interface ShopItem {
 export interface ShopSlot {
   slot: number;
   items: ShopItem[];
+  /** Sum of item chances; ~1 for a single roll, ~2 for the doubled slot. */
+  chance_total?: number;
 }
 
 export interface ShopDifficulty {
   difficulty: string;
   variant_id: string;
+  /** Card count including quality tiers; matches what the page renders. */
   item_count: number;
+  /** Distinct items after folding quality suffixes. */
+  base_item_count?: number;
+  exclusive_count?: number;
   slots: ShopSlot[];
 }
 
@@ -194,7 +206,10 @@ export interface ShopRegionSummary {
   region: string;
   label_key?: string;
   display: string;
+  /** Card count across difficulties; matches the detail page header. */
   item_count: number;
+  /** Distinct items after folding quality suffixes. */
+  base_item_count?: number;
   exclusive_count: number;
 }
 
@@ -220,6 +235,9 @@ export interface ShopDetail {
   display: string;
   merchant: ShopMerchant;
   exclusive_count: number;
+  /** Card count across difficulties; matches the list page. */
   total_items: number;
+  /** Distinct items after folding quality suffixes. */
+  base_item_count?: number;
   difficulties: ShopDifficulty[];
 }

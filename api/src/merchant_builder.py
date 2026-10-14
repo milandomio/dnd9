@@ -27,6 +27,18 @@ REGION_ORDER = ["Crypts", "Goblin", "IceCavern"]
 
 DIFFICULTY_ORDER = ["N", "HR"]
 
+# Item quality suffix -> rarity key, matching the lootdrop pages.
+SUFFIX_RARITY = {
+    "1001": "Poor",
+    "2001": "Common",
+    "3001": "Uncommon",
+    "4001": "Rare",
+    "5001": "Epic",
+    "6001": "Legend",
+    "7001": "Unique",
+    "8001": "Artifact",
+}
+
 # Slot 8 and 9 hold byte-identical pools (the game rolls the same material table
 # twice); they are merged into one row group so the table is not duplicated.
 MATERIAL_SLOT_GROUP = (8, 9)
@@ -95,20 +107,32 @@ def build_shop_data(
                 continue
             rows = by_variant.get(variant_id, [])
 
-            # Group rows into display slots. Slots 8 and 9 hold byte-identical
-            # pools (the game rolls the same material table twice), so they share
-            # one display slot and their items are deduped by name.
+            # Per-slot weight totals. A slot rolls once, so an item's chance is
+            # its rate divided by the total rate of the pool it belongs to.
+            slot_totals: dict[int, int] = {}
+            for row in rows:
+                slot_totals[row["slot_index"]] = slot_totals.get(row["slot_index"], 0) + row["item_rate"]
+
+            # Group rows into display slots. Slots 8 and 9 hold identical pools
+            # (the game rolls the same material table twice), so they share one
+            # display slot; an item's chance is then the union over both rolls.
             slots: dict[str, dict] = {}
             for row in rows:
                 slot_index = row["slot_index"]
                 display_slot = MATERIAL_SLOT_GROUP[0] if slot_index in MATERIAL_SLOT_GROUP else slot_index
                 entry = slots.setdefault(_slot_label(difficulty, display_slot), {"slot": display_slot, "items": {}})
-                if row["item_name"] in entry["items"]:
+                existing = entry["items"].get(row["item_name"])
+                if existing is not None:
+                    # Second roll of the same pool: accumulate the combined odds
+                    # instead of dropping the duplicate.
+                    existing["_miss"] *= 1 - (
+                        row["item_rate"] / slot_totals[slot_index] if slot_totals[slot_index] else 0
+                    )
                     continue
                 # Entity detail pages are keyed by the folded item name
                 # (HealingPotion_5001 -> HealingPotion); artifacts (_8001) keep
                 # their suffix.
-                page, _suffix = fold_item_page(row["item_name"])
+                page, suffix = fold_item_page(row["item_name"])
                 item_meta = item_index.get(page, item_index.get(row["item_name"], {}))
                 translation = item_meta.get("translation", "")
                 translation_key = item_meta.get("translation_key", "")
@@ -119,6 +143,8 @@ def build_shop_data(
                     if fallback_key in translations:
                         translation = translations[fallback_key]
                         translation_key = fallback_key
+                total = slot_totals.get(slot_index, 0)
+                chance = row["item_rate"] / total if total else 0.0
                 entry["items"][row["item_name"]] = {
                     "name": row["item_name"],
                     "page": item_meta.get("page", page),
@@ -129,31 +155,53 @@ def build_shop_data(
                     "count": row["item_count"],
                     "stock": row["stock"],
                     "rate": row["item_rate"],
+                    "slot_total": total,
+                    "chance": chance,
+                    "rarity": SUFFIX_RARITY.get(suffix or "", ""),
                     "map_exclusive": page not in other_items,
+                    "_miss": 1 - chance,
                 }
 
             ordered = sorted(slots.items(), key=lambda kv: kv[1]["slot"])
             for _, entry in ordered:
                 items = list(entry["items"].values())
+                for item in items:
+                    # Fold the per-roll misses into the final chance, then drop
+                    # the scratch field so it never reaches the JSON payload.
+                    item["chance"] = 1 - item.pop("_miss")
                 items.sort(key=lambda i: (-(i["price"] or 0), i["name"]))
                 entry["items"] = items
+                entry["chance_total"] = sum(i["chance"] for i in items)
+            # Per-difficulty totals. Counted by folded base name so the number
+            # matches what the page renders; the raw count differs because the
+            # same item appears at several quality tiers (Ruby_4001/5001/6001).
+            difficulty_pages = {fold_item_page(row["item_name"])[0] for row in rows}
+            difficulty_exclusive = sorted(name for name in difficulty_pages if name not in other_items)
             difficulties.append(
                 {
                     "difficulty": difficulty,
                     "variant_id": variant_id,
                     "slots": [entry for _, entry in ordered],
                     "item_count": len({row["item_name"] for row in rows}),
+                    "base_item_count": len(difficulty_pages),
+                    "exclusive_count": len(difficulty_exclusive),
                 }
             )
 
         exclusive = sorted(name for name in region_items.get(region, set()) if name not in other_items)
         label_key = REGION_LABEL_KEY.get(region, "")
+        # Card count across difficulties (HR usually has a few more tiers). The
+        # list page and the detail header both show this, so they never disagree;
+        # `base_item_count` is the folded, de-duplicated figure.
+        card_count = max((d["item_count"] for d in difficulties), default=0)
+        region_base_count = max((d["base_item_count"] for d in difficulties), default=0)
         regions.append(
             {
                 "region": region,
                 "label_key": label_key,
                 "display": region_labels.get(region, region),
-                "item_count": len(region_items.get(region, set())),
+                "item_count": card_count,
+                "base_item_count": region_base_count,
                 "exclusive_count": len(exclusive),
             }
         )
@@ -163,7 +211,8 @@ def build_shop_data(
             "display": region_labels.get(region, region),
             "merchant": merchants.get("GoblinSmuggler", {}),
             "exclusive_count": len(exclusive),
-            "total_items": len(region_items.get(region, set())),
+            "total_items": card_count,
+            "base_item_count": region_base_count,
             "difficulties": difficulties,
         }
 

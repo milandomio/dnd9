@@ -59,14 +59,17 @@ def _merchant_data():
                     "difficulty": difficulty,
                 }
             )
-            # Slot 1 is shared by every region; slot 8/9 are duplicated within a
-            # variant; Crypts additionally sells a region-exclusive material.
+            # Slot 1 is shared by every region; slots 8/9 are identical pools
+            # rolled twice, mirroring the real assets; Crypts additionally sells
+            # a region-exclusive material.
+            # Slot 1 holds two quality tiers so chances split 80/20.
             stock.append(_row(vid, 1, "HealingPotion_4001", 100, 3, 800))
-            stock.append(_row(vid, 8, "Bone", 30, 1, 1000))
-            stock.append(_row(vid, 9, "Bone", 30, 1, 1000))
-            stock.append(_row(vid, 8, "WolfPelt", 40, 1, 1000))
-            if region == "Crypts":
-                stock.append(_row(vid, 8, "BatClaw", 10, 1, 1000))
+            stock.append(_row(vid, 1, "HealingPotion_5001", 250, 3, 200))
+            for slot in (8, 9):
+                stock.append(_row(vid, slot, "Bone", 30, 1, 1000))
+                stock.append(_row(vid, slot, "WolfPelt", 40, 1, 1000))
+                if region == "Crypts":
+                    stock.append(_row(vid, slot, "BatClaw", 10, 1, 1000))
     return {
         "merchants": [
             {
@@ -158,10 +161,39 @@ class BuildShopDataTest(unittest.TestCase):
         by_region = {r["region"]: r["exclusive_count"] for r in data["index"]["regions"]}
         self.assertEqual(by_region, {"Crypts": 1, "Goblin": 0, "IceCavern": 0})
 
+    def test_region_counts_match_the_rendered_detail_cards(self):
+        """The list page and detail header must never disagree."""
+        data = self._build()
+        for summary in data["index"]["regions"]:
+            detail = data["details"][summary["region"]]
+            widest = max(sum(len(slot["items"]) for slot in diff["slots"]) for diff in detail["difficulties"])
+            self.assertEqual(summary["item_count"], widest)
+            self.assertEqual(detail["total_items"], widest)
+
+    def test_region_count_uses_max_across_difficulties(self):
+        """HR carries extra tiers, so the region count must follow the wider one."""
+        merchant = _merchant_data()
+        # Give Crypts-HR two extra items the other variants lack.
+        for item in ("Ruby_6001", "Diamond_6001"):
+            merchant["stock"].append(_row("GoblinSmuggler_Crypts_HR", 1, item, 200, 1, 100))
+        item_index = dict(ITEM_INDEX)
+        item_index["Ruby_6001"] = {"page": "Ruby", "translation": "红宝石", "translation_key": ""}
+        item_index["Diamond_6001"] = {"page": "Diamond", "translation": "钻石", "translation_key": ""}
+        data = build_shop_data(merchant, {}, item_index, {r: r for r in REGION_LABEL_KEY})
+        by_region = {r["region"]: r for r in data["index"]["regions"]}
+        crypts = data["details"]["Crypts"]
+        hr = next(d for d in crypts["difficulties"] if d["difficulty"] == "HR")
+        n_diff = next(d for d in crypts["difficulties"] if d["difficulty"] == "N")
+        hr_cards = sum(len(s["items"]) for s in hr["slots"])
+        n_cards = sum(len(s["items"]) for s in n_diff["slots"])
+        self.assertGreater(hr_cards, n_cards)
+        self.assertEqual(by_region["Crypts"]["item_count"], hr_cards)
+        self.assertEqual(crypts["total_items"], hr_cards)
+
     def test_items_carry_link_and_price_metadata(self):
         data = self._build()
-        item = data["details"]["Crypts"]["difficulties"][0]["slots"][0]["items"][0]
-        self.assertEqual(item["name"], "HealingPotion_4001")
+        slot = data["details"]["Crypts"]["difficulties"][0]["slots"][0]
+        item = next(i for i in slot["items"] if i["name"] == "HealingPotion_4001")
         self.assertEqual(item["page"], "HealingPotion")
         self.assertEqual(item["translation"], "治疗药水")
         self.assertEqual(item["price"], 100)
@@ -256,6 +288,56 @@ class BuildShopDataTest(unittest.TestCase):
                 detail = json.loads((out / "dungeon_shops" / f"{region}.json").read_text(encoding="utf-8"))
                 self.assertEqual(detail["region"], region)
                 self.assertEqual(len(detail["difficulties"]), 2)
+
+
+class ShopChanceTest(unittest.TestCase):
+    """Per-slot drop chance and item rarity."""
+
+    def _slot(self, region, slot_index, difficulty=0):
+        data = build_shop_data(
+            _merchant_data(),
+            {},
+            ITEM_INDEX,
+            {r: r for r in REGION_LABEL_KEY},
+        )
+        detail = data["details"][region]["difficulties"][difficulty]
+        return next(s for s in detail["slots"] if s["slot"] == slot_index)
+
+    def test_chance_splits_by_weight_within_a_slot(self):
+        slot = self._slot("Crypts", 1)
+        chances = {i["name"]: i["chance"] for i in slot["items"]}
+        self.assertAlmostEqual(chances["HealingPotion_4001"], 0.8, places=6)
+        self.assertAlmostEqual(chances["HealingPotion_5001"], 0.2, places=6)
+
+    def test_single_roll_slot_chances_sum_to_one(self):
+        slot = self._slot("Crypts", 1)
+        self.assertAlmostEqual(slot["chance_total"], 1.0, places=6)
+
+    def test_duplicated_pool_folds_two_rolls(self):
+        """Slots 8 and 9 each roll once, so odds combine as 1-(1-p)^2."""
+        slot = self._slot("Crypts", 8)
+        # Cranium pool: three items at 1000 out of 3000 per roll.
+        bone = next(i for i in slot["items"] if i["name"] == "Bone")
+        self.assertAlmostEqual(bone["chance"], 1 - (1 - 1000 / 3000) ** 2, places=6)
+        # Two rolls mean the per-slot total is ~2, not 1.
+        self.assertGreater(slot["chance_total"], 1.5)
+
+    def test_slot_total_is_exported(self):
+        slot = self._slot("Crypts", 1)
+        item = next(i for i in slot["items"] if i["name"] == "HealingPotion_4001")
+        self.assertEqual(item["slot_total"], 1000)
+        self.assertEqual(item["rate"], 800)
+
+    def test_rarity_comes_from_quality_suffix(self):
+        slot = self._slot("Crypts", 1)
+        by_name = {i["name"]: i["rarity"] for i in slot["items"]}
+        self.assertEqual(by_name["HealingPotion_4001"], "Rare")
+        self.assertEqual(by_name["HealingPotion_5001"], "Epic")
+
+    def test_suffixless_item_has_no_rarity(self):
+        slot = self._slot("Crypts", 8)
+        bone = next(i for i in slot["items"] if i["name"] == "Bone")
+        self.assertEqual(bone["rarity"], "")
 
 
 if __name__ == "__main__":

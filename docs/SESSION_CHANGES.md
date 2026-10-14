@@ -82,6 +82,22 @@
   9. **SSG**：`dungeon_shops` 加入 `SINGLE` 列表、`routeDataKey()`、`templateDescription()`（新增 `shops`/`shopRegion` SEO 类型），路由为用户可见的 `/:lang/dungeon_shops/:region`；区域详情在 quick/full 两种模式下都整体注入 `ssrDataMap`。
 - **验证**：`python3 -m unittest discover -s tests` 115/115 通过（新增 `test_merchant_builder.py` 20 例：资源名解析 5 例、区域顺序、N/HR 双难度、8/9 槽位合并、价格降序、限定标记与计数、物品链接元数据、品质后缀折叠、`_8001` 神器不折叠、品质档位差异不算限定、商人 display/greeting 解析与兜底、商店专属物品回退 Game.json 键、落盘文件校验）；`api/lint.sh` 通过；`cd web && npm run lint` 0 errors / 20 既有 warnings、Prettier 与 `npx tsc --noEmit` 通过；`python main.py --rebuild-db` 全量重建，导出 3 区域 / 57·46·44 种商品（含 12·7·6 种地图限定）；`npm run build` 退出码 0（3111 页 / 17106 文件，新增 4 个商店路由）；Playwright 实机验证 zh-Hans/en/ja：列表页标题「【地牢商店】哥布林走私者」并显示商人名与问候语，Crypts 详情页显示 `治疗药水 / 绷带与手术包 / 幸运药水 / 邪水 / 十字镐 / 营火工具 / 宝石 / 怪物材料 / 钥匙与开锁器 / 金币 / 油灯笼` 共 11 个分组，普通↔豪客赛切换正常（HR 出现巨魔之血、宝石升为传说档），限定商品带【地图限定】标记，三语言均无原始 token、无 page error。
 
+### feat: 地牢商店展示刷出概率与稀有度，并按设计审查修正
+
+- **改动原因**：用户询问「黄金钥匙是固定价格吗，刷出概率也标一下」「稀有度也标一下，因为有相同名字的东西」（如"治疗药水"有 100 金与 250 金两档），随后要求对新增的列表页/详情页做设计优化。经实机审查发现 6 类问题：① 头部标语「共 57 种商品」与实际渲染的 73 张卡片矛盾；② 概率说明文案在每个槽位重复，全文出现 84 次"概率"；③ 单品槽位显示无意义的"100% 概率"；④ 概率精度在 1/2/3 位小数间跳变；⑤ 宝石区 12 张卡片按 5 列排布导致品质分组中途断裂；⑥ 列表页固定 3 列在 390px 窄屏把卡片压到约 110px。
+- **变更文件**：`api/src/merchant_builder.py`、`api/tests/test_merchant_builder.py`、`web/src/types/data.ts`、`web/src/pages/DungeonShopDetailPage.tsx`、`web/src/pages/DungeonShopsPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **黄金钥匙价格结论**：**固定 1000 金**。三个地图 × N/HR 两档均为 1000（Crypts-N 权重 435、Crypts-HR 权重 1305，价格不变）；概率则随难度变化（N 0.435% → HR 1.3%）。
+- **概率算法**：`ItemRate` 是槽位内的相对权重，某商品概率 = `rate ÷ 该槽位权重和`。槽位权重和高度规律（槽位 1-6/11/12 = 1000，槽位 7 = 4000，槽位 10 = 100000，槽位 8/9 随区域物品数在 20000/21800/27200 间变化）。**槽位 8/9 是同一张表掷两次**，故合并展示时概率按 `1-(1-p)²` 折叠（如 `rate=1000/27200` 单次 3.676% → 两次 7.218%），`chance_total` 因此约等于 2 而非 1。
+- **关键逻辑/映射关系**：
+  1. `merchant_builder` 新增 `SUFFIX_RARITY`（1001 粗糙 → 8001 命名神器），由 `fold_item_page` 返回的品质后缀推导 `rarity`；每项同时输出 `slot_total` 与 `chance`。
+  2. 每个难度新增 `base_item_count`（折叠品质后的去重数）与 `exclusive_count`；区域层 `item_count` / `total_items` 改为**各难度的最大值**，使列表页与详情页头部数字一致（57→73、46→62、44→60）。
+  3. 前端 `ShopItemCard` 新增 `showChance` 参数，单物品槽位（邪水/金币/油灯笼）不再渲染 `100%`。
+  4. `formatChance` 统一为 2 位有效数字（`Number(pct.toPrecision(2))`），消除 `99.0%` 与 `0.435%` 并存的不一致。
+  5. 概率说明文案改为整页**只出现一次**（位于难度切换下方），并合并单抽/双抽两种规则说明；删除已无用的 `ui.shops.chance_hint_double`（10 语言 × 1 条）。
+  6. 宝石槽（slot 7）用 `repeat(auto-fit, minmax(170px, 1fr))`、其余槽位 `minmax(230px, 1fr)`；列表页改 `repeat(auto-fit, minmax(220px, 1fr))`（390px 单列、768px+ 三列）。
+  7. 详情页字号整体上调一档（h1 32→34、槽位标题 16→17、物品名与价格 14→15、辅助信息 11→12）。
+- **验证**：`python3 -m unittest discover -s tests` 123/123 通过（新增 2 例：区域计数等于详情页实际渲染卡片数、区域计数取各难度最大值）；`api/lint.sh` 通过；`cd web && npm run lint` 0 errors / 20 既有 warnings、Prettier 与 `npx tsc --noEmit` 通过；`python main.py` 重建后列表页 3 区域计数为 73/62/60（含 12/7/6 限定）；`npm run build` 退出码 0（3111 页）；Playwright 实机验证：头部「共 73 种商品」与实际 73 张卡片一致、列表页 Crypts 73 = 详情页 73、说明文案全文仅 1 次、`100%` 已消失、概率统一为 2 位有效数字、390px 单列且卡片满宽、无 page error。
+
 ## 2026-10-12
 
 ### docs: 同步性能计划与本地化文档计数
