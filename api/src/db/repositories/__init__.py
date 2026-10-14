@@ -1,6 +1,7 @@
 from .coordinates import CoordinatesRepository
 from .items import ItemsRepository
 from .lootdrops import LootdropsRepository
+from .merchants import InGameMerchantRepository
 from .modules import ModulesRepository
 from .monsters import MonstersRepository
 from .props import PropsRepository
@@ -16,3 +17,4 @@ class RepositoryRegistry:
         self.coordinates = CoordinatesRepository(conn)
         self.lootdrops = LootdropsRepository(conn)
         self.quests = QuestsRepository(conn)
+        self.merchants = InGameMerchantRepository(conn)

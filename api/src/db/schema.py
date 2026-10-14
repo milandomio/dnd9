@@ -59,6 +59,32 @@ class SchemaManager:
                 PRIMARY KEY (item_name, monster_name)
             );
 
+            CREATE TABLE IF NOT EXISTS ingame_merchants (
+                merchant_name TEXT PRIMARY KEY,
+                translation_key TEXT NOT NULL DEFAULT '',
+                greeting_key TEXT NOT NULL DEFAULT '',
+                npc_id TEXT NOT NULL DEFAULT ''
+            );
+
+            CREATE TABLE IF NOT EXISTS ingame_merchant_variants (
+                variant_id TEXT PRIMARY KEY,
+                merchant_name TEXT NOT NULL,
+                region TEXT NOT NULL DEFAULT '',
+                difficulty TEXT NOT NULL DEFAULT ''
+            );
+
+            CREATE TABLE IF NOT EXISTS ingame_merchant_stock (
+                variant_id TEXT NOT NULL,
+                slot_index INTEGER NOT NULL,
+                item_name TEXT NOT NULL,
+                item_count INTEGER NOT NULL DEFAULT 1,
+                item_rate INTEGER NOT NULL DEFAULT 0,
+                stock INTEGER NOT NULL DEFAULT 0,
+                price INTEGER NOT NULL DEFAULT 0,
+                currency TEXT NOT NULL DEFAULT '',
+                PRIMARY KEY (variant_id, slot_index, item_name)
+            );
+
             CREATE TABLE IF NOT EXISTS spawners (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 keyword TEXT NOT NULL,

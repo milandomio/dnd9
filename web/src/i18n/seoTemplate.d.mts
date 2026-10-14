@@ -10,6 +10,8 @@ export type SeoPageType =
   | 'questNpc'
   | 'modules'
   | 'moduleGroup'
+  | 'shops'
+  | 'shopRegion'
   | 'module';
 
 export type SeoFacts = Record<string, string | number | undefined>;
