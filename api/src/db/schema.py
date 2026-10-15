@@ -85,6 +85,14 @@ class SchemaManager:
                 PRIMARY KEY (variant_id, slot_index, item_name)
             );
 
+            -- Consumable numbers live in gameplay-effect assets, which only the
+            -- importer may read. Persist the resolved summary here so exports
+            -- (including CI, which has no game extract) stay DB-only.
+            CREATE TABLE IF NOT EXISTS item_effects (
+                item_name TEXT PRIMARY KEY,
+                effect_json TEXT NOT NULL DEFAULT ''
+            );
+
             CREATE TABLE IF NOT EXISTS spawners (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 keyword TEXT NOT NULL,

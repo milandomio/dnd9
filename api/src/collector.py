@@ -4,11 +4,9 @@ from datetime import datetime, timezone
 
 from config import (
     DB_PATH,
-    ITEM_ABILITY_DIR,
     LOG_DIR,
     OUTPUT_DIR,
 )
-from consumable_effects import build_effect_index
 from db_freshness import has_usable_database
 from db_manager import DatabaseManager
 from drop_rate import DropRateEngine
@@ -106,6 +104,10 @@ def run(
                 ctx.set_result(
                     f"{counts['merchants']} merchants, {counts['variants']} variants, {counts['stock']} stock rows"
                 )
+
+            with pipe.phase("import_item_effects", 11) as ctx:
+                count = db.import_item_effects()
+                ctx.set_result(f"{count} items")
 
             with pipe.phase("import_spawner_entries", 11) as ctx:
                 count = db.import_spawner_entries()
@@ -595,8 +597,6 @@ def run(
                 translations,
                 shop_item_index,
                 region_labels,
-                effect_index=build_effect_index(),
-                item_ability_dir=ITEM_ABILITY_DIR,
             )
             save_shop_data(shop_data, OUTPUT_DIR)
             ctx.set_result(f"{len(shop_data['index']['regions'])} regions")

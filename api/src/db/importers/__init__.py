@@ -1,3 +1,4 @@
+from .effects import ItemEffectsImporter
 from .items import ItemsImporter
 from .lootdrops import LootdropsImporter
 from .merchants import InGameMerchantImporter
@@ -20,3 +21,4 @@ class ImporterRegistry:
         self.spawners = SpawnersImporter(conn)
         self.translations = TranslationsImporter(conn)
         self.merchants = InGameMerchantImporter(conn)
+        self.effects = ItemEffectsImporter(conn)

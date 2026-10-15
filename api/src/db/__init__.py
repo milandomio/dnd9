@@ -115,6 +115,9 @@ class DatabaseManager:
     def import_ingame_merchants(self) -> dict[str, int]:
         return self.importers.merchants.import_all()
 
+    def import_item_effects(self) -> int:
+        return self.importers.effects.import_all()
+
     def import_lootdrops(self, spawner_monster_map: dict[str, list[str]] | None = None) -> int:
         return self.importers.lootdrops.import_all(spawner_monster_map)
 
@@ -172,6 +175,7 @@ class DatabaseManager:
             "merchants": self.repos.merchants.get_merchants(),
             "variants": self.repos.merchants.get_variants(),
             "stock": self.repos.merchants.get_stock(),
+            "effects": self.repos.merchants.get_item_effects(),
         }
 
     def get_lootdrop_relationships(self) -> list[dict]:

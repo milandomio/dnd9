@@ -2,6 +2,21 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-15
+
+### fix: 商店效果区间改由 DB 承载，修复 Actions 无游戏源导致的 CI 失败
+
+- **改动原因**：推送前做 CI 等价仿真（把项目复制到 `/tmp` 使 `PROJECT_DIR` 指向无游戏解包目录的位置）发现两处必然失败，证明当前 HEAD 一旦推送 CI 必红：1) `267635be3` 的幸运药水效果区间在**导出阶段**读游戏资产（`ActorStatusEffect`/`GameplayAbility`/`ItemAbility`），而仓库与 DB 里都没有这些文件，Actions 无游戏源时 `effect` 全部落为 `null`，线上商店页不显示区间；2) `api/tests/test_consumable_effects.py` 直接读源目录并断言 `ACTOR_STATUS_EFFECT_DIR`/`POTION_ABILITY_DIR` 存在，`test_merchant_builder.py` 也调用 `build_effect_index()` 读源，无游戏源时 3 failures + 7 errors。该问题违反项目规则「解包 JSON 只能用于导入阶段，导出只能从 DB 读取」。
+- **变更文件**：`api/src/db/schema.py`、`api/src/db/importers/effects.py`（新增）、`api/src/db/importers/__init__.py`、`api/src/db/repositories/merchants.py`、`api/src/db/__init__.py`、`api/src/collector.py`、`api/src/merchant_builder.py`、`api/tests/test_consumable_effects.py`、`api/tests/test_merchant_builder.py`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 新增 `item_effects(item_name TEXT PRIMARY KEY, effect_json TEXT)` 表：把 `{values, rolls}` 摘要按商品名持久化，使导出阶段无需再接触解包目录。
+  2. 新增 `ItemEffectsImporter`：从 `ingame_merchant_stock` 取出在售商品名，经 `resolve_item_effects(build_effect_index(), ITEM_ABILITY_DIR)` 解析后写库，仅导入阶段读游戏源。
+  3. `InGameMerchantRepository.get_item_effects()` 读回摘要（表缺失时返回 `{}`，兼容旧 DB）；`DatabaseManager.get_ingame_merchants()` 增加 `effects` 字段。
+  4. `build_shop_data()` 删除 `effect_index` / `item_ability_dir` 参数，改为直接消费 `merchant_data["effects"]`；`collector.py` 移除 `ITEM_ABILITY_DIR` 与 `build_effect_index` 引用（满足 `test_runtime_io_guard` 的运行时禁止解包路径约束），并在导入阶段插入 `import_item_effects` 步骤。
+  5. 测试改为**夹具驱动**而非跳过：`test_consumable_effects.py` 内联真实资产结构（8 档 Luck 数值、4 张蓝图权重表、能力映射）写入临时目录，保留原有全部解析断言并新增 `MissingSourceTest`（缺源时返回空且不抛错）；`test_merchant_builder.py` 改为通过 `merchant_data["effects"]` 传入，并新增 `ItemEffectsImporterTest` 覆盖「导入→仓储读回」与缺表兜底。
+- **验证**：CI 等价仿真（`/tmp` 无游戏源）后端 `Ran 142 tests ... OK`（修复前为 3 failures + 7 errors）；本地含游戏源同样 142/142、`api/lint.sh`（ruff + black）通过；删库全量重建 41.74s，`import_item_effects DONE -> 2 items`，新 DB 41 表 / integrity ok / `item_effects` 两行（5001 → `[100,200]`、6001 → `[200,300]`）；在无游戏源副本中以 DB-only 模式重跑管道成功，导出 `dungeon_shops/Crypts.json` 的 4 处 `effect` 与本地有源结果完全一致；前端 `npm test` 通过（0 errors / 20 既有 warnings、Prettier、tsc），`npm run build` 退出码 0（3111 页 / 17106 文件）；8084 预览 HTTP 200，Playwright 多语言回归 29/29，实机确认 zh-Hans/en/ja 商店详情页分别显示 `幸运 +100~200`、`Luck +100~200`、`幸運 +100~200` 及 `幸运 +200~300`，无 page error。
+- **备注**：本次为补丁部署前的必要前置修复，修复后按补丁流程随新 DB 一并推送 `main`。
+
 ## 2026-10-13
 
 ### feat: 展示 GoblinSmuggler 每局刷新上限
