@@ -1,4 +1,5 @@
 import json
+import sqlite3
 import sys
 import tempfile
 import unittest
@@ -6,9 +7,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from config import ITEM_ABILITY_DIR  # noqa: E402
-from consumable_effects import build_effect_index  # noqa: E402
+from db.importers.effects import ItemEffectsImporter  # noqa: E402
 from db.importers.merchants import parse_asset_name, parse_merchant_name  # noqa: E402
+from db.repositories.merchants import InGameMerchantRepository  # noqa: E402
+from db.schema import SchemaManager  # noqa: E402
 from merchant_builder import (  # noqa: E402
     REGION_LABEL_KEY,
     build_shop_data,
@@ -293,7 +295,7 @@ class BuildShopDataTest(unittest.TestCase):
 
 
 class ShopItemEffectTest(unittest.TestCase):
-    """Consumable effects resolved from gameplay assets ride along in the JSON."""
+    """Consumable effects travel to the JSON through the DB, never the assets."""
 
     def _plain(self):
         return build_shop_data(
@@ -308,6 +310,16 @@ class ShopItemEffectTest(unittest.TestCase):
         for row in merchant["stock"]:
             if row["slot_index"] == 1:
                 row["item_name"] = "LuckPotion_5001"
+        merchant["effects"] = {
+            "LuckPotion_5001": {
+                "values": {"Luck": [100, 200]},
+                "rolls": [
+                    {"effect": "Luck10", "rate": 2000, "chance": 0.2, "Luck": 100},
+                    {"effect": "Luck15", "rate": 4000, "chance": 0.4, "Luck": 150},
+                    {"effect": "Luck20", "rate": 4000, "chance": 0.4, "Luck": 200},
+                ],
+            }
+        }
         item_index = dict(ITEM_INDEX)
         item_index["LuckPotion"] = {
             "page": "LuckPotion",
@@ -319,8 +331,6 @@ class ShopItemEffectTest(unittest.TestCase):
             {"Text_DesignData_Item_Item_GreatLuckPotion": "大型幸运药水"},
             item_index,
             {r: r for r in REGION_LABEL_KEY},
-            effect_index=build_effect_index(),
-            item_ability_dir=ITEM_ABILITY_DIR,
         )
 
     def test_effect_range_is_attached(self):
@@ -345,10 +355,61 @@ class ShopItemEffectTest(unittest.TestCase):
                 self.assertIsNone(item["effect"])
 
     def test_effects_are_absent_when_not_requested(self):
-        """Omitting the effect index keeps the payload free of the field."""
+        """A merchant payload without an effects map keeps the field empty."""
         data = self._plain()
         item = data["details"]["Crypts"]["difficulties"][0]["slots"][0]["items"][0]
         self.assertIsNone(item["effect"])
+
+
+class ItemEffectsImporterTest(unittest.TestCase):
+    """The import phase persists effects so a DB-only export can still show them."""
+
+    def _temp_db(self):
+        tmp = tempfile.TemporaryDirectory()
+        conn = sqlite3.connect(str(Path(tmp.name) / "effects.db"))
+        conn.row_factory = sqlite3.Row
+        SchemaManager(conn).create_tables()
+        conn.executemany(
+            "INSERT INTO ingame_merchant_stock (variant_id, slot_index, item_name) VALUES (?, ?, ?)",
+            [("v", 1, "LuckPotion_5001"), ("v", 2, "HealingPotion_5001")],
+        )
+        conn.commit()
+        return tmp, conn
+
+    def test_import_then_repository_round_trip(self):
+        import db.importers.effects as effects_module
+
+        tmp, conn = self._temp_db()
+        original_index = effects_module.build_effect_index
+        original_dir = effects_module.ITEM_ABILITY_DIR
+        effects_module.build_effect_index = lambda: {"GA_LuckPotion_5001_Consume": {"values": {"Luck": [100, 200]}}}
+        effects_module.ITEM_ABILITY_DIR = Path("/nonexistent")
+        try:
+            # resolve_item_effects needs a real ability asset; patch it too so the
+            # test target stays the DB round trip rather than asset parsing.
+            original_resolve = effects_module.resolve_item_effects
+            effects_module.resolve_item_effects = lambda items, index, directory: {
+                "LuckPotion_5001": {"values": {"Luck": [100, 200]}}
+            }
+            try:
+                stored = ItemEffectsImporter(conn).import_all()
+            finally:
+                effects_module.resolve_item_effects = original_resolve
+        finally:
+            effects_module.build_effect_index = original_index
+            effects_module.ITEM_ABILITY_DIR = original_dir
+
+        self.assertEqual(stored, 1)
+        effects = InGameMerchantRepository(conn).get_item_effects()
+        self.assertEqual(effects["LuckPotion_5001"]["values"]["Luck"], [100, 200])
+        conn.close()
+        tmp.cleanup()
+
+    def test_repository_returns_empty_without_the_table(self):
+        conn = sqlite3.connect(":memory:")
+        conn.row_factory = sqlite3.Row
+        self.assertEqual(InGameMerchantRepository(conn).get_item_effects(), {})
+        conn.close()
 
 
 class ShopChanceTest(unittest.TestCase):
