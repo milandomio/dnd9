@@ -3457,6 +3457,23 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.seo.module_description':
       '{name}地图模块，大小 {sx}x{sy}，包含 {entities} 个实体、{positions} 个位置。',
     'ui.seo.module_group_description': '{name}地图模块，共 {count} 个模块。',
+    'ui.nav.lights': '灯',
+    'ui.search.tag.light': '灯',
+    'ui.home.card_labels.lights': '灯',
+    'ui.home.view_lights': '查看灯具的燃烧时间与照明范围',
+    'ui.lights.title': '【灯】灯具一览',
+    'ui.lights.stat': '共 {count} 种灯具 | {variants} 个品质变体',
+    'ui.lights.hint':
+      '仅收录同时具备燃烧时间（FuelSeconds）与照明范围（LightAreaRadius）的物品。点击卡片可搜索该物品。',
+    'ui.lights.fuel': '燃烧时间',
+    'ui.lights.radius': '照明范围',
+    'ui.lights.seconds': '秒',
+    'ui.lights.tab.common': '常用',
+    'ui.lights.tab.uncommon': '不常用',
+    'ui.lights.tab.environment': '环境',
+    'ui.lights.swarm': '仅虫潮',
+    'ui.lights.env_hint':
+      '场景中的发光道具（火把、灯架、蜡烛等），只有燃烧时间，没有照明范围数据。',
   },
   en: {
     'ui.pwa.install_title': 'Install DarkFlashNav',
@@ -3494,6 +3511,23 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '{name} module, size {sx}x{sy}, with {entities} entities and {positions} positions.',
     'ui.seo.module_group_description':
       '{name} modules, {count} modules in total.',
+    'ui.nav.lights': 'Lights',
+    'ui.search.tag.light': 'Light',
+    'ui.home.card_labels.lights': 'Lights',
+    'ui.home.view_lights': 'Browse burn time and light radius',
+    'ui.lights.title': 'Lights',
+    'ui.lights.stat': '{count} light sources | {variants} quality variants',
+    'ui.lights.hint':
+      'Only items that have both FuelSeconds and LightAreaRadius are listed. Click a card to search for the item.',
+    'ui.lights.fuel': 'Burn time',
+    'ui.lights.radius': 'Light radius',
+    'ui.lights.seconds': 's',
+    'ui.lights.tab.common': 'Common',
+    'ui.lights.tab.uncommon': 'Other',
+    'ui.lights.tab.environment': 'Environment',
+    'ui.lights.swarm': 'Swarm only',
+    'ui.lights.env_hint':
+      'Light-emitting props found in the world (torches, lamp stands, candles) — they only have a burn time, no light radius data.',
   },
   ja: {
     'ui.pwa.install_title': 'DarkFlashNavをインストール',
@@ -3530,6 +3564,23 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.seo.module_description':
       '{name}モジュール、サイズ {sx}x{sy}、{entities}個の実体と{positions}か所の位置があります。',
     'ui.seo.module_group_description': '{name}モジュール、合計{count}件です。',
+    'ui.nav.lights': '灯火',
+    'ui.search.tag.light': '灯火',
+    'ui.home.card_labels.lights': '灯火',
+    'ui.home.view_lights': '燃焼時間と照明範囲を見る',
+    'ui.lights.title': '灯火一覧',
+    'ui.lights.stat': '灯火 {count} 種 | 品質バリエーション {variants} 件',
+    'ui.lights.hint':
+      '燃焼時間（FuelSeconds）と照明範囲（LightAreaRadius）の両方を持つアイテムのみを掲載しています。カードをクリックすると検索できます。',
+    'ui.lights.fuel': '燃焼時間',
+    'ui.lights.radius': '照明範囲',
+    'ui.lights.seconds': '秒',
+    'ui.lights.tab.common': '常用',
+    'ui.lights.tab.uncommon': 'その他',
+    'ui.lights.tab.environment': '環境',
+    'ui.lights.swarm': '虫の群れ限定',
+    'ui.lights.env_hint':
+      'フィールドの発光オブジェクト（たいまつ、灯架、ろうそくなど）。燃焼時間のみで照明範囲のデータはありません。',
   },
   'zh-Hant': {
     'ui.pwa.install_title': '安裝 DND閃電指南',
@@ -3563,6 +3614,23 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.seo.module_description':
       '{name}地圖模組，大小 {sx}x{sy}，包含 {entities} 個實體、{positions} 個位置。',
     'ui.seo.module_group_description': '{name}地圖模組，共 {count} 個模組。',
+    'ui.nav.lights': '燈',
+    'ui.search.tag.light': '燈',
+    'ui.home.card_labels.lights': '燈',
+    'ui.home.view_lights': '查看燈具的燃燒時間與照明範圍',
+    'ui.lights.title': '【燈】燈具一覽',
+    'ui.lights.stat': '共 {count} 種燈具 | {variants} 個品質變體',
+    'ui.lights.hint':
+      '僅收錄同時具備燃燒時間（FuelSeconds）與照明範圍（LightAreaRadius）的物品。點擊卡片可搜尋該物品。',
+    'ui.lights.fuel': '燃燒時間',
+    'ui.lights.radius': '照明範圍',
+    'ui.lights.seconds': '秒',
+    'ui.lights.tab.common': '常用',
+    'ui.lights.tab.uncommon': '不常用',
+    'ui.lights.tab.environment': '環境',
+    'ui.lights.swarm': '僅蟲潮',
+    'ui.lights.env_hint':
+      '場景中的發光道具（火把、燈架、蠟燭等），只有燃燒時間，沒有照明範圍資料。',
   },
 };
 

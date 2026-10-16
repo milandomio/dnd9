@@ -92,6 +92,13 @@ def _load_used_keys(output_dir: Path, lootdrop_keys: set[str] | None = None) -> 
                 _collect_keys(json.load(f), used)
         except (json.JSONDecodeError, OSError):
             pass
+    lights_path = output_dir / "lights.json"
+    if lights_path.exists():
+        try:
+            with open(lights_path, encoding="utf-8") as f:
+                _collect_keys(json.load(f), used)
+        except (json.JSONDecodeError, OSError):
+            pass
     for subdir in subdirs:
         dir_path = output_dir / subdir
         if not dir_path.exists():

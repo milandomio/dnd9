@@ -256,6 +256,7 @@ const SINGLE = [
   'quest_npc',
   'dungeon_modules',
   'dungeon_shops',
+  'lights',
 ];
 const DEFAULT_LANG = 'zh-Hans';
 const LANGS = [
@@ -682,6 +683,7 @@ function routeDataKey(path) {
     return 'dungeon_shops';
   }
   if (stripped === '/explore') return 'explore';
+  if (stripped === '/lights') return 'lights';
   return `list-${stripped.slice(1)}`;
 }
 

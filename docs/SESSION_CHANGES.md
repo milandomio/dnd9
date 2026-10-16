@@ -11,6 +11,19 @@
 - **关键逻辑/映射关系**：数据取自 `data/json/lights.json`（更新前），按页面结构分为「常用」（火把/灯笼/机关盾）与「不常用」两组；列为 `原始 ID | 灯具 | 品质 | 燃烧时间（秒） | 照明范围`，共 8 种灯具 / 45 个品质变体，`原始 ID` 作为后续新旧合并的连接键。照明范围本次未变（火把/灯笼=300，其余=120）。
 - **备注**：【灯】页面功能代码（后端 `light_items`/`light_builder`、前端 `LightsPage`/`useLights`、SSG 路由）已在工作区完成并通过 lint/tsc/实机验证，待新数据同步后与前端一并提交；本次仅本地提交该备份文档。
 
+### feat: 【灯】页面新增「环境」分类（Props 光源）
+
+- **改动原因**：用户要求把 Props 目录中带 `FuelSeconds` 的发光场景道具（火把/灯架/灯/蜡烛等）也纳入【灯】页面，作为第三个分类标签「环境」。此前页面只收录同时具备 `FuelSeconds` 与 `LightAreaRadius` 的物品，而场景 Props 有燃料时长却无照明范围字段，被过滤掉；经全库搜索确认 `FuelSeconds` 分布在 59 个 Props 文件与 45 个 Item 文件，`LightAreaRadius` 仅存在于 Item。
+- **变更文件**：`api/src/db/schema.py`、`api/src/db/importers/props.py`、`api/src/db/repositories/props.py`、`api/src/db/__init__.py`、`api/src/collector.py`、`api/src/light_builder.py`、`api/src/db_freshness.py`、`web/src/types/data.ts`、`web/src/pages/LightsPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`；前端特性其余文件（`nav`/`home`/`AppInner`/`ssg`/`seoTemplate`/`useLights`）随【灯】页面本体一并纳入本次提交。
+- **关键逻辑/映射关系**：
+  1. 新增 `environment_lights(raw_name PK, item_name, translation_key, fuel_seconds, fuel_seconds_max, only_in_swarm)` 表；`PropsImporter.import_environment_lights()` 扫描 `PROPS_DIR`，只保留 `FuelSeconds > 0` 的 Props（共 59 个），`Name.Key` 经 `TRANSLATION_KEY_ALIAS_MAP` 作分组键，`FuelSecondsMax` 非数值时回退 `FuelSeconds`，`FuelBurnsOnlyInSwarm` 归一为 `only_in_swarm`。
+  2. `PropsRepository.get_environment_lights()` 读回、`DatabaseManager.get_environment_lights()` 透出；`light_builder.build_and_save_lights()` 增加 `environment` 参数，`lights.json` 新增 `environment`（59 条）与 `environment_count`（6 组：火把/灯架子/灯/蜡烛/冰渊灯架/水晶灯架），导出阶段仍只读 DB。
+  3. `collector.py` 新增 `import_environment_lights` 导入阶段并把行集传入导出；`db_freshness.py` 版本升到 `db-lifecycle-v8-environment-lights`，`REQUIRED_TABLES` 增加 `environment_lights`。
+  4. 前端 `LightsPayload` 增加可选 `environment`/`environment_count` 与 `EnvironmentLight` 类型（兼容旧数据）；`LightsPage.tsx` 新增第三个标签「环境」，按 `translation_key` 分组成同族，卡片显示燃烧时间区间（`fuel_seconds~fuel_seconds_max`，如 `45~112秒`，两者相等时只显示单值）与「仅虫潮」标记；标签页提示文案随 tab 切换为环境专用说明。
+  5. i18n 新增 `ui.lights.tab.environment` / `ui.lights.swarm` / `ui.lights.env_hint`（zh-Hans/en/ja/zh-Hant 四语言）。
+- **验证**：隔离测试（内存 DB 直连游戏源）导入 `59` 行 / `6` 组，`build_and_save_lights` 输出 `environment` 59 条、`environment_count` 6；`web/npm run check` 通过（0 error）；`api/lint.sh`（ruff + black）通过；Playwright 在 8081 实机点击「环境」标签，渲染 6 组 59 张卡片，中文标签正确（蜡烛/水晶灯架/冰渊灯架/灯/灯架子/火把），燃烧时间显示 `20~60秒`、`45~112秒`，无 page error；测试后已还原被临时改写的 `data/json/lights.json`（md5 校验一致）。
+- **备注**：`data/json/lights.json` 需重跑管道后才会带上 `environment` 段（由另一进程负责同步/重跑）；本次仅本地提交代码与文档。
+
 ## 2026-10-15
 
 ### fix: 商店效果区间改由 DB 承载，修复 Actions 无游戏源导致的 CI 失败
