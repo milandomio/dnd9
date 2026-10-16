@@ -4,6 +4,13 @@
 
 ## 2026-10-16
 
+### chore: 补丁部署——同步游戏数据并全量重建 DB
+
+- **改动原因**：按请求执行 `docs/BUILD_AND_DEPLOY.md`「更新部署」流程，游戏更新后同步 FMOD 解包数据并全量重建 SQLite，随后把含新 DB 的 `main` 推到 `origin/main` 供 Actions 导出 JSON。
+- **变更文件**：`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`~/sync_fmod.sh` 已完成（跳过）；删除 `api/data/darkfindv5.db` 后重跑 `python main.py`，从同步后的游戏 JSON 全量重建数据库与 JSON 导出。
+- **验证**：`api/pipeline.log` 无 error/traceback，管道总耗时 51.57s；sqlite-debug 确认 DB 可读、43 张表，关键表 `spawners=54298`、`monster_entities=739`、`lootdrop_groups=69771`、`item_entities=816`、`props_entities=598`。
+
 ### docs: 备份「旧版灯持续时间」参数表
 
 - **改动原因**：游戏更新（0.18.156）后火把燃烧时间由 60/75/90/105/120/150/180 调整为 90/115/135/160/180/225/270。为便于更新后做新旧对比（视频解说），先备份更新前的【灯】页面参数。
